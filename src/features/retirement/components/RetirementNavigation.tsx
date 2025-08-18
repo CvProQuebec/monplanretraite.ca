@@ -186,7 +186,7 @@ export const RetirementNavigation: React.FC = () => {
       <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white py-8">
         <div className="container mx-auto px-6 text-center">
           <h1 className="text-4xl font-bold mb-4">
-            🚀 {language === 'fr' ? 'Navigation Phase 1 Intégrée' : 'Integrated Phase 1 Navigation'}
+            🚀 {language === 'fr' ? 'Navigation Phase 1 intégrée' : 'Integrated Phase 1 Navigation'}
           </h1>
           <p className="text-xl text-blue-100 max-w-3xl mx-auto">
             {language === 'fr' 
@@ -221,7 +221,7 @@ export const RetirementNavigation: React.FC = () => {
         {/* Grille principale des cartes */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-            🎯 {language === 'fr' ? 'Fonctionnalités Principales' : 'Main Features'}
+            🎯 {language === 'fr' ? 'Fonctionnalités principales' : 'Main Features'}
           </h2>
           <CardGrid columns={4} gap="lg">
             {mainCards.map((card, index) => (
@@ -241,7 +241,7 @@ export const RetirementNavigation: React.FC = () => {
         {/* Actions rapides */}
         <div className="mb-16">
           <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-            ⚡ {language === 'fr' ? 'Actions Rapides' : 'Quick Actions'}
+            ⚡ {language === 'fr' ? 'Actions rapides' : 'Quick Actions'}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {quickActionCards.map((card, index) => (

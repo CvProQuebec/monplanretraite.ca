@@ -1,129 +1,211 @@
-import React from "react";
-import { useLocation, useNavigate, Link } from "react-router-dom";
-import AiConsultationForm from "@/components/consultation/AiConsultationForm";
+import React from 'react';
+import { useLocation } from 'react-router-dom';
+import { useLanguage } from '@/features/retirement/hooks/useLanguage';
+import { translations } from '@/features/retirement/translations/index';
+import { 
+  Shield, 
+  Calculator, 
+  TrendingUp, 
+  FileText, 
+  Heart, 
+  Mail, 
+  Phone,
+  MapPin,
+  ExternalLink
+} from 'lucide-react';
 
-const Footer = () => {
+const Footer: React.FC = () => {
   const location = useLocation();
-  const navigate = useNavigate();
-  const isEnglish = location.pathname.startsWith("/en");
-  const isRoiPage = location.pathname === "/calculroi" || location.pathname === "/en/roicalcul";
-  const isConsultationPage = location.pathname === "/consultation" || location.pathname === "/en/consultation";
+  const { language } = useLanguage();
+  const t = translations[language];
+  const isEnglish = language === 'en';
 
   return (
-    <>
-      {!isRoiPage && (
-        <>
-          <div className="bg-sapphire text-white py-12 px-4 text-center">
-            <div className="max-w-2xl mx-auto">
-              <h2 className="text-2xl md:text-3xl font-bold mb-4 flex flex-col items-center justify-center gap-2">
-                <span role="img" aria-label="analyse">📊</span>
-                <span>
-                  {isEnglish 
-                    ? "Free Quick Analysis:" 
-                    : "Brève analyse gratuite :"}
-                </span>
-                <span>
-                  {isEnglish 
-                    ? "automate, save, perform" 
-                    : "automatisez, économisez, performez"}
-                </span>
-              </h2>
-              <p className="text-lg mb-6">
+    <footer className="bg-gradient-to-br from-blue-900 via-indigo-900 to-purple-900 text-white relative overflow-hidden">
+      {/* Éléments décoratifs */}
+      <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-blue-500/10 blur-[100px]"></div>
+      <div className="absolute bottom-40 right-10 w-80 h-80 rounded-full bg-purple-500/10 blur-[120px]"></div>
+      
+      <div className="container mx-auto px-6 py-16 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          {/* Colonne 1 : À propos */}
+          <div className="space-y-4">
+            <div className="flex items-center gap-2">
+              <Shield className="w-8 h-8 text-blue-400" />
+              <h3 className="text-xl font-bold">MonPlanRetraite.ca</h3>
+            </div>
+            <p className="text-blue-100 text-sm leading-relaxed">
+              {isEnglish 
+                ? 'Professional retirement planning tools for Canadians. Plan your financial future with confidence and precision.'
+                : 'Outils professionnels de planification de retraite pour les Canadiens. Planifiez votre avenir financier avec confiance et précision.'
+              }
+            </p>
+            <div className="flex items-center gap-2 text-blue-200 text-sm">
+              <Heart className="w-4 h-4 text-red-400" />
+              <span>
                 {isEnglish 
-                  ? "Use our free tools to discover which tasks in your business have the highest potential for automation, savings and performance gains."
-                  : "Utilisez nos outils gratuits pour découvrir quelles tâches de votre entreprise ont le plus fort potentiel d'automatisation, d'économies et de gains de performance."}
-              </p>
-              <ul className="mb-8 text-base text-gold-200 list-disc list-inside text-left max-w-md mx-auto">
-                <li>
-                  {isEnglish 
-                    ? "Identify your most expensive processes"
-                    : "Identifiez vos processus les plus coûteux"}
-                </li>
-                <li>
-                  {isEnglish 
-                    ? "Calculate your potential savings in just a few clicks"
-                    : "Calculez vos économies potentielles en quelques clics"}
-                </li>
-                <li>
-                  {isEnglish 
-                    ? "Get a personalized estimate of your return on investment"
-                    : "Obtenez une estimation personnalisée de votre retour sur l'investissement"}
-                </li>
-              </ul>
-              <Link
-                to={isEnglish ? "/en/rentabilite" : "/fr/rentabilite"}
-                className="bg-gold hover:bg-gold-600 text-charcoal-900 font-bold px-8 py-3 rounded-lg shadow-lg transition-all duration-300 text-lg"
-              >
-                {isEnglish 
-                  ? "Profitability"
-                  : "Rentabilité"}
-              </Link>
+                  ? 'Made with love in Quebec'
+                  : 'Fait avec amour au Québec'
+                }
+              </span>
             </div>
           </div>
 
-          {!isConsultationPage && (
-            <div className="bg-white text-charcoal-900 py-12 px-4 text-center border-t border-gold/20">
-              <div className="max-w-2xl mx-auto">
-                <h2 className="text-2xl md:text-3xl font-bold mb-4 flex items-center justify-center gap-2">
-                  <span role="img" aria-label="chrono">⏱️</span>
+          {/* Colonne 2 : Services */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold text-blue-200">
+              {isEnglish ? 'Our services' : 'Nos services'}
+            </h4>
+            <ul className="space-y-2 text-sm text-blue-100">
+              <li className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
+                <Calculator className="w-4 h-4" />
+                <span>{isEnglish ? 'Retirement planning' : 'Planification retraite'}</span>
+              </li>
+              <li className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
+                <TrendingUp className="w-4 h-4" />
+                <span>{isEnglish ? 'Cashflow analysis' : 'Analyse cashflow'}</span>
+              </li>
+              <li className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
+                <FileText className="w-4 h-4" />
+                <span>{isEnglish ? 'CPP/RRQ optimization' : 'Optimisation CPP/RRQ'}</span>
+              </li>
+              <li className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
+                <Shield className="w-4 h-4" />
+                <span>{isEnglish ? 'Tax optimization' : 'Optimisation fiscale'}</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Colonne 3 : Ressources */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold text-blue-200">
+              {isEnglish ? 'Resources' : 'Ressources'}
+            </h4>
+            <ul className="space-y-2 text-sm text-blue-100">
+              <li className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
+                <FileText className="w-4 h-4" />
+                <span>{isEnglish ? 'Planning guides' : 'Guides de planification'}</span>
+              </li>
+              <li className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
+                <Calculator className="w-4 h-4" />
+                <span>{isEnglish ? 'Financial calculators' : 'Calculateurs financiers'}</span>
+              </li>
+              <li className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
+                <TrendingUp className="w-4 h-4" />
+                <span>{isEnglish ? 'Market insights' : 'Aperçus du marché'}</span>
+              </li>
+              <li className="flex items-center gap-2 hover:text-white transition-colors cursor-pointer">
+                <Shield className="w-4 h-4" />
+                <span>{isEnglish ? 'Security tips' : 'Conseils de sécurité'}</span>
+              </li>
+            </ul>
+          </div>
+
+          {/* Colonne 4 : Contact */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold text-blue-200">
+              {isEnglish ? 'Contact us' : 'Contactez-nous'}
+            </h4>
+            <div className="space-y-3 text-sm text-blue-100">
+              <div className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-blue-300" />
+                <span>info@monplanretraite.ca</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-blue-300" />
+                <span>+1 (514) 555-0123</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-blue-300" />
+                <span>
                   {isEnglish 
-                    ? "Get your personalized automation assessment – Free and fast!"
-                    : "Obtenez votre diagnostic d'automatisation personnalisé – Gratuit et rapide !"}
-                </h2>
-                <p className="text-lg mb-6">
-                  {isEnglish 
-                    ? "Get a free evaluation of the automation potential of a specific task in your business. Receive an expert report including:"
-                    : "Faites évaluer gratuitement le potentiel d'automatisation d'une tâche précise de votre entreprise. Recevez un rapport d'expert incluant :"}
-                </p>
-                <ul className="mb-8 text-base text-sapphire list-disc list-inside text-left max-w-md mx-auto">
-                  <li>
-                    {isEnglish 
-                      ? "Potential savings and return on investment"
-                      : "Les économies potentielles et le retour sur investissement"}
-                  </li>
-                  <li>
-                    {isEnglish 
-                      ? "Concrete implementation suggestions"
-                      : "Des suggestions concrètes d'implantation"}
-                  </li>
-                  <li>
-                    {isEnglish 
-                      ? "A custom action plan for the next step"
-                      : "Un plan d'action sur-mesure pour passer à l'étape suivante"}
-                  </li>
-                </ul>
-                <div className="font-semibold text-sapphire mb-6">
-                  {isEnglish 
-                    ? "Join the decision-makers who are already optimizing their operations with AI and make a difference in your sector."
-                    : "Rejoignez les décideurs qui optimisent déjà leurs opérations grâce à l'IA et faites la différence dans votre secteur."}
-                </div>
-                <Link
-                  to={isEnglish ? "/en/potential" : "/fr/potentiel"}
-                  className="bg-gold hover:bg-gold-600 text-charcoal-900 font-bold px-8 py-3 rounded-lg shadow-lg transition-all duration-300 text-lg mb-8"
-                >
-                  {isEnglish 
-                    ? "Get my free assessment"
-                    : "Obtenir mon évaluation gratuite"}
-                </Link>
+                    ? 'Montreal, Quebec, Canada'
+                    : 'Montréal, Québec, Canada'
+                  }
+                </span>
               </div>
             </div>
-          )}
-        </>
-      )}
-      <footer className="relative overflow-hidden">
-        {/* Dynamic background gradients */}
-        <div className="absolute inset-0 bg-gradient-to-b from-charcoal-900 via-charcoal-900 to-charcoal-800 z-0"></div>
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-gold via-sapphire to-gold z-10"></div>
-        
-        {/* Decorative elements */}
-        <div className="absolute top-20 left-10 w-64 h-64 rounded-full bg-sapphire/5 blur-[100px] z-0"></div>
-        <div className="absolute bottom-40 right-10 w-80 h-80 rounded-full bg-gold/5 blur-[120px] z-0"></div>
-        
-        <div id="contact-section" className="container-custom section-padding relative z-10">
-          {/* Bloc supprimé : ancien CTA potentiel d'automatisation IA */}
+            
+            {/* Liens sociaux */}
+            <div className="pt-2">
+              <h5 className="text-sm font-medium text-blue-200 mb-2">
+                {isEnglish ? 'Follow us' : 'Suivez-nous'}
+              </h5>
+              <div className="flex gap-3">
+                <a 
+                  href="#" 
+                  className="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
+                  aria-label={isEnglish ? 'LinkedIn' : 'LinkedIn'}
+                >
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+                <a 
+                  href="#" 
+                  className="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
+                  aria-label={isEnglish ? 'Twitter' : 'Twitter'}
+                >
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+                <a 
+                  href="#" 
+                  className="w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
+                  aria-label={isEnglish ? 'Facebook' : 'Facebook'}
+                >
+                  <ExternalLink className="w-4 h-4" />
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
-      </footer>
-    </>
+
+        {/* Ligne de séparation */}
+        <div className="border-t border-blue-700 mt-12 pt-8">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="text-sm text-blue-300">
+              <p>
+                {isEnglish 
+                  ? '© 2024 MonPlanRetraite.ca. All rights reserved.'
+                  : '© 2024 MonPlanRetraite.ca. Tous droits réservés.'
+                }
+              </p>
+            </div>
+            
+            <div className="flex gap-6 text-sm text-blue-300">
+              <a href="#" className="hover:text-white transition-colors">
+                {isEnglish ? 'Privacy policy' : 'Politique de confidentialité'}
+              </a>
+              <a href="#" className="hover:text-white transition-colors">
+                {isEnglish ? 'Terms of service' : 'Conditions d\'utilisation'}
+              </a>
+              <a href="#" className="hover:text-white transition-colors">
+                {isEnglish ? 'Cookie policy' : 'Politique des cookies'}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Avertissement légal */}
+        <div className="mt-8 p-4 bg-blue-800/50 rounded-lg border border-blue-700">
+          <div className="text-center text-sm text-blue-200">
+            <p className="mb-2">
+              <strong>
+                {isEnglish 
+                  ? '⚠️ This financial planning platform is an educational and informational tool that does not replace consultation with a qualified professional.'
+                  : '⚠️ Cette plateforme de planification financière est un outil éducatif et informatif qui ne remplace en aucun cas une consultation avec un professionnel qualifié.'
+                }
+              </strong>
+            </p>
+            <p>
+              {isEnglish 
+                ? 'Always consult a certified financial planner for important decisions.'
+                : 'Consultez toujours un planificateur financier agréé pour vos décisions importantes.'
+              }
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
 
