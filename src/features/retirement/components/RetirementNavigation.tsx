@@ -14,7 +14,8 @@ import {
   AlertTriangle,
   Database,
   Settings,
-  Zap
+  Zap,
+  Shield
 } from 'lucide-react';
 
 export const RetirementNavigation: React.FC = () => {
@@ -25,12 +26,65 @@ export const RetirementNavigation: React.FC = () => {
 
   // Configuration des onglets
   const tabs = [
-    { id: 'dashboard', label: language === 'fr' ? 'Tableau de bord' : 'Dashboard', icon: Home },
-    { id: 'planning', label: language === 'fr' ? 'Planification' : 'Planning', icon: Calculator },
-    { id: 'analysis', label: language === 'fr' ? 'Analyse' : 'Analysis', icon: TrendingUp },
-    { id: 'reports', label: language === 'fr' ? 'Rapports' : 'Reports', icon: FileText },
-    { id: 'emergency', label: language === 'fr' ? 'Urgence' : 'Emergency', icon: AlertTriangle },
-    { id: 'session', label: language === 'fr' ? 'Session' : 'Session', icon: Database },
+    { 
+      id: 'dashboard', 
+      label: language === 'fr' ? 'Tableau de bord' : 'Dashboard', 
+      icon: Home,
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module-phase1' : '/en/retirement-module-phase1')
+    },
+    { 
+      id: 'profile', 
+      label: language === 'fr' ? 'Profil' : 'Profile', 
+      icon: User,
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=personal' : '/en/retirement-module?section=personal')
+    },
+    { 
+      id: 'retirement', 
+      label: language === 'fr' ? 'Retraite' : 'Retirement', 
+      icon: Calculator,
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=retirement' : '/en/retirement-module?section=retirement')
+    },
+    { 
+      id: 'savings', 
+      label: language === 'fr' ? '$ Épargne' : '$ Savings', 
+      icon: TrendingUp,
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=savings' : '/en/retirement-module?section=savings')
+    },
+    { 
+      id: 'cashflow', 
+      label: language === 'fr' ? 'Flux de trésorerie' : 'Cash Flow', 
+      icon: BarChart3,
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=cashflow' : '/en/retirement-module?section=cashflow'),
+      badge: 'Pro'
+    },
+    { 
+      id: 'cpp', 
+      label: 'CPP', 
+      icon: FileText,
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=cpp' : '/en/retirement-module?section=cpp'),
+      badge: 'Pro'
+    },
+    { 
+      id: 'cpp-rrq', 
+      label: 'CPP+RRQ', 
+      icon: FileText,
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=cpp-rrq' : '/en/retirement-module?section=cpp-rrq'),
+      badge: 'Pro'
+    },
+    { 
+      id: 'advanced-expenses', 
+      label: language === 'fr' ? 'Dépenses avancées' : 'Advanced Expenses', 
+      icon: Calculator,
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=advanced-expenses' : '/en/retirement-module?section=advanced-expenses'),
+      badge: 'Pro'
+    },
+    { 
+      id: 'optimization', 
+      label: language === 'fr' ? 'Optimisation' : 'Optimization', 
+      icon: TrendingUp,
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=tax' : '/en/retirement-module?section=tax'),
+      badge: 'Pro'
+    }
   ];
 
   // Configuration des étapes
@@ -50,8 +104,8 @@ export const RetirementNavigation: React.FC = () => {
       icon: Home,
       status: 'completed' as const,
       progress: 100,
-      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=dashboard' : '/en/retirement-module?section=dashboard'),
-      external: true
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module-phase1' : '/en/retirement-module-phase1'),
+      external: false
     },
     {
       title: language === 'fr' ? 'Profil personnel' : 'Personal Profile',
@@ -59,8 +113,8 @@ export const RetirementNavigation: React.FC = () => {
       icon: User,
       status: 'completed' as const,
       progress: 85,
-      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=profile' : '/en/retirement-module?section=profile'),
-      external: true
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=personal' : '/en/retirement-module?section=personal'),
+      external: false
     },
     {
       title: language === 'fr' ? 'Planification retraite' : 'Retirement Planning',
@@ -68,8 +122,8 @@ export const RetirementNavigation: React.FC = () => {
       icon: Calculator,
       status: 'in-progress' as const,
       progress: 60,
-      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=planning' : '/en/retirement-module?section=planning'),
-      external: true
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=retirement' : '/en/retirement-module?section=retirement'),
+      external: false
     },
     {
       title: language === 'fr' ? 'Gestion épargne' : 'Savings Management',
@@ -78,7 +132,7 @@ export const RetirementNavigation: React.FC = () => {
       status: 'in-progress' as const,
       progress: 40,
       onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=savings' : '/en/retirement-module?section=savings'),
-      external: true
+      external: false
     },
     {
       title: language === 'fr' ? 'Analyse cashflow' : 'Cashflow Analysis',
@@ -87,7 +141,7 @@ export const RetirementNavigation: React.FC = () => {
       status: 'locked' as const,
       progress: 0,
       onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=cashflow' : '/en/retirement-module?section=cashflow'),
-      external: true
+      external: false
     },
     {
       title: language === 'fr' ? 'Calculs CPP/RRQ' : 'CPP/RRQ Calculations',
@@ -95,8 +149,8 @@ export const RetirementNavigation: React.FC = () => {
       icon: FileText,
       status: 'locked' as const,
       progress: 0,
-      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=cpp-rrq' : '/en/retirement-module?section=cpp-rrq'),
-      external: true
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=cpp' : '/en/retirement-module?section=cpp'),
+      external: false
     },
     {
       title: language === 'fr' ? 'Informations d\'urgence' : 'Emergency Info',
@@ -104,8 +158,8 @@ export const RetirementNavigation: React.FC = () => {
       icon: AlertTriangle,
       status: 'completed' as const,
       progress: 90,
-      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=emergency' : '/en/retirement-module?section=emergency'),
-      external: true
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=emergency-info' : '/en/retirement-module?section=emergency-info'),
+      external: false
     },
     {
       title: language === 'fr' ? 'Rapports et analyses' : 'Reports & Analysis',
@@ -122,8 +176,8 @@ export const RetirementNavigation: React.FC = () => {
       icon: Database,
       status: 'completed' as const,
       progress: 75,
-      onClick: () => navigate(language === 'fr' ? '/fr/sauvegarde-securite' : '/en/backup-security'),
-      external: true
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module?section=session' : '/en/retirement-module?section=session'),
+      external: false
     }
   ];
 
@@ -135,8 +189,8 @@ export const RetirementNavigation: React.FC = () => {
       icon: Zap,
       status: 'completed' as const,
       progress: 100,
-      onClick: () => navigate(language === 'fr' ? '/fr/navigation-demo' : '/en/navigation-demo'),
-      external: true
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module-phase1' : '/en/retirement-module-phase1'),
+      external: false
     },
     {
       title: language === 'fr' ? 'Démos Phase 2' : 'Phase 2 Demos',
@@ -144,8 +198,8 @@ export const RetirementNavigation: React.FC = () => {
       icon: Settings,
       status: 'completed' as const,
       progress: 100,
-      onClick: () => navigate(language === 'fr' ? '/fr/phase2-demo' : '/en/phase2-demo'),
-      external: true
+      onClick: () => navigate(language === 'fr' ? '/fr/retraite-module' : '/en/retirement-module'),
+      external: false
     }
   ];
 
@@ -199,11 +253,58 @@ export const RetirementNavigation: React.FC = () => {
 
       {/* Navigation par onglets */}
       <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-gray-200">
-        <TabbedNavigation
-          activeTab={activeTab}
-          onTabChange={handleTabChange}
-          onExternalNavigation={handleExternalNavigation}
-        />
+        <div className="container mx-auto px-6">
+          <div className="flex space-x-1 overflow-x-auto pb-2">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                onClick={tab.onClick}
+                className={`
+                  relative px-6 py-4 text-sm font-medium rounded-t-lg transition-all duration-300
+                  whitespace-nowrap flex items-center gap-2
+                  ${activeTab === tab.id
+                    ? 'bg-blue-600 text-white shadow-lg transform scale-105'
+                    : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600'
+                  }
+                `}
+              >
+                <tab.icon className="w-4 h-4" />
+                {tab.label}
+                {tab.badge && (
+                  <span className="ml-2 px-2 py-1 text-xs bg-green-100 text-green-700 rounded-full">
+                    {tab.badge}
+                  </span>
+                )}
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Indicateur de plan actuel et progression */}
+      <div className="bg-gradient-to-r from-green-50 to-blue-50 border-b border-green-200">
+        <div className="container mx-auto px-6 py-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            {/* Plan actuel */}
+            <div className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-full text-sm font-bold shadow-lg">
+              <Shield className="w-5 h-5" />
+              {language === 'fr' ? 'Plan actuel : Gratuit' : 'Current plan: Free'}
+            </div>
+            
+            {/* Progression globale */}
+            <div className="flex items-center gap-4">
+              <div className="text-sm text-gray-600">
+                {language === 'fr' ? 'Progression globale' : 'Global Progress'}
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-green-500 to-blue-500 rounded-full" style={{ width: '35%' }}></div>
+                </div>
+                <span className="text-sm font-medium text-gray-700">35%</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Navigation par étapes */}
