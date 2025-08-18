@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { RetirementApp, IntegratedNavigationBar } from '@/features/retirement';
 import { ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import '@/styles/retirement-module.css';
 
 const RetraiteModuleFr: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [activeSection, setActiveSection] = useState('dashboard');
   const navigate = useNavigate();
 
@@ -17,6 +18,21 @@ const RetraiteModuleFr: React.FC = () => {
       projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID ? '***MASKED***' : 'undefined'
     });
   }, []);
+
+  // Gérer les paramètres d'URL pour la section active
+  useEffect(() => {
+    const section = searchParams.get('section');
+    if (section) {
+      console.log('🔍 Section détectée dans l\'URL:', section);
+      setActiveSection(section);
+    }
+  }, [searchParams]);
+
+  const handleSectionChange = (newSection: string) => {
+    setActiveSection(newSection);
+    // Mettre à jour l'URL sans recharger la page
+    navigate(`/fr/retraite-module?section=${newSection}`, { replace: true });
+  };
 
   return (
     <div className="min-h-screen">
@@ -36,12 +52,12 @@ const RetraiteModuleFr: React.FC = () => {
       {/* Navigation intégrée directement sous le header */}
       <IntegratedNavigationBar 
         activeSection={activeSection}
-        onSectionChange={setActiveSection}
+        onSectionChange={handleSectionChange}
       />
       
       {/* Wrapper pour masquer les footers du RetirementApp */}
       <div className="retirement-module-wrapper">
-        <RetirementApp />
+        <RetirementApp activeSection={activeSection} onSectionChange={handleSectionChange} />
       </div>
     </div>
   );

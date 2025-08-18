@@ -20,9 +20,23 @@ import { EmergencyInfoSection } from '../sections/EmergencyInfoSection';
 import { SessionManager } from '../components/SessionManager';
 // Import de PricingSection supprimé
 
-export const RetirementApp: React.FC = () => {
-  const [activeSection, setActiveSection] = useState('dashboard');
+export const RetirementApp: React.FC<{ 
+  activeSection?: string; 
+  onSectionChange?: (section: string) => void;
+}> = ({ activeSection: externalActiveSection, onSectionChange: externalOnSectionChange }) => {
+  const [internalActiveSection, setInternalActiveSection] = useState('dashboard');
   const { userData, updateUserData, calculations, isLoading, error } = useRetirementData();
+
+  // Utiliser la section externe si fournie, sinon utiliser l'interne
+  const activeSection = externalActiveSection || internalActiveSection;
+  
+  const handleSectionChange = (newSection: string) => {
+    if (externalOnSectionChange) {
+      externalOnSectionChange(newSection);
+    } else {
+      setInternalActiveSection(newSection);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -82,7 +96,7 @@ export const RetirementApp: React.FC = () => {
           <div className="container mx-auto px-4 py-8">
             <NavigationBar 
               activeSection={activeSection} 
-              onSectionChange={setActiveSection}
+              onSectionChange={handleSectionChange}
             />
             <div className="mt-8">
               {renderSection()}

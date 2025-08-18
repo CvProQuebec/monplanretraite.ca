@@ -2,10 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { RetirementApp, IntegratedNavigationBar } from '@/features/retirement';
 import { ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import '@/styles/retirement-module.css';
 
 const RetraiteModuleEn: React.FC = () => {
+  const [searchParams] = useSearchParams();
   const [activeSection, setActiveSection] = useState('dashboard');
   const navigate = useNavigate();
 
@@ -18,9 +19,24 @@ const RetraiteModuleEn: React.FC = () => {
     });
   }, []);
 
+  // Handle URL parameters for active section
+  useEffect(() => {
+    const section = searchParams.get('section');
+    if (section) {
+      console.log('🔍 Section detected in URL:', section);
+      setActiveSection(section);
+    }
+  }, [searchParams]);
+
+  const handleSectionChange = (newSection: string) => {
+    setActiveSection(newSection);
+    // Update URL without reloading page
+    navigate(`/en/retirement-module?section=${newSection}`, { replace: true });
+  };
+
   return (
     <div className="min-h-screen">
-      {/* Back to Phase 1 button */}
+      {/* Back button to Phase 1 */}
       <div className="pt-8 pb-4 bg-gradient-to-r from-blue-50 to-indigo-50">
         <div className="container mx-auto px-6">
           <button
@@ -36,12 +52,12 @@ const RetraiteModuleEn: React.FC = () => {
       {/* Integrated navigation directly under header */}
       <IntegratedNavigationBar 
         activeSection={activeSection}
-        onSectionChange={setActiveSection}
+        onSectionChange={handleSectionChange}
       />
       
       {/* Wrapper to hide RetirementApp footers */}
       <div className="retirement-module-wrapper">
-        <RetirementApp />
+        <RetirementApp activeSection={activeSection} onSectionChange={handleSectionChange} />
       </div>
     </div>
   );
