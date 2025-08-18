@@ -1,5 +1,5 @@
 import React from 'react';
-import Header from './header';
+import { RetirementNavigation } from '@/features/retirement';
 import Footer from './Footer';
 
 interface LayoutProps {
@@ -8,9 +8,9 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen bg-charcoal-700 font-sans">
-      <Header />
-      <main>{children}</main>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-sans">
+      <RetirementNavigation />
+      <main className="pt-8">{children}</main>
       <Footer />
     </div>
   );

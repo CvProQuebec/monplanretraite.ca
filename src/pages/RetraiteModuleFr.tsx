@@ -1,6 +1,6 @@
 // src/pages/RetraiteModuleFr.tsx
 import React, { useEffect, useState } from 'react';
-import { RetirementApp, IntegratedNavigationBar, RetirementNavigation } from '@/features/retirement';
+import { RetirementApp, IntegratedNavigationBar } from '@/features/retirement';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import '@/styles/retirement-module.css';
@@ -19,10 +19,7 @@ const RetraiteModuleFr: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* Navigation Phase 1 Intégrée (remplace le Header) */}
-      <RetirementNavigation />
-      
+    <div className="min-h-screen">
       {/* Bouton de retour vers Phase 1 */}
       <div className="pt-8 pb-4 bg-gradient-to-r from-blue-50 to-indigo-50">
         <div className="container mx-auto px-6">

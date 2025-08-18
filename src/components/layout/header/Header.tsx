@@ -127,7 +127,15 @@ export const Header: React.FC = () => {
                 src="/logo-monplanretraite.png" 
                 alt="MonPlanRetraite.ca Logo" 
                 className="h-16 w-auto mr-4"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  target.nextElementSibling?.classList.remove('hidden');
+                }}
               />
+              <div className="hidden text-2xl font-bold text-white bg-blue-600 px-4 py-2 rounded-lg">
+                MonPlanRetraite.ca
+              </div>
             </div>
             <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">
               {language === 'fr' ? 'MonPlanRetraite.ca' : 'MonPlanRetraite.ca'}
