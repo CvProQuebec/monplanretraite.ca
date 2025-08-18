@@ -122,6 +122,13 @@ export const Header: React.FC = () => {
         <div className="py-6 space-y-6">
           {/* Titre principal */}
           <div className="text-center">
+            <div className="flex items-center justify-center mb-4">
+              <img 
+                src="/logo-monplanretraite.png" 
+                alt="MonPlanRetraite.ca Logo" 
+                className="h-16 w-auto mr-4"
+              />
+            </div>
             <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">
               {language === 'fr' ? 'MonPlanRetraite.ca' : 'MonPlanRetraite.ca'}
             </h1>

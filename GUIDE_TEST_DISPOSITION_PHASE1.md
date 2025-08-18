@@ -6,11 +6,11 @@ Vérifier que la disposition des pages Phase 1 est maintenant correcte, avec le 
 ## 🚀 Comment Tester
 
 ### 1. Test de la Disposition Française
-- **URL** : `https://iassistant.ca/fr/retraite-module-phase1`
+- **URL** : `https://monplanretraite.ca/fr/retraite-module-phase1`
 - **Vérification** : Le titre "🚀 Navigation Phase 1 Intégrée" doit être visible et bien espacé du menu
 
 ### 2. Test de la Disposition Anglaise
-- **URL** : `https://iassistant.ca/en/retirement-module-phase1`
+- **URL** : `https://monplanretraite.ca/en/retirement-module-phase1`
 - **Vérification** : Le titre "🚀 Integrated Phase 1 Navigation" doit être visible et bien espacé du menu
 
 ## 🔍 Vérifications de Disposition

@@ -75,7 +75,7 @@ export const BackupSecurityTips: React.FC = () => {
 
       // Conseils spécifiques
       specificTips: {
-        title: "Conseils spécifiques iAssistant",
+        title: "Conseils spécifiques MonPlanRetraite",
         naming: "Nommage intelligent des fichiers",
         namingDesc: "Incluez la date et une description claire",
         versioning: "Gestion des versions",
@@ -137,7 +137,7 @@ export const BackupSecurityTips: React.FC = () => {
 
       // Specific tips
       specificTips: {
-        title: "iAssistant Specific Tips",
+        title: "MonPlanRetraite Specific Tips",
         naming: "Smart file naming",
         namingDesc: "Include date and clear description",
         versioning: "Version management",
@@ -256,7 +256,7 @@ export const BackupSecurityTips: React.FC = () => {
           </AlertDescription>
         </Alert>
 
-        {/* Conseils spécifiques iAssistant */}
+        {/* Conseils spécifiques MonPlanRetraite */}
         {isExpanded && (
           <div className="space-y-3 pt-4 border-t">
             <h4 className="font-medium text-sm">{tr.specificTips.title}</h4>

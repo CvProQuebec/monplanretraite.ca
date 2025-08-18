@@ -1,4 +1,4 @@
-# Sauvegarde Améliorée - Module Retraite iAssistant
+# Sauvegarde Améliorée - Module Retraite MonPlanRetraite
 
 ## 🎯 **Vue d'ensemble**
 
@@ -37,7 +37,7 @@ if ('showSaveFilePicker' in window) {
   const fileHandle = await window.showSaveFilePicker({
     suggestedName: filename,
     types: [{
-      description: 'Fichier de sauvegarde iAssistant',
+              description: 'Fichier de sauvegarde MonPlanRetraite',
       accept: { 'application/json': ['.json'] }
     }]
   });

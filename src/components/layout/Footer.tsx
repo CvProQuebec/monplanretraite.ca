@@ -32,7 +32,11 @@ const Footer: React.FC = () => {
           {/* Colonne 1 : À propos */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
-              <Shield className="w-8 h-8 text-blue-400" />
+              <img 
+                src="/logo-monplanretraite.png" 
+                alt="MonPlanRetraite.ca Logo" 
+                className="h-8 w-auto"
+              />
               <h3 className="text-xl font-bold">MonPlanRetraite.ca</h3>
             </div>
             <p className="text-blue-100 text-sm leading-relaxed">

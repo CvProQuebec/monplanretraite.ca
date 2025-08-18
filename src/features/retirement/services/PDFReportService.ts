@@ -69,7 +69,7 @@ export class PDFReportService {
    * Page de couverture
    */
   private addCoverPage(data: ReportData) {
-    // Logo iAssistant en haut à gauche
+    // Logo MonPlanRetraite en haut à gauche
     this.addLogo(30, 30);
     
     // Titre principal
@@ -92,7 +92,7 @@ export class PDFReportService {
     const date = new Date().toLocaleDateString('fr-CA');
     this.pdf.text(`Date : ${date}`, this.pageWidth / 2, 160, { align: 'center' });
     
-    // Pied de page avec mention iAssistant
+    // Pied de page avec mention MonPlanRetraite
     this.addFooter();
     
     // Nouvelle page
@@ -101,24 +101,24 @@ export class PDFReportService {
   }
 
   /**
-   * Ajoute le logo iAssistant
+   * Ajoute le logo MonPlanRetraite
    */
   private addLogo(x: number, y: number) {
     try {
-      // Création d'un logo stylisé iAssistant
+      // Création d'un logo stylisé MonPlanRetraite
       
       // Rectangle de fond principal avec coins arrondis simulés
-      this.pdf.setFillColor(44, 62, 80); // Bleu iAssistant
+              this.pdf.setFillColor(44, 62, 80); // Bleu MonPlanRetraite
       this.pdf.rect(x, y, 80, 25, 'F');
       
       // Cercle doré pour le point du "i"
       this.pdf.setFillColor(255, 193, 7); // Doré
       this.pdf.circle(x + 15, y + 8, 4, 'F');
       
-      // Texte "iAssistant" stylisé
+              // Texte "MonPlanRetraite" stylisé
       this.pdf.setFontSize(16);
       this.pdf.setTextColor(255, 255, 255);
-      this.pdf.text('iAssistant', x + 40, y + 16, { align: 'center' });
+              this.pdf.text('MonPlanRetraite', x + 40, y + 16, { align: 'center' });
       
       // Ligne décorative dorée en bas
       this.pdf.setDrawColor(255, 193, 7);
@@ -135,30 +135,30 @@ export class PDFReportService {
       // Fallback: texte simple
       this.pdf.setFontSize(12);
       this.pdf.setTextColor(44, 62, 80);
-      this.pdf.text('iAssistant.ca', x, y + 15);
+              this.pdf.text('MonPlanRetraite.ca', x, y + 15);
     }
   }
 
   /**
-   * Ajoute le pied de page avec mention iAssistant
+   * Ajoute le pied de page avec mention MonPlanRetraite
    */
   private addFooter() {
     const footerY = this.pageHeight - 20;
     
-    // Ligne de séparation avec couleur iAssistant
-    this.pdf.setDrawColor(44, 62, 80); // Bleu iAssistant
+    // Ligne de séparation avec couleur MonPlanRetraite
+            this.pdf.setDrawColor(44, 62, 80); // Bleu MonPlanRetraite
     this.pdf.setLineWidth(1);
     this.pdf.line(20, footerY - 8, this.pageWidth - 20, footerY - 8);
     
-    // Logo iAssistant en bas à gauche
+    // Logo MonPlanRetraite en bas à gauche
     this.pdf.setFontSize(8);
     this.pdf.setTextColor(44, 62, 80);
-    this.pdf.text('iAssistant', 20, footerY - 2);
+            this.pdf.text('MonPlanRetraite', 20, footerY - 2);
     
     // Texte du pied de page centré
     this.pdf.setFontSize(9);
     this.pdf.setTextColor(100, 100, 100);
-    this.pdf.text('Ce rapport a été préparé en utilisant la solution de planification iAssistant.ca', this.pageWidth / 2, footerY - 2, { align: 'center' });
+            this.pdf.text('Ce rapport a été préparé en utilisant la solution de planification MonPlanRetraite.ca', this.pageWidth / 2, footerY - 2, { align: 'center' });
     
     // Date de génération à droite
     const date = new Date().toLocaleDateString('fr-CA');

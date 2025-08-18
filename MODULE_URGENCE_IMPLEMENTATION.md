@@ -2,7 +2,7 @@
 
 ## 🎯 **Vue d'ensemble**
 
-Le module "Informations en cas d'urgence" est un nouveau sous-module **gratuit** intégré à la solution Retraite d'iAssistant. Il permet aux utilisateurs de centraliser toutes les informations importantes que leurs proches pourraient avoir besoin en cas d'urgence, d'accident ou d'incapacité.
+Le module "Informations en cas d'urgence" est un nouveau sous-module **gratuit** intégré à la solution Retraite de MonPlanRetraite. Il permet aux utilisateurs de centraliser toutes les informations importantes que leurs proches pourraient avoir besoin en cas d'urgence, d'accident ou d'incapacité.
 
 ## 🚀 **Fonctionnalités Implémentées**
 
@@ -83,7 +83,7 @@ src/features/retirement/
 ## 🔒 **Sécurité et Confidentialité**
 
 ### **Stockage Local**
-- **Aucune donnée** n'est transmise aux serveurs d'iAssistant
+- **Aucune donnée** n'est transmise aux serveurs de MonPlanRetraite
 - **LocalStorage** pour la persistance des données
 - **Sauvegardes automatiques** à chaque modification
 - **Export/Import** en format JSON sécurisé
@@ -153,7 +153,7 @@ src/features/retirement/
 - **Économies** : Évite les frais de recherche d'informations
 - **Efficacité** : Accès rapide aux informations critiques
 
-### **Pour iAssistant**
+### **Pour MonPlanRetraite**
 - **Acquisition** : Module gratuit pour attirer les utilisateurs
 - **Conversion** : Incitation à passer aux plans supérieurs
 - **Différenciation** : Fonctionnalité unique sur le marché

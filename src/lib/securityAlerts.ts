@@ -58,7 +58,7 @@ class SecurityAlertService {
           type: 'security_alert',
           severity: severity,
           details: message,
-          source: 'iassistant_dashboard',
+          source: 'monplanretraite_dashboard',
           data: data,
           timestamp: new Date().toISOString()
         })
@@ -87,7 +87,7 @@ class SecurityAlertService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          recipients: ['gerald.dore@iassistant.ca'], // Email principal valide
+          recipients: ['info@monplanretraite.ca'], // Email principal valide
           severity: severity,
           message: message,
           data: data,
@@ -251,7 +251,7 @@ class SecurityAlertService {
           type: 'connection_test',
           severity: severity,
           details: 'Test de connexion Telegram',
-          source: 'iassistant_dashboard',
+          source: 'monplanretraite_dashboard',
           data: { test: true },
           timestamp: new Date().toISOString()
         })
@@ -273,7 +273,7 @@ class SecurityAlertService {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          recipients: ['gerald.dore@iassistant.ca'],
+          recipients: ['info@monplanretraite.ca'],
           severity: severity,
           message: 'Test de connexion Email',
           data: { test: true, severity: severity },

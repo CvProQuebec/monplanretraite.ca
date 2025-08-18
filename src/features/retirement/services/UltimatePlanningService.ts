@@ -417,7 +417,7 @@ export class UltimatePlanningService {
       estimatedReadingTime: 15, // minutes
       lastDataSync: new Date(),
       dataCompleteness: 0, // À calculer
-      generatedBy: 'iAssistant.ca',
+              generatedBy: 'MonPlanRetraite.ca',
       template: 'standard'
     };
   }

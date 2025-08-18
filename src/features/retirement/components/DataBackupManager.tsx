@@ -226,7 +226,7 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
         const options = {
           suggestedName: filename,
           types: [{
-            description: 'Fichier de sauvegarde iAssistant',
+            description: 'Fichier de sauvegarde MonPlanRetraite',
             accept: {
               'application/json': ['.json']
             }

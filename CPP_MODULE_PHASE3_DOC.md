@@ -273,7 +273,7 @@ La **Phase 3** du module CPP représente un saut qualitatif majeur, transformant
 - **Planification successorale complète**
 - **Intégration API gouvernementale** en temps réel
 
-Cette implémentation positionne iAssistant.ca comme un leader dans les outils de planification de retraite au Canada, offrant des capacités jusqu'alors réservées aux conseillers financiers professionnels.
+Cette implémentation positionne MonPlanRetraite.ca comme un leader dans les outils de planification de retraite au Canada, offrant des capacités jusqu'alors réservées aux conseillers financiers professionnels.
 
 ---
 
@@ -281,4 +281,4 @@ Cette implémentation positionne iAssistant.ca comme un leader dans les outils d
 **Version** : 3.0.0  
 **Date** : Décembre 2024  
 **Plan Requis** : Ultimate  
-**Mainteneur** : Équipe iAssistant
+**Mainteneur** : Équipe MonPlanRetraite

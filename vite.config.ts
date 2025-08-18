@@ -10,7 +10,7 @@ export default defineConfig({
     },
   },
   server: {
-    port: 3001, // Port différent d'iAssistant
+    port: 3001, // Port pour MonPlanRetraite.ca
     open: true
   },
   build: {

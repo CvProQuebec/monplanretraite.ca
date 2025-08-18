@@ -580,7 +580,7 @@ export const defaultSecurityLoggerConfig: SecurityLoggerConfig = {
       enabled: true,
       recipients: [
         'gerald.dore@gmail.com',
-        'gerald.dore@iassistant.ca', 
+        'info@monplanretraite.ca', 
         'gadore@yahoo.com'
       ],
       smtp: {
@@ -600,7 +600,7 @@ export const defaultSecurityLoggerConfig: SecurityLoggerConfig = {
     },
     webhook: {
       enabled: true,
-      url: process.env.TELEGRAM_WEBHOOK_URL || 'https://www.iassistant.ca/.netlify/functions/telegramAlert',
+              url: process.env.TELEGRAM_WEBHOOK_URL || 'https://www.monplanretraite.ca/.netlify/functions/telegramAlert',
       headers: {
         'Content-Type': 'application/json'
       }

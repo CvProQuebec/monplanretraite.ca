@@ -53,5 +53,5 @@ export const getImageUrl = (path: string): string => {
   if (path.startsWith('http')) return path;
   
   // Sinon, ajoute le préfixe
-  return `/lovable-uploads/${path.startsWith('/') ? path.slice(1) : path}`;
+      return `/uploads/${path.startsWith('/') ? path.slice(1) : path}`;
 };

@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Le **Plan Ultimate** est le niveau premium du module de retraite d'iAssistant.ca, offrant des outils avancés de planification successorale et de rapports de préparation professionnels. Ce plan respecte les limites professionnelles québécoises en se concentrant sur la **préparation** plutôt que sur la rédaction légale.
+Le **Plan Ultimate** est le niveau premium du module de retraite de MonPlanRetraite.ca, offrant des outils avancés de planification successorale et de rapports de préparation professionnels. Ce plan respecte les limites professionnelles québécoises en se concentrant sur la **préparation** plutôt que sur la rédaction légale.
 
 ## 🎯 Objectifs principaux
 
@@ -299,4 +299,4 @@ UltimatePlanningService.saveData(data);
 
 **Note importante** : Le Plan Ultimate respecte strictement les limites professionnelles québécoises. Il ne remplace pas les conseils juridiques, notariaux ou financiers professionnels. Son objectif est de vous aider à vous préparer et organiser vos informations pour optimiser vos consultations avec des professionnels qualifiés.
 
-© 2024 iAssistant.ca - Tous droits réservés
+© 2024 MonPlanRetraite.ca - Tous droits réservés
