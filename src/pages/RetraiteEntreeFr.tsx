@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { Shield, TrendingUp, Crown, Zap, FileText, Users, Calculator, Target } from 'lucide-react';
+import { Shield, TrendingUp, Crown, Zap, FileText, Users, Calculator, Target, AlertTriangle } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useToast } from '../hooks/use-toast';
 import { PromoCodeInput } from '../components/ui/promo-code-input';
