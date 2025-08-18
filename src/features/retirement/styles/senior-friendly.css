@@ -1,0 +1,250 @@
+/* Styles pour améliorer l'accessibilité des utilisateurs seniors */
+
+/* Taille de police de base plus grande */
+.retirement-app {
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Titres plus grands et plus lisibles */
+.retirement-app h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.retirement-app h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+}
+
+.retirement-app h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+/* Labels plus grands et plus visibles */
+.retirement-app label {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Champs de saisie plus grands */
+.retirement-app input,
+.retirement-app select,
+.retirement-app textarea {
+  font-size: 1.125rem;
+  padding: 1rem;
+  min-height: 3.5rem;
+  border: 2px solid #d1d5db;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.retirement-app input:focus,
+.retirement-app select:focus,
+.retirement-app textarea:focus {
+  outline: none;
+  border-color: #2A4365;
+  box-shadow: 0 0 0 3px rgba(42, 67, 101, 0.1);
+}
+
+/* Boutons plus grands et plus accessibles */
+.retirement-app button {
+  font-size: 1.125rem;
+  padding: 1rem 2rem;
+  min-height: 3.5rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.retirement-app button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Contraste élevé pour les liens */
+.retirement-app a {
+  color: #2A4365;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.retirement-app a:hover {
+  color: #1e3a5f;
+  text-decoration: none;
+}
+
+/* Espacement généreux entre les éléments */
+.retirement-app .form-group {
+  margin-bottom: 2rem;
+}
+
+.retirement-app .card {
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Icônes plus grandes */
+.retirement-app .icon {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.retirement-app .icon-large {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* Messages d'erreur plus visibles */
+.retirement-app .error-message {
+  background-color: #fef2f2;
+  border: 2px solid #fecaca;
+  color: #dc2626;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+/* Messages de succès */
+.retirement-app .success-message {
+  background-color: #f0fdf4;
+  border: 2px solid #bbf7d0;
+  color: #16a34a;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  margin: 1rem 0;
+}
+
+/* Tooltips plus grands et plus lisibles */
+.retirement-app .tooltip {
+  font-size: 1rem;
+  max-width: 300px;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Navigation simplifiée */
+.retirement-app .nav-item {
+  padding: 1rem 1.5rem;
+  margin: 0.5rem 0;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.retirement-app .nav-item:hover {
+  background-color: #f3f4f6;
+  transform: translateX(4px);
+}
+
+/* Responsive design pour les écrans tactiles */
+@media (max-width: 768px) {
+  .retirement-app {
+    font-size: 18px;
+  }
+  
+  .retirement-app h1 {
+    font-size: 2rem;
+  }
+  
+  .retirement-app h2 {
+    font-size: 1.75rem;
+  }
+  
+  .retirement-app input,
+  .retirement-app select,
+  .retirement-app button {
+    font-size: 1.25rem;
+    min-height: 4rem;
+  }
+  
+  .retirement-app .card {
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Améliorations pour les utilisateurs avec des problèmes de vision */
+@media (prefers-reduced-motion: reduce) {
+  .retirement-app * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mode contraste élevé */
+@media (prefers-contrast: high) {
+  .retirement-app {
+    --border-color: #000000;
+    --text-color: #000000;
+    --background-color: #ffffff;
+  }
+  
+  .retirement-app input,
+  .retirement-app select,
+  .retirement-app button {
+    border: 3px solid var(--border-color);
+  }
+}
+
+/* Améliorations pour les utilisateurs avec des tremblements */
+.retirement-app input:focus,
+.retirement-app select:focus,
+.retirement-app button:focus {
+  outline: 3px solid #2A4365;
+  outline-offset: 2px;
+}
+
+/* Zones de clic plus grandes pour les éléments interactifs */
+.retirement-app .clickable {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Indicateurs visuels pour les champs requis */
+.retirement-app .required::after {
+  content: " *";
+  color: #dc2626;
+  font-weight: bold;
+}
+
+/* Amélioration de la lisibilité des tableaux */
+.retirement-app table {
+  font-size: 1rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  width: 100%;
+}
+
+.retirement-app th,
+.retirement-app td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.retirement-app th {
+  background-color: #f9fafb;
+  font-weight: 700;
+  font-size: 1.125rem;
+}

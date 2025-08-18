@@ -1,0 +1,41 @@
+/* CSS de débogage pour forcer l'affichage des cartes */
+[data-debug="login-card"],
+[data-debug="login-card-forced"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 9999 !important;
+  background-color: #fef2f2 !important;
+  border: 3px solid #dc2626 !important;
+  margin: 20px 0 !important;
+  padding: 20px !important;
+}
+
+/* Forcer l'affichage de toutes les cartes de connexion */
+.card[data-debug="login-card"],
+.card[data-debug="login-card-forced"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 9999 !important;
+  background-color: #fef2f2 !important;
+  border: 3px solid #dc2626 !important;
+  margin: 20px 0 !important;
+  padding: 20px !important;
+}
+
+/* Masquer le gestionnaire de sauvegarde si l'utilisateur n'est pas connecté */
+[data-debug="backup-manager"] {
+  display: none !important;
+}
+
+/* Forcer l'affichage du bandeau de debug */
+[data-debug="dashboard-section"] {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 9999 !important;
+}
