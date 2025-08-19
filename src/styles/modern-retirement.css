@@ -14,7 +14,7 @@
   --danger: #E74C3C;         /* Rouge vif */
   
   /* Gradients modernes */
-  --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+  --gradient-primary: linear-gradient(135deg, #11335C 0%, #1E4A8C 100%);
   --gradient-secondary: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
   --gradient-accent: linear-gradient(135deg, #FFE66D 0%, #FFC107 100%);
   --gradient-success: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%);
