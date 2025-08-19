@@ -67,10 +67,10 @@ export const Phase2Wrapper: React.FC<Phase2WrapperProps> = ({
 
   const themeClasses = getThemeClasses();
 
-  // Toggle des contrôles avec la touche Ctrl + Shift + P
+  // Toggle des contrôles avec la touche Alt + Shift + P
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.shiftKey && e.key === 'P') {
+      if (e.altKey && e.shiftKey && e.key === 'P') {
         setShowControls(prev => !prev);
       }
     };
@@ -207,7 +207,7 @@ export const Phase2Wrapper: React.FC<Phase2WrapperProps> = ({
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.8 }}
       >
-        Ctrl + Shift + P
+        Alt + Shift + P
       </motion.div>
     </div>
   );

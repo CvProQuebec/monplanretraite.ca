@@ -171,7 +171,7 @@ const CashflowPage: React.FC = () => {
 
 ## 🎮 **Étape 4 : Contrôles utilisateur**
 
-### **Raccourci clavier : `Ctrl + Shift + P`**
+### **Raccourci clavier : `Alt + Shift + P`**
 - **Affiche/Masque** le panneau de contrôle
 - **Toggle des particules** en temps réel
 - **Toggle de la physique** en temps réel
