@@ -90,18 +90,10 @@ export const RetirementApp: React.FC<{
 
   return (
     <LanguageProvider>
-      <div className="min-h-screen bg-charcoal-700">
-        <div className="pt-20 bg-gradient-to-br from-blue-50 to-indigo-100">
-          <HeroSection />
-          <div className="container mx-auto px-4 py-8">
-            <NavigationBar 
-              activeSection={activeSection} 
-              onSectionChange={handleSectionChange}
-            />
-            <div className="mt-8">
-              {renderSection()}
-            </div>
-          </div>
+      <div className="min-h-screen">
+        {/* Contenu de la section active uniquement */}
+        <div className="mt-8">
+          {renderSection()}
         </div>
       </div>
     </LanguageProvider>
