@@ -81,24 +81,24 @@ const RetraiteEntreeFr: React.FC = () => {
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         {/* En-tête et introduction */}
         <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 flex items-center justify-center gap-4">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 flex items-center justify-center gap-4 drop-shadow-lg">
+            <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
               <TrendingUp className="w-6 h-6 text-white" />
             </div>
             Planificateur de retraite
           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
             Planifiez votre retraite avec des outils professionnels et des analyses avancées
           </p>
         </div>
 
         {/* Description produit */}
-        <Card className="mb-16 bg-white/80 backdrop-blur-sm border-0 shadow-xl">
+        <Card className="mb-16 bg-white border-0 shadow-xl">
           <CardHeader className="text-center pb-8">
-            <CardTitle className="text-3xl font-bold text-gray-900 mb-4">
+            <CardTitle className="text-3xl font-bold text-blue-900 mb-4">
               Planification financière complète
             </CardTitle>
-            <CardDescription className="text-lg text-gray-600 max-w-4xl mx-auto">
+            <CardDescription className="text-lg text-gray-700 max-w-4xl mx-auto">
               Notre plateforme unique vous permet de gérer l'ensemble de votre planification
               financière, budgétaire et fiscale pour une retraite sereine et optimisée.
             </CardDescription>

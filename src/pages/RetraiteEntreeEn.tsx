@@ -92,18 +92,18 @@ const RetraiteEntreeEn: React.FC = () => {
       
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         
-                 {/* Header and Introduction */}
-         <div className="text-center mb-16">
-           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 flex items-center justify-center gap-4">
-             <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
-               <TrendingUp className="w-6 h-6 text-white" />
-             </div>
-             Retirement planner
-           </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Plan your retirement with professional tools and advanced analytics
-          </p>
-        </div>
+                          {/* Header and Introduction */}
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 flex items-center justify-center gap-4 drop-shadow-lg">
+              <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
+                <TrendingUp className="w-6 h-6 text-white" />
+              </div>
+              Retirement planner
+            </h1>
+           <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
+             Plan your retirement with professional tools and advanced analytics
+           </p>
+         </div>
 
         {/* Product Description */}
         <Card className="mb-16 bg-white/80 backdrop-blur-sm border-0 shadow-xl">
