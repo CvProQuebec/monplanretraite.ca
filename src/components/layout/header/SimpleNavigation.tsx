@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { useAuth } from '@/hooks/useAuth';
+import '@/styles/modern-retirement.css';
 import { 
   BarChart3, 
   Users, 
@@ -50,7 +51,7 @@ export const SimpleNavigation: React.FC = () => {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 shadow-sm">
+    <nav className="retirement-navigation bg-gradient-to-r from-orange-500 to-orange-600 border-b-0 shadow-xl">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between py-4">
           {/* Logo et titre - FORCÉ avec timestamp */}
@@ -58,42 +59,42 @@ export const SimpleNavigation: React.FC = () => {
             <img 
               src={`/logo-planretraite.png?v=${Date.now()}`}
               alt="MonPlanRetraite.ca Logo" 
-              className="h-8 w-auto"
+              className="h-10 w-auto drop-shadow-lg"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
                 target.nextElementSibling?.classList.remove('hidden');
               }}
             />
-            <div className="hidden text-lg font-bold text-gray-900 bg-gray-100 px-3 py-1 rounded">
+            <div className="hidden text-xl font-bold text-white bg-white/20 px-4 py-2 rounded-xl backdrop-blur-sm">
               MonPlanRetraite.ca
             </div>
           </div>
 
-          {/* Navigation horizontale */}
-          <div className="hidden md:flex items-center space-x-1">
+          {/* Navigation horizontale - MODERNE et DYNAMIQUE */}
+          <div className="hidden md:flex items-center space-x-2">
             {navigationItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => handleNavigationClick(item.id)}
-                className="flex items-center space-x-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors duration-200"
+                className="nav-item flex items-center space-x-2 px-4 py-3 text-sm font-semibold text-white hover:text-white rounded-xl transition-all duration-300 backdrop-blur-sm"
               >
-                <item.icon className="w-4 h-4" />
+                <item.icon className="w-5 h-5" />
                 <span>{item.label}</span>
               </button>
             ))}
           </div>
 
-          {/* Utilisateur et déconnexion */}
+          {/* Utilisateur et déconnexion - MODERNE et DYNAMIQUE */}
           <div className="flex items-center space-x-4">
             {user ? (
               <>
-                <span className="text-sm text-gray-700">
+                <span className="text-sm text-white/90 font-medium">
                   {language === 'fr' ? 'Bonjour' : 'Hello'} {user.displayName || user.email}
                 </span>
                 <button
                   onClick={handleSignOut}
-                  className="px-4 py-2 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                  className="btn-primary bg-gradient-to-r from-red-500 to-red-600 px-6 py-3 text-sm font-semibold text-white rounded-xl hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
                 >
                   {language === 'fr' ? 'Déconnexion' : 'Sign Out'}
                 </button>
@@ -101,7 +102,7 @@ export const SimpleNavigation: React.FC = () => {
             ) : (
               <button
                 onClick={() => navigate('/')}
-                className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="btn-secondary bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-3 text-sm font-semibold text-white rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 {language === 'fr' ? 'Se connecter' : 'Sign In'}
               </button>
