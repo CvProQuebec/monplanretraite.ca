@@ -4,12 +4,14 @@
 // React et React Router
 export { default as App } from './App';
 
-// Layout et Navigation
+// Export des composants principaux
 export { default as Layout } from './components/layout/Layout';
 export { default as Header } from './components/layout/header/Header';
-export { default as Footer } from './components/layout/Footer';
 export { default as DesktopNav } from './components/layout/header/DesktopNav';
 export { default as MobileNav } from './components/layout/header/MobileNav';
+export { default as LanguageSelector } from './components/layout/header/LanguageSelector';
+export { default as NavLink } from './components/layout/header/NavLink';
+export { default as MobileNavLink } from './components/layout/header/MobileNavLink';
 
 // Pages principales
 export { default as RetraiteFr } from './pages/RetraiteFr';
