@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../hooks/useLanguage';
 import { TabbedNavigation } from './TabbedNavigation';
@@ -7,22 +8,47 @@ import { StepNavigation } from './StepNavigation';
 import { 
   Home, 
   User, 
-  Calculator, 
+  Shield, 
+  DollarSign, 
   TrendingUp, 
-  BarChart3, 
-  FileText,
-  AlertTriangle,
-  Database,
-  Settings,
+  Calculator, 
+  FileText, 
+  Settings, 
+  Crown,
+  Star,
   Zap,
-  Shield
+  Brain,
+  Sparkles,
+  Rocket,
+  Target,
+  BarChart3,
+  Calendar,
+  Database,
+  Lock,
+  Unlock,
+  CheckCircle,
+  Clock,
+  AlertTriangle,
+  Info
 } from 'lucide-react';
+
+// Import de la Phase 2
+import { InteractiveParticles } from './InteractiveParticles';
+import { PhysicsCard } from './PhysicsCard';
+import { useDynamicTheme } from '../hooks/useDynamicTheme';
+import { useAdaptiveLayout } from '../hooks/useAdaptiveLayout';
 
 export const RetirementNavigation: React.FC = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('dashboard');
-  const [currentStep, setCurrentStep] = useState(0);
+  // Hooks Phase 2
+  const { currentTheme, changeTheme, startThemeRotation, isRotating } = useDynamicTheme();
+  const { currentLayout, screenContext, recommendations } = useAdaptiveLayout();
+
+  // États locaux
+  const [showParticles, setShowParticles] = useState(true);
+  const [showPhysics, setShowPhysics] = useState(true);
+  const [activeSection, setActiveSection] = useState('dashboard');
 
   // Configuration des onglets
   const tabs = [
@@ -235,222 +261,464 @@ export const RetirementNavigation: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* Header avec titre */}
-      <div className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white py-8">
-        <div className="container mx-auto px-6 text-center">
-          <h1 className="text-4xl font-bold mb-4">
-            🚀 {language === 'fr' ? 'Navigation Phase 1 intégrée' : 'Integrated Phase 1 Navigation'}
-          </h1>
-          <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-            {language === 'fr' 
-              ? 'Expérience utilisateur fluide et intuitive pour votre planification de retraite'
-              : 'Smooth and intuitive user experience for your retirement planning'
-            }
-          </p>
-        </div>
-      </div>
-
-      {/* Navigation par onglets */}
-      <div className="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-gray-200">
-        <div className="container mx-auto px-6">
-          <div className="flex space-x-1 overflow-x-auto pb-2">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={tab.onClick}
-                className={`
-                  relative px-6 py-4 text-sm font-medium rounded-t-lg transition-all duration-300
-                  whitespace-nowrap flex items-center gap-2
-                  ${activeTab === tab.id
-                    ? 'bg-blue-600 text-white shadow-lg transform scale-105'
-                    : 'bg-white text-gray-700 hover:bg-blue-50 hover:text-blue-600'
-                  }
-                `}
-              >
-                <tab.icon className="w-4 h-4" />
-                {tab.label}
-                {tab.badge && (
-                  <span className="ml-2 px-2 py-1 text-xs bg-green-100 text-green-700 rounded-full">
-                    {tab.badge}
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Indicateur de plan actuel et progression */}
-      <div className="bg-gradient-to-r from-green-50 to-blue-50 border-b border-green-200">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            {/* Plan actuel */}
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-green-600 text-white rounded-full text-sm font-bold shadow-lg">
-              <Shield className="w-5 h-5" />
-              {language === 'fr' ? 'Plan actuel : Gratuit' : 'Current plan: Free'}
-            </div>
-            
-            {/* Progression globale */}
-            <div className="flex items-center gap-4">
-              <div className="text-sm text-gray-600">
-                {language === 'fr' ? 'Progression globale' : 'Global Progress'}
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-green-500 to-blue-500 rounded-full" style={{ width: '35%' }}></div>
-                </div>
-                <span className="text-sm font-medium text-gray-700">35%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Navigation par étapes */}
-      <div className="bg-white/60 backdrop-blur-sm border-b border-gray-200">
-        <StepNavigation
-          steps={steps}
-          currentStep={currentStep}
-          onStepClick={handleStepClick}
-          showProgress={true}
+    <div className={`min-h-screen transition-all duration-1000 ${
+      currentTheme.id === 'morning' ? 'bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50' :
+      currentTheme.id === 'afternoon' ? 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50' :
+      currentTheme.id === 'evening' ? 'bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50' :
+      currentTheme.id === 'night' ? 'bg-gradient-to-br from-slate-900 via-gray-800 to-indigo-900' :
+      currentTheme.id === 'premium' ? 'bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50' :
+      'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50'
+    }`}>
+      {/* Particules de fond Phase 2 */}
+      {showParticles && (
+        <InteractiveParticles
+          count={currentLayout.columns === 1 ? 20 : 40}
+          theme={currentTheme.id}
+          interactive={true}
+          magnetic={true}
+          energy={true}
+          className="fixed inset-0 pointer-events-none z-0"
         />
+      )}
+
+      {/* Header avec thème dynamique */}
+      <motion.header 
+        className="relative z-10 p-6 text-center"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+      >
+        <motion.h1 
+          className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+          animate={{ 
+            scale: [1, 1.02, 1],
+            rotateZ: [0, 0.5, -0.5, 0]
+          }}
+          transition={{ 
+            duration: 4,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }}
+        >
+          🚀 Navigation Phase 1 Intégrée
+        </motion.h1>
+        
+        <motion.p 
+          className="text-xl text-gray-700 max-w-3xl mx-auto mb-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.8 }}
+        >
+          Expérience utilisateur fluide et intuitive pour votre planification de retraite
+        </motion.p>
+
+        {/* Contrôles Phase 2 */}
+        <motion.div 
+          className="flex flex-wrap justify-center gap-4 mb-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7, duration: 0.8 }}
+        >
+          <PhysicsCard
+            physics={{ gravity: false, friction: 0.8 }}
+            effects={{ shadow: true, glow: isRotating }}
+            className="cursor-pointer"
+            onClick={startThemeRotation}
+          >
+            <div className="text-center p-3">
+              <motion.div
+                animate={{ rotate: isRotating ? 360 : 0 }}
+                transition={{ duration: 2, repeat: isRotating ? Infinity : 0 }}
+              >
+                <Rocket className="w-6 h-6 mx-auto mb-2 text-blue-500" />
+              </motion.div>
+              <span className="text-sm font-medium">
+                {isRotating ? 'Arrêter' : 'Démarrer'} Rotation
+              </span>
+            </div>
+          </PhysicsCard>
+
+          <PhysicsCard
+            physics={{ gravity: false, friction: 0.8 }}
+            effects={{ shadow: true, glow: showParticles }}
+            className="cursor-pointer"
+            onClick={() => setShowParticles(!showParticles)}
+          >
+            <div className="text-center p-3">
+              <Sparkles className={`w-6 h-6 mx-auto mb-2 ${showParticles ? 'text-purple-500' : 'text-gray-400'}`} />
+              <span className="text-sm font-medium">
+                {showParticles ? 'Masquer' : 'Afficher'} Particules
+              </span>
+            </div>
+          </PhysicsCard>
+
+          <PhysicsCard
+            physics={{ gravity: false, friction: 0.8 }}
+            effects={{ shadow: true, glow: showPhysics }}
+            className="cursor-pointer"
+            onClick={() => setShowPhysics(!showPhysics)}
+          >
+            <div className="text-center p-3">
+              <Zap className={`w-6 h-6 mx-auto mb-2 ${showPhysics ? 'text-green-500' : 'text-gray-400'}`} />
+              <span className="text-sm font-medium">
+                {showPhysics ? 'Désactiver' : 'Activer'} Physique
+              </span>
+            </div>
+          </PhysicsCard>
+        </motion.div>
+
+        {/* Indicateur de thème actuel */}
+        <motion.div 
+          className="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-sm rounded-full"
+          whileHover={{ scale: 1.05 }}
+        >
+          <Star className="w-5 h-5 text-yellow-500" />
+          <span className="font-medium">{currentTheme.name}</span>
+          <span className="text-sm opacity-75">• {currentTheme.mood}</span>
+        </motion.div>
+      </motion.header>
+
+      {/* Navigation principale avec cartes physiques */}
+      <div className="max-w-7xl mx-auto px-6 mb-8">
+        <motion.div 
+          className="flex flex-wrap justify-center gap-4 mb-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9, duration: 0.8 }}
+        >
+          {tabs.map((tab, index) => (
+            <motion.div
+              key={tab.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 * index, duration: 0.6 }}
+            >
+              <PhysicsCard
+                physics={{ 
+                  gravity: showPhysics, 
+                  friction: 0.9, 
+                  bounce: 0.8 
+                }}
+                effects={{ 
+                  shadow: true, 
+                  glow: activeSection === tab.id,
+                  particles: tab.badge === 'Pro'
+                }}
+                className={`cursor-pointer transition-all duration-300 ${
+                  activeSection === tab.id 
+                    ? 'ring-4 ring-blue-400/50 scale-105' 
+                    : ''
+                }`}
+                onClick={() => setActiveSection(tab.id)}
+              >
+                <div className="p-4 text-center min-w-[120px]">
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <tab.icon className="w-5 h-5" />
+                    {tab.badge && (
+                      <span className="px-2 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">
+                        {tab.badge}
+                      </span>
+                    )}
+                  </div>
+                  <span className="text-sm font-medium">{tab.label}</span>
+                </div>
+              </PhysicsCard>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
 
-      {/* Contenu principal */}
-      <main className="container mx-auto px-6 py-12">
-        {/* Grille principale des cartes */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-            🎯 {language === 'fr' ? 'Fonctionnalités principales' : 'Main Features'}
-          </h2>
-          <CardGrid columns={4} gap="lg">
-            {mainCards.map((card, index) => (
-              <InteractiveCard
-                key={index}
-                title={card.title}
-                description={card.description}
-                icon={card.icon}
-                status={card.status}
-                progress={card.progress}
-                onClick={card.onClick}
-              />
-            ))}
-          </CardGrid>
-        </div>
-
-        {/* Actions rapides */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-            ⚡ {language === 'fr' ? 'Actions rapides' : 'Quick Actions'}
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            {quickActionCards.map((card, index) => (
-              <InteractiveCard
-                key={index}
-                title={card.title}
-                description={card.description}
-                icon={card.icon}
-                status={card.status}
-                progress={card.progress}
-                onClick={card.onClick}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Section des nouvelles fonctionnalités */}
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-200">
-          <div className="text-center mb-8">
-            <h3 className="text-2xl font-bold text-blue-900 mb-4">
-              🆕 {language === 'fr' ? 'Nouvelles fonctionnalités ajoutées' : 'New features added'}
-            </h3>
-            <p className="text-blue-700 max-w-3xl mx-auto">
-              {language === 'fr'
-                ? 'Découvrez nos dernières améliorations pour une expérience complète et sécurisée'
-                : 'Discover our latest improvements for a complete and secure experience'
-              }
-            </p>
+      {/* Indicateurs de plan et progression */}
+      <div className="max-w-7xl mx-auto px-6 mb-8">
+        <motion.div 
+          className="flex flex-col sm:flex-row justify-between items-center gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.1, duration: 0.8 }}
+        >
+          <div className="flex items-center gap-3">
+            <div className="px-4 py-2 bg-green-100 text-green-800 rounded-full font-medium">
+              Plan actuel : Gratuit
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Carte Urgence */}
-            <div 
-              className="bg-white rounded-xl p-6 shadow-lg border border-blue-200 cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105"
-              onClick={() => navigate(language === 'fr' ? '/fr/retraite-module?section=emergency' : '/en/retirement-module?section=emergency')}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center">
-                  <AlertTriangle className="w-5 h-5 text-red-600" />
-                </div>
-                <h4 className="font-semibold text-gray-900">
-                  {language === 'fr' ? 'Informations d\'urgence' : 'Emergency Info'}
-                </h4>
-              </div>
-              <p className="text-gray-600 mb-4">
-                {language === 'fr'
-                  ? 'Directives médicales et contacts d\'urgence complets'
-                  : 'Complete medical directives and emergency contacts'
-                }
-              </p>
-              <div className="flex items-center gap-2 text-sm text-green-600">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                {language === 'fr' ? 'Disponible maintenant' : 'Available now'}
-              </div>
+          <div className="flex items-center gap-3">
+            <span className="text-sm font-medium text-gray-700">Progression globale</span>
+            <div className="w-32 h-2 bg-gray-200 rounded-full overflow-hidden">
+              <motion.div
+                className="h-full bg-gradient-to-r from-blue-500 to-purple-600 rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: '35%' }}
+                transition={{ delay: 1.3, duration: 1 }}
+              />
             </div>
-
-            {/* Carte Rapports */}
-            <div 
-              className="bg-white rounded-xl p-6 shadow-lg border border-blue-200 cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105"
-              onClick={() => navigate(language === 'fr' ? '/fr/rapports-retraite' : '/en/retirement-reports')}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
-                  <FileText className="w-5 h-5 text-blue-600" />
-                </div>
-                <h4 className="font-semibold text-gray-900">
-                  {language === 'fr' ? 'Rapports et analyses' : 'Reports & Analysis'}
-                </h4>
-              </div>
-              <p className="text-gray-600 mb-4">
-                {language === 'fr'
-                  ? 'Générez des rapports détaillés de votre planification'
-                  : 'Generate detailed planning reports'
-                }
-              </p>
-              <div className="flex items-center gap-2 text-sm text-orange-600">
-                <span className="w-2 h-2 bg-orange-500 rounded-full"></span>
-                {language === 'fr' ? 'Plan professionnel' : 'Professional plan'}
-              </div>
-            </div>
-
-            {/* Carte Session */}
-            <div 
-              className="bg-white rounded-xl p-6 shadow-lg border border-blue-200 cursor-pointer hover:shadow-xl transition-all duration-300 hover:scale-105"
-              onClick={() => navigate(language === 'fr' ? '/fr/sauvegarde-securite' : '/en/backup-security')}
-            >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                  <Database className="w-5 h-5 text-purple-600" />
-                </div>
-                <h4 className="font-semibold text-gray-900">
-                  {language === 'fr' ? 'Gestion des sessions' : 'Session Management'}
-                </h4>
-              </div>
-              <p className="text-gray-600 mb-4">
-                {language === 'fr'
-                  ? 'Sauvegardez, chargez et sécurisez vos données'
-                  : 'Save, load and secure your data'
-                }
-              </p>
-              <div className="flex items-center gap-2 text-sm text-green-600">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                {language === 'fr' ? 'Disponible maintenant' : 'Available now'}
-              </div>
-            </div>
+            <span className="text-sm font-medium text-gray-700">35%</span>
           </div>
+        </motion.div>
+      </div>
+
+      {/* Étapes de progression */}
+      <div className="max-w-7xl mx-auto px-6 mb-8">
+        <motion.div 
+          className="flex flex-wrap justify-center gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.3, duration: 0.8 }}
+        >
+          {['Profil', '2', '3', '4', '5'].map((step, index) => (
+            <motion.div
+              key={step}
+              className="flex flex-col items-center gap-2"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.5 + index * 0.1, duration: 0.6 }}
+            >
+              <div className={`w-12 h-12 rounded-full flex items-center justify-center text-white font-bold ${
+                index === 0 ? 'bg-green-500' : 'bg-blue-500'
+              }`}>
+                {index === 0 ? <User className="w-6 h-6" /> : step}
+              </div>
+              <span className="text-sm font-medium text-gray-700">
+                {index === 0 ? 'Profil' : 
+                 index === 1 ? 'Planification' :
+                 index === 2 ? 'Analyse' :
+                 index === 3 ? 'Rapports' : 'Sécurité'}
+              </span>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
+
+      {/* Fonctionnalités principales avec cartes physiques */}
+      <div className="max-w-7xl mx-auto px-6 mb-8">
+        <motion.h2 
+          className="text-2xl font-bold text-center mb-6 text-gray-800"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.7, duration: 0.8 }}
+        >
+          Fonctionnalités principales
+        </motion.h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {mainCards.map((card, index) => (
+            <motion.div
+              key={card.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.9 + index * 0.1, duration: 0.6 }}
+            >
+              <PhysicsCard
+                physics={{ 
+                  gravity: showPhysics, 
+                  friction: 0.9, 
+                  bounce: 0.8 
+                }}
+                effects={{ 
+                  shadow: true, 
+                  glow: card.status === 'Terminé',
+                  particles: card.status === 'Terminé'
+                }}
+                className="cursor-pointer h-full"
+                onClick={() => handleCardClick(card)}
+              >
+                <div className="p-6 h-full flex flex-col">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={`p-2 rounded-lg ${
+                      card.status === 'Terminé' ? 'bg-green-100 text-green-600' :
+                      card.status === 'En cours' ? 'bg-blue-100 text-blue-600' :
+                      'bg-gray-100 text-gray-600'
+                    }`}>
+                      <card.icon className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg">{card.title}</h3>
+                      <p className="text-sm text-gray-600">{card.description}</p>
+                    </div>
+                  </div>
+                  
+                  {/* Barre de progression */}
+                  <div className="mt-auto">
+                    <div className="flex justify-between text-sm mb-1">
+                      <span>Progression</span>
+                      <span className="font-medium">{card.progress}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <motion.div
+                        className={`h-2 rounded-full ${
+                          card.status === 'Terminé' ? 'bg-green-500' : 'bg-blue-500'
+                        }`}
+                        initial={{ width: 0 }}
+                        animate={{ width: `${card.progress}%` }}
+                        transition={{ delay: 2.1 + index * 0.1, duration: 1 }}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between mt-2">
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        card.status === 'Terminé' ? 'bg-green-100 text-green-800' :
+                        card.status === 'En cours' ? 'bg-blue-100 text-blue-800' :
+                        'bg-gray-100 text-gray-800'
+                      }`}>
+                        {card.status}
+                      </span>
+                      <span className="text-xs text-blue-600 hover:underline cursor-pointer">
+                        Cliquez pour accéder
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </PhysicsCard>
+            </motion.div>
+          ))}
         </div>
-      </main>
+      </div>
+
+      {/* Actions rapides */}
+      <div className="max-w-7xl mx-auto px-6 mb-8">
+        <motion.h2 
+          className="text-2xl font-bold text-center mb-6 text-gray-800"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2.5, duration: 0.8 }}
+        >
+          Actions rapides
+        </motion.h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {quickActionCards.map((card, index) => (
+            <motion.div
+              key={card.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 2.7 + index * 0.1, duration: 0.6 }}
+            >
+              <PhysicsCard
+                physics={{ 
+                  gravity: showPhysics, 
+                  friction: 0.9, 
+                  bounce: 0.8 
+                }}
+                effects={{ 
+                  shadow: true, 
+                  glow: true,
+                  particles: true
+                }}
+                className="cursor-pointer h-full"
+                onClick={() => handleCardClick(card)}
+              >
+                <div className="p-6 h-full flex flex-col">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 rounded-lg bg-green-100 text-green-600">
+                      <card.icon className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg">{card.title}</h3>
+                      <p className="text-sm text-gray-600">{card.description}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-auto">
+                    <div className="flex justify-between text-sm mb-1">
+                      <span>Progression</span>
+                      <span className="font-medium">{card.progress}%</span>
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2">
+                      <motion.div
+                        className="h-2 bg-green-500 rounded-full"
+                        initial={{ width: 0 }}
+                        animate={{ width: `${card.progress}%` }}
+                        transition={{ delay: 2.9 + index * 0.1, duration: 1 }}
+                      />
+                    </div>
+                    <div className="flex items-center justify-between mt-2">
+                      <span className="text-xs px-2 py-1 rounded-full bg-green-100 text-green-800">
+                        {card.status}
+                      </span>
+                      <span className="text-xs text-blue-600 hover:underline cursor-pointer">
+                        Cliquez pour accéder
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </PhysicsCard>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Nouvelles fonctionnalités */}
+      <div className="max-w-7xl mx-auto px-6 mb-8">
+        <motion.h2 
+          className="text-2xl font-bold text-center mb-6 text-gray-800"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 3.1, duration: 0.8 }}
+        >
+          Nouvelles fonctionnalités ajoutées
+        </motion.h2>
+        
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {newFeatures.map((feature, index) => (
+            <motion.div
+              key={feature.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 3.3 + index * 0.1, duration: 0.6 }}
+            >
+              <PhysicsCard
+                physics={{ 
+                  gravity: showPhysics, 
+                  friction: 0.9, 
+                  bounce: 0.8 
+                }}
+                effects={{ 
+                  shadow: true, 
+                  glow: feature.status === 'Disponible maintenant',
+                  particles: feature.status === 'Disponible maintenant'
+                }}
+                className="cursor-pointer h-full"
+              >
+                <div className="p-6 h-full flex flex-col">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className={`p-2 rounded-lg ${
+                      feature.status === 'Disponible maintenant' ? 'bg-red-100 text-red-600' : 'bg-blue-100 text-blue-600'
+                    }`}>
+                      <feature.icon className="w-6 h-6" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg">{feature.title}</h3>
+                      <p className="text-sm text-gray-600">{feature.description}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="mt-auto">
+                    <span className={`text-xs px-2 py-1 rounded-full ${
+                      feature.status === 'Disponible maintenant' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'
+                    }`}>
+                      {feature.status}
+                    </span>
+                  </div>
+                </div>
+              </PhysicsCard>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Footer avec informations Phase 2 */}
+      <motion.footer 
+        className="text-center py-8 text-gray-600"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 3.5, duration: 0.8 }}
+      >
+        <p className="text-lg">
+          🚀 <strong>Phase 2</strong> - Expérience Immersive & Intelligente
+        </p>
+        <p className="text-sm mt-2">
+          Propulsé par l'IA adaptative, la physique réaliste et la magie des particules
+        </p>
+      </motion.footer>
     </div>
   );
 };
