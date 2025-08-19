@@ -9,7 +9,7 @@ import { useRetirementData } from '../hooks/useRetirementData';
 import { useToast } from '@/hooks/use-toast';
 import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
 import { PLAN_CONFIG } from '@/config/plans';
-import { Shield, ArrowRight, Lock, AlertTriangle, Crown, Zap, TrendingUp, Target, Users, Calculator } from 'lucide-react';
+import { Shield, ArrowRight, Lock, AlertTriangle, Crown, Zap, TrendingUp, Target, Users, Calculator, Rocket, Sparkles, Brain, Star, DollarSign, BarChart3, Database, Lock as LockIcon, AlertCircle, CheckCircle, Info } from 'lucide-react';
 
 interface DashboardSectionProps {
   data?: any;
@@ -98,238 +98,235 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ data, calculations 
   
   // Utiliser les props ou les données locales
   const userData = data || localData;
-  
-  // Plan simple par défaut (free)
-  const currentPlan = 'free';
-  const planInfo = { badge: 'Free', price: 'Gratuit' };
-  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
-  const [upgradeFeature, setUpgradeFeature] = useState<string>('');
-
-  const handleGoogleSignIn = async () => {
-    try {
-      await signInWithGoogle();
-    } catch (error) {
-      console.error('Erreur de connexion Google:', error);
-    }
-  };
-
-  const handleUpgradeClick = (feature: string) => {
-    setUpgradeFeature(feature);
-    setShowUpgradeModal(true);
-  };
-
-  const handlePlanUpgradeClick = (targetPlan: string) => {
-    setUpgradeFeature('plan_upgrade');
-    setShowUpgradeModal(true);
-  };
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-      </div>
-    );
-  }
 
   return (
-    <div className="space-y-6">
-      {/* Section de connexion si l'utilisateur n'est pas connecté */}
-      {!user ? (
-        <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
-          <CardHeader className="text-center">
-            <div className="flex justify-center mb-4">
-              <Shield className="h-12 w-12 text-blue-600" />
-            </div>
-            <CardTitle className="text-2xl font-bold text-blue-900">
-              {isEnglish ? 'Connection Required' : 'Connexion Requise'}
-            </CardTitle>
-            <CardDescription className="text-blue-700">
-              {isEnglish 
-                ? 'Connect to access the secure backup of your data'
-                : 'Connectez-vous pour accéder à la sauvegarde sécurisée de vos données'
-              }
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="text-center">
-            <div className="mb-4 p-4 bg-blue-100 rounded-lg">
-              <div className="flex items-center justify-center gap-2 text-blue-800">
-                <Lock className="h-4 w-4" />
-                <span className="text-sm font-medium">
-                  {isEnglish ? 'Status: Ready' : 'État: Prêt'}
-                </span>
-                <span className="text-blue-600">|</span>
-                <span className="text-sm">
-                  {isEnglish ? 'User: Not connected' : 'Utilisateur: Non connecté'}
-                </span>
-              </div>
-            </div>
-            <Button
-              onClick={handleGoogleSignIn}
-              className="bg-white text-blue-700 border-blue-300 hover:bg-blue-50 px-6 py-3 text-lg font-medium"
-            >
-              <ArrowRight className="h-5 w-5 mr-2" />
-              {isEnglish ? 'Continue with Google' : 'Continuer avec Google'}
-            </Button>
-            <div className="mt-4 text-sm text-blue-600">
-              {isEnglish ? 'Secure and private connection' : 'Connexion sécurisée et privée'}
-            </div>
-          </CardContent>
-        </Card>
-      ) : (
-        // Gestionnaire de sauvegarde si l'utilisateur est connecté
-        <div>
-          <DataBackupManager data={userData} onDataLoad={handleDataLoad} />
-        </div>
-      )}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+      {/* Particules de fond visibles */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-60 left-1/4 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
+        <div className="absolute top-80 right-1/3 w-1 h-1 bg-red-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-96 left-1/2 w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-32 right-1/4 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-72 left-1/3 w-1 h-1 bg-pink-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-48 left-1/5 w-1 h-1 bg-cyan-400 rounded-full animate-ping"></div>
+        <div className="absolute top-88 right-1/5 w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
+      </div>
 
-      {/* Section d'informations de sécurité */}
-      <Card className="bg-gradient-to-r from-slate-50 to-gray-50 border-slate-200">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-slate-800">
-            <Shield className="h-5 w-5 text-green-600" />
-            {isEnglish ? '100% Secure and Confidential' : '100% sécuritaire et confidentiel'}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-slate-700 mb-4">
+      <div className="container mx-auto px-6 py-8 relative z-10">
+        {/* En-tête spectaculaire */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-3 mb-6 bg-gradient-to-r from-yellow-400 to-orange-500 text-slate-900 px-6 py-3 rounded-full font-bold text-lg shadow-2xl">
+            <Rocket className="w-6 h-6 animate-bounce" />
+            <span>PHASE 2 ACTIVE</span>
+            <Sparkles className="w-6 h-6 animate-pulse" />
+          </div>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent drop-shadow-2xl">
+            {isEnglish ? '🚀 Advanced Financial Dashboard' : '🚀 Tableau de Bord Financier Avancé'}
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto leading-relaxed">
             {isEnglish 
-              ? 'Your data is saved locally, at the location of your choice. No information transits through our servers.'
-              : 'Vos données sont sauvegardées localement, à l\'emplacement de votre choix. Aucune information ne transite par nos serveurs.'
+              ? 'Transform your financial data into spectacular insights and planning'
+              : 'Transformez vos données financières en insights et planification spectaculaires'
             }
           </p>
-          <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-            <div className="flex items-start gap-2">
-              <AlertTriangle className="h-5 w-5 text-yellow-600 mt-0.5" />
-              <div>
-                <p className="text-yellow-800 font-medium">
-                  {isEnglish ? 'Important Notice' : 'Avertissement important'}
-                </p>
-                <p className="text-yellow-700 text-sm mt-1">
-                  {isEnglish 
-                    ? 'You are responsible for your data, no copy in cache. Save your data regularly.'
-                    : 'Vous êtes responsables de vos données, aucune copie en cache. Sauvegardez vos données régulièrement.'
-                  }
-                </p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+        </div>
 
-      {/* Section des fonctionnalités avec limitations */}
-      {user && (
-        <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-purple-800">
-              <Crown className="h-5 w-5 text-purple-600" />
-              {isEnglish ? 'Your Plan Features' : 'Fonctionnalités de votre forfait'}
+        {/* Gestion des sauvegardes - Design moderne */}
+        <Card className="bg-gradient-to-br from-pink-800/90 to-purple-800/90 border-0 shadow-2xl backdrop-blur-sm mb-12">
+          <CardHeader className="border-b border-pink-600 bg-gradient-to-r from-pink-600/20 to-purple-600/20">
+            <CardTitle className="text-2xl font-bold text-pink-300 flex items-center gap-3">
+              <Shield className="w-8 h-8" />
+              {isEnglish ? 'Backup Management' : 'Gestion des sauvegardes'}
             </CardTitle>
-            <CardDescription className="text-purple-600">
+            <CardDescription className="text-pink-200">
               {isEnglish 
-                ? `Current plan: Free`
-                : `Forfait actuel : Gratuit`
+                ? 'Save and load your retirement data securely'
+                : 'Sauvegardez et chargez vos données de retraite en toute sécurité'
               }
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-4">
-            {/* Fonctionnalités du plan gratuit */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {/* Planification de base */}
-              <div className="flex items-center gap-3 p-3 bg-green-100 rounded-lg">
-                <Target className="h-5 w-5 text-green-600" />
-                <div>
-                  <h4 className="font-medium text-green-800">
-                    {isEnglish ? 'Basic Planning' : 'Planification de base'}
-                  </h4>
-                  <p className="text-sm text-green-600">
-                    {isEnglish ? 'Essential retirement planning tools' : 'Outils essentiels de planification'}
-                  </p>
-                </div>
-              </div>
+          <CardContent className="p-6">
+            <DataBackupManager onDataLoad={handleDataLoad} />
+          </CardContent>
+        </Card>
 
-              {/* Gestion du profil */}
-              <div className="flex items-center gap-3 p-3 bg-green-100 rounded-lg">
-                <Users className="h-5 w-5 text-green-600" />
-                <div>
-                  <h4 className="font-medium text-green-800">
-                    {isEnglish ? 'Profile Management' : 'Gestion du profil'}
-                  </h4>
-                  <p className="text-sm text-green-600">
-                    {isEnglish ? 'Personal data management' : 'Gestion des données personnelles'}
-                  </p>
-                </div>
-              </div>
-
-              {/* Calculs de base */}
-              <div className="flex items-center gap-3 p-3 bg-green-100 rounded-lg">
-                <Calculator className="h-5 w-5 text-green-600" />
-                <div>
-                  <h4 className="font-medium text-green-800">
-                    {isEnglish ? 'Basic Calculations' : 'Calculs de base'}
-                  </h4>
-                  <p className="text-sm text-green-600">
-                    {isEnglish ? 'Fundamental retirement calculations' : 'Calculs de retraite fondamentaux'}
-                  </p>
-                </div>
-              </div>
-
-              {/* Gestion de l'épargne */}
-              <div className="flex items-center gap-3 p-3 bg-green-100 rounded-lg">
-                <Shield className="h-5 w-5 text-green-600" />
-                <div>
-                  <h4 className="font-medium text-green-800">
-                    {isEnglish ? 'Savings Management' : 'Gestion de l\'épargne'}
-                  </h4>
-                  <p className="text-sm text-green-600">
-                    {isEnglish ? 'Track your savings progress' : 'Suivez vos progrès d\'épargne'}
-                  </p>
-                </div>
-              </div>
+        {/* Sécurité et confidentialité - Design moderne */}
+        <Card className="bg-gradient-to-br from-green-800/90 to-emerald-800/90 border-0 shadow-2xl backdrop-blur-sm mb-12">
+          <CardHeader className="border-b border-green-600 bg-gradient-to-r from-green-600/20 to-emerald-600/20">
+            <CardTitle className="text-2xl font-bold text-green-300 flex items-center gap-3">
+              <LockIcon className="w-8 h-8" />
+              {isEnglish ? '100% Secure and Confidential' : '100% sécuritaire et confidentiel'}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="text-green-200 text-lg leading-relaxed">
+              {isEnglish 
+                ? 'Your data is saved locally, at your chosen location. No information transits through our servers.'
+                : 'Vos données sont sauvegardées localement, à l\'emplacement de votre choix. Aucune information ne transite par nos serveurs.'
+              }
             </div>
-
-            {/* Boutons d'upgrade selon le plan actuel */}
-            {currentPlan === 'free' && (
-              <div className="text-center pt-4 space-y-3">
-                <Button
-                  onClick={() => handleUpgradeClick('hasMonteCarloSimulations')}
-                  className="bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700"
-                >
-                  <Crown className="h-4 w-4 mr-2" />
-                  {isEnglish ? 'Upgrade to Professional' : 'Passer au forfait Professional'}
-                </Button>
-                <div className="text-sm text-purple-600">
-                  {isEnglish ? 'Unlock unlimited simulations and advanced features' : 'Débloquez les simulations illimitées et fonctionnalités avancées'}
+            
+            <div className="mt-6 p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
+              <div className="flex items-start gap-3">
+                <AlertTriangle className="w-6 h-6 text-yellow-400 mt-1 flex-shrink-0" />
+                <div>
+                  <h4 className="font-semibold text-yellow-300 mb-2">
+                    {isEnglish ? 'Important Warning' : 'Avertissement important'}
+                  </h4>
+                  <p className="text-yellow-200">
+                    {isEnglish 
+                      ? 'You are responsible for your data, no cached copy. Save your data regularly.'
+                      : 'Vous êtes responsables de vos données, aucune copie en cache. Sauvegardez vos données régulièrement.'
+                    }
+                  </p>
                 </div>
-              </div>
-            )}
-
-            {/* Pour l'instant, affichons toujours l'option d'upgrade vers Ultimate */}
-            <div className="text-center pt-4 space-y-3">
-              <Button
-                onClick={() => handlePlanUpgradeClick('ultimate')}
-                className="bg-gradient-to-r from-purple-600 to-pink-600 text-white hover:from-purple-700 hover:to-pink-700"
-              >
-                <TrendingUp className="h-4 w-4 mr-2" />
-                {isEnglish ? 'Upgrade to Ultimate' : 'Passer au forfait Ultimate'}
-              </Button>
-              <div className="text-sm text-purple-600">
-                {isEnglish ? 'Get AI consulting, integrations and personalized training' : 'Obtenez conseils IA, intégrations et formation personnalisée'}
               </div>
             </div>
           </CardContent>
         </Card>
-      )}
 
-      {/* Modal d'upgrade avancé */}
-      {showUpgradeModal && (
-        <AdvancedUpgradeModal
-          isOpen={showUpgradeModal}
-          onClose={() => setShowUpgradeModal(false)}
-          requiredPlan={upgradeFeature === 'plan_upgrade' ? 'ultimate' : 'professional'}
-          featureName={upgradeFeature}
-          currentPlan={currentPlan}
-        />
-      )}
+        {/* Fonctionnalités du forfait - Design moderne */}
+        <Card className="bg-gradient-to-br from-blue-800/90 to-indigo-800/90 border-0 shadow-2xl backdrop-blur-sm mb-12">
+          <CardHeader className="border-b border-blue-600 bg-gradient-to-r from-blue-600/20 to-indigo-600/20">
+            <CardTitle className="text-2xl font-bold text-blue-300 flex items-center gap-3">
+              <Crown className="w-8 h-8" />
+              {isEnglish ? 'Features of your Plan' : 'Fonctionnalités de votre forfait'}
+            </CardTitle>
+            <CardDescription className="text-blue-200">
+              {isEnglish ? 'Current plan: Free' : 'Forfait actuel : Gratuit'}
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              {/* Planification de base */}
+              <Card className="bg-gradient-to-br from-green-600/20 to-green-500/20 border border-green-500/30 shadow-lg">
+                <CardContent className="p-6 text-center">
+                  <Target className="w-12 h-12 text-green-400 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold text-green-300 mb-2">
+                    {isEnglish ? 'Basic Planning' : 'Planification de base'}
+                  </h3>
+                  <p className="text-green-200">
+                    {isEnglish ? 'Essential planning tools' : 'Outils essentiels de planification'}
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Gestion du profil */}
+              <Card className="bg-gradient-to-br from-blue-600/20 to-blue-500/20 border border-blue-500/30 shadow-lg">
+                <CardContent className="p-6 text-center">
+                  <Users className="w-12 h-12 text-blue-400 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold text-blue-300 mb-2">
+                    {isEnglish ? 'Profile Management' : 'Gestion du profil'}
+                  </h3>
+                  <p className="text-blue-200">
+                    {isEnglish ? 'Personal data management' : 'Gestion des données personnelles'}
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Calculs de base */}
+              <Card className="bg-gradient-to-br from-purple-600/20 to-purple-500/20 border border-purple-500/30 shadow-lg">
+                <CardContent className="p-6 text-center">
+                  <Calculator className="w-12 h-12 text-purple-400 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold text-purple-300 mb-2">
+                    {isEnglish ? 'Basic Calculations' : 'Calculs de base'}
+                  </h3>
+                  <p className="text-purple-200">
+                    {isEnglish ? 'Fundamental retirement calculations' : 'Calculs de retraite fondamentaux'}
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* Gestion de l'épargne */}
+              <Card className="bg-gradient-to-br from-orange-600/20 to-orange-500/20 border border-orange-500/30 shadow-lg">
+                <CardContent className="p-6 text-center">
+                  <Shield className="w-12 h-12 text-orange-400 mx-auto mb-4" />
+                  <h3 className="text-xl font-bold text-orange-300 mb-2">
+                    {isEnglish ? 'Savings Management' : 'Gestion de l\'épargne'}
+                  </h3>
+                  <p className="text-orange-200">
+                    {isEnglish ? 'Track your savings progress' : 'Suivez vos progrès d\'épargne'}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Boutons d'upgrade */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Button
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold text-lg py-4 shadow-2xl transform hover:scale-105 transition-all duration-300"
+                size="lg"
+              >
+                <Crown className="w-6 h-6 mr-3" />
+                {isEnglish ? 'Upgrade to Professional Plan' : 'Passer au forfait Professional'}
+                <ArrowRight className="w-6 h-6 ml-3" />
+              </Button>
+              <Button
+                className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold text-lg py-4 shadow-2xl transform hover:scale-105 transition-all duration-300"
+                size="lg"
+              >
+                <TrendingUp className="w-6 h-6 mr-3" />
+                {isEnglish ? 'Upgrade to Ultimate Plan' : 'Passer au forfait Ultimate'}
+                <ArrowRight className="w-6 h-6 ml-3" />
+              </Button>
+            </div>
+
+            <div className="mt-6 text-center">
+              <p className="text-blue-200 text-sm">
+                {isEnglish 
+                  ? 'Unlock unlimited simulations and advanced features'
+                  : 'Débloquez les simulations illimitées et fonctionnalités avancées'
+                }
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Statistiques et métriques - Design moderne */}
+        <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl backdrop-blur-sm">
+          <CardHeader className="border-b border-slate-600 bg-gradient-to-r from-slate-600/20 to-slate-500/20">
+            <CardTitle className="text-2xl font-bold text-slate-300 flex items-center gap-3">
+              <BarChart3 className="w-8 h-8" />
+              {isEnglish ? 'Your Financial Overview' : 'Votre Aperçu Financier'}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="text-center p-6 bg-gradient-to-br from-green-600/20 to-green-500/20 rounded-lg border border-green-500/30">
+                <DollarSign className="w-12 h-12 text-green-400 mx-auto mb-4" />
+                <div className="text-3xl font-bold text-green-300">
+                  ${(userData?.savings?.totalEpargne || 0).toLocaleString()}
+                </div>
+                <div className="text-green-200">
+                  {isEnglish ? 'Total Savings' : 'Épargne Totale'}
+                </div>
+              </div>
+
+              <div className="text-center p-6 bg-gradient-to-br from-blue-600/20 to-blue-500/20 rounded-lg border border-blue-500/30">
+                <Target className="w-12 h-12 text-blue-400 mx-auto mb-4" />
+                <div className="text-3xl font-bold text-blue-300">
+                  {userData?.personal?.ageRetraite1 || 65}
+                </div>
+                <div className="text-blue-200">
+                  {isEnglish ? 'Retirement Age' : 'Âge de Retraite'}
+                </div>
+              </div>
+
+              <div className="text-center p-6 bg-gradient-to-br from-purple-600/20 to-purple-500/20 rounded-lg border border-purple-500/30">
+                <TrendingUp className="w-12 h-12 text-purple-400 mx-auto mb-4" />
+                <div className="text-3xl font-bold text-purple-300">
+                  {isEnglish ? 'Progress' : 'Progression'}
+                </div>
+                <div className="text-purple-200">
+                  {isEnglish ? '35% Complete' : '35% Complété'}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };
