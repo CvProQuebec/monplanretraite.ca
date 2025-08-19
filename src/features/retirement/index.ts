@@ -20,6 +20,7 @@ export { Phase2Demo } from './components/Phase2Demo';
 export { InteractiveParticles, MagneticParticles, EnergyParticles, SimpleParticles } from './components/InteractiveParticles';
 export { PhysicsCard, SimplePhysicsCard, AdvancedPhysicsCard, MagneticPhysicsCard } from './components/PhysicsCard';
 export { IntelligentSkeleton, CardSkeleton, TableSkeleton, ChartSkeleton, ListSkeleton } from './components/IntelligentSkeleton';
+export { Phase2Wrapper, Phase2WrapperLight, Phase2WrapperHeavy, Phase2WrapperAuto } from './components/Phase2Wrapper';
 
 // Composants temporaires
 export { UltimatePlanningDashboard } from './components/UltimatePlanningDashboard';
