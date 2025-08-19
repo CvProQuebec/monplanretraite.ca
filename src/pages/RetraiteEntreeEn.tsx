@@ -1,400 +1,455 @@
-import React, { useState } from 'react';
-import { Button } from '../components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
-import { Badge } from '../components/ui/badge';
-import { Shield, TrendingUp, Crown, Zap, FileText, Users, Calculator, Target, Check, X, AlertTriangle } from 'lucide-react';
-import { useAuth } from '../hooks/useAuth';
-import { useToast } from '../hooks/use-toast';
-import { PromoCodeInput } from '../components/ui/promo-code-input';
-import { usePromoCode } from '../hooks/usePromoCode';
-import SimpleNavigation from '../components/layout/header/SimpleNavigation';
+import React from 'react';
+import { Phase2Wrapper } from '../features/retirement/components/Phase2Wrapper';
+import { SimpleNavigation } from '../components/layout/header/SimpleNavigation';
 
 const RetraiteEntreeEn: React.FC = () => {
-  const { user, signInWithGoogle } = useAuth();
-  const { toast } = useToast();
-  const { promoCode, setPromoCode, appliedCode, applyPromoCode, clearPromoCode } = usePromoCode();
-
-  const handleGoogleSignIn = async () => {
-    try {
-      await signInWithGoogle();
-      toast({
-        title: "Login successful",
-        description: "Welcome to your retirement planner!",
-        variant: "default"
-      });
-    } catch (error) {
-      toast({
-        title: "Login error",
-        description: "Unable to connect with Google. Please try again.",
-        variant: "destructive"
-      });
-    }
-  };
-
-  const handlePromoCodeSubmit = async () => {
-    if (!promoCode.trim()) return;
-    
-    try {
-      const result = await applyPromoCode(promoCode);
-      if (result.success) {
-        toast({
-          title: "Promo code applied!",
-          description: result.message,
-          variant: "default"
-        });
-      } else {
-        toast({
-          title: "Invalid promo code",
-          description: result.message,
-          variant: "destructive"
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Unable to validate promo code",
-        variant: "destructive"
-      });
-    }
-  };
-
-  // Features comparison configuration
-  const featuresComparison = [
-    { feature: 'Basic planning', free: true, professional: true, ultimate: true },
-    { feature: 'Personal profile management', free: true, professional: true, ultimate: true },
-    { feature: 'Basic retirement calculations', free: true, professional: true, ultimate: true },
-    { feature: 'Savings management', free: true, professional: true, ultimate: true },
-    { feature: 'Cashflow management', free: 'Basic', professional: true, ultimate: true },
-    { feature: 'Expense projects', free: '1 project', professional: 'Multiple', ultimate: 'Unlimited' },
-    { feature: 'Withdrawal strategies', free: false, professional: true, ultimate: true },
-    { feature: 'Monte Carlo simulations', free: false, professional: '100', ultimate: 'Unlimited' },
-    { feature: 'Tax optimization', free: false, professional: 'Basic', ultimate: 'Advanced' },
-    { feature: 'Personalized AI advice', free: false, professional: false, ultimate: true },
-    { feature: 'Detailed reports', free: false, professional: true, ultimate: true },
-    { feature: 'PDF export', free: false, professional: true, ultimate: true },
-    { feature: 'Priority support', free: false, professional: false, ultimate: true },
-  ];
-
-  const renderFeatureCell = (value: boolean | string) => {
-    if (value === true) {
-      return <Check className="w-5 h-5 text-green-600 mx-auto" />;
-    } else if (value === false) {
-      return <X className="w-5 h-5 text-gray-400 mx-auto" />;
-    } else {
-      return <span className="text-sm text-gray-700 text-center">{value}</span>;
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700">
-      {/* Simple navigation menu */}
+    <Phase2Wrapper 
+      theme="premium" 
+      showParticles={true} 
+      showPhysics={true}
+      enableThemeRotation={true}
+      enableAdaptiveLayout={true}
+    >
       <SimpleNavigation />
       
-      <div className="container mx-auto px-4 py-12 max-w-6xl">
-        
-                          {/* Header and Introduction */}
+      {/* Hero Section with premium theme */}
+      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white">
+        <div className="container mx-auto px-6 py-16">
           <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-6 flex items-center justify-center gap-4 drop-shadow-lg">
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl flex items-center justify-center shadow-lg">
-                <TrendingUp className="w-6 h-6 text-white" />
-              </div>
-              Retirement planner
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg">
+              Retirement Planner
             </h1>
-           <p className="text-xl text-blue-100 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
-             Plan your retirement with professional tools and advanced analytics
-           </p>
-         </div>
+            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto drop-shadow-md">
+              Plan your retirement with professional tools and advanced analysis
+            </p>
+          </div>
 
-        {/* Product Description */}
-        <Card className="mb-16 bg-white/80 backdrop-blur-sm border-0 shadow-xl">
-          <CardHeader className="text-center pb-8">
-                      <CardTitle className="text-3xl font-bold text-gray-900 mb-4">
-            Complete financial planning
-          </CardTitle>
-                     <CardDescription className="text-lg text-gray-600 max-w-4xl mx-auto">
-             Our unique platform allows you to manage your complete financial,<br />
-             budgetary and tax planning for a serene and optimized retirement.
-           </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center p-6">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Calculator className="w-8 h-8 text-blue-600" />
+          {/* Complete Financial Planning Section */}
+          <div className="bg-white rounded-2xl p-8 md:p-12 mb-16 shadow-2xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-6 text-center">
+              Complete Financial Planning
+            </h2>
+            <p className="text-lg text-gray-700 text-center mb-12 max-w-4xl mx-auto">
+              Our unique platform allows you to manage your entire financial, budgetary and tax planning for a serene and optimized retirement.
+            </p>
+
+            {/* Feature Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Cashflow Management */}
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-300">
+                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                  </svg>
                 </div>
-                                 <h3 className="font-semibold text-gray-900 mb-2">Cashflow management (treasury flow)</h3>
-                <p className="text-sm text-gray-600">
+                <h3 className="text-lg font-semibold text-blue-900 mb-2 text-center">
+                  Cashflow Management
+                </h3>
+                <p className="text-blue-700 text-center text-sm">
                   Analyze and optimize your expense flows to maximize your savings
                 </p>
               </div>
-              
-              <div className="text-center p-6">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Target className="w-8 h-8 text-green-600" />
+
+              {/* Withdrawal Strategies */}
+              <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-xl border border-green-200 hover:shadow-lg transition-all duration-300">
+                <div className="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Withdrawal strategies</h3>
-                <p className="text-sm text-gray-600">
+                <h3 className="text-lg font-semibold text-green-900 mb-2 text-center">
+                  Withdrawal Strategies
+                </h3>
+                <p className="text-green-700 text-center text-sm">
                   Determine the best time to withdraw from your investments
                 </p>
               </div>
-              
-              <div className="text-center p-6">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FileText className="w-8 h-8 text-purple-600" />
+
+              {/* Expense Planning */}
+              <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-xl border border-purple-200 hover:shadow-lg transition-all duration-300">
+                <div className="w-12 h-12 bg-purple-500 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Expense planning</h3>
-                <p className="text-sm text-gray-600">
+                <h3 className="text-lg font-semibold text-purple-900 mb-2 text-center">
+                  Expense Planning
+                </h3>
+                <p className="text-purple-700 text-center text-sm">
                   Evaluate the impact of major purchases on your future income
                 </p>
               </div>
-              
-              <div className="text-center p-6">
-                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <TrendingUp className="w-8 h-8 text-orange-600" />
+
+              {/* Tax Optimization */}
+              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-300">
+                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4 mx-auto">
+                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                  </svg>
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Tax optimization</h3>
-                <p className="text-sm text-gray-600">
-                  Minimize your taxes with intelligent withdrawal strategies
+                <h3 className="text-lg font-semibold text-blue-900 mb-2 text-center">
+                  Tax Optimization
+                </h3>
+                <p className="text-blue-700 text-center text-sm">
+                  Minimize your taxes with smart withdrawal strategies
                 </p>
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </div>
 
-        {/* Plans comparison table */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">Plans comparison</h2>
-          <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
-            Discover what's included in each plan and choose the one that fits your needs
-          </p>
-          
-          <Card className="overflow-hidden">
+          {/* Plan Comparison Section */}
+          <div className="bg-gradient-to-r from-blue-800 to-blue-900 rounded-2xl p-8 md:p-12 mb-16 shadow-2xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 text-center">
+              Plan Comparison
+            </h2>
+            <p className="text-xl text-blue-100 text-center mb-12 max-w-3xl mx-auto">
+              Discover what's included in each plan and choose the one that fits your needs
+            </p>
+
+            {/* Comparison Table */}
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full text-left">
                 <thead>
-                  <tr className="border-b bg-gray-50">
-                    <th className="text-left p-4 font-semibold text-gray-900">Feature</th>
-                    <th className="text-center p-4">
-                      <div className="flex flex-col items-center">
-                        <span className="font-semibold text-gray-900">Free</span>
-                        <Badge variant="secondary" className="mt-1">Free</Badge>
-                      </div>
+                  <tr className="border-b border-blue-600">
+                    <th className="py-4 px-6 text-white font-semibold text-lg">Feature</th>
+                    <th className="py-4 px-6 text-center">
+                      <div className="text-white font-semibold">Free</div>
+                      <div className="text-blue-200 text-sm">Free</div>
                     </th>
-                    <th className="text-center p-4">
-                      <div className="flex flex-col items-center">
-                        <span className="font-semibold text-gray-900">Professional</span>
-                        <Badge className="bg-blue-600 mt-1">$119.99/year</Badge>
-                      </div>
+                    <th className="py-4 px-6 text-center">
+                      <div className="text-white font-semibold">Professional</div>
+                      <div className="text-blue-200 text-sm">$119.99/year</div>
                     </th>
-                    <th className="text-center p-4">
-                      <div className="flex flex-col items-center">
-                        <span className="font-semibold text-gray-900">Ultimate</span>
-                        <Badge className="bg-purple-600 mt-1">$239.99/year</Badge>
-                      </div>
+                    <th className="py-4 px-6 text-center">
+                      <div className="text-white font-semibold">Ultimate</div>
+                      <div className="text-blue-200 text-sm">$239.99/year</div>
                     </th>
                   </tr>
                 </thead>
-                <tbody>
-                  {featuresComparison.map((item, index) => (
-                    <tr key={index} className="border-b hover:bg-gray-50">
-                      <td className="p-4 font-medium text-gray-900">{item.feature}</td>
-                      <td className="p-4 text-center">{renderFeatureCell(item.free)}</td>
-                      <td className="p-4 text-center">{renderFeatureCell(item.professional)}</td>
-                      <td className="p-4 text-center">{renderFeatureCell(item.ultimate)}</td>
-                    </tr>
-                  ))}
+                <tbody className="text-blue-100">
+                  <tr className="border-b border-blue-700">
+                    <td className="py-3 px-6">Basic planning</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                  </tr>
+                  <tr className="border-b border-blue-700">
+                    <td className="py-3 px-6">Personal profile management</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                  </tr>
+                  <tr className="border-b border-blue-700">
+                    <td className="py-3 px-6">Basic retirement calculations</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                  </tr>
+                  <tr className="border-b border-blue-700">
+                    <td className="py-3 px-6">Savings management</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                  </tr>
+                  <tr className="border-b border-blue-700">
+                    <td className="py-3 px-6">Cashflow management</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                  </tr>
+                  <tr className="border-b border-blue-700">
+                    <td className="py-3 px-6">Expense projects</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                  </tr>
+                  <tr className="border-b border-blue-700">
+                    <td className="py-3 px-6">Withdrawal strategies</td>
+                    <td className="py-3 px-6 text-center text-red-400">✗</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                  </tr>
+                  <tr className="border-b border-blue-700">
+                    <td className="py-3 px-6">Monte Carlo simulations</td>
+                    <td className="py-3 px-6 text-center text-red-400">✗</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                  </tr>
+                  <tr className="border-b border-blue-700">
+                    <td className="py-3 px-6">Tax optimization</td>
+                    <td className="py-3 px-6 text-center text-red-400">✗</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                  </tr>
+                  <tr className="border-b border-blue-700">
+                    <td className="py-3 px-6">AI personalized advice</td>
+                    <td className="py-3 px-6 text-center text-red-400">✗</td>
+                    <td className="py-3 px-6 text-center text-red-400">✗</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                  </tr>
+                  <tr className="border-b border-blue-700">
+                    <td className="py-3 px-6">Detailed reports</td>
+                    <td className="py-3 px-6 text-center text-red-400">✗</td>
+                    <td className="py-3 px-6 text-center text-red-400">✗</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                  </tr>
+                  <tr className="border-b border-blue-700">
+                    <td className="py-3 px-6">PDF export</td>
+                    <td className="py-3 px-6 text-center text-red-400">✗</td>
+                    <td className="py-3 px-6 text-center text-red-400">✗</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-6">Priority support</td>
+                    <td className="py-3 px-6 text-center text-red-400">✗</td>
+                    <td className="py-3 px-6 text-center text-red-400">✗</td>
+                    <td className="py-3 px-6 text-center text-green-400">✓</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
-          </Card>
-        </div>
+          </div>
 
-        {/* Plans and Pricing */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">Our annual plans</h2>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Free Plan */}
-            <Card className="relative bg-white border-2 border-gray-200 hover:border-blue-300 transition-all duration-300 hover:shadow-lg">
-              <CardHeader className="text-center pb-4">
-                <CardTitle className="text-2xl font-bold text-gray-900">Free</CardTitle>
-                <Badge variant="secondary" className="w-fit mx-auto">Trial</Badge>
-                <CardDescription className="text-gray-600">
-                  Start your retirement planning
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <div className="text-3xl font-bold text-gray-900 mb-4">$0</div>
-                <ul className="text-sm text-gray-600 space-y-2 mb-6">
-                  <li>• Basic cashflow management</li>
-                  <li>• 1 expense project</li>
-                  <li>• Basic planning</li>
-                  <li>• Local backup</li>
+          {/* Annual Plans Section */}
+          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-8 md:p-12 mb-16 shadow-2xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-12 text-center">
+              Our Annual Plans
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {/* Free Plan */}
+              <div className="bg-white rounded-xl p-6 shadow-lg border border-blue-200 hover:shadow-xl transition-all duration-300">
+                <div className="text-center mb-6">
+                  <span className="inline-block bg-green-100 text-green-800 text-sm font-medium px-3 py-1 rounded-full mb-4">
+                    Trial
+                  </span>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Free</h3>
+                  <p className="text-gray-600 mb-4">Start your retirement planning</p>
+                  <div className="text-4xl font-bold text-gray-900">$0</div>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Basic cashflow management
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    1 expense project
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Basic planning
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Local backup
+                  </li>
                 </ul>
-                <Button 
-                  onClick={handleGoogleSignIn}
-                  className="w-full bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-300"
-                >
+                <button className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
                   Start Free
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Professional Plan */}
-            <Card className="relative bg-white border-2 border-blue-500 shadow-lg transform scale-105">
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-blue-600 text-white px-4 py-1">Recommended</Badge>
+                </button>
               </div>
-              <CardHeader className="text-center pb-4">
-                <CardTitle className="text-2xl font-bold text-gray-900">Professional</CardTitle>
-                <CardDescription className="text-gray-600">
-                  For advanced planning
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <div className="text-3xl font-bold text-gray-900 mb-2">$119.99</div>
-                <div className="text-sm text-gray-500 mb-4">per year</div>
-                <ul className="text-sm text-gray-600 space-y-2 mb-6">
-                  <li>• Advanced cashflow management</li>
-                  <li>• Withdrawal strategies</li>
-                  <li>• 100 Monte Carlo simulations</li>
-                  <li>• Multiple expense projects</li>
-                  <li>• Basic tax optimization</li>
+
+              {/* Professional Plan */}
+              <div className="bg-white rounded-xl p-6 shadow-lg border-2 border-blue-500 relative hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <span className="bg-blue-500 text-white text-sm font-medium px-4 py-2 rounded-full">
+                    Recommended
+                  </span>
+                </div>
+                <div className="text-center mb-6">
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Professional</h3>
+                  <p className="text-gray-600 mb-4">For advanced planning</p>
+                  <div className="text-4xl font-bold text-gray-900">$119.99</div>
+                  <p className="text-gray-500 text-sm">per year</p>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Advanced cashflow management
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Withdrawal strategies
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    100 Monte Carlo simulations
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Multiple expense projects
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Basic tax optimization
+                  </li>
                 </ul>
-                <Button 
-                  onClick={handleGoogleSignIn}
-                  className="w-full bg-blue-600 hover:bg-blue-700"
-                >
+                <button className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
                   Choose Professional
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Ultimate Plan */}
-            <Card className="relative bg-white border-2 border-purple-500 hover:border-purple-600 transition-all duration-300 hover:shadow-lg">
-              <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                <Badge className="bg-purple-600 text-white px-4 py-1">Premium</Badge>
+                </button>
               </div>
-              <CardHeader className="text-center pb-4">
-                <CardTitle className="text-2xl font-bold text-gray-900">Ultimate</CardTitle>
-                <CardDescription className="text-gray-600">
-                  Complete solution with AI
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="text-center">
-                <div className="text-3xl font-bold text-gray-900 mb-2">$239.99</div>
-                <div className="text-sm text-gray-500 mb-4">per year</div>
-                <ul className="text-sm text-gray-600 space-y-2 mb-6">
-                  <li>• Expert cashflow management</li>
-                  <li>• AI withdrawal strategies</li>
-                  <li>• Unlimited Monte Carlo simulations</li>
-                  <li>• Advanced tax optimization</li>
-                  <li>• Personalized AI advice</li>
+
+              {/* Ultimate Plan */}
+              <div className="bg-white rounded-xl p-6 shadow-lg border border-purple-200 hover:shadow-xl transition-all duration-300">
+                <div className="text-center mb-6">
+                  <span className="inline-block bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full mb-4">
+                    Premium
+                  </span>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Ultimate</h3>
+                  <p className="text-gray-600 mb-4">Complete solution with AI</p>
+                  <div className="text-4xl font-bold text-gray-900">$239.99</div>
+                  <p className="text-gray-500 text-sm">per year</p>
+                </div>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Expert cashflow management
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    AI-powered withdrawal strategies
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Unlimited Monte Carlo simulations
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    Advanced tax optimization
+                  </li>
+                  <li className="flex items-center text-gray-700">
+                    <svg className="w-5 h-5 text-green-500 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                    </svg>
+                    AI personalized advice
+                  </li>
                 </ul>
-                <Button 
-                  onClick={handleGoogleSignIn}
-                  className="w-full bg-purple-600 hover:bg-purple-700"
-                >
+                <button className="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
                   Choose Ultimate
-                </Button>
-              </CardContent>
-            </Card>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Important Warning Section */}
+          <div className="bg-yellow-50 border border-yellow-200 rounded-2xl p-8 md:p-12 mb-16">
+            <div className="flex items-start">
+              <div className="flex-shrink-0">
+                <svg className="h-8 w-8 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <h3 className="text-2xl font-bold text-yellow-800 mb-4">
+                  Important Warning
+                </h3>
+                <p className="text-yellow-700 text-lg mb-6">
+                  This financial planning platform is an educational and informational tool that does not replace consultation with a qualified professional.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <h4 className="text-lg font-semibold text-yellow-800 mb-3">YOUR RESPONSIBILITIES:</h4>
+                    <ul className="space-y-2 text-yellow-700">
+                      <li className="flex items-start">
+                        <span className="text-yellow-600 mr-2">•</span>
+                        Consult a licensed financial planner for important decisions
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-yellow-600 mr-2">•</span>
+                        Verify the tax validity of your strategies with a tax specialist
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-yellow-600 mr-2">•</span>
+                        Get legal advice for estate planning
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div>
+                    <h4 className="text-lg font-semibold text-yellow-800 mb-3">ADVANTAGES OF OUR SOLUTION:</h4>
+                    <ul className="space-y-2 text-yellow-700">
+                      <li className="flex items-start">
+                        <span className="text-yellow-600 mr-2">•</span>
+                        Save time by preparing your file in advance
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-yellow-600 mr-2">•</span>
+                        Reduce the number of meetings with your professionals
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-yellow-600 mr-2">•</span>
+                        Take control of your finances with professional tools
+                      </li>
+                      <li className="flex items-start">
+                        <span className="text-yellow-600 mr-2">•</span>
+                        Optimize your consultations through better understanding
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Welcome and Promo Code Section */}
+          <div className="bg-gradient-to-r from-green-500 to-green-600 rounded-2xl p-8 md:p-12 shadow-2xl">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
+                <span className="text-2xl font-bold text-green-600">M</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                Welcome Gerald Dore!
+              </h2>
+              <p className="text-green-100 text-lg mb-8">
+                Do you have a promo code? Unlock additional features!
+              </p>
+              
+              <div className="max-w-md mx-auto">
+                <div className="flex gap-4">
+                  <input
+                    type="text"
+                    placeholder="Enter your promo code...."
+                    className="flex-1 px-4 py-3 rounded-lg border-0 focus:ring-2 focus:ring-white focus:ring-opacity-50 text-gray-900"
+                  />
+                  <button className="bg-white text-green-600 px-6 py-3 rounded-lg font-semibold hover:bg-green-50 transition-colors">
+                    Apply
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-
-                 {/* Legal Warning */}
-         <Card className="bg-amber-50 border-amber-200 mb-8">
-           <CardHeader className="pb-3">
-             <div className="flex items-center gap-2">
-               <AlertTriangle className="h-5 w-5 text-amber-600" />
-               <CardTitle className="text-lg text-amber-800">Important Warning</CardTitle>
-             </div>
-           </CardHeader>
-           <CardContent>
-             <div className="text-sm text-amber-700 space-y-2">
-               <p>
-                 <strong>⚠️ This financial planning platform is an educational and informational tool 
-                 that does not replace consultation with a qualified professional.</strong>
-               </p>
-               <p>
-                 <strong>YOUR RESPONSIBILITIES:</strong>
-               </p>
-               <ul className="list-disc list-inside ml-4 space-y-1">
-                 <li>Consult a licensed financial planner for important decisions</li>
-                 <li>Verify the tax validity of your strategies with a tax specialist</li>
-                 <li>Obtain legal advice for estate planning</li>
-               </ul>
-               <p>
-                 <strong>ADVANTAGES OF OUR SOLUTION:</strong>
-               </p>
-               <ul className="list-disc list-inside ml-4 space-y-1">
-                 <li>Save time by preparing your file in advance</li>
-                 <li>Reduce the number of meetings with your professionals</li>
-                 <li>Take control of your finances with professional tools</li>
-                 <li>Optimize your consultations through better understanding</li>
-               </ul>
-             </div>
-           </CardContent>
-         </Card>
-
-         {/* Connection Section */}
-         {!user ? (
-          <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200 max-w-2xl mx-auto">
-            <CardHeader className="text-center">
-              <div className="flex justify-center mb-4">
-                <Shield className="h-12 w-12 text-blue-600" />
-              </div>
-              <CardTitle className="text-2xl font-bold text-blue-900">
-                Start Now
-              </CardTitle>
-              <CardDescription className="text-blue-700">
-                Connect with Google to access your retirement planning
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-center">
-              <Button
-                onClick={handleGoogleSignIn}
-                className="bg-white text-blue-700 border-blue-300 hover:bg-blue-50 px-8 py-4 text-lg font-medium mb-4"
-                size="lg"
-              >
-                <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" className="w-5 h-5 mr-3" />
-                Continue with Google
-              </Button>
-              <div className="text-sm text-blue-600">
-                Secure and private connection
-              </div>
-            </CardContent>
-          </Card>
-        ) : (
-          /* Promo Code Section for connected users without plan */
-          <Card className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-200 max-w-2xl mx-auto">
-            <CardHeader className="text-center">
-              <div className="flex justify-center mb-4">
-                <Crown className="h-12 w-12 text-green-600" />
-              </div>
-              <CardTitle className="text-2xl font-bold text-green-900">
-                Welcome {user.displayName || user.email}!
-              </CardTitle>
-              <CardDescription className="text-green-700">
-                Do you have a promo code? Unlock additional features!
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-center">
-              <PromoCodeInput
-                value={promoCode}
-                onChange={setPromoCode}
-                onSubmit={handlePromoCodeSubmit}
-                onClear={clearPromoCode}
-                appliedCode={appliedCode}
-                placeholder="Enter your promo code..."
-                className="max-w-md mx-auto"
-              />
-
-            </CardContent>
-          </Card>
-        )}
       </div>
-    </div>
+    </Phase2Wrapper>
   );
 };
 
