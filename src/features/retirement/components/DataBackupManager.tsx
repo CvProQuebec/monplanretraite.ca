@@ -290,22 +290,32 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
     try {
       console.log('🔄 Début du chargement du fichier:', selectedFile.name);
       
+      // Afficher un toast de progression
+      toast({
+        title: "Chargement en cours...",
+        description: `Analyse du fichier ${selectedFile.name}`,
+        variant: "default"
+      });
+      
       const loadedData = await SecurityService.loadFromLocalFile(selectedFile, loadPassword);
       
       console.log('✅ Données chargées avec succès:', loadedData);
       
       if (typeof onDataLoad === 'function') {
         console.log('🔄 Appel de onDataLoad avec les données chargées');
-        onDataLoad(loadedData);
         
-        // Attendre un peu pour que les données soient appliquées
-        await new Promise(resolve => setTimeout(resolve, 100));
-        
+        // Afficher un toast de succès
         toast({
-          title: tr.loadSuccess,
+          title: "✅ Chargement réussi !",
           description: `Données restaurées depuis ${selectedFile.name}`,
           variant: "default"
         });
+        
+        // Appeler la fonction de chargement des données
+        onDataLoad(loadedData);
+        
+        // Attendre un peu pour que les données soient appliquées
+        await new Promise(resolve => setTimeout(resolve, 500));
         
         // Reset et fermer seulement après succès
         setLoadPassword('');
@@ -316,21 +326,51 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
         }
         
         console.log('✅ Chargement terminé et dialogue fermé');
+        
+        // Afficher un toast final de confirmation
+        toast({
+          title: "🎉 Données restaurées !",
+          description: "Vos données ont été chargées avec succès. Vous pouvez maintenant naviguer dans les différentes sections.",
+          variant: "default"
+        });
+        
       } else {
         console.warn('⚠️ onDataLoad n\'est pas une fonction');
         toast({
           title: tr.loadError,
-          description: 'Erreur de configuration du composant',
+          description: 'Erreur de configuration du composant - contactez le support',
           variant: "destructive"
         });
       }
     } catch (error) {
       console.error('❌ Erreur lors du chargement:', error);
+      
+      // Analyser l'erreur pour donner un message plus précis
+      let errorMessage = 'Erreur inconnue lors du chargement';
+      
+      if (error instanceof Error) {
+        if (error.message.includes('Mot de passe incorrect')) {
+          errorMessage = '❌ Mot de passe incorrect - vérifiez votre saisie';
+        } else if (error.message.includes('JSON invalide')) {
+          errorMessage = '❌ Format de fichier invalide - vérifiez que c\'est un fichier JSON valide';
+        } else if (error.message.includes('Format de fichier non reconnu')) {
+          errorMessage = '❌ Format de fichier non reconnu - utilisez un fichier de sauvegarde MonPlanRetraite';
+        } else if (error.message.includes('Lecture du fichier')) {
+          errorMessage = '❌ Erreur de lecture du fichier - vérifiez que le fichier n\'est pas corrompu';
+        } else {
+          errorMessage = `❌ ${error.message}`;
+        }
+      }
+      
       toast({
         title: tr.loadError,
-        description: error instanceof Error ? error.message : 'Erreur inconnue',
+        description: errorMessage,
         variant: "destructive"
       });
+      
+      // Garder le dialogue ouvert en cas d'erreur pour permettre à l'utilisateur de corriger
+      console.log('🔄 Dialogue maintenu ouvert en cas d\'erreur');
+      
     } finally {
       setIsLoading(false);
       console.log('🔄 État de chargement réinitialisé');
@@ -342,6 +382,48 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
     const dataSize = JSON.stringify(data).length;
     const encryptedSize = Math.ceil(dataSize * 1.5); // Estimation du chiffrement
     return (encryptedSize / 1024).toFixed(1) + ' KB';
+  };
+
+  const handleCreateTestFile = async () => {
+    const testData = {
+      name: "Test User",
+      age: 35,
+      retirementAge: 65,
+      currentSavings: 150000,
+      monthlyContributions: 1000,
+      expectedReturn: 0.07,
+      inflationRate: 0.03,
+      yearsUntilRetirement: 30,
+      retirementYear: new Date().getFullYear() + 30,
+      monthlyExpenses: 2500,
+      emergencyFund: 10000,
+      investments: [
+        { name: "Stocks", allocation: 0.6, expectedReturn: 0.12 },
+        { name: "Bonds", allocation: 0.4, expectedReturn: 0.06 }
+      ]
+    };
+
+    const filename = `test-backup-${new Date().toISOString().split('T')[0]}-${new Date().toTimeString().split(' ')[0].replace(/:/g, '-')}.json`;
+
+    try {
+      await saveToCustomLocation(testData, 'testPassword123', filename, 'Fichier de test pour vérifier le chargement');
+      toast({
+        title: "Fichier de test créé avec succès !",
+        description: `Fichier de test créé: ${filename}`,
+        variant: "default"
+      });
+      setLoadDialogOpen(true); // Ouvrir le dialogue de chargement pour tester
+      setSelectedFile(null); // Reset le sélecteur de fichier
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur lors de la création du fichier de test",
+        description: error instanceof Error ? error.message : 'Erreur inconnue',
+        variant: "destructive"
+      });
+    }
   };
 
   return (
@@ -525,6 +607,22 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
                   <AlertCircle className="h-4 w-4" />
                   {tr.fileNote}
                 </div>
+                
+                {/* Bouton de test pour créer un fichier de sauvegarde */}
+                <div className="bg-green-50 border border-green-200 rounded-lg p-3">
+                  <div className="text-sm text-green-800 mb-2">
+                    <strong>🧪 Test du système :</strong> Créez un fichier de test pour vérifier le chargement
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={handleCreateTestFile}
+                    className="w-full text-green-700 border-green-300 hover:bg-green-100"
+                  >
+                    📁 Créer fichier de test
+                  </Button>
+                </div>
+                
                 <div className="flex gap-2">
                   <Button onClick={handleLoad} disabled={isLoading} className="flex-1">
                     {isLoading ? 'Chargement...' : tr.load}

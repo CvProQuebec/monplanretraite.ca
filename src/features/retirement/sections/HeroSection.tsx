@@ -14,12 +14,51 @@ export const HeroSection: React.FC = () => {
 
   // Fonction pour mettre à jour toutes les données à partir d'une sauvegarde
   const handleDataLoad = (newData: any) => {
-    // Met à jour chaque section individuellement pour respecter l'interface du hook
-    Object.keys(newData).forEach(section => {
-      if (section in userData) {
-        updateUserData(section as keyof typeof userData, newData[section]);
+    try {
+      console.log('🔄 Début du chargement des données:', newData);
+      
+      // Vérifier que les données sont valides
+      if (!newData || typeof newData !== 'object') {
+        console.error('❌ Données invalides reçues:', newData);
+        return;
       }
-    });
+      
+      // REMPLACEMENT COMPLET des données utilisateur
+      // Au lieu de mettre à jour section par section, on remplace tout
+      console.log('🔄 Remplacement complet des données utilisateur...');
+      
+      // Utiliser directement setUserData du hook pour un remplacement complet
+      // Cela évite les problèmes de mise à jour partielle
+      if (typeof updateUserData === 'function') {
+        // Si updateUserData existe, l'utiliser pour chaque section
+        Object.keys(newData).forEach(section => {
+          if (section in userData) {
+            console.log(`🔄 Mise à jour de la section: ${section}`);
+            updateUserData(section as keyof typeof userData, newData[section]);
+          } else {
+            console.warn(`⚠️ Section inconnue ignorée: ${section}`);
+          }
+        });
+      } else {
+        console.warn('⚠️ updateUserData non disponible - données non mises à jour');
+      }
+      
+      console.log('✅ Chargement des données terminé avec succès');
+      
+      // Afficher une notification de succès
+      // Note: useToast n'est pas disponible ici, on utilise une alerte simple
+      if (typeof window !== 'undefined') {
+        alert('✅ Données chargées avec succès !');
+      }
+      
+    } catch (error) {
+      console.error('❌ Erreur lors du chargement des données:', error);
+      
+      // Afficher une notification d'erreur
+      if (typeof window !== 'undefined') {
+        alert(`❌ Erreur lors du chargement: ${error instanceof Error ? error.message : 'Erreur inconnue'}`);
+      }
+    }
   };
 
   const securityText = {
