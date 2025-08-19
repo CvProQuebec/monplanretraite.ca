@@ -1,470 +1,259 @@
-// Hook intelligent pour le layout adaptatif avec IA
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useDynamicTheme } from './useDynamicTheme';
+import { useState, useEffect, useCallback } from 'react';
 
-export interface UserBehavior {
-  features: Array<{
-    id: string;
-    name: string;
-    usageCount: number;
-    lastUsed: Date;
-    timeSpent: number;
-    clickPattern: 'frequent' | 'occasional' | 'rare';
-  }>;
-  layouts: Array<{
-    id: string;
-    screenSize: 'mobile' | 'tablet' | 'desktop';
-    type: 'grid' | 'list' | 'compact' | 'spacious';
-    columns: number;
-    spacing: 'tight' | 'comfortable' | 'spacious';
-    preferences: {
-      animations: 'minimal' | 'moderate' | 'intensive';
-      density: 'compact' | 'balanced' | 'spacious';
-      organization: 'alphabetical' | 'frequency' | 'category' | 'recent';
-    };
-  }>;
-  interactions: Array<{
-    type: 'click' | 'hover' | 'scroll' | 'drag' | 'search';
-    target: string;
-    timestamp: Date;
-    duration: number;
-    success: boolean;
-  }>;
-  patterns: {
-    sessionDuration: number;
-    peakUsageHours: number[];
-    preferredFeatures: string[];
-    navigationStyle: 'direct' | 'exploratory' | 'systematic';
-    multitasking: boolean;
-  };
-}
-
-export interface AdaptiveLayoutConfig {
+// Types pour le layout adaptatif
+export interface AdaptiveLayout {
   columns: number;
-  spacing: 'tight' | 'comfortable' | 'spacious';
-  animations: 'minimal' | 'moderate' | 'intensive';
-  density: 'compact' | 'balanced' | 'spacious';
-  organization: 'alphabetical' | 'frequency' | 'category' | 'recent';
+  spacing: 'sm' | 'md' | 'lg' | 'xl';
+  density: 'compact' | 'comfortable' | 'spacious';
+  animations: 'none' | 'subtle' | 'smooth' | 'energetic';
   shortcuts: boolean;
   predictiveLoading: boolean;
-  autoOrganization: boolean;
 }
 
 export interface ScreenContext {
-  size: 'mobile' | 'tablet' | 'desktop';
+  size: 'mobile' | 'tablet' | 'desktop' | 'ultrawide';
   orientation: 'portrait' | 'landscape';
-  pixelRatio: number;
   viewport: {
     width: number;
     height: number;
   };
+  touchCapable: boolean;
+  connectionSpeed: 'slow' | 'fast' | 'unknown';
+}
+
+export interface LayoutRecommendation {
+  type: 'performance' | 'accessibility' | 'productivity' | 'aesthetic';
+  message: string;
+  config: Partial<AdaptiveLayout>;
+  confidence: number;
+}
+
+export interface FeatureUsage {
+  featureId: string;
+  featureName: string;
+  usageCount: number;
+  lastUsed: Date;
+  averageTime: number;
 }
 
 export const useAdaptiveLayout = () => {
-  const { currentTheme, userContext } = useDynamicTheme();
-  const [userBehavior, setUserBehavior] = useState<UserBehavior>({
-    features: [],
-    layouts: [],
-    interactions: [],
-    patterns: {
-      sessionDuration: 0,
-      peakUsageHours: [],
-      preferredFeatures: [],
-      navigationStyle: 'direct',
-      multitasking: false
-    }
+  const [currentLayout, setCurrentLayout] = useState<AdaptiveLayout>({
+    columns: 3,
+    spacing: 'md',
+    density: 'comfortable',
+    animations: 'smooth',
+    shortcuts: true,
+    predictiveLoading: true
   });
 
   const [screenContext, setScreenContext] = useState<ScreenContext>({
     size: 'desktop',
     orientation: 'landscape',
-    pixelRatio: 1,
-    viewport: { width: 1920, height: 1080 }
+    viewport: { width: 1920, height: 1080 },
+    touchCapable: false,
+    connectionSpeed: 'fast'
   });
 
-  const [currentLayout, setCurrentLayout] = useState<AdaptiveLayoutConfig>({
-    columns: 3,
-    spacing: 'comfortable',
-    animations: 'moderate',
-    density: 'balanced',
-    organization: 'category',
-    shortcuts: false,
-    predictiveLoading: true,
-    autoOrganization: true
-  });
+  const [featureUsage, setFeatureUsage] = useState<Map<string, FeatureUsage>>(new Map());
+  const [recommendations, setRecommendations] = useState<LayoutRecommendation[]>([]);
 
-  // Détection automatique de la taille d'écran
-  useEffect(() => {
-    const updateScreenContext = () => {
-      const width = window.innerWidth;
-      const height = window.innerHeight;
-      const pixelRatio = window.devicePixelRatio || 1;
-      
-      let size: 'mobile' | 'tablet' | 'desktop';
-      if (width < 768) size = 'mobile';
-      else if (width < 1024) size = 'tablet';
-      else size = 'desktop';
-      
-      const orientation = width > height ? 'landscape' : 'portrait';
-      
-      setScreenContext({
-        size,
-        orientation,
-        pixelRatio,
-        viewport: { width, height }
-      });
-    };
+  // Détection du contexte d'écran
+  const updateScreenContext = useCallback(() => {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    
+    let size: ScreenContext['size'] = 'desktop';
+    if (width < 768) size = 'mobile';
+    else if (width < 1024) size = 'tablet';
+    else if (width > 2560) size = 'ultrawide';
 
-    updateScreenContext();
-    window.addEventListener('resize', updateScreenContext);
-    window.addEventListener('orientationchange', updateScreenContext);
+    const orientation = width > height ? 'landscape' : 'portrait';
+    const touchCapable = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-    return () => {
-      window.removeEventListener('resize', updateScreenContext);
-      window.removeEventListener('orientationchange', updateScreenContext);
-    };
+    // Estimation simple de la vitesse de connexion
+    const connection = (navigator as any).connection;
+    let connectionSpeed: ScreenContext['connectionSpeed'] = 'unknown';
+    if (connection) {
+      connectionSpeed = connection.effectiveType === '4g' || connection.effectiveType === '5g' ? 'fast' : 'slow';
+    }
+
+    setScreenContext({
+      size,
+      orientation,
+      viewport: { width, height },
+      touchCapable,
+      connectionSpeed
+    });
+
+    console.log('📱 Contexte d\'écran mis à jour:', { size, orientation, width, height });
   }, []);
 
-  // Analyse intelligente du comportement utilisateur
-  const analyzeUserBehavior = useCallback((): AdaptiveLayoutConfig => {
-    const { size } = screenContext;
-    const { userType, userMood } = userContext;
-    
-    // Configuration de base selon la taille d'écran
-    let baseConfig: Partial<AdaptiveLayoutConfig> = {};
-    
-    switch (size) {
+  // Adaptation automatique du layout selon le contexte
+  const adaptLayout = useCallback(() => {
+    const newLayout: AdaptiveLayout = { ...currentLayout };
+
+    // Adaptation selon la taille d'écran
+    switch (screenContext.size) {
       case 'mobile':
-        baseConfig = {
-          columns: 1,
-          spacing: 'tight',
-          density: 'compact',
-          animations: 'minimal',
-          shortcuts: false
-        };
+        newLayout.columns = 1;
+        newLayout.spacing = 'sm';
+        newLayout.density = 'compact';
+        newLayout.animations = screenContext.connectionSpeed === 'slow' ? 'subtle' : 'smooth';
         break;
       case 'tablet':
-        baseConfig = {
-          columns: 2,
-          spacing: 'comfortable',
-          density: 'balanced',
-          animations: 'moderate',
-          shortcuts: true
-        };
+        newLayout.columns = 2;
+        newLayout.spacing = 'md';
+        newLayout.density = 'comfortable';
+        newLayout.animations = 'smooth';
         break;
       case 'desktop':
-        baseConfig = {
-          columns: 3,
-          spacing: 'comfortable',
-          density: 'balanced',
-          animations: 'moderate',
-          shortcuts: true
-        };
+        newLayout.columns = 3;
+        newLayout.spacing = 'lg';
+        newLayout.density = 'comfortable';
+        newLayout.animations = 'energetic';
+        break;
+      case 'ultrawide':
+        newLayout.columns = 4;
+        newLayout.spacing = 'xl';
+        newLayout.density = 'spacious';
+        newLayout.animations = 'energetic';
         break;
     }
 
-    // Adaptation selon le type d'utilisateur
-    switch (userType) {
-      case 'power':
-        baseConfig = {
-          ...baseConfig,
-          columns: Math.min((baseConfig.columns || 3) + 1, 4),
-          spacing: 'tight',
-          density: 'compact',
-          animations: 'intensive',
-          shortcuts: true,
-          predictiveLoading: true,
-          autoOrganization: true
-        };
-        break;
-      case 'casual':
-        baseConfig = {
-          ...baseConfig,
-          spacing: 'comfortable',
-          density: 'balanced',
-          animations: 'moderate',
-          shortcuts: false,
-          predictiveLoading: true,
-          autoOrganization: false
-        };
-        break;
-      case 'minimalist':
-        baseConfig = {
-          ...baseConfig,
-          columns: Math.max((baseConfig.columns || 3) - 1, 1),
-          spacing: 'spacious',
-          density: 'spacious',
-          animations: 'minimal',
-          shortcuts: false,
-          predictiveLoading: false,
-          autoOrganization: false
-        };
-        break;
+    // Adaptation selon les capacités tactiles
+    if (screenContext.touchCapable) {
+      newLayout.spacing = newLayout.spacing === 'sm' ? 'md' : newLayout.spacing;
+      newLayout.shortcuts = false; // Moins de raccourcis clavier sur tactile
     }
 
-    // Adaptation selon l'humeur
-    switch (userMood) {
-      case 'energetic':
-        baseConfig.animations = 'intensive';
-        baseConfig.density = 'compact';
-        break;
-      case 'focused':
-        baseConfig.animations = 'minimal';
-        baseConfig.density = 'balanced';
-        break;
-      case 'relaxed':
-        baseConfig.animations = 'moderate';
-        baseConfig.spacing = 'spacious';
-        break;
-      case 'creative':
-        baseConfig.animations = 'intensive';
-        baseConfig.organization = 'category';
-        break;
+    // Adaptation selon la vitesse de connexion
+    if (screenContext.connectionSpeed === 'slow') {
+      newLayout.animations = 'subtle';
+      newLayout.predictiveLoading = false;
     }
 
-    // Adaptation selon le thème actuel
-    if (currentTheme) {
-      switch (currentTheme.animations) {
-        case 'subtle':
-          baseConfig.animations = 'minimal';
-          break;
-        case 'moderate':
-          baseConfig.animations = 'moderate';
-          break;
-        case 'intensive':
-          baseConfig.animations = 'intensive';
-          break;
-      }
-    }
-
-    return {
-      columns: baseConfig.columns || 3,
-      spacing: baseConfig.spacing || 'comfortable',
-      animations: baseConfig.animations || 'moderate',
-      density: baseConfig.density || 'balanced',
-      organization: baseConfig.organization || 'category',
-      shortcuts: baseConfig.shortcuts || false,
-      predictiveLoading: baseConfig.predictiveLoading !== false,
-      autoOrganization: baseConfig.autoOrganization !== false
-    };
-  }, [screenContext, userContext, currentTheme]);
-
-  // Mise à jour automatique du layout
-  useEffect(() => {
-    const newLayout = analyzeUserBehavior();
     setCurrentLayout(newLayout);
-  }, [analyzeUserBehavior]);
-
-  // Enregistrement des interactions utilisateur
-  const recordInteraction = useCallback((
-    type: UserBehavior['interactions'][0]['type'],
-    target: string,
-    duration: number = 0,
-    success: boolean = true
-  ) => {
-    const interaction = {
-      type,
-      target,
-      timestamp: new Date(),
-      duration,
-      success
-    };
-
-    setUserBehavior(prev => ({
-      ...prev,
-      interactions: [...prev.interactions, interaction].slice(-100) // Garder seulement les 100 dernières
-    }));
-  }, []);
+    console.log('🎯 Layout adapté:', newLayout);
+  }, [screenContext, currentLayout]);
 
   // Enregistrement de l'utilisation des fonctionnalités
-  const recordFeatureUsage = useCallback((featureId: string, featureName: string, timeSpent: number = 0) => {
-    setUserBehavior(prev => {
-      const existingFeature = prev.features.find(f => f.id === featureId);
+  const recordFeatureUsage = useCallback((featureId: string, featureName: string, timeSpent: number) => {
+    setFeatureUsage(prev => {
+      const updated = new Map(prev);
+      const existing = updated.get(featureId);
       
-      if (existingFeature) {
-        // Mise à jour de la fonctionnalité existante
-        const updatedFeatures = prev.features.map(f => 
-          f.id === featureId 
-            ? {
-                ...f,
-                usageCount: f.usageCount + 1,
-                lastUsed: new Date(),
-                timeSpent: f.timeSpent + timeSpent,
-                clickPattern: f.usageCount > 10 ? 'frequent' : f.usageCount > 5 ? 'occasional' : 'rare'
-              }
-            : f
-        );
-        
-        return { ...prev, features: updatedFeatures };
+      if (existing) {
+        updated.set(featureId, {
+          ...existing,
+          usageCount: existing.usageCount + 1,
+          lastUsed: new Date(),
+          averageTime: (existing.averageTime + timeSpent) / 2
+        });
       } else {
-        // Ajout d'une nouvelle fonctionnalité
-        const newFeature = {
-          id: featureId,
-          name: featureName,
+        updated.set(featureId, {
+          featureId,
+          featureName,
           usageCount: 1,
           lastUsed: new Date(),
-          timeSpent,
-          clickPattern: 'rare' as const
-        };
-        
-        return { ...prev, features: [...prev.features, newFeature] };
+          averageTime: timeSpent
+        });
       }
+      
+      console.log('📊 Utilisation enregistrée:', featureName, 'Temps:', timeSpent);
+      return updated;
     });
   }, []);
 
-  // Prédiction des fonctionnalités les plus utilisées
-  const getPredictedFeatures = useCallback(() => {
-    return userBehavior.features
-      .sort((a, b) => {
-        // Score basé sur l'utilisation récente et la fréquence
-        const timeWeight = 0.7;
-        const frequencyWeight = 0.3;
-        
-        const timeScore = (Date.now() - a.lastUsed.getTime()) / (1000 * 60 * 60 * 24); // Jours
-        const frequencyScore = a.usageCount;
-        
-        return (timeScore * timeWeight + frequencyScore * frequencyWeight) - 
-               (timeScore * timeWeight + frequencyScore * frequencyWeight);
-      })
-      .slice(0, 5);
-  }, [userBehavior.features]);
+  // Génération de recommandations IA
+  const generateRecommendations = useCallback(() => {
+    const newRecommendations: LayoutRecommendation[] = [];
 
-  // Recommandations de layout personnalisées
-  const getLayoutRecommendations = useCallback(() => {
-    const recommendations = [];
-    
-    // Recommandation basée sur l'heure
-    const hour = new Date().getHours();
-    if (hour >= 9 && hour <= 17) {
-      recommendations.push({
-        type: 'productivity',
-        message: 'Mode productivité activé - Layout compact pour plus d\'efficacité',
-        config: { density: 'compact', animations: 'minimal' }
-      });
-    } else if (hour >= 18 && hour <= 22) {
-      recommendations.push({
-        type: 'relaxation',
-        message: 'Mode détente - Layout spacieux et animations douces',
-        config: { spacing: 'spacious', animations: 'moderate' }
+    // Recommandation basée sur la performance
+    if (screenContext.connectionSpeed === 'slow') {
+      newRecommendations.push({
+        type: 'performance',
+        message: 'Connexion lente détectée - animations réduites recommandées',
+        config: { animations: 'subtle', predictiveLoading: false },
+        confidence: 0.9
       });
     }
 
     // Recommandation basée sur l'utilisation
-    if (userBehavior.patterns.sessionDuration > 30) {
-      recommendations.push({
-        type: 'long-session',
-        message: 'Session longue détectée - Activation des raccourcis et préchargement',
-        config: { shortcuts: true, predictiveLoading: true }
+    const mostUsedFeatures = Array.from(featureUsage.values())
+      .sort((a, b) => b.usageCount - a.usageCount)
+      .slice(0, 3);
+
+    if (mostUsedFeatures.length > 0) {
+      newRecommendations.push({
+        type: 'productivity',
+        message: `Optimisation pour vos fonctionnalités les plus utilisées: ${mostUsedFeatures.map(f => f.featureName).join(', ')}`,
+        config: { shortcuts: true, predictiveLoading: true },
+        confidence: 0.8
       });
     }
 
-    // Recommandation basée sur la navigation
-    if (userBehavior.patterns.navigationStyle === 'exploratory') {
-      recommendations.push({
-        type: 'exploration',
-        message: 'Mode exploration - Organisation par catégorie et animations engageantes',
-        config: { organization: 'category', animations: 'intensive' }
+    // Recommandation basée sur l'écran
+    if (screenContext.size === 'ultrawide') {
+      newRecommendations.push({
+        type: 'aesthetic',
+        message: 'Écran ultra-large détecté - layout étendu recommandé',
+        config: { columns: 4, spacing: 'xl', density: 'spacious' },
+        confidence: 0.85
       });
     }
 
-    // Toujours ajouter au moins une recommandation par défaut
-    if (recommendations.length === 0) {
-      recommendations.push({
-        type: 'default',
-        message: 'Configuration optimale pour votre écran actuel',
-        config: { 
-          columns: currentLayout.columns, 
-          spacing: currentLayout.spacing,
-          animations: currentLayout.animations 
-        }
+    // Recommandation d'accessibilité
+    if (screenContext.touchCapable) {
+      newRecommendations.push({
+        type: 'accessibility',
+        message: 'Interface tactile détectée - espacement augmenté recommandé',
+        config: { spacing: 'lg', density: 'comfortable' },
+        confidence: 0.75
       });
     }
 
+    setRecommendations(newRecommendations);
+    console.log('🤖 Recommandations générées:', newRecommendations.length);
+  }, [screenContext, featureUsage]);
+
+  // Obtention des recommandations actuelles
+  const getLayoutRecommendations = useCallback(() => {
     return recommendations;
-  }, [userBehavior.patterns, currentLayout]);
+  }, [recommendations]);
 
-  // Hook pour les animations adaptatives
-  const useAdaptiveAnimation = () => {
-    const getAnimationConfig = useCallback(() => {
-      switch (currentLayout.animations) {
-        case 'minimal':
-          return {
-            duration: 0.2,
-            ease: "easeOut",
-            type: "tween"
-          };
-        case 'moderate':
-          return {
-            duration: 0.4,
-            ease: "easeInOut",
-            type: "spring",
-            stiffness: 300,
-            damping: 20
-          };
-        case 'intensive':
-          return {
-            duration: 0.6,
-            ease: "easeInOut",
-            type: "spring",
-            stiffness: 400,
-            damping: 15
-          };
-        default:
-          return {
-            duration: 0.4,
-            ease: "easeInOut",
-            type: "spring"
-          };
-      }
-    }, [currentLayout.animations]);
+  // Initialisation et événements
+  useEffect(() => {
+    updateScreenContext();
+    
+    const handleResize = () => {
+      updateScreenContext();
+    };
 
-    return { getAnimationConfig };
-  };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [updateScreenContext]);
 
-  // Hook pour la grille adaptative
-  const useAdaptiveGrid = () => {
-    const getGridConfig = useCallback(() => {
-      const { columns, spacing, density } = currentLayout;
-      
-      const gridCols = {
-        1: 'grid-cols-1',
-        2: 'grid-cols-1 md:grid-cols-2',
-        3: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-        4: 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'
-      };
+  // Adaptation automatique quand le contexte change
+  useEffect(() => {
+    adaptLayout();
+  }, [screenContext]);
 
-      const gaps = {
-        tight: 'gap-2',
-        comfortable: 'gap-4',
-        spacious: 'gap-6'
-      };
-
-      const padding = {
-        tight: 'p-2',
-        comfortable: 'p-4',
-        spacious: 'p-6'
-      };
-
-      return {
-        gridCols: gridCols[columns as keyof typeof gridCols] || gridCols[3],
-        gap: gaps[spacing] || gaps.comfortable,
-        padding: padding[density] || padding.comfortable
-      };
-    }, [currentLayout]);
-
-    return { getGridConfig };
-  };
+  // Génération périodique de recommandations
+  useEffect(() => {
+    generateRecommendations();
+    
+    const interval = setInterval(generateRecommendations, 30000); // Toutes les 30 secondes
+    return () => clearInterval(interval);
+  }, [generateRecommendations]);
 
   return {
     currentLayout,
     screenContext,
-    userBehavior,
-    recordInteraction,
+    featureUsage: Array.from(featureUsage.values()),
+    recommendations,
     recordFeatureUsage,
-    getPredictedFeatures,
     getLayoutRecommendations,
-    useAdaptiveAnimation,
-    useAdaptiveGrid,
-    updateLayout: setCurrentLayout
+    updateScreenContext,
+    adaptLayout
   };
 };
