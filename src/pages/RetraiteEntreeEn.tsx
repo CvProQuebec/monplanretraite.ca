@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { Shield, TrendingUp, Crown, Zap, FileText, Users, Calculator, Target } from 'lucide-react';
+import { Shield, TrendingUp, Crown, Zap, FileText, Users, Calculator, Target, Check, X, AlertTriangle } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useToast } from '../hooks/use-toast';
 import { PromoCodeInput } from '../components/ui/promo-code-input';
 import { usePromoCode } from '../hooks/usePromoCode';
+import Header from '../components/layout/header/Header';
 
 const RetraiteEntreeEn: React.FC = () => {
   const { user, signInWithGoogle } = useAuth();
@@ -57,8 +58,38 @@ const RetraiteEntreeEn: React.FC = () => {
     }
   };
 
+  // Features comparison configuration
+  const featuresComparison = [
+    { feature: 'Basic planning', free: true, professional: true, ultimate: true },
+    { feature: 'Personal profile management', free: true, professional: true, ultimate: true },
+    { feature: 'Basic retirement calculations', free: true, professional: true, ultimate: true },
+    { feature: 'Savings management', free: true, professional: true, ultimate: true },
+    { feature: 'Cashflow management', free: 'Basic', professional: true, ultimate: true },
+    { feature: 'Expense projects', free: '1 project', professional: 'Multiple', ultimate: 'Unlimited' },
+    { feature: 'Withdrawal strategies', free: false, professional: true, ultimate: true },
+    { feature: 'Monte Carlo simulations', free: false, professional: '100', ultimate: 'Unlimited' },
+    { feature: 'Tax optimization', free: false, professional: 'Basic', ultimate: 'Advanced' },
+    { feature: 'Personalized AI advice', free: false, professional: false, ultimate: true },
+    { feature: 'Detailed reports', free: false, professional: true, ultimate: true },
+    { feature: 'PDF export', free: false, professional: true, ultimate: true },
+    { feature: 'Priority support', free: false, professional: false, ultimate: true },
+  ];
+
+  const renderFeatureCell = (value: boolean | string) => {
+    if (value === true) {
+      return <Check className="w-5 h-5 text-green-600 mx-auto" />;
+    } else if (value === false) {
+      return <X className="w-5 h-5 text-gray-400 mx-auto" />;
+    } else {
+      return <span className="text-sm text-gray-700 text-center">{value}</span>;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      {/* Standard navigation menu */}
+      <Header />
+      
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         
                  {/* Header and Introduction */}
@@ -129,6 +160,54 @@ const RetraiteEntreeEn: React.FC = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Plans comparison table */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">Plans comparison</h2>
+          <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+            Discover what's included in each plan and choose the one that fits your needs
+          </p>
+          
+          <Card className="overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b bg-gray-50">
+                    <th className="text-left p-4 font-semibold text-gray-900">Feature</th>
+                    <th className="text-center p-4">
+                      <div className="flex flex-col items-center">
+                        <span className="font-semibold text-gray-900">Free</span>
+                        <Badge variant="secondary" className="mt-1">Free</Badge>
+                      </div>
+                    </th>
+                    <th className="text-center p-4">
+                      <div className="flex flex-col items-center">
+                        <span className="font-semibold text-gray-900">Professional</span>
+                        <Badge className="bg-blue-600 mt-1">$119.99/year</Badge>
+                      </div>
+                    </th>
+                    <th className="text-center p-4">
+                      <div className="flex flex-col items-center">
+                        <span className="font-semibold text-gray-900">Ultimate</span>
+                        <Badge className="bg-purple-600 mt-1">$239.99/year</Badge>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {featuresComparison.map((item, index) => (
+                    <tr key={index} className="border-b hover:bg-gray-50">
+                      <td className="p-4 font-medium text-gray-900">{item.feature}</td>
+                      <td className="p-4 text-center">{renderFeatureCell(item.free)}</td>
+                      <td className="p-4 text-center">{renderFeatureCell(item.professional)}</td>
+                      <td className="p-4 text-center">{renderFeatureCell(item.ultimate)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        </div>
 
         {/* Plans and Pricing */}
         <div className="mb-16">
@@ -310,9 +389,7 @@ const RetraiteEntreeEn: React.FC = () => {
                 placeholder="Enter your promo code..."
                 className="max-w-md mx-auto"
               />
-              <div className="mt-4 text-sm text-green-600">
-                Popular codes: TESTER100, Calvin2025
-              </div>
+
             </CardContent>
           </Card>
         )}

@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Button } from '../components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Badge } from '../components/ui/badge';
-import { Shield, TrendingUp, Crown, Zap, FileText, Users, Calculator, Target, AlertTriangle } from 'lucide-react';
+import { Shield, TrendingUp, Crown, Zap, FileText, Users, Calculator, Target, AlertTriangle, Check, X } from 'lucide-react';
 import { useAuth } from '../hooks/useAuth';
 import { useToast } from '../hooks/use-toast';
 import { PromoCodeInput } from '../components/ui/promo-code-input';
 import { usePromoCode } from '../hooks/usePromoCode';
+import Header from '../components/layout/header/Header';
 
 const RetraiteEntreeFr: React.FC = () => {
   const { user, signInWithGoogle } = useAuth();
@@ -45,8 +46,38 @@ const RetraiteEntreeFr: React.FC = () => {
     }
   };
 
+  // Configuration du tableau de comparaison
+  const featuresComparison = [
+    { feature: 'Planification de base', gratuit: true, professionnel: true, ultime: true },
+    { feature: 'Gestion du profil personnel', gratuit: true, professionnel: true, ultime: true },
+    { feature: 'Calculs de retraite de base', gratuit: true, professionnel: true, ultime: true },
+    { feature: 'Gestion de l\'épargne', gratuit: true, professionnel: true, ultime: true },
+    { feature: 'Gestion du cashflow', gratuit: 'Basique', professionnel: true, ultime: true },
+    { feature: 'Projets de dépenses', gratuit: '1 projet', professionnel: 'Multiples', ultime: 'Illimités' },
+    { feature: 'Stratégies de décaissement', gratuit: false, professionnel: true, ultime: true },
+    { feature: 'Simulations Monte Carlo', gratuit: false, professionnel: '100', ultime: 'Illimitées' },
+    { feature: 'Optimisation fiscale', gratuit: false, professionnel: 'Basique', ultime: 'Avancée' },
+    { feature: 'Conseils personnalisés par IA', gratuit: false, professionnel: false, ultime: true },
+    { feature: 'Rapports détaillés', gratuit: false, professionnel: true, ultime: true },
+    { feature: 'Export PDF', gratuit: false, professionnel: true, ultime: true },
+    { feature: 'Support prioritaire', gratuit: false, professionnel: false, ultime: true },
+  ];
+
+  const renderFeatureCell = (value: boolean | string) => {
+    if (value === true) {
+      return <Check className="w-5 h-5 text-green-600 mx-auto" />;
+    } else if (value === false) {
+      return <X className="w-5 h-5 text-gray-400 mx-auto" />;
+    } else {
+      return <span className="text-sm text-gray-700 text-center">{value}</span>;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      {/* Menu de navigation standard */}
+      <Header />
+      
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         {/* En-tête et introduction */}
         <div className="text-center mb-16">
@@ -108,6 +139,54 @@ const RetraiteEntreeFr: React.FC = () => {
             </div>
           </CardContent>
         </Card>
+
+        {/* Tableau de comparaison des plans */}
+        <div className="mb-16">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-4">Comparaison des plans</h2>
+          <p className="text-center text-gray-600 mb-8 max-w-2xl mx-auto">
+            Découvrez ce qui est inclus dans chaque plan et choisissez celui qui correspond à vos besoins
+          </p>
+          
+          <Card className="overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b bg-gray-50">
+                    <th className="text-left p-4 font-semibold text-gray-900">Fonctionnalité</th>
+                    <th className="text-center p-4">
+                      <div className="flex flex-col items-center">
+                        <span className="font-semibold text-gray-900">Gratuit</span>
+                        <Badge variant="secondary" className="mt-1">Gratuit</Badge>
+                      </div>
+                    </th>
+                    <th className="text-center p-4">
+                      <div className="flex flex-col items-center">
+                        <span className="font-semibold text-gray-900">Professionnel</span>
+                        <Badge className="bg-blue-600 mt-1">119,99$/an</Badge>
+                      </div>
+                    </th>
+                    <th className="text-center p-4">
+                      <div className="flex flex-col items-center">
+                        <span className="font-semibold text-gray-900">Ultime</span>
+                        <Badge className="bg-purple-600 mt-1">239,99$/an</Badge>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {featuresComparison.map((item, index) => (
+                    <tr key={index} className="border-b hover:bg-gray-50">
+                      <td className="p-4 font-medium text-gray-900">{item.feature}</td>
+                      <td className="p-4 text-center">{renderFeatureCell(item.gratuit)}</td>
+                      <td className="p-4 text-center">{renderFeatureCell(item.professionnel)}</td>
+                      <td className="p-4 text-center">{renderFeatureCell(item.ultime)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+        </div>
 
         {/* Forfaits et tarification */}
         <div className="mb-16">
