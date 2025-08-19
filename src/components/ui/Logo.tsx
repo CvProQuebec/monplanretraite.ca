@@ -33,10 +33,13 @@ export const Logo: React.FC<LogoProps> = ({
     dark: 'text-gray-900'
   };
 
+  // Force le rechargement du logo en ajoutant un timestamp
+  const logoUrl = `/logo-monplanretraite.png?v=${Date.now()}`;
+
   return (
     <div className={`flex items-center space-x-3 ${className}`}>
       <img 
-        src="/logo-monplanretraite.png" 
+        src={logoUrl}
         alt="MonPlanRetraite.ca Logo" 
         className={`${sizeClasses[size]} w-auto`}
         onError={(e) => {

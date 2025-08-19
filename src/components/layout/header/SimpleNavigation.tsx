@@ -2,7 +2,6 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { useAuth } from '@/hooks/useAuth';
-import { Logo } from '@/components/ui/Logo';
 import { 
   BarChart3, 
   Users, 
@@ -54,8 +53,22 @@ export const SimpleNavigation: React.FC = () => {
     <nav className="bg-white border-b border-gray-200 shadow-sm">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between py-4">
-          {/* Logo et titre */}
-          <Logo size="md" showText={false} />
+          {/* Logo et titre - FORCÉ avec timestamp */}
+          <div className="flex items-center space-x-3">
+            <img 
+              src={`/logo-monplanretraite.png?v=${Date.now()}`}
+              alt="MonPlanRetraite.ca Logo" 
+              className="h-8 w-auto"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                target.nextElementSibling?.classList.remove('hidden');
+              }}
+            />
+            <div className="hidden text-lg font-bold text-gray-900 bg-gray-100 px-3 py-1 rounded">
+              MonPlanRetraite.ca
+            </div>
+          </div>
 
           {/* Navigation horizontale */}
           <div className="hidden md:flex items-center space-x-1">
