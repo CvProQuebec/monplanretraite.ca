@@ -7,7 +7,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useToast } from '../hooks/use-toast';
 import { PromoCodeInput } from '../components/ui/promo-code-input';
 import { usePromoCode } from '../hooks/usePromoCode';
-import Header from '../components/layout/header/Header';
+import SimpleNavigation from '../components/layout/header/SimpleNavigation';
 
 const RetraiteEntreeEn: React.FC = () => {
   const { user, signInWithGoogle } = useAuth();
@@ -87,8 +87,8 @@ const RetraiteEntreeEn: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
-      {/* Standard navigation menu */}
-      <Header />
+      {/* Simple navigation menu */}
+      <SimpleNavigation />
       
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         
