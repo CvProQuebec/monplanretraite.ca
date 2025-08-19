@@ -74,7 +74,7 @@ const RetraiteEntreeFr: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700">
       {/* Menu de navigation simple */}
       <SimpleNavigation />
       
@@ -105,35 +105,35 @@ const RetraiteEntreeFr: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="text-center p-6">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Calculator className="w-8 h-8 text-blue-600" />
+              <div className="retirement-card text-center p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <Calculator className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Gestion du flux de trésorerie (cashflow)</h3>
+                <h3 className="font-semibold text-blue-900 mb-2">Gestion du flux de trésorerie (cashflow)</h3>
                 <p className="text-sm text-gray-600">Analysez et optimisez vos flux de dépenses pour maximiser vos économies</p>
               </div>
 
-              <div className="text-center p-6">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Target className="w-8 h-8 text-green-600" />
+              <div className="retirement-card text-center p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                <div className="w-16 h-16 bg-gradient-to-br from-green-600 to-green-700 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <Target className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Stratégies de décaissement</h3>
+                <h3 className="font-semibold text-green-900 mb-2">Stratégies de décaissement</h3>
                 <p className="text-sm text-gray-600">Déterminez le meilleur moment pour retirer de vos investissements</p>
               </div>
 
-              <div className="text-center p-6">
-                <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <FileText className="w-8 h-8 text-purple-600" />
+              <div className="retirement-card text-center p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                <div className="w-16 h-16 bg-gradient-to-br from-purple-600 to-purple-700 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <FileText className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Planification des dépenses</h3>
+                <h3 className="font-semibold text-purple-900 mb-2">Planification des dépenses</h3>
                 <p className="text-sm text-gray-600">Évaluez l'impact des gros achats sur vos revenus futurs</p>
               </div>
 
-              <div className="text-center p-6">
-                <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <TrendingUp className="w-8 h-8 text-orange-600" />
+              <div className="retirement-card text-center p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                  <TrendingUp className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">Optimisation fiscale</h3>
+                <h3 className="font-semibold text-blue-900 mb-2">Optimisation fiscale</h3>
                 <p className="text-sm text-gray-600">Minimisez vos impôts avec des stratégies de retrait intelligentes</p>
               </div>
             </div>

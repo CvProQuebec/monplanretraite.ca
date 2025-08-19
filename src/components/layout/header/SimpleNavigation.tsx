@@ -51,7 +51,7 @@ export const SimpleNavigation: React.FC = () => {
   };
 
   return (
-    <nav className="retirement-navigation bg-gradient-to-r from-orange-500 to-orange-600 border-b-0 shadow-xl">
+    <nav className="retirement-navigation bg-gradient-to-r from-blue-800 to-blue-900 border-b-0 shadow-xl">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between py-4">
           {/* Logo et titre - FORCÉ avec timestamp */}
