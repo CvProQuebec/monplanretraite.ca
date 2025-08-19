@@ -1,421 +1,294 @@
-// Composant de carte avec physique réaliste et effets 3D
-import React, { useRef, useState, useEffect } from 'react';
-import { motion, useMotionValue, useTransform, useSpring, useDragControls, PanInfo } from 'framer-motion';
-import { useDynamicTheme } from '../hooks/useDynamicTheme';
+import React, { useState } from 'react';
+import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
+
+// Types pour la physique
+interface PhysicsConfig {
+  gravity?: boolean;
+  friction?: number;
+  bounce?: number;
+  magnetism?: boolean;
+  inertia?: boolean;
+}
+
+interface EffectsConfig {
+  shadow?: boolean;
+  glow?: boolean;
+  particles?: boolean;
+  ripple?: boolean;
+  sound?: boolean;
+}
 
 interface PhysicsCardProps {
   children: React.ReactNode;
   drag?: boolean;
-  dragConstraints?: boolean | { left: number; right: number; top: number; bottom: number };
-  dragElastic?: number;
-  dragMomentum?: boolean;
-  dragSnapToOrigin?: boolean;
-  onDragStart?: () => void;
-  onDragEnd?: (event: any, info: PanInfo) => void;
+  physics?: PhysicsConfig;
+  effects?: EffectsConfig;
   className?: string;
-  initialScale?: number;
-  hoverScale?: number;
-  tapScale?: number;
-  springConfig?: {
-    stiffness: number;
-    damping: number;
-    mass: number;
-  };
-  physics?: {
-    gravity?: boolean;
-    friction?: number;
-    bounce?: number;
-    airResistance?: number;
-  };
-  effects?: {
-    shadow?: boolean;
-    glow?: boolean;
-    particles?: boolean;
-    ripple?: boolean;
-  };
+  onDragStart?: () => void;
+  onDragEnd?: () => void;
+  onClick?: () => void;
 }
 
 export const PhysicsCard: React.FC<PhysicsCardProps> = ({
   children,
   drag = true,
-  dragConstraints = { left: -50, right: 50, top: -50, bottom: 50 },
-  dragElastic = 0.1,
-  dragMomentum = true,
-  dragSnapToOrigin = false,
+  physics = {},
+  effects = {},
+  className = '',
   onDragStart,
   onDragEnd,
-  className = '',
-  initialScale = 1,
-  hoverScale = 1.05,
-  tapScale = 0.95,
-  springConfig = { stiffness: 300, damping: 20, mass: 1 },
-  physics = { gravity: true, friction: 0.95, bounce: 0.8, airResistance: 0.98 },
-  effects = { shadow: true, glow: true, particles: true, ripple: true }
+  onClick
 }) => {
-  const { currentTheme } = useDynamicTheme();
-  const cardRef = useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
-  const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number; scale: number }>>([]);
+  const [dragCount, setDragCount] = useState(0);
+  const [energy, setEnergy] = useState(0);
 
-  // Valeurs de mouvement avec physique
+  // Configuration par défaut
+  const config = {
+    gravity: physics.gravity ?? true,
+    friction: physics.friction ?? 0.9,
+    bounce: physics.bounce ?? 0.8,
+    magnetism: physics.magnetism ?? false,
+    inertia: physics.inertia ?? true,
+    ...physics
+  };
+
+  const effectsConfig = {
+    shadow: effects.shadow ?? true,
+    glow: effects.glow ?? true,
+    particles: effects.particles ?? false,
+    ripple: effects.ripple ?? true,
+    sound: effects.sound ?? false,
+    ...effects
+  };
+
+  // Valeurs de mouvement
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const scale = useMotionValue(initialScale);
-  const rotateX = useMotionValue(0);
-  const rotateY = useMotionValue(0);
-  const z = useMotionValue(0);
-
-  // Ressorts physiques réalistes
-  const springX = useSpring(x, {
-    stiffness: springConfig.stiffness,
-    damping: springConfig.damping,
-    mass: springConfig.mass
+  const rotateX = useTransform(y, [-100, 100], [10, -10]);
+  const rotateY = useTransform(x, [-100, 100], [-10, 10]);
+  const scale = useTransform([x, y], ([latestX, latestY]) => {
+    const distance = Math.sqrt(latestX * latestX + latestY * latestY);
+    return 1 + Math.min(distance / 500, 0.1);
   });
 
-  const springY = useSpring(y, {
-    stiffness: springConfig.stiffness,
-    damping: springConfig.damping,
-    mass: springConfig.mass
-  });
-
-  const springScale = useSpring(scale, {
-    stiffness: springConfig.stiffness * 2,
-    damping: springConfig.damping,
-    mass: springConfig.mass
-  });
-
-  const springRotateX = useSpring(rotateX, {
-    stiffness: springConfig.stiffness * 0.5,
-    damping: springConfig.damping * 1.5,
-    mass: springConfig.mass * 2
-  });
-
-  const springRotateY = useSpring(rotateY, {
-    stiffness: springConfig.stiffness * 0.5,
-    damping: springConfig.damping * 1.5,
-    mass: springConfig.mass * 2
-  });
-
-  // Transformations 3D basées sur la position
-  const rotateXTransform = useTransform(y, [-100, 100], [30, -30]);
-  const rotateYTransform = useTransform(x, [-100, 100], [-30, 30]);
-  const zTransform = useTransform(scale, [0.8, 1.2], [-20, 20]);
-
-  // Contrôles de glissement
-  const dragControls = useDragControls();
-
-  // Gestion du glissement avec physique
+  // Gestion du drag
   const handleDragStart = () => {
     setIsDragging(true);
+    setDragCount(prev => prev + 1);
     onDragStart?.();
+    console.log('🎭 Drag commencé - Carte physique');
   };
 
-  const handleDragEnd = (event: any, info: PanInfo) => {
+  const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     setIsDragging(false);
     
-    // Physique de rebond
-    if (physics.bounce && physics.bounce > 0) {
-      const velocity = Math.sqrt(info.velocity.x ** 2 + info.velocity.y ** 2);
-      if (velocity > 100) {
-        // Rebond avec friction
-        const bounceX = info.velocity.x * physics.bounce * physics.friction;
-        const bounceY = info.velocity.y * physics.bounce * physics.friction;
-        
-        x.set(x.get() + bounceX * 0.1);
-        y.set(y.get() + bounceY * 0.1);
-      }
-    }
-
-    // Retour à l'origine si activé
-    if (dragSnapToOrigin) {
-      x.set(0);
-      y.set(0);
-    }
-
-    onDragEnd?.(event, info);
-  };
-
-  // Gestion du hover avec physique
-  const handleHoverStart = () => {
-    setIsHovered(true);
-    if (physics.gravity) {
-      // Lévitation légère
-      z.set(10);
-    }
-  };
-
-  const handleHoverEnd = () => {
-    setIsHovered(false);
-    if (physics.gravity) {
-      // Retour à la normale
-      z.set(0);
-    }
-  };
-
-  // Gestion du clic avec effet ripple
-  const handleTap = (event: React.MouseEvent) => {
-    if (!effects.ripple) return;
-
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (rect) {
-      const x = event.clientX - rect.left;
-      const y = event.clientY - rect.top;
-      
-      const newRipple = {
-        id: Date.now(),
-        x,
-        y,
-        scale: 0
-      };
-
-      setRipples(prev => [...prev, newRipple]);
-
-      // Suppression automatique du ripple
-      setTimeout(() => {
-        setRipples(prev => prev.filter(r => r.id !== newRipple.id));
-      }, 1000);
-    }
-  };
-
-  // Effet de gravité
-  useEffect(() => {
-    if (!physics.gravity || isDragging) return;
-
-    let animationId: number;
-    let lastTime = performance.now();
-
-    const animateGravity = (currentTime: number) => {
-      const deltaTime = currentTime - lastTime;
-      lastTime = currentTime;
-
-      // Simulation de gravité
-      const gravity = 0.5;
-      const currentY = y.get();
-      const currentVelocity = (currentY - y.get()) / deltaTime;
-      
-      // Application de la gravité avec friction
-      const newVelocity = currentVelocity + gravity;
-      const newY = currentY + newVelocity * physics.friction!;
-      
-      // Rebond au sol
-      if (newY > 0) {
-        y.set(0);
-        y.set(-newVelocity * physics.bounce!);
-      } else {
-        y.set(newY);
-      }
-
-      animationId = requestAnimationFrame(animateGravity);
-    };
-
-    animationId = requestAnimationFrame(animateGravity);
-
-    return () => {
-      if (animationId) {
-        cancelAnimationFrame(animationId);
-      }
-    };
-  }, [physics.gravity, isDragging, y, physics.friction, physics.bounce]);
-
-  // Mise à jour des transformations 3D
-  useEffect(() => {
-    rotateX.set(rotateXTransform.get());
-    rotateY.set(rotateYTransform.get());
-    z.set(zTransform.get());
-  }, [rotateXTransform, rotateYTransform, zTransform, rotateX, rotateY, z]);
-
-  // Configuration des couleurs selon le thème
-  const getThemeColors = () => {
-    if (!currentTheme) return { primary: 'from-blue-500 to-purple-600', accent: 'from-pink-400 to-rose-500' };
+    // Calcul de l'énergie basée sur la vitesse
+    const velocity = Math.sqrt(info.velocity.x ** 2 + info.velocity.y ** 2);
+    const newEnergy = Math.min(velocity / 1000, 2);
+    setEnergy(newEnergy);
     
-    return {
-      primary: currentTheme.primary,
-      accent: currentTheme.accent
-    };
+    // Diminution progressive de l'énergie
+    setTimeout(() => setEnergy(0), 2000);
+    
+    onDragEnd?.();
+    console.log('🎭 Drag terminé - Vitesse:', velocity, 'Énergie:', newEnergy);
   };
 
-  const themeColors = getThemeColors();
+  // Animation de retour avec physique
+  const dragConstraints = { left: -150, right: 150, top: -150, bottom: 150 };
+  
+  const dragTransition = {
+    type: "spring",
+    damping: config.friction * 30,
+    stiffness: config.bounce * 100,
+    mass: config.inertia ? 1 : 0.5
+  };
+
+  // Classes dynamiques basées sur l'état
+  const dynamicClasses = [
+    'relative',
+    'cursor-grab',
+    'select-none',
+    'transition-all duration-300',
+    // Ombre dynamique
+    effectsConfig.shadow && (
+      isDragging 
+        ? 'shadow-2xl shadow-blue-500/25' 
+        : 'shadow-lg hover:shadow-xl'
+    ),
+    // Lueur d'énergie
+    effectsConfig.glow && energy > 0.5 && 'ring-4 ring-blue-400/50',
+    // Effet de survol
+    'hover:scale-105 active:scale-95',
+    className
+  ].filter(Boolean).join(' ');
+
+  // Style dynamique
+  const dynamicStyle: React.CSSProperties = {
+    transformOrigin: 'center',
+    willChange: 'transform',
+    // Lueur d'énergie
+    ...(effectsConfig.glow && energy > 0 && {
+      boxShadow: `0 0 ${20 + energy * 30}px rgba(59, 130, 246, ${0.3 + energy * 0.4})`
+    })
+  };
+
+  // Effet de particules (simulé avec des divs)
+  const renderParticles = () => {
+    if (!effectsConfig.particles || energy < 0.3) return null;
+    
+    return (
+      <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-inherit">
+        {Array.from({ length: Math.floor(energy * 10) }, (_, i) => (
+          <motion.div
+            key={`particle-${dragCount}-${i}`}
+            className="absolute w-1 h-1 bg-blue-400 rounded-full"
+            initial={{
+              x: '50%',
+              y: '50%',
+              opacity: 1,
+              scale: 0
+            }}
+            animate={{
+              x: `${50 + (Math.random() - 0.5) * 200}%`,
+              y: `${50 + (Math.random() - 0.5) * 200}%`,
+              opacity: 0,
+              scale: 1
+            }}
+            transition={{
+              duration: 1 + Math.random(),
+              ease: "easeOut"
+            }}
+          />
+        ))}
+      </div>
+    );
+  };
+
+  // Effet de ripple au clic
+  const [ripples, setRipples] = useState<Array<{ id: number; x: number; y: number }>>([]);
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (!effectsConfig.ripple) {
+      onClick?.();
+      return;
+    }
+
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    const newRipple = { id: Date.now(), x, y };
+    setRipples(prev => [...prev, newRipple]);
+    
+    // Nettoyage du ripple
+    setTimeout(() => {
+      setRipples(prev => prev.filter(r => r.id !== newRipple.id));
+    }, 1000);
+    
+    onClick?.();
+  };
 
   return (
     <motion.div
-      ref={cardRef}
       drag={drag}
-      dragControls={dragControls}
       dragConstraints={dragConstraints}
-      dragElastic={dragElastic}
-      dragMomentum={dragMomentum}
+      dragElastic={config.bounce}
+      dragTransition={dragTransition}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      onHoverStart={handleHoverStart}
-      onHoverEnd={handleHoverEnd}
-      onTap={handleTap}
+      onClick={handleClick}
+      className={dynamicClasses}
       style={{
-        x: springX,
-        y: springY,
-        scale: springScale,
-        rotateX: springRotateX,
-        rotateY: springRotateY,
-        z: z,
-        transformStyle: "preserve-3d"
+        x,
+        y,
+        rotateX: config.gravity ? rotateX : 0,
+        rotateY: config.gravity ? rotateY : 0,
+        scale,
+        ...dynamicStyle
       }}
       whileHover={{ 
-        scale: hoverScale,
-        transition: { duration: 0.3, ease: "easeOut" }
+        scale: 1.05,
+        rotateZ: Math.random() * 4 - 2,
+        transition: { duration: 0.2 }
       }}
       whileTap={{ 
-        scale: tapScale,
-        transition: { duration: 0.1, ease: "easeOut" }
+        scale: 0.95,
+        transition: { duration: 0.1 }
       }}
-      className={`
-        relative cursor-grab active:cursor-grabbing
-        transform-gpu perspective-1000
-        ${className}
-      `}
     >
-      {/* Effet de bordure lumineuse */}
-      {effects.glow && (
-        <motion.div
-          className="absolute inset-0 rounded-xl opacity-0 group-hover:opacity-100"
-          style={{
-            background: `linear-gradient(45deg, ${themeColors.primary})`,
-            filter: 'blur(20px)',
-            transform: 'scale(1.1)',
-            zIndex: -1
-          }}
-          animate={{
-            opacity: isHovered ? 0.3 : 0,
-            scale: isHovered ? 1.1 : 1
-          }}
-          transition={{ duration: 0.3 }}
-        />
-      )}
+      {/* Contenu principal */}
+      <div className="relative z-10 p-6 bg-white rounded-xl border border-gray-200">
+        {children}
+      </div>
 
-      {/* Effet de particules flottantes */}
-      {effects.particles && isHovered && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(8)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute w-1 h-1 bg-white/60 rounded-full"
-              style={{
-                left: `${20 + i * 10}%`,
-                top: `${30 + Math.sin(i) * 20}%`
-              }}
-              initial={{ scale: 0, opacity: 0 }}
-              animate={{ 
-                scale: [0, 1, 0],
-                opacity: [0, 1, 0],
-                y: [0, -20, -40]
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                delay: i * 0.2,
-                ease: "easeOut"
-              }}
-            />
-          ))}
-        </div>
-      )}
+      {/* Particules d'énergie */}
+      {renderParticles()}
 
-      {/* Effet de ripple au clic */}
-      {effects.ripple && ripples.map((ripple) => (
+      {/* Effets de ripple */}
+      {effectsConfig.ripple && ripples.map(ripple => (
         <motion.div
           key={ripple.id}
-          className="absolute w-4 h-4 bg-white/30 rounded-full pointer-events-none"
+          className="absolute pointer-events-none bg-blue-400/30 rounded-full"
           style={{
-            left: ripple.x - 8,
-            top: ripple.y - 8,
-            transformOrigin: 'center'
+            left: `${ripple.x}%`,
+            top: `${ripple.y}%`,
+            transform: 'translate(-50%, -50%)'
           }}
-          initial={{ scale: 0, opacity: 1 }}
-          animate={{ scale: 4, opacity: 0 }}
+          initial={{ width: 0, height: 0, opacity: 0.8 }}
+          animate={{ width: 200, height: 200, opacity: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
         />
       ))}
 
-      {/* Contenu principal de la carte */}
-      <motion.div
-        className={`
-          relative bg-white rounded-xl p-6 shadow-lg border border-gray-200
-          transform-gpu transition-all duration-300
-          ${isDragging ? 'shadow-2xl' : 'shadow-lg'}
-          ${isHovered ? 'border-blue-300' : 'border-gray-200'}
-        `}
-        style={{
-          transform: isHovered ? 'translateZ(20px)' : 'translateZ(0px)'
-        }}
-      >
-        {/* Effet de brillance au hover */}
+      {/* Indicateur d'énergie */}
+      {energy > 0.2 && (
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent rounded-xl"
-          initial={{ x: '-100%' }}
-          animate={{ x: isHovered ? '100%' : '-100%' }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+          className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full z-20"
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [0.8, 1, 0.8]
+          }}
+          transition={{ 
+            duration: 0.5,
+            repeat: Infinity,
+            repeatType: "reverse"
+          }}
         />
+      )}
 
-        {/* Contenu de la carte */}
-        <div className="relative z-10">
-          {children}
+      {/* Compteur de drags (pour le debug) */}
+      {process.env.NODE_ENV === 'development' && dragCount > 0 && (
+        <div className="absolute -bottom-2 -left-2 w-6 h-6 bg-gray-800 text-white text-xs rounded-full flex items-center justify-center z-20">
+          {dragCount}
         </div>
-
-        {/* Indicateur de glissement */}
-        {drag && (
-          <motion.div
-            className="absolute bottom-2 right-2 w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100"
-            animate={{
-              scale: isDragging ? 1.2 : 1,
-              rotate: isDragging ? 180 : 0
-            }}
-            transition={{ duration: 0.2 }}
-          >
-            <svg className="w-3 h-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
-            </svg>
-          </motion.div>
-        )}
-      </motion.div>
-
-      {/* Effet d'ombre dynamique */}
-      {effects.shadow && (
-        <motion.div
-          className="absolute inset-0 rounded-xl opacity-0"
-          style={{
-            background: `radial-gradient(ellipse at center, rgba(0,0,0,0.1) 0%, transparent 70%)`,
-            transform: 'translateZ(-10px)',
-            filter: 'blur(10px)'
-          }}
-          animate={{
-            opacity: isHovered ? 0.3 : 0,
-            scale: isHovered ? 1.2 : 1
-          }}
-          transition={{ duration: 0.3 }}
-        />
       )}
     </motion.div>
   );
 };
 
-// Composant de carte avec configuration par défaut
-export const SimplePhysicsCard: React.FC<Omit<PhysicsCardProps, 'physics' | 'effects'>> = (props) => {
-  return (
-    <PhysicsCard
-      {...props}
-      physics={{ gravity: false, friction: 0.95, bounce: 0.5, airResistance: 0.98 }}
-      effects={{ shadow: true, glow: false, particles: false, ripple: true }}
-    />
-  );
-};
+// Variantes pré-configurées
+export const SimplePhysicsCard: React.FC<Omit<PhysicsCardProps, 'physics' | 'effects'>> = (props) => (
+  <PhysicsCard
+    {...props}
+    physics={{ gravity: false, friction: 0.8, bounce: 0.6 }}
+    effects={{ shadow: true, glow: false, particles: false, ripple: true }}
+  />
+);
 
-// Composant de carte avec physique avancée
-export const AdvancedPhysicsCard: React.FC<Omit<PhysicsCardProps, 'physics' | 'effects'>> = (props) => {
-  return (
-    <PhysicsCard
-      {...props}
-      physics={{ gravity: true, friction: 0.9, bounce: 0.8, airResistance: 0.95 }}
-      effects={{ shadow: true, glow: true, particles: true, ripple: true }}
-      springConfig={{ stiffness: 400, damping: 15, mass: 0.8 }}
-    />
-  );
-};
+export const AdvancedPhysicsCard: React.FC<Omit<PhysicsCardProps, 'physics' | 'effects'>> = (props) => (
+  <PhysicsCard
+    {...props}
+    physics={{ gravity: true, friction: 0.9, bounce: 0.9, inertia: true }}
+    effects={{ shadow: true, glow: true, particles: true, ripple: true }}
+  />
+);
+
+export const MagneticPhysicsCard: React.FC<Omit<PhysicsCardProps, 'physics' | 'effects'>> = (props) => (
+  <PhysicsCard
+    {...props}
+    physics={{ gravity: true, friction: 0.95, bounce: 0.7, magnetism: true }}
+    effects={{ shadow: true, glow: true, particles: false, ripple: true }}
+  />
+);

@@ -16,12 +16,10 @@ export { NavigationDemo } from './components/NavigationDemo';
 export { RetirementNavigation } from './components/RetirementNavigation';
 
 // Composants Phase 2 - Expérience immersive
-export { useDynamicTheme } from './hooks/useDynamicTheme';
-export { useAdaptiveLayout } from './hooks/useAdaptiveLayout';
-export { IntelligentSkeleton } from './components/IntelligentSkeleton';
-export { PhysicsCard } from './components/PhysicsCard';
-export { InteractiveParticles } from './components/InteractiveParticles';
 export { Phase2Demo } from './components/Phase2Demo';
+export { InteractiveParticles, MagneticParticles, EnergyParticles, SimpleParticles } from './components/InteractiveParticles';
+export { PhysicsCard, SimplePhysicsCard, AdvancedPhysicsCard, MagneticPhysicsCard } from './components/PhysicsCard';
+export { IntelligentSkeleton, CardSkeleton, TableSkeleton, ChartSkeleton, ListSkeleton } from './components/IntelligentSkeleton';
 
 // Composants temporaires
 export { UltimatePlanningDashboard } from './components/UltimatePlanningDashboard';
