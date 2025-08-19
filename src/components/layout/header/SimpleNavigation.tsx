@@ -56,7 +56,7 @@ export const SimpleNavigation: React.FC = () => {
           {/* Logo et titre - FORCÉ avec timestamp */}
           <div className="flex items-center space-x-3">
             <img 
-              src={`/logo-monplanretraite.png?v=${Date.now()}`}
+              src={`/logo-planretraite.png?v=${Date.now()}`}
               alt="MonPlanRetraite.ca Logo" 
               className="h-8 w-auto"
               onError={(e) => {

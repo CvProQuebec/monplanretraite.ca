@@ -34,7 +34,7 @@ export const Logo: React.FC<LogoProps> = ({
   };
 
   // Force le rechargement du logo en ajoutant un timestamp
-  const logoUrl = `/logo-monplanretraite.png?v=${Date.now()}`;
+  const logoUrl = `/logo-planretraite.png?v=${Date.now()}`;
 
   return (
     <div className={`flex items-center space-x-3 ${className}`}>

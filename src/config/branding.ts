@@ -2,7 +2,7 @@ export const SITE_CONFIG = {
   name: "MonPlanRetraite.ca",
   description: "Planification de retraite intelligente et personnalisée",
   domain: "monplanretraite.ca",
-  logo: "/logo-monplanretraite.png",
+  logo: "/logo-planretraite.png",
   colors: {
     primary: "#2B4C8C", // Bleu retraite
     secondary: "#E8F4F8",
