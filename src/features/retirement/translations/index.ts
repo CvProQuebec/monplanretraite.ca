@@ -19,6 +19,9 @@ export const translations = {
 			simulator: 'Simulateur',
 			reports: 'Rapports',
 		},
+		personalData: {
+			help: 'Aide',
+		},
 		cashflow: {
 			title: 'Gestion du budget',
 			subtitle: 'Suivez vos revenus et dépenses mensuels',
@@ -88,6 +91,9 @@ export const translations = {
 			taxOptimization: 'Tax optimization',
 			simulator: 'Simulator',
 			reports: 'Reports',
+		},
+		personalData: {
+			help: 'Help',
 		},
 		cashflow: {
 			title: 'Budget management',
