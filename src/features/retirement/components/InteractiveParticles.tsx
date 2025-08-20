@@ -85,6 +85,7 @@ export const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
   const animationRef = useRef<number>();
   const mouseRef = useRef({ x: 0, y: 0 });
   const [particles, setParticles] = useState<Particle[]>([]);
+  const particlesRef = useRef<Particle[]>([]);
   const [isActive, setIsActive] = useState(false);
 
   const themeConfig = PARTICLE_THEMES[theme];
@@ -115,7 +116,8 @@ export const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       createParticle(i, canvas)
     );
     setParticles(newParticles);
-  }, [count, themeConfig]);
+    particlesRef.current = newParticles;
+  }, [count, theme]); // Utiliser theme au lieu de themeConfig
 
   // Animation des particules
   useEffect(() => {
@@ -132,8 +134,7 @@ export const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
       // Effacement
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      setParticles(prevParticles => {
-        return prevParticles.map(particle => {
+      particlesRef.current = particlesRef.current.map(particle => {
           let { x, y, vx, vy, energy } = particle;
 
           // Effet magnétique
@@ -181,10 +182,9 @@ export const InteractiveParticles: React.FC<InteractiveParticlesProps> = ({
             x, y, vx, vy, energy, life
           };
         });
-      });
 
       // Rendu des particules
-      particles.forEach(particle => {
+      particlesRef.current.forEach(particle => {
         const { x, y, size, color, opacity, energy } = particle;
         
         ctx.save();
