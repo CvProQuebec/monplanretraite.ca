@@ -7,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { Users, Info, HelpCircle, Calendar, DollarSign, Target, Rocket, Sparkles, Brain, Shield, Zap } from 'lucide-react';
+import { Users, Info, HelpCircle, Calendar, DollarSign, Target, Rocket, Sparkles, Brain, Shield, Zap, Save } from 'lucide-react';
 import { UserData } from '../types';
 import { formatCurrency } from '../utils/formatters';
 import { HelpTooltip, FieldHelp } from '../components/HelpTooltip';
@@ -71,11 +71,6 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
       <div className="container mx-auto px-6 py-8 relative z-10">
         {/* En-tête spectaculaire */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-3 mb-6 bg-gradient-to-r from-yellow-400 to-orange-500 text-slate-900 px-6 py-3 rounded-full font-bold text-lg shadow-2xl">
-            <Rocket className="w-6 h-6 animate-bounce" />
-            <span>PHASE 2 ACTIVE</span>
-            <Sparkles className="w-6 h-6 animate-pulse" />
-          </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent drop-shadow-2xl">
             {isFrench ? '🚀 Données Personnelles Avancées' : '🚀 Advanced Personal Data'}
           </h1>
@@ -402,14 +397,14 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
           </CardContent>
         </Card>
 
-        {/* Bouton CALCULER ET CONTINUER - ULTRA-VISIBLE ! */}
+        {/* Bouton SAUVEGARDER - Protection des données ! */}
         <div className="text-center">
           <Button
             size="lg"
-            className="bg-gradient-to-r from-red-500 via-pink-500 to-purple-500 hover:from-red-600 hover:via-pink-600 hover:to-purple-600 text-white font-bold text-2xl py-6 px-12 shadow-2xl transform hover:scale-110 transition-all duration-300 border-4 border-white/20 backdrop-blur-sm"
+            className="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-600 hover:from-green-600 hover:via-emerald-600 hover:to-teal-700 text-white font-bold text-2xl py-6 px-12 shadow-2xl transform hover:scale-110 transition-all duration-300 border-4 border-white/20 backdrop-blur-sm"
             onClick={() => {
-              // Logique de calcul et continuation
-              console.log('🚀 Calcul et continuation...');
+              // Logique de sauvegarde et protection des données
+              console.log('💾 Sauvegarde des données...');
               
               // Calculer automatiquement les dépenses mensuelles si les annuelles sont renseignées
               if (data.personal?.depensesAnnuelles && data.personal.depensesAnnuelles > 0) {
@@ -418,30 +413,33 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
                 
                 // Afficher un toast de confirmation
                 toast({
-                  title: "✅ Calcul automatique effectué !",
-                  description: `Dépenses mensuelles calculées: $${depensesMensuelles.toLocaleString()}`,
+                  title: "✅ Données sauvegardées !",
+                  description: `Vos informations personnelles ont été sauvegardées avec succès`,
                   variant: "default"
                 });
                 
-                console.log(`🔄 Dépenses mensuelles calculées: $${depensesMensuelles}`);
+                console.log(`🔄 Dépenses mensuelles calculées et sauvegardées: $${depensesMensuelles}`);
               } else {
-                // Avertir l'utilisateur
+                // Sauvegarder quand même mais avertir
                 toast({
-                  title: "⚠️ Données manquantes",
-                  description: "Veuillez d'abord saisir vos dépenses annuelles pour le calcul automatique",
-                  variant: "destructive"
+                  title: "💾 Données sauvegardées",
+                  description: "Vos données ont été sauvegardées. Complétez les dépenses annuelles pour un calcul automatique optimal.",
+                  variant: "default"
                 });
               }
+              
+              // Appeler onUpdate pour sauvegarder les données
+              onUpdate(data);
             }}
           >
-            <Brain className="w-8 h-8 mr-4 animate-pulse" />
-            {isFrench ? '🧠 CALCULER ET CONTINUER' : '🧠 CALCULATE AND CONTINUE'}
-            <Zap className="w-8 h-8 ml-4 animate-bounce" />
+            <Save className="w-8 h-8 mr-4 animate-pulse" />
+            {isFrench ? '💾 SAUVEGARDER' : '💾 SAVE'}
+            <Shield className="w-8 h-8 ml-4 animate-bounce" />
           </Button>
           <p className="text-gray-300 mt-4 text-lg">
             {isFrench 
-              ? '✨ Votre planification financière commence ici !'
-              : '✨ Your financial planning starts here!'
+              ? '✨ Protégez vos données et continuez en toute sécurité !'
+              : '✨ Protect your data and continue safely!'
             }
           </p>
         </div>

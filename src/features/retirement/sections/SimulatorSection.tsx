@@ -159,10 +159,6 @@ export const SimulatorSection: React.FC<SimulatorSectionProps> = ({ data, calcul
       <div className="space-y-6 relative z-10 p-6">
         {/* En-tête principal avec nouveau look Phase 2 */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-3 mb-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm font-bold">
-            <Rocket className="w-4 h-4" />
-            PHASE 2 ACTIVE
-          </div>
           <h1 className="text-5xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent drop-shadow-2xl mb-4">
             {t.title}
           </h1>
