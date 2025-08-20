@@ -18,6 +18,7 @@ import { CombinedPensionSection } from '../sections/CombinedPensionSection';
 import { PremiumFeaturesSection } from '../sections/PremiumFeaturesSection';
 import { EmergencyInfoSection } from '../sections/EmergencyInfoSection';
 import { BackupSecuritySection } from '../sections/BackupSecuritySection';
+import { Phase2Wrapper } from './Phase2Wrapper';
 // Import de PricingSection supprimé
 
 export const RetirementApp: React.FC<{ 
@@ -39,6 +40,29 @@ export const RetirementApp: React.FC<{
     }
   };
 
+  // Fonction pour obtenir le thème approprié selon la section
+  const getSectionTheme = (section: string) => {
+    switch (section) {
+      case 'dashboard': return 'auto';
+      case 'personal': return 'afternoon';
+      case 'retirement': return 'evening';
+      case 'savings': return 'morning';
+      case 'cashflow': return 'evening';
+      case 'cpp': return 'afternoon';
+      case 'combined-pension': return 'premium';
+      case 'advanced-expenses': return 'creative';
+      case 'tax': return 'night';
+      case 'simulator': return 'premium';
+      case 'session': return 'morning';
+      case 'backup-security': return 'night';
+      case 'reports': return 'evening';
+      case 'emergency-info': return 'creative';
+      case 'premium-features': return 'premium';
+      case 'demos': return 'auto';
+      default: return 'auto';
+    }
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -56,36 +80,94 @@ export const RetirementApp: React.FC<{
   }
 
   const renderSection = () => {
+    const theme = getSectionTheme(activeSection);
+    
     switch (activeSection) {
       case 'personal':
-        return <PersonalDataSection data={userData} onUpdate={updateUserData} />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={false} enableThemeRotation={false}>
+            <PersonalDataSection data={userData} onUpdate={updateUserData} />
+          </Phase2Wrapper>
+        );
       case 'retirement':
-        return <RetirementSection data={userData} onUpdate={updateUserData} />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={true} enableThemeRotation={true}>
+            <RetirementSection data={userData} onUpdate={updateUserData} />
+          </Phase2Wrapper>
+        );
       case 'savings':
-        return <SavingsSection data={userData} onUpdate={updateUserData} />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={true} enableThemeRotation={true}>
+            <SavingsSection data={userData} onUpdate={updateUserData} />
+          </Phase2Wrapper>
+        );
       case 'emergency-info':
-        return <EmergencyInfoSection />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={false} enableThemeRotation={true}>
+            <EmergencyInfoSection />
+          </Phase2Wrapper>
+        );
       case 'cashflow':
-        return <CashflowSection data={userData} onUpdate={updateUserData} />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={true} enableAdaptiveLayout={true}>
+            <CashflowSection data={userData} onUpdate={updateUserData} />
+          </Phase2Wrapper>
+        );
       case 'cpp':
-        return <CPPSection />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={true} enableThemeRotation={true}>
+            <CPPSection />
+          </Phase2Wrapper>
+        );
       case 'combined-pension':
-        return <CombinedPensionSection />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={true} enableThemeRotation={true}>
+            <CombinedPensionSection />
+          </Phase2Wrapper>
+        );
       case 'premium-features':
-        return <PremiumFeaturesSection />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={true} enableThemeRotation={true}>
+            <PremiumFeaturesSection />
+          </Phase2Wrapper>
+        );
       case 'advanced-expenses':
-        return <AdvancedExpensesSection data={userData} onUpdate={updateUserData} />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={true} enableAdaptiveLayout={true}>
+            <AdvancedExpensesSection data={userData} onUpdate={updateUserData} />
+          </Phase2Wrapper>
+        );
       case 'tax':
-        return <TaxOptimizationSection data={userData} calculations={calculations} />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={true} enableAdaptiveLayout={true}>
+            <TaxOptimizationSection data={userData} calculations={calculations} />
+          </Phase2Wrapper>
+        );
       case 'simulator':
-        return <SimulatorSection data={userData} calculations={calculations} />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={true} enableAdaptiveLayout={true}>
+            <SimulatorSection data={userData} calculations={calculations} />
+          </Phase2Wrapper>
+        );
       case 'reports':
-        return <ReportsSection data={userData} calculations={calculations} />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={true} enableAdaptiveLayout={true}>
+            <ReportsSection data={userData} calculations={calculations} />
+          </Phase2Wrapper>
+        );
       case 'session':
-        return <BackupSecuritySection data={userData} onDataLoad={onDataLoad} />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={false} enableThemeRotation={false}>
+            <BackupSecuritySection data={userData} onDataLoad={onDataLoad} />
+          </Phase2Wrapper>
+        );
       case 'dashboard':
       default:
-        return <DashboardSection data={userData} calculations={calculations} />;
+        return (
+          <Phase2Wrapper theme={theme} showParticles={true} showPhysics={true} enableThemeRotation={true}>
+            <DashboardSection data={userData} calculations={calculations} />
+          </Phase2Wrapper>
+        );
     }
   };
 
