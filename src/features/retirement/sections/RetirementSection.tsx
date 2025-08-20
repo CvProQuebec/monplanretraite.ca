@@ -39,7 +39,7 @@ export const RetirementSection: React.FC = () => {
 
   const translations = {
     fr: {
-      title: "🚀 Planification de Retraite Avancée",
+      title: "🚀 Planification de retraite avancée",
       subtitle: "Transformez vos rêves de retraite en réalité avec notre calculateur intelligent",
       currentAge: "Âge actuel",
       retirementAge: "Âge de retraite souhaité",
