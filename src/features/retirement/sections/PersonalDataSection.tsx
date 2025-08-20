@@ -1,5 +1,5 @@
 // src/features/retirement/sections/PersonalDataSection.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -12,6 +12,7 @@ import { UserData } from '../types';
 import { formatCurrency } from '../utils/formatters';
 import { HelpTooltip, FieldHelp } from '../components/HelpTooltip';
 import { CustomBirthDateInput } from '../components/CustomBirthDateInput';
+import { useToast } from '@/hooks/use-toast';
 
 interface PersonalDataSectionProps {
   data: UserData;
@@ -23,9 +24,23 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
   onUpdate
 }) => {
   const [showHelp, setShowHelp] = useState(false);
+  const { toast } = useToast();
   
   // Détection simple de la langue depuis l'URL
   const isFrench = window.location.pathname.includes('/fr/') || !window.location.pathname.includes('/en/');
+
+  // Calcul automatique des dépenses mensuelles quand les annuelles changent
+  useEffect(() => {
+    if (data.personal?.depensesAnnuelles && data.personal.depensesAnnuelles > 0) {
+      const depensesMensuelles = Math.round(data.personal.depensesAnnuelles / 12);
+      
+      // Mettre à jour seulement si les mensuelles ne sont pas déjà calculées
+      if (data.personal.depensesMensuelles !== depensesMensuelles) {
+        handleChange('depensesMensuelles', depensesMensuelles);
+        console.log(`🔄 Calcul automatique: $${data.personal.depensesAnnuelles} annuel = $${depensesMensuelles} mensuel`);
+      }
+    }
+  }, [data.personal?.depensesAnnuelles]);
 
   const handleChange = (field: string, value: any) => {
     onUpdate('personal', { [field]: value });
@@ -351,8 +366,14 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
             </div>
 
             <div className="bg-gradient-to-r from-slate-700/50 to-slate-600/50 p-4 rounded-lg border border-slate-500/30">
-              <h4 className="text-lg font-semibold text-gray-200 mb-3">
+              <h4 className="text-lg font-semibold text-gray-200 mb-3 flex items-center gap-2">
+                <Target className="w-5 h-5 text-yellow-400" />
                 {isFrench ? 'Résumé calculé automatiquement:' : 'Automatically calculated summary:'}
+                {data.personal?.depensesAnnuelles && data.personal.depensesAnnuelles > 0 && (
+                  <span className="text-xs bg-green-500 text-white px-2 py-1 rounded-full animate-pulse">
+                    ✅ Auto
+                  </span>
+                )}
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="text-center">
@@ -362,6 +383,11 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
                   <div className="text-sm text-gray-300">
                     {isFrench ? 'Mensuel' : 'Monthly'}
                   </div>
+                  {data.personal?.depensesAnnuelles && data.personal.depensesAnnuelles > 0 && (
+                    <div className="text-xs text-green-400 mt-1">
+                      Calculé automatiquement
+                    </div>
+                  )}
                 </div>
                 <div className="text-center">
                   <div className="text-2xl font-bold text-blue-400">
@@ -384,6 +410,28 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
             onClick={() => {
               // Logique de calcul et continuation
               console.log('🚀 Calcul et continuation...');
+              
+              // Calculer automatiquement les dépenses mensuelles si les annuelles sont renseignées
+              if (data.personal?.depensesAnnuelles && data.personal.depensesAnnuelles > 0) {
+                const depensesMensuelles = Math.round(data.personal.depensesAnnuelles / 12);
+                handleChange('depensesMensuelles', depensesMensuelles);
+                
+                // Afficher un toast de confirmation
+                toast({
+                  title: "✅ Calcul automatique effectué !",
+                  description: `Dépenses mensuelles calculées: $${depensesMensuelles.toLocaleString()}`,
+                  variant: "default"
+                });
+                
+                console.log(`🔄 Dépenses mensuelles calculées: $${depensesMensuelles}`);
+              } else {
+                // Avertir l'utilisateur
+                toast({
+                  title: "⚠️ Données manquantes",
+                  description: "Veuillez d'abord saisir vos dépenses annuelles pour le calcul automatique",
+                  variant: "destructive"
+                });
+              }
             }}
           >
             <Brain className="w-8 h-8 mr-4 animate-pulse" />
