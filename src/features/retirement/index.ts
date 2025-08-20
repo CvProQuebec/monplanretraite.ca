@@ -23,6 +23,10 @@ export { PhysicsCard, SimplePhysicsCard, AdvancedPhysicsCard, MagneticPhysicsCar
 export { IntelligentSkeleton, CardSkeleton, TableSkeleton, ChartSkeleton, ListSkeleton } from './components/IntelligentSkeleton';
 export { Phase2Wrapper, Phase2WrapperLight, Phase2WrapperHeavy, Phase2WrapperAuto } from './components/Phase2Wrapper';
 
+// Composants de simulation et analyse
+export { ScenarioComparison } from './components/ScenarioComparison';
+export { SensitivityAnalysis } from './components/SensitivityAnalysis';
+
 // Composants temporaires
 export { UltimatePlanningDashboard } from './components/UltimatePlanningDashboard';
 
