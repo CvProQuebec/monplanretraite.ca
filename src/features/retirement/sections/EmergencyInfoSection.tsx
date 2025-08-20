@@ -229,72 +229,92 @@ export const EmergencyInfoSection: React.FC = () => {
   const stats = EmergencyInfoService.getUsageStats();
 
   return (
-    <div className="space-y-6">
-      {/* En-tête */}
-      <Card className="bg-gradient-to-br from-red-50 to-orange-50 border-red-200">
-        <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
-              <AlertTriangle className="w-8 h-8 text-red-600" />
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+      {/* Particules animées en arrière-plan */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
+        <div className="absolute bottom-40 left-20 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
+        <div className="absolute top-60 left-1/2 w-1 h-1 bg-red-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-96 left-1/4 w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-32 right-1/4 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-72 left-1/3 w-1 h-1 bg-pink-400 rounded-full animate-bounce"></div>
+      </div>
+
+      <div className="space-y-6 relative z-10 p-6">
+        {/* En-tête spectaculaire */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-3 mb-4 px-4 py-2 bg-gradient-to-r from-red-600 to-orange-600 text-white rounded-full text-sm font-bold">
+            <AlertTriangle className="w-4 h-4" />
+            PHASE 2 ACTIVE
           </div>
-          <CardTitle className="text-3xl text-red-900 mb-3">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent drop-shadow-2xl mb-4">
             {t.title}
-          </CardTitle>
-          <CardDescription className="text-lg text-red-700 max-w-2xl mx-auto">
+          </h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-4">
             {t.subtitle}
-          </CardDescription>
-          <p className="text-sm text-red-600 mt-2">
+          </p>
+          <p className="text-gray-400 max-w-2xl mx-auto">
             {t.description}
           </p>
-        </CardHeader>
-      </Card>
+        </div>
 
-      {/* Note de sécurité */}
-      <Alert className="border-blue-200 bg-blue-50">
-        <Shield className="h-4 w-4 text-blue-600" />
-        <AlertDescription className="text-blue-800">
-          {t.securityNote}
-        </AlertDescription>
-      </Alert>
-
-      {/* Progression */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <FileCheck className="w-5 h-5" />
-            {t.completionProgress}
-          </CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="flex items-center gap-4">
-            <Progress value={stats.pourcentageCompletion} className="flex-1" />
-            <Badge variant="secondary">
-              {stats.pourcentageCompletion} %
-            </Badge>
-          </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-            <div className="text-center">
-              <div className="font-bold text-blue-600">{stats.contactsCompletes}</div>
-              <div className="text-gray-600">Contacts</div>
-            </div>
-            <div className="text-center">
-              <div className="font-bold text-green-600">{stats.sectionsCompletes}</div>
-              <div className="text-gray-600">Sections</div>
-            </div>
-            <div className="text-center">
-              <div className="font-bold text-purple-600">{stats.totalSections}</div>
-              <div className="text-gray-600">Total</div>
-            </div>
-            <div className="text-center">
-              <div className="font-bold text-orange-600">
-                {lastSaved ? lastSaved.toLocaleDateString('fr-CA') : 'Jamais'}
+        {/* En-tête avec informations */}
+        <Card className="bg-gradient-to-br from-red-800/90 to-orange-800/90 border-0 shadow-2xl backdrop-blur-sm">
+          <CardHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 bg-gradient-to-r from-red-500 to-orange-500 rounded-full flex items-center justify-center shadow-2xl">
+                <AlertTriangle className="w-8 h-8 text-white" />
               </div>
-              <div className="text-gray-600">{t.lastSaved}</div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
+          </CardHeader>
+        </Card>
+
+        {/* Note de sécurité */}
+        <Alert className="border-blue-400 bg-blue-900/20 text-blue-200 mb-8">
+          <Shield className="h-5 w-5 text-blue-400" />
+          <AlertDescription className="text-blue-200 text-lg">
+            <strong>Sécurité :</strong> {t.securityNote}
+          </AlertDescription>
+        </Alert>
+
+        {/* Progression */}
+        <Card className="bg-gradient-to-br from-green-800/90 to-emerald-800/90 border-0 shadow-2xl backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-white">
+              <FileCheck className="w-5 h-5 text-green-400" />
+              {t.completionProgress}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="flex items-center gap-4">
+              <Progress value={stats.pourcentageCompletion} className="flex-1 bg-green-900" />
+              <Badge variant="secondary" className="bg-green-400 text-green-900">
+                {stats.pourcentageCompletion} %
+              </Badge>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+              <div className="text-center">
+                <div className="font-bold text-blue-400">{stats.contactsCompletes}</div>
+                <div className="text-green-200">Contacts</div>
+              </div>
+              <div className="text-center">
+                <div className="font-bold text-green-400">{stats.sectionsCompletes}</div>
+                <div className="text-green-200">Sections</div>
+              </div>
+              <div className="text-center">
+                <div className="font-bold text-purple-400">{stats.totalSections}</div>
+                <div className="text-green-200">Total</div>
+              </div>
+              <div className="text-center">
+                <div className="font-bold text-orange-400">
+                  {lastSaved ? lastSaved.toLocaleDateString('fr-CA') : 'Jamais'}
+                </div>
+                <div className="text-green-200">{t.lastSaved}</div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
       {/* Actions principales */}
       <Card>
@@ -489,6 +509,7 @@ export const EmergencyInfoSection: React.FC = () => {
           </Tabs>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };

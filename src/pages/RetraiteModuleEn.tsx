@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { RetirementApp } from '@/features/retirement';
 import { Phase2Wrapper } from '../features/retirement/components/Phase2Wrapper';
 import { useSearchParams } from 'react-router-dom';
+import { useAuth } from '@/hooks/useAuth';
 import { 
   Home, User, Calculator, TrendingUp, BarChart3, FileText, 
   AlertTriangle, Database, Lock, Crown, Zap, Settings 
@@ -12,6 +13,7 @@ import '@/styles/retirement-module.css';
 const RetraiteModuleEn: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [activeSection, setActiveSection] = useState('dashboard');
+  const { user } = useAuth();
 
   useEffect(() => {
     console.log('🔍 RetraiteModuleEn - Component loaded');
@@ -28,7 +30,7 @@ const RetraiteModuleEn: React.FC = () => {
 
   const handleSectionChange = (newSection: string) => {
     setActiveSection(newSection);
-    // Update URL without reloading page
+    // Update URL without reloading the page
     const url = new URL(window.location.href);
     url.searchParams.set('section', newSection);
     window.history.replaceState({}, '', url.toString());
@@ -57,25 +59,70 @@ const RetraiteModuleEn: React.FC = () => {
     }
   };
 
-  // Navigation tabs configuration
+  // Function to check section access based on plan
+  const hasSectionAccess = (sectionId: string): boolean => {
+    if (!user) return false;
+    
+    const planHierarchy = { free: 0, professional: 1, ultimate: 2 };
+    const currentPlan = user.plan;
+    
+    // Free sections
+    const freeSections = ['dashboard', 'personal', 'retirement', 'savings', 'cashflow', 'cpp', 'combined-pension', 'session', 'emergency-info', 'demos'];
+    if (freeSections.includes(sectionId)) return true;
+    
+    // Professional sections
+    const professionalSections = ['advanced-expenses', 'tax', 'simulator', 'reports'];
+    if (professionalSections.includes(sectionId)) {
+      return planHierarchy[currentPlan] >= planHierarchy.professional;
+    }
+    
+    // Premium sections
+    const premiumSections = ['premium-features'];
+    if (premiumSections.includes(sectionId)) {
+      return planHierarchy[currentPlan] >= planHierarchy.ultimate;
+    }
+    
+    return true; // Default accessible
+  };
+
+  // Navigation tabs configuration with access verification
   const tabs = [
-    { id: 'dashboard', label: 'Dashboard', icon: Home },
-    { id: 'personal', label: 'Profile', icon: User },
-    { id: 'retirement', label: 'Retirement', icon: Calculator },
-    { id: 'savings', label: '$ Savings', icon: TrendingUp },
-    { id: 'cashflow', label: 'Cash Flow', icon: BarChart3, badge: 'Pro' },
-    { id: 'cpp', label: 'CPP', icon: FileText, badge: 'Pro' },
-    { id: 'combined-pension', label: 'CPP+RRQ', icon: FileText, badge: 'Pro' },
-    { id: 'advanced-expenses', label: 'Advanced Expenses', icon: Calculator, badge: 'Pro' },
-    { id: 'tax', label: 'Tax Optimization', icon: Settings, badge: 'Pro' },
-    { id: 'simulator', label: 'Simulator', icon: Zap, badge: 'Pro' },
-    { id: 'session', label: 'Save/Load', icon: Database },
-    { id: 'backup-security', label: 'Security Tips', icon: Lock },
-    { id: 'reports', label: 'Reports', icon: FileText, badge: 'Pro' },
-    { id: 'emergency-info', label: 'Emergency Info', icon: AlertTriangle },
-    { id: 'premium-features', label: 'Premium', icon: Crown, badge: 'Pro' },
-    { id: 'demos', label: 'View Demos', icon: Zap }
+    { id: 'dashboard', label: 'Dashboard', icon: Home, requiredPlan: 'free' },
+    { id: 'emergency-info', label: 'Emergency Info', icon: AlertTriangle, requiredPlan: 'free' },
+    { id: 'personal', label: 'Profile', icon: User, requiredPlan: 'free' },
+    { id: 'retirement', label: 'Retirement', icon: Calculator, requiredPlan: 'free' },
+    { id: 'savings', label: '$ Savings', icon: TrendingUp, requiredPlan: 'free' },
+    { id: 'cashflow', label: 'Cash Flow', icon: BarChart3, requiredPlan: 'free' },
+    { id: 'cpp', label: 'CPP', icon: FileText, requiredPlan: 'free' },
+    { id: 'combined-pension', label: 'CPP+RRQ', icon: FileText, requiredPlan: 'free' },
+    { id: 'advanced-expenses', label: 'Advanced Expenses', icon: Calculator, requiredPlan: 'professional' },
+    { id: 'tax', label: 'Tax Optimization', icon: Settings, requiredPlan: 'professional' },
+    { id: 'simulator', label: 'Simulator', icon: Zap, requiredPlan: 'professional' },
+    { id: 'session', label: 'Save/Load', icon: Database, requiredPlan: 'free' },
+    { id: 'backup-security', label: 'Security Tips', icon: Lock, requiredPlan: 'free' },
+    { id: 'reports', label: 'Reports', icon: FileText, requiredPlan: 'professional' },
+    { id: 'premium-features', label: 'Premium', icon: Crown, requiredPlan: 'ultimate' }
   ];
+
+  // Get plan name in English
+  const getPlanName = (plan: string): string => {
+    const planNames = {
+      'free': 'Free',
+      'professional': 'Professional',
+      'ultimate': 'Ultimate'
+    };
+    return planNames[plan as keyof typeof planNames] || 'Free';
+  };
+
+  // Get plan color
+  const getPlanColor = (plan: string): string => {
+    const planColors = {
+      'free': 'bg-gray-600',
+      'professional': 'bg-blue-600',
+      'ultimate': 'bg-purple-600'
+    };
+    return planColors[plan as keyof typeof planColors] || 'bg-gray-600';
+  };
 
   return (
     <Phase2Wrapper 
@@ -90,34 +137,46 @@ const RetraiteModuleEn: React.FC = () => {
         <div className="container mx-auto px-6">
           {/* Navigation tabs bar */}
           <div className="flex space-x-1 overflow-x-auto py-4">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => handleSectionChange(tab.id)}
-                className={`
-                  relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300
-                  whitespace-nowrap flex items-center gap-2 backdrop-blur-sm
-                  ${activeSection === tab.id
-                    ? 'bg-blue-600/90 text-white shadow-lg transform scale-105'
-                    : 'bg-white/70 text-gray-700 hover:bg-blue-50/80 hover:text-blue-600'
-                  }
-                `}
-              >
-                <tab.icon className="w-4 h-4" />
-                {tab.label}
-                {tab.badge && (
-                  <span className="ml-1 px-2 py-0.5 text-xs bg-green-100 text-green-700 rounded-full">
-                    {tab.badge}
-                  </span>
-                )}
-              </button>
-            ))}
+            {tabs.map((tab) => {
+              const hasAccess = hasSectionAccess(tab.id);
+              const isActive = activeSection === tab.id;
+              
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => hasAccess && handleSectionChange(tab.id)}
+                  disabled={!hasAccess}
+                  className={`
+                    relative px-4 py-2 text-sm font-medium rounded-lg transition-all duration-300
+                    whitespace-nowrap flex items-center gap-2 backdrop-blur-sm
+                    ${!hasAccess 
+                      ? 'opacity-50 cursor-not-allowed bg-gray-100 text-gray-400'
+                      : isActive
+                        ? 'bg-blue-600/90 text-white shadow-lg transform scale-105'
+                        : 'bg-white/70 text-gray-700 hover:bg-blue-50/80 hover:text-blue-600'
+                    }
+                  `}
+                >
+                  <tab.icon className="w-4 h-4" />
+                  {tab.label}
+                  {tab.requiredPlan !== 'free' && (
+                    <span className={`ml-1 px-2 py-0.5 text-xs rounded-full ${
+                      tab.requiredPlan === 'professional' 
+                        ? 'bg-green-100 text-green-700' 
+                        : 'bg-purple-100 text-purple-700'
+                    }`}>
+                      {tab.requiredPlan === 'professional' ? 'Pro' : 'Ultimate'}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
           </div>
           
           {/* Plan indicator and progress */}
           <div className="flex items-center justify-between py-3 border-t border-gray-200/50">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-600/90 text-white rounded-full text-sm font-bold backdrop-blur-sm">
-              Current plan: Free
+            <div className={`inline-flex items-center gap-2 px-4 py-2 ${getPlanColor(user?.plan || 'free')} text-white rounded-full text-sm font-bold backdrop-blur-sm`}>
+              Current Plan: {getPlanName(user?.plan || 'free')}
             </div>
             <div className="flex items-center gap-4">
               <div className="text-sm text-gray-600">Global Progress</div>
@@ -132,9 +191,13 @@ const RetraiteModuleEn: React.FC = () => {
         </div>
       </div>
       
-      {/* Content of active section directly under menu */}
+      {/* Active section content directly under the menu */}
       <div className="container mx-auto px-6 py-8">
-        <RetirementApp activeSection={activeSection} onSectionChange={handleSectionChange} />
+        <RetirementApp 
+          activeSection={activeSection} 
+          onSectionChange={handleSectionChange}
+          onDataLoad={(data) => console.log('Data loaded:', data)}
+        />
       </div>
     </Phase2Wrapper>
   );

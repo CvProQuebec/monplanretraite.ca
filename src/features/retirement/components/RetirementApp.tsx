@@ -17,13 +17,14 @@ import { CPPSection } from '../sections/CPPSection';
 import { CombinedPensionSection } from '../sections/CombinedPensionSection';
 import { PremiumFeaturesSection } from '../sections/PremiumFeaturesSection';
 import { EmergencyInfoSection } from '../sections/EmergencyInfoSection';
-import { SessionManager } from '../components/SessionManager';
+import { BackupSecuritySection } from '../sections/BackupSecuritySection';
 // Import de PricingSection supprimé
 
 export const RetirementApp: React.FC<{ 
   activeSection?: string; 
   onSectionChange?: (section: string) => void;
-}> = ({ activeSection: externalActiveSection, onSectionChange: externalOnSectionChange }) => {
+  onDataLoad?: (data: any) => void;
+}> = ({ activeSection: externalActiveSection, onSectionChange: externalOnSectionChange, onDataLoad }) => {
   const [internalActiveSection, setInternalActiveSection] = useState('dashboard');
   const { userData, updateUserData, calculations, isLoading, error } = useRetirementData();
 
@@ -81,7 +82,7 @@ export const RetirementApp: React.FC<{
       case 'reports':
         return <ReportsSection data={userData} calculations={calculations} />;
       case 'session':
-        return <SessionManager />;
+        return <BackupSecuritySection data={userData} onDataLoad={onDataLoad} />;
       case 'dashboard':
       default:
         return <DashboardSection data={userData} calculations={calculations} />;

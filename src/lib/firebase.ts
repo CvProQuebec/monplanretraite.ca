@@ -23,27 +23,48 @@ console.log('🔍 Variables Firebase détectées:', {
   appId: import.meta.env.VITE_FIREBASE_APP_ID ? '✅ Présente' : '❌ Manquante'
 });
 
-// Vérification stricte de la configuration
-const isFirebaseConfigured = firebaseConfig.apiKey && 
-                            firebaseConfig.apiKey !== "" &&
-                            firebaseConfig.authDomain &&
-                            firebaseConfig.projectId;
+// MODE DÉVELOPPEMENT LOCAL - Firebase désactivé
+const LOCAL_DEV_MODE = true; // FORCÉ pour les tests
 
-if (!isFirebaseConfigured) {
-  console.error('❌ Firebase non configuré - Variables manquantes:', {
-    apiKey: !!firebaseConfig.apiKey,
-    authDomain: !!firebaseConfig.authDomain,
-    projectId: !!firebaseConfig.projectId
-  });
-  throw new Error('Firebase configuration incomplète');
+// Déclarer les variables d'export au niveau racine
+let auth: any;
+let db: any;
+let googleProvider: any;
+let app: any;
+
+if (LOCAL_DEV_MODE) {
+  console.log('🔧 MODE DÉVELOPPEMENT LOCAL ACTIVÉ - Firebase désactivé');
+  
+  // Assigner des objets mock
+  auth = {} as any;
+  db = {} as any;
+  googleProvider = {} as any;
+  app = {} as any;
+} else {
+  // Vérification stricte de la configuration
+  const isFirebaseConfigured = firebaseConfig.apiKey && 
+                              firebaseConfig.apiKey !== "" &&
+                              firebaseConfig.authDomain &&
+                              firebaseConfig.projectId;
+
+  if (!isFirebaseConfigured) {
+    console.error('❌ Firebase non configuré - Variables manquantes:', {
+      apiKey: !!firebaseConfig.apiKey,
+      authDomain: !!firebaseConfig.authDomain,
+      projectId: !!firebaseConfig.projectId
+    });
+    throw new Error('Firebase configuration incomplète');
+  }
+
+  console.log('✅ Firebase correctement configuré');
+
+  // Initialiser Firebase
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  googleProvider = new GoogleAuthProvider();
 }
 
-console.log('✅ Firebase correctement configuré');
-
-// Initialiser Firebase
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-export const googleProvider = new GoogleAuthProvider();
-
+// Exporter au niveau racine
+export { auth, db, googleProvider };
 export default app;
