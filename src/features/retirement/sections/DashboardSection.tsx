@@ -148,7 +148,7 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ data, calculations 
             </CardDescription>
           </CardHeader>
           <CardContent className="p-6">
-            <DataBackupManager onDataLoad={handleDataLoad} />
+            <DataBackupManager data={userData} onDataLoad={handleDataLoad} />
           </CardContent>
         </Card>
 

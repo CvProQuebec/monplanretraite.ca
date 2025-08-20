@@ -381,9 +381,18 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
 
   // Calculer la taille estimée des données
   const getEstimatedSize = () => {
-    const dataSize = JSON.stringify(data).length;
-    const encryptedSize = Math.ceil(dataSize * 1.5); // Estimation du chiffrement
-    return (encryptedSize / 1024).toFixed(1) + ' KB';
+    if (!data) {
+      return '0.0 KB';
+    }
+    
+    try {
+      const dataSize = JSON.stringify(data).length;
+      const encryptedSize = Math.ceil(dataSize * 1.5); // Estimation du chiffrement
+      return (encryptedSize / 1024).toFixed(1) + ' KB';
+    } catch (error) {
+      console.warn('Erreur lors du calcul de la taille des données:', error);
+      return '0.0 KB';
+    }
   };
 
   const handleCreateTestFile = async () => {
