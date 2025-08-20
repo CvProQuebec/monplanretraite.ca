@@ -37,7 +37,96 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
   
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Utiliser le système de traductions global
+  // Traductions
+  const translations = {
+    fr: {
+      save: 'Sauvegarder',
+      load: 'Charger',
+      saveSuccess: 'Sauvegarde réussie',
+      saveError: 'Erreur de sauvegarde',
+      loadSuccess: 'Chargement réussi',
+      loadError: 'Erreur de chargement',
+      passwordRequired: 'Le mot de passe est requis',
+      passwordMismatch: 'Les mots de passe ne correspondent pas',
+      passwordStrength: 'Le mot de passe doit contenir au moins 8 caractères',
+      manualBackup: 'Sauvegarde manuelle',
+      fileRequired: 'Veuillez sélectionner un fichier',
+      invalidFile: 'Fichier invalide',
+      backupFile: 'Fichier de sauvegarde',
+      backupDescription: 'Description',
+      location: 'Emplacement',
+      downloads: 'Téléchargements',
+      custom: 'Personnalisé',
+      chooseFile: 'Choisir un fichier',
+      noFileSelected: 'Aucun fichier sélectionné',
+      createTestFile: 'Créer un fichier de test',
+      testFileCreated: 'Fichier de test créé avec succès',
+      title: 'Gestionnaire de sauvegarde',
+      description: 'Sauvegardez et chargez vos données de retraite',
+      saveButton: 'Sauvegarder',
+      saveTitle: 'Sauvegarder les données',
+      backupInfo: 'Informations de sauvegarde',
+      securityLevel: 'Niveau de sécurité',
+      high: 'Élevé',
+      password: 'Mot de passe',
+      confirmPassword: 'Confirmer le mot de passe',
+      filename: 'Nom du fichier',
+      filenamePlaceholder: 'retirement-backup-2025-01-27.json',
+      backupDescriptionText: 'Description de la sauvegarde',
+      descriptionPlaceholder: 'Sauvegarde complète des données de retraite',
+      locationNote: 'Choisissez où sauvegarder vos données',
+      securityNote: 'Vos données sont chiffrées avec AES-256',
+      cancel: 'Annuler',
+      loadButton: 'Charger',
+      loadTitle: 'Charger les données',
+      selectFile: 'Sélectionner un fichier',
+      fileNote: 'Assurez-vous que le fichier provient d\'une source fiable'
+    },
+    en: {
+      save: 'Save',
+      load: 'Load',
+      saveSuccess: 'Save successful',
+      saveError: 'Save error',
+      loadSuccess: 'Load successful',
+      loadError: 'Load error',
+      passwordRequired: 'Password is required',
+      passwordMismatch: 'Passwords do not match',
+      passwordStrength: 'Password must be at least 8 characters',
+      manualBackup: 'Manual backup',
+      fileRequired: 'Please select a file',
+      invalidFile: 'Invalid file',
+      backupFile: 'Backup file',
+      backupDescription: 'Description',
+      location: 'Location',
+      downloads: 'Downloads',
+      custom: 'Custom',
+      chooseFile: 'Choose a file',
+      noFileSelected: 'No file selected',
+      createTestFile: 'Create test file',
+      testFileCreated: 'Test file created successfully',
+      title: 'Backup Manager',
+      description: 'Save and load your retirement data',
+      saveButton: 'Save',
+      saveTitle: 'Save Data',
+      backupInfo: 'Backup Information',
+      securityLevel: 'Security Level',
+      high: 'High',
+      password: 'Password',
+      confirmPassword: 'Confirm Password',
+      filename: 'Filename',
+      filenamePlaceholder: 'retirement-backup-2025-01-27.json',
+      backupDescriptionText: 'Backup Description',
+      descriptionPlaceholder: 'Complete retirement data backup',
+      locationNote: 'Choose where to save your data',
+      securityNote: 'Your data is encrypted with AES-256',
+      cancel: 'Cancel',
+      loadButton: 'Load',
+      loadTitle: 'Load Data',
+      selectFile: 'Select File',
+      fileNote: 'Make sure the file comes from a trusted source'
+    }
+  };
+
   const t = translations[language];
 
   // Générer un nom de fichier par défaut intelligent
@@ -58,8 +147,8 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
   const handleSave = async () => {
     if (!savePassword) {
       toast({
-        title: tr.saveError,
-        description: tr.passwordRequired,
+        title: t.saveError,
+        description: t.passwordRequired,
         variant: "destructive"
       });
       return;
@@ -67,8 +156,8 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
 
     if (savePassword !== saveConfirmPassword) {
       toast({
-        title: tr.saveError,
-        description: tr.passwordMismatch,
+        title: t.saveError,
+        description: t.passwordMismatch,
         variant: "destructive"
       });
       return;
@@ -76,8 +165,8 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
 
     if (savePassword.length < 8) {
       toast({
-        title: tr.saveError,
-        description: tr.passwordStrength,
+        title: t.saveError,
+        description: t.passwordStrength,
         variant: "destructive"
       });
       return;
@@ -108,8 +197,8 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
       }
       
       toast({
-        title: tr.saveSuccess,
-        description: `${filename} - ${tr.manualBackup}`,
+        title: t.saveSuccess,
+        description: `${filename} - ${t.manualBackup}`,
         variant: "default"
       });
       
