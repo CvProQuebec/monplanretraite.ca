@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
@@ -17,160 +17,184 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
   onChange,
   className = ""
 }) => {
-  const yearRef = useRef<HTMLInputElement>(null);
-  const monthRef = useRef<HTMLInputElement>(null);
-  const dayRef = useRef<HTMLInputElement>(null);
+  // État local pour gérer l'affichage
+  const [displayValue, setDisplayValue] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
 
-  // Séparer la valeur en composants avec validation
-  const year = value?.substring(0, 4) || '';
-  const month = value?.substring(4, 6) || '';
-  const day = value?.substring(6, 8) || '';
-
-  // Validation des composants
-  const isValidYear = year.length === 4 && /^\d{4}$/.test(year);
-  const isValidMonth = month.length === 2 && /^\d{2}$/.test(month) && parseInt(month) >= 1 && parseInt(month) <= 12;
-  const isValidDay = day.length === 2 && /^\d{2}$/.test(day) && parseInt(day) >= 1 && parseInt(day) <= 31;
-
-  const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newYear = e.target.value.replace(/\D/g, ''); // Seulement les chiffres
+  // Formater la valeur pour l'affichage (19870908 -> 1987-09-08)
+  const formatDisplayValue = (rawValue: string): string => {
+    if (!rawValue || rawValue.length !== 8) return '';
     
-    // Limiter à 4 chiffres
-    if (newYear.length <= 4) {
-      const newValue = newYear + month + day;
-      onChange(newValue);
+    const year = rawValue.substring(0, 4);
+    const month = rawValue.substring(4, 6);
+    const day = rawValue.substring(6, 8);
+    
+    return `${year}-${month}-${day}`;
+  };
+
+  // Convertir la valeur d'affichage en format brut (1987-09-08 -> 19870908)
+  const parseDisplayValue = (displayValue: string): string => {
+    return displayValue.replace(/-/g, '');
+  };
+
+  // Initialiser l'affichage
+  useEffect(() => {
+    if (value && value.length === 8) {
+      setDisplayValue(formatDisplayValue(value));
+    } else {
+      setDisplayValue('');
+    }
+  }, [value]);
+
+  // Gérer le changement de valeur
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    
+    // Permettre la saisie de chiffres et de tirets
+    const cleanValue = inputValue.replace(/[^\d-]/g, '');
+    
+    // Si l'utilisateur tape une date complète sans tirets (ex: 19870908)
+    if (cleanValue.length === 8 && !cleanValue.includes('-')) {
+      const formattedValue = formatDisplayValue(cleanValue);
+      setDisplayValue(formattedValue);
+      onChange(cleanValue); // Sauvegarder en format brut
+      setIsEditing(false);
+      return;
+    }
+    
+    // Si l'utilisateur tape avec des tirets (ex: 1987-09-08)
+    if (cleanValue.length <= 10) {
+      setDisplayValue(cleanValue);
       
-              // Si 4 chiffres sont entrés, passer au mois (seulement si pas de Tab)
-        if (newYear.length === 4 && document.activeElement === yearRef.current) {
-          // Délai pour éviter les conflits avec Tab
-          setTimeout(() => {
-            monthRef.current?.focus();
-            monthRef.current?.select();
-          }, 50);
-        }
-    }
-  };
-
-  const handleMonthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newMonth = e.target.value.replace(/\D/g, ''); // Seulement les chiffres
-    
-    // Limiter à 2 chiffres et valider (1-12)
-    if (newMonth.length <= 2) {
-      const monthNum = parseInt(newMonth);
-      if (newMonth === '' || (monthNum >= 1 && monthNum <= 12)) {
-        const newValue = year + newMonth + day;
-        onChange(newValue);
-        
-        // Si 2 chiffres sont entrés, passer au jour (seulement si pas de Tab)
-        if (newMonth.length === 2 && document.activeElement === monthRef.current) {
-          // Délai pour éviter les conflits avec Tab
-          setTimeout(() => {
-            dayRef.current?.focus();
-            dayRef.current?.select();
-          }, 50);
+      // Si la date est complète, la valider et la sauvegarder
+      if (cleanValue.length === 10 && cleanValue.includes('-')) {
+        const rawValue = parseDisplayValue(cleanValue);
+        if (rawValue.length === 8) {
+          onChange(rawValue);
+          setIsEditing(false);
         }
       }
     }
   };
 
-  const handleDayChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newDay = e.target.value.replace(/\D/g, ''); // Seulement les chiffres
+  // Gérer la validation et la sauvegarde lors de la perte de focus
+  const handleBlur = () => {
+    setIsEditing(false);
     
-    // Limiter à 2 chiffres et valider (1-31)
-    if (newDay.length <= 2) {
-      const dayNum = parseInt(newDay);
-      if (newDay === '' || (dayNum >= 1 && dayNum <= 31)) {
-        // Utiliser la valeur actuelle du champ pour construire la nouvelle valeur
-        const currentYear = yearRef.current?.value || '';
-        const currentMonth = monthRef.current?.value || '';
-        const newValue = currentYear + currentMonth + newDay;
-        onChange(newValue);
+    // Valider et formater la date
+    if (displayValue.length === 10 && displayValue.includes('-')) {
+      const rawValue = parseDisplayValue(displayValue);
+      if (rawValue.length === 8) {
+        onChange(rawValue);
+        setDisplayValue(formatDisplayValue(rawValue));
       }
+    } else if (displayValue.length === 8 && !displayValue.includes('-')) {
+      // Si l'utilisateur a tapé 19870908, le formater
+      const formattedValue = formatDisplayValue(displayValue);
+      setDisplayValue(formattedValue);
+      onChange(displayValue);
     }
   };
 
-  // Gestion des événements Tab pour une navigation plus fluide
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, nextRef: React.RefObject<HTMLInputElement>) => {
-    if (e.key === 'Tab' && !e.shiftKey) {
-      e.preventDefault();
-      // Délai pour éviter les conflits avec onChange
-      setTimeout(() => {
-        nextRef.current?.focus();
-        nextRef.current?.select();
-      }, 10);
-    }
+  // Gérer l'édition
+  const handleFocus = () => {
+    setIsEditing(true);
   };
 
-  // Prévention des conflits entre auto-focus et Tab
-  const shouldAutoFocus = (currentValue: string, maxLength: number) => {
-    return currentValue.length === maxLength && document.activeElement === e.target;
+  // Validation de la date
+  const isValidDate = (): boolean => {
+    if (!displayValue || displayValue.length !== 10) return false;
+    
+    const rawValue = parseDisplayValue(displayValue);
+    if (rawValue.length !== 8) return false;
+    
+    const year = parseInt(rawValue.substring(0, 4));
+    const month = parseInt(rawValue.substring(4, 6));
+    const day = parseInt(rawValue.substring(6, 8));
+    
+    // Validation basique
+    if (year < 1900 || year > new Date().getFullYear()) return false;
+    if (month < 1 || month > 12) return false;
+    if (day < 1 || day > 31) return false;
+    
+    // Validation des mois avec 30 jours
+    if ([4, 6, 9, 11].includes(month) && day > 30) return false;
+    
+    // Validation de février
+    if (month === 2) {
+      const isLeapYear = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+      if (isLeapYear && day > 29) return false;
+      if (!isLeapYear && day > 28) return false;
+    }
+    
+    return true;
+  };
+
+  // Obtenir la classe de validation
+  const getValidationClass = (): string => {
+    if (!displayValue) return 'border-gray-300 bg-white';
+    if (isValidDate()) return 'border-green-500 bg-green-50 text-green-900';
+    return 'border-red-500 bg-red-50 text-red-900';
   };
 
   return (
     <div className={`space-y-3 ${className}`}>
-             <Label htmlFor={id} className="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3">
-         <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-         </svg>
-         {label}
-         <span className="text-sm text-gray-500 font-normal ml-2">
-           (Format: AAAA-MM-JJ)
-         </span>
-       </Label>
-             <div className="relative">
-         <div className="flex gap-2 items-center">
-           {/* Indicateur de validation globale */}
-           {year.length === 4 && month.length === 2 && day.length === 2 && (
-             <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center shadow-lg animate-pulse z-10">
-               <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-               </svg>
-             </div>
-           )}
-                 <Input
-           ref={yearRef}
-           type="text"
-           placeholder="AAAA"
-           value={year}
-           onChange={handleYearChange}
-           onKeyDown={(e) => handleKeyDown(e, monthRef)}
-           maxLength={4}
-           className={`w-20 text-center text-lg p-4 h-14 border-2 transition-colors ${
-             year.length === 4 
-               ? 'border-green-500 bg-green-100 text-green-900 font-bold shadow-lg' 
-               : 'border-gray-300 bg-white text-gray-900 hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
-           }`}
-         />
-         <span className="flex items-center text-gray-500 text-lg font-bold">-</span>
-         <Input
-           ref={monthRef}
-           type="text"
-           placeholder="MM"
-           value={month}
-           onChange={handleMonthChange}
-           onKeyDown={(e) => handleKeyDown(e, dayRef)}
-           maxLength={2}
-           className={`w-16 text-center text-lg p-4 h-14 border-2 transition-colors ${
-             month.length === 2 
-               ? 'border-green-500 bg-green-100 text-green-900 font-bold shadow-lg' 
-               : 'border-gray-300 bg-white text-gray-900 hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
-           }`}
-         />
-         <span className="flex items-center text-gray-500 text-lg font-bold">-</span>
-         <Input
-           ref={dayRef}
-           type="text"
-           placeholder="JJ"
-           value={day}
-           onChange={handleDayChange}
-           maxLength={2}
-           className={`w-16 text-center text-lg p-4 h-14 border-2 transition-colors ${
-             day.length === 2 
-               ? 'border-green-500 bg-green-100 text-green-900 font-bold shadow-lg' 
-               : 'border-gray-300 bg-white text-gray-900 hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200'
-           }`}
-                  />
-         </div>
-       </div>
-     </div>
-   );
- };
+      <Label htmlFor={id} className="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3">
+        <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+        {label}
+        <span className="text-sm text-gray-500 font-normal ml-2">
+          (Format: AAAA-MM-JJ ou AAAA)
+        </span>
+      </Label>
+      
+      <div className="relative">
+        <Input
+          id={id}
+          type="text"
+          placeholder="1987-09-08 ou 19870908"
+          value={displayValue}
+          onChange={handleInputChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          className={`w-full text-center text-lg p-4 h-14 border-2 transition-all duration-200 font-mono ${
+            getValidationClass()
+          } hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200`}
+        />
+        
+        {/* Indicateur de validation */}
+        {displayValue && (
+          <div className={`absolute -top-2 -right-2 w-6 h-6 rounded-full flex items-center justify-center shadow-lg z-10 ${
+            isValidDate() 
+              ? 'bg-green-500 animate-pulse' 
+              : 'bg-red-500'
+          }`}>
+            <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d={
+                isValidDate() ? "M5 13l4 4L19 7" : "M6 18L18 6M6 6l12 12"
+              } />
+            </svg>
+          </div>
+        )}
+        
+        {/* Message d'aide */}
+        {isEditing && (
+          <div className="absolute top-full left-0 right-0 mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800 shadow-lg z-20">
+            <div className="font-semibold mb-1">💡 Conseils de saisie :</div>
+            <div>• Tapez directement : <span className="font-mono bg-blue-100 px-1 rounded">19870908</span></div>
+            <div>• Ou utilisez le format : <span className="font-mono bg-blue-100 px-1 rounded">1987-09-08</span></div>
+            <div>• La date sera automatiquement formatée et validée</div>
+          </div>
+        )}
+      </div>
+      
+      {/* Message de validation */}
+      {displayValue && !isValidDate() && (
+        <div className="text-red-600 text-sm bg-red-50 p-2 rounded border border-red-200">
+          ⚠️ Date invalide. Vérifiez le format et la validité de la date.
+        </div>
+      )}
+    </div>
+  );
+};
