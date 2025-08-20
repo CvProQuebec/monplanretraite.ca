@@ -174,7 +174,7 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
 
     if (!saveFilename.trim()) {
       toast({
-        title: tr.saveError,
+        title: t.saveError,
         description: "Le nom de fichier est requis",
         variant: "destructive"
       });
@@ -211,7 +211,7 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
       setSaveDialogOpen(false);
     } catch (error) {
       toast({
-        title: tr.saveError,
+        title: t.saveError,
         description: error instanceof Error ? error.message : 'Erreur inconnue',
         variant: "destructive"
       });
@@ -262,8 +262,8 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
       setSelectedFile(file);
     } else {
       toast({
-        title: tr.loadError,
-        description: tr.fileNote,
+        title: t.loadError,
+        description: t.fileNote,
         variant: "destructive"
       });
     }
@@ -272,8 +272,8 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
   const handleLoad = async () => {
     if (!selectedFile) {
       toast({
-        title: tr.loadError,
-        description: tr.fileRequired,
+        title: t.loadError,
+        description: t.fileRequired,
         variant: "destructive"
       });
       return;
@@ -281,8 +281,8 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
 
     if (!loadPassword) {
       toast({
-        title: tr.loadError,
-        description: tr.passwordRequired,
+        title: t.loadError,
+        description: t.passwordRequired,
         variant: "destructive"
       });
       return;
@@ -339,7 +339,7 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
       } else {
         console.warn('⚠️ onDataLoad n\'est pas une fonction');
         toast({
-          title: tr.loadError,
+          title: t.loadError,
           description: 'Erreur de configuration du composant - contactez le support',
           variant: "destructive"
         });
@@ -365,7 +365,7 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
       }
       
       toast({
-        title: tr.loadError,
+        title: t.loadError,
         description: errorMessage,
         variant: "destructive"
       });
@@ -433,9 +433,9 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Shield className="h-5 w-5" />
-          {tr.title}
+          {t.title}
         </CardTitle>
-        <p className="text-sm text-muted-foreground">{tr.description}</p>
+        <p className="text-sm text-muted-foreground">{t.description}</p>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="flex gap-3">
@@ -444,14 +444,14 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
             <DialogTrigger asChild>
               <Button variant="outline" className="flex-1">
                 <Save className="mr-2 h-4 w-4" />
-                {tr.saveButton}
+                {t.saveButton}
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-lg">
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2">
                   <Save className="h-5 w-5" />
-                  {tr.saveTitle}
+                  {t.saveTitle}
                 </DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
@@ -460,7 +460,7 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2 text-sm text-blue-800">
                       <Info className="h-4 w-4" />
-                      <span className="font-medium">{tr.backupInfo}</span>
+                      <span className="font-medium">{t.backupInfo}</span>
                     </div>
                     <span className="text-xs text-blue-600 font-medium">
                       {getEstimatedSize()}
@@ -468,23 +468,23 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
                   </div>
                   
                   <div className="text-xs text-blue-700">
-                    <span className="font-medium">{tr.securityLevel}:</span> {tr.high}
+                    <span className="font-medium">{t.securityLevel}:</span> {t.high}
                   </div>
                 </div>
 
                 {/* Sécurité */}
                 <div className="space-y-2">
-                  <Label htmlFor="save-password">{tr.password}</Label>
+                  <Label htmlFor="save-password">{t.password}</Label>
                   <Input
                     id="save-password"
                     type="password"
                     value={savePassword}
                     onChange={(e) => setSavePassword(e.target.value)}
-                    placeholder={tr.passwordStrength}
+                    placeholder={t.passwordStrength}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="save-confirm-password">{tr.confirmPassword}</Label>
+                  <Label htmlFor="save-confirm-password">{t.confirmPassword}</Label>
                   <Input
                     id="save-confirm-password"
                     type="password"
@@ -495,31 +495,31 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
 
                 {/* Nom du fichier */}
                 <div className="space-y-2">
-                  <Label htmlFor="save-filename">{tr.filename}</Label>
+                  <Label htmlFor="save-filename">{t.filename}</Label>
                   <Input
                     id="save-filename"
                     type="text"
                     value={saveFilename}
                     onChange={(e) => setSaveFilename(e.target.value)}
-                    placeholder={tr.filenamePlaceholder}
+                    placeholder={t.filenamePlaceholder}
                   />
                 </div>
 
                 {/* Description */}
                 <div className="space-y-2">
-                  <Label htmlFor="save-description">{tr.backupDescription}</Label>
+                  <Label htmlFor="save-description">{t.backupDescription}</Label>
                   <Textarea
                     id="save-description"
                     value={saveDescription}
                     onChange={(e) => setSaveDescription(e.target.value)}
-                    placeholder={tr.descriptionPlaceholder}
+                    placeholder={t.descriptionPlaceholder}
                     rows={2}
                   />
                 </div>
 
                 {/* Emplacement de sauvegarde */}
                 <div className="space-y-2">
-                  <Label htmlFor="save-location">{tr.location}</Label>
+                  <Label htmlFor="save-location">{t.location}</Label>
                   <Select value={saveLocation} onValueChange={(value: 'downloads' | 'custom') => setSaveLocation(value)}>
                     <SelectTrigger>
                       <SelectValue />
@@ -528,36 +528,36 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
                       <SelectItem value="downloads">
                         <div className="flex items-center gap-2">
                           <HardDrive className="h-4 w-4" />
-                          {tr.downloads}
+                          {t.downloads}
                         </div>
                       </SelectItem>
                       <SelectItem value="custom">
                         <div className="flex items-center gap-2">
                           <FolderOpen className="h-4 w-4" />
-                          {tr.custom}
+                          {t.custom}
                         </div>
                       </SelectItem>
                     </SelectContent>
                   </Select>
                   <p className="text-xs text-muted-foreground flex items-center gap-1">
                     <Usb className="h-3 w-3" />
-                    {tr.locationNote}
+                    {t.locationNote}
                   </p>
                 </div>
 
                 {/* Note de sécurité */}
                 <div className="flex items-center gap-2 text-sm text-muted-foreground">
                   <Lock className="h-4 w-4" />
-                  {tr.securityNote}
+                  {t.securityNote}
                 </div>
 
                 {/* Boutons d'action */}
                 <div className="flex gap-2">
                   <Button onClick={handleSave} disabled={isSaving} className="flex-1">
-                    {isSaving ? 'Sauvegarde...' : tr.save}
+                    {isSaving ? 'Sauvegarde...' : t.save}
                   </Button>
                   <Button variant="outline" onClick={() => setSaveDialogOpen(false)}>
-                    {tr.cancel}
+                    {t.cancel}
                   </Button>
                 </div>
               </div>
@@ -569,19 +569,19 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
             <DialogTrigger asChild>
               <Button variant="outline" className="flex-1">
                 <Upload className="mr-2 h-4 w-4" />
-                {tr.loadButton}
+                {t.loadButton}
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-md">
               <DialogHeader>
                 <DialogTitle className="flex items-center gap-2">
                   <Upload className="h-5 w-5" />
-                  {tr.loadTitle}
+                  {t.loadTitle}
                 </DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="file-input">{tr.selectFile}</Label>
+                  <Label htmlFor="file-input">{t.selectFile}</Label>
                   <Input
                     id="file-input"
                     ref={fileInputRef}
@@ -597,7 +597,7 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
                   )}
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="load-password">{tr.password}</Label>
+                  <Label htmlFor="load-password">{t.password}</Label>
                   <Input
                     id="load-password"
                     type="password"
@@ -607,7 +607,7 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
                 </div>
                 <div className="flex items-center gap-2 text-sm text-yellow-600">
                   <AlertCircle className="h-4 w-4" />
-                  {tr.fileNote}
+                  {t.fileNote}
                 </div>
                 
                 {/* Bouton de test pour créer un fichier de sauvegarde */}
@@ -627,10 +627,10 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
                 
                 <div className="flex gap-2">
                   <Button onClick={handleLoad} disabled={isLoading} className="flex-1">
-                    {isLoading ? 'Chargement...' : tr.load}
+                    {isLoading ? 'Chargement...' : t.load}
                   </Button>
                   <Button variant="outline" onClick={() => setLoadDialogOpen(false)}>
-                    {tr.cancel}
+                    {t.cancel}
                   </Button>
                 </div>
               </div>
