@@ -117,11 +117,6 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ data, calculations 
       <div className="container mx-auto px-6 py-8 relative z-10">
         {/* En-tête spectaculaire */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-3 mb-6 bg-gradient-to-r from-yellow-400 to-orange-500 text-slate-900 px-6 py-3 rounded-full font-bold text-lg shadow-2xl">
-            <Rocket className="w-6 h-6 animate-bounce" />
-            <span>PHASE 2 ACTIVE</span>
-            <Sparkles className="w-6 h-6 animate-pulse" />
-          </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent drop-shadow-2xl">
             {isEnglish ? '🚀 Advanced Financial Dashboard' : '🚀 Tableau de Bord Financier Avancé'}
           </h1>

@@ -79,7 +79,10 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
     if (newDay.length <= 2) {
       const dayNum = parseInt(newDay);
       if (newDay === '' || (dayNum >= 1 && dayNum <= 31)) {
-        const newValue = year + month + newDay;
+        // Utiliser la valeur actuelle du champ pour construire la nouvelle valeur
+        const currentYear = yearRef.current?.value || '';
+        const currentMonth = monthRef.current?.value || '';
+        const newValue = currentYear + currentMonth + newDay;
         onChange(newValue);
       }
     }
