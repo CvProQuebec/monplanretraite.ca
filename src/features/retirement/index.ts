@@ -6,6 +6,7 @@
 // Composants principaux
 export { RetirementApp } from './components/RetirementApp';
 export { BackupSecurityTips } from './components/BackupSecurityTips';
+export { BackupSecuritySection } from './sections/BackupSecuritySection';
 
 // Composants Phase 1 - Navigation fluide
 export { TabbedNavigation } from './components/TabbedNavigation';

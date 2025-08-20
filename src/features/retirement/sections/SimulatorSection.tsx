@@ -18,7 +18,9 @@ import {
   AlertTriangle,
   Zap,
   Shield,
-  BarChart3
+  BarChart3,
+  Rocket,
+  Sparkles
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { UserData, Calculations } from '../types';
@@ -145,22 +147,45 @@ export const SimulatorSection: React.FC<SimulatorSectionProps> = ({ data, calcul
   const currentScenario = scenarios.find(s => s.id === activeScenario);
 
   return (
-    <div className="space-y-6">
-      {/* Introduction au simulateur */}
-      <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
-        <CardHeader className="text-center">
-          <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-              <Zap className="w-8 h-8 text-blue-600" />
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+      {/* Particules animées en arrière-plan */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-purple-400 rounded-full animate-bounce"></div>
+        <div className="absolute bottom-40 left-20 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
+        <div className="absolute top-60 left-1/2 w-1 h-1 bg-yellow-400 rounded-full animate-pulse"></div>
+      </div>
+
+      <div className="space-y-6 relative z-10 p-6">
+        {/* En-tête principal avec nouveau look Phase 2 */}
+        <div className="text-center mb-8">
+          <div className="inline-flex items-center gap-3 mb-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm font-bold">
+            <Rocket className="w-4 h-4" />
+            PHASE 2 ACTIVE
           </div>
-          <CardTitle className="text-3xl text-blue-900 mb-3">
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent drop-shadow-2xl mb-4">
             {t.title}
-          </CardTitle>
-          <CardDescription className="text-lg text-blue-700 max-w-4xl mx-auto leading-relaxed">
+          </h1>
+          <p className="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
             {t.subtitle}
-          </CardDescription>
-        </CardHeader>
+          </p>
+        </div>
+
+        {/* Introduction au simulateur avec nouveau look */}
+        <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl backdrop-blur-sm">
+          <CardHeader className="text-center">
+            <div className="flex justify-center mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center">
+                <Zap className="w-8 h-8 text-white" />
+              </div>
+            </div>
+            <CardTitle className="text-3xl text-white mb-3">
+              {t.title}
+            </CardTitle>
+            <CardDescription className="text-lg text-gray-300 max-w-4xl mx-auto leading-relaxed">
+              {t.subtitle}
+            </CardDescription>
+          </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
             <div className="text-center">
@@ -306,74 +331,9 @@ export const SimulatorSection: React.FC<SimulatorSectionProps> = ({ data, calcul
           </ul>
         </CardContent>
       </Card>
+      </div>
     </div>
   );
 };
 
-// Composant pour la comparaison de scénarios
-const ScenarioComparison: React.FC<{ userData: UserData; calculations: Calculations }> = ({ userData, calculations }) => {
-  const { language } = useLanguage();
-  const t = language === 'fr' ? {
-    title: 'Comparaison de scénarios',
-    description: 'Analysez l\'impact de différents paramètres',
-    developmentFeature: 'Fonctionnalité en développement',
-    comingSoon: 'Comparaison de scénarios multiples bientôt disponible'
-  } : {
-    title: 'Scenario Comparison',
-    description: 'Analyze the impact of different parameters',
-    developmentFeature: 'Feature in development',
-    comingSoon: 'Multiple scenario comparison coming soon'
-  };
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t.title}</CardTitle>
-        <CardDescription>{t.description}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="text-center py-8">
-          <div className="text-gray-500 mb-4">
-            <LineChart className="w-16 h-16 mx-auto mb-4 opacity-50" />
-            <p>{t.developmentFeature}</p>
-            <p className="text-sm">{t.comingSoon}</p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
-
-// Composant pour l'analyse de sensibilité
-const SensitivityAnalysis: React.FC<{ userData: UserData; calculations: Calculations }> = ({ userData, calculations }) => {
-  const { language } = useLanguage();
-  const t = language === 'fr' ? {
-    title: 'Analyse de sensibilité',
-    description: 'Testez l\'impact de changements sur vos paramètres clés',
-    developmentFeature: 'Fonctionnalité en développement',
-    comingSoon: 'Analyse de sensibilité bientôt disponible'
-  } : {
-    title: 'Sensitivity Analysis',
-    description: 'Test the impact of changes on your key parameters',
-    developmentFeature: 'Feature in development',
-    comingSoon: 'Sensitivity analysis coming soon'
-  };
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>{t.title}</CardTitle>
-        <CardDescription>{t.description}</CardDescription>
-      </CardHeader>
-      <CardContent>
-        <div className="text-center py-8">
-          <div className="text-gray-500 mb-4">
-            <Target className="w-16 h-16 mx-auto mb-4 opacity-50" />
-            <p>{t.developmentFeature}</p>
-            <p className="text-sm">{t.comingSoon}</p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  );
-};
+export default SimulatorSection;

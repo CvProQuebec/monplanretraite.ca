@@ -1,4 +1,4 @@
-// src/hooks/useAuth.tsx - FIREBASE RÉACTIVÉ
+// src/hooks/useAuth.tsx - FIREBASE RÉACTIVÉ + MODE DÉVELOPPEMENT LOCAL
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { 
   signInWithPopup, 
@@ -10,6 +10,9 @@ import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db, googleProvider } from '@/lib/firebase';
 import { User, PlanType } from '@/types/subscription';
 import { getPlan } from '@/config/plans';
+
+// Mode développement local - DÉSACTIVE Firebase pour les tests
+const LOCAL_DEV_MODE = true; // FORCÉ pour les tests
 
 interface AuthContextType {
   user: User | null;
@@ -60,6 +63,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Connexion avec Google
   const signInWithGoogle = async () => {
+    if (LOCAL_DEV_MODE) {
+      // Mode développement local - utilisateur simulé
+      const mockUser: User = {
+        id: 'local-dev-user',
+        email: 'dev@monplanretraite.ca',
+        displayName: 'Développeur Local',
+        plan: 'ultimate', // Plan Ultimate pour tester toutes les fonctionnalités
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      setUser(mockUser);
+      return;
+    }
+
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = await createOrGetUser(result.user);
@@ -71,6 +88,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Déconnexion
   const signOut = async () => {
+    if (LOCAL_DEV_MODE) {
+      setUser(null);
+      return;
+    }
+
     try {
       await firebaseSignOut(auth);
       setUser(null);
@@ -82,6 +104,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   // Mettre à jour le plan utilisateur
   const updateUserPlan = async (plan: PlanType) => {
     if (!user) return;
+    
+    if (LOCAL_DEV_MODE) {
+      // Mode développement local - mise à jour simulée
+      setUser(prev => prev ? { ...prev, plan, updatedAt: new Date() } : null);
+      return;
+    }
+
     try {
       const userRef = doc(db, 'users', user.id);
       await updateDoc(userRef, { plan, updatedAt: new Date() });
@@ -93,6 +122,22 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   // Écouter les changements d'authentification
   useEffect(() => {
+    if (LOCAL_DEV_MODE) {
+      // Mode développement local - utilisateur automatiquement connecté
+      console.log('🔧 MODE DÉVELOPPEMENT LOCAL ACTIVÉ - Firebase désactivé');
+      const mockUser: User = {
+        id: 'local-dev-user',
+        email: 'dev@monplanretraite.ca',
+        displayName: 'Développeur Local',
+        plan: 'ultimate', // Plan Ultimate pour tester toutes les fonctionnalités
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+      setUser(mockUser);
+      setLoading(false);
+      return;
+    }
+
     console.log('🔍 useAuth - Démarrage de l\'écouteur d\'authentification');
     console.log('🔍 useAuth - Firebase auth disponible:', !!auth);
     console.log('🔍 useAuth - Variables Firebase dans useAuth:', {

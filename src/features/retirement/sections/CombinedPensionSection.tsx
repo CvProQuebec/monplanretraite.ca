@@ -12,7 +12,9 @@ import {
   Shield,
   Zap,
   Info,
-  ExternalLink
+  ExternalLink,
+  Rocket,
+  Sparkles
 } from 'lucide-react';
 import { CombinedPensionPlanner } from '../components/CombinedPensionPlanner';
 import { CPPRRQComparison } from '../components/CPPRRQComparison';
@@ -89,13 +91,25 @@ export const CombinedPensionSection: React.FC<CombinedPensionSectionProps> = ({ 
   
   return (
     <PlanRestrictedSection sectionId="combined-pension" requiredPlan="professional" className={className}>
-      <div className="space-y-8">
-        {/* En-tête */}
+      {/* Particules animées en arrière-plan */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute top-20 left-10 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-purple-400 rounded-full animate-bounce"></div>
+        <div className="absolute bottom-40 left-20 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
+        <div className="absolute top-60 left-1/2 w-1 h-1 bg-yellow-400 rounded-full animate-pulse"></div>
+      </div>
+
+      <div className="space-y-8 relative z-10">
+        {/* En-tête avec nouveau look Phase 2 */}
         <div className="text-center space-y-4">
-          <h1 className="text-4xl font-bold text-gray-900 dark:text-white">
+          <div className="inline-flex items-center gap-3 mb-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm font-bold">
+            <Rocket className="w-4 h-4" />
+            PHASE 2 ACTIVE
+          </div>
+          <h1 className="text-5xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent drop-shadow-2xl">
             {t.title}
           </h1>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             {t.subtitle}
           </p>
         </div>

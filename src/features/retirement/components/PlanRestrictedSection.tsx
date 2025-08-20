@@ -28,12 +28,17 @@ const SECTION_PLAN_REQUIREMENTS: Record<string, SubscriptionPlan> = {
   'personal': 'free',
   'retirement': 'free',
   'savings': 'free',
-  'cashflow': 'free',
+  'cashflow': 'free', // Accessible gratuitement
   'advanced-expenses': 'professional',
   'tax': 'professional',
   'simulator': 'professional',
   'reports': 'professional',
   'session': 'free',
+  'emergency-info': 'free',
+  'cpp': 'free', // Accessible gratuitement
+  'combined-pension': 'free', // Accessible gratuitement
+  'premium-features': 'ultimate',
+  'demos': 'free'
 };
 
 // Fonction pour vérifier si un plan a accès à une fonctionnalité
