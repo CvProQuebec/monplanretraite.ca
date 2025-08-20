@@ -39,11 +39,14 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
       const newValue = newYear + month + day;
       onChange(newValue);
       
-      // Si 4 chiffres sont entrés, passer au mois
-      if (newYear.length === 4) {
-        monthRef.current?.focus();
-        monthRef.current?.select();
-      }
+              // Si 4 chiffres sont entrés, passer au mois (seulement si pas de Tab)
+        if (newYear.length === 4 && document.activeElement === yearRef.current) {
+          // Délai pour éviter les conflits avec Tab
+          setTimeout(() => {
+            monthRef.current?.focus();
+            monthRef.current?.select();
+          }, 50);
+        }
     }
   };
 
@@ -57,10 +60,13 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
         const newValue = year + newMonth + day;
         onChange(newValue);
         
-        // Si 2 chiffres sont entrés, passer au jour
-        if (newMonth.length === 2) {
-          dayRef.current?.focus();
-          dayRef.current?.select();
+        // Si 2 chiffres sont entrés, passer au jour (seulement si pas de Tab)
+        if (newMonth.length === 2 && document.activeElement === monthRef.current) {
+          // Délai pour éviter les conflits avec Tab
+          setTimeout(() => {
+            dayRef.current?.focus();
+            dayRef.current?.select();
+          }, 50);
         }
       }
     }
@@ -77,6 +83,23 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
         onChange(newValue);
       }
     }
+  };
+
+  // Gestion des événements Tab pour une navigation plus fluide
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>, nextRef: React.RefObject<HTMLInputElement>) => {
+    if (e.key === 'Tab' && !e.shiftKey) {
+      e.preventDefault();
+      // Délai pour éviter les conflits avec onChange
+      setTimeout(() => {
+        nextRef.current?.focus();
+        nextRef.current?.select();
+      }, 10);
+    }
+  };
+
+  // Prévention des conflits entre auto-focus et Tab
+  const shouldAutoFocus = (currentValue: string, maxLength: number) => {
+    return currentValue.length === maxLength && document.activeElement === e.target;
   };
 
   return (
@@ -106,6 +129,7 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
            placeholder="AAAA"
            value={year}
            onChange={handleYearChange}
+           onKeyDown={(e) => handleKeyDown(e, monthRef)}
            maxLength={4}
            className={`w-20 text-center text-lg p-4 h-14 border-2 transition-colors ${
              year.length === 4 
@@ -120,6 +144,7 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
            placeholder="MM"
            value={month}
            onChange={handleMonthChange}
+           onKeyDown={(e) => handleKeyDown(e, dayRef)}
            maxLength={2}
            className={`w-16 text-center text-lg p-4 h-14 border-2 transition-colors ${
              month.length === 2 
