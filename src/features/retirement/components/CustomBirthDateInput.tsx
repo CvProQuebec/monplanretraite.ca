@@ -22,9 +22,9 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
   const dayRef = useRef<HTMLInputElement>(null);
 
   // Séparer la valeur en composants
-  const year = value.substring(0, 4) || '';
-  const month = value.substring(4, 6) || '';
-  const day = value.substring(6, 8) || '';
+  const year = value?.substring(0, 4) || '';
+  const month = value?.substring(4, 6) || '';
+  const day = value?.substring(6, 8) || '';
 
   const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newYear = e.target.value;

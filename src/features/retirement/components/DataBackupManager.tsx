@@ -581,69 +581,112 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
                 {t.loadButton}
               </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-md">
-              <DialogHeader>
-                <DialogTitle className="flex items-center gap-2">
-                  <Upload className="h-5 w-5" />
-                  {t.loadTitle}
-                </DialogTitle>
-              </DialogHeader>
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="file-input">{t.selectFile}</Label>
-                  <Input
-                    id="file-input"
-                    ref={fileInputRef}
-                    type="file"
-                    accept=".json"
-                    onChange={handleFileSelect}
-                  />
-                  {selectedFile && (
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <FileText className="h-4 w-4" />
-                      {selectedFile.name}
-                    </div>
-                  )}
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="load-password">{t.password}</Label>
-                  <Input
-                    id="load-password"
-                    type="password"
-                    value={loadPassword}
-                    onChange={(e) => setLoadPassword(e.target.value)}
-                  />
-                </div>
-                <div className="flex items-center gap-2 text-sm text-yellow-600">
-                  <AlertCircle className="h-4 w-4" />
-                  {t.fileNote}
-                </div>
-                
-                {/* Bouton de test pour créer un fichier de sauvegarde */}
-                <div className="bg-green-50 border border-green-200 rounded-lg p-3">
-                  <div className="text-sm text-green-800 mb-2">
-                    <strong>🧪 Test du système :</strong> Créez un fichier de test pour vérifier le chargement
-                  </div>
-                  <Button 
-                    variant="outline" 
-                    size="sm"
-                    onClick={handleCreateTestFile}
-                    className="w-full text-green-700 border-green-300 hover:bg-green-100"
-                  >
-                    📁 Créer fichier de test
-                  </Button>
-                </div>
-                
-                <div className="flex gap-2">
-                  <Button onClick={handleLoad} disabled={isLoading} className="flex-1">
-                    {isLoading ? 'Chargement...' : t.load}
-                  </Button>
-                  <Button variant="outline" onClick={() => setLoadDialogOpen(false)}>
-                    {t.cancel}
-                  </Button>
-                </div>
-              </div>
-            </DialogContent>
+                         <DialogContent className="sm:max-w-lg">
+               <DialogHeader>
+                 <DialogTitle className="flex items-center gap-2 text-xl">
+                   <Upload className="h-6 w-6" />
+                   {t.loadTitle}
+                 </DialogTitle>
+               </DialogHeader>
+               <div className="space-y-6">
+                 {/* Section 1: Sélection de fichier */}
+                 <div className="space-y-3">
+                   <Label htmlFor="file-input" className="text-base font-semibold">
+                     {t.selectFile}
+                   </Label>
+                   <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-blue-400 transition-colors">
+                     <Input
+                       id="file-input"
+                       ref={fileInputRef}
+                       type="file"
+                       accept=".json"
+                       onChange={handleFileSelect}
+                       className="cursor-pointer"
+                     />
+                     {selectedFile && (
+                       <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
+                         <div className="flex items-center gap-2 text-sm text-blue-800">
+                           <FileText className="h-4 w-4" />
+                           <span className="font-medium">Fichier sélectionné:</span>
+                         </div>
+                         <div className="mt-1 text-sm text-blue-700 font-mono">
+                           {selectedFile.name}
+                         </div>
+                       </div>
+                     )}
+                   </div>
+                 </div>
+
+                 {/* Section 2: Mot de passe */}
+                 <div className="space-y-3">
+                   <Label htmlFor="load-password" className="text-base font-semibold">
+                     {t.password}
+                   </Label>
+                   <Input
+                     id="load-password"
+                     type="password"
+                     value={loadPassword}
+                     onChange={(e) => setLoadPassword(e.target.value)}
+                     placeholder="Entrez le mot de passe de sauvegarde"
+                     className="text-lg p-3"
+                   />
+                 </div>
+
+                 {/* Section 3: Avertissement de sécurité */}
+                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                   <div className="flex items-start gap-3">
+                     <AlertCircle className="h-5 w-5 text-yellow-600 mt-1 flex-shrink-0" />
+                     <div className="text-sm text-yellow-800">
+                       <strong className="font-semibold">⚠️ Sécurité :</strong> {t.fileNote}
+                     </div>
+                   </div>
+                 </div>
+                 
+                 {/* Section 4: Test du système */}
+                 <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                   <div className="text-sm text-green-800 mb-3">
+                     <strong className="font-semibold">🧪 Test du système :</strong> 
+                     Créez un fichier de test pour vérifier le chargement
+                   </div>
+                   <Button 
+                     variant="outline" 
+                     size="sm"
+                     onClick={handleCreateTestFile}
+                     className="w-full text-green-700 border-green-300 hover:bg-green-100 h-10"
+                   >
+                     📁 Créer fichier de test
+                   </Button>
+                 </div>
+                 
+                 {/* Section 5: Boutons d'action */}
+                 <div className="flex gap-3 pt-2">
+                   <Button 
+                     onClick={handleLoad} 
+                     disabled={isLoading || !selectedFile || !loadPassword} 
+                     className="flex-1 h-12 text-lg font-semibold bg-blue-600 hover:bg-blue-700"
+                   >
+                     {isLoading ? (
+                       <div className="flex items-center gap-2">
+                         <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                         Chargement...
+                       </div>
+                     ) : (
+                       <div className="flex items-center gap-2">
+                         <Upload className="h-5 w-5" />
+                         {t.load}
+                       </div>
+                     )}
+                   </Button>
+                   <Button 
+                     variant="outline" 
+                     onClick={() => setLoadDialogOpen(false)}
+                     className="h-12 px-6"
+                   >
+                     {t.cancel}
+                   </Button>
+                 </div>
+               </div>
+             </DialogContent>
           </Dialog>
         </div>
       </CardContent>
