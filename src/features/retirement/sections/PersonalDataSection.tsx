@@ -72,7 +72,7 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
         {/* En-tête spectaculaire */}
         <div className="text-center mb-12">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent drop-shadow-2xl">
-            {isFrench ? '🚀 Données Personnelles Avancées' : '🚀 Advanced Personal Data'}
+            {isFrench ? '🚀 Données personnelles avancées' : '🚀 Advanced Personal Data'}
           </h1>
           <p className="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto leading-relaxed">
             {isFrench 

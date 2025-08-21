@@ -1,0 +1,426 @@
+/* ===== STYLES D'ACCESSIBILITÉ POUR SENIORS (65-90 ans) ===== */
+/* Optimisé pour une meilleure lisibilité et facilité d'utilisation */
+
+:root {
+  /* Tailles de police augmentées pour seniors */
+  --font-size-xs: 16px;      /* Au lieu de 12px */
+  --font-size-sm: 18px;      /* Au lieu de 14px */
+  --font-size-base: 20px;    /* Au lieu de 16px */
+  --font-size-lg: 24px;      /* Au lieu de 18px */
+  --font-size-xl: 28px;      /* Au lieu de 20px */
+  --font-size-2xl: 32px;     /* Au lieu de 24px */
+  --font-size-3xl: 36px;     /* Au lieu de 30px */
+  --font-size-4xl: 42px;     /* Au lieu de 36px */
+  
+  /* Hauteurs de ligne augmentées pour meilleure lisibilité */
+  --line-height-tight: 1.4;
+  --line-height-normal: 1.6;
+  --line-height-relaxed: 1.8;
+  --line-height-loose: 2.0;
+  
+  /* Couleurs à contraste élevé */
+  --text-primary: #1a1a1a;           /* Noir très foncé */
+  --text-secondary: #2d2d2d;         /* Gris très foncé */
+  --text-muted: #404040;             /* Gris moyen foncé */
+  --background-primary: #ffffff;      /* Blanc pur */
+  --background-secondary: #f8f9fa;    /* Gris très clair */
+  --background-accent: #e3f2fd;      /* Bleu très clair */
+  
+  /* Couleurs d'accent avec bon contraste */
+  --accent-primary: #1565c0;         /* Bleu foncé */
+  --accent-secondary: #2e7d32;       /* Vert foncé */
+  --accent-warning: #ef6c00;         /* Orange foncé */
+  --accent-error: #c62828;           /* Rouge foncé */
+  
+  /* Espacements augmentés */
+  --spacing-xs: 8px;
+  --spacing-sm: 12px;
+  --spacing-md: 20px;
+  --spacing-lg: 32px;
+  --spacing-xl: 48px;
+  --spacing-2xl: 64px;
+  
+  /* Bordures plus visibles */
+  --border-width: 2px;
+  --border-radius: 8px;
+  --border-color: #d1d5db;
+  
+  /* Ombres plus prononcées */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* ===== CLASSE PRINCIPALE POUR ACTIVER LE MODE SENIORS ===== */
+.seniors-mode {
+  /* Police plus lisible */
+  font-family: 'Segoe UI', 'Arial', sans-serif;
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-normal);
+  color: var(--text-primary);
+  background-color: var(--background-primary);
+}
+
+/* ===== TYPOGRAPHIE AMÉLIORÉE ===== */
+.seniors-mode h1 {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+  letter-spacing: 0.5px;
+}
+
+.seniors-mode h2 {
+  font-size: var(--font-size-3xl);
+  font-weight: 600;
+  line-height: var(--line-height-tight);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+  letter-spacing: 0.3px;
+}
+
+.seniors-mode h3 {
+  font-size: var(--font-size-2xl);
+  font-weight: 600;
+  line-height: var(--line-height-normal);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.seniors-mode h4 {
+  font-size: var(--font-size-xl);
+  font-weight: 500;
+  line-height: var(--line-height-normal);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.seniors-mode p {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.seniors-mode .text-sm {
+  font-size: var(--font-size-sm) !important;
+  line-height: var(--line-height-normal);
+}
+
+.seniors-mode .text-lg {
+  font-size: var(--font-size-lg) !important;
+  line-height: var(--line-height-normal);
+}
+
+/* ===== BOUTONS AMÉLIORÉS ===== */
+.seniors-mode button,
+.seniors-mode .btn {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--border-radius);
+  border: var(--border-width) solid transparent;
+  min-height: 48px; /* Taille minimum pour faciliter le clic */
+  min-width: 120px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.5px;
+}
+
+.seniors-mode .btn-primary {
+  background-color: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.seniors-mode .btn-primary:hover {
+  background-color: #0d47a1;
+  border-color: #0d47a1;
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.seniors-mode .btn-secondary {
+  background-color: var(--background-primary);
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.seniors-mode .btn-secondary:hover {
+  background-color: var(--background-accent);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== CARTES ET CONTENEURS ===== */
+.seniors-mode .card,
+.seniors-mode .retirement-card {
+  background-color: var(--background-primary);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s ease;
+}
+
+.seniors-mode .card:hover,
+.seniors-mode .retirement-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== FORMULAIRES AMÉLIORÉS ===== */
+.seniors-mode input,
+.seniors-mode select,
+.seniors-mode textarea {
+  font-size: var(--font-size-base);
+  padding: var(--spacing-md);
+  border: var(--border-width) solid var(--border-color);
+  border-radius: var(--border-radius);
+  background-color: var(--background-primary);
+  color: var(--text-primary);
+  min-height: 48px;
+  line-height: var(--line-height-normal);
+}
+
+.seniors-mode input:focus,
+.seniors-mode select:focus,
+.seniors-mode textarea:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px rgba(21, 101, 192, 0.2);
+  background-color: var(--background-accent);
+}
+
+.seniors-mode label {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-xs);
+  display: block;
+}
+
+/* ===== NAVIGATION AMÉLIORÉE ===== */
+.seniors-mode .nav-item,
+.seniors-mode .navigation-item {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  padding: var(--spacing-md) var(--spacing-lg);
+  margin: var(--spacing-xs);
+  border-radius: var(--border-radius);
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--text-primary);
+  background-color: var(--background-secondary);
+  border: var(--border-width) solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.seniors-mode .nav-item:hover,
+.seniors-mode .navigation-item:hover {
+  background-color: var(--background-accent);
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.seniors-mode .nav-item.active,
+.seniors-mode .navigation-item.active {
+  background-color: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-md);
+}
+
+/* ===== LISTES ET ÉLÉMENTS ===== */
+.seniors-mode ul,
+.seniors-mode ol {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  margin-bottom: var(--spacing-md);
+  padding-left: var(--spacing-lg);
+}
+
+.seniors-mode li {
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-primary);
+}
+
+/* ===== TABLEAUX AMÉLIORÉS ===== */
+.seniors-mode table {
+  font-size: var(--font-size-base);
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: var(--spacing-md);
+}
+
+.seniors-mode th,
+.seniors-mode td {
+  padding: var(--spacing-md);
+  border: var(--border-width) solid var(--border-color);
+  text-align: left;
+  line-height: var(--line-height-normal);
+}
+
+.seniors-mode th {
+  background-color: var(--background-secondary);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.seniors-mode td {
+  color: var(--text-primary);
+}
+
+/* ===== ALERTES ET NOTIFICATIONS ===== */
+.seniors-mode .alert {
+  font-size: var(--font-size-base);
+  padding: var(--spacing-md);
+  border-radius: var(--border-radius);
+  border: var(--border-width) solid;
+  margin-bottom: var(--spacing-md);
+  line-height: var(--line-height-normal);
+}
+
+.seniors-mode .alert-info {
+  background-color: #e3f2fd;
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.seniors-mode .alert-success {
+  background-color: #e8f5e8;
+  border-color: var(--accent-secondary);
+  color: var(--accent-secondary);
+}
+
+.seniors-mode .alert-warning {
+  background-color: #fff3e0;
+  border-color: var(--accent-warning);
+  color: var(--accent-warning);
+}
+
+.seniors-mode .alert-error {
+  background-color: #ffebee;
+  border-color: var(--accent-error);
+  color: var(--accent-error);
+}
+
+/* ===== ICÔNES ET ÉLÉMENTS VISUELS ===== */
+.seniors-mode .icon {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  min-height: 24px;
+}
+
+.seniors-mode .icon-lg {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  min-height: 32px;
+}
+
+/* ===== LIENS AMÉLIORÉS ===== */
+.seniors-mode a {
+  color: var(--accent-primary);
+  text-decoration: underline;
+  font-weight: 500;
+  font-size: inherit;
+}
+
+.seniors-mode a:hover {
+  color: #0d47a1;
+  text-decoration: none;
+}
+
+.seniors-mode a:focus {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* ===== ESPACEMENT GÉNÉRAL ===== */
+.seniors-mode .container,
+.seniors-mode .max-w-6xl {
+  padding-left: var(--spacing-lg);
+  padding-right: var(--spacing-lg);
+}
+
+.seniors-mode .section {
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* ===== RESPONSIVE POUR SENIORS ===== */
+@media (max-width: 768px) {
+  .seniors-mode {
+    font-size: var(--font-size-lg); /* Encore plus grand sur mobile */
+  }
+  
+  .seniors-mode h1 {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .seniors-mode h2 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .seniors-mode button,
+  .seniors-mode .btn {
+    min-height: 52px; /* Boutons encore plus grands sur mobile */
+    font-size: var(--font-size-lg);
+  }
+  
+  .seniors-mode input,
+  .seniors-mode select,
+  .seniors-mode textarea {
+    min-height: 52px;
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* ===== MODE CONTRASTE ÉLEVÉ (OPTIONNEL) ===== */
+.seniors-mode.high-contrast {
+  --text-primary: #000000;
+  --text-secondary: #000000;
+  --background-primary: #ffffff;
+  --background-secondary: #f0f0f0;
+  --accent-primary: #0000ff;
+  --border-color: #000000;
+}
+
+.seniors-mode.high-contrast button,
+.seniors-mode.high-contrast .btn {
+  border-width: 3px;
+}
+
+.seniors-mode.high-contrast input,
+.seniors-mode.high-contrast select,
+.seniors-mode.high-contrast textarea {
+  border-width: 3px;
+}
+
+/* ===== DÉSACTIVATION DES ANIMATIONS POUR SENIORS ===== */
+.seniors-mode.reduce-motion * {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+/* ===== FOCUS VISIBLE AMÉLIORÉ ===== */
+.seniors-mode *:focus-visible {
+  outline: 3px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* ===== CURSEUR PLUS VISIBLE ===== */
+.seniors-mode button:hover,
+.seniors-mode .btn:hover,
+.seniors-mode a:hover,
+.seniors-mode input:hover,
+.seniors-mode select:hover {
+  cursor: pointer;
+}

@@ -4,6 +4,9 @@
 import { UserData, Calculations, RRQOptimizationResult } from '../types';
 import { EnhancedRRQService } from './EnhancedRRQService';
 import { OASGISService } from './OASGISService';
+import { EmploymentStatusService } from './EmploymentStatusService';
+import { EmploymentStatusData, EmploymentImpactAnalysis } from '../types/employment-status';
+import { AdvancedMonteCarloService, MonteCarloResult } from './AdvancedMonteCarloService';
 
 export class CalculationService {
   // CONSTANTES MISES À JOUR SELON LES TRANSCRIPTIONS D'EXPERTS
@@ -18,6 +21,39 @@ export class CalculationService {
   private static readonly VOLATILITY_BONDS = 0.05; // 5% volatilité obligations
   private static readonly CORRELATION_INFLATION_STOCKS = -0.3; // Corrélation négative
   
+  /**
+   * NOUVEAU: Calculs avancés avec simulations Monte Carlo
+   */
+  static async calculateAllAdvanced(userData: UserData): Promise<Calculations & { monteCarloResults?: MonteCarloResult }> {
+    try {
+      // 1. Calculs de base
+      const baseCalculations = await this.calculateAll(userData);
+      
+      // 2. Simulations Monte Carlo avancées
+      let monteCarloResults;
+      try {
+        console.log('🎲 Lancement des simulations Monte Carlo avancées...');
+        monteCarloResults = await AdvancedMonteCarloService.runAdvancedSimulation(
+          userData,
+          baseCalculations
+        );
+        console.log('✅ Simulations Monte Carlo terminées avec succès');
+      } catch (error) {
+        console.warn('Erreur simulations Monte Carlo, ignoré:', error);
+        monteCarloResults = undefined;
+      }
+      
+      return {
+        ...baseCalculations,
+        monteCarloResults
+      };
+    } catch (error) {
+      console.error('Erreur dans calculateAllAdvanced:', error);
+      // Fallback vers calculs de base
+      return this.calculateAll(userData);
+    }
+  }
+
   static calculateAll(userData: UserData): Calculations {
     try {
       // 1. Calculs de base (CONSERVER L'ANCIENNE LOGIQUE)
@@ -63,12 +99,22 @@ export class CalculationService {
         recommendedActions = undefined;
       }
       
+      // NOUVEAU: Analyse d'impact de l'emploi précaire
+      let employmentImpactAnalysis;
+      try {
+        employmentImpactAnalysis = this.calculateEmploymentImpact(userData);
+      } catch (error) {
+        console.warn('Erreur analyse emploi, ignoré:', error);
+        employmentImpactAnalysis = undefined;
+      }
+      
       return {
         ...baseCalculations,
         rrqOptimization,
         oasGisProjection,
         riskAnalysis,
-        recommendedActions
+        recommendedActions,
+        employmentImpactAnalysis
       };
       
     } catch (error) {
@@ -406,6 +452,28 @@ export class CalculationService {
         'Échelonner les investissements par échéance'
       ]
     };
+  }
+
+  /**
+   * NOUVEAU: Analyse d'impact de l'emploi précaire
+   */
+  private static calculateEmploymentImpact(userData: UserData): EmploymentImpactAnalysis | undefined {
+    // Vérifier si des données d'emploi précaire sont disponibles
+    if (!userData.employmentStatus) {
+      return undefined;
+    }
+
+    const currentAge = this.calculateAge(userData.personal.naissance1);
+    const retirementAge = userData.personal.ageRetraiteSouhaite1 || 65;
+    const baseIncome = userData.personal.salaire1 || 0;
+
+    // Utiliser le service spécialisé pour l'analyse
+    return EmploymentStatusService.analyzeEmploymentImpact(
+      userData.employmentStatus,
+      currentAge,
+      baseIncome,
+      retirementAge
+    );
   }
 
   /**

@@ -90,16 +90,20 @@ export const CombinedPensionSection: React.FC<CombinedPensionSectionProps> = ({ 
   const t = texts[language];
   
   return (
-    <PlanRestrictedSection sectionId="combined-pension" requiredPlan="professional" className={className}>
-      {/* Particules animées en arrière-plan */}
-      <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-3 h-3 bg-purple-400 rounded-full animate-bounce"></div>
-        <div className="absolute bottom-40 left-20 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
-        <div className="absolute top-60 left-1/2 w-1 h-1 bg-yellow-400 rounded-full animate-pulse"></div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+      {/* Particules de fond visibles */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-60 left-1/4 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
+        <div className="absolute top-80 right-1/3 w-1 h-1 bg-red-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-96 left-1/2 w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-32 right-1/4 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-72 left-1/3 w-1 h-1 bg-pink-400 rounded-full animate-bounce"></div>
       </div>
 
-      <div className="space-y-8 relative z-10">
+      <div className="container mx-auto px-6 py-8 relative z-10">
+        <div className="space-y-8">
         {/* En-tête avec nouveau look Phase 2 */}
         <div className="text-center space-y-4">
           <div className="inline-flex items-center gap-3 mb-4 px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm font-bold">
@@ -216,7 +220,8 @@ export const CombinedPensionSection: React.FC<CombinedPensionSectionProps> = ({ 
             <CPPRRQComparison />
           </TabsContent>
         </Tabs>
+        </div>
       </div>
-    </PlanRestrictedSection>
+    </div>
   );
 };

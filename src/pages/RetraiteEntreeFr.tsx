@@ -30,9 +30,45 @@ const RetraiteEntreeFr: React.FC = () => {
             <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-6 text-center">
               Planification financière complète
             </h2>
-            <p className="text-lg text-gray-700 text-center mb-12 max-w-4xl mx-auto">
+            <p className="text-lg text-gray-700 text-center mb-8 max-w-4xl mx-auto">
               Notre plateforme unique vous permet de gérer l'ensemble de votre planification financière, budgétaire et fiscale pour une retraite sereine et optimisée.
             </p>
+            
+            {/* Section Pourquoi choisir notre solution */}
+            <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-12">
+              <h3 className="text-2xl font-bold text-blue-900 mb-4 text-center">
+                Pourquoi choisir notre solution ?
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div>
+                  <div className="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                  </div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Économisez des milliers de dollars</h4>
+                  <p className="text-sm text-gray-600">Optimisez vos stratégies fiscales et de décaissement pour maximiser vos revenus de retraite</p>
+                </div>
+                <div>
+                  <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Gagnez du temps précieux</h4>
+                  <p className="text-sm text-gray-600">Préparez vos rencontres avec vos conseillers et réduisez le nombre de consultations nécessaires</p>
+                </div>
+                <div>
+                  <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-3">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Sécurisez votre avenir</h4>
+                  <p className="text-sm text-gray-600">Simulez différents scénarios et prenez des décisions éclairées pour votre retraite</p>
+                </div>
+              </div>
+            </div>
 
             {/* Cartes de fonctionnalités */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -47,7 +83,7 @@ const RetraiteEntreeFr: React.FC = () => {
                   Gestion du flux de trésorerie (cashflow)
                 </h3>
                 <p className="text-blue-700 text-center text-sm">
-                  Analysez et optimisez vos flux de dépenses pour maximiser vos économies
+                  <strong>Maîtrisez vos finances :</strong> Analysez vos revenus et dépenses mois par mois, identifiez les opportunités d'économies et optimisez votre budget pour maximiser votre épargne-retraite. Visualisez l'impact de chaque décision financière sur votre avenir.
                 </p>
               </div>
 
@@ -62,7 +98,7 @@ const RetraiteEntreeFr: React.FC = () => {
                   Stratégies de décaissement
                 </h3>
                 <p className="text-green-700 text-center text-sm">
-                  Déterminez le meilleur moment pour retirer de vos investissements
+                  <strong>Optimisez vos retraits :</strong> Découvrez les stratégies de décaissement les plus avantageuses pour vos REER, FERR, CELI et autres placements. Minimisez l'impact fiscal et maximisez la durée de vie de votre capital avec des simulations avancées.
                 </p>
               </div>
 
@@ -77,7 +113,7 @@ const RetraiteEntreeFr: React.FC = () => {
                   Planification des dépenses
                 </h3>
                 <p className="text-purple-700 text-center text-sm">
-                  Évaluez l'impact des gros achats sur vos revenus futurs
+                  <strong>Planifiez sereinement :</strong> Modélisez l'impact financier de vos projets majeurs (voyage, rénovations, aide aux enfants) sur votre retraite. Prenez des décisions éclairées en visualisant les conséquences à long terme de chaque dépense importante.
                 </p>
               </div>
 
@@ -92,7 +128,7 @@ const RetraiteEntreeFr: React.FC = () => {
                   Optimisation fiscale
                 </h3>
                 <p className="text-blue-700 text-center text-sm">
-                  Minimisez vos impôts avec des stratégies de retrait intelligentes
+                  <strong>Réduisez vos impôts :</strong> Exploitez toutes les opportunités fiscales disponibles grâce à des stratégies de fractionnement de revenus, d'optimisation des crédits d'impôt et de planification des retraits. Gardez plus d'argent dans vos poches.
                 </p>
               </div>
             </div>

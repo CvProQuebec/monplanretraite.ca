@@ -98,22 +98,22 @@ const getPlanFeatures = (plan: SubscriptionPlan, language: 'fr' | 'en'): string[
   const features = {
     fr: {
       'professional': [
-        'Simulations illimitées',
-        'Rapports illimités',
+        'simulations illimitées',
+        'rapports illimités',
         '3 profils utilisateurs',
-        'Analyses avancées',
-        'Simulations Monte Carlo',
-        'Export PDF',
-        'Optimisation fiscale'
+        'analyses avancées',
+        'simulations Monte Carlo',
+        'export PDF',
+        'optimisation fiscale'
       ],
       'ultimate': [
-        'Tout du plan Professionnel',
-        'Profils illimités',
-        'Conseils IA',
-        'Intégrations bancaires',
-        'Collaboration conseiller',
-        'Support prioritaire',
-        'Formation personnalisée'
+        'tout du plan Professionnel',
+        'profils illimités',
+        'conseils IA',
+        'intégrations bancaires',
+        'collaboration conseiller',
+        'support prioritaire',
+        'formation personnalisée'
       ]
     },
     en: {

@@ -258,30 +258,36 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
   ];
 
   return (
-    <div className="space-y-6">
-      {/* En-tête avec aide */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-sapphire-100 rounded-full flex items-center justify-center">
-            <TrendingUp className="w-6 h-6 text-sapphire-600" />
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold text-charcoal-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+      {/* Particules de fond visibles */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-60 left-1/4 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
+        <div className="absolute top-80 right-1/3 w-1 h-1 bg-red-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-96 left-1/2 w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-32 right-1/4 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-72 left-1/3 w-1 h-1 bg-pink-400 rounded-full animate-bounce"></div>
+      </div>
+
+      <div className="container mx-auto px-6 py-8 relative z-10">
+        <div className="space-y-6">
+          {/* En-tête avec aide - Style Phase 2 */}
+          <div className="text-center mb-8">
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent drop-shadow-2xl mb-4">
               {t.cashflow.title}
             </h1>
-            <p className="text-lg text-charcoal-600 mt-1">
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
               {t.cashflow.subtitle}
             </p>
+            <button
+              onClick={() => setShowHelp(!showHelp)}
+              className="mt-4 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors backdrop-blur-sm border border-white/20"
+            >
+              <Info className="w-4 h-4 inline mr-2" />
+              {t.personalData.help}
+            </button>
           </div>
-        </div>
-        <button
-          onClick={() => setShowHelp(!showHelp)}
-          className="bg-charcoal-100 hover:bg-charcoal-200 text-charcoal-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-        >
-          <Info className="w-4 h-4 inline mr-2" />
-          {t.personalData.help}
-        </button>
-      </div>
 
       {/* Message d'aide */}
       {showHelp && (
@@ -795,6 +801,8 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
           </Tabs>
         </CardContent>
       </Card>
+        </div>
+      </div>
     </div>
   );
 };
