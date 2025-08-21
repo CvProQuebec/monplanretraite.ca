@@ -29,9 +29,9 @@ import { useLanguage } from '../hooks/useLanguage';
 export const RetirementSection: React.FC = () => {
   const { language } = useLanguage();
   const [retirementAge, setRetirementAge] = useState(65);
-  const [currentAge, setCurrentAge] = useState(35);
-  const [currentSavings, setCurrentSavings] = useState(50000);
-  const [monthlyContribution, setMonthlyContribution] = useState(500);
+  const [currentAge, setCurrentAge] = useState(0);
+  const [currentSavings, setCurrentSavings] = useState(0);
+  const [monthlyContribution, setMonthlyContribution] = useState(0);
   const [expectedReturn, setExpectedReturn] = useState(7);
   const [inflationRate, setExpectedInflation] = useState(3);
 
