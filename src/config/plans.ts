@@ -86,16 +86,16 @@ export const UPGRADE_PATHS: UpgradePath[] = [
     upgradePrice: '119,99 $/an',
     priceId: 'price_professional_annual',
     upgradeType: 'immediate',
-    savings: 'Économisez 40% vs mensuel',
+    savings: 'Économisez 40 % vs mensuel',
     isRecommended: true,
     features: [
-      'Simulations illimitées',
-      'Rapports illimités',
+      'simulations illimitées',
+      'rapports illimités',
       '2 profils',
-      'Analyses avancées',
-      'Simulations Monte Carlo',
-      'Export PDF',
-      'Support prioritaire'
+      'analyses avancées',
+      'simulations Monte Carlo',
+      'export PDF',
+      'support prioritaire'
     ]
   },
   {
@@ -104,13 +104,13 @@ export const UPGRADE_PATHS: UpgradePath[] = [
     upgradePrice: '239,99 $/an',
     priceId: 'price_ultimate_annual',
     upgradeType: 'immediate',
-    savings: 'Économisez 45% vs mensuel',
+    savings: 'Économisez 45 % vs mensuel',
     features: [
-      'Tout inclus',
-      'Profils illimités',
-      'Conseils IA',
-      'Intégrations',
-      'Formation personnalisée'
+      'tout inclus',
+      'profils illimités',
+      'conseils IA',
+      'intégrations',
+      'formation personnalisée'
     ]
   },
   {
@@ -122,10 +122,10 @@ export const UPGRADE_PATHS: UpgradePath[] = [
     savings: 'Prix ajusté selon votre temps restant',
     isRecommended: true,
     features: [
-      'Profils illimités',
-      'Conseils IA',
-      'Intégrations',
-      'Formation personnalisée'
+      'profils illimités',
+      'conseils IA',
+      'intégrations',
+      'formation personnalisée'
     ]
   }
 ];
@@ -156,7 +156,7 @@ export const calculateSmartUpgradePrice = (
     return {
       price: upgradePrice,
       description: `Upgrade Ultimate pour ${monthsRemaining} mois restants`,
-      savings: `Économisez ${savings.toFixed(2)}$ vs achat séparé`,
+      savings: `Économisez ${savings.toFixed(2)} $ vs achat séparé`,
       totalPaid: totalPaid
     };
   }
@@ -346,28 +346,28 @@ export const PROMO_CODES: Record<string, PromoCode> = {
   EARLYBIRD30: {
     code: 'EARLYBIRD30',
     discount: 30,
-    description: '30% de réduction - Lancement',
+    description: '30 % de réduction - Lancement',
     validUntil: '2025-12-31',
     maxUses: 100
   },
   SAVINGS40: {
     code: 'SAVINGS40',
     discount: 40,
-    description: '40% de réduction - Économies',
+    description: '40 % de réduction - Économies',
     validUntil: '2025-12-31',
     maxUses: 50
   },
   FOUNDER50: {
     code: 'FOUNDER50',
     discount: 50,
-    description: '50% de réduction - Fondateurs',
+    description: '50 % de réduction - Fondateurs',
     validUntil: '2025-12-31',
     maxUses: 25
   },
   TESTER100: {
     code: 'TESTER100',
     discount: 100,
-    description: '100% gratuit - Tests et développement',
+    description: '100 % gratuit - Tests et développement',
     validUntil: '2025-12-31',
     maxUses: 999,
     unlimitedFeatures: true,
@@ -376,7 +376,7 @@ export const PROMO_CODES: Record<string, PromoCode> = {
   Calvin2025: {
     code: 'Calvin2025',
     discount: 100,
-    description: '100% gratuit - Tests Calvin jusqu\'au 31 décembre 2026',
+    description: '100 % gratuit - Tests Calvin jusqu\'au 31 décembre 2026',
     validUntil: '2026-12-31',
     maxUses: 9999,
     unlimitedFeatures: true,
@@ -417,7 +417,7 @@ export const calculateAnnualSavings = (
   const savings = monthlyTotal - annualPrice;
   const percentage = ((savings / monthlyTotal) * 100);
   
-  return `${percentage.toFixed(0)}%`;
+  return `${percentage.toFixed(0)} %`;
 };
 
 // Export PLANS pour compatibilité (si nécessaire)

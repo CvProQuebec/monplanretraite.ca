@@ -10,6 +10,7 @@ import { useToast } from '@/hooks/use-toast';
 import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
 import { PLAN_CONFIG } from '@/config/plans';
 import { Shield, ArrowRight, Lock, AlertTriangle, Crown, Zap, TrendingUp, Target, Users, Calculator, Rocket, Sparkles, Brain, Star, DollarSign, BarChart3, Database, Lock as LockIcon, AlertCircle, CheckCircle, Info } from 'lucide-react';
+import { AdvancedResultsDashboard } from '../components/AdvancedResultsDashboard';
 
 interface DashboardSectionProps {
   data?: any;
@@ -278,6 +279,16 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ data, calculations 
             </div>
           </CardContent>
         </Card>
+
+        {/* Simulations Monte Carlo avancées */}
+        {calculations?.monteCarloResults && (
+          <div className="mb-12">
+            <AdvancedResultsDashboard 
+              calculations={calculations}
+              userData={userData}
+            />
+          </div>
+        )}
 
         {/* Statistiques et métriques - Design moderne */}
         <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl backdrop-blur-sm">

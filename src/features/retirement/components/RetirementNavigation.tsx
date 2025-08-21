@@ -49,6 +49,8 @@ export const RetirementNavigation: React.FC = () => {
   const [showParticles, setShowParticles] = useState(true);
   const [showPhysics, setShowPhysics] = useState(true);
   const [activeSection, setActiveSection] = useState('dashboard');
+  const [activeTab, setActiveTab] = useState('dashboard');
+  const [currentStep, setCurrentStep] = useState(0);
 
   // Configuration des onglets
   const tabs = [
@@ -125,6 +127,7 @@ export const RetirementNavigation: React.FC = () => {
   // Configuration des cartes principales
   const mainCards = [
     {
+      id: 'dashboard',
       title: language === 'fr' ? 'Tableau de bord' : 'Dashboard',
       description: language === 'fr' ? 'Vue d\'ensemble de votre planification retraite' : 'Overview of your retirement planning',
       icon: Home,
@@ -134,6 +137,7 @@ export const RetirementNavigation: React.FC = () => {
       external: false
     },
     {
+      id: 'profile',
       title: language === 'fr' ? 'Profil personnel' : 'Personal Profile',
       description: language === 'fr' ? 'Informations personnelles et objectifs' : 'Personal information and goals',
       icon: User,
@@ -143,6 +147,7 @@ export const RetirementNavigation: React.FC = () => {
       external: false
     },
     {
+      id: 'retirement',
       title: language === 'fr' ? 'Planification retraite' : 'Retirement Planning',
       description: language === 'fr' ? 'Calculs et projections de retraite' : 'Retirement calculations and projections',
       icon: Calculator,
@@ -152,6 +157,7 @@ export const RetirementNavigation: React.FC = () => {
       external: false
     },
     {
+      id: 'savings',
       title: language === 'fr' ? 'Gestion épargne' : 'Savings Management',
       description: language === 'fr' ? 'Suivi de vos économies et investissements' : 'Track your savings and investments',
       icon: TrendingUp,
@@ -161,6 +167,7 @@ export const RetirementNavigation: React.FC = () => {
       external: false
     },
     {
+      id: 'cashflow',
       title: language === 'fr' ? 'Analyse cashflow' : 'Cashflow Analysis',
       description: language === 'fr' ? 'Analyse détaillée de vos flux de trésorerie' : 'Detailed analysis of your cash flows',
       icon: BarChart3,
@@ -170,6 +177,7 @@ export const RetirementNavigation: React.FC = () => {
       external: false
     },
     {
+      id: 'cpp',
       title: language === 'fr' ? 'Calculs CPP/RRQ' : 'CPP/RRQ Calculations',
       description: language === 'fr' ? 'Calculs des prestations gouvernementales' : 'Government benefits calculations',
       icon: FileText,
@@ -179,6 +187,7 @@ export const RetirementNavigation: React.FC = () => {
       external: false
     },
     {
+      id: 'emergency',
       title: language === 'fr' ? 'Informations d\'urgence' : 'Emergency Info',
       description: language === 'fr' ? 'Directives médicales et contacts d\'urgence' : 'Medical directives and emergency contacts',
       icon: AlertTriangle,
@@ -188,6 +197,7 @@ export const RetirementNavigation: React.FC = () => {
       external: false
     },
     {
+      id: 'reports',
       title: language === 'fr' ? 'Rapports et analyses' : 'Reports & Analysis',
       description: language === 'fr' ? 'Générez des rapports détaillés de votre planification' : 'Generate detailed planning reports',
       icon: FileText,
@@ -197,6 +207,7 @@ export const RetirementNavigation: React.FC = () => {
       external: true
     },
     {
+      id: 'session',
       title: language === 'fr' ? 'Gestion des sessions' : 'Session Management',
       description: language === 'fr' ? 'Sauvegardez, chargez et sécurisez vos données' : 'Save, load and secure your data',
       icon: Database,
@@ -210,6 +221,7 @@ export const RetirementNavigation: React.FC = () => {
   // Configuration des cartes d'action rapide
   const quickActionCards = [
     {
+      id: 'phase1',
       title: language === 'fr' ? 'Démos Phase 1' : 'Phase 1 Demos',
       description: language === 'fr' ? 'Navigation fluide et cartes interactives' : 'Fluid navigation and interactive cards',
       icon: Zap,
@@ -219,6 +231,7 @@ export const RetirementNavigation: React.FC = () => {
       external: false
     },
     {
+      id: 'phase2',
       title: language === 'fr' ? 'Démos Phase 2' : 'Phase 2 Demos',
       description: language === 'fr' ? 'Expérience immersive et IA adaptative' : 'Immersive experience and adaptive AI',
       icon: Settings,
@@ -226,6 +239,31 @@ export const RetirementNavigation: React.FC = () => {
       progress: 100,
       onClick: () => navigate(language === 'fr' ? '/fr/retraite-module' : '/en/retirement-module'),
       external: false
+    }
+  ];
+
+  // Configuration des nouvelles fonctionnalités
+  const newFeatures = [
+    {
+      id: 'monte-carlo',
+      title: language === 'fr' ? 'Simulations Monte Carlo' : 'Monte Carlo Simulations',
+      description: language === 'fr' ? 'Analyses avancées avec 10,000 scénarios' : 'Advanced analysis with 10,000 scenarios',
+      icon: BarChart3,
+      status: language === 'fr' ? 'Disponible maintenant' : 'Available now'
+    },
+    {
+      id: 'risk-analysis',
+      title: language === 'fr' ? 'Analyse des risques' : 'Risk Analysis',
+      description: language === 'fr' ? 'Évaluation complète des risques de retraite' : 'Complete retirement risk assessment',
+      icon: Shield,
+      status: language === 'fr' ? 'Disponible maintenant' : 'Available now'
+    },
+    {
+      id: 'advanced-dashboard',
+      title: language === 'fr' ? 'Tableau de bord avancé' : 'Advanced Dashboard',
+      description: language === 'fr' ? 'Interface moderne avec 5 onglets spécialisés' : 'Modern interface with 5 specialized tabs',
+      icon: Target,
+      status: language === 'fr' ? 'Disponible maintenant' : 'Available now'
     }
   ];
 
@@ -273,7 +311,7 @@ export const RetirementNavigation: React.FC = () => {
       {showParticles && (
         <InteractiveParticles
           count={currentLayout.columns === 1 ? 20 : 40}
-          theme={currentTheme.id}
+          theme={currentTheme.id as any}
           interactive={true}
           magnetic={true}
           energy={true}
@@ -516,8 +554,8 @@ export const RetirementNavigation: React.FC = () => {
                 }}
                 effects={{ 
                   shadow: true, 
-                  glow: card.status === 'Terminé',
-                  particles: card.status === 'Terminé'
+                  glow: card.status === 'completed',
+                  particles: card.status === 'completed'
                 }}
                 className="cursor-pointer h-full"
                 onClick={() => handleCardClick(card)}
@@ -525,8 +563,8 @@ export const RetirementNavigation: React.FC = () => {
                 <div className="p-6 h-full flex flex-col">
                   <div className="flex items-center gap-3 mb-4">
                     <div className={`p-2 rounded-lg ${
-                      card.status === 'Terminé' ? 'bg-green-100 text-green-600' :
-                      card.status === 'En cours' ? 'bg-blue-100 text-blue-600' :
+                      card.status === 'completed' ? 'bg-green-100 text-green-600' :
+                      card.status === 'in-progress' ? 'bg-blue-100 text-blue-600' :
                       'bg-gray-100 text-gray-600'
                     }`}>
                       <card.icon className="w-6 h-6" />
@@ -546,7 +584,7 @@ export const RetirementNavigation: React.FC = () => {
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <motion.div
                         className={`h-2 rounded-full ${
-                          card.status === 'Terminé' ? 'bg-green-500' : 'bg-blue-500'
+                          card.status === 'completed' ? 'bg-green-500' : 'bg-blue-500'
                         }`}
                         initial={{ width: 0 }}
                         animate={{ width: `${card.progress}%` }}
@@ -555,11 +593,12 @@ export const RetirementNavigation: React.FC = () => {
                     </div>
                     <div className="flex items-center justify-between mt-2">
                       <span className={`text-xs px-2 py-1 rounded-full ${
-                        card.status === 'Terminé' ? 'bg-green-100 text-green-800' :
-                        card.status === 'En cours' ? 'bg-blue-100 text-blue-800' :
+                        card.status === 'completed' ? 'bg-green-100 text-green-800' :
+                        card.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
                         'bg-gray-100 text-gray-800'
                       }`}>
-                        {card.status}
+                        {card.status === 'completed' ? 'Terminé' : 
+                         card.status === 'in-progress' ? 'En cours' : 'Verrouillé'}
                       </span>
                       <span className="text-xs text-blue-600 hover:underline cursor-pointer">
                         Cliquez pour accéder
