@@ -3,6 +3,7 @@ import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import DateInput from '@/components/ui/DateInput';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -147,8 +148,8 @@ const MonProfil: React.FC = () => {
             <AlertDescription className="text-lg">
               <strong>{isFrench ? 'Conseils :' : 'Tips:'}</strong> {
                 isFrench 
-                  ? 'Remplissez les informations pour chaque personne. Si vous êtes seul(e), laissez la section « Personne 2 » vide. Les montants en dollars n\'incluent pas les centimes pour simplifier la saisie.'
-                  : 'Fill in the information for each person. If you are single, leave the "Person 2" section empty. Dollar amounts do not include cents to simplify entry.'
+                  ? 'Entrez vos noms complets (prénoms composés, noms de famille) pour une personnalisation optimale de vos rapports. Si vous êtes seul(e), laissez la section « Personne 2 » vide. Les montants en dollars n\'incluent pas les centimes pour simplifier la saisie.'
+                  : 'Enter your full names (compound first names, last names) for optimal personalization of your reports. If you are single, leave the "Person 2" section empty. Dollar amounts do not include cents to simplify entry.'
               }
             </AlertDescription>
           </Alert>
@@ -170,26 +171,32 @@ const MonProfil: React.FC = () => {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label className="text-gray-200 font-semibold">
-                    {isFrench ? 'Prénom' : 'First Name'}
+                    {isFrench ? 'Nom complet' : 'Full Name'}
                   </Label>
                   <Input
                     type="text"
                     value={userData.personal?.prenom1 || ''}
                     onChange={(e) => handleChange('prenom1', e.target.value)}
                     className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400"
-                    placeholder={isFrench ? 'Prénom' : 'First Name'}
+                    placeholder={isFrench ? 'Ex: Jean Philippe ou Louis-Alexandre Veillette' : 'Ex: John Smith or Mary-Jane Watson'}
                   />
+                  <p className="text-xs text-gray-400 mt-1">
+                    {isFrench 
+                      ? 'Entrez votre nom complet tel que vous souhaitez qu\'il apparaisse dans vos rapports'
+                      : 'Enter your full name as you want it to appear in your reports'
+                    }
+                  </p>
                 </div>
 
                 <div className="space-y-2">
                   <Label className="text-gray-200 font-semibold">
                     {isFrench ? 'Date de naissance' : 'Date of Birth'}
                   </Label>
-                  <Input
-                    type="date"
+                  <DateInput
                     value={userData.personal?.naissance1 || ''}
-                    onChange={(e) => handleChange('naissance1', e.target.value)}
+                    onChange={(value) => handleChange('naissance1', value)}
                     className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400"
+                    placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
                   />
                 </div>
 
@@ -243,26 +250,32 @@ const MonProfil: React.FC = () => {
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label className="text-gray-200 font-semibold">
-                    {isFrench ? 'Prénom (optionnel)' : 'First Name (optional)'}
+                    {isFrench ? 'Nom complet (optionnel)' : 'Full Name (optional)'}
                   </Label>
                   <Input
                     type="text"
                     value={userData.personal?.prenom2 || ''}
                     onChange={(e) => handleChange('prenom2', e.target.value)}
                     className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
-                    placeholder={isFrench ? 'Prénom (optionnel)' : 'First Name (optional)'}
+                    placeholder={isFrench ? 'Ex: Marie-Claire Dubois ou Pierre Martin' : 'Ex: Sarah Johnson or Michael Brown'}
                   />
+                  <p className="text-xs text-gray-400 mt-1">
+                    {isFrench 
+                      ? 'Nom complet du conjoint pour la personnalisation des rapports'
+                      : 'Full name of spouse for report personalization'
+                    }
+                  </p>
                 </div>
 
                 <div className="space-y-2">
                   <Label className="text-gray-200 font-semibold">
                     {isFrench ? 'Date de naissance' : 'Date of Birth'}
                   </Label>
-                  <Input
-                    type="date"
+                  <DateInput
                     value={userData.personal?.naissance2 || ''}
-                    onChange={(e) => handleChange('naissance2', e.target.value)}
+                    onChange={(value) => handleChange('naissance2', value)}
                     className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
+                    placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
                   />
                 </div>
 
