@@ -41,6 +41,10 @@ export interface PersonalData {
   nombreEnfants?: number;
   province?: string;
   
+  // Champs pour les dépenses de retraite
+  depensesMensuelles?: number;
+  depensesAnnuelles?: number;
+  
   // NOUVEAUX: Informations d'emploi détaillées
   secteurActivite1?: string;
   secteurActivite2?: string;

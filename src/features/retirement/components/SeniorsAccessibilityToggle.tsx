@@ -1,17 +1,32 @@
 import React, { useState, useEffect } from 'react';
-import { Eye, EyeOff, Settings, Palette, Type, Contrast } from 'lucide-react';
+import { Eye, EyeOff, Settings, Palette, Type, Contrast, Navigation, Rocket, Sparkles, Zap, Play, Pause, RotateCcw } from 'lucide-react';
+import { useDemoControls } from '../hooks/useDemoControls';
 
-interface SeniorsAccessibilityToggleProps {
+interface NavigationToggleProps {
   className?: string;
 }
 
-export const SeniorsAccessibilityToggle: React.FC<SeniorsAccessibilityToggleProps> = ({ 
+export const NavigationToggle: React.FC<NavigationToggleProps> = ({ 
   className = '' 
 }) => {
   const [isSeniorsMode, setIsSeniorsMode] = useState(false);
   const [isHighContrast, setIsHighContrast] = useState(false);
   const [isReducedMotion, setIsReducedMotion] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
+  
+  // Hook centralisé pour les contrôles de démonstration
+  const {
+    isRotating,
+    startThemeRotation,
+    showParticles,
+    toggleParticles,
+    showPhysics,
+    togglePhysics,
+    performanceMode,
+    togglePerformanceMode,
+    isDemoMode,
+    toggleDemoMode
+  } = useDemoControls();
 
   // Charger les préférences depuis localStorage
   useEffect(() => {
@@ -77,9 +92,11 @@ export const SeniorsAccessibilityToggle: React.FC<SeniorsAccessibilityToggleProp
     updateBodyClasses(isSeniorsMode, isHighContrast, newValue);
   };
 
+  // Les contrôles de démonstration sont maintenant gérés par le hook useDemoControls
+
   return (
     <div className={`relative ${className}`}>
-      {/* Bouton principal */}
+      {/* Bouton principal - Maintenant "Navigation" au lieu de "Mode Seniors" */}
       <button
         onClick={() => setShowSettings(!showSettings)}
         className={`
@@ -90,54 +107,123 @@ export const SeniorsAccessibilityToggle: React.FC<SeniorsAccessibilityToggleProp
           }
           hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
         `}
-        title="Options d'accessibilité pour seniors"
+        title="Options de navigation et d'accessibilité"
       >
-        <Eye className="w-5 h-5" />
+        <Navigation className="w-5 h-5" />
         <span className="font-medium">
-          {isSeniorsMode ? 'Mode Seniors Actif' : 'Mode Seniors'}
+          {isSeniorsMode ? 'Navigation Active' : 'Navigation'}
         </span>
         <Settings className={`w-4 h-4 transition-transform ${showSettings ? 'rotate-90' : ''}`} />
       </button>
 
       {/* Panneau de paramètres */}
       {showSettings && (
-        <div className="absolute top-full left-0 mt-2 w-80 bg-white border-2 border-gray-200 rounded-xl shadow-xl z-50">
+        <div className="absolute top-full right-0 mt-2 w-96 bg-white border-2 border-gray-200 rounded-xl shadow-xl z-50">
           <div className="p-6">
             <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <Eye className="w-5 h-5" />
-              Accessibilité pour Seniors
+              <Navigation className="w-5 h-5" />
+              Options de Navigation
             </h3>
             
             <div className="space-y-4">
-              {/* Mode seniors principal */}
-              <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Type className="w-4 h-4 text-blue-600" />
-                    <span className="font-medium text-gray-800">Mode Seniors</span>
-                  </div>
-                  <p className="text-sm text-gray-600">
-                    Textes plus grands, meilleur contraste, boutons plus larges
-                  </p>
+              {/* Section 1: Options de navigation (Capture 2) */}
+              <div className="border-b border-gray-200 pb-4">
+                <h4 className="font-medium text-gray-700 mb-3">Mode de Navigation</h4>
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setIsSeniorsMode(false)}
+                    className={`w-full p-3 rounded-lg border-2 transition-all duration-200 text-left ${
+                      !isSeniorsMode 
+                        ? 'bg-blue-50 border-blue-300 text-blue-800' 
+                        : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                      <span className="font-medium">Mode Standard</span>
+                    </div>
+                    <p className="text-sm text-gray-500 mt-1">Interface standard avec toutes les fonctionnalités</p>
+                  </button>
+                  
+                  <button
+                    onClick={() => setIsSeniorsMode(true)}
+                    className={`w-full p-3 rounded-lg border-2 transition-all duration-200 text-left ${
+                      isSeniorsMode 
+                        ? 'bg-blue-50 border-blue-300 text-blue-800' 
+                        : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                      <span className="font-medium">Mode Senior</span>
+                    </div>
+                    <p className="text-sm text-gray-500 mt-1">Interface simplifiée et accessible</p>
+                  </button>
                 </div>
-                <button
-                  onClick={toggleSeniorsMode}
-                  title={isSeniorsMode ? 'Désactiver le mode seniors' : 'Activer le mode seniors'}
-                  className={`
-                    relative w-12 h-6 rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500
-                    ${isSeniorsMode ? 'bg-blue-600' : 'bg-gray-300'}
-                  `}
-                >
-                  <div className={`
-                    absolute top-0.5 w-5 h-5 bg-white rounded-full transition-transform duration-200
-                    ${isSeniorsMode ? 'translate-x-6' : 'translate-x-0.5'}
-                  `} />
-                </button>
               </div>
 
-              {/* Options supplémentaires (seulement si mode seniors actif) */}
+              {/* Section 2: Contrôles de démonstration (Capture 3) */}
+              <div className="border-b border-gray-200 pb-4">
+                <h4 className="font-medium text-gray-700 mb-3">Contrôles de Démonstration</h4>
+                <div className="grid grid-cols-1 gap-2">
+                  <button
+                    onClick={startThemeRotation}
+                    className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all duration-200 ${
+                      isRotating 
+                        ? 'bg-blue-50 border-blue-300 text-blue-800' 
+                        : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-gray-300'
+                    }`}
+                  >
+                    <Rocket className={`w-5 h-5 ${isRotating ? 'text-blue-600' : 'text-gray-500'}`} />
+                    <div className="text-left">
+                      <div className="font-medium">Démarrer Rotation</div>
+                      <div className="text-sm text-gray-500">
+                        {isRotating ? 'Rotation active' : 'Rotation des thèmes automatique'}
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={toggleParticles}
+                    className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all duration-200 ${
+                      !showParticles 
+                        ? 'bg-purple-50 border-purple-300 text-purple-800' 
+                        : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-gray-300'
+                    }`}
+                  >
+                    <Sparkles className={`w-5 h-5 ${!showParticles ? 'text-purple-600' : 'text-gray-500'}`} />
+                    <div className="text-left">
+                      <div className="font-medium">Masquer Particules</div>
+                      <div className="text-sm text-gray-500">
+                        {!showParticles ? 'Particules masquées' : 'Particules visibles'}
+                      </div>
+                    </div>
+                  </button>
+
+                  <button
+                    onClick={togglePhysics}
+                    className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all duration-200 ${
+                      !showPhysics 
+                        ? 'bg-green-50 border-green-300 text-green-800' 
+                        : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-gray-300'
+                    }`}
+                  >
+                    <Zap className={`w-5 h-5 ${!showPhysics ? 'text-green-600' : 'text-gray-500'}`} />
+                    <div className="text-left">
+                      <div className="font-medium">Désactiver Physique</div>
+                      <div className="text-sm text-gray-500">
+                        {!showPhysics ? 'Physique désactivée' : 'Physique activée'}
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Section 3: Options d'accessibilité (seulement si mode senior actif) */}
               {isSeniorsMode && (
-                <>
+                <div className="border-b border-gray-200 pb-4">
+                  <h4 className="font-medium text-gray-700 mb-3">Accessibilité</h4>
+                  
                   {/* Contraste élevé */}
                   <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <div className="flex-1">
@@ -165,7 +251,7 @@ export const SeniorsAccessibilityToggle: React.FC<SeniorsAccessibilityToggleProp
                   </div>
 
                   {/* Mouvement réduit */}
-                  <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-green-50 rounded-lg mt-3">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <EyeOff className="w-4 h-4 text-green-600" />
@@ -189,26 +275,26 @@ export const SeniorsAccessibilityToggle: React.FC<SeniorsAccessibilityToggleProp
                       `} />
                     </button>
                   </div>
-                </>
+                </div>
               )}
-            </div>
 
-            {/* Informations */}
-            <div className="mt-4 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
-              <p className="text-sm text-yellow-800">
-                <strong>💡 Conseil :</strong> Ces paramètres sont sauvegardés automatiquement 
-                et s'appliquent à toute l'application.
-              </p>
-            </div>
+              {/* Informations */}
+              <div className="p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                <p className="text-sm text-yellow-800">
+                  <strong>💡 Conseil :</strong> Ces paramètres sont sauvegardés automatiquement 
+                  et s'appliquent à toute l'application.
+                </p>
+              </div>
 
-            {/* Bouton de fermeture */}
-            <div className="mt-4 text-center">
-              <button
-                onClick={() => setShowSettings(false)}
-                className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors"
-              >
-                Fermer
-              </button>
+              {/* Bouton de fermeture */}
+              <div className="text-center">
+                <button
+                  onClick={() => setShowSettings(false)}
+                  className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 transition-colors"
+                >
+                  Fermer
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -225,4 +311,4 @@ export const SeniorsAccessibilityToggle: React.FC<SeniorsAccessibilityToggleProp
   );
 };
 
-export default SeniorsAccessibilityToggle;
+export default NavigationToggle;

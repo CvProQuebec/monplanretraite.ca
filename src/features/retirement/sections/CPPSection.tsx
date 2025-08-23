@@ -1,30 +1,14 @@
 // src/features/retirement/sections/CPPSection.tsx
 
 import React from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { 
-  Flag, 
-  Info, 
-  TrendingUp, 
-  Calculator,
-  AlertTriangle,
-  CheckCircle,
-  ExternalLink,
-  Rocket,
-  Sparkles
-} from 'lucide-react';
-import { CPPCalculator } from '../components/CPPCalculator';
-import { useLanguage } from '../hooks/useLanguage';
-import { PlanRestrictedSection } from '../components/PlanRestrictedSection';
 
 interface CPPSectionProps {
   className?: string;
 }
 
 export const CPPSection: React.FC<CPPSectionProps> = ({ className }) => {
-  const { language } = useLanguage();
+  // Détection simple de la langue depuis l'URL
+  const isFrench = window.location.pathname.includes('/fr/') || !window.location.pathname.includes('/en/');
 
   const texts = {
     fr: {
@@ -73,112 +57,109 @@ export const CPPSection: React.FC<CPPSectionProps> = ({ className }) => {
     }
   };
 
-  const t = texts[language];
+  const t = texts[isFrench ? 'fr' : 'en'];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
-      {/* Particules de fond visibles */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
-        <div className="absolute top-60 left-1/4 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
-        <div className="absolute top-80 right-1/3 w-1 h-1 bg-red-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-96 left-1/2 w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
-        <div className="absolute top-32 right-1/4 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-72 left-1/3 w-1 h-1 bg-pink-400 rounded-full animate-bounce"></div>
-      </div>
-
-      <div className="container mx-auto px-6 py-8 relative z-10">
+      <div className="container mx-auto px-6 py-8">
         <div className="space-y-8">
-        {/* En-tête de la section avec nouveau look Phase 2 */}
-        <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent drop-shadow-2xl mb-4">
-            {t.title}
-          </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            {t.subtitle}
-          </p>
-        </div>
+          {/* En-tête de la section */}
+          <div className="text-center mb-8">
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent drop-shadow-2xl mb-4">
+              {t.title}
+            </h1>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              {t.subtitle}
+            </p>
+          </div>
 
-        {/* Description et différences */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Description */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Info className="w-5 h-5" />
-                {language === 'fr' ? 'À propos du CPP' : 'About CPP'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-gray-700 leading-relaxed">
-                {t.description}
-              </p>
-              
-              <div className="space-y-3">
-                <h4 className="font-semibold text-gray-900">
-                  {language === 'fr' ? 'Fonctionnalités principales :' : 'Main features:'}
-                </h4>
-                <ul className="space-y-2">
-                  {t.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-2">
-                      <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
-                      <span className="text-gray-700">{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </CardContent>
-          </Card>
+          {/* Description principale */}
+          <div className="bg-white/10 backdrop-blur-sm border-purple-300/30 rounded-lg p-6">
+            <h2 className="text-2xl font-bold text-yellow-400 mb-4 flex items-center gap-3">
+              <span className="text-3xl">🏁</span>
+              {isFrench ? 'À propos du CPP' : 'About CPP'}
+            </h2>
+            <p className="text-gray-200 text-lg leading-relaxed">
+              {t.description}
+            </p>
+          </div>
+
+          {/* Fonctionnalités principales */}
+          <div className="bg-white/10 backdrop-blur-sm border-blue-300/30 rounded-lg p-6">
+            <h2 className="text-2xl font-bold text-blue-400 mb-4 flex items-center gap-3">
+              <span className="text-3xl">✨</span>
+              {isFrench ? 'Fonctionnalités principales' : 'Key Features'}
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {t.features.map((feature, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <span className="text-green-400 text-xl">✓</span>
+                  <span className="text-gray-200">{feature}</span>
+                </div>
+              ))}
+            </div>
+          </div>
 
           {/* Différences CPP vs RRQ */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <TrendingUp className="w-5 h-5" />
-                {language === 'fr' ? 'CPP vs RRQ' : 'CPP vs RRQ'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                {t.differences.map((difference, index) => (
-                  <div key={index} className="flex items-start gap-2">
-                    <div className="w-2 h-2 bg-red-500 rounded-full mt-2 flex-shrink-0"></div>
-                    <span className="text-gray-700">{difference}</span>
-                  </div>
-                ))}
-              </div>
-              
-              <div className="pt-4 border-t">
-                <a
-                  href={t.officialLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-red-600 hover:text-red-700 font-medium"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                  {t.officialText}
-                </a>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+          <div className="bg-white/10 backdrop-blur-sm border-green-300/30 rounded-lg p-6">
+            <h2 className="text-2xl font-bold text-green-400 mb-4 flex items-center gap-3">
+              <span className="text-3xl">📊</span>
+              {isFrench ? 'CPP vs RRQ : Les différences' : 'CPP vs RRQ: The Differences'}
+            </h2>
+            <div className="space-y-3">
+              {t.differences.map((difference, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <span className="text-blue-400 text-xl">ℹ️</span>
+                  <span className="text-gray-200">{difference}</span>
+                </div>
+              ))}
+            </div>
+          </div>
 
-        {/* Note importante */}
-        <Alert>
-          <AlertTriangle className="h-4 w-4" />
-          <AlertTitle>
-            {language === 'fr' ? 'Information importante' : 'Important information'}
-          </AlertTitle>
-          <AlertDescription>
-            {t.note}
-          </AlertDescription>
-        </Alert>
+          {/* Lien officiel */}
+          <div className="bg-white/10 backdrop-blur-sm border-yellow-300/30 rounded-lg p-6">
+            <h2 className="text-2xl font-bold text-yellow-400 mb-4 flex items-center gap-3">
+              <span className="text-3xl">🔗</span>
+              {isFrench ? 'Informations officielles' : 'Official Information'}
+            </h2>
+            <div className="space-y-4">
+              <p className="text-gray-200">
+                {isFrench 
+                  ? 'Pour plus d\'informations officielles sur le CPP :'
+                  : 'For more official information about CPP:'
+                }
+              </p>
+              <a 
+                href={t.officialLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-yellow-400 hover:text-yellow-300 transition-colors bg-yellow-900/20 px-4 py-2 rounded-lg border border-yellow-400/30"
+              >
+                <span className="text-xl">🌐</span>
+                {t.officialText}
+              </a>
+            </div>
+          </div>
 
-        {/* Calculateur CPP */}
-        <div className="mt-8">
-          <CPPCalculator />
-        </div>
+          {/* Note importante */}
+          <div className="bg-yellow-900/50 border-yellow-400/30 rounded-lg p-6">
+            <div className="flex items-start gap-3">
+              <span className="text-yellow-400 text-xl">⚠️</span>
+              <div className="text-yellow-200">
+                <p className="font-semibold mb-2">
+                  {isFrench ? 'Information importante' : 'Important information'}
+                </p>
+                <p>{t.note}</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Badge de statut */}
+          <div className="text-center">
+            <div className="bg-green-500 text-white px-6 py-3 rounded-lg text-lg font-bold inline-block">
+              ✅ {isFrench ? 'CPP Disponible' : 'CPP Available'}
+            </div>
+          </div>
         </div>
       </div>
     </div>

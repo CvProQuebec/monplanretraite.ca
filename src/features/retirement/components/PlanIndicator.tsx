@@ -119,7 +119,7 @@ const getPlanFeatures = (plan: SubscriptionPlan, language: 'fr' | 'en'): string[
         'Tout du plan Professionnel',
         'Profils illimités',
         'Conseils IA',
-        'Intégrations bancaires',
+
         'Collaboration conseiller',
         'Support prioritaire',
         'Formation personnalisée'
@@ -145,7 +145,7 @@ const getPlanFeatures = (plan: SubscriptionPlan, language: 'fr' | 'en'): string[
         'Everything from Professional',
         'Unlimited profiles',
         'AI advice',
-        'Banking integrations',
+
         'Advisor collaboration',
         'Priority support',
         'Personalized training'

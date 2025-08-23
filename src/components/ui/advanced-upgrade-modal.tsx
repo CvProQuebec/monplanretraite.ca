@@ -127,7 +127,7 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
       maxProfiles: 'Profils multiples',
       hasAdvancedAnalytics: 'Analyses avancées',
       hasAIConsulting: 'Conseils IA',
-      hasIntegrations: 'Intégrations',
+
       hasPrioritySupport: 'Support prioritaire',
       hasPersonalizedTraining: 'Formation personnalisée',
       hasExportPDF: 'Export PDF',
