@@ -44,19 +44,14 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
       hasSubmenu: true,
       submenu: [
         {
-          id: 'overview',
-          label: isEnglish ? 'Overview' : 'Vue d\'ensemble',
-          path: isEnglish ? '/en/retirement-module?section=dashboard' : '/fr/retraite-module?section=dashboard'
-        },
-        {
-          id: 'retirement',
-          label: isEnglish ? 'Retirement Summary' : 'Sommaire retraite',
-          path: isEnglish ? '/my-retirement' : '/ma-retraite'
-        },
-        {
           id: 'profile',
           label: isEnglish ? 'Profile' : 'Profil',
           path: isEnglish ? '/my-profile' : '/mon-profil'
+        },
+        {
+          id: 'overview',
+          label: isEnglish ? 'Overview' : 'Vue d\'ensemble',
+          path: isEnglish ? '/en/retirement-module?section=dashboard' : '/fr/retraite-module?section=dashboard'
         },
         {
           id: 'save-load',
@@ -155,6 +150,11 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           id: 'succession',
           label: isEnglish ? 'Succession' : 'Succession',
           path: isEnglish ? '/en/retirement-module?section=succession' : '/fr/retraite-module?section=succession'
+        },
+        {
+          id: 'financial-assistant',
+          label: isEnglish ? 'Personal Financial Assistant' : 'Assistant Financier Personnel',
+          path: isEnglish ? '/assistant-financier' : '/assistant-financier'
         }
       ]
     },
