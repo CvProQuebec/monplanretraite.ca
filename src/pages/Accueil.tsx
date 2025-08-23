@@ -165,6 +165,119 @@ const Accueil: React.FC = () => {
             </Card>
           </div>
 
+          {/* Section Assistant Financier Personnel - NOUVEAU */}
+          <Card className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-2xl mb-12 border-0">
+            <CardContent className="p-8">
+              <div className="text-center mb-8">
+                <div className="flex justify-center mb-6">
+                  <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <Sparkles className="w-10 h-10 text-white" />
+                  </div>
+                </div>
+                <h2 className="text-3xl font-bold mb-4">
+                  {isFrench ? '🚀 NOUVEAU : Assistant Financier Personnel' : '🚀 NEW: Personal Financial Assistant'}
+                </h2>
+                <p className="text-xl text-indigo-100 max-w-3xl mx-auto mb-8">
+                  {isFrench 
+                    ? 'Le premier assistant IA au monde qui évite les catastrophes financières avant qu\'elles arrivent !'
+                    : 'The world\'s first AI assistant that prevents financial disasters before they happen!'
+                  }
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <AlertTriangle className="w-8 h-8 text-yellow-300" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {isFrench ? 'Évite les découverts' : 'Prevents overdrafts'}
+                  </h3>
+                  <p className="text-indigo-100 text-sm">
+                    {isFrench 
+                      ? 'Analyse l\'impact de chaque achat sur votre flux de trésorerie'
+                      : 'Analyzes the impact of every purchase on your cash flow'
+                    }
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <BarChart3 className="w-8 h-8 text-green-300" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {isFrench ? 'Optimise le timing' : 'Optimizes timing'}
+                  </h3>
+                  <p className="text-indigo-100 text-sm">
+                    {isFrench 
+                      ? 'Recommande le meilleur moment pour vos achats importants'
+                      : 'Recommends the best time for your major purchases'
+                    }
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <TrendingUp className="w-8 h-8 text-blue-300" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {isFrench ? 'Score financier' : 'Financial score'}
+                  </h3>
+                  <p className="text-indigo-100 text-sm">
+                    {isFrench 
+                      ? 'Évalue votre santé financière en temps réel sur 100 points'
+                      : 'Evaluates your financial health in real-time out of 100 points'
+                    }
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8">
+                <h3 className="text-xl font-bold mb-4 text-center">
+                  {isFrench ? 'Exemples concrets d\'utilisation :' : 'Real-world examples:'}
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-3">
+                    <h4 className="font-semibold text-yellow-300">
+                      {isFrench ? '💡 Scénario Électroménager' : '💡 Appliance Scenario'}
+                    </h4>
+                    <p className="text-sm text-indigo-100">
+                      {isFrench 
+                        ? 'Vous voulez un frigo à 2000 $. L\'assistant compare : neuf vs usagé vs financement, et vous dit : "Attendez 2 mois ou choisissez l\'usagé à 400 $ pour éviter un découvert"'
+                        : 'You want a $2000 fridge. The assistant compares: new vs used vs financing, and tells you: "Wait 2 months or choose the used one at $400 to avoid an overdraft"'
+                      }
+                    </p>
+                  </div>
+                  <div className="space-y-3">
+                    <h4 className="font-semibold text-green-300">
+                      {isFrench ? '🏖️ Scénario Vacances' : '🏖️ Vacation Scenario'}
+                    </h4>
+                    <p className="text-sm text-indigo-100">
+                      {isFrench 
+                        ? 'Croisière 8000 $ vs Cuba 2000 $. L\'assistant calcule l\'impact sur votre fonds d\'urgence et recommande : "Cuba maintenant ou croisière dans 6 mois avec plan d\'épargne"'
+                        : '$8000 cruise vs $2000 Cuba. The assistant calculates the impact on your emergency fund and recommends: "Cuba now or cruise in 6 months with savings plan"'
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <Button 
+                  onClick={() => handleNavigation('/assistant-financier')}
+                  size="lg"
+                  className="bg-white text-indigo-600 hover:bg-gray-100 font-semibold px-8 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  {isFrench ? 'Découvrir l\'Assistant IA' : 'Discover the AI Assistant'}
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+                <p className="text-indigo-200 text-sm mt-3">
+                  {isFrench ? 'Disponible dans les plans Professionnel et Ultimate' : 'Available in Professional and Ultimate plans'}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Section Planification financière complète */}
           <Card className="bg-white/90 backdrop-blur-sm border-2 border-indigo-200 shadow-2xl mb-12">
             <CardHeader className="text-center">
@@ -182,7 +295,7 @@ const Accueil: React.FC = () => {
               {/* Section Pourquoi choisir notre solution */}
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 mb-8">
                 <h3 className="text-2xl font-bold text-blue-900 mb-4 text-center">
-                  {isFrench ? 'Pourquoi choisir notre solution ?' : 'Why choose our solution?'}
+                  {isFrench ? 'Pourquoi choisir notre solution?' : 'Why choose our solution?'}
                 </h3>
                                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
                    <div className="space-y-2">
@@ -492,6 +605,28 @@ const Accueil: React.FC = () => {
                         <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
                         <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
                       </tr>
+                      <tr className="border-b border-gray-100 bg-gradient-to-r from-indigo-50 to-purple-50">
+                        <td className="p-4 text-gray-700 font-semibold">
+                          🚀 {isFrench ? 'Assistant Financier Personnel IA' : 'Personal AI Financial Assistant'}
+                          <div className="text-xs text-indigo-600 font-normal">
+                            {isFrench ? 'Évite les catastrophes financières' : 'Prevents financial disasters'}
+                          </div>
+                        </td>
+                        <td className="p-4 text-center">
+                          <div className="text-xs text-gray-500 mb-1">{isFrench ? 'Score seulement' : 'Score only'}</div>
+                          <div className="w-5 h-5 bg-yellow-100 border-2 border-yellow-500 rounded-full mx-auto flex items-center justify-center">
+                            <span className="text-yellow-600 text-xs font-bold">~</span>
+                          </div>
+                        </td>
+                        <td className="p-4 text-center">
+                          <div className="text-xs text-blue-600 mb-1 font-medium">{isFrench ? 'Complet' : 'Complete'}</div>
+                          <CheckCircle className="w-5 h-5 text-green-600 mx-auto" />
+                        </td>
+                        <td className="p-4 text-center">
+                          <div className="text-xs text-purple-600 mb-1 font-medium">{isFrench ? 'Premium' : 'Premium'}</div>
+                          <CheckCircle className="w-5 h-5 text-green-600 mx-auto" />
+                        </td>
+                      </tr>
                       <tr className="border-b border-gray-100">
                         <td className="p-4 text-gray-700">{isFrench ? 'Conseils personnalisés par IA' : 'AI-powered personal advice'}</td>
                         <td className="p-4 text-center"><div className="w-5 h-5 border-2 border-red-500 rounded-full mx-auto flex items-center justify-center"><span className="text-red-500 text-xs font-bold">×</span></div></td>
@@ -634,11 +769,11 @@ const Accueil: React.FC = () => {
             <span className="text-3xl font-bold text-green-600">M</span>
           </div>
           <h2 className="text-3xl font-bold mb-4">
-            {isFrench ? 'Bienvenue Gerald Dore !' : 'Welcome Gerald Dore!'}
+            {isFrench ? 'Bienvenue Gerald Dore!' : 'Welcome Gerald Dore!'}
           </h2>
           <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
             {isFrench 
-              ? 'Avec notre code promo : Débloquez des fonctionnalités supplémentaires !'
+              ? 'Avec notre code promo : Débloquez des fonctionnalités supplémentaires!'
               : 'With our promo code: Unlock additional features!'
             }
           </p>

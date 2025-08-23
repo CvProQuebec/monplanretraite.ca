@@ -111,14 +111,25 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, className, place
   const validateDate = (dateString: string): boolean => {
     if (!dateString || dateString.length !== 10) return false;
     
-    const date = new Date(dateString);
+    // Vérifier le format YYYY-MM-DD
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(dateString)) return false;
+    
     const [year, month, day] = dateString.split('-').map(Number);
     
+    // Vérifications de base
+    if (year < 1900 || year > new Date().getFullYear()) return false;
+    if (month < 1 || month > 12) return false;
+    if (day < 1 || day > 31) return false;
+    
+    // Créer la date et vérifier qu'elle est valide
+    const date = new Date(year, month - 1, day);
+    
+    // Vérifier que la date créée correspond aux valeurs entrées
+    // (évite les dates comme 31 février qui deviennent 3 mars)
     return date.getFullYear() === year &&
            date.getMonth() === month - 1 &&
-           date.getDate() === day &&
-           year >= 1900 &&
-           year <= new Date().getFullYear();
+           date.getDate() === day;
   };
 
   const isValidDate = validateDate(displayValue);

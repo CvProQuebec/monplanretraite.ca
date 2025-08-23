@@ -15,7 +15,25 @@ export class InputSanitizer {
       .replace(/[<>]/g, '') // Remove potential HTML tags
       .replace(/javascript:/gi, '') // Remove javascript: protocols
       .replace(/on\w+\s*=/gi, '') // Remove event handlers
-      .trim();
+      .replace(/\s+/g, ' ') // Normalize multiple spaces to single space
+      .trim(); // Only trim start/end, preserve internal spaces
+  }
+
+  /**
+   * Sanitize name input (preserves spaces for compound names)
+   */
+  static sanitizeName(input: string): string {
+    if (typeof input !== 'string') {
+      return '';
+    }
+    
+    return input
+      .replace(/[<>]/g, '') // Remove potential HTML tags
+      .replace(/javascript:/gi, '') // Remove javascript: protocols
+      .replace(/on\w+\s*=/gi, '') // Remove event handlers
+      .replace(/[^a-zA-ZÀ-ÿĀ-žА-я\u4e00-\u9fff\s\-'\.]/g, '') // Keep only letters (including accented), spaces, hyphens, apostrophes, dots
+      .replace(/\s{2,}/g, ' ') // Normalize multiple consecutive spaces to single space (but preserve single spaces)
+      .trim(); // Trim only start/end
   }
 
   /**
@@ -50,12 +68,20 @@ export class InputSanitizer {
 
     const sanitized: any = {};
 
+    // Fields that should use name sanitization (preserve spaces)
+    const nameFields = ['prenom1', 'prenom2', 'nom1', 'nom2', 'nom', 'prenom'];
+
     // Recursively sanitize object properties
     for (const [key, value] of Object.entries(data)) {
       const sanitizedKey = this.sanitizeString(key);
       
       if (typeof value === 'string') {
-        sanitized[sanitizedKey] = this.sanitizeString(value);
+        // Use special name sanitization for name fields
+        if (nameFields.includes(key)) {
+          sanitized[sanitizedKey] = this.sanitizeName(value);
+        } else {
+          sanitized[sanitizedKey] = this.sanitizeString(value);
+        }
       } else if (typeof value === 'number') {
         sanitized[sanitizedKey] = this.sanitizeNumber(value);
       } else if (typeof value === 'boolean') {

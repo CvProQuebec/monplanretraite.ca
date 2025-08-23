@@ -42,7 +42,10 @@ import {
   EmergencyPlanValidation 
 } from '../types/emergency-planning';
 import { useRetirementData } from '../hooks/useRetirementData';
-import { formatCurrency } from '../utils/formatters';
+import { usePersonNames } from '../hooks/usePersonNames';
+import { EmergencyContactsForm } from './EmergencyContactsForm';
+import { MedicalInfoForm } from './MedicalInfoForm';
+import { FinancialAccountsForm } from './FinancialAccountsForm';
 
 interface EmergencyPlanningManagerProps {
   className?: string;
@@ -50,6 +53,7 @@ interface EmergencyPlanningManagerProps {
 
 export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> = ({ className }) => {
   const { userData } = useRetirementData();
+  const { getPersonDisplayName, getSectionTitle, getSaveButtonLabel, getSelectOptions } = usePersonNames();
   const [planningState, setPlanningState] = useState<EmergencyPlanningState>({
     selectedPerson: 'person1',
     isEditing: false
@@ -101,64 +105,114 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
     setPlanningState(newState);
   };
 
-  const saveState = async () => {
+  const saveToFile = () => {
     setIsSaving(true);
     try {
-      // Sauvegarde par défaut : données combinées + planification d'urgence
-      IndividualSaveService.saveDefault(userData, planningState);
-      
-      // Sauvegarde traditionnelle de la planification d'urgence
+      // Créer le nom de fichier suggéré
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('fr-CA').replace(/-/g, '');
+      const timeStr = now.toLocaleTimeString('fr-CA', { hour12: false }).replace(/:/g, 'h');
+      const suggestedName = `Plan-retraite-${dateStr}-${timeStr}.json`;
+
+      // Préparer les données à sauvegarder
+      const dataToSave = {
+        version: '1.0.0',
+        exportDate: now,
+        userData: userData,
+        emergencyPlanning: planningState,
+        metadata: {
+          appVersion: '1.0.0',
+          exportedBy: 'MonPlanRetraite.ca'
+        }
+      };
+
+      // Créer le blob et télécharger
+      const blob = new Blob([JSON.stringify(dataToSave, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = suggestedName;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      // Sauvegarder aussi localement pour la session
       EmergencyPlanningService.saveEmergencyPlanningState(planningState);
       
-      setLastSaved(new Date());
-      console.log('💾 Sauvegarde complète effectuée (combinée + urgence)');
+      setLastSaved(now);
+      console.log('💾 Fichier sauvegardé:', suggestedName);
     } catch (error) {
       console.error('Erreur lors de la sauvegarde:', error);
+      alert('Erreur lors de la sauvegarde du fichier. Veuillez réessayer.');
     } finally {
       setIsSaving(false);
     }
   };
 
-  const savePerson1Individual = async () => {
-    setIsSaving(true);
-    try {
-      IndividualSaveService.savePerson1Individual(userData);
-      setLastSaved(new Date());
-      console.log('💾 Données Personne 1 sauvegardées individuellement');
-    } catch (error) {
-      console.error('Erreur lors de la sauvegarde Personne 1:', error);
-    } finally {
-      setIsSaving(false);
-    }
-  };
+  const restoreFromFile = () => {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.json';
+    input.onchange = (event) => {
+      const file = (event.target as HTMLInputElement).files?.[0];
+      if (!file) return;
 
-  const savePerson2Individual = async () => {
-    setIsSaving(true);
-    try {
-      IndividualSaveService.savePerson2Individual(userData);
-      setLastSaved(new Date());
-      console.log('💾 Données Personne 2 sauvegardées individuellement');
-    } catch (error) {
-      console.error('Erreur lors de la sauvegarde Personne 2:', error);
-    } finally {
-      setIsSaving(false);
-    }
-  };
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const content = e.target?.result as string;
+          const data = JSON.parse(content);
 
-  const exportPerson1 = () => {
-    IndividualSaveService.exportPerson1Individual(userData);
-  };
+          // Vérifier la structure du fichier
+          if (!data.emergencyPlanning && !data.userData) {
+            alert('Ce fichier ne semble pas être un fichier de sauvegarde valide.');
+            return;
+          }
 
-  const exportPerson2 = () => {
-    IndividualSaveService.exportPerson2Individual(userData);
-  };
+          // Confirmer l'écrasement des données
+          const confirmRestore = window.confirm(
+            'Cette action va remplacer toutes vos données actuelles par celles du fichier. ' +
+            'Êtes-vous sûr de vouloir continuer ?'
+          );
 
-  const exportCombined = () => {
-    IndividualSaveService.exportCombinedFinancialData(userData);
-  };
+          if (!confirmRestore) return;
 
-  const exportEmergencyOnly = () => {
-    IndividualSaveService.exportEmergencyPlanning(planningState);
+          // Restaurer les données d'urgence
+          if (data.emergencyPlanning) {
+            // Convertir les dates
+            const restoredState = data.emergencyPlanning;
+            if (restoredState.person1Plan) {
+              restoredState.person1Plan = EmergencyPlanningService.convertDatesInPlan(restoredState.person1Plan);
+            }
+            if (restoredState.person2Plan) {
+              restoredState.person2Plan = EmergencyPlanningService.convertDatesInPlan(restoredState.person2Plan);
+            }
+
+            // Écraser complètement l'état actuel
+            setPlanningState({
+              selectedPerson: restoredState.selectedPerson || 'person1',
+              isEditing: false,
+              person1Plan: restoredState.person1Plan,
+              person2Plan: restoredState.person2Plan
+            });
+
+            // Sauvegarder localement
+            EmergencyPlanningService.saveEmergencyPlanningState(restoredState);
+          }
+
+          setLastSaved(new Date());
+          alert('Données restaurées avec succès !');
+          console.log('📂 Données restaurées depuis le fichier');
+
+        } catch (error) {
+          console.error('Erreur lors de la restauration:', error);
+          alert('Erreur lors de la lecture du fichier. Assurez-vous qu\'il s\'agit d\'un fichier de sauvegarde valide.');
+        }
+      };
+      reader.readAsText(file);
+    };
+    input.click();
   };
 
   const getCurrentPlan = (): EmergencyPlan | undefined => {
@@ -200,10 +254,6 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
     });
   };
 
-  const exportPlans = () => {
-    // Export par défaut : données combinées
-    exportCombined();
-  };
 
   const printPlan = () => {
     const currentPlan = getCurrentPlan();
@@ -349,20 +399,14 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="person1">
-                  <div className="flex items-center gap-2">
-                    <User className="w-4 h-4" />
-                    {planningState.person1Plan?.prenom || 'Personne 1'} {planningState.person1Plan?.nom || ''}
-                  </div>
-                </SelectItem>
-                {hasSecondPerson && (
-                  <SelectItem value="person2">
+                {getSelectOptions().map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
                     <div className="flex items-center gap-2">
-                      <User className="w-4 h-4" />
-                      {planningState.person2Plan?.prenom || userData.personal?.prenom2 || 'Personne 2'} {planningState.person2Plan?.nom || ''}
+                      <span className="text-sm">{option.icon}</span>
+                      {option.label}
                     </div>
                   </SelectItem>
-                )}
+                ))}
               </SelectContent>
             </Select>
 
@@ -374,23 +418,36 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
             )}
           </div>
 
-          {/* Actions globales */}
+          {/* Actions simplifiées */}
           <div className="space-y-4">
-            {/* Actions principales */}
-            <div className="flex flex-wrap gap-2">
-              <Button onClick={saveState} disabled={isSaving} variant="outline">
-                <Save className="w-4 h-4 mr-2" />
-                {isSaving ? 'Sauvegarde...' : 'Sauvegarder (Combiné)'}
+            <div className="flex flex-wrap gap-3 items-center">
+              <Button 
+                onClick={saveToFile} 
+                disabled={isSaving} 
+                className="bg-green-600 hover:bg-green-700 text-white"
+                size="lg"
+              >
+                <Download className="w-5 h-5 mr-2" />
+                {isSaving ? 'Sauvegarde...' : 'Sauvegarder sur mon ordinateur'}
               </Button>
               
-              <Button onClick={printPlan} disabled={!currentPlan} variant="outline">
-                <Printer className="w-4 h-4 mr-2" />
+              <Button 
+                onClick={restoreFromFile} 
+                variant="outline"
+                size="lg"
+              >
+                <Upload className="w-5 h-5 mr-2" />
+                Restaurer depuis un fichier
+              </Button>
+              
+              <Button 
+                onClick={printPlan} 
+                disabled={!currentPlan} 
+                variant="outline"
+                size="lg"
+              >
+                <Printer className="w-5 h-5 mr-2" />
                 Imprimer
-              </Button>
-              
-              <Button onClick={exportPlans} variant="outline">
-                <Download className="w-4 h-4 mr-2" />
-                Exporter (Combiné)
               </Button>
 
               {lastSaved && (
@@ -401,82 +458,14 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
               )}
             </div>
 
-            {/* Actions individuelles */}
-            <div className="border-t pt-4">
-              <h4 className="text-sm font-medium text-gray-700 mb-3">Sauvegardes et exports individuels :</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Personne 1 */}
-                <div className="space-y-2">
-                  <h5 className="text-xs font-medium text-blue-700">
-                    {planningState.person1Plan?.prenom || 'Personne 1'}
-                  </h5>
-                  <div className="flex gap-2">
-                    <Button 
-                      onClick={savePerson1Individual} 
-                      disabled={isSaving} 
-                      size="sm" 
-                      variant="outline"
-                      className="text-xs"
-                    >
-                      <Save className="w-3 h-3 mr-1" />
-                      Sauvegarder
-                    </Button>
-                    <Button 
-                      onClick={exportPerson1} 
-                      size="sm" 
-                      variant="outline"
-                      className="text-xs"
-                    >
-                      <Download className="w-3 h-3 mr-1" />
-                      Exporter
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Personne 2 */}
-                {hasSecondPerson && (
-                  <div className="space-y-2">
-                    <h5 className="text-xs font-medium text-purple-700">
-                      {planningState.person2Plan?.prenom || userData.personal?.prenom2 || 'Personne 2'}
-                    </h5>
-                    <div className="flex gap-2">
-                      <Button 
-                        onClick={savePerson2Individual} 
-                        disabled={isSaving} 
-                        size="sm" 
-                        variant="outline"
-                        className="text-xs"
-                      >
-                        <Save className="w-3 h-3 mr-1" />
-                        Sauvegarder
-                      </Button>
-                      <Button 
-                        onClick={exportPerson2} 
-                        size="sm" 
-                        variant="outline"
-                        className="text-xs"
-                      >
-                        <Download className="w-3 h-3 mr-1" />
-                        Exporter
-                      </Button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Export planification d'urgence séparée */}
-              <div className="mt-4 pt-3 border-t">
-                <Button 
-                  onClick={exportEmergencyOnly} 
-                  size="sm" 
-                  variant="outline"
-                  className="text-xs"
-                >
-                  <Shield className="w-3 h-3 mr-1" />
-                  Exporter planification d'urgence uniquement
-                </Button>
-              </div>
-            </div>
+            <Alert>
+              <Info className="h-4 w-4" />
+              <AlertDescription>
+                <strong>Conseil :</strong> Utilisez "Sauvegarder sur mon ordinateur" pour créer un fichier de sauvegarde 
+                que vous pouvez conserver en sécurité. Le fichier sera nommé automatiquement avec la date et l'heure 
+                (ex: Plan-retraite-20250823-14h30.json).
+              </AlertDescription>
+            </Alert>
           </div>
         </CardContent>
       </Card>
@@ -594,49 +583,120 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
         </Card>
       )}
 
-      {/* Placeholder pour les formulaires détaillés */}
+      {/* Formulaires détaillés */}
       {currentPlan && (
-        <Card>
-          <CardHeader>
-            <CardTitle>Formulaire détaillé</CardTitle>
-            <CardDescription>
-              Les formulaires détaillés pour chaque section seront implémentés dans les prochains composants
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
-                <Phone className="w-6 h-6 mb-2" />
-                Contacts d'urgence
-              </Button>
-              
-              <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
-                <Heart className="w-6 h-6 mb-2" />
-                Informations médicales
-              </Button>
-              
-              <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
-                <CreditCard className="w-6 h-6 mb-2" />
-                Comptes bancaires
-              </Button>
-              
-              <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
-                <Shield className="w-6 h-6 mb-2" />
-                Assurances
-              </Button>
-              
-              <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
-                <FileCheck className="w-6 h-6 mb-2" />
-                Documents légaux
-              </Button>
-              
-              <Button variant="outline" className="h-20 flex flex-col items-center justify-center">
-                <Home className="w-6 h-6 mb-2" />
-                Responsabilités familiales
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+        <Tabs defaultValue="contacts" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6">
+            <TabsTrigger value="contacts" className="flex items-center gap-1">
+              <Phone className="w-4 h-4" />
+              <span className="hidden sm:inline">Contacts</span>
+            </TabsTrigger>
+            <TabsTrigger value="medical" className="flex items-center gap-1">
+              <Heart className="w-4 h-4" />
+              <span className="hidden sm:inline">Médical</span>
+            </TabsTrigger>
+            <TabsTrigger value="financial" className="flex items-center gap-1">
+              <CreditCard className="w-4 h-4" />
+              <span className="hidden sm:inline">Comptes</span>
+            </TabsTrigger>
+            <TabsTrigger value="insurance" className="flex items-center gap-1">
+              <Shield className="w-4 h-4" />
+              <span className="hidden sm:inline">Assurances</span>
+            </TabsTrigger>
+            <TabsTrigger value="legal" className="flex items-center gap-1">
+              <FileCheck className="w-4 h-4" />
+              <span className="hidden sm:inline">Documents</span>
+            </TabsTrigger>
+            <TabsTrigger value="family" className="flex items-center gap-1">
+              <Home className="w-4 h-4" />
+              <span className="hidden sm:inline">Famille</span>
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="contacts">
+            <EmergencyContactsForm
+              contacts={currentPlan.contactsUrgence}
+              onChange={(contacts) => updateCurrentPlan({
+                ...currentPlan,
+                contactsUrgence: contacts,
+                derniereMiseAJour: new Date()
+              })}
+            />
+          </TabsContent>
+
+          <TabsContent value="medical">
+            <MedicalInfoForm
+              medicalInfo={currentPlan.informationsMedicales}
+              onChange={(medicalInfo) => updateCurrentPlan({
+                ...currentPlan,
+                informationsMedicales: medicalInfo,
+                derniereMiseAJour: new Date()
+              })}
+            />
+          </TabsContent>
+
+          <TabsContent value="financial">
+            <FinancialAccountsForm
+              accounts={currentPlan.comptesBancaires}
+              onChange={(accounts) => updateCurrentPlan({
+                ...currentPlan,
+                comptesBancaires: accounts,
+                derniereMiseAJour: new Date()
+              })}
+            />
+          </TabsContent>
+
+          <TabsContent value="insurance">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Shield className="w-5 h-5 text-purple-600" />
+                  Assurances
+                </CardTitle>
+                <CardDescription>
+                  Formulaire d'assurances à implémenter
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-500">Formulaire en cours de développement...</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="legal">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <FileCheck className="w-5 h-5 text-orange-600" />
+                  Documents légaux
+                </CardTitle>
+                <CardDescription>
+                  Formulaire de documents légaux à implémenter
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-500">Formulaire en cours de développement...</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="family">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Home className="w-5 h-5 text-green-600" />
+                  Responsabilités familiales
+                </CardTitle>
+                <CardDescription>
+                  Formulaire de responsabilités familiales à implémenter
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <p className="text-gray-500">Formulaire en cours de développement...</p>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       )}
     </div>
   );
