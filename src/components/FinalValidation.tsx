@@ -91,8 +91,8 @@ const FinalValidation: React.FC = () => {
       category: '🔧 Composants',
       tests: [
         {
-          name: 'SeniorsNavigationHeader présent',
-          test: () => testComponent('SeniorsNavigationHeader'),
+          name: 'UniformHeader présent',
+          test: () => testComponent('UniformHeader'),
           priority: 'high' as const
         },
         {

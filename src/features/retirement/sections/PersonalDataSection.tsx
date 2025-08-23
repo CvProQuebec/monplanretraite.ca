@@ -406,30 +406,52 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
               // Logique de sauvegarde et protection des données
               console.log('💾 Sauvegarde des données...');
               
-              // Calculer automatiquement les dépenses mensuelles si les annuelles sont renseignées
-              if (data.personal?.depensesAnnuelles && data.personal.depensesAnnuelles > 0) {
-                const depensesMensuelles = Math.round(data.personal.depensesAnnuelles / 12);
-                handleChange('depensesMensuelles', depensesMensuelles);
+              try {
+                // Calculer automatiquement les dépenses mensuelles si les annuelles sont renseignées
+                if (data.personal?.depensesAnnuelles && data.personal.depensesAnnuelles > 0) {
+                  const depensesMensuelles = Math.round(data.personal.depensesAnnuelles / 12);
+                  handleChange('depensesMensuelles', depensesMensuelles);
+                  
+                  // Afficher un toast de confirmation
+                  toast({
+                    title: "✅ Données sauvegardées !",
+                    description: `Vos informations personnelles ont été sauvegardées avec succès. Dépenses mensuelles calculées automatiquement : $${depensesMensuelles.toLocaleString()}`,
+                    variant: "default"
+                  });
+                  
+                  console.log(`🔄 Dépenses mensuelles calculées et sauvegardées: $${depensesMensuelles}`);
+                } else {
+                  // Sauvegarder quand même mais avertir
+                  toast({
+                    title: "💾 Données sauvegardées",
+                    description: "Vos données ont été sauvegardées. Complétez les dépenses annuelles pour un calcul automatique optimal.",
+                    variant: "default"
+                  });
+                }
                 
-                // Afficher un toast de confirmation
-                toast({
-                  title: "✅ Données sauvegardées !",
-                  description: `Vos informations personnelles ont été sauvegardées avec succès`,
-                  variant: "default"
-                });
+                // Appeler onUpdate avec la bonne signature : (section, updates)
+                // On sauvegarde toutes les données personnelles actuelles
+                const personalUpdates = {
+                  ...data.personal,
+                  // S'assurer que les dépenses mensuelles sont à jour
+                  depensesMensuelles: data.personal?.depensesMensuelles || 
+                    (data.personal?.depensesAnnuelles ? Math.round(data.personal.depensesAnnuelles / 12) : 0)
+                };
                 
-                console.log(`🔄 Dépenses mensuelles calculées et sauvegardées: $${depensesMensuelles}`);
-              } else {
-                // Sauvegarder quand même mais avertir
+                onUpdate('personal', personalUpdates);
+                
+                console.log('💾 Données personnelles sauvegardées avec succès:', personalUpdates);
+                
+              } catch (error) {
+                console.error('❌ Erreur lors de la sauvegarde:', error);
+                
+                // Afficher un toast d'erreur
                 toast({
-                  title: "💾 Données sauvegardées",
-                  description: "Vos données ont été sauvegardées. Complétez les dépenses annuelles pour un calcul automatique optimal.",
-                  variant: "default"
+                  title: "❌ Erreur de sauvegarde",
+                  description: "Impossible de sauvegarder vos données. Veuillez réessayer.",
+                  variant: "destructive"
                 });
               }
-              
-              // Appeler onUpdate pour sauvegarder les données
-              onUpdate(data);
             }}
           >
             <Save className="w-8 h-8 mr-4 animate-pulse" />

@@ -9,7 +9,8 @@ import { useRetirementData } from '../hooks/useRetirementData';
 import { useToast } from '@/hooks/use-toast';
 import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
 import { PLAN_CONFIG } from '@/config/plans';
-import { Shield, ArrowRight, Lock, AlertTriangle, Crown, Zap, TrendingUp, Target, Users, Calculator, Rocket, Sparkles, Brain, Star, DollarSign, BarChart3, Database, Lock as LockIcon, AlertCircle, CheckCircle, Info } from 'lucide-react';
+import { Shield, ArrowRight, Lock, AlertTriangle, Crown, Zap, TrendingUp, Target, Users, Calculator, Rocket, Sparkles, Brain, Star, DollarSign, BarChart3, Database, Lock as LockIcon, AlertCircle, CheckCircle, Info, FileText } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import { AdvancedResultsDashboard } from '../components/AdvancedResultsDashboard';
 
 interface DashboardSectionProps {
@@ -129,59 +130,7 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ data, calculations 
           </p>
         </div>
 
-        {/* Gestion des sauvegardes - Design moderne */}
-        <Card className="bg-gradient-to-br from-pink-800/90 to-purple-800/90 border-0 shadow-2xl backdrop-blur-sm mb-12">
-          <CardHeader className="border-b border-pink-600 bg-gradient-to-r from-pink-600/20 to-purple-600/20">
-            <CardTitle className="text-2xl font-bold text-pink-300 flex items-center gap-3">
-              <Shield className="w-8 h-8" />
-              {isEnglish ? 'Backup Management' : 'Gestion des sauvegardes'}
-            </CardTitle>
-            <CardDescription className="text-pink-200">
-              {isEnglish 
-                ? 'Save and load your retirement data securely'
-                : 'Sauvegardez et chargez vos données de retraite en toute sécurité'
-              }
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-6">
-            <DataBackupManager data={userData} onDataLoad={handleDataLoad} />
-          </CardContent>
-        </Card>
-
-        {/* Sécurité et confidentialité - Design moderne */}
-        <Card className="bg-gradient-to-br from-green-800/90 to-emerald-800/90 border-0 shadow-2xl backdrop-blur-sm mb-12">
-          <CardHeader className="border-b border-green-600 bg-gradient-to-r from-green-600/20 to-emerald-600/20">
-            <CardTitle className="text-2xl font-bold text-green-300 flex items-center gap-3">
-              <LockIcon className="w-8 h-8" />
-              {isEnglish ? '100% Secure and Confidential' : '100% sécuritaire et confidentiel'}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-6">
-            <div className="text-green-200 text-lg leading-relaxed">
-              {isEnglish 
-                ? 'Your data is saved locally, at your chosen location. No information transits through our servers.'
-                : 'Vos données sont sauvegardées localement, à l\'emplacement de votre choix. Aucune information ne transite par nos serveurs.'
-              }
-            </div>
-            
-            <div className="mt-6 p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-lg">
-              <div className="flex items-start gap-3">
-                <AlertTriangle className="w-6 h-6 text-yellow-400 mt-1 flex-shrink-0" />
-                <div>
-                  <h4 className="font-semibold text-yellow-300 mb-2">
-                    {isEnglish ? 'Important Warning' : 'Avertissement important'}
-                  </h4>
-                  <p className="text-yellow-200">
-                    {isEnglish 
-                      ? 'You are responsible for your data, no cached copy. Save your data regularly.'
-                      : 'Vous êtes responsables de vos données, aucune copie en cache. Sauvegardez vos données régulièrement.'
-                    }
-                  </p>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        
 
         {/* Fonctionnalités du forfait - Design moderne */}
         <Card className="bg-gradient-to-br from-blue-800/90 to-indigo-800/90 border-0 shadow-2xl backdrop-blur-sm mb-12">
@@ -290,48 +239,269 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ data, calculations 
           </div>
         )}
 
-        {/* Statistiques et métriques - Design moderne */}
-        <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl backdrop-blur-sm">
-          <CardHeader className="border-b border-slate-600 bg-gradient-to-r from-slate-600/20 to-slate-500/20">
-            <CardTitle className="text-2xl font-bold text-slate-300 flex items-center gap-3">
-              <BarChart3 className="w-8 h-8" />
-              {isEnglish ? 'Your Financial Overview' : 'Votre Aperçu Financier'}
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="text-center p-6 bg-gradient-to-br from-green-600/20 to-green-500/20 rounded-lg border border-green-500/30">
-                <DollarSign className="w-12 h-12 text-green-400 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-green-300">
-                  ${(userData?.savings?.totalEpargne || 0).toLocaleString()}
-                </div>
-                <div className="text-green-200">
-                  {isEnglish ? 'Total Savings' : 'Épargne Totale'}
-                </div>
-              </div>
+                 {/* Statistiques et métriques - Design moderne */}
+         <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl backdrop-blur-sm mb-12">
+           <CardHeader className="border-b border-slate-600 bg-gradient-to-r from-slate-600/20 to-slate-500/20">
+             <CardTitle className="text-2xl font-bold text-slate-300 flex items-center gap-3">
+               <BarChart3 className="w-8 h-8" />
+               {isEnglish ? 'Your Financial Overview' : 'Votre Aperçu Financier'}
+             </CardTitle>
+           </CardHeader>
+           <CardContent className="p-6">
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+               <div className="text-center p-6 bg-gradient-to-br from-green-600/20 to-green-500/20 rounded-lg border border-green-500/30">
+                 <DollarSign className="w-12 h-12 text-green-400 mx-auto mb-4" />
+                 <div className="text-3xl font-bold text-green-300">
+                   ${(userData?.savings?.totalEpargne || 0).toLocaleString()}
+                 </div>
+                 <div className="text-green-200">
+                   {isEnglish ? 'Total Savings' : 'Épargne Totale'}
+                 </div>
+               </div>
 
-              <div className="text-center p-6 bg-gradient-to-br from-blue-600/20 to-blue-500/20 rounded-lg border border-blue-500/30">
-                <Target className="w-12 h-12 text-blue-400 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-blue-300">
-                  {userData?.personal?.ageRetraite1 || 65}
-                </div>
-                <div className="text-blue-200">
-                  {isEnglish ? 'Retirement Age' : 'Âge de Retraite'}
-                </div>
-              </div>
+               <div className="text-center p-6 bg-gradient-to-br from-blue-600/20 to-blue-500/20 rounded-lg border border-blue-500/30">
+                 <Target className="w-12 h-12 text-blue-400 mx-auto mb-4" />
+                 <div className="text-3xl font-bold text-blue-300">
+                   {userData?.personal?.ageRetraite1 || 65}
+                 </div>
+                 <div className="text-blue-200">
+                   {isEnglish ? 'Retirement Age' : 'Âge de Retraite'}
+                 </div>
+               </div>
 
-              <div className="text-center p-6 bg-gradient-to-br from-purple-600/20 to-purple-500/20 rounded-lg border border-purple-500/30">
-                <TrendingUp className="w-12 h-12 text-purple-400 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-purple-300">
-                  {isEnglish ? 'Progress' : 'Progression'}
-                </div>
-                <div className="text-purple-200">
-                  {isEnglish ? '35% Complete' : '35% Complété'}
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+               <div className="text-center p-6 bg-gradient-to-br from-purple-600/20 to-purple-500/20 rounded-lg border border-purple-500/30">
+                 <TrendingUp className="w-12 h-12 text-purple-400 mx-auto mb-4" />
+                 <div className="text-3xl font-bold text-purple-300">
+                   {isEnglish ? 'Progress' : 'Progression'}
+                 </div>
+                 <div className="text-purple-200">
+                   {isEnglish ? '35% Complete' : '35% Complété'}
+                 </div>
+               </div>
+             </div>
+           </CardContent>
+         </Card>
+
+         {/* Outils Financiers - Grille de 8 cartes */}
+         <Card className="bg-gradient-to-br from-indigo-800/90 to-blue-800/90 border-0 shadow-2xl backdrop-blur-sm">
+           <CardHeader className="border-b border-indigo-600 bg-gradient-to-r from-indigo-600/20 to-blue-600/20">
+             <CardTitle className="text-2xl font-bold text-indigo-300 flex items-center gap-3">
+               <Zap className="w-8 h-8" />
+               {isEnglish ? 'Financial Tools' : 'Outils Financiers'}
+             </CardTitle>
+           </CardHeader>
+           <CardContent className="p-6">
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+               {/* Profil personnel */}
+               <Card className="bg-gradient-to-br from-green-600/20 to-green-500/20 border border-green-500/30 shadow-lg hover:shadow-xl transition-all duration-300">
+                 <CardContent className="p-4 text-center">
+                   <Users className="w-8 h-8 text-green-400 mx-auto mb-3" />
+                   <h3 className="text-lg font-bold text-green-300 mb-2">
+                     {isEnglish ? 'Personal Profile' : 'Profil personnel'}
+                   </h3>
+                   <p className="text-sm text-green-200 mb-3">
+                     {isEnglish ? 'Personal information and objectives' : 'Informations personnelles et objectifs'}
+                   </p>
+                   <div className="w-full bg-gray-700 rounded-full h-2 mb-3">
+                     <div className="bg-gray-500 h-2 rounded-full" style={{ width: '0%' }}></div>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <span className="text-gray-300">Progression</span>
+                     <span className="text-gray-300">0%</span>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <Badge variant="destructive" className="text-xs">Verrouillé</Badge>
+                   </div>
+                   <Button variant="outline" size="sm" className="w-full text-green-300 border-green-500/30 hover:bg-green-500/20">
+                     {isEnglish ? 'Click to access' : 'Cliquez pour accéder'}
+                   </Button>
+                 </CardContent>
+               </Card>
+
+               {/* Planification retraite */}
+               <Card className="bg-gradient-to-br from-blue-600/20 to-blue-500/20 border border-blue-500/30 shadow-lg hover:shadow-xl transition-all duration-300">
+                 <CardContent className="p-4 text-center">
+                   <Calculator className="w-8 h-8 text-blue-400 mx-auto mb-3" />
+                   <h3 className="text-lg font-bold text-blue-300 mb-2">
+                     {isEnglish ? 'Retirement Planning' : 'Planification retraite'}
+                   </h3>
+                   <p className="text-sm text-blue-200 mb-3">
+                     {isEnglish ? 'Retirement calculations and projections' : 'Calculs et projections de retraite'}
+                   </p>
+                   <div className="w-full bg-gray-700 rounded-full h-2 mb-3">
+                     <div className="bg-gray-500 h-2 rounded-full" style={{ width: '0%' }}></div>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <span className="text-gray-300">Progression</span>
+                     <span className="text-gray-300">0%</span>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <Badge variant="destructive" className="text-xs">Verrouillé</Badge>
+                   </div>
+                   <Button variant="outline" size="sm" className="w-full text-blue-300 border-blue-500/30 hover:bg-blue-500/20">
+                     {isEnglish ? 'Click to access' : 'Cliquez pour accéder'}
+                   </Button>
+                 </CardContent>
+               </Card>
+
+               {/* Gestion épargne */}
+               <Card className="bg-gradient-to-br from-purple-600/20 to-purple-500/20 border border-purple-500/30 shadow-lg hover:shadow-xl transition-all duration-300">
+                 <CardContent className="p-4 text-center">
+                   <TrendingUp className="w-8 h-8 text-purple-400 mx-auto mb-3" />
+                   <h3 className="text-lg font-bold text-purple-300 mb-2">
+                     {isEnglish ? 'Savings Management' : 'Gestion épargne'}
+                   </h3>
+                   <p className="text-sm text-purple-200 mb-3">
+                     {isEnglish ? 'Track your savings and investments' : 'Suivi de vos économies et investissements'}
+                   </p>
+                   <div className="w-full bg-gray-700 rounded-full h-2 mb-3">
+                     <div className="bg-gray-500 h-2 rounded-full" style={{ width: '0%' }}></div>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <span className="text-gray-300">Progression</span>
+                     <span className="text-gray-300">0%</span>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <Badge variant="destructive" className="text-xs">Verrouillé</Badge>
+                   </div>
+                   <Button variant="outline" size="sm" className="w-full text-purple-300 border-purple-500/30 hover:bg-purple-500/20">
+                     {isEnglish ? 'Click to access' : 'Cliquez pour accéder'}
+                   </Button>
+                 </CardContent>
+               </Card>
+
+               {/* Informations d'urgence */}
+               <Card className="bg-gradient-to-br from-red-600/20 to-red-500/20 border border-red-500/30 shadow-lg hover:shadow-xl transition-all duration-300">
+                 <CardContent className="p-4 text-center">
+                   <AlertTriangle className="w-8 h-8 text-red-400 mx-auto mb-3" />
+                   <h3 className="text-lg font-bold text-red-300 mb-2">
+                     {isEnglish ? 'Emergency Information' : 'Informations d\'urgence'}
+                   </h3>
+                   <p className="text-sm text-red-200 mb-3">
+                     {isEnglish ? 'Medical directives and emergency contacts' : 'Directives médicales et contacts d\'urgence'}
+                   </p>
+                   <div className="w-full bg-gray-700 rounded-full h-2 mb-3">
+                     <div className="bg-gray-500 h-2 rounded-full" style={{ width: '0%' }}></div>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <span className="text-gray-300">Progression</span>
+                     <span className="text-gray-300">0%</span>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <Badge variant="destructive" className="text-xs">Verrouillé</Badge>
+                   </div>
+                   <Button variant="outline" size="sm" className="w-full text-red-300 border-red-500/30 hover:bg-red-500/20">
+                     {isEnglish ? 'Click to access' : 'Cliquez pour accéder'}
+                   </Button>
+                 </CardContent>
+               </Card>
+
+               {/* Gestion des sessions */}
+               <Card className="bg-gradient-to-br from-green-600/20 to-green-500/20 border border-green-500/30 shadow-lg hover:shadow-xl transition-all duration-300">
+                 <CardContent className="p-4 text-center">
+                   <Database className="w-8 h-8 text-green-400 mx-auto mb-3" />
+                   <h3 className="text-lg font-bold text-green-300 mb-2">
+                     {isEnglish ? 'Session Management' : 'Gestion des sessions'}
+                   </h3>
+                   <p className="text-sm text-green-200 mb-3">
+                     {isEnglish ? 'Save, load and secure your data' : 'Sauvegardez, chargez et sécurisez vos données'}
+                   </p>
+                   <div className="w-full bg-gray-700 rounded-full h-2 mb-3">
+                     <div className="bg-green-500 h-2 rounded-full" style={{ width: '100%' }}></div>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <span className="text-gray-300">Progression</span>
+                     <span className="text-gray-300">100%</span>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <Badge variant="default" className="text-xs bg-green-500">Terminé</Badge>
+                   </div>
+                   <Button variant="outline" size="sm" className="w-full text-green-300 border-green-500/30 hover:bg-green-500/20">
+                     {isEnglish ? 'Click to access' : 'Cliquez pour accéder'}
+                   </Button>
+                 </CardContent>
+               </Card>
+
+               {/* Analyse cashflow */}
+               <Card className="bg-gradient-to-br from-orange-600/20 to-orange-500/20 border border-orange-500/30 shadow-lg hover:shadow-xl transition-all duration-300">
+                 <CardContent className="p-4 text-center">
+                   <BarChart3 className="w-8 h-8 text-orange-400 mx-auto mb-3" />
+                   <h3 className="text-lg font-bold text-orange-300 mb-2">
+                     {isEnglish ? 'Cashflow Analysis' : 'Analyse cashflow'}
+                   </h3>
+                   <p className="text-sm text-orange-200 mb-3">
+                     {isEnglish ? 'Detailed analysis of your cash flow' : 'Analyse détaillée de vos flux de trésorerie'}
+                   </p>
+                   <div className="w-full bg-gray-700 rounded-full h-2 mb-3">
+                     <div className="bg-gray-500 h-2 rounded-full" style={{ width: '0%' }}></div>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <span className="text-gray-300">Progression</span>
+                     <span className="text-gray-300">0%</span>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <Badge variant="destructive" className="text-xs">Verrouillé</Badge>
+                   </div>
+                   <Button variant="outline" size="sm" className="w-full text-orange-300 border-orange-500/30 hover:bg-orange-500/20">
+                     {isEnglish ? 'Click to access' : 'Cliquez pour accéder'}
+                   </Button>
+                 </CardContent>
+               </Card>
+
+               {/* Calculs CPP/RRQ */}
+               <Card className="bg-gradient-to-br from-indigo-600/20 to-indigo-500/20 border border-indigo-500/30 shadow-lg hover:shadow-xl transition-all duration-300">
+                 <CardContent className="p-4 text-center">
+                   <FileText className="w-8 h-8 text-indigo-400 mx-auto mb-3" />
+                   <h3 className="text-lg font-bold text-indigo-300 mb-2">
+                     {isEnglish ? 'CPP/RRQ Calculations' : 'Calculs CPP/RRQ'}
+                   </h3>
+                   <p className="text-sm text-indigo-200 mb-3">
+                     {isEnglish ? 'Government benefit calculations' : 'Calculs des prestations gouvernementales'}
+                   </p>
+                   <div className="w-full bg-gray-700 rounded-full h-2 mb-3">
+                     <div className="bg-gray-500 h-2 rounded-full" style={{ width: '0%' }}></div>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <span className="text-gray-300">Progression</span>
+                     <span className="text-gray-300">0%</span>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <Badge variant="destructive" className="text-xs">Verrouillé</Badge>
+                   </div>
+                   <Button variant="outline" size="sm" className="w-full text-indigo-300 border-indigo-500/30 hover:bg-indigo-500/20">
+                     {isEnglish ? 'Click to access' : 'Cliquez pour accéder'}
+                   </Button>
+                 </CardContent>
+               </Card>
+
+               {/* Simulations Monte Carlo */}
+               <Card className="bg-gradient-to-br from-pink-600/20 to-pink-500/20 border border-pink-500/30 shadow-lg hover:shadow-xl transition-all duration-300">
+                 <CardContent className="p-4 text-center">
+                   <BarChart3 className="w-8 h-8 text-pink-400 mx-auto mb-3" />
+                   <h3 className="text-lg font-bold text-pink-300 mb-2">
+                     {isEnglish ? 'Monte Carlo Simulations' : 'Simulations Monte Carlo'}
+                   </h3>
+                   <p className="text-sm text-pink-200 mb-3">
+                     {isEnglish ? 'Advanced analyses with 10,000 scenarios' : 'Analyses avancées avec 10,000 scénarios'}
+                   </p>
+                   <div className="w-full bg-gray-700 rounded-full h-2 mb-3">
+                     <div className="bg-gray-500 h-2 rounded-full" style={{ width: '0%' }}></div>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <span className="text-gray-300">Progression</span>
+                     <span className="text-gray-300">0%</span>
+                   </div>
+                   <div className="flex items-center justify-between text-xs mb-3">
+                     <Badge variant="destructive" className="text-xs">Verrouillé</Badge>
+                   </div>
+                   <Button variant="outline" size="sm" className="w-full text-pink-300 border-pink-500/30 hover:bg-pink-500/20">
+                     {isEnglish ? 'Click to access' : 'Cliquez pour accéder'}
+                   </Button>
+                 </CardContent>
+               </Card>
+             </div>
+           </CardContent>
+         </Card>
       </div>
     </div>
   );

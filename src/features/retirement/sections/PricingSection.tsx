@@ -39,7 +39,7 @@ export const PricingSection: React.FC = () => {
       taxOptimization: 'Optimisation fiscale',
       advancedReports: 'Rapports avancés',
       aiAdvice: 'Conseils IA',
-      integrations: 'Intégrations bancaires',
+
       collaboration: 'Collaboration conseiller',
       support: 'Support prioritaire',
               earlyBird: 'Lancement - 30 %',
@@ -75,7 +75,7 @@ export const PricingSection: React.FC = () => {
       taxOptimization: 'Tax Optimization',
       advancedReports: 'Advanced Reports',
       aiAdvice: 'AI Advice',
-      integrations: 'Bank Integrations',
+
       collaboration: 'Advisor Collaboration',
       support: 'Priority Support',
       earlyBird: 'Launch - 30%',
@@ -124,7 +124,7 @@ export const PricingSection: React.FC = () => {
       case 'taxOptimization': return <Shield className="w-4 h-4" />;
       case 'advancedReports': return <FileText className="w-4 h-4" />;
       case 'aiAdvice': return <Brain className="w-4 h-4" />;
-      case 'integrations': return <Settings className="w-4 h-4" />;
+
       case 'collaboration': return <Users className="w-4 h-4" />;
       default: return <Check className="w-4 h-4" />;
     }

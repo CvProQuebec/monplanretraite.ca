@@ -1,98 +1,137 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { 
-  User, 
-  Heart, 
-  Home, 
-  Calendar,
-  Users,
-  Shield,
-  CheckCircle,
-  ArrowRight,
-  Star
+  Users, 
+  Info, 
+  HelpCircle, 
+  Calendar, 
+  DollarSign, 
+  Target, 
+  Rocket, 
+  Sparkles, 
+  Brain, 
+  Shield, 
+  Zap, 
+  Save,
+  User,
+  Star,
+  CheckCircle
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import SeniorsNavigationHeader from '@/components/layout/header/SeniorsNavigationHeader';
+import { formatCurrency } from '@/features/retirement/utils/formatters';
 
 const MonProfil: React.FC = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const isFrench = language === 'fr';
+  
+  // Hook pour les données de retraite
+  const { userData, updateUserData } = useRetirementData();
+  
+  const [showHelp, setShowHelp] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
-  const [formData, setFormData] = useState({
-    nom: '',
-    age: '',
-    situationFamiliale: '',
-    sante: '',
-    residence: '',
-    objectifRetraite: '',
-    epargneActuelle: '',
-    revenusMensuels: ''
-  });
+  // Calcul automatique des dépenses mensuelles quand les annuelles changent
+  useEffect(() => {
+    if (userData.personal?.depensesAnnuelles && userData.personal.depensesAnnuelles > 0) {
+      const depensesMensuelles = Math.round(userData.personal.depensesAnnuelles / 12);
+      
+      // Mettre à jour seulement si les mensuelles ne sont pas déjà calculées
+      if (userData.personal.depensesMensuelles !== depensesMensuelles) {
+        handleChange('depensesMensuelles', depensesMensuelles);
+        console.log(`🔄 Calcul automatique: $${userData.personal.depensesAnnuelles} annuel = $${depensesMensuelles} mensuel`);
+      }
+    }
+  }, [userData.personal?.depensesAnnuelles]);
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+  const handleChange = (field: string, value: any) => {
+    updateUserData('personal', { [field]: value });
   };
 
-  const handleNavigation = (path: string) => {
-    navigate(path);
+  const handleSalaryChange = (person: '1' | '2', value: string) => {
+    const numericValue = parseFloat(value.replace(/[^\d.]/g, '')) || 0;
+    handleChange(`salaire${person}`, numericValue);
+  };
+
+  const formatSalaryInput = (value: number): string => {
+    return value > 0 ? formatCurrency(value, { showCents: false }) : '';
   };
 
   const getProgressPercentage = () => {
-    const filledFields = Object.values(formData).filter(value => value.trim() !== '').length;
-    return Math.round((filledFields / Object.keys(formData).length) * 100);
+    const personalData = userData.personal;
+    if (!personalData) return 0;
+    
+    const requiredFields = [
+      'prenom1', 'naissance1', 'sexe1', 'salaire1', 'statutProfessionnel1', 
+      'ageRetraiteSouhaite1', 'depensesRetraite'
+    ];
+    
+    const filledFields = requiredFields.filter(field => {
+      const value = personalData[field as keyof typeof personalData];
+      return value !== null && value !== undefined && value !== '' && value !== 0;
+    }).length;
+    
+    return Math.round((filledFields / requiredFields.length) * 100);
   };
 
   const progress = getProgressPercentage();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
-      {/* Navigation seniors intégrée */}
-      <SeniorsNavigationHeader />
-      
-      <div className="container mx-auto px-6 py-12">
-        {/* En-tête bienveillant */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+      {/* Particules de fond visibles */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-60 left-1/4 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
+        <div className="absolute top-80 right-1/3 w-1 h-1 bg-red-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-96 left-1/2 w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-32 right-1/4 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-72 left-1/3 w-1 h-1 bg-pink-400 rounded-full animate-bounce"></div>
+      </div>
+
+      <div className="container mx-auto px-6 py-8 relative z-10">
+        {/* En-tête spectaculaire */}
         <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <User className="w-12 h-12 text-green-600" />
-            <h1 className="text-4xl font-bold text-gray-900">
-              {isFrench ? 'Mon profil' : 'My profile'}
-            </h1>
-          </div>
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent drop-shadow-2xl">
+            {isFrench ? '🚀 Mon profil' : '🚀 My Profile'}
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto leading-relaxed">
             {isFrench 
-              ? 'Votre situation est unique, comme vous. Nous travaillons avec vos moyens réels, pas avec des rêves inaccessibles.'
-              : 'Your situation is unique, just like you. We work with your real means, not with inaccessible dreams.'
+              ? 'Transformez vos informations en planification financière spectaculaire'
+              : 'Transform your information into spectacular financial planning'
             }
           </p>
         </div>
 
         {/* Barre de progression encourageante */}
-        <Card className="bg-white/80 backdrop-blur-sm border-2 border-green-200 shadow-lg mb-8">
+        <Card className="bg-white/10 backdrop-blur-sm border-2 border-green-200 shadow-lg mb-8">
           <CardContent className="py-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
                 <Star className="w-6 h-6 text-yellow-500" />
-                <span className="text-lg font-semibold text-gray-800">
+                <span className="text-lg font-semibold text-white">
                   {isFrench ? 'Votre progression' : 'Your progress'}
                 </span>
               </div>
-              <span className="text-2xl font-bold text-green-600">
+              <span className="text-2xl font-bold text-green-400">
                 {progress} %
               </span>
             </div>
-            <div className="w-full bg-gray-200 rounded-full h-3">
+            <div className="w-full bg-gray-700 rounded-full h-3">
               <div 
                 className="bg-gradient-to-r from-green-500 to-blue-500 h-3 rounded-full transition-all duration-500"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
-            <p className="text-sm text-gray-600 mt-2 text-center">
+            <p className="text-sm text-gray-300 mt-2 text-center">
               {isFrench 
                 ? `Excellent travail ! Vous avez complété ${progress} % de votre profil.`
                 : `Great work! You have completed ${progress} % of your profile.`
@@ -101,192 +140,229 @@ const MonProfil: React.FC = () => {
           </CardContent>
         </Card>
 
-        {/* Formulaire bienveillant */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Informations personnelles */}
-          <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200 shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-blue-800">
-                <Heart className="w-6 h-6" />
-                {isFrench ? 'Informations personnelles' : 'Personal information'}
+        {/* Message d'aide */}
+        {showHelp && (
+          <Alert className="border-yellow-400 bg-yellow-900/20 text-yellow-200 mb-8">
+            <Info className="h-5 w-5 text-yellow-400" />
+            <AlertDescription className="text-lg">
+              <strong>{isFrench ? 'Conseils :' : 'Tips:'}</strong> {
+                isFrench 
+                  ? 'Remplissez les informations pour chaque personne. Si vous êtes seul(e), laissez la section « Personne 2 » vide. Les montants en dollars n\'incluent pas les centimes pour simplifier la saisie.'
+                  : 'Fill in the information for each person. If you are single, leave the "Person 2" section empty. Dollar amounts do not include cents to simplify entry.'
+              }
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {/* Formulaire principal */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+          {/* Personne 1 */}
+          <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl backdrop-blur-sm">
+            <CardHeader className="border-b border-slate-600 bg-gradient-to-r from-blue-600/20 to-purple-600/20">
+              <CardTitle className="text-2xl font-bold text-blue-300 flex items-center gap-3">
+                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                  1
+                </div>
+                {isFrench ? 'Personne 1' : 'Person 1'}
               </CardTitle>
-              <p className="text-gray-600">
-                {isFrench 
-                  ? 'Chaque détail compte pour personnaliser votre plan'
-                  : 'Every detail counts to personalize your plan'
-                }
-              </p>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="nom" className="text-gray-700">
-                  {isFrench ? 'Nom complet' : 'Full name'}
-                </Label>
-                <Input
-                  id="nom"
-                  value={formData.nom}
-                  onChange={(e) => handleInputChange('nom', e.target.value)}
-                  placeholder={isFrench ? 'Votre nom' : 'Your name'}
-                  className="mt-1"
-                />
-              </div>
-              
-              <div>
-                <Label htmlFor="age" className="text-gray-700">
-                  {isFrench ? 'Âge' : 'Age'}
-                </Label>
-                <Input
-                  id="age"
-                  type="number"
-                  value={formData.age}
-                  onChange={(e) => handleInputChange('age', e.target.value)}
-                  placeholder={isFrench ? 'Votre âge' : 'Your age'}
-                  className="mt-1"
-                />
-              </div>
+            <CardContent className="p-6 space-y-6">
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="text-gray-200 font-semibold">
+                    {isFrench ? 'Prénom' : 'First Name'}
+                  </Label>
+                  <Input
+                    type="text"
+                    value={userData.personal?.prenom1 || ''}
+                    onChange={(e) => handleChange('prenom1', e.target.value)}
+                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400"
+                    placeholder={isFrench ? 'Prénom' : 'First Name'}
+                  />
+                </div>
 
-              <div>
-                <Label htmlFor="situationFamiliale" className="text-gray-700">
-                  {isFrench ? 'Situation familiale' : 'Family situation'}
-                </Label>
-                <Textarea
-                  id="situationFamiliale"
-                  value={formData.situationFamiliale}
-                  onChange={(e) => handleInputChange('situationFamiliale', e.target.value)}
-                  placeholder={isFrench ? 'Célibataire, marié(e), enfants...' : 'Single, married, children...'}
-                  className="mt-1"
-                  rows={2}
-                />
-              </div>
+                <div className="space-y-2">
+                  <Label className="text-gray-200 font-semibold">
+                    {isFrench ? 'Date de naissance' : 'Date of Birth'}
+                  </Label>
+                  <Input
+                    type="date"
+                    value={userData.personal?.naissance1 || ''}
+                    onChange={(e) => handleChange('naissance1', e.target.value)}
+                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400"
+                  />
+                </div>
 
-              <div>
-                <Label htmlFor="sante" className="text-gray-700">
-                  {isFrench ? 'État de santé' : 'Health status'}
-                </Label>
-                <Textarea
-                  id="sante"
-                  value={formData.sante}
-                  onChange={(e) => handleInputChange('sante', e.target.value)}
-                  placeholder={isFrench ? 'Bon, excellent, quelques problèmes...' : 'Good, excellent, some issues...'}
-                  className="mt-1"
-                  rows={2}
-                />
-              </div>
+                <div className="space-y-2">
+                  <Label className="text-gray-200 font-semibold">
+                    {isFrench ? 'Sexe' : 'Gender'}
+                  </Label>
+                  <Select
+                    value={userData.personal?.sexe1 || 'homme'}
+                    onValueChange={(value) => handleChange('sexe1', value)}
+                  >
+                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-slate-700 border-slate-600">
+                      <SelectItem value="homme">{isFrench ? 'Homme' : 'Male'}</SelectItem>
+                      <SelectItem value="femme">{isFrench ? 'Femme' : 'Female'}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
 
-              <div>
-                <Label htmlFor="residence" className="text-gray-700">
-                  {isFrench ? 'Lieu de résidence' : 'Residence'}
-                </Label>
-                <Input
-                  id="residence"
-                  value={formData.residence}
-                  onChange={(e) => handleInputChange('residence', e.target.value)}
-                  placeholder={isFrench ? 'Ville, province' : 'City, province'}
-                  className="mt-1"
-                />
+
+                <div className="space-y-2">
+                  <Label className="text-gray-200 font-semibold">
+                    {isFrench ? 'Âge de retraite souhaité' : 'Desired Retirement Age'}
+                  </Label>
+                  <Input
+                    type="number"
+                    value={userData.personal?.ageRetraiteSouhaite1 || 65}
+                    onChange={(e) => handleChange('ageRetraiteSouhaite1', Number(e.target.value))}
+                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400"
+                    min="50"
+                    max="100"
+                  />
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Situation financière */}
-          <Card className="bg-white/80 backdrop-blur-sm border-2 border-green-200 shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-green-800">
-                <Shield className="w-6 h-6" />
-                {isFrench ? 'Situation financière' : 'Financial situation'}
+          {/* Personne 2 */}
+          <Card className="bg-gradient-to-br from-indigo-800/90 to-purple-800/90 border-0 shadow-2xl backdrop-blur-sm">
+            <CardHeader className="border-b border-indigo-600 bg-gradient-to-r from-indigo-600/20 to-purple-600/20">
+              <CardTitle className="text-2xl font-bold text-indigo-300 flex items-center gap-3">
+                <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                  2
+                </div>
+                {isFrench ? 'Personne 2' : 'Person 2'}
               </CardTitle>
-              <p className="text-gray-600">
-                {isFrench 
-                  ? 'Soyez honnête, nous ne jugeons pas. Chaque situation mérite respect.'
-                  : 'Be honest, we don\'t judge. Every situation deserves respect.'
-                }
-              </p>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label htmlFor="objectifRetraite" className="text-gray-700">
-                  {isFrench ? 'Objectif de retraite' : 'Retirement goal'}
-                </Label>
-                <Textarea
-                  id="objectifRetraite"
-                  value={formData.objectifRetraite}
-                  onChange={(e) => handleInputChange('objectifRetraite', e.target.value)}
-                  placeholder={isFrench ? 'Vivre confortablement, voyager, rester près de la famille...' : 'Live comfortably, travel, stay close to family...'}
-                  className="mt-1"
-                  rows={3}
-                />
-              </div>
+            <CardContent className="p-6 space-y-6">
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label className="text-gray-200 font-semibold">
+                    {isFrench ? 'Prénom (optionnel)' : 'First Name (optional)'}
+                  </Label>
+                  <Input
+                    type="text"
+                    value={userData.personal?.prenom2 || ''}
+                    onChange={(e) => handleChange('prenom2', e.target.value)}
+                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
+                    placeholder={isFrench ? 'Prénom (optionnel)' : 'First Name (optional)'}
+                  />
+                </div>
 
-              <div>
-                <Label htmlFor="epargneActuelle" className="text-gray-700">
-                  {isFrench ? 'Épargne actuelle' : 'Current savings'}
-                </Label>
-                <Input
-                  id="epargneActuelle"
-                  value={formData.epargneActuelle}
-                  onChange={(e) => handleInputChange('epargneActuelle', e.target.value)}
-                  placeholder={isFrench ? 'Montant en dollars' : 'Amount in dollars'}
-                  className="mt-1"
-                />
-                <p className="text-sm text-green-600 mt-1">
-                  {isFrench 
-                    ? 'Chaque dollar compte ! Votre épargne actuelle est un excellent début.'
-                    : 'Every dollar counts! Your current savings are an excellent start.'
-                  }
-                </p>
-              </div>
+                <div className="space-y-2">
+                  <Label className="text-gray-200 font-semibold">
+                    {isFrench ? 'Date de naissance' : 'Date of Birth'}
+                  </Label>
+                  <Input
+                    type="date"
+                    value={userData.personal?.naissance2 || ''}
+                    onChange={(e) => handleChange('naissance2', e.target.value)}
+                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
+                  />
+                </div>
 
-              <div>
-                <Label htmlFor="revenusMensuels" className="text-gray-700">
-                  {isFrench ? 'Revenus mensuels' : 'Monthly income'}
-                </Label>
-                <Input
-                  id="revenusMensuels"
-                  value={formData.revenusMensuels}
-                  onChange={(e) => handleInputChange('revenusMensuels', e.target.value)}
-                  placeholder={isFrench ? 'Salaire, pensions, autres revenus' : 'Salary, pensions, other income'}
-                  className="mt-1"
-                />
+                <div className="space-y-2">
+                  <Label className="text-gray-200 font-semibold">
+                    {isFrench ? 'Sexe' : 'Gender'}
+                  </Label>
+                  <Select
+                    value={userData.personal?.sexe2 || 'femme'}
+                    onValueChange={(value) => handleChange('sexe2', value)}
+                  >
+                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent className="bg-slate-700 border-slate-600">
+                      <SelectItem value="homme">{isFrench ? 'Homme' : 'Male'}</SelectItem>
+                      <SelectItem value="femme">{isFrench ? 'Femme' : 'Female'}</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+
+
+                <div className="space-y-2">
+                  <Label className="text-gray-200 font-semibold">
+                    {isFrench ? 'Âge de retraite souhaité' : 'Desired Retirement Age'}
+                  </Label>
+                  <Input
+                    type="number"
+                    value={userData.personal?.ageRetraiteSouhaite2 || 65}
+                    onChange={(e) => handleChange('ageRetraiteSouhaite2', Number(e.target.value))}
+                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
+                    min="50"
+                    max="100"
+                  />
+                </div>
               </div>
             </CardContent>
           </Card>
         </div>
 
-        {/* Message d'encouragement */}
-        <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 mt-8">
-          <CardContent className="py-8 text-center">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <CheckCircle className="w-8 h-8 text-green-600" />
-              <h2 className="text-2xl font-bold text-gray-800">
-                {isFrench ? 'Félicitations pour chaque étape !' : 'Congratulations for every step!'}
-              </h2>
-            </div>
-            <p className="text-lg text-gray-700 mb-6">
-              {isFrench 
-                ? 'Vous construisez votre avenir financier avec courage et détermination. Chaque information que vous partagez nous aide à mieux vous accompagner.'
-                : 'You are building your financial future with courage and determination. Every piece of information you share helps us better support you.'
+
+        {/* Bouton SAUVEGARDER - Protection des données ! */}
+        <div className="text-center">
+          <Button
+            size="lg"
+            disabled={isSaving}
+            className="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-600 hover:from-green-600 hover:via-emerald-600 hover:to-teal-700 text-white font-bold text-2xl py-6 px-12 shadow-2xl transform hover:scale-110 transition-all duration-300 border-4 border-white/20 backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={async () => {
+              setIsSaving(true);
+              try {
+                // Calculer automatiquement les dépenses mensuelles si les annuelles sont renseignées
+                if (userData.personal?.depensesRetraite && userData.personal.depensesRetraite > 0) {
+                  const depensesMensuelles = Math.round(userData.personal.depensesRetraite / 12);
+                  handleChange('depensesMensuelles', depensesMensuelles);
+                  console.log(`🔄 Dépenses mensuelles calculées et sauvegardées: $${depensesMensuelles}`);
+                }
+                
+                // Simuler un délai de sauvegarde
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                console.log('💾 Données personnelles sauvegardées avec succès');
+                
+                // Afficher un message de succès
+                alert(isFrench ? '✅ Données sauvegardées avec succès !' : '✅ Data saved successfully!');
+                
+              } catch (error) {
+                console.error('❌ Erreur lors de la sauvegarde:', error);
+                alert(isFrench ? '❌ Erreur lors de la sauvegarde' : '❌ Error saving data');
+              } finally {
+                setIsSaving(false);
               }
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                variant="outline"
-                size="lg"
-                onClick={() => handleNavigation('/')}
-                className="border-green-600 text-green-600 hover:bg-green-50"
-              >
-                {isFrench ? 'Retour à l\'accueil' : 'Back to home'}
-              </Button>
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white"
-                onClick={() => handleNavigation('/ma-retraite')}
-              >
-                {isFrench ? 'Continuer vers ma retraite' : 'Continue to my retirement'}
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
+            }}
+          >
+            <Save className="w-8 h-8 mr-4 animate-pulse" />
+            {isSaving 
+              ? (isFrench ? '💾 SAUVEGARDE...' : '💾 SAVING...')
+              : (isFrench ? '💾 SAUVEGARDER' : '💾 SAVE')
+            }
+            <Shield className="w-8 h-8 ml-4 animate-bounce" />
+          </Button>
+          <p className="text-gray-300 mt-4 text-lg">
+            {isFrench 
+              ? '✨ Protégez vos données et continuez en toute sécurité!'
+              : '✨ Protect your data and continue safely!'
+            }
+          </p>
+        </div>
+
+        {/* Bouton d'aide */}
+        <div className="text-center mt-8">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setShowHelp(!showHelp)}
+            className="border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-slate-900"
+          >
+            <HelpCircle className="w-4 h-4 mr-2" />
+            {isFrench ? 'Afficher l\'aide' : 'Show help'}
+          </Button>
+        </div>
       </div>
     </div>
   );

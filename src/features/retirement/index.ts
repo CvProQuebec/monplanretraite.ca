@@ -16,10 +16,17 @@ export { MobileStepNavigation } from './components/StepNavigation';
 export { NavigationDemo } from './components/NavigationDemo';
 export { RetirementNavigation } from './components/RetirementNavigation';
 
+// Composant de navigation unifié (remplace SeniorsAccessibilityToggle)
+export { NavigationToggle } from './components/SeniorsAccessibilityToggle';
+
 // Composants Phase 2 - Expérience immersive
 export { Phase2Demo } from './components/Phase2Demo';
 export { InteractiveParticles, MagneticParticles, EnergyParticles, SimpleParticles } from './components/InteractiveParticles';
 export { PhysicsCard, SimplePhysicsCard, AdvancedPhysicsCard, MagneticPhysicsCard } from './components/PhysicsCard';
+export { AdvancedDemoControls } from './components/AdvancedDemoControls';
+export { ContextualAdaptation } from './components/ContextualAdaptation';
+export { PredictiveOptimization } from './components/PredictiveOptimization';
+export { SmartRecommendations } from './components/SmartRecommendations';
 export { IntelligentSkeleton, CardSkeleton, TableSkeleton, ChartSkeleton, ListSkeleton } from './components/IntelligentSkeleton';
 export { Phase2Wrapper, Phase2WrapperLight, Phase2WrapperHeavy, Phase2WrapperAuto } from './components/Phase2Wrapper';
 
@@ -98,3 +105,5 @@ export type {
 // Hooks et utilitaires
 export { useLanguage } from './hooks/useLanguage';
 export { useRetirementData } from './hooks/useRetirementData';
+export { useDemoControls } from './hooks/useDemoControls';
+export { useAIPreferences } from './hooks/useAIPreferences';

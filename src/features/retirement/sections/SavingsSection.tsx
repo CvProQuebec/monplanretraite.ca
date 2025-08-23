@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { UserData } from '../types';
 import { formatCurrency } from '../utils/formatters';
+import { formatMontantOQLF, formatPourcentageOQLF } from '@/utils/formatters';
 
 interface SavingsSectionProps {
   data: UserData;
@@ -111,7 +112,7 @@ export const SavingsSection: React.FC<SavingsSectionProps> = ({ data, onUpdate }
                   <DollarSign className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-2xl font-bold text-green-400">
-                  ${totalEpargne.toLocaleString()}
+                  {isFrench ? formatMontantOQLF(totalEpargne) : `$${totalEpargne.toLocaleString()}`}
                 </div>
                 <div className="text-green-200 text-sm">
                   {isFrench ? 'Total épargne' : 'Total Savings'}
@@ -130,7 +131,7 @@ export const SavingsSection: React.FC<SavingsSectionProps> = ({ data, onUpdate }
                   <Home className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-2xl font-bold text-blue-400">
-                  ${valeurNetResidence.toLocaleString()}
+                  {isFrench ? formatMontantOQLF(valeurNetResidence) : `$${valeurNetResidence.toLocaleString()}`}
                 </div>
                 <div className="text-blue-200 text-sm">
                   {isFrench ? 'Valeur nette résidence' : 'Net Residence Value'}
@@ -149,7 +150,7 @@ export const SavingsSection: React.FC<SavingsSectionProps> = ({ data, onUpdate }
                   <BarChart3 className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-2xl font-bold text-purple-400">
-                  ${patrimoineTotal.toLocaleString()}
+                  {isFrench ? formatMontantOQLF(patrimoineTotal) : `$${patrimoineTotal.toLocaleString()}`}
                 </div>
                 <div className="text-purple-200 text-sm">
                   {isFrench ? 'Patrimoine total' : 'Total Net Worth'}
@@ -168,13 +169,13 @@ export const SavingsSection: React.FC<SavingsSectionProps> = ({ data, onUpdate }
                   <Target className="w-6 h-6 text-white" />
                 </div>
                 <div className="text-2xl font-bold text-orange-400">
-                  {progressionEpargne.toFixed(1)}%
+                  {isFrench ? formatPourcentageOQLF(progressionEpargne) : `${progressionEpargne.toFixed(1)}%`}
                 </div>
                 <div className="text-orange-200 text-sm">
                   {isFrench ? 'Progression objectif' : 'Objective Progress'}
                 </div>
                 <div className="text-orange-300 text-xs">
-                  {isFrench ? 'Vers 1M$ de retraite' : 'Towards $1M retirement'}
+                  {isFrench ? 'Vers la liberté financière' : 'Towards financial freedom'}
                 </div>
                 <Progress value={progressionEpargne} className="w-full h-2 bg-orange-900/30">
                   <div className="h-full bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full transition-all duration-500" style={{ width: `${progressionEpargne}%` }}></div>

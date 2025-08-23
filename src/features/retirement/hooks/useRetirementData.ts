@@ -10,31 +10,31 @@ const LOCAL_STORAGE_KEY = 'retirement-backup-data';
 
 const defaultUserData: UserData = {
   personal: {
-    prenom1: 'Utilisateur',  // Valeur par défaut valide
-    prenom2: 'Utilisateur',  // Valeur par défaut valide
-    naissance1: '1990-01-01',  // Valeur par défaut valide
-    naissance2: '1990-01-01',  // Valeur par défaut valide
-    sexe1: 'M',
-    sexe2: 'F',
-    salaire1: 50000,  // Valeur par défaut réaliste
-    salaire2: 50000,  // Valeur par défaut réaliste
+    prenom1: '',  // Maintenant vide
+    prenom2: '',  // Maintenant vide
+    naissance1: '',  // Maintenant vide
+    naissance2: '',  // Maintenant vide
+    sexe1: '' as any,
+    sexe2: '' as any,
+    salaire1: 0,  // Maintenant vide
+    salaire2: 0,  // Maintenant vide
     // Nouvelles valeurs par défaut
-    statutProfessionnel1: 'actif',
-    statutProfessionnel2: 'actif',
-    ageRetraiteSouhaite1: 65,
-    ageRetraiteSouhaite2: 65,
-    depensesRetraite: 3000  // Valeur par défaut réaliste
+    statutProfessionnel1: '' as any,
+    statutProfessionnel2: '' as any,
+    ageRetraiteSouhaite1: 0,
+    ageRetraiteSouhaite2: 0,
+    depensesRetraite: 0  // Maintenant vide
   },
   retirement: {
-    rrqAgeActuel1: 69,
+    rrqAgeActuel1: 0,  // Maintenant vide
     rrqMontantActuel1: 0,
     rrqMontant70_1: 0,
-    esperanceVie1: 85,
-    rrqAgeActuel2: 65,
+    esperanceVie1: 0,  // Maintenant vide
+    rrqAgeActuel2: 0,  // Maintenant vide
     rrqMontantActuel2: 0,
     rrqMontant70_2: 0,
-    esperanceVie2: 85,
-    rregopMembre1: 'non',
+    esperanceVie2: 0,  // Maintenant vide
+    rregopMembre1: '' as any,  // Maintenant vide
     rregopAnnees1: 0,
     pensionPrivee1: 0,
     pensionPrivee2: 0,
@@ -43,8 +43,8 @@ const defaultUserData: UserData = {
     svMontant2: 0,
     svRevenus1: 0,
     svRevenus2: 0,
-    svAgeDebut1: 65,
-    svAgeDebut2: 65
+    svAgeDebut1: 0,  // Maintenant vide
+    svAgeDebut2: 0  // Maintenant vide
   },
   savings: {
     reer1: 0,
@@ -60,23 +60,35 @@ const defaultUserData: UserData = {
     residenceValeur: 0,
     residenceHypotheque: 0
   },
-  cashflow: {
-    logement: 0,
-    servicesPublics: 0,
-    assurances: 0,
-    telecom: 0,
-    alimentation: 0,
-    transport: 0,
-    sante: 0,
-    loisirs: 0
-  }
-};
+      cashflow: {
+      logement: 0,
+      servicesPublics: 0,
+      assurances: 0,
+      telecom: 0,
+      alimentation: 0,
+      transport: 0,
+      sante: 0,
+      loisirs: 0
+    },
+    emergency: {
+      contactsUrgence: '',
+      directivesMedicales: '',
+      assuranceVie: 0,
+      testament: ''
+    },
+    session: {
+      sauvegardeLocale: false,
+      sauvegardeCloud: false,
+      exportDonnees: false,
+      importDonnees: false
+    }
+  };
 
 // Validation des données
 const validateUserData = (data: any): UserData => {
   try {
     // Vérifier que toutes les propriétés requises existent
-    const requiredSections = ['personal', 'retirement', 'savings', 'cashflow'];
+    const requiredSections = ['personal', 'retirement', 'savings', 'cashflow', 'emergency', 'session'];
     for (const section of requiredSections) {
       if (!data[section] || typeof data[section] !== 'object') {
         throw new Error(`Section ${section} manquante ou invalide`);
@@ -317,6 +329,106 @@ export const useRetirementData = () => {
     }
   };
 
+  // Calcul dynamique des progressions par section
+  const calculateSectionProgress = (section: keyof UserData) => {
+    try {
+      const sectionData = userData[section];
+      let totalFields = 0;
+      let completedFields = 0;
+
+      switch (section) {
+        case 'personal':
+          // Champs requis pour le profil personnel
+          const personalFields = [
+            'prenom1', 'naissance1', 'sexe1', 'salaire1', 'statutProfessionnel1', 
+            'ageRetraiteSouhaite1', 'depensesRetraite'
+          ];
+          totalFields = personalFields.length;
+          completedFields = personalFields.filter(field => {
+            const value = sectionData[field];
+            return value !== null && value !== undefined && value !== '' && value !== 0;
+          }).length;
+          break;
+
+        case 'retirement':
+          // Champs requis pour la planification retraite
+          const retirementFields = [
+            'rrqAgeActuel1', 'esperanceVie1', 'rregopMembre1', 'pensionPrivee1'
+          ];
+          totalFields = retirementFields.length;
+          completedFields = retirementFields.filter(field => {
+            const value = sectionData[field];
+            return value !== null && value !== undefined && value !== '' && value !== 0;
+          }).length;
+          break;
+
+        case 'savings':
+          // Champs requis pour l'épargne
+          const savingsFields = [
+            'reer1', 'celi1', 'placements1', 'epargne1', 'residenceValeur'
+          ];
+          totalFields = savingsFields.length;
+          completedFields = savingsFields.filter(field => {
+            const value = sectionData[field];
+            return value !== null && value !== undefined && value !== '' && value !== 0;
+          }).length;
+          break;
+
+        case 'cashflow':
+          // Champs requis pour le cashflow
+          const cashflowFields = [
+            'logement', 'servicesPublics', 'assurances', 'telecom', 'alimentation', 
+            'transport', 'sante', 'loisirs'
+          ];
+          totalFields = cashflowFields.length;
+          completedFields = cashflowFields.filter(field => {
+            const value = sectionData[field];
+            return value !== null && value !== undefined && value !== '' && value !== 0;
+          }).length;
+          break;
+
+        case 'emergency':
+          // Champs requis pour les informations d'urgence
+          const emergencyFields = [
+            'contactsUrgence', 'directivesMedicales', 'assuranceVie', 'testament'
+          ];
+          totalFields = emergencyFields.length;
+          completedFields = emergencyFields.filter(field => {
+            const value = sectionData[field];
+            return value !== null && value !== undefined && value !== '' && value !== 0;
+          }).length;
+          break;
+
+        case 'session':
+          // Champs requis pour la gestion des sessions
+          const sessionFields = [
+            'sauvegardeLocale', 'sauvegardeCloud', 'exportDonnees', 'importDonnees'
+          ];
+          totalFields = sessionFields.length;
+          completedFields = sessionFields.filter(field => {
+            const value = sectionData[field];
+            return value !== null && value !== undefined && value !== '' && value !== 0;
+          }).length;
+          break;
+
+        default:
+          return 0;
+      }
+
+      return totalFields > 0 ? Math.round((completedFields / totalFields) * 100) : 0;
+    } catch (error) {
+      console.error('Erreur lors du calcul de progression:', error);
+      return 0;
+    }
+  };
+
+  // Calcul du statut basé sur la progression
+  const getSectionStatus = (progress: number): 'not-started' | 'in-progress' | 'completed' => {
+    if (progress === 0) return 'not-started';
+    if (progress < 100) return 'in-progress';
+    return 'completed';
+  };
+
   return {
     userData,
     updateUserData,
@@ -330,6 +442,8 @@ export const useRetirementData = () => {
     clearBackup,
     hasBackup,
     clearError: () => setError(null),
-    sessionId
+    sessionId,
+    calculateSectionProgress,
+    getSectionStatus
   };
 };

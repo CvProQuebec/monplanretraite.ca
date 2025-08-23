@@ -14,9 +14,10 @@ import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { FileText, Plus, Trash2, Edit, Calendar as CalendarIcon, User, Building, Heart, AlertTriangle, Info, Shield, Clock, MapPin } from 'lucide-react';
 import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { fr, enUS } from 'date-fns/locale';
 import { WillAndSuccession, FuneralPreferences, FuneralHome, Cemetery } from '../../types/emergency-info';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useLanguage } from '../../hooks/useLanguage';
 
 interface SuccessionTabProps {
   data: {
@@ -27,6 +28,8 @@ interface SuccessionTabProps {
 }
 
 export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) => {
+  const { language } = useLanguage();
+  const isEnglish = language === 'en';
   const [activeTab, setActiveTab] = useState('will');
   const [showWillForm, setShowWillForm] = useState(false);
   const [showFuneralForm, setShowFuneralForm] = useState(false);
@@ -59,26 +62,30 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
     notes: ''
   });
 
-  const provinces = [
+  const provinces = isEnglish ? [
+    'Alberta', 'British Columbia', 'Manitoba', 'New Brunswick',
+    'Newfoundland and Labrador', 'Nova Scotia', 'Ontario', 'Prince Edward Island',
+    'Quebec', 'Saskatchewan', 'Northwest Territories', 'Nunavut', 'Yukon'
+  ] : [
     'Alberta', 'Colombie-Britannique', 'Manitoba', 'Nouveau-Brunswick',
     'Terre-Neuve-et-Labrador', 'Nouvelle-Écosse', 'Ontario', 'Île-du-Prince-Édouard',
     'Québec', 'Saskatchewan', 'Territoires du Nord-Ouest', 'Nunavut', 'Yukon'
   ];
 
   const funeralTypes = [
-    { value: 'traditional', label: 'Traditionnel' },
-    { value: 'cremation', label: 'Crémation' },
-    { value: 'green', label: 'Écologique' },
-    { value: 'memorial', label: 'Service commémoratif' },
-    { value: 'other', label: 'Autre' }
+    { value: 'traditional', label: isEnglish ? 'Traditional' : 'Traditionnel' },
+    { value: 'cremation', label: isEnglish ? 'Cremation' : 'Crémation' },
+    { value: 'green', label: isEnglish ? 'Green' : 'Écologique' },
+    { value: 'memorial', label: isEnglish ? 'Memorial Service' : 'Service commémoratif' },
+    { value: 'other', label: isEnglish ? 'Other' : 'Autre' }
   ];
 
   const burialTypes = [
-    { value: 'ground', label: 'En terre' },
-    { value: 'mausoleum', label: 'Mausolée' },
-    { value: 'columbarium', label: 'Columbarium' },
-    { value: 'scattering', label: 'Dispersion des cendres' },
-    { value: 'other', label: 'Autre' }
+    { value: 'ground', label: isEnglish ? 'Ground Burial' : 'En terre' },
+    { value: 'mausoleum', label: isEnglish ? 'Mausoleum' : 'Mausolée' },
+    { value: 'columbarium', label: isEnglish ? 'Columbarium' : 'Columbarium' },
+    { value: 'scattering', label: isEnglish ? 'Ash Scattering' : 'Dispersion des cendres' },
+    { value: 'other', label: isEnglish ? 'Other' : 'Autre' }
   ];
 
   const handleAddFuneralHome = () => {
@@ -206,9 +213,9 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
             <div className="flex items-center space-x-2">
               <FileText className="h-5 w-5 text-blue-600" />
               <div>
-                <p className="text-sm text-muted-foreground">Testament</p>
+                <p className="text-sm text-muted-foreground">{isEnglish ? 'Will' : 'Testament'}</p>
                 <p className="text-2xl font-bold">
-                  {data.willAndSuccession.hasWill ? 'Présent' : 'Absent'}
+                  {data.willAndSuccession.hasWill ? (isEnglish ? 'Present' : 'Présent') : (isEnglish ? 'Absent' : 'Absent')}
                 </p>
               </div>
             </div>
@@ -220,7 +227,7 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
             <div className="flex items-center space-x-2">
               <Building className="h-5 w-5 text-green-600" />
               <div>
-                <p className="text-sm text-muted-foreground">Salons funéraires</p>
+                <p className="text-sm text-muted-foreground">{isEnglish ? 'Funeral Homes' : 'Salons funéraires'}</p>
                 <p className="text-2xl font-bold">{data.funeralPreferences.funeralHomes.length}</p>
               </div>
             </div>
@@ -232,7 +239,7 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
             <div className="flex items-center space-x-2">
               <MapPin className="h-5 w-5 text-purple-600" />
               <div>
-                <p className="text-sm text-muted-foreground">Cimetières</p>
+                <p className="text-sm text-muted-foreground">{isEnglish ? 'Cemeteries' : 'Cimetières'}</p>
                 <p className="text-2xl font-bold">{data.funeralPreferences.cemeteries.length}</p>
               </div>
             </div>
@@ -245,8 +252,7 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
         <Alert className="border-orange-200 bg-orange-50">
           <AlertTriangle className="h-4 w-4 text-orange-600" />
           <AlertDescription>
-            <strong>Recommandation importante :</strong> Vous n'avez pas encore de testament. 
-            Considérez en rédiger un pour protéger vos proches et vos biens.
+            <strong>{isEnglish ? 'Important Recommendation:' : 'Recommandation importante :'}</strong> {isEnglish ? 'You do not have a will yet. Consider writing one to protect your loved ones and assets.' : 'Vous n\'avez pas encore de testament. Considérez en rédiger un pour protéger vos proches et vos biens.'}
           </AlertDescription>
         </Alert>
       )}
@@ -255,8 +261,7 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
         <Alert className="border-blue-200 bg-blue-50">
           <Info className="h-4 w-4 text-blue-600" />
           <AlertDescription>
-            <strong>Information :</strong> Vous n'avez pas encore exprimé vos préférences funéraires. 
-            Cela peut aider vos proches à prendre des décisions difficiles.
+            <strong>{isEnglish ? 'Information:' : 'Information :'}</strong> {isEnglish ? 'You have not yet expressed your funeral preferences. This can help your loved ones make difficult decisions.' : 'Vous n\'avez pas encore exprimé vos préférences funéraires. Cela peut aider vos proches à prendre des décisions difficiles.'}
           </AlertDescription>
         </Alert>
       )}
@@ -264,22 +269,22 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
       {/* Interface à onglets */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="will">Testament et succession</TabsTrigger>
-          <TabsTrigger value="funeral">Préférences funéraires</TabsTrigger>
+          <TabsTrigger value="will">{isEnglish ? 'Will & Estate' : 'Testament et succession'}</TabsTrigger>
+          <TabsTrigger value="funeral">{isEnglish ? 'Funeral Preferences' : 'Préférences funéraires'}</TabsTrigger>
         </TabsList>
 
         {/* Onglet Testament et succession */}
         <TabsContent value="will" className="space-y-4">
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="text-lg font-semibold">Testament et succession</h3>
+              <h3 className="text-lg font-semibold">{isEnglish ? 'Will & Estate' : 'Testament et succession'}</h3>
               <p className="text-sm text-muted-foreground">
-                Gérez vos informations de succession et testament
+                {isEnglish ? 'Manage your estate and will information' : 'Gérez vos informations de succession et testament'}
               </p>
             </div>
             <Button onClick={() => setShowWillForm(true)} className="flex items-center space-x-2">
               <Edit className="h-4 w-4" />
-              <span>Modifier</span>
+              <span>{isEnglish ? 'Edit' : 'Modifier'}</span>
             </Button>
           </div>
 
@@ -287,9 +292,9 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
           {showWillForm && (
             <Card>
               <CardHeader>
-                <CardTitle>Modifier les informations de succession</CardTitle>
+                <CardTitle>{isEnglish ? 'Edit Estate Information' : 'Modifier les informations de succession'}</CardTitle>
                 <CardDescription>
-                  Mettez à jour vos informations de testament et succession
+                  {isEnglish ? 'Update your will and estate information' : 'Mettez à jour vos informations de testament et succession'}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -301,14 +306,14 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
                       handleUpdateWill('hasWill', checked)
                     }
                   />
-                  <Label htmlFor="has-will">J'ai un testament</Label>
+                  <Label htmlFor="has-will">{isEnglish ? 'I have a will' : 'J\'ai un testament'}</Label>
                 </div>
 
                 {data.willAndSuccession.hasWill && (
                   <>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="space-y-2">
-                        <Label htmlFor="will-date">Date du testament</Label>
+                        <Label htmlFor="will-date">{isEnglish ? 'Will Date' : 'Date du testament'}</Label>
                         <Popover>
                           <PopoverTrigger asChild>
                             <Button
@@ -317,8 +322,8 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
                             >
                               <CalendarIcon className="mr-2 h-4 w-4" />
                               {data.willAndSuccession.willDate ? 
-                                format(new Date(data.willAndSuccession.willDate), 'PPP', { locale: fr }) : 
-                                'Sélectionner une date'
+                                format(new Date(data.willAndSuccession.willDate), 'PPP', { locale: isEnglish ? enUS : fr }) : 
+                                (isEnglish ? 'Select a date' : 'Sélectionner une date')
                               }
                             </Button>
                           </PopoverTrigger>
@@ -334,56 +339,58 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
                       </div>
                       
                       <div className="space-y-2">
-                        <Label htmlFor="will-location">Emplacement du testament</Label>
+                        <Label htmlFor="will-location">{isEnglish ? 'Will Location' : 'Emplacement du testament'}</Label>
                         <Input
                           id="will-location"
                           value={data.willAndSuccession.willLocation || ''}
                           onChange={(e) => handleUpdateWill('willLocation', e.target.value)}
-                          placeholder="Ex : Coffre-fort, Cabinet d'avocat"
+                          placeholder={isEnglish ? 'Ex: Safe, Law Office' : 'Ex : Coffre-fort, Cabinet d\'avocat'}
                         />
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="executor-name">Nom de l'exécuteur testamentaire</Label>
+                      <Label htmlFor="executor-name">{isEnglish ? 'Executor Name' : 'Nom de l\'exécuteur testamentaire'}</Label>
                       <Input
                         id="executor-name"
                         value={data.willAndSuccession.executorName || ''}
                         onChange={(e) => handleUpdateWill('executorName', e.target.value)}
-                        placeholder="Nom complet de l'exécuteur"
+                        placeholder={isEnglish ? 'Full name of executor' : 'Nom complet de l\'exécuteur'}
                       />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="executor-phone">Téléphone de l'exécuteur</Label>
-                        <Input
-                          id="executor-phone"
-                          value={data.willAndSuccession.executorPhone || ''}
-                          onChange={(e) => handleUpdateWill('executorPhone', e.target.value)}
-                          placeholder="(514) 555-0123"
-                        />
+                      <div className="flex items-center space-x-2">
+                        <div className="space-y-2">
+                          <Label htmlFor="executor-phone">{isEnglish ? 'Executor Phone' : 'Téléphone de l\'exécuteur'}</Label>
+                          <Input
+                            id="executor-phone"
+                            value={data.willAndSuccession.executorPhone || ''}
+                            onChange={(e) => handleUpdateWill('executorPhone', e.target.value)}
+                            placeholder="(514) 555-0123"
+                          />
+                        </div>
                       </div>
                       
                       <div className="space-y-2">
-                        <Label htmlFor="executor-email">Email de l'exécuteur</Label>
+                        <Label htmlFor="executor-email">{isEnglish ? 'Executor Email' : 'Email de l\'exécuteur'}</Label>
                         <Input
                           id="executor-email"
                           type="email"
                           value={data.willAndSuccession.executorEmail || ''}
                           onChange={(e) => handleUpdateWill('executorEmail', e.target.value)}
-                          placeholder="executeur@email.com"
+                          placeholder={isEnglish ? 'executor@email.com' : 'executeur@email.com'}
                         />
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="succession-notes">Notes sur la succession</Label>
+                      <Label htmlFor="succession-notes">{isEnglish ? 'Estate Notes' : 'Notes sur la succession'}</Label>
                       <Textarea
                         id="succession-notes"
                         value={data.willAndSuccession.notes || ''}
                         onChange={(e) => handleUpdateWill('notes', e.target.value)}
-                        placeholder="Informations importantes sur votre succession, instructions spéciales..."
+                        placeholder={isEnglish ? 'Important information about your estate, special instructions...' : 'Informations importantes sur votre succession, instructions spéciales...'}
                         rows={3}
                       />
                     </div>

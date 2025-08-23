@@ -6,13 +6,16 @@ import Layout from './components/layout/Layout';
 
 // Nouvelles pages principales
 import Accueil from './pages/Accueil';
+import Home from './pages/Home';
 import MonProfil from './pages/MonProfil';
+import MyProfile from './pages/MyProfile';
 import MaRetraite from './pages/MaRetraite';
-import MesResultats from './pages/MesResultats';
+import Revenus from './pages/Revenus';
 
 // Composants de test et validation
-import TestNavigation from './components/TestNavigation';
 import FinalValidation from './components/FinalValidation';
+import { AdvancedDemoControls } from './features/retirement/components/AdvancedDemoControls';
+import TestPhase3IA from './components/TestPhase3IA';
 
 // Pages existantes (pour compatibilité)
 import RetraiteFr from './pages/RetraiteFr';
@@ -26,6 +29,7 @@ import RetraiteModulePhase1En from './pages/RetraiteModulePhase1En';
 import RapportsRetraiteFr from './pages/RapportsRetraiteFr';
 import RetirementReportsEn from './pages/RetirementReportsEn';
 import Phase2DemoPage from './pages/Phase2DemoPage';
+import SauvegarderCharger from './pages/SauvegarderCharger';
 
 function App() {
   return (
@@ -39,24 +43,29 @@ function App() {
               {/* Page d'accueil - "VOTRE RETRAITE, VOTRE HISTOIRE" */}
               <Route path="/" element={<Accueil />} />
               <Route path="/accueil" element={<Accueil />} />
-              <Route path="/home" element={<Accueil />} />
+              <Route path="/fr" element={<Accueil />} />
+              <Route path="/home" element={<Home />} />
+              <Route path="/en" element={<Home />} />
               
               {/* Page profil - "VOTRE SITUATION, NOS RESSOURCES" */}
               <Route path="/mon-profil" element={<MonProfil />} />
-              <Route path="/my-profile" element={<MonProfil />} />
+              <Route path="/my-profile" element={<MyProfile />} />
               
               {/* Page retraite - "TRAVAILLER AVEC CE QU'ON A" */}
               <Route path="/ma-retraite" element={<MaRetraite />} />
               <Route path="/my-retirement" element={<MaRetraite />} />
               
-              {/* Page résultats - "VOTRE PROGRÈS, NOS FÉLICITATIONS" */}
-              <Route path="/mes-resultats" element={<MesResultats />} />
-              <Route path="/my-results" element={<MesResultats />} />
+              {/* Page revenus - "GÉREZ VOS SOURCES DE REVENUS" */}
+              <Route path="/mes-revenus" element={<Revenus />} />
+              <Route path="/my-income" element={<Revenus />} />
               
               {/* 🧪 ROUTES DE TEST ET VALIDATION */}
               
-              {/* Tests de navigation */}
-              <Route path="/test-navigation" element={<TestNavigation />} />
+              {/* Test des contrôles de démonstration avancés */}
+              <Route path="/advanced-demo-controls" element={<AdvancedDemoControls />} />
+              
+              {/* Test Phase 3 IA */}
+              <Route path="/test-phase3-ia" element={<TestPhase3IA />} />
               
               {/* Validation finale - Dernière étape avant déploiement */}
               <Route path="/validation-finale" element={<FinalValidation />} />
@@ -84,6 +93,10 @@ function App() {
               
               {/* Route Phase 2 Demo */}
               <Route path="/phase2-demo" element={<Phase2DemoPage />} />
+              
+              {/* Routes Sauvegarder/Charger */}
+              <Route path="/fr/sauvegarder-charger" element={<SauvegarderCharger />} />
+              <Route path="/en/save-load" element={<SauvegarderCharger />} />
               
               {/* 🔄 REDIRECTIONS INTELLIGENTES */}
               

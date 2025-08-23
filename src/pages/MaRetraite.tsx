@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
+import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,13 +21,16 @@ import {
   BarChart3
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import SeniorsNavigationHeader from '@/components/layout/header/SeniorsNavigationHeader';
+
 
 const MaRetraite: React.FC = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const isFrench = language === 'fr';
   const [activeTab, setActiveTab] = useState('revenus');
+  
+  // Hook pour les données de retraite
+  const { userData, updateUserData } = useRetirementData();
 
   const [revenusData, setRevenusData] = useState({
     salaire: '',
@@ -35,6 +39,30 @@ const MaRetraite: React.FC = () => {
     immobilier: '',
     autres: ''
   });
+
+  // Synchronisation des données du profil avec la page revenus
+  useEffect(() => {
+    if (userData.personal) {
+      // Synchroniser le salaire du profil avec la page revenus
+      if (userData.personal.salaire1) {
+        setRevenusData(prev => ({
+          ...prev,
+          salaire: userData.personal.salaire1.toString()
+        }));
+      }
+    }
+  }, [userData.personal]);
+
+  // Synchronisation inverse : mettre à jour le profil quand le salaire change
+  const handleRevenusChange = (field: string, value: string) => {
+    setRevenusData(prev => ({ ...prev, [field]: value }));
+    
+    // Si c'est le salaire, mettre à jour le profil
+    if (field === 'salaire') {
+      const numericValue = parseFloat(value.replace(/[^\d.]/g, '')) || 0;
+      updateUserData('personal', { salaire1: numericValue });
+    }
+  };
 
   const [depensesData, setDepensesData] = useState({
     logement: '',
@@ -52,9 +80,7 @@ const MaRetraite: React.FC = () => {
     epargneNecessaire: ''
   });
 
-  const handleRevenusChange = (field: string, value: string) => {
-    setRevenusData(prev => ({ ...prev, [field]: value }));
-  };
+
 
   const handleDepensesChange = (field: string, value: string) => {
     setDepensesData(prev => ({ ...prev, [field]: value }));
@@ -85,8 +111,7 @@ const MaRetraite: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
-      {/* Navigation seniors intégrée */}
-      <SeniorsNavigationHeader />
+
       
       <div className="container mx-auto px-6 py-12">
         {/* En-tête bienveillant */}

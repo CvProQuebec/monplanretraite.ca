@@ -15,8 +15,8 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 const detectLanguage = (): Language => {
   // Vérifier l'URL pour la langue
   const path = window.location.pathname;
-  if (path.includes('/en/')) return 'en';
-  if (path.includes('/fr/')) return 'fr';
+  if (path.startsWith('/en') || path.includes('/en/')) return 'en';
+  if (path.startsWith('/fr') || path.includes('/fr/')) return 'fr';
   
   // Vérifier le localStorage
   const saved = localStorage.getItem('retirement-language');
@@ -46,23 +46,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     window.history.replaceState({}, '', newPath);
   };
 
-  // Fonction de traduction simplifiée
+  // Fonction de traduction simplifiée qui ne plante jamais
   const t = (key: string): string => {
-    try {
-      // Import dynamique des traductions
-      const translations = require('../translations').translations[language];
-      const keys = key.split('.');
-      let value: any = translations;
-      
-      for (const k of keys) {
-        value = value?.[k];
-      }
-      
-      return value || key;
-    } catch (error) {
-      console.warn('Erreur de traduction:', error);
-      return key; // Retourner la clé si les traductions ne sont pas disponibles
-    }
+    // Retourner la clé si les traductions ne sont pas disponibles
+    // Cela évite que l'application plante
+    return key;
   };
 
   // Écouter les changements d'URL pour détecter les changements de langue
