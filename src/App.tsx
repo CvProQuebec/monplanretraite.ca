@@ -12,6 +12,8 @@ import MyProfile from './pages/MyProfile';
 import MaRetraite from './pages/MaRetraite';
 import Revenus from './pages/Revenus';
 import PlanificationUrgence from './pages/PlanificationUrgence';
+import PlanificationDepenses from './pages/PlanificationDepenses';
+import AssistantFinancier from './pages/AssistantFinancier';
 
 // Composants de test et validation
 import FinalValidation from './components/FinalValidation';
@@ -63,6 +65,14 @@ function App() {
               {/* Page planification d'urgence - "PROTÉGEZ VOS PROCHES" */}
               <Route path="/planification-urgence" element={<PlanificationUrgence />} />
               <Route path="/emergency-planning" element={<PlanificationUrgence />} />
+              
+              {/* Page planification de dépenses - "OPTIMISEZ VOS ACHATS" */}
+              <Route path="/planification-depenses" element={<PlanificationDepenses />} />
+              <Route path="/expense-planning" element={<PlanificationDepenses />} />
+              
+              {/* Assistant financier personnel - "ÉVITEZ LES CATASTROPHES FINANCIÈRES" */}
+              <Route path="/assistant-financier" element={<AssistantFinancier />} />
+              <Route path="/financial-assistant" element={<AssistantFinancier />} />
               
               {/* 🧪 ROUTES DE TEST ET VALIDATION */}
               

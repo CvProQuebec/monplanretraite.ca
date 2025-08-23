@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
+import { InputSanitizer } from '@/utils/inputSanitizer';
 
 const MonProfil: React.FC = () => {
   const { language } = useLanguage();
@@ -55,6 +56,12 @@ const MonProfil: React.FC = () => {
 
   const handleChange = (field: string, value: any) => {
     updateUserData('personal', { [field]: value });
+  };
+
+  const handleNameChange = (field: string, value: string) => {
+    // Apply name sanitization directly for real-time feedback
+    const sanitizedValue = InputSanitizer.sanitizeName(value);
+    updateUserData('personal', { [field]: sanitizedValue });
   };
 
   const handleSalaryChange = (person: '1' | '2', value: string) => {
@@ -176,7 +183,7 @@ const MonProfil: React.FC = () => {
                   <Input
                     type="text"
                     value={userData.personal?.prenom1 || ''}
-                    onChange={(e) => handleChange('prenom1', e.target.value)}
+                    onChange={(e) => handleNameChange('prenom1', e.target.value)}
                     className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400"
                     placeholder={isFrench ? 'Ex: Jean Philippe ou Louis-Alexandre Veillette' : 'Ex: John Smith or Mary-Jane Watson'}
                   />
@@ -255,7 +262,7 @@ const MonProfil: React.FC = () => {
                   <Input
                     type="text"
                     value={userData.personal?.prenom2 || ''}
-                    onChange={(e) => handleChange('prenom2', e.target.value)}
+                    onChange={(e) => handleNameChange('prenom2', e.target.value)}
                     className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
                     placeholder={isFrench ? 'Ex: Marie-Claire Dubois ou Pierre Martin' : 'Ex: Sarah Johnson or Michael Brown'}
                   />
