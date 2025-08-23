@@ -59,9 +59,9 @@ const MonProfil: React.FC = () => {
   };
 
   const handleNameChange = (field: string, value: string) => {
-    // Apply name sanitization directly for real-time feedback
-    const sanitizedValue = InputSanitizer.sanitizeName(value);
-    updateUserData('personal', { [field]: sanitizedValue });
+    // No need to sanitize here - updateUserData will handle it with sanitizeUserData
+    // This prevents double sanitization which can cause issues with spaces
+    updateUserData('personal', { [field]: value });
   };
 
   const handleSalaryChange = (person: '1' | '2', value: string) => {

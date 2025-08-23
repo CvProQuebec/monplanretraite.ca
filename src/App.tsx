@@ -12,6 +12,7 @@ import MyProfile from './pages/MyProfile';
 import MaRetraite from './pages/MaRetraite';
 import Revenus from './pages/Revenus';
 import PlanificationUrgence from './pages/PlanificationUrgence';
+import PlanificationSuccessorale from './pages/PlanificationSuccessorale';
 import PlanificationDepenses from './pages/PlanificationDepenses';
 import AssistantFinancier from './pages/AssistantFinancier';
 
@@ -65,6 +66,10 @@ function App() {
               {/* Page planification d'urgence - "PROTÉGEZ VOS PROCHES" */}
               <Route path="/planification-urgence" element={<PlanificationUrgence />} />
               <Route path="/emergency-planning" element={<PlanificationUrgence />} />
+              
+              {/* Page planification successorale - "ORGANISEZ VOTRE SUCCESSION" */}
+              <Route path="/planification-successorale" element={<PlanificationSuccessorale />} />
+              <Route path="/succession-planning" element={<PlanificationSuccessorale />} />
               
               {/* Page planification de dépenses - "OPTIMISEZ VOS ACHATS" */}
               <Route path="/planification-depenses" element={<PlanificationDepenses />} />

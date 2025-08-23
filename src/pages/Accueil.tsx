@@ -15,7 +15,10 @@ import {
   ArrowRight,
   AlertCircle,
   AlertTriangle,
-  Home
+  Home,
+  Target,
+  Users,
+  Calculator
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -507,6 +510,103 @@ const Accueil: React.FC = () => {
                    </CardContent>
                  </Card>
                </div>
+            </CardContent>
+          </Card>
+
+          {/* Fonctionnalités de votre forfait - Déplacé depuis Vue d'ensemble */}
+          <Card className="bg-gradient-to-br from-blue-800/90 to-indigo-800/90 border-0 shadow-2xl backdrop-blur-sm mb-12">
+            <CardHeader className="border-b border-blue-600 bg-gradient-to-r from-blue-600/20 to-indigo-600/20">
+              <CardTitle className="text-2xl font-bold text-blue-300 flex items-center gap-3">
+                <Crown className="w-8 h-8" />
+                {isFrench ? 'Fonctionnalités de votre forfait' : 'Features of your Plan'}
+              </CardTitle>
+              <p className="text-blue-200">
+                {isFrench ? 'Forfait actuel : Gratuit' : 'Current plan: Free'}
+              </p>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                {/* Planification de base */}
+                <Card className="bg-gradient-to-br from-green-600/20 to-green-500/20 border border-green-500/30 shadow-lg">
+                  <CardContent className="p-6 text-center">
+                    <Target className="w-12 h-12 text-green-400 mx-auto mb-4" />
+                    <h3 className="text-xl font-bold text-green-300 mb-2">
+                      {isFrench ? 'Planification de base' : 'Basic Planning'}
+                    </h3>
+                    <p className="text-green-200">
+                      {isFrench ? 'Outils essentiels de planification' : 'Essential planning tools'}
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Gestion du profil */}
+                <Card className="bg-gradient-to-br from-blue-600/20 to-blue-500/20 border border-blue-500/30 shadow-lg">
+                  <CardContent className="p-6 text-center">
+                    <Users className="w-12 h-12 text-blue-400 mx-auto mb-4" />
+                    <h3 className="text-xl font-bold text-blue-300 mb-2">
+                      {isFrench ? 'Gestion du profil' : 'Profile Management'}
+                    </h3>
+                    <p className="text-blue-200">
+                      {isFrench ? 'Gestion des données personnelles' : 'Personal data management'}
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Calculs de base */}
+                <Card className="bg-gradient-to-br from-purple-600/20 to-purple-500/20 border border-purple-500/30 shadow-lg">
+                  <CardContent className="p-6 text-center">
+                    <Calculator className="w-12 h-12 text-purple-400 mx-auto mb-4" />
+                    <h3 className="text-xl font-bold text-purple-300 mb-2">
+                      {isFrench ? 'Calculs de base' : 'Basic Calculations'}
+                    </h3>
+                    <p className="text-purple-200">
+                      {isFrench ? 'Calculs de retraite fondamentaux' : 'Fundamental retirement calculations'}
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Gestion de l'épargne */}
+                <Card className="bg-gradient-to-br from-orange-600/20 to-orange-500/20 border border-orange-500/30 shadow-lg">
+                  <CardContent className="p-6 text-center">
+                    <Shield className="w-12 h-12 text-orange-400 mx-auto mb-4" />
+                    <h3 className="text-xl font-bold text-orange-300 mb-2">
+                      {isFrench ? 'Gestion de l\'épargne' : 'Savings Management'}
+                    </h3>
+                    <p className="text-orange-200">
+                      {isFrench ? 'Suivez vos progrès d\'épargne' : 'Track your savings progress'}
+                    </p>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Boutons d'upgrade */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <Button
+                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold text-lg py-4 shadow-2xl transform hover:scale-105 transition-all duration-300"
+                  size="lg"
+                >
+                  <Crown className="w-6 h-6 mr-3" />
+                  {isFrench ? 'Passer au forfait Professional' : 'Upgrade to Professional Plan'}
+                  <ArrowRight className="w-6 h-6 ml-3" />
+                </Button>
+                <Button
+                  className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold text-lg py-4 shadow-2xl transform hover:scale-105 transition-all duration-300"
+                  size="lg"
+                >
+                  <TrendingUp className="w-6 h-6 mr-3" />
+                  {isFrench ? 'Passer au forfait Ultimate' : 'Upgrade to Ultimate Plan'}
+                  <ArrowRight className="w-6 h-6 ml-3" />
+                </Button>
+              </div>
+
+              <div className="mt-6 text-center">
+                <p className="text-blue-200 text-sm">
+                  {isFrench 
+                    ? 'Débloquez les simulations illimitées et fonctionnalités avancées'
+                    : 'Unlock unlimited simulations and advanced features'
+                  }
+                </p>
+              </div>
             </CardContent>
           </Card>
 
