@@ -11,6 +11,7 @@ import MonProfil from './pages/MonProfil';
 import MyProfile from './pages/MyProfile';
 import MaRetraite from './pages/MaRetraite';
 import Revenus from './pages/Revenus';
+import PlanificationUrgence from './pages/PlanificationUrgence';
 
 // Composants de test et validation
 import FinalValidation from './components/FinalValidation';
@@ -58,6 +59,10 @@ function App() {
               {/* Page revenus - "GÉREZ VOS SOURCES DE REVENUS" */}
               <Route path="/mes-revenus" element={<Revenus />} />
               <Route path="/my-income" element={<Revenus />} />
+              
+              {/* Page planification d'urgence - "PROTÉGEZ VOS PROCHES" */}
+              <Route path="/planification-urgence" element={<PlanificationUrgence />} />
+              <Route path="/emergency-planning" element={<PlanificationUrgence />} />
               
               {/* 🧪 ROUTES DE TEST ET VALIDATION */}
               
