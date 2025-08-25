@@ -3,10 +3,12 @@ import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import DateInput from '@/components/ui/DateInput';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
+import SVAdjustmentManager from '@/components/retirement/SVAdjustmentManager';
 import { 
   DollarSign, 
   Info, 
@@ -294,11 +296,11 @@ const Revenus: React.FC = () => {
                         <Calendar className="w-4 h-4" />
                         {isFrench ? 'Date de fin de contrat' : 'Contract End Date'}
                       </Label>
-                      <Input
-                        type="date"
+                      <DateInput
                         value={userData.personal?.dateFinContrat1 || ''}
-                        onChange={(e) => handleChange('dateFinContrat1', e.target.value)}
+                        onChange={(value) => handleChange('dateFinContrat1', value)}
                         className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400"
+                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
                       />
                     </div>
                   </>
@@ -446,11 +448,11 @@ const Revenus: React.FC = () => {
                         <Calendar className="w-4 h-4" />
                         {isFrench ? 'Date de fin de contrat' : 'Contract End Date'}
                       </Label>
-                      <Input
-                        type="date"
+                      <DateInput
                         value={userData.personal?.dateFinContrat2 || ''}
-                        onChange={(e) => handleChange('dateFinContrat2', e.target.value)}
+                        onChange={(value) => handleChange('dateFinContrat2', value)}
                         className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400"
+                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
                       />
                     </div>
                   </>
@@ -473,257 +475,48 @@ const Revenus: React.FC = () => {
           </Card>
         </div>
 
-        {/* Section Sécurité de la vieillesse */}
-        <Card className="bg-gradient-to-br from-purple-800/90 to-pink-800/90 border-0 shadow-2xl backdrop-blur-sm mb-8">
-          <CardHeader className="border-b border-purple-600 bg-gradient-to-r from-purple-600/20 to-pink-600/20">
-            <CardTitle className="text-2xl font-bold text-purple-300 flex items-center gap-3">
+        {/* Section Sécurité de la vieillesse avec ajustements */}
+        <div className="space-y-8 mb-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-purple-300 mb-4 flex items-center justify-center gap-3">
               <Shield className="w-8 h-8 text-purple-400" />
               {isFrench ? 'Sécurité de la vieillesse (SV)' : 'Old Age Security (OAS)'}
-            </CardTitle>
-            <CardDescription className="text-purple-200">
+            </h2>
+            <p className="text-purple-200 text-lg">
               {isFrench 
-                ? 'Planifiez vos prestations de la Sécurité de la vieillesse pour optimiser vos revenus de retraite'
-                : 'Plan your Old Age Security benefits to optimize your retirement income'
+                ? 'Gérez vos prestations réelles avec les ajustements par période'
+                : 'Manage your actual benefits with period-specific adjustments'
               }
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Personne 1 - SV */}
-              <div className="space-y-6">
-                <h3 className="text-xl font-bold text-purple-300 flex items-center gap-2">
-                  <div className="w-6 h-6 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                    1
-                  </div>
-                  {userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
-                </h3>
-                
-                <div className="space-y-4">
-                  {/* Âge de début de la SV */}
-                  <div className="space-y-2">
-                    <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      {isFrench ? 'Âge de début de la SV' : 'OAS Start Age'}
-                    </Label>
-                    <Select
-                      value={userData.personal?.ageSV1?.toString() || '65'}
-                      onValueChange={(value) => handleChange('ageSV1', parseInt(value))}
-                    >
-                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-slate-700 border-slate-600">
-                        <SelectItem value="65">65 ans (standard)</SelectItem>
-                        <SelectItem value="66">66 ans (+7.2%)</SelectItem>
-                        <SelectItem value="67">67 ans (+14.4%)</SelectItem>
-                        <SelectItem value="68">68 ans (+21.6%)</SelectItem>
-                        <SelectItem value="69">69 ans (+28.8%)</SelectItem>
-                        <SelectItem value="70">70 ans (+36%)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <p className="text-xs text-gray-400">
-                      {isFrench 
-                        ? 'Reporter la SV augmente les prestations de 0.6% par mois (7.2% par année)'
-                        : 'Deferring OAS increases benefits by 0.6% per month (7.2% per year)'
-                      }
-                    </p>
-                  </div>
+            </p>
+          </div>
 
-                  {/* Montant mensuel estimé */}
-                  <div className="space-y-2">
-                    <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                      <DollarSign className="w-4 h-4" />
-                      {isFrench ? 'Montant mensuel estimé' : 'Estimated Monthly Amount'}
-                    </Label>
-                    <div className="bg-slate-700 border border-slate-600 rounded-md p-3">
-                      <div className="text-2xl font-bold text-green-400">
-                        ${(() => {
-                          const baseSV = 707.68; // Montant maximum SV 2024
-                          const age = userData.personal?.ageSV1 || 65;
-                          const bonus = age > 65 ? (age - 65) * 0.072 : 0;
-                          return Math.round(baseSV * (1 + bonus));
-                        })()}
-                      </div>
-                      <div className="text-sm text-gray-400">
-                        {isFrench ? 'Par mois (montant maximum)' : 'Per month (maximum amount)'}
-                      </div>
-                    </div>
-                  </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Personne 1 - Ajustements SV */}
+            <SVAdjustmentManager
+              personNumber={1}
+              personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
+              adjustments={userData.retirement?.svAjustements1 || []}
+              onAdjustmentsChange={(adjustments) => {
+                updateUserData('retirement', { svAjustements1: adjustments });
+              }}
+              isFrench={isFrench}
+            />
 
-                  {/* Statut d'admissibilité */}
-                  <div className="space-y-2">
-                    <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                      <Info className="w-4 h-4" />
-                      {isFrench ? 'Statut d\'admissibilité' : 'Eligibility Status'}
-                    </Label>
-                    <Select
-                      value={userData.personal?.statutSV1 || 'admissible'}
-                      onValueChange={(value) => handleChange('statutSV1', value)}
-                    >
-                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-slate-700 border-slate-600">
-                        <SelectItem value="admissible">
-                          {isFrench ? 'Admissible (40+ ans au Canada)' : 'Eligible (40+ years in Canada)'}
-                        </SelectItem>
-                        <SelectItem value="partiel">
-                          {isFrench ? 'Admissible partiel (10-39 ans)' : 'Partial eligibility (10-39 years)'}
-                        </SelectItem>
-                        <SelectItem value="incertain">
-                          {isFrench ? 'Incertain' : 'Uncertain'}
-                        </SelectItem>
-                        <SelectItem value="non-admissible">
-                          {isFrench ? 'Non admissible' : 'Not eligible'}
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+            {/* Personne 2 - Ajustements SV */}
+            <SVAdjustmentManager
+              personNumber={2}
+              personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
+              adjustments={userData.retirement?.svAjustements2 || []}
+              onAdjustmentsChange={(adjustments) => {
+                updateUserData('retirement', { svAjustements2: adjustments });
+              }}
+              isFrench={isFrench}
+            />
+          </div>
 
-                  {/* Années de résidence au Canada */}
-                  <div className="space-y-2">
-                    <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                      <Target className="w-4 h-4" />
-                      {isFrench ? 'Années de résidence au Canada' : 'Years of Residence in Canada'}
-                    </Label>
-                    <Input
-                      type="number"
-                      value={userData.personal?.anneesResidenceCanada1 || ''}
-                      onChange={(e) => handleChange('anneesResidenceCanada1', Number(e.target.value))}
-                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400"
-                      placeholder="40"
-                      min="0"
-                      max="80"
-                    />
-                    <p className="text-xs text-gray-400">
-                      {isFrench 
-                        ? 'Minimum 10 ans requis. 40 ans pour le montant maximum.'
-                        : 'Minimum 10 years required. 40 years for maximum amount.'
-                      }
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Personne 2 - SV */}
-              <div className="space-y-6">
-                <h3 className="text-xl font-bold text-pink-300 flex items-center gap-2">
-                  <div className="w-6 h-6 bg-gradient-to-r from-pink-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold text-sm">
-                    2
-                  </div>
-                  {userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
-                </h3>
-                
-                <div className="space-y-4">
-                  {/* Âge de début de la SV */}
-                  <div className="space-y-2">
-                    <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      {isFrench ? 'Âge de début de la SV' : 'OAS Start Age'}
-                    </Label>
-                    <Select
-                      value={userData.personal?.ageSV2?.toString() || '65'}
-                      onValueChange={(value) => handleChange('ageSV2', parseInt(value))}
-                    >
-                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-slate-700 border-slate-600">
-                        <SelectItem value="65">65 ans (standard)</SelectItem>
-                        <SelectItem value="66">66 ans (+7.2%)</SelectItem>
-                        <SelectItem value="67">67 ans (+14.4%)</SelectItem>
-                        <SelectItem value="68">68 ans (+21.6%)</SelectItem>
-                        <SelectItem value="69">69 ans (+28.8%)</SelectItem>
-                        <SelectItem value="70">70 ans (+36%)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                    <p className="text-xs text-gray-400">
-                      {isFrench 
-                        ? 'Reporter la SV augmente les prestations de 0.6% par mois (7.2% par année)'
-                        : 'Deferring OAS increases benefits by 0.6% per month (7.2% per year)'
-                      }
-                    </p>
-                  </div>
-
-                  {/* Montant mensuel estimé */}
-                  <div className="space-y-2">
-                    <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                      <DollarSign className="w-4 h-4" />
-                      {isFrench ? 'Montant mensuel estimé' : 'Estimated Monthly Amount'}
-                    </Label>
-                    <div className="bg-slate-700 border border-slate-600 rounded-md p-3">
-                      <div className="text-2xl font-bold text-green-400">
-                        ${(() => {
-                          const baseSV = 707.68; // Montant maximum SV 2024
-                          const age = userData.personal?.ageSV2 || 65;
-                          const bonus = age > 65 ? (age - 65) * 0.072 : 0;
-                          return Math.round(baseSV * (1 + bonus));
-                        })()}
-                      </div>
-                      <div className="text-sm text-gray-400">
-                        {isFrench ? 'Par mois (montant maximum)' : 'Per month (maximum amount)'}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Statut d'admissibilité */}
-                  <div className="space-y-2">
-                    <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                      <Info className="w-4 h-4" />
-                      {isFrench ? 'Statut d\'admissibilité' : 'Eligibility Status'}
-                    </Label>
-                    <Select
-                      value={userData.personal?.statutSV2 || 'admissible'}
-                      onValueChange={(value) => handleChange('statutSV2', value)}
-                    >
-                      <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent className="bg-slate-700 border-slate-600">
-                        <SelectItem value="admissible">
-                          {isFrench ? 'Admissible (40+ ans au Canada)' : 'Eligible (40+ years in Canada)'}
-                        </SelectItem>
-                        <SelectItem value="partiel">
-                          {isFrench ? 'Admissible partiel (10-39 ans)' : 'Partial eligibility (10-39 years)'}
-                        </SelectItem>
-                        <SelectItem value="incertain">
-                          {isFrench ? 'Incertain' : 'Uncertain'}
-                        </SelectItem>
-                        <SelectItem value="non-admissible">
-                          {isFrench ? 'Non admissible' : 'Not eligible'}
-                        </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  {/* Années de résidence au Canada */}
-                  <div className="space-y-2">
-                    <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                      <Target className="w-4 h-4" />
-                      {isFrench ? 'Années de résidence au Canada' : 'Years of Residence in Canada'}
-                    </Label>
-                    <Input
-                      type="number"
-                      value={userData.personal?.anneesResidenceCanada2 || ''}
-                      onChange={(e) => handleChange('anneesResidenceCanada2', Number(e.target.value))}
-                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-pink-400 focus:ring-pink-400"
-                      placeholder="40"
-                      min="0"
-                      max="80"
-                    />
-                    <p className="text-xs text-gray-400">
-                      {isFrench 
-                        ? 'Minimum 10 ans requis. 40 ans pour le montant maximum.'
-                        : 'Minimum 10 years required. 40 years for maximum amount.'
-                      }
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Recommandations SV */}
-            <div className="mt-8 p-6 bg-gradient-to-r from-purple-900/50 to-pink-900/50 rounded-lg border border-purple-500/30">
+          {/* Recommandations SV */}
+          <Card className="bg-gradient-to-r from-purple-900/50 to-pink-900/50 border border-purple-500/30">
+            <CardContent className="p-6">
               <h4 className="text-lg font-bold text-purple-300 mb-4 flex items-center gap-2">
                 <Info className="w-5 h-5" />
                 {isFrench ? 'Recommandations pour la SV' : 'OAS Recommendations'}
@@ -746,9 +539,9 @@ const Revenus: React.FC = () => {
                   </ul>
                 </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
 
         {/* Résumé des revenus */}
         <Card className="bg-gradient-to-br from-blue-800/90 to-indigo-800/90 border-0 shadow-2xl backdrop-blur-sm mb-8">

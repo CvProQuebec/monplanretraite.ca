@@ -7,6 +7,8 @@ import { OASGISService } from './OASGISService';
 import { EmploymentStatusService } from './EmploymentStatusService';
 import { EmploymentStatusData, EmploymentImpactAnalysis } from '../types/employment-status';
 import { AdvancedMonteCarloService, MonteCarloResult } from './AdvancedMonteCarloService';
+import { TaxOptimizationService2025 } from './TaxParametersService2025';
+import { RetirementBudgetService } from './RetirementBudgetService';
 
 export class CalculationService {
   // CONSTANTES MISES À JOUR SELON LES TRANSCRIPTIONS D'EXPERTS
@@ -108,13 +110,60 @@ export class CalculationService {
         employmentImpactAnalysis = undefined;
       }
       
+      // NOUVEAUX CALCULS 2025
+      let reerCeliOptimization;
+      try {
+        reerCeliOptimization = this.calculateREERCELIOptimization(userData);
+      } catch (error) {
+        console.warn('Erreur optimisation REER/CELI, ignoré:', error);
+        reerCeliOptimization = undefined;
+      }
+      
+      let withdrawalStrategy;
+      try {
+        withdrawalStrategy = this.calculateWithdrawalStrategy(userData);
+      } catch (error) {
+        console.warn('Erreur stratégie décaissement, ignoré:', error);
+        withdrawalStrategy = undefined;
+      }
+      
+      let budgetAnalysis;
+      try {
+        budgetAnalysis = this.calculateRetirementBudgetAnalysis(userData);
+      } catch (error) {
+        console.warn('Erreur analyse budgétaire, ignoré:', error);
+        budgetAnalysis = undefined;
+      }
+      
+      let fondsSolidariteAnalysis;
+      try {
+        fondsSolidariteAnalysis = this.calculateFondsSolidariteAnalysis(userData);
+      } catch (error) {
+        console.warn('Erreur analyse fonds solidarité, ignoré:', error);
+        fondsSolidariteAnalysis = undefined;
+      }
+      
+      let estateConsiderations;
+      try {
+        estateConsiderations = this.calculateEstateConsiderations(userData);
+      } catch (error) {
+        console.warn('Erreur considérations successorales, ignoré:', error);
+        estateConsiderations = undefined;
+      }
+      
       return {
         ...baseCalculations,
         rrqOptimization,
         oasGisProjection,
         riskAnalysis,
         recommendedActions,
-        employmentImpactAnalysis
+        employmentImpactAnalysis,
+        // NOUVEAUX CALCULS 2025
+        reerCeliOptimization,
+        withdrawalStrategy,
+        budgetAnalysis,
+        fondsSolidariteAnalysis,
+        estateConsiderations
       };
       
     } catch (error) {
@@ -131,7 +180,13 @@ export class CalculationService {
         rrqOptimization: undefined,
         oasGisProjection: undefined,
         riskAnalysis: undefined,
-        recommendedActions: undefined
+        recommendedActions: undefined,
+        // NOUVEAUX CALCULS 2025 (undefined en cas d'erreur)
+        reerCeliOptimization: undefined,
+        withdrawalStrategy: undefined,
+        budgetAnalysis: undefined,
+        fondsSolidariteAnalysis: undefined,
+        estateConsiderations: undefined
       };
     }
   }
@@ -841,6 +896,165 @@ export class CalculationService {
       moisDeLiquidite: monthsOfLiquidity,
       strategies: ['Maintenir 6-12 mois de dépenses en liquidités', 'Diversifier les sources de revenus']
     };
+  }
+
+  // ===== NOUVELLES MÉTHODES 2025 =====
+
+  /**
+   * NOUVEAU: Optimisation REER vs CELI personnalisée
+   */
+  private static calculateREERCELIOptimization(userData: UserData): any {
+    try {
+      const revenuActuel = (userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0);
+      const ageActuel = this.calculateAge(userData.personal?.naissance1);
+      const ageRetraite = userData.personal?.ageRetraiteSouhaite1 || 65;
+      
+      // Estimation revenu de retraite
+      const revenuProjetteRetraite = this.estimateRetirementIncome(userData);
+      
+      // Capacité d'épargne disponible
+      const capaciteEpargne = this.calculateAvailableSavingsCapacity(userData);
+      
+      return TaxOptimizationService2025.analyzeREERvsCELI({
+        revenuActuel,
+        revenuProjetteRetraite,
+        ageActuel,
+        ageRetraite,
+        montantDisponible: capaciteEpargne,
+        situationConjoint: userData.personal?.salaire2 > 0 ? 'COUPLE' : 'SEUL'
+      });
+    } catch (error) {
+      console.error('Erreur calcul optimisation REER/CELI:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * NOUVEAU: Stratégie de décaissement optimisée
+   */
+  private static calculateWithdrawalStrategy(userData: UserData): any {
+    try {
+      const ageRetraite = userData.personal?.ageRetraiteSouhaite1 || 65;
+      const esperanceVie = userData.retirement?.esperanceVie1 || 85;
+      
+      const reerTotal = (userData.savings?.reer1 || 0) + (userData.savings?.reer2 || 0);
+      const celiTotal = (userData.savings?.celi1 || 0) + (userData.savings?.celi2 || 0);
+      const placementsTotal = (userData.savings?.placements1 || 0) + (userData.savings?.placements2 || 0);
+      
+      // Revenus garantis estimés
+      const revenuRRQ = (userData.retirement?.rrqMontantActuel1 || 0) + (userData.retirement?.rrqMontantActuel2 || 0);
+      const revenuPSV = 717.15 * 2; // Estimation couple
+      const revenuGaranti = (revenuRRQ + revenuPSV) * 12;
+      
+      const depensesAnnuelles = this.calculateMonthlyExpenses(userData) * 12 * 0.75; // 75% dépenses actuelles
+      
+      return TaxOptimizationService2025.optimizeWithdrawalSequence({
+        ageDebut: ageRetraite,
+        reerValue: reerTotal,
+        celiValue: celiTotal,
+        placementsValue: placementsTotal,
+        revenuGaranti,
+        depensesAnnuelles,
+        esperanceVie
+      });
+    } catch (error) {
+      console.error('Erreur calcul stratégie décaissement:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * NOUVEAU: Analyse budgétaire spécialisée retraite
+   */
+  private static calculateRetirementBudgetAnalysis(userData: UserData): any {
+    try {
+      const currentExpenses = {
+        logement: userData.cashflow?.logement || 0,
+        alimentation: userData.cashflow?.alimentation || 0,
+        transport: userData.cashflow?.transport || 0,
+        sante: userData.cashflow?.sante || 0,
+        loisirs: userData.cashflow?.loisirs || 0,
+        vetements: userData.cashflow?.vetements || 0,
+        vehicule: userData.cashflow?.vehicule || 0,
+        rrqCotisations: userData.cashflow?.rrqCotisations || 0,
+        reerEmployeur: userData.cashflow?.reerEmployeur || 0,
+        cotisationsPro: userData.cashflow?.cotisationsPro || 0,
+        assuranceEmploi: userData.cashflow?.assuranceEmploi || 0,
+        voyages: userData.cashflow?.voyages || 0
+      };
+      
+      return RetirementBudgetService.analyzeRetirementExpenseChanges(currentExpenses);
+    } catch (error) {
+      console.error('Erreur calcul analyse budgétaire:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * NOUVEAU: Analyse fonds de solidarité
+   */
+  private static calculateFondsSolidariteAnalysis(userData: UserData): any {
+    try {
+      const revenuAnnuel = (userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0);
+      const ageActuel = this.calculateAge(userData.personal?.naissance1);
+      const ageRetraite = userData.personal?.ageRetraiteSouhaite1 || 65;
+      const capaciteEpargne = this.calculateAvailableSavingsCapacity(userData);
+      
+      return TaxOptimizationService2025.analyzeFondsSolidarite({
+        revenuAnnuel,
+        ageActuel,
+        ageRetraite,
+        capaciteEpargne
+      });
+    } catch (error) {
+      console.error('Erreur calcul analyse fonds solidarité:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * NOUVEAU: Considérations successorales
+   */
+  private static calculateEstateConsiderations(userData: UserData): any {
+    try {
+      const ageActuel = this.calculateAge(userData.personal?.naissance1);
+      const situationFamiliale = userData.personal?.salaire2 > 0 ? 'COUPLE' : 'CELIBATAIRE';
+      const enfants = userData.personal?.enfants || false;
+      
+      const valeursPatrimoine = {
+        reer: (userData.savings?.reer1 || 0) + (userData.savings?.reer2 || 0),
+        celi: (userData.savings?.celi1 || 0) + (userData.savings?.celi2 || 0),
+        residence: userData.savings?.residence || 0,
+        placements: (userData.savings?.placements1 || 0) + (userData.savings?.placements2 || 0)
+      };
+      
+      return RetirementBudgetService.analyzeEstateConsiderations({
+        ageActuel,
+        situationFamiliale,
+        enfants,
+        valeursPatrimoine
+      });
+    } catch (error) {
+      console.error('Erreur calcul considérations successorales:', error);
+      throw error;
+    }
+  }
+
+  // Méthodes utilitaires pour les nouveaux calculs
+  private static estimateRetirementIncome(userData: UserData): number {
+    const revenuActuel = (userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0);
+    const revenuRRQ = (userData.retirement?.rrqMontantActuel1 || 0) + (userData.retirement?.rrqMontantActuel2 || 0);
+    const revenuPSV = 717.15 * 2; // Estimation couple
+    
+    return (revenuRRQ + revenuPSV) * 12; // Revenus garantis uniquement
+  }
+
+  private static calculateAvailableSavingsCapacity(userData: UserData): number {
+    const revenuMensuel = this.calculateMonthlyIncome(userData);
+    const depensesMensuelles = this.calculateMonthlyExpenses(userData);
+    const epargneMensuelle = Math.max(0, revenuMensuel - depensesMensuelles);
+    
+    return epargneMensuelle * 12; // Capacité annuelle
   }
 
   private static assessHealthCareRisk(currentAge: number): any {

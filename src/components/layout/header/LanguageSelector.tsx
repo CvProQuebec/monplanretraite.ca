@@ -2,13 +2,7 @@ import React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Globe } from "lucide-react";
 import { cn } from "@/lib/utils";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+import { useLanguage } from "@/features/retirement/hooks/useLanguage";
 
 interface LanguageSelectorProps {
   isEnglish: boolean;
@@ -46,12 +40,17 @@ const routeMapping: { [key: string]: string } = {
 const LanguageSelector = ({ isEnglish }: LanguageSelectorProps) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { language, setLanguage } = useLanguage();
 
-  const handleLanguageSwitch = (lang: 'fr' | 'en') => {
+  const handleLanguageToggle = () => {
+    const newLang = language === 'fr' ? 'en' : 'fr';
+    setLanguage(newLang);
+    
+    // Navigation basée sur le mapping des routes
     const currentPath = location.pathname;
     let newPath = '/';
 
-    if (lang === 'en') {
+    if (newLang === 'en') {
       if (currentPath.startsWith('/en')) {
         newPath = currentPath;
       } else if (routeMapping[currentPath]) {
@@ -63,7 +62,7 @@ const LanguageSelector = ({ isEnglish }: LanguageSelectorProps) => {
       } else {
         newPath = '/en';
       }
-    } else { // lang === 'fr'
+    } else { // newLang === 'fr'
       if (!currentPath.startsWith('/en')) {
         newPath = currentPath;
       } else {
@@ -86,45 +85,23 @@ const LanguageSelector = ({ isEnglish }: LanguageSelectorProps) => {
   };
 
   return (
-    <NavigationMenu>
-      <NavigationMenuList>
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className={cn(
-            "gap-1",
-            "bg-transparent text-blue-900 hover:text-amber-600 data-[state=open]:text-amber-600"
-          )}>
-            <Globe className="h-4 w-4" />
-            <span className="text-sm">
-              {isEnglish ? "EN" : "FR"}
-            </span>
-          </NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <div className="p-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
-              <button 
-                onClick={() => handleLanguageSwitch('fr')}
-                className={cn(
-                  "block p-2 rounded-md transition-colors w-full text-left text-gray-900",
-                  "hover:bg-gray-100",
-                  isEnglish ? "text-gray-600" : "font-medium text-gray-900"
-                )}
-              >
-                FR
-              </button>
-              <button 
-                onClick={() => handleLanguageSwitch('en')}
-                className={cn(
-                  "block p-2 rounded-md transition-colors w-full text-left text-gray-900",
-                  "hover:bg-gray-100",
-                  isEnglish ? "font-medium text-gray-900" : "text-gray-600"
-                )}
-              >
-                EN
-              </button>
-            </div>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-      </NavigationMenuList>
-    </NavigationMenu>
+    <button
+      onClick={handleLanguageToggle}
+      className={cn(
+        "flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200",
+        "bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200",
+        "border border-blue-200 hover:border-blue-300",
+        "text-blue-900 hover:text-blue-700",
+        "shadow-sm hover:shadow-md",
+        "transform hover:scale-105 active:scale-95"
+      )}
+      title={language === 'fr' ? 'Switch to English' : 'Passer en français'}
+    >
+      <Globe className="h-4 w-4" />
+      <span className="font-medium text-sm">
+        {language === 'fr' ? 'FR' : 'EN'}
+      </span>
+    </button>
   );
 };
 

@@ -28,11 +28,31 @@ export interface PersonalData {
   salaire2: number;
   
   // Champs existants étendus
-  statutProfessionnel1?: 'actif' | 'retraite';
-  statutProfessionnel2?: 'actif' | 'retraite';
+  statutProfessionnel1?: 'actif' | 'retraite' | 'sans-emploi' | 'conge-maladie' | 'conge-parental';
+  statutProfessionnel2?: 'actif' | 'retraite' | 'sans-emploi' | 'conge-maladie' | 'conge-parental';
   ageRetraiteSouhaite1?: number;
   ageRetraiteSouhaite2?: number;
   depensesRetraite?: number;
+  
+  // NOUVEAUX: Champs pour les revenus détaillés
+  typeRevenu1?: 'salaire' | 'assurance-emploi' | 'rentes' | 'dividendes' | 'revenus-location' | 'travail-autonome' | 'autres';
+  typeRevenu2?: 'salaire' | 'assurance-emploi' | 'rentes' | 'dividendes' | 'revenus-location' | 'travail-autonome' | 'autres';
+  typeEmploi1?: 'permanent' | 'partiel' | 'contrat' | 'saisonnier' | 'autonome';
+  typeEmploi2?: 'permanent' | 'partiel' | 'contrat' | 'saisonnier' | 'autonome';
+  dureeContrat1?: number;
+  dureeContrat2?: number;
+  dateFinContrat1?: string;
+  dateFinContrat2?: string;
+  notesSupplementaires1?: string;
+  notesSupplementaires2?: string;
+  
+  // NOUVEAUX: Champs pour la Sécurité de la vieillesse
+  ageSV1?: number;
+  ageSV2?: number;
+  statutSV1?: 'admissible' | 'partiel' | 'incertain' | 'non-admissible';
+  statutSV2?: 'admissible' | 'partiel' | 'incertain' | 'non-admissible';
+  anneesResidenceCanada1?: number;
+  anneesResidenceCanada2?: number;
   
   // Champs manquants pour compatibilité
   nom1?: string;
@@ -76,9 +96,25 @@ export interface RetirementData {
   svAgeDebut1?: number;
   svAgeDebut2?: number;
   
+  // NOUVEAUX: Ajustements de la Sécurité de la vieillesse par période
+  svAjustements1?: SVAdjustment[];
+  svAjustements2?: SVAdjustment[];
+  
   // Propriétés existantes
   revenusTempsPartiel1?: number;
   revenusTempsPartiel2?: number;
+}
+
+// Interface pour les ajustements de la Sécurité de la vieillesse
+export interface SVAdjustment {
+  id: string;
+  dateDebut: string; // Format YYYY-MM-DD
+  dateFin: string; // Format YYYY-MM-DD
+  montantMensuel: number;
+  raison: string; // Ex: "Ajustement basé sur les revenus de l'année précédente"
+  typeAjustement: 'reduction' | 'augmentation' | 'suspension' | 'retablissement';
+  montantOriginal?: number; // Pour référence
+  pourcentageAjustement?: number; // Pourcentage de réduction/augmentation
 }
 
 export interface SavingsData {
