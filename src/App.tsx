@@ -15,6 +15,7 @@ import PlanificationUrgence from './pages/PlanificationUrgence';
 import PlanificationSuccessorale from './pages/PlanificationSuccessorale';
 import PlanificationDepenses from './pages/PlanificationDepenses';
 import AssistantFinancier from './pages/AssistantFinancier';
+import Budget from './pages/Budget';
 
 // Composants de test et validation
 import FinalValidation from './components/FinalValidation';
@@ -78,6 +79,11 @@ function App() {
               {/* Assistant financier personnel - "ÉVITEZ LES CATASTROPHES FINANCIÈRES" */}
               <Route path="/assistant-financier" element={<AssistantFinancier />} />
               <Route path="/financial-assistant" element={<AssistantFinancier />} />
+              
+              {/* Module Budget - "GÉREZ VOS FINANCES INTELLIGEMMENT" */}
+              <Route path="/budget" element={<Budget />} />
+              <Route path="/mon-budget" element={<Budget />} />
+              <Route path="/my-budget" element={<Budget />} />
               
               {/* 🧪 ROUTES DE TEST ET VALIDATION */}
               

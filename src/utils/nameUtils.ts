@@ -75,3 +75,73 @@ export function generateFilename(userData: any, includeTimestamp: boolean = true
   
   return filename + '.json';
 }
+
+/**
+ * Formate un nom pour l'affichage dans les rapports
+ */
+export function formatNameForReport(name: string): string {
+  if (!name || typeof name !== 'string') {
+    return '';
+  }
+  
+  // Capitaliser la première lettre de chaque mot
+  return name
+    .trim()
+    .split(' ')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
+/**
+ * Formate les noms des deux conjoints pour l'affichage
+ */
+export function formatCoupleNames(prenom1: string, prenom2?: string): string {
+  const nom1 = formatNameForReport(prenom1);
+  const nom2 = prenom2 ? formatNameForReport(prenom2) : '';
+  
+  if (nom1 && nom2) {
+    return `${nom1} et ${nom2}`;
+  } else if (nom1) {
+    return nom1;
+  } else if (nom2) {
+    return nom2;
+  }
+  
+  return 'Utilisateur';
+}
+
+/**
+ * Parse un nom complet en prénom et nom de famille
+ */
+export function parseName(fullName: string): { firstName: string; lastName: string } {
+  if (!fullName || typeof fullName !== 'string') {
+    return { firstName: '', lastName: '' };
+  }
+  
+  const parts = fullName.trim().split(' ');
+  
+  if (parts.length === 1) {
+    return { firstName: parts[0], lastName: '' };
+  } else if (parts.length === 2) {
+    return { firstName: parts[0], lastName: parts[1] };
+  } else {
+    // Si plus de 2 parties, prendre la première comme prénom et le reste comme nom
+    return { 
+      firstName: parts[0], 
+      lastName: parts.slice(1).join(' ') 
+    };
+  }
+}
+
+/**
+ * Valide si un nom contient seulement des caractères valides
+ */
+export function isValidName(name: string): boolean {
+  if (!name || typeof name !== 'string') {
+    return false;
+  }
+  
+  // Accepter les lettres, espaces, tirets et apostrophes
+  const nameRegex = /^[a-zA-ZÀ-ÿ\s\-']+$/;
+  return nameRegex.test(name.trim()) && name.trim().length > 0;
+}

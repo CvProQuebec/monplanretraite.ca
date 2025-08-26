@@ -16,7 +16,11 @@ import {
   AlertCircle,
   AlertTriangle,
   Home as HomeIcon,
-  Rocket
+  Rocket,
+  Phone,
+  FileText,
+  Users,
+  Target
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -36,6 +40,153 @@ const Home: React.FC = () => {
       {/* Main content - Directly financial planning */}
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-6xl mx-auto">
+
+          {/* NEW - Free Service Section - Family Protection Kit */}
+          <Card className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-2xl mb-12 border-0 overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
+            <CardContent className="p-8 relative z-10">
+              <div className="text-center mb-8">
+                <div className="flex justify-center mb-6">
+                  <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <Shield className="w-10 h-10 text-white" />
+                  </div>
+                </div>
+                <div className="inline-block bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full text-sm font-bold mb-4">
+                  🎁 {isFrench ? 'SERVICE GRATUIT' : 'FREE SERVICE'}
+                </div>
+                <h2 className="text-4xl font-bold mb-4">
+                  {isFrench ? 'Kit de Protection Familiale' : 'Family Protection Kit'}
+                </h2>
+                <p className="text-xl text-emerald-100 max-w-4xl mx-auto mb-8">
+                  {isFrench 
+                    ? 'Protégez vos proches avec un plan d\'urgence complet. Le premier pas essentiel avant de rencontrer un professionnel.'
+                    : 'Protect your loved ones with a comprehensive emergency plan. The essential first step before meeting a professional.'
+                  }
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <Phone className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {isFrench ? 'Contacts d\'urgence' : 'Emergency contacts'}
+                  </h3>
+                  <p className="text-emerald-100 text-sm">
+                    {isFrench 
+                      ? 'Qui contacter en cas d\'urgence'
+                      : 'Who to contact in emergencies'
+                    }
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <Heart className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {isFrench ? 'Infos médicales' : 'Medical info'}
+                  </h3>
+                  <p className="text-emerald-100 text-sm">
+                    {isFrench 
+                      ? 'Allergies, médicaments, directives'
+                      : 'Allergies, medications, directives'
+                    }
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <FileText className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {isFrench ? 'Documents légaux' : 'Legal documents'}
+                  </h3>
+                  <p className="text-emerald-100 text-sm">
+                    {isFrench 
+                      ? 'Testament, mandats, assurances'
+                      : 'Will, mandates, insurance'
+                    }
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <Users className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {isFrench ? 'Responsabilités' : 'Responsibilities'}
+                  </h3>
+                  <p className="text-emerald-100 text-sm">
+                    {isFrench 
+                      ? 'Enfants, parents, animaux'
+                      : 'Children, parents, pets'
+                    }
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8">
+                <h3 className="text-xl font-bold mb-4 text-center">
+                  {isFrench ? 'Pourquoi commencer par ici ?' : 'Why start here?'}
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="text-center">
+                    <CheckCircle className="w-8 h-8 text-yellow-300 mx-auto mb-3" />
+                    <h4 className="font-semibold mb-2">
+                      {isFrench ? 'Gratuit et sans engagement' : 'Free and no commitment'}
+                    </h4>
+                    <p className="text-sm text-emerald-100">
+                      {isFrench 
+                        ? 'Familiarisez-vous avec nos outils sans pression'
+                        : 'Get familiar with our tools without pressure'
+                      }
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <Target className="w-8 h-8 text-yellow-300 mx-auto mb-3" />
+                    <h4 className="font-semibold mb-2">
+                      {isFrench ? 'Prépare vos rencontres' : 'Prepares your meetings'}
+                    </h4>
+                    <p className="text-sm text-emerald-100">
+                      {isFrench 
+                        ? 'Arrivez organisé chez votre conseiller'
+                        : 'Arrive organized at your advisor\'s'
+                      }
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <Sparkles className="w-8 h-8 text-yellow-300 mx-auto mb-3" />
+                    <h4 className="font-semibold mb-2">
+                      {isFrench ? 'Découvrez notre approche' : 'Discover our approach'}
+                    </h4>
+                    <p className="text-sm text-emerald-100">
+                      {isFrench 
+                        ? 'Testez la qualité de nos solutions'
+                        : 'Test the quality of our solutions'
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <Button 
+                  onClick={() => handleNavigation('/emergency-planning')}
+                  size="lg"
+                  className="bg-white text-emerald-600 hover:bg-gray-100 font-bold px-12 py-4 text-xl rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                >
+                  {isFrench ? '🎯 Créer mon Kit GRATUIT' : '🎯 Create my FREE Kit'}
+                  <ArrowRight className="ml-3 w-6 h-6" />
+                </Button>
+                <p className="text-emerald-200 text-sm mt-4">
+                  {isFrench ? '✨ Aucune inscription requise • Données 100% privées' : '✨ No registration required • 100% private data'}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* Section Your retirement, your story */}
           <div className="text-center mb-12">

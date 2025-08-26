@@ -23,7 +23,8 @@ import {
   Save,
   User,
   Star,
-  CheckCircle
+  CheckCircle,
+  Home
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { formatCurrency } from '@/features/retirement/utils/formatters';

@@ -23,15 +23,23 @@ import {
   FileText
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
 
 
 const Accueil: React.FC = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const isFrench = language === 'fr';
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
+  const [targetPlan, setTargetPlan] = useState<'professional' | 'ultimate'>('professional');
 
   const handleNavigation = (path: string) => {
     navigate(path);
+  };
+
+  const handleUpgradeClick = (plan: 'professional' | 'ultimate') => {
+    setTargetPlan(plan);
+    setIsUpgradeModalOpen(true);
   };
 
   return (
@@ -42,7 +50,7 @@ const Accueil: React.FC = () => {
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-6xl mx-auto">
 
-          {/* NOUVEAU - Section Service Gratuit - Kit de Protection Familiale */}
+          {/* NOUVEAU - Section Service Gratuit - Trousse de protection familiale */}
           <Card className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-2xl mb-12 border-0 overflow-hidden relative">
             <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
@@ -61,7 +69,7 @@ const Accueil: React.FC = () => {
                 </h2>
                 <p className="text-xl text-emerald-100 max-w-4xl mx-auto mb-8">
                   {isFrench 
-                    ? 'Protégez vos proches avec un plan d\'urgence complet. Le premier pas essentiel avant de rencontrer un professionnel.'
+                    ? 'Protégez vos proches avec un plan d\'urgence complet.<br />Le premier pas essentiel avant de rencontrer un professionnel.'
                     : 'Protect your loved ones with a comprehensive emergency plan. The essential first step before meeting a professional.'
                   }
                 </p>
@@ -131,7 +139,7 @@ const Accueil: React.FC = () => {
 
               <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8">
                 <h3 className="text-xl font-bold mb-4 text-center">
-                  {isFrench ? 'Pourquoi commencer par ici ?' : 'Why start here?'}
+                  {isFrench ? 'Pourquoi commencer par ici?' : 'Why start here?'}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="text-center">
@@ -179,11 +187,11 @@ const Accueil: React.FC = () => {
                   size="lg"
                   className="bg-white text-emerald-600 hover:bg-gray-100 font-bold px-12 py-4 text-xl rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >
-                  {isFrench ? '🎯 Créer mon Kit GRATUIT' : '🎯 Create my FREE Kit'}
+                  {isFrench ? '🎯 Créer ma trousse GRATUITE' : '🎯 Create my FREE Kit'}
                   <ArrowRight className="ml-3 w-6 h-6" />
                 </Button>
                 <p className="text-emerald-200 text-sm mt-4">
-                  {isFrench ? '✨ Aucune inscription requise • Données 100% privées' : '✨ No registration required • 100% private data'}
+                  {isFrench ? '✨ Aucune inscription requise • Données 100 % privées' : '✨ No registration required • 100% private data'}
                 </p>
               </div>
             </CardContent>
@@ -201,7 +209,7 @@ const Accueil: React.FC = () => {
             </h2>
             <p className="text-xl text-gray-700 max-w-4xl mx-auto mb-12">
               {isFrench 
-                ? 'Préparez-vous efficacement avec nos outils professionnels. Gagnez du temps et maximisez la valeur de vos consultations.'
+                ? 'Préparez-vous efficacement avec nos outils professionnels.<br />Gagnez du temps et maximisez la valeur de vos consultations.'
                 : 'Prepare effectively with our professional tools. Save time and maximize the value of your consultations.'
               }
             </p>
@@ -731,6 +739,7 @@ const Accueil: React.FC = () => {
               {/* Boutons d'upgrade */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Button
+                  onClick={() => handleUpgradeClick('professional')}
                   className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold text-lg py-4 shadow-2xl transform hover:scale-105 transition-all duration-300"
                   size="lg"
                 >
@@ -739,6 +748,7 @@ const Accueil: React.FC = () => {
                   <ArrowRight className="w-6 h-6 ml-3" />
                 </Button>
                 <Button
+                  onClick={() => handleUpgradeClick('ultimate')}
                   className="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white font-bold text-lg py-4 shadow-2xl transform hover:scale-105 transition-all duration-300"
                   size="lg"
                 >
@@ -840,36 +850,15 @@ const Accueil: React.FC = () => {
         </div>
       </div>
 
-      {/* Section finale - Call to action avec code promo - Déplacée depuis Planification Retraite */}
-      <div className="text-center pb-16">
-        <div className="bg-gradient-to-r from-green-500 to-blue-600 rounded-3xl mx-6 p-12 text-white shadow-2xl">
-          <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-6">
-            <span className="text-3xl font-bold text-green-600">M</span>
-          </div>
-          <h2 className="text-3xl font-bold mb-4">
-            {isFrench ? 'Bienvenue Gerald Dore!' : 'Welcome Gerald Dore!'}
-          </h2>
-          <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
-            {isFrench 
-              ? 'Avec notre code promo : Débloquez des fonctionnalités supplémentaires!'
-              : 'With our promo code: Unlock additional features!'
-            }
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-md mx-auto">
-            <input 
-              type="text" 
-              placeholder={isFrench ? 'Entrez votre code promo' : 'Enter your promo code'}
-              className="flex-1 px-4 py-3 rounded-lg text-gray-800 border-0 focus:ring-2 focus:ring-white"
-            />
-            <Button 
-              size="lg"
-              className="bg-white text-green-600 hover:bg-gray-100 font-semibold px-8"
-            >
-              {isFrench ? 'Appliquer' : 'Apply'}
-            </Button>
-          </div>
-        </div>
-      </div>
+      {/* Modal d'upgrade */}
+      <AdvancedUpgradeModal
+        isOpen={isUpgradeModalOpen}
+        onClose={() => setIsUpgradeModalOpen(false)}
+        requiredPlan={targetPlan}
+        featureName="plan_upgrade"
+        currentPlan="free"
+      />
+
     </div>
   );
 };
