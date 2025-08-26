@@ -124,14 +124,19 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
       hasSubmenu: true,
       submenu: [
         {
-          id: 'monte-carlo',
-          label: isEnglish ? 'Monte Carlo' : 'Monte Carlo',
-          path: isEnglish ? '/en/retirement-module?section=monte-carlo' : '/fr/retraite-module?section=monte-carlo'
+          id: 'financial-assistant',
+          label: isEnglish ? 'Personal Financial Assistant' : 'Assistant Financier Personnel',
+          path: isEnglish ? '/assistant-financier' : '/assistant-financier'
         },
         {
           id: 'tax-optimization',
           label: isEnglish ? 'Tax Optimization' : 'Optimisation fiscale',
           path: isEnglish ? '/en/retirement-module?section=optimization' : '/fr/retraite-module?section=optimization'
+        },
+        {
+          id: 'monte-carlo',
+          label: isEnglish ? 'Monte Carlo' : 'Monte Carlo',
+          path: isEnglish ? '/en/retirement-module?section=monte-carlo' : '/fr/retraite-module?section=monte-carlo'
         }
       ]
     },
@@ -150,11 +155,6 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           id: 'succession',
           label: isEnglish ? 'Succession' : 'Succession',
           path: isEnglish ? '/en/retirement-module?section=succession' : '/fr/retraite-module?section=succession'
-        },
-        {
-          id: 'financial-assistant',
-          label: isEnglish ? 'Personal Financial Assistant' : 'Assistant Financier Personnel',
-          path: isEnglish ? '/assistant-financier' : '/assistant-financier'
         }
       ]
     },

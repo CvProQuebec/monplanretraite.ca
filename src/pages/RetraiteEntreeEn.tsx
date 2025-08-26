@@ -122,7 +122,7 @@ const RetraiteEntreeEn: React.FC = () => {
                       <div className="text-blue-200 text-sm">$119.99/year</div>
                     </th>
                     <th className="py-4 px-6 text-center">
-                      <div className="text-white font-semibold">Ultimate</div>
+                      <div className="text-white font-semibold">Expert</div>
                       <div className="text-blue-200 text-sm">$239.99/year</div>
                     </th>
                   </tr>
@@ -309,13 +309,13 @@ const RetraiteEntreeEn: React.FC = () => {
                 </button>
               </div>
 
-              {/* Ultimate Plan */}
+              {/* Expert Plan */}
               <div className="bg-white rounded-xl p-6 shadow-lg border border-purple-200 hover:shadow-xl transition-all duration-300">
                 <div className="text-center mb-6">
                   <span className="inline-block bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full mb-4">
                     Premium
                   </span>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Ultimate</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Expert</h3>
                   <p className="text-gray-600 mb-4">Complete solution with AI</p>
                   <div className="text-4xl font-bold text-gray-900">$239.99</div>
                   <p className="text-gray-500 text-sm">per year</p>
@@ -353,7 +353,7 @@ const RetraiteEntreeEn: React.FC = () => {
                   </li>
                 </ul>
                 <button className="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
-                  Choose Ultimate
+                  Choose Expert
                 </button>
               </div>
             </div>

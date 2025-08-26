@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { PLANS, PROMO_CODES, calculatePriceWithPromo, calculateAnnualSavings } from '@/config/plans';
+import { PLAN_CONFIG, PROMO_CODES, calculatePriceWithPromo, calculateAnnualSavings } from '@/config/plans';
 import { useLanguage } from '../hooks/useLanguage';
 import { Check, Star, Zap, Crown, Shield, Users, FileText, BarChart3, Brain, Settings } from 'lucide-react';
 
 export const PricingSection: React.FC = () => {
-  const { lang } = useLanguage();
+  const { language } = useLanguage();
   const [billingCycle, setBillingCycle] = useState<'month' | 'year'>('year');
   const [promoCode, setPromoCode] = useState('');
   const [appliedPromo, setAppliedPromo] = useState<string | null>(null);
@@ -93,29 +93,23 @@ export const PricingSection: React.FC = () => {
       setAppliedPromo(promoCode.toUpperCase());
       setPromoError('');
     } else {
-      setPromoError(lang === 'fr' ? 'Code promo invalide' : 'Invalid promo code');
+      setPromoError(language === 'fr' ? 'Code promo invalide' : 'Invalid promo code');
       setAppliedPromo(null);
     }
   };
 
   const getPlanPrice = (plan: any) => {
-    if (billingCycle === 'year' && plan.annualPrice !== undefined) {
-      const finalPrice = appliedPromo ? calculatePriceWithPromo(plan.annualPrice, appliedPromo) : plan.annualPrice;
-      return {
-        price: finalPrice,
-        originalPrice: plan.annualPrice,
-        period: t[lang].perYear,
-        savings: calculateAnnualSavings(plan.price, plan.annualPrice)
-      };
-    } else {
-      const finalPrice = appliedPromo ? calculatePriceWithPromo(plan.price, appliedPromo) : plan.price;
-      return {
-        price: finalPrice,
-        originalPrice: plan.price,
-        period: t[lang].perMonth,
-        savings: 0
-      };
-    }
+    // For now, return a simple price structure since we don't have annualPrice in PLAN_CONFIG
+    const basePrice = parseFloat(plan.price.replace(/[^\d.]/g, '')) || 0;
+    const finalPriceResult = appliedPromo ? calculatePriceWithPromo(basePrice, appliedPromo) : { finalPrice: basePrice, discount: 0, savings: '0,00 $' };
+    
+    return {
+      price: finalPriceResult.finalPrice,
+      originalPrice: basePrice,
+      period: t[language].perYear,
+      savings: 0,
+      currency: '$'
+    };
   };
 
   const getFeatureIcon = (feature: string) => {
@@ -132,22 +126,28 @@ export const PricingSection: React.FC = () => {
 
   const plans = [
     {
-      ...PLANS.free,
+      ...PLAN_CONFIG.free,
+      id: 'free',
+      name: language === 'fr' ? 'Gratuit' : 'Free',
       icon: <Star className="w-6 h-6" />,
       color: 'from-gray-400 to-gray-600',
       badge: null
     },
     {
-      ...PLANS.premium,
+      ...PLAN_CONFIG.professional,
+      id: 'professional',
+      name: language === 'fr' ? 'Professionnel' : 'Professional',
       icon: <Zap className="w-6 h-6" />,
       color: 'from-blue-500 to-purple-600',
-      badge: t[lang].recommended
+      badge: t[language].recommended
     },
     {
-      ...PLANS.enterprise,
+      ...PLAN_CONFIG.ultimate,
+      id: 'ultimate',
+      name: language === 'fr' ? 'Expert' : 'Expert',
       icon: <Crown className="w-6 h-6" />,
       color: 'from-yellow-400 to-orange-500',
-      badge: t[lang].popular
+      badge: t[language].popular
     }
   ];
 
@@ -157,10 +157,10 @@ export const PricingSection: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            {t[lang].title}
+            {t[language].title}
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            {t[lang].subtitle}
+            {t[language].subtitle}
           </p>
         </div>
 
@@ -176,7 +176,7 @@ export const PricingSection: React.FC = () => {
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                {t[lang].monthly}
+                {t[language].monthly}
               </button>
               <button
                 onClick={() => setBillingCycle('year')}
@@ -186,7 +186,7 @@ export const PricingSection: React.FC = () => {
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
-                {t[lang].yearly}
+                {t[language].yearly}
               </button>
             </div>
           </div>
@@ -199,14 +199,14 @@ export const PricingSection: React.FC = () => {
               type="text"
               value={promoCode}
               onChange={(e) => setPromoCode(e.target.value)}
-              placeholder={t[lang].promoPlaceholder}
+              placeholder={t[language].promoPlaceholder}
               className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
             <button
               onClick={handlePromoCode}
               className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
-              {t[lang].applyPromo}
+              {t[language].applyPromo}
             </button>
           </div>
         </div>
@@ -222,7 +222,7 @@ export const PricingSection: React.FC = () => {
             <div className="inline-flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full">
               <Check className="w-4 h-4" />
               <span className="font-medium">
-                {lang === 'fr' ? 'Code promo appliqué : ' : 'Promo code applied: '}
+                {language === 'fr' ? 'Code promo appliqué : ' : 'Promo code applied: '}
                 {appliedPromo}
               </span>
             </div>
@@ -233,8 +233,8 @@ export const PricingSection: React.FC = () => {
         <div className="grid md:grid-cols-3 gap-8 mb-16">
           {plans.map((plan, index) => {
             const pricing = getPlanPrice(plan);
-            const isPopular = plan.badge === t[lang].popular;
-            const isRecommended = plan.badge === t[lang].recommended;
+            const isPopular = plan.badge === t[language].popular;
+            const isRecommended = plan.badge === t[language].recommended;
 
             return (
               <div
@@ -277,7 +277,7 @@ export const PricingSection: React.FC = () => {
                   </div>
                   {pricing.savings > 0 && (
                     <p className="text-green-600 font-medium mt-2">
-                      {t[lang].save} {pricing.savings} {t[lang].perYear}
+                      {t[language].save} {pricing.savings} {t[language].perYear}
                     </p>
                   )}
                   {appliedPromo && pricing.price < pricing.originalPrice && (
@@ -290,7 +290,7 @@ export const PricingSection: React.FC = () => {
                 {/* Features */}
                 <div className="space-y-4 mb-8">
                   <h4 className="font-semibold text-gray-900 mb-3">
-                    {t[lang].features}
+                    {t[language].features}
                   </h4>
                   <div className="space-y-3">
                     {Object.entries(plan.features).map(([feature, enabled]) => (
@@ -301,29 +301,27 @@ export const PricingSection: React.FC = () => {
                           {enabled ? <Check className="w-3 h-3" /> : <span className="text-xs">×</span>}
                         </div>
                         <span className={`text-sm ${enabled ? 'text-gray-900' : 'text-gray-500'}`}>
-                          {t[lang][feature as keyof typeof t.fr] || feature}
+                          {t[language][feature as keyof typeof t.fr] || feature}
                         </span>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                {/* Limits */}
+                {/* Features section - simplified since PLAN_CONFIG doesn't have limits */}
                 <div className="space-y-4 mb-8">
                   <h4 className="font-semibold text-gray-900 mb-3">
-                    {t[lang].limits}
+                    {t[language].features}
                   </h4>
                   <div className="space-y-3">
-                    {Object.entries(plan.limits).map(([limit, value]) => (
-                      <div key={limit} className="flex items-center justify-between">
-                        <span className="text-sm text-gray-600">
-                          {t[lang][limit as keyof typeof t.fr] || limit}
-                        </span>
-                        <span className="text-sm font-medium text-gray-900">
-                          {value === -1 ? t[lang].unlimited : value}
-                        </span>
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full flex items-center justify-center bg-green-100 text-green-600">
+                        <Check className="w-3 h-3" />
                       </div>
-                    ))}
+                      <span className="text-sm text-gray-900">
+                        {plan.description}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
@@ -335,7 +333,12 @@ export const PricingSection: React.FC = () => {
                     ? 'bg-yellow-500 text-black hover:bg-yellow-600'
                     : 'bg-blue-600 text-white hover:bg-blue-700'
                 }`}>
-                  {plan.id === 'free' ? t[lang].startFree : t[lang].startTrial}
+                  {plan.id === 'free' 
+                    ? t[language].startFree 
+                    : plan.id === 'professional'
+                    ? (language === 'fr' ? 'Choisir Professionnel' : 'Choose Professional')
+                    : (language === 'fr' ? 'Choisir Expert' : 'Choose Expert')
+                  }
                 </button>
               </div>
             );
@@ -345,14 +348,14 @@ export const PricingSection: React.FC = () => {
         {/* Promo Codes Info */}
         <div className="text-center">
           <h3 className="text-2xl font-bold text-gray-900 mb-6">
-            {lang === 'fr' ? 'Codes promo disponibles' : 'Available Promo Codes'}
+            {language === 'fr' ? 'Codes promo disponibles' : 'Available Promo Codes'}
           </h3>
           <div className="grid md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {Object.entries(PROMO_CODES).map(([code, promo]) => (
               <div key={code} className="bg-white rounded-lg p-4 shadow-md">
                 <div className="font-bold text-lg text-blue-600 mb-2">{code}</div>
                 <div className="text-sm text-gray-600 mb-2">
-                  {lang === 'fr' ? promo.description : promo.description.replace('Tests et développement', 'Testing & Development')}
+                  {language === 'fr' ? promo.description : promo.description.replace('Tests et développement', 'Testing & Development')}
                 </div>
                 <div className="text-2xl font-bold text-green-600">
                   {promo.discount}%

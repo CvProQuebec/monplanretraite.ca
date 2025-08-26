@@ -158,7 +158,7 @@ const RetraiteEntreeFr: React.FC = () => {
                       <div className="text-blue-200 text-sm">119,99$/an</div>
                     </th>
                     <th className="py-4 px-6 text-center">
-                      <div className="text-white font-semibold">Ultime</div>
+                      <div className="text-white font-semibold">Expert</div>
                       <div className="text-blue-200 text-sm">239,99$/an</div>
                     </th>
                   </tr>
@@ -345,13 +345,13 @@ const RetraiteEntreeFr: React.FC = () => {
                 </button>
               </div>
 
-              {/* Plan Ultime */}
+              {/* Plan Expert */}
               <div className="bg-white rounded-xl p-6 shadow-lg border border-purple-200 hover:shadow-xl transition-all duration-300">
                 <div className="text-center mb-6">
                   <span className="inline-block bg-purple-100 text-purple-800 text-sm font-medium px-3 py-1 rounded-full mb-4">
                     Premium
                   </span>
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Ultime</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">Expert</h3>
                   <p className="text-gray-600 mb-4">Solution complète avec IA</p>
                   <div className="text-4xl font-bold text-gray-900">239,99 $</div>
                   <p className="text-gray-500 text-sm">par an</p>
@@ -389,7 +389,7 @@ const RetraiteEntreeFr: React.FC = () => {
                   </li>
                 </ul>
                 <button className="w-full bg-purple-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-purple-700 transition-colors">
-                  Choisir Ultimate
+                  Choisir Expert
                 </button>
               </div>
             </div>

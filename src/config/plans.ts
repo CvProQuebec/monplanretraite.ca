@@ -53,7 +53,7 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
     plan: 'ultimate',
     price: '239,99 $/an',
     priceId: 'price_ultimate_annual',
-    badge: 'Premium',
+    badge: 'Expert',
     description: 'Solution complète avec IA',
     features: {
       maxSimulations: -1, // Illimité
@@ -442,4 +442,4 @@ export const isFeatureEnabled = (
   }
   
   return false;
-}; 
+};

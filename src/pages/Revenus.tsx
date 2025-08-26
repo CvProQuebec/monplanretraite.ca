@@ -29,6 +29,7 @@ import { useNavigate } from 'react-router-dom';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
 import MoneyInput from '@/components/ui/MoneyInput';
 import AdvancedEIManager from '@/components/ui/AdvancedEIManager';
+import ReturnCalculator from '@/components/ui/ReturnCalculator';
 
 const Revenus: React.FC = () => {
   const { language } = useLanguage();
@@ -781,6 +782,457 @@ const Revenus: React.FC = () => {
           </Card>
         </div>
 
+        {/* Section Investissements */}
+        <div className="space-y-8 mb-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-orange-300 mb-4 flex items-center justify-center gap-3">
+              <TrendingUp className="w-8 h-8 text-orange-400" />
+              {isFrench ? 'Mes investissements' : 'My Investments'}
+            </h2>
+            <p className="text-orange-200 text-lg">
+              {isFrench 
+                ? 'Gérez vos comptes d\'investissement et leurs soldes actuels'
+                : 'Manage your investment accounts and their current balances'
+              }
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Personne 1 - Investissements */}
+            <Card className="bg-gradient-to-br from-orange-800/90 to-red-800/90 border-0 shadow-2xl backdrop-blur-sm">
+              <CardHeader className="border-b border-orange-600 bg-gradient-to-r from-orange-600/20 to-red-600/20">
+                <CardTitle className="text-2xl font-bold text-orange-300 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                    1
+                  </div>
+                  {userData.personal?.prenom1 
+                    ? `${isFrench ? 'Investissements' : 'Investments'} - ${userData.personal.prenom1}`
+                    : (isFrench ? 'Investissements - Personne 1' : 'Investments - Person 1')
+                  }
+                </CardTitle>
+                <CardDescription className="text-orange-200">
+                  {userData.personal?.prenom1 || (isFrench ? 'Première personne' : 'First person')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-6 space-y-6">
+                {/* REER */}
+                <div className="space-y-4 p-4 bg-slate-700/50 rounded-lg">
+                  <h4 className="text-lg font-semibold text-orange-300 flex items-center gap-2">
+                    <Shield className="w-5 h-5" />
+                    {isFrench ? 'REER (Régime enregistré d\'épargne-retraite)' : 'RRSP (Registered Retirement Savings Plan)'}
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold">
+                        {isFrench ? 'Solde REER' : 'RRSP Balance'}
+                      </Label>
+                      <MoneyInput
+                        value={userData.personal?.soldeREER1 || 0}
+                        onChange={(value) => handleChange('soldeREER1', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
+                        placeholder={isFrench ? "Ex: 150 000" : "Ex: 150,000"}
+                        allowDecimals={true}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        {isFrench ? 'Date du solde' : 'Balance Date'}
+                      </Label>
+                      <DateInput
+                        value={userData.personal?.dateREER1 || ''}
+                        onChange={(value) => handleChange('dateREER1', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
+                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* CELI */}
+                <div className="space-y-4 p-4 bg-slate-700/50 rounded-lg">
+                  <h4 className="text-lg font-semibold text-orange-300 flex items-center gap-2">
+                    <Target className="w-5 h-5" />
+                    {isFrench ? 'CELI (Compte d\'épargne libre d\'impôt)' : 'TFSA (Tax-Free Savings Account)'}
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold">
+                        {isFrench ? 'Solde CELI' : 'TFSA Balance'}
+                      </Label>
+                      <MoneyInput
+                        value={userData.personal?.soldeCELI1 || 0}
+                        onChange={(value) => handleChange('soldeCELI1', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
+                        placeholder={isFrench ? "Ex: 75 000" : "Ex: 75,000"}
+                        allowDecimals={true}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        {isFrench ? 'Date du solde' : 'Balance Date'}
+                      </Label>
+                      <DateInput
+                        value={userData.personal?.dateCELI1 || ''}
+                        onChange={(value) => handleChange('dateCELI1', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
+                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* CRI */}
+                <div className="space-y-4 p-4 bg-slate-700/50 rounded-lg">
+                  <h4 className="text-lg font-semibold text-orange-300 flex items-center gap-2">
+                    <Briefcase className="w-5 h-5" />
+                    {isFrench ? 'CRI (Compte de retraite immobilisé)' : 'LIRA (Locked-in Retirement Account)'}
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold">
+                        {isFrench ? 'Solde CRI' : 'LIRA Balance'}
+                      </Label>
+                      <MoneyInput
+                        value={userData.personal?.soldeCRI1 || 0}
+                        onChange={(value) => handleChange('soldeCRI1', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
+                        placeholder={isFrench ? "Ex: 200 000" : "Ex: 200,000"}
+                        allowDecimals={true}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        {isFrench ? 'Date du solde' : 'Balance Date'}
+                      </Label>
+                      <DateInput
+                        value={userData.personal?.dateCRI1 || ''}
+                        onChange={(value) => handleChange('dateCRI1', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
+                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Crypto-monnaie */}
+                <div className="space-y-4 p-4 bg-gradient-to-r from-purple-700/50 to-pink-700/50 rounded-lg border border-purple-500/30">
+                  <h4 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
+                    <span className="text-xl">₿</span>
+                    {isFrench ? 'Crypto-monnaie' : 'Cryptocurrency'}
+                    <span className="text-xs bg-purple-600 px-2 py-1 rounded-full">
+                      {isFrench ? 'NOUVEAU' : 'NEW'}
+                    </span>
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold">
+                        {isFrench ? 'Valeur totale crypto' : 'Total Crypto Value'}
+                      </Label>
+                      <MoneyInput
+                        value={userData.personal?.soldeCrypto1 || 0}
+                        onChange={(value) => handleChange('soldeCrypto1', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400"
+                        placeholder={isFrench ? "Ex: 25 000" : "Ex: 25,000"}
+                        allowDecimals={true}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        {isFrench ? 'Date d\'évaluation' : 'Valuation Date'}
+                      </Label>
+                      <DateInput
+                        value={userData.personal?.dateCrypto1 || ''}
+                        onChange={(value) => handleChange('dateCrypto1', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400"
+                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-gray-200 font-semibold">
+                      {isFrench ? 'Détails crypto (optionnel)' : 'Crypto Details (optional)'}
+                    </Label>
+                    <textarea
+                      value={userData.personal?.detailsCrypto1 || ''}
+                      onChange={(e) => handleNotesChange('detailsCrypto1', e.target.value)}
+                      className="w-full bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400 rounded-md p-3 min-h-[60px]"
+                      placeholder={isFrench ? 'Ex: Bitcoin, Ethereum, portefeuilles...' : 'Ex: Bitcoin, Ethereum, wallets...'}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Personne 2 - Investissements */}
+            <Card className="bg-gradient-to-br from-amber-800/90 to-orange-800/90 border-0 shadow-2xl backdrop-blur-sm">
+              <CardHeader className="border-b border-amber-600 bg-gradient-to-r from-amber-600/20 to-orange-600/20">
+                <CardTitle className="text-2xl font-bold text-amber-300 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+                    2
+                  </div>
+                  {userData.personal?.prenom2 
+                    ? `${isFrench ? 'Investissements' : 'Investments'} - ${userData.personal.prenom2}`
+                    : (isFrench ? 'Investissements - Personne 2' : 'Investments - Person 2')
+                  }
+                </CardTitle>
+                <CardDescription className="text-amber-200">
+                  {userData.personal?.prenom2 || (isFrench ? 'Deuxième personne (optionnel)' : 'Second person (optional)')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-6 space-y-6">
+                {/* REER */}
+                <div className="space-y-4 p-4 bg-slate-700/50 rounded-lg">
+                  <h4 className="text-lg font-semibold text-amber-300 flex items-center gap-2">
+                    <Shield className="w-5 h-5" />
+                    {isFrench ? 'REER (Régime enregistré d\'épargne-retraite)' : 'RRSP (Registered Retirement Savings Plan)'}
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold">
+                        {isFrench ? 'Solde REER' : 'RRSP Balance'}
+                      </Label>
+                      <MoneyInput
+                        value={userData.personal?.soldeREER2 || 0}
+                        onChange={(value) => handleChange('soldeREER2', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
+                        placeholder={isFrench ? "Ex: 150 000" : "Ex: 150,000"}
+                        allowDecimals={true}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        {isFrench ? 'Date du solde' : 'Balance Date'}
+                      </Label>
+                      <DateInput
+                        value={userData.personal?.dateREER2 || ''}
+                        onChange={(value) => handleChange('dateREER2', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
+                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* CELI */}
+                <div className="space-y-4 p-4 bg-slate-700/50 rounded-lg">
+                  <h4 className="text-lg font-semibold text-amber-300 flex items-center gap-2">
+                    <Target className="w-5 h-5" />
+                    {isFrench ? 'CELI (Compte d\'épargne libre d\'impôt)' : 'TFSA (Tax-Free Savings Account)'}
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold">
+                        {isFrench ? 'Solde CELI' : 'TFSA Balance'}
+                      </Label>
+                      <MoneyInput
+                        value={userData.personal?.soldeCELI2 || 0}
+                        onChange={(value) => handleChange('soldeCELI2', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
+                        placeholder={isFrench ? "Ex: 75 000" : "Ex: 75,000"}
+                        allowDecimals={true}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        {isFrench ? 'Date du solde' : 'Balance Date'}
+                      </Label>
+                      <DateInput
+                        value={userData.personal?.dateCELI2 || ''}
+                        onChange={(value) => handleChange('dateCELI2', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
+                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* CRI */}
+                <div className="space-y-4 p-4 bg-slate-700/50 rounded-lg">
+                  <h4 className="text-lg font-semibold text-amber-300 flex items-center gap-2">
+                    <Briefcase className="w-5 h-5" />
+                    {isFrench ? 'CRI (Compte de retraite immobilisé)' : 'LIRA (Locked-in Retirement Account)'}
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold">
+                        {isFrench ? 'Solde CRI' : 'LIRA Balance'}
+                      </Label>
+                      <MoneyInput
+                        value={userData.personal?.soldeCRI2 || 0}
+                        onChange={(value) => handleChange('soldeCRI2', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
+                        placeholder={isFrench ? "Ex: 200 000" : "Ex: 200,000"}
+                        allowDecimals={true}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        {isFrench ? 'Date du solde' : 'Balance Date'}
+                      </Label>
+                      <DateInput
+                        value={userData.personal?.dateCRI2 || ''}
+                        onChange={(value) => handleChange('dateCRI2', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
+                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Crypto-monnaie */}
+                <div className="space-y-4 p-4 bg-gradient-to-r from-purple-700/50 to-pink-700/50 rounded-lg border border-purple-500/30">
+                  <h4 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
+                    <span className="text-xl">₿</span>
+                    {isFrench ? 'Crypto-monnaie' : 'Cryptocurrency'}
+                    <span className="text-xs bg-purple-600 px-2 py-1 rounded-full">
+                      {isFrench ? 'NOUVEAU' : 'NEW'}
+                    </span>
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold">
+                        {isFrench ? 'Valeur totale crypto' : 'Total Crypto Value'}
+                      </Label>
+                      <MoneyInput
+                        value={userData.personal?.soldeCrypto2 || 0}
+                        onChange={(value) => handleChange('soldeCrypto2', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400"
+                        placeholder={isFrench ? "Ex: 25 000" : "Ex: 25,000"}
+                        allowDecimals={true}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                        <Calendar className="w-4 h-4" />
+                        {isFrench ? 'Date d\'évaluation' : 'Valuation Date'}
+                      </Label>
+                      <DateInput
+                        value={userData.personal?.dateCrypto2 || ''}
+                        onChange={(value) => handleChange('dateCrypto2', value)}
+                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400"
+                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-gray-200 font-semibold">
+                      {isFrench ? 'Détails crypto (optionnel)' : 'Crypto Details (optional)'}
+                    </Label>
+                    <textarea
+                      value={userData.personal?.detailsCrypto2 || ''}
+                      onChange={(e) => handleNotesChange('detailsCrypto2', e.target.value)}
+                      className="w-full bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400 rounded-md p-3 min-h-[60px]"
+                      placeholder={isFrench ? 'Ex: Bitcoin, Ethereum, portefeuilles...' : 'Ex: Bitcoin, Ethereum, wallets...'}
+                    />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Résumé des investissements */}
+          <Card className="bg-gradient-to-r from-orange-900/50 to-red-900/50 border border-orange-500/30">
+            <CardContent className="p-6">
+              <h4 className="text-lg font-bold text-orange-300 mb-4 flex items-center gap-2">
+                <TrendingUp className="w-5 h-5" />
+                {isFrench ? 'Résumé des investissements' : 'Investment Summary'}
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-blue-400">
+                    ${((userData.personal?.soldeREER1 || 0) + (userData.personal?.soldeREER2 || 0)).toLocaleString()}
+                  </div>
+                  <div className="text-sm text-gray-300">
+                    {isFrench ? 'Total REER' : 'Total RRSP'}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-green-400">
+                    ${((userData.personal?.soldeCELI1 || 0) + (userData.personal?.soldeCELI2 || 0)).toLocaleString()}
+                  </div>
+                  <div className="text-sm text-gray-300">
+                    {isFrench ? 'Total CELI' : 'Total TFSA'}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-yellow-400">
+                    ${((userData.personal?.soldeCRI1 || 0) + (userData.personal?.soldeCRI2 || 0)).toLocaleString()}
+                  </div>
+                  <div className="text-sm text-gray-300">
+                    {isFrench ? 'Total CRI' : 'Total LIRA'}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-purple-400">
+                    ${((userData.personal?.soldeCrypto1 || 0) + (userData.personal?.soldeCrypto2 || 0)).toLocaleString()}
+                  </div>
+                  <div className="text-sm text-gray-300">
+                    {isFrench ? 'Total Crypto' : 'Total Crypto'}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-600">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-orange-400">
+                    ${(
+                      (userData.personal?.soldeREER1 || 0) + (userData.personal?.soldeREER2 || 0) +
+                      (userData.personal?.soldeCELI1 || 0) + (userData.personal?.soldeCELI2 || 0) +
+                      (userData.personal?.soldeCRI1 || 0) + (userData.personal?.soldeCRI2 || 0) +
+                      (userData.personal?.soldeCrypto1 || 0) + (userData.personal?.soldeCrypto2 || 0)
+                    ).toLocaleString()}
+                  </div>
+                  <div className="text-lg text-gray-300">
+                    {isFrench ? 'Valeur totale des investissements' : 'Total Investment Value'}
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Conseils pour les investissements */}
+          <Card className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 border border-indigo-500/30">
+            <CardContent className="p-6">
+              <h4 className="text-lg font-bold text-indigo-300 mb-4 flex items-center gap-2">
+                <Info className="w-5 h-5" />
+                {isFrench ? 'Conseils pour vos investissements' : 'Investment Tips'}
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-300">
+                <div>
+                  <strong className="text-indigo-300">{isFrench ? 'REER :' : 'RRSP:'}</strong>
+                  <ul className="list-disc list-inside mt-2 space-y-1">
+                    <li>{isFrench ? 'Déduction fiscale immédiate' : 'Immediate tax deduction'}</li>
+                    <li>{isFrench ? 'Imposable au retrait' : 'Taxable on withdrawal'}</li>
+                    <li>{isFrench ? 'Conversion obligatoire à 71 ans' : 'Mandatory conversion at 71'}</li>
+                  </ul>
+                </div>
+                <div>
+                  <strong className="text-green-300">{isFrench ? 'CELI :' : 'TFSA:'}</strong>
+                  <ul className="list-disc list-inside mt-2 space-y-1">
+                    <li>{isFrench ? 'Croissance libre d\'impôt' : 'Tax-free growth'}</li>
+                    <li>{isFrench ? 'Retraits non imposables' : 'Tax-free withdrawals'}</li>
+                    <li>{isFrench ? 'Droits de cotisation récupérables' : 'Contribution room recoverable'}</li>
+                  </ul>
+                </div>
+                <div>
+                  <strong className="text-purple-300">{isFrench ? 'Crypto :' : 'Crypto:'}</strong>
+                  <ul className="list-disc list-inside mt-2 space-y-1">
+                    <li>{isFrench ? 'Actif volatil et spéculatif' : 'Volatile and speculative asset'}</li>
+                    <li>{isFrench ? 'Gains en capital imposables' : 'Taxable capital gains'}</li>
+                    <li>{isFrench ? 'Diversification limitée recommandée' : 'Limited diversification recommended'}</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Section Sécurité de la vieillesse avec ajustements */}
         <div className="space-y-8 mb-8">
           <div className="text-center">
@@ -934,6 +1386,57 @@ const Revenus: React.FC = () => {
             )}
           </CardContent>
         </Card>
+
+        {/* Section Calculette de Rendement */}
+        <div className="space-y-8 mb-12">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-indigo-300 mb-4 flex items-center justify-center gap-3">
+              <Calculator className="w-8 h-8 text-indigo-400" />
+              {isFrench ? 'Analyse de Performance' : 'Performance Analysis'}
+            </h2>
+            <p className="text-indigo-200 text-lg mb-8">
+              {isFrench 
+                ? 'Calculez et comparez les rendements de vos investissements REER, CELI et CRI'
+                : 'Calculate and compare the returns of your RRSP, TFSA and LIRA investments'
+              }
+            </p>
+            
+            {/* Calculette de Rendement */}
+            <div className="flex justify-center">
+              <ReturnCalculator isFrench={isFrench} />
+            </div>
+          </div>
+
+          {/* Informations sur la calculette */}
+          <Card className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 border border-indigo-500/30">
+            <CardContent className="p-6">
+              <h4 className="text-lg font-bold text-indigo-300 mb-4 flex items-center gap-2">
+                <Info className="w-5 h-5" />
+                {isFrench ? 'À propos de la calculette de rendement' : 'About the Return Calculator'}
+              </h4>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-300">
+                <div>
+                  <strong className="text-indigo-300">{isFrench ? 'Fonctionnalités :' : 'Features:'}</strong>
+                  <ul className="list-disc list-inside mt-2 space-y-1">
+                    <li>{isFrench ? 'Calcul IRR (Taux de rendement interne)' : 'IRR (Internal Rate of Return) calculation'}</li>
+                    <li>{isFrench ? 'Rendement pondéré dans le temps (TWR)' : 'Time-Weighted Return (TWR)'}</li>
+                    <li>{isFrench ? 'Rendement pondéré par l\'argent (MWR)' : 'Money-Weighted Return (MWR)'}</li>
+                    <li>{isFrench ? 'Gestion des contributions multiples' : 'Multiple contributions management'}</li>
+                  </ul>
+                </div>
+                <div>
+                  <strong className="text-purple-300">{isFrench ? 'Utilisations :' : 'Uses:'}</strong>
+                  <ul className="list-disc list-inside mt-2 space-y-1">
+                    <li>{isFrench ? 'Comparer la performance entre comptes' : 'Compare performance between accounts'}</li>
+                    <li>{isFrench ? 'Analyser l\'impact des versements' : 'Analyze contribution impact'}</li>
+                    <li>{isFrench ? 'Évaluer les stratégies d\'investissement' : 'Evaluate investment strategies'}</li>
+                    <li>{isFrench ? 'Optimiser les décisions futures' : 'Optimize future decisions'}</li>
+                  </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
 
         {/* Bouton SAUVEGARDER */}
         <div className="text-center">

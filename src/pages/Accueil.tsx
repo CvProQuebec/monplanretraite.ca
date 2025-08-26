@@ -18,7 +18,9 @@ import {
   Home,
   Target,
   Users,
-  Calculator
+  Calculator,
+  Phone,
+  FileText
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -40,6 +42,153 @@ const Accueil: React.FC = () => {
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-6xl mx-auto">
 
+          {/* NOUVEAU - Section Service Gratuit - Kit de Protection Familiale */}
+          <Card className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-2xl mb-12 border-0 overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-white/10 rounded-full translate-y-12 -translate-x-12"></div>
+            <CardContent className="p-8 relative z-10">
+              <div className="text-center mb-8">
+                <div className="flex justify-center mb-6">
+                  <div className="w-20 h-20 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
+                    <Shield className="w-10 h-10 text-white" />
+                  </div>
+                </div>
+                <div className="inline-block bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full text-sm font-bold mb-4">
+                  🎁 {isFrench ? 'SERVICE GRATUIT' : 'FREE SERVICE'}
+                </div>
+                <h2 className="text-4xl font-bold mb-4">
+                  {isFrench ? 'Kit de Protection Familiale' : 'Family Protection Kit'}
+                </h2>
+                <p className="text-xl text-emerald-100 max-w-4xl mx-auto mb-8">
+                  {isFrench 
+                    ? 'Protégez vos proches avec un plan d\'urgence complet. Le premier pas essentiel avant de rencontrer un professionnel.'
+                    : 'Protect your loved ones with a comprehensive emergency plan. The essential first step before meeting a professional.'
+                  }
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <Phone className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {isFrench ? 'Contacts d\'urgence' : 'Emergency contacts'}
+                  </h3>
+                  <p className="text-emerald-100 text-sm">
+                    {isFrench 
+                      ? 'Qui contacter en cas d\'urgence'
+                      : 'Who to contact in emergencies'
+                    }
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <Heart className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {isFrench ? 'Infos médicales' : 'Medical info'}
+                  </h3>
+                  <p className="text-emerald-100 text-sm">
+                    {isFrench 
+                      ? 'Allergies, médicaments, directives'
+                      : 'Allergies, medications, directives'
+                    }
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <FileText className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {isFrench ? 'Documents légaux' : 'Legal documents'}
+                  </h3>
+                  <p className="text-emerald-100 text-sm">
+                    {isFrench 
+                      ? 'Testament, mandats, assurances'
+                      : 'Will, mandates, insurance'
+                    }
+                  </p>
+                </div>
+                
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <Users className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-lg font-semibold mb-2">
+                    {isFrench ? 'Responsabilités' : 'Responsibilities'}
+                  </h3>
+                  <p className="text-emerald-100 text-sm">
+                    {isFrench 
+                      ? 'Enfants, parents, animaux'
+                      : 'Children, parents, pets'
+                    }
+                  </p>
+                </div>
+              </div>
+
+              <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 mb-8">
+                <h3 className="text-xl font-bold mb-4 text-center">
+                  {isFrench ? 'Pourquoi commencer par ici ?' : 'Why start here?'}
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="text-center">
+                    <CheckCircle className="w-8 h-8 text-yellow-300 mx-auto mb-3" />
+                    <h4 className="font-semibold mb-2">
+                      {isFrench ? 'Gratuit et sans engagement' : 'Free and no commitment'}
+                    </h4>
+                    <p className="text-sm text-emerald-100">
+                      {isFrench 
+                        ? 'Familiarisez-vous avec nos outils sans pression'
+                        : 'Get familiar with our tools without pressure'
+                      }
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <Target className="w-8 h-8 text-yellow-300 mx-auto mb-3" />
+                    <h4 className="font-semibold mb-2">
+                      {isFrench ? 'Prépare vos rencontres' : 'Prepares your meetings'}
+                    </h4>
+                    <p className="text-sm text-emerald-100">
+                      {isFrench 
+                        ? 'Arrivez organisé chez votre conseiller'
+                        : 'Arrive organized at your advisor\'s'
+                      }
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <Sparkles className="w-8 h-8 text-yellow-300 mx-auto mb-3" />
+                    <h4 className="font-semibold mb-2">
+                      {isFrench ? 'Découvrez notre approche' : 'Discover our approach'}
+                    </h4>
+                    <p className="text-sm text-emerald-100">
+                      {isFrench 
+                        ? 'Testez la qualité de nos solutions'
+                        : 'Test the quality of our solutions'
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="text-center">
+                <Button 
+                  onClick={() => handleNavigation('/planification-urgence')}
+                  size="lg"
+                  className="bg-white text-emerald-600 hover:bg-gray-100 font-bold px-12 py-4 text-xl rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                >
+                  {isFrench ? '🎯 Créer mon Kit GRATUIT' : '🎯 Create my FREE Kit'}
+                  <ArrowRight className="ml-3 w-6 h-6" />
+                </Button>
+                <p className="text-emerald-200 text-sm mt-4">
+                  {isFrench ? '✨ Aucune inscription requise • Données 100% privées' : '✨ No registration required • 100% private data'}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
           {/* Section Votre retraite, votre histoire */}
           <div className="text-center mb-12">
             <div className="flex justify-center mb-6">
@@ -48,12 +197,12 @@ const Accueil: React.FC = () => {
               </div>
             </div>
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              {isFrench ? 'Votre retraite, votre histoire' : 'Your retirement, your story'}
+              {isFrench ? 'Votre solution complète avant de rencontrer un professionnel' : 'Your complete solution before meeting a professional'}
             </h2>
             <p className="text-xl text-gray-700 max-w-4xl mx-auto mb-12">
               {isFrench 
-                ? 'Chaque personne mérite de planifier son avenir avec dignité, peu importe son niveau d\'épargne actuel.'
-                : 'Every person deserves to plan their future with dignity, regardless of their current savings level.'
+                ? 'Préparez-vous efficacement avec nos outils professionnels. Gagnez du temps et maximisez la valeur de vos consultations.'
+                : 'Prepare effectively with our professional tools. Save time and maximize the value of your consultations.'
               }
             </p>
 
@@ -275,7 +424,7 @@ const Accueil: React.FC = () => {
                   <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
                 <p className="text-indigo-200 text-sm mt-3">
-                  {isFrench ? 'Disponible dans les plans Professionnel et Ultimate' : 'Available in Professional and Ultimate plans'}
+                  {isFrench ? 'Disponible dans les plans Professionnel et Expert' : 'Available in Professional and Expert plans'}
                 </p>
               </div>
             </CardContent>
@@ -334,12 +483,12 @@ const Accueil: React.FC = () => {
                        <Heart className="w-6 h-6 text-white" />
                      </div>
                      <h4 className="font-semibold text-gray-800">
-                       {isFrench ? 'Sécurité garantie' : 'Guaranteed security'}
+                       {isFrench ? 'Contrôle total de vos données' : 'Full control of your data'}
                      </h4>
                      <p className="text-sm text-gray-600">
                        {isFrench 
-                         ? 'Vos données sont protégées selon les plus hauts standards'
-                         : 'Your data is protected according to the highest standards'
+                         ? 'Vos données restent sur votre appareil. Vous devez les sauvegarder localement - nous ne conservons aucune copie.'
+                         : 'Your data stays on your device. You must save it locally - we keep no copies.'
                        }
                      </p>
                    </div>
@@ -594,7 +743,7 @@ const Accueil: React.FC = () => {
                   size="lg"
                 >
                   <TrendingUp className="w-6 h-6 mr-3" />
-                  {isFrench ? 'Passer au forfait Ultimate' : 'Upgrade to Ultimate Plan'}
+                  {isFrench ? 'Passer au forfait Expert' : 'Upgrade to Expert Plan'}
                   <ArrowRight className="w-6 h-6 ml-3" />
                 </Button>
               </div>
@@ -610,177 +759,6 @@ const Accueil: React.FC = () => {
             </CardContent>
           </Card>
 
-          {/* Section de comparaison des plans */}
-          <Card className="bg-white/90 backdrop-blur-sm border-2 border-gray-200 shadow-2xl mb-12">
-            <CardHeader className="text-center">
-              <CardTitle className="text-3xl font-bold text-gray-900 mb-4">
-                {isFrench ? 'Comparaison des plans' : 'Plan comparison'}
-              </CardTitle>
-              <p className="text-lg text-gray-700">
-                {isFrench 
-                  ? 'Découvrez le plan qui correspond le mieux à vos besoins et commencez votre planification'
-                  : 'Discover the plan that best suits your needs and start your planning'
-                }
-              </p>
-            </CardHeader>
-            <CardContent>
-              {/* Tableau détaillé des fonctionnalités */}
-              <div className="mb-8">
-                <div className="overflow-x-auto">
-                  <table className="w-full border-collapse">
-                    <thead>
-                      <tr className="border-b-2 border-gray-200">
-                        <th className="text-left p-4 font-semibold text-gray-800">
-                          {isFrench ? 'Fonctionnalité' : 'Feature'}
-                        </th>
-                        <th className="text-center p-4 font-semibold text-gray-800">
-                          <div>{isFrench ? 'Gratuit' : 'Free'}</div>
-                          <div className="text-sm font-normal text-gray-600">0 $</div>
-                          <div className="text-xs text-gray-500">{isFrench ? 'Pour toujours' : 'Forever'}</div>
-                        </th>
-                        <th className="text-center p-4 font-semibold text-gray-800">
-                          <div>{isFrench ? 'Professionnel' : 'Professional'}</div>
-                          <div className="text-sm font-normal text-blue-600">119,99 $</div>
-                          <div className="text-xs text-blue-500">{isFrench ? '/an' : '/year'}</div>
-                        </th>
-                        <th className="text-center p-4 font-semibold text-gray-800">
-                          <div>{isFrench ? 'Ultimate' : 'Ultimate'}</div>
-                          <div className="text-sm font-normal text-purple-600">239,99 $</div>
-                          <div className="text-xs text-purple-500">{isFrench ? '/an' : '/year'}</div>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr className="border-b border-gray-100">
-                        <td className="p-4 text-gray-700">{isFrench ? 'Planification de base' : 'Basic planning'}</td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="p-4 text-gray-700">{isFrench ? 'Gestion du profil personnel' : 'Personal profile management'}</td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="p-4 text-gray-700">{isFrench ? 'Calculs de retraite de base' : 'Basic retirement calculations'}</td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="p-4 text-gray-700">{isFrench ? 'Gestion de l\'épargne' : 'Savings management'}</td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="p-4 text-gray-700">{isFrench ? 'Gestion du cashflow' : 'Cashflow management'}</td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="p-4 text-gray-700">{isFrench ? 'Projets de dépenses' : 'Expense projects'}</td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="p-4 text-gray-700">{isFrench ? 'Stratégies de décaissement' : 'Withdrawal strategies'}</td>
-                        <td className="p-4 text-center"><div className="w-5 h-5 border-2 border-red-500 rounded-full mx-auto flex items-center justify-center"><span className="text-red-500 text-xs font-bold">×</span></div></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="p-4 text-gray-700">{isFrench ? 'Simulations Monte Carlo' : 'Monte Carlo simulations'}</td>
-                        <td className="p-4 text-center"><div className="w-5 h-5 border-2 border-red-500 rounded-full mx-auto flex items-center justify-center"><span className="text-red-500 text-xs font-bold">×</span></div></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="p-4 text-gray-700">{isFrench ? 'Optimisation fiscale' : 'Tax optimization'}</td>
-                        <td className="p-4 text-center"><div className="w-5 h-5 border-2 border-red-500 rounded-full mx-auto flex items-center justify-center"><span className="text-red-500 text-xs font-bold">×</span></div></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                      </tr>
-                      <tr className="border-b border-gray-100 bg-gradient-to-r from-indigo-50 to-purple-50">
-                        <td className="p-4 text-gray-700 font-semibold">
-                          🚀 {isFrench ? 'Assistant Financier Personnel IA' : 'Personal AI Financial Assistant'}
-                          <div className="text-xs text-indigo-600 font-normal">
-                            {isFrench ? 'Évite les catastrophes financières' : 'Prevents financial disasters'}
-                          </div>
-                        </td>
-                        <td className="p-4 text-center">
-                          <div className="text-xs text-gray-500 mb-1">{isFrench ? 'Score seulement' : 'Score only'}</div>
-                          <div className="w-5 h-5 bg-yellow-100 border-2 border-yellow-500 rounded-full mx-auto flex items-center justify-center">
-                            <span className="text-yellow-600 text-xs font-bold">~</span>
-                          </div>
-                        </td>
-                        <td className="p-4 text-center">
-                          <div className="text-xs text-blue-600 mb-1 font-medium">{isFrench ? 'Complet' : 'Complete'}</div>
-                          <CheckCircle className="w-5 h-5 text-green-600 mx-auto" />
-                        </td>
-                        <td className="p-4 text-center">
-                          <div className="text-xs text-purple-600 mb-1 font-medium">{isFrench ? 'Premium' : 'Premium'}</div>
-                          <CheckCircle className="w-5 h-5 text-green-600 mx-auto" />
-                        </td>
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="p-4 text-gray-700">{isFrench ? 'Conseils personnalisés par IA' : 'AI-powered personal advice'}</td>
-                        <td className="p-4 text-center"><div className="w-5 h-5 border-2 border-red-500 rounded-full mx-auto flex items-center justify-center"><span className="text-red-500 text-xs font-bold">×</span></div></td>
-                        <td className="p-4 text-center"><div className="w-5 h-5 border-2 border-red-500 rounded-full mx-auto flex items-center justify-center"><span className="text-red-500 text-xs font-bold">×</span></div></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="p-4 text-gray-700">{isFrench ? 'Rapports détaillés' : 'Detailed reports'}</td>
-                        <td className="p-4 text-center"><div className="w-5 h-5 border-2 border-red-500 rounded-full mx-auto flex items-center justify-center"><span className="text-red-500 text-xs font-bold">×</span></div></td>
-                        <td className="p-4 text-center"><div className="w-5 h-5 border-2 border-red-500 rounded-full mx-auto flex items-center justify-center"><span className="text-red-500 text-xs font-bold">×</span></div></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="p-4 text-gray-700">{isFrench ? 'Export PDF' : 'PDF Export'}</td>
-                        <td className="p-4 text-center"><div className="w-5 h-5 border-2 border-red-500 rounded-full mx-auto flex items-center justify-center"><span className="text-red-500 text-xs font-bold">×</span></div></td>
-                        <td className="p-4 text-center"><div className="w-5 h-5 border-2 border-red-500 rounded-full mx-auto flex items-center justify-center"><span className="text-red-500 text-xs font-bold">×</span></div></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                      </tr>
-                      <tr className="border-b border-gray-100">
-                        <td className="p-4 text-gray-700">{isFrench ? 'Support prioritaire' : 'Priority support'}</td>
-                        <td className="p-4 text-center"><div className="w-5 h-5 border-2 border-red-500 rounded-full mx-auto flex items-center justify-center"><span className="text-red-500 text-xs font-bold">×</span></div></td>
-                        <td className="p-4 text-center"><div className="w-5 h-5 border-2 border-red-500 rounded-full mx-auto flex items-center justify-center"><span className="text-red-500 text-xs font-bold">×</span></div></td>
-                        <td className="p-4 text-center"><CheckCircle className="w-5 h-5 text-green-600 mx-auto" /></td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              {/* Boutons d'action */}
-              <div className="flex flex-col md:flex-row gap-4 justify-center">
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  onClick={() => handleNavigation('/mon-profil')}
-                  className="flex-1 max-w-xs"
-                >
-                  {isFrench ? 'Commencer gratuitement' : 'Start for free'}
-                </Button>
-                <Button 
-                  size="lg" 
-                  className="flex-1 max-w-xs bg-blue-600 hover:bg-blue-700"
-                >
-                  {isFrench ? 'Choisir Professionnel' : 'Choose Professional'}
-                </Button>
-                <Button 
-                  size="lg" 
-                  className="flex-1 max-w-xs bg-purple-600 hover:bg-purple-700"
-                >
-                  {isFrench ? 'Choisir Ultimate' : 'Choose Ultimate'}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
 

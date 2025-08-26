@@ -8,6 +8,7 @@ import { FileText, Download, Eye, AlertTriangle, TrendingUp, Calculator, Target,
 import { useLanguage } from '../hooks/useLanguage';
 import { useRetirementData } from '../hooks/useRetirementData';
 import { useSubscriptionLimits } from '../../../hooks/useSubscriptionLimits';
+import ConsentDialog from '@/components/ui/ConsentDialog';
 
 export type ReportType = 'comprehensive' | 'cashflow' | 'monte-carlo' | 'summary';
 export type ReportFormat = 'pdf' | 'html' | 'csv';
@@ -21,9 +22,11 @@ interface ReportOptions {
 }
 
 const ReportGenerator: React.FC = () => {
-  const { isEnglish } = useLanguage();
-  const { data: retirementData } = useRetirementData();
+  const { language } = useLanguage();
+  const { userData: retirementData } = useRetirementData();
   const { checkAccess } = useSubscriptionLimits();
+  
+  const isEnglish = language === 'en';
   
   const [reportOptions, setReportOptions] = useState<ReportOptions>({
     type: 'summary',
@@ -34,6 +37,8 @@ const ReportGenerator: React.FC = () => {
   });
   
   const [isGenerating, setIsGenerating] = useState(false);
+  const [showConsentDialog, setShowConsentDialog] = useState(false);
+  const [pendingReportGeneration, setPendingReportGeneration] = useState(false);
 
   // Vérifier l'accès aux rapports selon le plan
   const canGenerateReport = (type: ReportType): boolean => {
@@ -95,6 +100,15 @@ const ReportGenerator: React.FC = () => {
       return;
     }
 
+    // Afficher le dialog de consentement avant de générer le rapport
+    setShowConsentDialog(true);
+    setPendingReportGeneration(true);
+  };
+
+  const handleConsentAccepted = async () => {
+    setShowConsentDialog(false);
+    setPendingReportGeneration(false);
+    
     setIsGenerating(true);
     try {
       // Simulation de génération de rapport
@@ -108,6 +122,11 @@ const ReportGenerator: React.FC = () => {
     } finally {
       setIsGenerating(false);
     }
+  };
+
+  const handleConsentDeclined = () => {
+    setShowConsentDialog(false);
+    setPendingReportGeneration(false);
   };
 
   const tr = {
@@ -290,6 +309,15 @@ const ReportGenerator: React.FC = () => {
           )}
         </Button>
       </div>
+
+      {/* Dialog de consentement */}
+      <ConsentDialog
+        isOpen={showConsentDialog}
+        onClose={handleConsentDeclined}
+        onConsent={handleConsentAccepted}
+        featureName={getReportInfo(reportOptions.type).title}
+        isFrench={!isEnglish}
+      />
     </div>
   );
 };

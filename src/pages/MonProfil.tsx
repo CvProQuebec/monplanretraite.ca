@@ -44,8 +44,6 @@ const MonProfil: React.FC = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [licenseBlocked, setLicenseBlocked] = useState(false);
   const [licenseMessage, setLicenseMessage] = useState('');
-  const [showPromoCode, setShowPromoCode] = useState(false);
-  const [promoCode, setPromoCode] = useState('');
 
   // Calcul automatique des dépenses mensuelles quand les annuelles changent
   useEffect(() => {
@@ -193,74 +191,13 @@ const MonProfil: React.FC = () => {
               <div className="mt-4 space-y-2">
                 <p className="text-sm">
                   {isFrench 
-                    ? 'Pour créer un nouveau profil, vous devez :'
-                    : 'To create a new profile, you must:'
+                    ? 'Pour créer un nouveau profil, vous devez souscrire à un plan ou contacter le service à la clientèle.'
+                    : 'To create a new profile, you must subscribe to a plan or contact customer service.'
                   }
                 </p>
-                <ul className="text-sm list-disc list-inside ml-4">
-                  <li>{isFrench ? 'Souscrire à une nouvelle licence' : 'Subscribe to a new license'}</li>
-                  <li>{isFrench ? 'Communiquer avec le service à la clientèle' : 'Contact customer service'}</li>
-                  <li>{isFrench ? 'Ou utiliser un code promo valide' : 'Or use a valid promo code'}</li>
-                </ul>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setShowPromoCode(!showPromoCode)}
-                  className="mt-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-slate-900"
-                >
-                  {isFrench ? 'Entrer un code promo' : 'Enter promo code'}
-                </Button>
               </div>
             </AlertDescription>
           </Alert>
-        )}
-
-        {/* Formulaire de code promo */}
-        {showPromoCode && (
-          <Card className="bg-yellow-900/20 border-yellow-400 mb-8">
-            <CardContent className="p-6">
-              <h3 className="text-lg font-semibold text-yellow-300 mb-4">
-                {isFrench ? 'Code promo' : 'Promo Code'}
-              </h3>
-              <div className="flex gap-4">
-                <Input
-                  type="text"
-                  value={promoCode}
-                  onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
-                  placeholder={isFrench ? 'Entrez votre code promo' : 'Enter your promo code'}
-                  className="bg-slate-700 border-slate-600 text-white"
-                />
-                <Button
-                  onClick={() => {
-                    if (EnhancedSaveManager.activateTestMode(promoCode)) {
-                      alert(isFrench 
-                        ? '✅ Code promo activé ! Vous pouvez maintenant créer plusieurs profils.'
-                        : '✅ Promo code activated! You can now create multiple profiles.'
-                      );
-                      setLicenseBlocked(false);
-                      setLicenseMessage('');
-                      setShowPromoCode(false);
-                      setPromoCode('');
-                    } else {
-                      alert(isFrench 
-                        ? '❌ Code promo invalide'
-                        : '❌ Invalid promo code'
-                      );
-                    }
-                  }}
-                  className="bg-yellow-600 hover:bg-yellow-700"
-                >
-                  {isFrench ? 'Activer' : 'Activate'}
-                </Button>
-              </div>
-              <p className="text-xs text-gray-400 mt-2">
-                {isFrench 
-                  ? 'Code pour les tests : MULTIPLE2025'
-                  : 'Test code: MULTIPLE2025'
-                }
-              </p>
-            </CardContent>
-          </Card>
         )}
 
         {/* Formulaire principal */}

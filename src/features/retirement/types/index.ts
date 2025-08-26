@@ -78,6 +78,30 @@ export interface PersonalData {
   niveauCompetences2?: 'debutant' | 'intermediaire' | 'expert' | 'specialise';
   regionEconomique?: string;
   tauxChomageRegional?: number;
+  
+  // NOUVEAUX: Investissements avec dates de solde
+  soldeREER1?: number;
+  soldeREER2?: number;
+  dateREER1?: string;
+  dateREER2?: string;
+  soldeCELI1?: number;
+  soldeCELI2?: number;
+  dateCELI1?: string;
+  dateCELI2?: string;
+  soldeCRI1?: number;
+  soldeCRI2?: number;
+  dateCRI1?: string;
+  dateCRI2?: string;
+  soldeCrypto1?: number;
+  soldeCrypto2?: number;
+  dateCrypto1?: string;
+  dateCrypto2?: string;
+  detailsCrypto1?: string;
+  detailsCrypto2?: string;
+  
+  // NOUVEAUX: Calculette de rendement
+  returnCalculatorAccounts?: any[];
+  returnCalculatorResults?: any[];
 }
 
 export interface RetirementData {
