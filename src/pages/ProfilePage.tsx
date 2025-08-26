@@ -25,6 +25,7 @@ import { OnboardingWizard } from '../features/retirement/components/OnboardingWi
 import { SRGAnalysisSection } from '../features/retirement/components/SRGAnalysisSection';
 import { RREGOPAnalysisSection } from '../features/retirement/components/RREGOPAnalysisSection';
 import { GovernmentBenefitsTest } from '../features/retirement/components/GovernmentBenefitsTest';
+import { IntelligentReportSection } from '../features/retirement/components/IntelligentReportSection';
 
 // Import des services
 import { OnboardingService } from '../features/retirement/services/OnboardingService';
@@ -309,10 +310,11 @@ export default function ProfilePage() {
 
         {/* Onglets */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-5">
             <TabsTrigger value="profile">Profil</TabsTrigger>
             <TabsTrigger value="benefits">Prestations</TabsTrigger>
             <TabsTrigger value="analysis">Analyses</TabsTrigger>
+            <TabsTrigger value="report">Rapport Intelligent</TabsTrigger>
             <TabsTrigger value="test">Tests</TabsTrigger>
           </TabsList>
 
@@ -482,6 +484,14 @@ export default function ProfilePage() {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* Onglet Rapport Intelligent */}
+          <TabsContent value="report" className="space-y-6">
+            <IntelligentReportSection 
+              userData={userData} 
+              isFrench={isFrench}
+            />
           </TabsContent>
 
           {/* Onglet Tests */}

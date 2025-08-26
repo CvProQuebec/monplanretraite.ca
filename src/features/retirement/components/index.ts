@@ -73,3 +73,6 @@ export { default as OnboardingWizard } from './OnboardingWizard';
 
 // COMPOSANT DE TEST D'INTÉGRATION
 export { default as OnboardingIntegrationTest } from './OnboardingIntegrationTest';
+
+// NOUVEAU COMPOSANT DE RAPPORT INTELLIGENT 2025
+export { default as IntelligentReportSection } from './IntelligentReportSection';

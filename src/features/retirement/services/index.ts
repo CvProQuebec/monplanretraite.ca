@@ -22,6 +22,9 @@ export { SecureDataManager } from './SecureDataManager';
 // NOUVEAU SERVICE D'ONBOARDING 2025
 export { OnboardingService } from './OnboardingService';
 
+// NOUVEAU SERVICE DE RAPPORT INTELLIGENT 2025
+export { IntelligentReportService } from './intelligent_report_service';
+
 // Types et interfaces
 export type {
   TaxParameters2025,
@@ -55,3 +58,16 @@ export type {
   RREGOPRecommendation,
   RREGOPScenario
 } from './RREGOPService';
+
+// Types du service de rapport intelligent
+export type { 
+  IntelligentReport, 
+  ReportMetadata, 
+  ExecutiveSummary, 
+  CriticalAlert, 
+  PriorityAction,
+  ImplementationTimeline,
+  ComparativeScenario,
+  PersonalizedRecommendation,
+  FinancialSummary
+} from './intelligent_report_service';
