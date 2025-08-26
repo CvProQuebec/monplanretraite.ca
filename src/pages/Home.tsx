@@ -23,15 +23,23 @@ import {
   Target
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
 
 
 const Home: React.FC = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const isFrench = language === 'fr';
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
+  const [targetPlan, setTargetPlan] = useState<'professional' | 'ultimate'>('professional');
 
   const handleNavigation = (path: string) => {
     navigate(path);
+  };
+
+  const handleUpgradeClick = (plan: 'professional' | 'ultimate') => {
+    setTargetPlan(plan);
+    setIsUpgradeModalOpen(true);
   };
 
   return (
@@ -459,6 +467,205 @@ const Home: React.FC = () => {
             </div>
           </div>
 
+          {/* Section Plan Comparison */}
+          <div className="mb-16">
+            <Card className="bg-white/95 backdrop-blur-sm border-2 border-gray-200 shadow-2xl">
+              <CardHeader className="text-center pb-6">
+                <CardTitle className="text-3xl font-bold text-gray-900 mb-4">
+                  {isFrench ? 'Comparaison des plans' : 'Plan Comparison'}
+                </CardTitle>
+                <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                  {isFrench 
+                    ? 'Choisissez le plan qui correspond le mieux à vos besoins de planification financière'
+                    : 'Choose the plan that best fits your financial planning needs'
+                  }
+                </p>
+              </CardHeader>
+              <CardContent className="p-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  
+                  {/* Free Plan */}
+                  <Card className="border-2 border-gray-200 hover:border-gray-300 transition-all duration-300">
+                    <CardHeader className="text-center pb-4">
+                      <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Shield className="w-8 h-8 text-gray-600" />
+                      </div>
+                      <CardTitle className="text-xl font-bold text-gray-900">
+                        {isFrench ? 'Gratuit' : 'Free'}
+                      </CardTitle>
+                      <div className="text-3xl font-bold text-gray-900 mb-2">$0</div>
+                      <p className="text-sm text-gray-600">
+                        {isFrench ? 'Pour commencer' : 'To get started'}
+                      </p>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Planification de base' : 'Basic planning'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Gestion du profil' : 'Profile management'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Calculs de base' : 'Basic calculations'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Kit de protection familiale' : 'Family protection kit'}
+                          </span>
+                        </div>
+                      </div>
+                      <Button 
+                        variant="outline" 
+                        className="w-full mt-6"
+                        disabled
+                      >
+                        {isFrench ? 'Plan actuel' : 'Current plan'}
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* Professional Plan */}
+                  <Card className="border-2 border-purple-300 hover:border-purple-400 transition-all duration-300 relative">
+                    <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                      <span className="bg-purple-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+                        {isFrench ? 'Populaire' : 'Popular'}
+                      </span>
+                    </div>
+                    <CardHeader className="text-center pb-4">
+                      <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Crown className="w-8 h-8 text-purple-600" />
+                      </div>
+                      <CardTitle className="text-xl font-bold text-purple-900">
+                        Professional
+                      </CardTitle>
+                      <div className="text-3xl font-bold text-purple-900 mb-2">$119.99</div>
+                      <p className="text-sm text-purple-600">
+                        {isFrench ? 'par année' : 'per year'}
+                      </p>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Tout du plan Gratuit' : 'Everything in Free plan'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Assistant Financier IA' : 'AI Financial Assistant'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Simulations illimitées' : 'Unlimited simulations'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Optimisation fiscale' : 'Tax optimization'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Rapports avancés' : 'Advanced reports'}
+                          </span>
+                        </div>
+                      </div>
+                      <Button 
+                        onClick={() => handleUpgradeClick('professional')}
+                        className="w-full mt-6 bg-purple-600 hover:bg-purple-700 text-white"
+                      >
+                        {isFrench ? 'Passer au Professional' : 'Upgrade to Professional'}
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                  {/* Ultimate Plan */}
+                  <Card className="border-2 border-pink-300 hover:border-pink-400 transition-all duration-300">
+                    <CardHeader className="text-center pb-4">
+                      <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <Sparkles className="w-8 h-8 text-pink-600" />
+                      </div>
+                      <CardTitle className="text-xl font-bold text-pink-900">
+                        {isFrench ? 'Expert' : 'Ultimate'}
+                      </CardTitle>
+                      <div className="text-3xl font-bold text-pink-900 mb-2">$239.99</div>
+                      <p className="text-sm text-pink-600">
+                        {isFrench ? 'par année' : 'per year'}
+                      </p>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="space-y-3">
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Tout du plan Professional' : 'Everything in Professional'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Simulations Monte Carlo' : 'Monte Carlo simulations'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Planification successorale' : 'Estate planning'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Conseils IA personnalisés' : 'Personalized AI advice'}
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <span className="text-sm text-gray-700">
+                            {isFrench ? 'Support prioritaire' : 'Priority support'}
+                          </span>
+                        </div>
+                      </div>
+                      <Button 
+                        onClick={() => handleUpgradeClick('ultimate')}
+                        className="w-full mt-6 bg-pink-600 hover:bg-pink-700 text-white"
+                      >
+                        {isFrench ? 'Passer au Expert' : 'Upgrade to Ultimate'}
+                      </Button>
+                    </CardContent>
+                  </Card>
+
+                </div>
+
+                <div className="mt-8 text-center">
+                  <p className="text-gray-600 text-sm">
+                    {isFrench 
+                      ? '✨ Tous les plans incluent une garantie de remboursement de 30 jours'
+                      : '✨ All plans include a 30-day money-back guarantee'
+                    }
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
           {/* Section Final CTA */}
           <div className="text-center">
             <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-2xl">
@@ -487,6 +694,15 @@ const Home: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Upgrade Modal */}
+      <AdvancedUpgradeModal
+        isOpen={isUpgradeModalOpen}
+        onClose={() => setIsUpgradeModalOpen(false)}
+        requiredPlan={targetPlan}
+        featureName="plan_upgrade"
+        currentPlan="free"
+      />
     </div>
   );
 };

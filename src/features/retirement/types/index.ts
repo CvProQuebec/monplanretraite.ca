@@ -130,6 +130,36 @@ export interface RetirementData {
   svAjustements1?: SVAdjustment[];
   svAjustements2?: SVAdjustment[];
   
+  // NOUVEAUX: Données SRG (Supplément de Revenu Garanti)
+  srgEligibilite1?: boolean;
+  srgEligibilite2?: boolean;
+  srgRevenus1?: number;
+  srgRevenus2?: number;
+  srgMontant1?: number;
+  srgMontant2?: number;
+  srgStatutConjoint?: 'celibataire' | 'conjoint-avec-sv' | 'conjoint-sans-sv';
+  
+  // NOUVEAUX: Données RREGOP détaillées
+  rregopTypeRegime1?: 'RREGOP' | 'RRPE';
+  rregopAnneesService1?: number;
+  rregopAnneesServiceCalcul1?: number;
+  rregopSalaireActuel1?: number;
+  rregopAgePleineRente1?: number;
+  rregopMontantPleineRente1?: number;
+  rregopCoordinationRRQ1?: number;
+  rregopIndexation1?: number;
+  rregopRenteConjointSurvivant1?: 50 | 60;
+  
+  rregopTypeRegime2?: 'RREGOP' | 'RRPE';
+  rregopAnneesService2?: number;
+  rregopAnneesServiceCalcul2?: number;
+  rregopSalaireActuel2?: number;
+  rregopAgePleineRente2?: number;
+  rregopMontantPleineRente2?: number;
+  rregopCoordinationRRQ2?: number;
+  rregopIndexation2?: number;
+  rregopRenteConjointSurvivant2?: 50 | 60;
+  
   // Propriétés existantes
   revenusTempsPartiel1?: number;
   revenusTempsPartiel2?: number;

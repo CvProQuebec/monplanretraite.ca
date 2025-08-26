@@ -62,3 +62,14 @@ export { default as WeeklyFinancialTracker } from './WeeklyFinancialTracker';
 // NOUVEAUX COMPOSANTS 2025
 export { TaxOptimizationDashboard } from './TaxOptimizationDashboard';
 export { TaxOptimizationTest } from './TaxOptimizationTest';
+
+// NOUVEAUX COMPOSANTS GOUVERNEMENTAUX
+export { default as SRGAnalysisSection } from './SRGAnalysisSection';
+export { default as RREGOPAnalysisSection } from './RREGOPAnalysisSection';
+export { default as GovernmentBenefitsTest } from './GovernmentBenefitsTest';
+
+// NOUVEAU COMPOSANT D'ONBOARDING 2025
+export { default as OnboardingWizard } from './OnboardingWizard';
+
+// COMPOSANT DE TEST D'INTÉGRATION
+export { default as OnboardingIntegrationTest } from './OnboardingIntegrationTest';

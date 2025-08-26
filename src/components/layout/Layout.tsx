@@ -34,8 +34,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Header uniforme pour toutes les pages (sauf exceptions) */}
       {shouldShowUniformHeader && <UniformHeader isEnglish={isEnglish} />}
       
-      {/* Bouton de navigation unifié - Masqué sur mobile, visible sur desktop */}
-      <div className="fixed top-4 right-4 z-50 hidden md:block">
+      {/* Bouton de navigation unifié - Repositionné pour ne pas bloquer la navigation principale */}
+      <div className="fixed bottom-6 right-6 z-40 hidden md:block">
         <NavigationToggle />
       </div>
       

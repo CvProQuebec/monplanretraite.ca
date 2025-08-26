@@ -9,6 +9,8 @@ import { EmploymentStatusData, EmploymentImpactAnalysis } from '../types/employm
 import { AdvancedMonteCarloService, MonteCarloResult } from './AdvancedMonteCarloService';
 import { TaxOptimizationService2025 } from './TaxParametersService2025';
 import { RetirementBudgetService } from './RetirementBudgetService';
+import { SRGService, SRGCalculationResult } from './SRGService';
+import { RREGOPService, RREGOPCalculationResult } from './RREGOPService';
 
 export class CalculationService {
   // CONSTANTES MISES À JOUR SELON LES TRANSCRIPTIONS D'EXPERTS
@@ -1068,5 +1070,141 @@ export class CalculationService {
         'Planifier les soins de longue durée'
       ]
     };
+  }
+
+  /**
+   * NOUVEAU: Calcul du Supplément de Revenu Garanti (SRG)
+   */
+  static calculateSRG(userData: UserData): SRGCalculationResult | null {
+    try {
+      console.log('🧮 Calcul SRG en cours...');
+      const result = SRGService.calculerSRG(userData);
+      console.log('✅ Calcul SRG terminé:', result.eligible ? 'Éligible' : 'Non éligible');
+      return result;
+    } catch (error) {
+      console.error('Erreur calcul SRG:', error);
+      return null;
+    }
+  }
+
+  /**
+   * NOUVEAU: Calcul RREGOP/RRPE
+   */
+  static calculateRREGOP(userData: UserData, personId: 1 | 2): RREGOPCalculationResult | null {
+    try {
+      console.log(`🧮 Calcul RREGOP personne ${personId} en cours...`);
+      
+      const rregopData = {
+        typeRegime: personId === 1 ? userData.retirement?.rregopTypeRegime1 : userData.retirement?.rregopTypeRegime2,
+        anneesServiceAdmissibilite: personId === 1 ? userData.retirement?.rregopAnneesService1 || 0 : userData.retirement?.rregopAnneesService2 || 0,
+        anneesServiceCalcul: personId === 1 ? userData.retirement?.rregopAnneesServiceCalcul1 || 0 : userData.retirement?.rregopAnneesServiceCalcul2 || 0,
+        salaireActuel: personId === 1 ? userData.personal?.salaire1 || 0 : userData.personal?.salaire2 || 0,
+        ageRetraite: personId === 1 ? userData.personal?.ageRetraiteSouhaite1 || 65 : userData.personal?.ageRetraiteSouhaite2 || 65,
+        optionSurvivant: personId === 1 ? userData.retirement?.rregopRenteConjointSurvivant1 || 50 : userData.retirement?.rregopRenteConjointSurvivant2 || 50
+      };
+
+      const result = RREGOPService.calculerRREGOP(rregopData);
+      console.log(`✅ Calcul RREGOP personne ${personId} terminé:`, result.valide ? 'Valide' : 'Erreurs');
+      return result;
+    } catch (error) {
+      console.error(`Erreur calcul RREGOP personne ${personId}:`, error);
+      return null;
+    }
+  }
+
+  /**
+   * NOUVEAU: Calculs gouvernementaux combinés (RRQ + SV + SRG + RREGOP)
+   */
+  static calculateGovernmentBenefits(userData: UserData): any {
+    try {
+      console.log('🇨🇦 Calcul des prestations gouvernementales combinées...');
+      
+      const results = {
+        rrq: this.calculateRRQOptimizationEnhanced(userData),
+        sv: this.calculateOASGISProjection(userData),
+        srg: this.calculateSRG(userData),
+        rregop: {
+          personne1: this.calculateRREGOP(userData, 1),
+          personne2: this.calculateRREGOP(userData, 2)
+        }
+      };
+
+      // Calcul du revenu total garanti
+      const revenuTotalGaranti = this.calculateTotalGuaranteedIncome(results);
+      
+      console.log('✅ Calculs gouvernementaux terminés');
+      return {
+        ...results,
+        revenuTotalGaranti,
+        recommandations: this.generateGovernmentBenefitsRecommendations(results)
+      };
+    } catch (error) {
+      console.error('Erreur calculs gouvernementaux:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * NOUVEAU: Calcul du revenu total garanti
+   */
+  private static calculateTotalGuaranteedIncome(governmentResults: any): number {
+    let total = 0;
+    
+    // RRQ
+    if (governmentResults.rrq?.person1?.montantMensuel) {
+      total += governmentResults.rrq.person1.montantMensuel * 12;
+    }
+    if (governmentResults.rrq?.person2?.montantMensuel) {
+      total += governmentResults.rrq.person2.montantMensuel * 12;
+    }
+    
+    // Sécurité de la vieillesse
+    if (governmentResults.sv?.securiteVieillesse?.montantMensuel) {
+      total += governmentResults.sv.securiteVieillesse.montantMensuel * 12 * 2; // Estimation couple
+    }
+    
+    // SRG
+    if (governmentResults.srg?.montantTotal) {
+      total += governmentResults.srg.montantTotal;
+    }
+    
+    // RREGOP
+    if (governmentResults.rregop.personne1?.montantFinal) {
+      total += governmentResults.rregop.personne1.montantFinal;
+    }
+    if (governmentResults.rregop.personne2?.montantFinal) {
+      total += governmentResults.rregop.personne2.montantFinal;
+    }
+    
+    return total;
+  }
+
+  /**
+   * NOUVEAU: Génération de recommandations pour les prestations gouvernementales
+   */
+  private static generateGovernmentBenefitsRecommendations(governmentResults: any): string[] {
+    const recommandations: string[] = [];
+    
+    // Recommandations SRG
+    if (governmentResults.srg?.eligible) {
+      recommandations.push('✅ Vous êtes éligible au SRG - Optimisez vos revenus pour maximiser le montant');
+    } else if (governmentResults.srg?.strategiesOptimisation?.length > 0) {
+      recommandations.push('💡 Stratégies disponibles pour devenir éligible au SRG');
+    }
+    
+    // Recommandations RREGOP
+    if (governmentResults.rregop.personne1?.recommandations?.length > 0) {
+      recommandations.push('🏛️ Optimisations RREGOP disponibles pour la personne 1');
+    }
+    if (governmentResults.rregop.personne2?.recommandations?.length > 0) {
+      recommandations.push('🏛️ Optimisations RREGOP disponibles pour la personne 2');
+    }
+    
+    // Recommandations générales
+    if (governmentResults.revenuTotalGaranti > 0) {
+      recommandations.push(`💰 Revenu total garanti: ${governmentResults.revenuTotalGaranti.toLocaleString('fr-CA')} $/an`);
+    }
+    
+    return recommandations;
   }
 }

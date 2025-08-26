@@ -13,6 +13,13 @@ export interface PlanFeatures {
   hasPersonalizedTraining: boolean;
   hasExportPDF: boolean;
   hasMonteCarloSimulations: boolean;
+  hasCashflowManagement: boolean;
+  hasWithdrawalStrategies: boolean;
+  hasExpensePlanning: boolean;
+  hasTaxOptimization: boolean;
+  hasFinancialAssistant: boolean; // NOUVEAU : Assistant Financier Personnel
+  hasBudgetModule: boolean; // NOUVEAU : Module Budget
+  maxExpenseProjects: number;
 }
 
 export interface PlanLimits {
@@ -82,4 +89,4 @@ export interface PromoCodeValidation {
   discount: number;
   message: string;
   code?: PromoCode;
-} 
+}

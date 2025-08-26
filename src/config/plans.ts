@@ -22,6 +22,8 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
       hasWithdrawalStrategies: false,
       hasExpensePlanning: true,
       hasTaxOptimization: false,
+      hasFinancialAssistant: false, // RESTREINT : Plans payants uniquement
+      hasBudgetModule: false, // RESTREINT : Plans payants uniquement
       maxExpenseProjects: 1
     }
   },
@@ -46,6 +48,8 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
       hasWithdrawalStrategies: true,
       hasExpensePlanning: true,
       hasTaxOptimization: true,
+      hasFinancialAssistant: true, // INCLUS : Assistant Financier Personnel
+      hasBudgetModule: true, // INCLUS : Module Budget
       maxExpenseProjects: 5
     }
   },
@@ -70,6 +74,8 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
       hasWithdrawalStrategies: true,
       hasExpensePlanning: true,
       hasTaxOptimization: true,
+      hasFinancialAssistant: true, // INCLUS : Assistant Financier Personnel
+      hasBudgetModule: true, // INCLUS : Module Budget
       maxExpenseProjects: -1 // Illimité
     }
   }
@@ -89,13 +95,13 @@ export const UPGRADE_PATHS: UpgradePath[] = [
     savings: 'Économisez 40 % vs mensuel',
     isRecommended: true,
     features: [
+      'Assistant Financier Personnel',
+      'Module Budget',
       'simulations illimitées',
       'rapports illimités',
-      '2 profils',
       'analyses avancées',
       'simulations Monte Carlo',
-      'export PDF',
-      'support prioritaire'
+      'export PDF'
     ]
   },
   {
@@ -281,7 +287,8 @@ export const checkFeatureAccess = (
 export const getRequiredPlanForFeature = (
   feature: keyof PlanLimits['features']
 ): SubscriptionPlan => {
-  if (feature === 'hasAdvancedAnalytics' || feature === 'hasMonteCarloSimulations') {
+  if (feature === 'hasAdvancedAnalytics' || feature === 'hasMonteCarloSimulations' || 
+      feature === 'hasFinancialAssistant' || feature === 'hasBudgetModule') {
     return 'professional';
   }
   if (feature === 'hasAIConsulting' || feature === 'hasIntegrations' || feature === 'hasPersonalizedTraining') {
@@ -321,7 +328,9 @@ export const getUpgradeMessage = (
     hasPrioritySupport: 'support prioritaire',
     hasPersonalizedTraining: 'formation personnalisée',
     hasExportPDF: 'export PDF',
-    hasMonteCarloSimulations: 'simulations Monte Carlo'
+    hasMonteCarloSimulations: 'simulations Monte Carlo',
+    hasFinancialAssistant: 'Assistant Financier Personnel',
+    hasBudgetModule: 'Module Budget'
   };
 
   return `Cette fonctionnalité (${featureNames[feature]}) fait partie du forfait ${planNames[requiredPlan]}. Voulez-vous souscrire au forfait ${planNames[requiredPlan]} ?`;

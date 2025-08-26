@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
   CheckCircle,
+  XCircle,
   BarChart3,
   TrendingUp,
   Calendar,
@@ -299,30 +300,6 @@ const Accueil: React.FC = () => {
               </CardContent>
             </Card>
 
-            {/* Section Vous n'êtes plus seul(e) */}
-            <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200 shadow-xl mb-12">
-              <CardContent className="p-8 text-center">
-                <div className="flex justify-center mb-4">
-                  <Heart className="w-8 h-8 text-pink-500" />
-                </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
-                  {isFrench ? 'Vous n\'êtes plus seul(e)' : 'You are no longer alone'}
-                </h3>
-                <p className="text-lg text-gray-700 mb-6 max-w-2xl mx-auto">
-                  {isFrench 
-                    ? 'Chaque petit pas compte vers votre sécurité financière. Commencez votre voyage avec bienveillance.'
-                    : 'Every small step counts towards your financial security. Start your journey with kindness.'
-                  }
-                </p>
-                <Button 
-                  onClick={() => handleNavigation('/mon-profil')}
-                  className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 mx-auto"
-                >
-                  {isFrench ? 'Commencer maintenant' : 'Start now'}
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </CardContent>
-            </Card>
           </div>
 
           {/* Section Assistant Financier Personnel - NOUVEAU */}
@@ -784,6 +761,142 @@ const Accueil: React.FC = () => {
 
 
 
+
+      {/* Section Comparaison des plans - TABLEAU ORIGINAL */}
+      <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-16">
+        <div className="container mx-auto px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-4xl font-bold text-white mb-4">
+                {isFrench ? 'Comparaison des plans' : 'Plan Comparison'}
+              </h2>
+              <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+                {isFrench 
+                  ? 'Découvrez ce qui est inclus dans chaque plan et choisissez celui qui correspond à vos besoins'
+                  : 'Discover what is included in each plan and choose the one that fits your needs'
+                }
+              </p>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+              {/* En-têtes des plans */}
+              <div className="grid grid-cols-4 bg-gray-50 border-b border-gray-200">
+                <div className="p-6">
+                  <h3 className="text-lg font-semibold text-gray-900">
+                    {isFrench ? 'Fonctionnalité' : 'Feature'}
+                  </h3>
+                </div>
+                <div className="p-6 text-center border-l border-gray-200">
+                  <div className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium mb-2">
+                    {isFrench ? 'Gratuit' : 'Free'}
+                  </div>
+                  <div className="text-2xl font-bold text-gray-900">0 $</div>
+                </div>
+                <div className="p-6 text-center border-l border-gray-200 bg-blue-50">
+                  <div className="inline-block bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium mb-2">
+                    {isFrench ? 'Recommandé' : 'Recommended'}
+                  </div>
+                  <div className="inline-block bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium mb-2">
+                    Professional
+                  </div>
+                  <div className="text-2xl font-bold text-blue-900">119,99 $</div>
+                  <div className="text-sm text-blue-600">{isFrench ? '/an' : '/year'}</div>
+                </div>
+                <div className="p-6 text-center border-l border-gray-200 bg-purple-50">
+                  <div className="inline-block bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium mb-2">
+                    Ultimate
+                  </div>
+                  <div className="text-2xl font-bold text-purple-900">239,99 $</div>
+                  <div className="text-sm text-purple-600">{isFrench ? '/an' : '/year'}</div>
+                </div>
+              </div>
+
+              {/* Lignes de fonctionnalités */}
+              {[
+                { name: isFrench ? 'Planification de base' : 'Basic planning', free: true, pro: true, ultimate: true },
+                { name: isFrench ? 'Gestion du profil personnel' : 'Personal profile management', free: true, pro: true, ultimate: true },
+                { name: isFrench ? 'Calculs de retraite de base' : 'Basic retirement calculations', free: true, pro: true, ultimate: true },
+                { name: isFrench ? 'Gestion de l\'épargne' : 'Savings management', free: true, pro: true, ultimate: true },
+                { name: isFrench ? 'Gestion du cashflow' : 'Cashflow management', free: true, pro: true, ultimate: true },
+                { name: isFrench ? 'Projets de dépenses' : 'Expense projects', free: true, pro: true, ultimate: true },
+                { name: isFrench ? 'Stratégies de décaissement' : 'Withdrawal strategies', free: false, pro: true, ultimate: true },
+                { name: isFrench ? 'Simulations Monte Carlo' : 'Monte Carlo simulations', free: false, pro: true, ultimate: true },
+                { name: isFrench ? 'Optimisation fiscale' : 'Tax optimization', free: false, pro: true, ultimate: true },
+                { name: isFrench ? 'Conseils personnalisés par IA' : 'AI personalized advice', free: false, pro: false, ultimate: true },
+                { name: isFrench ? 'Rapports détaillés' : 'Detailed reports', free: false, pro: false, ultimate: true },
+                { name: isFrench ? 'Export PDF' : 'PDF export', free: false, pro: false, ultimate: true },
+                { name: isFrench ? 'Support prioritaire' : 'Priority support', free: false, pro: false, ultimate: true }
+              ].map((feature, index) => (
+                <div key={index} className={`grid grid-cols-4 border-b border-gray-100 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
+                  <div className="p-4 font-medium text-gray-900">
+                    {feature.name}
+                  </div>
+                  <div className="p-4 text-center border-l border-gray-200">
+                    {feature.free ? (
+                      <CheckCircle className="w-5 h-5 text-green-500 mx-auto" />
+                    ) : (
+                      <XCircle className="w-5 h-5 text-red-400 mx-auto" />
+                    )}
+                  </div>
+                  <div className="p-4 text-center border-l border-gray-200 bg-blue-50">
+                    {feature.pro ? (
+                      <CheckCircle className="w-5 h-5 text-green-500 mx-auto" />
+                    ) : (
+                      <XCircle className="w-5 h-5 text-red-400 mx-auto" />
+                    )}
+                  </div>
+                  <div className="p-4 text-center border-l border-gray-200 bg-purple-50">
+                    {feature.ultimate ? (
+                      <CheckCircle className="w-5 h-5 text-green-500 mx-auto" />
+                    ) : (
+                      <XCircle className="w-5 h-5 text-red-400 mx-auto" />
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {/* Boutons d'action */}
+              <div className="grid grid-cols-4 bg-gray-50 p-6">
+                <div></div>
+                <div className="text-center">
+                  <Button 
+                    variant="outline" 
+                    className="w-full"
+                    disabled
+                  >
+                    {isFrench ? 'Commencer gratuitement' : 'Start for free'}
+                  </Button>
+                </div>
+                <div className="text-center">
+                  <Button 
+                    onClick={() => handleUpgradeClick('professional')}
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+                  >
+                    {isFrench ? 'Choisir Professional' : 'Choose Professional'}
+                  </Button>
+                </div>
+                <div className="text-center">
+                  <Button 
+                    onClick={() => handleUpgradeClick('ultimate')}
+                    className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold"
+                  >
+                    {isFrench ? 'Choisir Ultimate' : 'Choose Ultimate'}
+                  </Button>
+                </div>
+              </div>
+            </div>
+
+            <div className="text-center mt-8">
+              <p className="text-blue-100 text-sm">
+                ✨ {isFrench 
+                  ? 'Tous les plans incluent une garantie de remboursement de 30 jours'
+                  : 'All plans include a 30-day money-back guarantee'
+                }
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Section Avertissement important - Déplacée depuis Planification Retraite */}
       <div className="bg-yellow-50 border-l-4 border-yellow-400 rounded-2xl mx-6 mb-12 shadow-lg">

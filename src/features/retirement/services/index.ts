@@ -14,6 +14,14 @@ export { CoupleCalculationService } from './CoupleCalculationService';
 export { TaxOptimizationService2025 } from './TaxParametersService2025';
 export { RetirementBudgetService } from './RetirementBudgetService';
 
+// NOUVEAUX SERVICES GOUVERNEMENTAUX ET SÉCURITÉ
+export { SRGService } from './SRGService';
+export { RREGOPService } from './RREGOPService';
+export { SecureDataManager } from './SecureDataManager';
+
+// NOUVEAU SERVICE D'ONBOARDING 2025
+export { OnboardingService } from './OnboardingService';
+
 // Types et interfaces
 export type {
   TaxParameters2025,
@@ -31,3 +39,19 @@ export type {
   EstateAnalysis,
   RetirementBudgetAnalysis
 } from './TaxParametersService2025';
+
+// Types des nouveaux services
+export type {
+  SRGParams2025,
+  SRGCalculationResult,
+  SRGStrategy,
+  SRGAlert
+} from './SRGService';
+
+export type {
+  RREGOPParams2025,
+  RREGOPUserData,
+  RREGOPCalculationResult,
+  RREGOPRecommendation,
+  RREGOPScenario
+} from './RREGOPService';

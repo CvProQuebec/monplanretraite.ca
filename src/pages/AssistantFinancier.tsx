@@ -6,6 +6,9 @@ import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
 import { useRetirementData } from '../features/retirement/hooks/useRetirementData';
 import { IncomeIntegrationService } from '../services/IncomeIntegrationService';
+import { useAuth } from '../hooks/useAuth';
+import { checkFeatureAccess, getRequiredPlanForFeature, getContextualUpgradeMessage } from '../config/plans';
+import AdvancedUpgradeModal from '../components/ui/advanced-upgrade-modal';
 import { 
   Brain, 
   Shield, 
@@ -26,10 +29,17 @@ import {
 } from 'lucide-react';
 
 export const AssistantFinancier: React.FC = () => {
+  const { user } = useAuth();
   const [currentBalance, setCurrentBalance] = useState(5000);
   const [monthlyIncome, setMonthlyIncome] = useState(4500);
   const [monthlyExpenses, setMonthlyExpenses] = useState(3200);
   const [isFirstVisit, setIsFirstVisit] = useState(true);
+  const [showUpgradeModal, setShowUpgradeModal] = useState(false);
+
+  // Vérifier l'accès à l'Assistant Financier Personnel
+  const userPlan = user?.subscription?.plan || 'free';
+  const hasAccess = checkFeatureAccess('hasFinancialAssistant', userPlan);
+  const requiredPlan = getRequiredPlanForFeature('hasFinancialAssistant');
 
   // Load financial data from localStorage or other sources
   useEffect(() => {
@@ -72,6 +82,58 @@ export const AssistantFinancier: React.FC = () => {
       currency: 'CAD'
     }).format(amount);
   };
+
+  // Si l'utilisateur n'a pas accès, afficher le message d'upgrade
+  if (!hasAccess) {
+    return (
+      <>
+        <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
+          <div className="container mx-auto px-4 py-12">
+            <div className="text-center mb-12">
+              <div className="flex justify-center mb-6">
+                <div className="bg-gradient-to-r from-orange-600 to-red-600 p-4 rounded-full shadow-lg">
+                  <Shield className="h-12 w-12 text-white" />
+                </div>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Assistant Financier Personnel
+              </h1>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                Cette fonctionnalité est réservée aux plans Professionnel et Expert.
+              </p>
+              
+              <Alert className="max-w-2xl mx-auto mb-8 border-orange-200 bg-orange-50">
+                <AlertTriangle className="h-5 w-5 text-orange-600" />
+                <AlertDescription className="text-orange-800">
+                  <strong>Accès restreint :</strong> {getContextualUpgradeMessage(userPlan, requiredPlan)}
+                </AlertDescription>
+              </Alert>
+
+              <div className="flex justify-center gap-4">
+                <Button 
+                  onClick={() => setShowUpgradeModal(true)}
+                  size="lg"
+                  className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-8 py-3 text-lg"
+                >
+                  Upgrader maintenant
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <AdvancedUpgradeModal
+          isOpen={showUpgradeModal}
+          onClose={() => setShowUpgradeModal(false)}
+          requiredPlan={requiredPlan}
+          featureName="hasFinancialAssistant"
+          currentPlan={userPlan}
+          subscriptionStartDate={user?.subscription?.startDate}
+        />
+      </>
+    );
+  }
 
   if (isFirstVisit) {
     return (
