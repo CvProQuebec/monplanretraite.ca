@@ -26,18 +26,26 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
     
     if (toEnglish && !isEnglish) {
       // Switch to English
-      if (path === "/calculroi") path = "/en/roicalcul";
-      else if (path === "/consultation") path = "/en/consultation";
-      else if (path === "/formation") path = "/en/formation";
-      else if (path === "/retraite") path = "/en/retirement";
+      if (path === "/ma-retraite") path = "/my-retirement";
+      else if (path === "/mon-profil") path = "/my-profile";
+      else if (path === "/mes-revenus") path = "/my-income";
+      else if (path === "/planification-urgence") path = "/emergency-planning";
+      else if (path === "/planification-successorale") path = "/succession-planning";
+      else if (path === "/planification-depenses") path = "/expense-planning";
+      else if (path === "/assistant-financier") path = "/financial-assistant";
+      else if (path === "/mon-budget") path = "/my-budget";
       else if (path === "/") path = "/en";
       else path = "/en" + path;
     } else if (!toEnglish && isEnglish) {
       // Switch to French
-      if (path === "/en/roicalcul") path = "/calculroi";
-      else if (path === "/en/consultation") path = "/consultation";
-      else if (path === "/en/formation") path = "/formation";
-      else if (path === "/en/retirement") path = "/retraite";
+      if (path === "/my-retirement") path = "/ma-retraite";
+      else if (path === "/my-profile") path = "/mon-profil";
+      else if (path === "/my-income") path = "/mes-revenus";
+      else if (path === "/emergency-planning") path = "/planification-urgence";
+      else if (path === "/succession-planning") path = "/planification-successorale";
+      else if (path === "/expense-planning") path = "/planification-depenses";
+      else if (path === "/financial-assistant") path = "/assistant-financier";
+      else if (path === "/my-budget") path = "/mon-budget";
       else if (path.startsWith("/en")) path = path.replace(/^\/en/, "") || "/";
     }
     
@@ -65,88 +73,103 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
             {isEnglish ? "Home" : "Accueil"}
           </MobileNavLink>
           
+          {/* Ma Retraite / My Retirement */}
           <Link
-            to={isEnglish ? "/en/solutions" : "/fr/solutions"}
-            className={getMobileLinkClasses(isEnglish ? "/en/solutions" : "/fr/solutions")}
+            to={isEnglish ? "/my-retirement" : "/ma-retraite"}
+            className={getMobileLinkClasses(isEnglish ? "/my-retirement" : "/ma-retraite")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Solutions" : "Solutions"}
+            {isEnglish ? "My Retirement" : "Ma Retraite"}
           </Link>
           
-          {/* Sur mesure / Custom */}
+          {/* Mon Profil / My Profile */}
           <Link
-            to={isEnglish ? "/en/M2M" : "/fr/surMesure"}
-            className={getMobileLinkClasses(isEnglish ? "/en/M2M" : "/fr/surMesure")}
+            to={isEnglish ? "/my-profile" : "/mon-profil"}
+            className={getMobileLinkClasses(isEnglish ? "/my-profile" : "/mon-profil")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Custom" : "Sur mesure"}
+            {isEnglish ? "My Profile" : "Mon Profil"}
           </Link>
           
-          {/* Assistants */}
+          {/* Mes Revenus / My Income */}
           <Link
-            to={isEnglish ? "/en/assistants" : "/fr/assistants"}
-            className={getMobileLinkClasses(isEnglish ? "/en/assistants" : "/fr/assistants")}
+            to={isEnglish ? "/my-income" : "/mes-revenus"}
+            className={getMobileLinkClasses(isEnglish ? "/my-income" : "/mes-revenus")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Assistants" : "Assistants"}
+            {isEnglish ? "My Income" : "Mes Revenus"}
           </Link>
           
+          {/* Planification d'urgence / Emergency Planning */}
           <Link
-            to={isEnglish ? "/en/demo" : "/fr/demo"}
-            className={getMobileLinkClasses(isEnglish ? "/en/demo" : "/fr/demo")}
+            to={isEnglish ? "/emergency-planning" : "/planification-urgence"}
+            className={getMobileLinkClasses(isEnglish ? "/emergency-planning" : "/planification-urgence")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Demo" : "Démo"}
+            {isEnglish ? "Emergency Planning" : "Planification d'urgence"}
           </Link>
           
-          {/* Rentabilité et Évaluation supprimées du menu - disponibles via footer */}
-          {/* Removed Benefits - not in desktop nav */}
+          {/* Planification successorale / Succession Planning */}
           <Link
-            to={isEnglish ? "/en/content-media" : "/fr/contenu-media"}
-            className={getMobileLinkClasses(isEnglish ? "/en/content-media" : "/fr/contenu-media")}
+            to={isEnglish ? "/succession-planning" : "/planification-successorale"}
+            className={getMobileLinkClasses(isEnglish ? "/succession-planning" : "/planification-successorale")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Media" : "Média"}
-          </Link>
-          <Link
-            to={isEnglish ? "/en/recrutementrh" : "/fr/recrutementrh"}
-            className={getMobileLinkClasses(isEnglish ? "/en/recrutementrh" : "/fr/recrutementrh")}
-            onClick={toggleMenu}
-          >
-            {isEnglish ? "HR Solution" : "RH"}
+            {isEnglish ? "Succession Planning" : "Planification successorale"}
           </Link>
           
+          {/* Planification de dépenses / Expense Planning */}
           <Link
-            to={isEnglish ? "/en/training" : "/fr/formation"}
-            className={getMobileLinkClasses(isEnglish ? "/en/training" : "/fr/formation")}
+            to={isEnglish ? "/expense-planning" : "/planification-depenses"}
+            className={getMobileLinkClasses(isEnglish ? "/expense-planning" : "/planification-depenses")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Training docs" : "Formation"}
-          </Link>
-          <Link
-            to={isEnglish ? "/en/templates" : "/fr/gabarits"}
-            className={getMobileLinkClasses(isEnglish ? "/en/templates" : "/fr/gabarits")}
-            onClick={toggleMenu}
-          >
-            {isEnglish ? "Templates" : "Gabarits"}
+            {isEnglish ? "Expense Planning" : "Planification de dépenses"}
           </Link>
           
-          {/* About */}
+          {/* Assistant financier / Financial Assistant */}
           <Link
-            to={isEnglish ? "/en/about" : "/fr/a-propos"}
-            className={getMobileLinkClasses(isEnglish ? "/en/about" : "/fr/a-propos")}
+            to={isEnglish ? "/financial-assistant" : "/assistant-financier"}
+            className={getMobileLinkClasses(isEnglish ? "/financial-assistant" : "/assistant-financier")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "About" : "À propos"}
+            {isEnglish ? "Financial Assistant" : "Assistant financier"}
           </Link>
           
-          {/* Retraite intégré dans la navigation principale */}
+          {/* Budget */}
           <Link
-            to={isEnglish ? "/en/retirement" : "/fr/retraite"}
-            className={getMobileLinkClasses(isEnglish ? "/en/retirement" : "/fr/retraite")}
+            to={isEnglish ? "/my-budget" : "/mon-budget"}
+            className={getMobileLinkClasses(isEnglish ? "/my-budget" : "/mon-budget")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Retirement" : "Retraite"}
+            {isEnglish ? "My Budget" : "Mon Budget"}
+          </Link>
+          
+          {/* Module Retraite / Retirement Module */}
+          <Link
+            to={isEnglish ? "/en/retirement-module" : "/fr/retraite-module"}
+            className={getMobileLinkClasses(isEnglish ? "/en/retirement-module" : "/fr/retraite-module")}
+            onClick={toggleMenu}
+          >
+            {isEnglish ? "Retirement Module" : "Module Retraite"}
+          </Link>
+          
+          {/* Rapports / Reports */}
+          <Link
+            to={isEnglish ? "/en/retirement-reports" : "/fr/rapports-retraite"}
+            className={getMobileLinkClasses(isEnglish ? "/en/retirement-reports" : "/fr/rapports-retraite")}
+            onClick={toggleMenu}
+          >
+            {isEnglish ? "Reports" : "Rapports"}
+          </Link>
+          
+          {/* Sauvegarder/Charger / Save/Load */}
+          <Link
+            to={isEnglish ? "/en/save-load" : "/fr/sauvegarder-charger"}
+            className={getMobileLinkClasses(isEnglish ? "/en/save-load" : "/fr/sauvegarder-charger")}
+            onClick={toggleMenu}
+          >
+            {isEnglish ? "Save/Load" : "Sauvegarder/Charger"}
           </Link>
           
           {/* Language Mobile Toggle */}

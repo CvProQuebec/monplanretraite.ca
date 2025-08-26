@@ -38,107 +38,25 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
       hasSubmenu: false
     },
     {
-      id: 'dashboard',
-      label: isEnglish ? 'Dashboard' : 'Tableau de bord',
+      id: 'retirement',
+      label: isEnglish ? 'My Retirement' : 'Ma Retraite',
       icon: TrendingUp,
-      hasSubmenu: true,
-      submenu: [
-        {
-          id: 'profile',
-          label: isEnglish ? 'Profile' : 'Profil',
-          path: isEnglish ? '/my-profile' : '/mon-profil'
-        },
-        {
-          id: 'overview',
-          label: isEnglish ? 'Overview' : 'Vue d\'ensemble',
-          path: isEnglish ? '/en/retirement-module?section=dashboard' : '/fr/retraite-module?section=dashboard'
-        },
-        {
-          id: 'save-load',
-          label: isEnglish ? 'Save / Load' : 'Sauvegarder / Charger',
-          path: isEnglish ? '/en/save-load' : '/fr/sauvegarder-charger'
-        }
-      ]
+      path: isEnglish ? '/my-retirement' : '/ma-retraite',
+      hasSubmenu: false
     },
     {
-      id: 'assets-income',
-      label: isEnglish ? 'Income' : 'Revenus',
+      id: 'profile',
+      label: isEnglish ? 'My Profile' : 'Mon Profil',
+      icon: User,
+      path: isEnglish ? '/my-profile' : '/mon-profil',
+      hasSubmenu: false
+    },
+    {
+      id: 'income',
+      label: isEnglish ? 'My Income' : 'Mes Revenus',
       icon: DollarSign,
-      hasSubmenu: true,
-      submenu: [
-        {
-          id: 'income-management',
-          label: isEnglish ? 'Income Management' : 'Gestion des revenus',
-          path: isEnglish ? '/my-income' : '/mes-revenus'
-        },
-        {
-          id: 'investments',
-          label: isEnglish ? 'Investments' : 'Investissements',
-          path: isEnglish ? '/en/retirement-module?section=savings' : '/fr/retraite-module?section=savings'
-        },
-        {
-          id: 'real-estate',
-          label: isEnglish ? 'Real Estate' : 'Immobilier',
-          path: isEnglish ? '/en/retirement-module?section=real-estate' : '/fr/retraite-module?section=real-estate'
-        },
-        {
-          id: 'cpp',
-          label: 'CPP',
-          path: isEnglish ? '/en/retirement-module?section=cpp' : '/fr/retraite-module?section=cpp'
-        },
-        {
-          id: 'rrq',
-          label: 'RRQ',
-          path: isEnglish ? '/en/retirement-module?section=rrq' : '/fr/retraite-module?section=rrq'
-        },
-        {
-          id: 'cpp-rrq',
-          label: 'CPP+RRQ',
-          path: isEnglish ? '/en/retirement-module?section=cpp-rrq' : '/fr/retraite-module?section=cpp-rrq'
-        }
-      ]
-    },
-    {
-      id: 'expenses',
-      label: isEnglish ? 'Expenses' : 'Dépenses',
-      icon: TrendingUp,
-      path: isEnglish ? '/en/retirement-module?section=cashflow' : '/fr/retraite-module?section=cashflow',
-      hasSubmenu: true,
-      submenu: [
-        {
-          id: 'monthly-expenses',
-          label: isEnglish ? 'Monthly' : 'Mensuelles',
-          path: isEnglish ? '/en/retirement-module?section=cashflow' : '/fr/retraite-module?section=cashflow'
-        },
-        {
-          id: 'seasonal-expenses',
-          label: isEnglish ? 'Seasonal' : 'Saisonnières',
-          path: isEnglish ? '/en/retirement-module?section=cashflow' : '/fr/retraite-module?section=cashflow'
-        }
-      ]
-    },
-    {
-      id: 'optimization',
-      label: isEnglish ? 'Optimization' : 'Optimisation',
-      icon: BarChart3,
-      hasSubmenu: true,
-      submenu: [
-        {
-          id: 'financial-assistant',
-          label: isEnglish ? 'Personal Financial Assistant' : 'Assistant Financier Personnel',
-          path: isEnglish ? '/assistant-financier' : '/assistant-financier'
-        },
-        {
-          id: 'tax-optimization',
-          label: isEnglish ? 'Tax Optimization' : 'Optimisation fiscale',
-          path: isEnglish ? '/en/retirement-module?section=optimization' : '/fr/retraite-module?section=optimization'
-        },
-        {
-          id: 'monte-carlo',
-          label: isEnglish ? 'Monte Carlo' : 'Monte Carlo',
-          path: isEnglish ? '/en/retirement-module?section=monte-carlo' : '/fr/retraite-module?section=monte-carlo'
-        }
-      ]
+      path: isEnglish ? '/my-income' : '/mes-revenus',
+      hasSubmenu: false
     },
     {
       id: 'planning',
@@ -148,22 +66,54 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
       submenu: [
         {
           id: 'emergency-info',
-          label: isEnglish ? 'Emergency Information' : 'Infos en cas d\'urgence',
-          path: isEnglish ? '/en/retirement-module?section=emergency-info' : '/fr/retraite-module?section=emergency-info'
+          label: isEnglish ? 'Emergency Planning' : 'Planification d\'urgence',
+          path: isEnglish ? '/emergency-planning' : '/planification-urgence'
         },
         {
           id: 'succession',
-          label: isEnglish ? 'Succession' : 'Succession',
-          path: isEnglish ? '/en/retirement-module?section=succession' : '/fr/retraite-module?section=succession'
+          label: isEnglish ? 'Succession Planning' : 'Planification successorale',
+          path: isEnglish ? '/succession-planning' : '/planification-successorale'
+        },
+        {
+          id: 'expenses',
+          label: isEnglish ? 'Expense Planning' : 'Planification de dépenses',
+          path: isEnglish ? '/expense-planning' : '/planification-depenses'
         }
       ]
     },
-
+    {
+      id: 'assistant',
+      label: isEnglish ? 'Financial Assistant' : 'Assistant financier',
+      icon: Calculator,
+      path: isEnglish ? '/financial-assistant' : '/assistant-financier',
+      hasSubmenu: false
+    },
+    {
+      id: 'budget',
+      label: isEnglish ? 'My Budget' : 'Mon Budget',
+      icon: BarChart3,
+      path: isEnglish ? '/my-budget' : '/mon-budget',
+      hasSubmenu: false
+    },
+    {
+      id: 'module',
+      label: isEnglish ? 'Retirement Module' : 'Module Retraite',
+      icon: FileText,
+      path: isEnglish ? '/en/retirement-module' : '/fr/retraite-module',
+      hasSubmenu: false
+    },
     {
       id: 'reports',
       label: isEnglish ? 'Reports' : 'Rapports',
       icon: FileText,
       path: isEnglish ? '/en/retirement-reports' : '/fr/rapports-retraite',
+      hasSubmenu: false
+    },
+    {
+      id: 'save-load',
+      label: isEnglish ? 'Save/Load' : 'Sauvegarder/Charger',
+      icon: Database,
+      path: isEnglish ? '/en/save-load' : '/fr/sauvegarder-charger',
       hasSubmenu: false
     }
   ];

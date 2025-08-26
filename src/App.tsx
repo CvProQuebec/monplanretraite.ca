@@ -124,6 +124,9 @@ function App() {
               <Route path="/fr/sauvegarder-charger" element={<SauvegarderCharger />} />
               <Route path="/en/save-load" element={<SauvegarderCharger />} />
               
+              {/* Route Admin */}
+              <Route path="/admin" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-gray-800">Admin Panel</h1><p className="text-gray-600 mt-4">Administration panel - Coming soon</p></div>} />
+              
               {/* 🔄 REDIRECTIONS INTELLIGENTES */}
               
               {/* Redirection des anciennes routes vers la nouvelle structure */}

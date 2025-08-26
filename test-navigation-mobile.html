@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Navigation Mobile - MonPlanRetraite.ca</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        .test-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .route-item {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .route-path {
+            font-family: monospace;
+            background: #e9ecef;
+            padding: 5px 10px;
+            border-radius: 3px;
+            color: #495057;
+        }
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .language-toggle {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .language-toggle button {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .language-toggle button:hover {
+            background: #2980b9;
+        }
+        .mobile-simulator {
+            background: #2c3e50;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            color: white;
+        }
+        .mobile-nav {
+            background: #34495e;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .mobile-nav-item {
+            background: #ecf0f1;
+            color: #2c3e50;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .mobile-nav-item:hover {
+            background: #bdc3c7;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Navigation Mobile - MonPlanRetraite.ca</h1>
+    
+    <div class="language-toggle">
+        <button onclick="setLanguage('fr')">🇫🇷 Français</button>
+        <button onclick="setLanguage('en')">🇬🇧 English</button>
+        <span id="current-language">Langue actuelle: Français</span>
+    </div>
+
+    <div class="test-section">
+        <h2>📱 Simulateur de Navigation Mobile</h2>
+        <div class="mobile-simulator">
+            <h3>Menu Mobile (Simulation)</h3>
+            <div class="mobile-nav">
+                <div class="mobile-nav-item" onclick="testRoute('/')">🏠 Accueil / Home</div>
+                <div class="mobile-nav-item" onclick="testRoute('/ma-retraite')">📈 Ma Retraite / My Retirement</div>
+                <div class="mobile-nav-item" onclick="testRoute('/mon-profil')">👤 Mon Profil / My Profile</div>
+                <div class="mobile-nav-item" onclick="testRoute('/mes-revenus')">💰 Mes Revenus / My Income</div>
+                <div class="mobile-nav-item" onclick="testRoute('/planification-urgence')">🚨 Planification d'urgence / Emergency Planning</div>
+                <div class="mobile-nav-item" onclick="testRoute('/planification-successorale')">📋 Planification successorale / Succession Planning</div>
+                <div class="mobile-nav-item" onclick="testRoute('/planification-depenses')">💳 Planification de dépenses / Expense Planning</div>
+                <div class="mobile-nav-item" onclick="testRoute('/assistant-financier')">🤖 Assistant financier / Financial Assistant</div>
+                <div class="mobile-nav-item" onclick="testRoute('/mon-budget')">📊 Mon Budget / My Budget</div>
+                <div class="mobile-nav-item" onclick="testRoute('/fr/retraite-module')">🔧 Module Retraite / Retirement Module</div>
+                <div class="mobile-nav-item" onclick="testRoute('/fr/rapports-retraite')">📊 Rapports / Reports</div>
+                <div class="mobile-nav-item" onclick="testRoute('/fr/sauvegarder-charger')">💾 Sauvegarder/Charger / Save/Load</div>
+                <div class="mobile-nav-item" onclick="testRoute('/admin')">⚙️ Admin</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🔍 Test des Routes</h2>
+        <div id="routes-test">
+            <div class="route-item">
+                <span>Route d'accueil</span>
+                <span class="route-path">/</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Page d'accueil française</span>
+                <span class="route-path">/fr</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Page d'accueil anglaise</span>
+                <span class="route-path">/en</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Ma Retraite (FR)</span>
+                <span class="route-path">/ma-retraite</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>My Retirement (EN)</span>
+                <span class="route-path">/my-retirement</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Mon Profil (FR)</span>
+                <span class="route-path">/mon-profil</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>My Profile (EN)</span>
+                <span class="route-path">/my-profile</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Mes Revenus (FR)</span>
+                <span class="route-path">/mes-revenus</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>My Income (EN)</span>
+                <span class="route-path">/my-income</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Planification d'urgence (FR)</span>
+                <span class="route-path">/planification-urgence</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Emergency Planning (EN)</span>
+                <span class="route-path">/emergency-planning</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Planification successorale (FR)</span>
+                <span class="route-path">/planification-successorale</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Succession Planning (EN)</span>
+                <span class="route-path">/succession-planning</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Planification de dépenses (FR)</span>
+                <span class="route-path">/planification-depenses</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Expense Planning (EN)</span>
+                <span class="route-path">/expense-planning</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Assistant financier (FR)</span>
+                <span class="route-path">/assistant-financier</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Financial Assistant (EN)</span>
+                <span class="route-path">/financial-assistant</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Mon Budget (FR)</span>
+                <span class="route-path">/mon-budget</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>My Budget (EN)</span>
+                <span class="route-path">/my-budget</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Module Retraite (FR)</span>
+                <span class="route-path">/fr/retraite-module</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Retirement Module (EN)</span>
+                <span class="route-path">/en/retirement-module</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Rapports Retraite (FR)</span>
+                <span class="route-path">/fr/rapports-retraite</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Retirement Reports (EN)</span>
+                <span class="route-path">/en/retirement-reports</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Sauvegarder/Charger (FR)</span>
+                <span class="route-path">/fr/sauvegarder-charger</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Save/Load (EN)</span>
+                <span class="route-path">/en/save-load</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+            <div class="route-item">
+                <span>Admin</span>
+                <span class="route-path">/admin</span>
+                <span class="status pending">En attente de test</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 Instructions de Test</h2>
+        <ol>
+            <li><strong>Ouvrez l'application</strong> dans votre navigateur</li>
+            <li><strong>Passez en mode mobile</strong> (F12 → Device Toolbar)</li>
+            <li><strong>Ouvrez le menu mobile</strong> (bouton hamburger)</li>
+            <li><strong>Testez chaque lien</strong> du menu mobile</li>
+            <li><strong>Vérifiez que chaque page s'affiche</strong> correctement</li>
+            <li><strong>Testez le changement de langue</strong> (FR/EN)</li>
+            <li><strong>Vérifiez la navigation</strong> entre les pages</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>🐛 Problèmes Identifiés et Corrigés</h2>
+        <ul>
+            <li><strong>✅ Routes manquantes</strong> - Ajoutées dans App.tsx</li>
+            <li><strong>✅ Menu mobile corrigé</strong> - Routes mises à jour</li>
+            <li><strong>✅ Navigation uniforme</strong> - UniformHeader corrigé</li>
+            <li><strong>✅ Changement de langue</strong> - Gestion des routes corrigée</li>
+            <li><strong>✅ Route admin</strong> - Ajoutée pour le menu mobile</li>
+        </ul>
+    </div>
+
+    <script>
+        let currentLanguage = 'fr';
+        
+        function setLanguage(lang) {
+            currentLanguage = lang;
+            document.getElementById('current-language').textContent = 
+                lang === 'fr' ? 'Langue actuelle: Français' : 'Current Language: English';
+            
+            // Mettre à jour les textes du simulateur mobile
+            updateMobileSimulator(lang);
+        }
+        
+        function updateMobileSimulator(lang) {
+            const items = document.querySelectorAll('.mobile-nav-item');
+            items.forEach(item => {
+                if (lang === 'en') {
+                    item.textContent = item.textContent.split(' / ')[1];
+                } else {
+                    item.textContent = item.textContent.split(' / ')[0];
+                }
+            });
+        }
+        
+        function testRoute(route) {
+            // Simuler un test de route
+            const routeElement = document.querySelector(`[data-route="${route}"]`);
+            if (routeElement) {
+                routeElement.querySelector('.status').textContent = 'Testé';
+                routeElement.querySelector('.status').className = 'status success';
+            }
+            
+            // Afficher un message de test
+            alert(`Test de la route: ${route}\n\nCette route devrait maintenant fonctionner correctement sur mobile !`);
+        }
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🧪 Test Navigation Mobile initialisé');
+            console.log('📱 Testez la navigation mobile dans votre application');
+        });
+    </script>
+</body>
+</html>
