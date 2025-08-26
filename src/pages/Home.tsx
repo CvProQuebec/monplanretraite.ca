@@ -25,9 +25,6 @@ const Home: React.FC = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const isFrench = language === 'fr';
-  
-  // Debug: afficher la langue détectée
-  console.log('🌍 Language detected:', language, 'isFrench:', isFrench);
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -35,11 +32,6 @@ const Home: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
-
-      {/* Debug: Afficher la langue détectée */}
-      <div className="fixed top-20 left-4 z-50 bg-red-500 text-white p-2 rounded text-sm">
-        🌍 Langue: {language} | isFrench: {isFrench.toString()}
-      </div>
       
       {/* Main content - Directly financial planning */}
       <div className="container mx-auto px-6 py-8">
