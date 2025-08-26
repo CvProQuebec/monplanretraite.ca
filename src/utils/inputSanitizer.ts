@@ -27,13 +27,28 @@ export class InputSanitizer {
       return '';
     }
     
+    // For names, only remove the most dangerous characters and preserve everything else including spaces
     return input
       .replace(/[<>]/g, '') // Remove potential HTML tags
       .replace(/javascript:/gi, '') // Remove javascript: protocols
-      .replace(/on\w+\s*=/gi, '') // Remove event handlers
-      .replace(/[^a-zA-ZÀ-ÿĀ-žА-я\u4e00-\u9fff\s\-'\.]/g, '') // Keep only letters (including accented), spaces, hyphens, apostrophes, dots
-      .replace(/\s{2,}/g, ' ') // Normalize multiple consecutive spaces to single space (but preserve single spaces)
-      .trim(); // Trim only start/end
+      .replace(/on\w+\s*=/gi, ''); // Remove event handlers
+    // DO NOT remove spaces or other characters - let users type freely
+  }
+
+  /**
+   * Sanitize text input for notes and comments (preserves natural spacing)
+   */
+  static sanitizeNotes(input: string): string {
+    if (typeof input !== 'string') {
+      return '';
+    }
+    
+    // For notes and comments, preserve natural spacing and only remove dangerous content
+    return input
+      .replace(/[<>]/g, '') // Remove potential HTML tags
+      .replace(/javascript:/gi, '') // Remove javascript: protocols
+      .replace(/on\w+\s*=/gi, ''); // Remove event handlers
+    // DO NOT normalize spaces - preserve user's natural typing including multiple spaces
   }
 
   /**
@@ -70,6 +85,9 @@ export class InputSanitizer {
 
     // Fields that should use name sanitization (preserve spaces)
     const nameFields = ['prenom1', 'prenom2', 'nom1', 'nom2', 'nom', 'prenom'];
+    
+    // Fields that should use notes sanitization (preserve natural spacing)
+    const notesFields = ['notesSupplementaires1', 'notesSupplementaires2', 'notes', 'commentaires', 'description'];
 
     // Recursively sanitize object properties
     for (const [key, value] of Object.entries(data)) {
@@ -79,7 +97,13 @@ export class InputSanitizer {
         // Use special name sanitization for name fields
         if (nameFields.includes(key)) {
           sanitized[sanitizedKey] = this.sanitizeName(value);
-        } else {
+        }
+        // Use special notes sanitization for notes fields
+        else if (notesFields.includes(key)) {
+          sanitized[sanitizedKey] = this.sanitizeNotes(value);
+        }
+        // Use standard sanitization for other fields
+        else {
           sanitized[sanitizedKey] = this.sanitizeString(value);
         }
       } else if (typeof value === 'number') {

@@ -46,6 +46,12 @@ export interface PersonalData {
   notesSupplementaires1?: string;
   notesSupplementaires2?: string;
   
+  // NOUVEAUX: Champs pour les revenus temporaires et fréquences
+  dateFinRevenu1?: string;
+  dateFinRevenu2?: string;
+  frequencePaiement1?: 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'annual';
+  frequencePaiement2?: 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'annual';
+  
   // NOUVEAUX: Champs pour la Sécurité de la vieillesse
   ageSV1?: number;
   ageSV2?: number;

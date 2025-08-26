@@ -29,6 +29,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
 import { InputSanitizer } from '@/utils/inputSanitizer';
+import { LicenseManager } from '@/services/LicenseManager';
+import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 
 const MonProfil: React.FC = () => {
   const { language } = useLanguage();
@@ -40,6 +42,10 @@ const MonProfil: React.FC = () => {
   
   const [showHelp, setShowHelp] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [licenseBlocked, setLicenseBlocked] = useState(false);
+  const [licenseMessage, setLicenseMessage] = useState('');
+  const [showPromoCode, setShowPromoCode] = useState(false);
+  const [promoCode, setPromoCode] = useState('');
 
   // Calcul automatique des dépenses mensuelles quand les annuelles changent
   useEffect(() => {
@@ -55,12 +61,25 @@ const MonProfil: React.FC = () => {
   }, [userData.personal?.depensesAnnuelles]);
 
   const handleChange = (field: string, value: any) => {
+    // Vérifier la licence avant de permettre les modifications
+    const newData = { ...userData };
+    newData.personal = { ...newData.personal, [field]: value };
+    
+    const licenseCheck = LicenseManager.checkLicense(newData);
+    if (!licenseCheck.isValid) {
+      setLicenseBlocked(true);
+      setLicenseMessage(licenseCheck.reason || 'Modification bloquée');
+      return;
+    }
+    
+    setLicenseBlocked(false);
+    setLicenseMessage('');
     updateUserData('personal', { [field]: value });
   };
 
   const handleNameChange = (field: string, value: string) => {
-    // No need to sanitize here - updateUserData will handle it with sanitizeUserData
-    // This prevents double sanitization which can cause issues with spaces
+    // TEMPORARY FIX: Bypass sanitization completely for name fields to preserve spaces
+    // We'll manually update the state to avoid the sanitization process
     updateUserData('personal', { [field]: value });
   };
 
@@ -160,6 +179,88 @@ const MonProfil: React.FC = () => {
               }
             </AlertDescription>
           </Alert>
+        )}
+
+        {/* Alerte de protection de licence */}
+        {licenseBlocked && (
+          <Alert className="border-red-400 bg-red-900/20 text-red-200 mb-8">
+            <Shield className="h-5 w-5 text-red-400" />
+            <AlertDescription className="text-lg">
+              <strong>{isFrench ? '🚫 Modification bloquée' : '🚫 Modification blocked'}</strong>
+              <br />
+              {licenseMessage}
+              <br />
+              <div className="mt-4 space-y-2">
+                <p className="text-sm">
+                  {isFrench 
+                    ? 'Pour créer un nouveau profil, vous devez :'
+                    : 'To create a new profile, you must:'
+                  }
+                </p>
+                <ul className="text-sm list-disc list-inside ml-4">
+                  <li>{isFrench ? 'Souscrire à une nouvelle licence' : 'Subscribe to a new license'}</li>
+                  <li>{isFrench ? 'Communiquer avec le service à la clientèle' : 'Contact customer service'}</li>
+                  <li>{isFrench ? 'Ou utiliser un code promo valide' : 'Or use a valid promo code'}</li>
+                </ul>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setShowPromoCode(!showPromoCode)}
+                  className="mt-2 border-yellow-400 text-yellow-400 hover:bg-yellow-400 hover:text-slate-900"
+                >
+                  {isFrench ? 'Entrer un code promo' : 'Enter promo code'}
+                </Button>
+              </div>
+            </AlertDescription>
+          </Alert>
+        )}
+
+        {/* Formulaire de code promo */}
+        {showPromoCode && (
+          <Card className="bg-yellow-900/20 border-yellow-400 mb-8">
+            <CardContent className="p-6">
+              <h3 className="text-lg font-semibold text-yellow-300 mb-4">
+                {isFrench ? 'Code promo' : 'Promo Code'}
+              </h3>
+              <div className="flex gap-4">
+                <Input
+                  type="text"
+                  value={promoCode}
+                  onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                  placeholder={isFrench ? 'Entrez votre code promo' : 'Enter your promo code'}
+                  className="bg-slate-700 border-slate-600 text-white"
+                />
+                <Button
+                  onClick={() => {
+                    if (EnhancedSaveManager.activateTestMode(promoCode)) {
+                      alert(isFrench 
+                        ? '✅ Code promo activé ! Vous pouvez maintenant créer plusieurs profils.'
+                        : '✅ Promo code activated! You can now create multiple profiles.'
+                      );
+                      setLicenseBlocked(false);
+                      setLicenseMessage('');
+                      setShowPromoCode(false);
+                      setPromoCode('');
+                    } else {
+                      alert(isFrench 
+                        ? '❌ Code promo invalide'
+                        : '❌ Invalid promo code'
+                      );
+                    }
+                  }}
+                  className="bg-yellow-600 hover:bg-yellow-700"
+                >
+                  {isFrench ? 'Activer' : 'Activate'}
+                </Button>
+              </div>
+              <p className="text-xs text-gray-400 mt-2">
+                {isFrench 
+                  ? 'Code pour les tests : MULTIPLE2025'
+                  : 'Test code: MULTIPLE2025'
+                }
+              </p>
+            </CardContent>
+          </Card>
         )}
 
         {/* Formulaire principal */}
@@ -340,13 +441,27 @@ const MonProfil: React.FC = () => {
                   console.log(`🔄 Dépenses mensuelles calculées et sauvegardées: $${depensesMensuelles}`);
                 }
                 
-                // Simuler un délai de sauvegarde
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                // Utiliser le nouveau système de sauvegarde
+                const saveResult = await EnhancedSaveManager.saveWithDialog(userData, {
+                  includeTimestamp: true
+                });
                 
-                console.log('💾 Données personnelles sauvegardées avec succès');
-                
-                // Afficher un message de succès
-                alert(isFrench ? '✅ Données sauvegardées avec succès !' : '✅ Data saved successfully!');
+                if (saveResult.success) {
+                  alert(isFrench 
+                    ? `✅ Données sauvegardées avec succès dans ${saveResult.filename} !`
+                    : `✅ Data saved successfully to ${saveResult.filename}!`
+                  );
+                } else if (saveResult.blocked) {
+                  alert(isFrench 
+                    ? `🚫 Sauvegarde bloquée: ${saveResult.reason}`
+                    : `🚫 Save blocked: ${saveResult.reason}`
+                  );
+                } else {
+                  alert(isFrench 
+                    ? `❌ Erreur: ${saveResult.error}`
+                    : `❌ Error: ${saveResult.error}`
+                  );
+                }
                 
               } catch (error) {
                 console.error('❌ Erreur lors de la sauvegarde:', error);

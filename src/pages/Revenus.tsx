@@ -22,10 +22,13 @@ import {
   Clock,
   Shield,
   AlertTriangle,
-  Users
+  Users,
+  Calculator
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
+import MoneyInput from '@/components/ui/MoneyInput';
+import AdvancedEIManager from '@/components/ui/AdvancedEIManager';
 
 const Revenus: React.FC = () => {
   const { language } = useLanguage();
@@ -42,13 +45,13 @@ const Revenus: React.FC = () => {
     updateUserData('personal', { [field]: value });
   };
 
-  const handleSalaryChange = (person: '1' | '2', value: string) => {
-    const numericValue = parseFloat(value.replace(/[^\d.]/g, '')) || 0;
-    handleChange(`salaire${person}`, numericValue);
+  const handleNotesChange = (field: string, value: string) => {
+    // BYPASS sanitization completely for notes fields to preserve spaces and natural typing
+    updateUserData('personal', { [field]: value });
   };
 
-  const formatSalaryInput = (value: number): string => {
-    return value > 0 ? formatCurrency(value, { showCents: false }) : '';
+  const handleSalaryChange = (person: '1' | '2', value: number) => {
+    handleChange(`salaire${person}`, value);
   };
 
   const getProgressPercentage = () => {
@@ -69,18 +72,61 @@ const Revenus: React.FC = () => {
 
   const progress = getProgressPercentage();
 
-  // Types de revenus disponibles
+  // Types de revenus disponibles avec métadonnées
   const typesRevenu = [
-    { value: 'salaire', label: isFrench ? 'Salaire' : 'Salary' },
-    { value: 'assurance-emploi', label: isFrench ? 'Assurance emploi' : 'Employment Insurance' },
-    { value: 'rentes', label: isFrench ? 'Rentes' : 'Pensions' },
-    { value: 'dividendes', label: isFrench ? 'Dividendes' : 'Dividends' },
-    { value: 'revenus-location', label: isFrench ? 'Revenus de location' : 'Rental Income' },
-    { value: 'travail-autonome', label: isFrench ? 'Travail autonome' : 'Self-Employment' },
-    { value: 'autres', label: isFrench ? 'Autres' : 'Other' }
+    { 
+      value: 'salaire', 
+      label: isFrench ? 'Salaire' : 'Salary',
+      frequency: 'annual',
+      temporary: false,
+      needsEmploymentType: true
+    },
+    { 
+      value: 'assurance-emploi', 
+      label: isFrench ? 'Assurance emploi' : 'Employment Insurance',
+      frequency: 'weekly',
+      temporary: true,
+      needsEmploymentType: false,
+      maxDuration: 45 // semaines maximum
+    },
+    { 
+      value: 'rentes', 
+      label: isFrench ? 'Rentes' : 'Pensions',
+      frequency: 'monthly',
+      temporary: false,
+      needsEmploymentType: false
+    },
+    { 
+      value: 'dividendes', 
+      label: isFrench ? 'Dividendes' : 'Dividends',
+      frequency: 'annual',
+      temporary: false,
+      needsEmploymentType: false
+    },
+    { 
+      value: 'revenus-location', 
+      label: isFrench ? 'Revenus de location' : 'Rental Income',
+      frequency: 'monthly',
+      temporary: false,
+      needsEmploymentType: false
+    },
+    { 
+      value: 'travail-autonome', 
+      label: isFrench ? 'Travail autonome' : 'Self-Employment',
+      frequency: 'annual',
+      temporary: false,
+      needsEmploymentType: false
+    },
+    { 
+      value: 'autres', 
+      label: isFrench ? 'Autres' : 'Other',
+      frequency: 'annual',
+      temporary: false,
+      needsEmploymentType: false
+    }
   ];
 
-  // Types d'emploi disponibles
+  // Types d'emploi disponibles (pour salaires uniquement)
   const typesEmploi = [
     { value: 'permanent', label: isFrench ? 'Permanent' : 'Permanent' },
     { value: 'partiel', label: isFrench ? 'Temps partiel' : 'Part-time' },
@@ -88,6 +134,57 @@ const Revenus: React.FC = () => {
     { value: 'saisonnier', label: isFrench ? 'Saisonnier' : 'Seasonal' },
     { value: 'autonome', label: isFrench ? 'Travailleur autonome' : 'Self-employed' }
   ];
+
+  // Fréquences de paiement
+  const frequencesPaiement = [
+    { value: 'weekly', label: isFrench ? 'Hebdomadaire' : 'Weekly' },
+    { value: 'biweekly', label: isFrench ? 'Aux 2 semaines' : 'Bi-weekly' },
+    { value: 'monthly', label: isFrench ? 'Mensuel' : 'Monthly' },
+    { value: 'quarterly', label: isFrench ? 'Trimestriel' : 'Quarterly' },
+    { value: 'annual', label: isFrench ? 'Annuel' : 'Annual' }
+  ];
+
+  // Fonction pour obtenir les métadonnées d'un type de revenu
+  const getRevenueTypeMetadata = (typeRevenu: string) => {
+    return typesRevenu.find(type => type.value === typeRevenu) || typesRevenu[0];
+  };
+
+  // Fonction pour calculer le montant annuel selon la fréquence
+  const calculateAnnualAmount = (amount: number, frequency: string) => {
+    const multipliers = {
+      weekly: 52,
+      biweekly: 26,
+      monthly: 12,
+      quarterly: 4,
+      annual: 1
+    };
+    return amount * (multipliers[frequency as keyof typeof multipliers] || 1);
+  };
+
+  // Fonction pour générer des suggestions de planification
+  const generatePlanningAdvice = (person: '1' | '2') => {
+    const typeRevenu = userData.personal?.[`typeRevenu${person}` as keyof typeof userData.personal] as string;
+    const dateFin = userData.personal?.[`dateFinRevenu${person}` as keyof typeof userData.personal] as string;
+    const metadata = getRevenueTypeMetadata(typeRevenu);
+    
+    if (metadata.temporary && dateFin) {
+      const endDate = new Date(dateFin);
+      const today = new Date();
+      const daysUntilEnd = Math.ceil((endDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+      
+      if (daysUntilEnd > 0 && daysUntilEnd <= 365) {
+        return {
+          type: 'transition',
+          message: isFrench 
+            ? `Votre ${metadata.label.toLowerCase()} se termine dans ${daysUntilEnd} jours. Considérez demander votre RRQ le ${new Date(endDate.getTime() + 24 * 60 * 60 * 1000).toLocaleDateString('fr-CA')}.`
+            : `Your ${metadata.label.toLowerCase()} ends in ${daysUntilEnd} days. Consider applying for CPP on ${new Date(endDate.getTime() + 24 * 60 * 60 * 1000).toLocaleDateString('en-CA')}.`,
+          urgency: daysUntilEnd <= 90 ? 'high' : 'medium'
+        };
+      }
+    }
+    
+    return null;
+  };
 
   // Statuts professionnels
   const statutsProfessionnels = [
@@ -168,6 +265,51 @@ const Revenus: React.FC = () => {
           </Alert>
         )}
 
+        {/* Section Assurance Emploi Avancée */}
+        {((userData.personal?.typeRevenu1 === 'assurance-emploi' && userData.personal?.naissance1) || 
+          (userData.personal?.typeRevenu2 === 'assurance-emploi' && userData.personal?.naissance2)) && (
+          <div className="mb-12">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-indigo-300 mb-4 flex items-center justify-center gap-3">
+                <Calculator className="w-8 h-8 text-indigo-400" />
+                {isFrench ? 'Analyse Avancée - Assurance Emploi' : 'Advanced Analysis - Employment Insurance'}
+              </h2>
+              <p className="text-indigo-200 text-lg">
+                {isFrench 
+                  ? 'Calculateur intelligent pour optimiser votre transition vers la retraite'
+                  : 'Smart calculator to optimize your transition to retirement'
+                }
+              </p>
+            </div>
+            
+            <div className="grid grid-cols-1 gap-8">
+              {userData.personal?.typeRevenu1 === 'assurance-emploi' && userData.personal?.naissance1 && (
+                <AdvancedEIManager
+                  personNumber={1}
+                  personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
+                  birthDate={userData.personal.naissance1}
+                  onDataChange={(data) => {
+                    updateUserData('personal', { advancedEI1: data });
+                  }}
+                  isFrench={isFrench}
+                />
+              )}
+              
+              {userData.personal?.typeRevenu2 === 'assurance-emploi' && userData.personal?.naissance2 && (
+                <AdvancedEIManager
+                  personNumber={2}
+                  personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
+                  birthDate={userData.personal.naissance2}
+                  onDataChange={(data) => {
+                    updateUserData('personal', { advancedEI2: data });
+                  }}
+                  isFrench={isFrench}
+                />
+              )}
+            </div>
+          </div>
+        )}
+
         {/* Formulaire principal */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Personne 1 - Revenus */}
@@ -177,7 +319,10 @@ const Revenus: React.FC = () => {
                 <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
                   1
                 </div>
-                {isFrench ? 'Revenus - Personne 1' : 'Income - Person 1'}
+                {userData.personal?.prenom1 
+                  ? `${isFrench ? 'Revenus' : 'Income'} - ${userData.personal.prenom1}`
+                  : (isFrench ? 'Revenus - Personne 1' : 'Income - Person 1')
+                }
               </CardTitle>
               <CardDescription className="text-green-200">
                 {userData.personal?.prenom1 || (isFrench ? 'Première personne' : 'First person')}
@@ -214,16 +359,13 @@ const Revenus: React.FC = () => {
                     <DollarSign className="w-4 h-4" />
                     {isFrench ? 'Revenu annuel' : 'Annual Income'}
                   </Label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                    <Input
-                      type="text"
-                      value={formatSalaryInput(userData.personal?.salaire1 || 0)}
-                      onChange={(e) => handleSalaryChange('1', e.target.value)}
-                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 pl-8 focus:border-green-400 focus:ring-green-400"
-                      placeholder="0"
-                    />
-                  </div>
+                  <MoneyInput
+                    value={userData.personal?.salaire1 || 0}
+                    onChange={(value) => handleSalaryChange('1', value)}
+                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400"
+                    placeholder={isFrench ? "Ex: 75 000 ou 75 000,50" : "Ex: 75,000 or 75,000.50"}
+                    allowDecimals={true}
+                  />
                 </div>
 
                 {/* Type de revenu */}
@@ -249,62 +391,144 @@ const Revenus: React.FC = () => {
                   </Select>
                 </div>
 
-                {/* Type d'emploi */}
-                <div className="space-y-2">
-                  <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                    <Users className="w-4 h-4" />
-                    {isFrench ? 'Type d\'emploi' : 'Employment Type'}
-                  </Label>
-                  <Select
-                    value={userData.personal?.typeEmploi1 || 'permanent'}
-                    onValueChange={(value) => handleChange('typeEmploi1', value)}
-                  >
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
-                      {typesEmploi.map(type => (
-                        <SelectItem key={type.value} value={type.value}>
-                          {type.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                {/* Champs adaptatifs selon le type de revenu */}
+                {(() => {
+                  const currentTypeRevenu = userData.personal?.typeRevenu1 || 'salaire';
+                  const metadata = getRevenueTypeMetadata(currentTypeRevenu);
+                  
+                  return (
+                    <>
+                      {/* Type d'emploi (seulement pour salaires) */}
+                      {metadata.needsEmploymentType && (
+                        <div className="space-y-2">
+                          <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                            <Users className="w-4 h-4" />
+                            {isFrench ? 'Type d\'emploi' : 'Employment Type'}
+                          </Label>
+                          <Select
+                            value={userData.personal?.typeEmploi1 || 'permanent'}
+                            onValueChange={(value) => handleChange('typeEmploi1', value)}
+                          >
+                            <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent className="bg-slate-700 border-slate-600">
+                              {typesEmploi.map(type => (
+                                <SelectItem key={type.value} value={type.value}>
+                                  {type.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      )}
 
-                {/* Informations de contrat (si applicable) */}
-                {userData.personal?.typeEmploi1 === 'contrat' && (
-                  <>
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                        <Clock className="w-4 h-4" />
-                        {isFrench ? 'Durée du contrat (mois)' : 'Contract Duration (months)'}
-                      </Label>
-                      <Input
-                        type="number"
-                        value={userData.personal?.dureeContrat1 || ''}
-                        onChange={(e) => handleChange('dureeContrat1', Number(e.target.value))}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400"
-                        placeholder="12"
-                        min="1"
-                        max="120"
-                      />
-                    </div>
+                      {/* Fréquence de paiement (pour revenus non-salariaux) */}
+                      {!metadata.needsEmploymentType && (
+                        <div className="space-y-2">
+                          <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                            <Clock className="w-4 h-4" />
+                            {isFrench ? 'Fréquence de paiement' : 'Payment Frequency'}
+                          </Label>
+                          <Select
+                            value={userData.personal?.[`frequencePaiement1`] || metadata.frequency}
+                            onValueChange={(value) => handleChange('frequencePaiement1', value)}
+                          >
+                            <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent className="bg-slate-700 border-slate-600">
+                              {frequencesPaiement.map(freq => (
+                                <SelectItem key={freq.value} value={freq.value}>
+                                  {freq.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      )}
 
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
-                        {isFrench ? 'Date de fin de contrat' : 'Contract End Date'}
-                      </Label>
-                      <DateInput
-                        value={userData.personal?.dateFinContrat1 || ''}
-                        onChange={(value) => handleChange('dateFinContrat1', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400"
-                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
-                      />
-                    </div>
-                  </>
-                )}
+                      {/* Date de fin pour revenus temporaires */}
+                      {metadata.temporary && (
+                        <div className="space-y-2">
+                          <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                            <Calendar className="w-4 h-4" />
+                            {currentTypeRevenu === 'assurance-emploi' 
+                              ? (isFrench ? 'Prend fin le (ou vers le)' : 'Ends on (or around)')
+                              : (isFrench ? 'Date de fin' : 'End Date')
+                            }
+                          </Label>
+                          <DateInput
+                            value={userData.personal?.dateFinRevenu1 || ''}
+                            onChange={(value) => handleChange('dateFinRevenu1', value)}
+                            className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400"
+                            placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                          />
+                          {currentTypeRevenu === 'assurance-emploi' && (
+                            <p className="text-xs text-yellow-300 flex items-center gap-1">
+                              <Info className="w-3 h-3" />
+                              {isFrench 
+                                ? `Maximum ${metadata.maxDuration} semaines selon l'admissibilité`
+                                : `Maximum ${metadata.maxDuration} weeks based on eligibility`
+                              }
+                            </p>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Informations de contrat (pour emplois contractuels) */}
+                      {userData.personal?.typeEmploi1 === 'contrat' && (
+                        <>
+                          <div className="space-y-2">
+                            <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                              <Clock className="w-4 h-4" />
+                              {isFrench ? 'Durée du contrat (mois)' : 'Contract Duration (months)'}
+                            </Label>
+                            <Input
+                              type="number"
+                              value={userData.personal?.dureeContrat1 || ''}
+                              onChange={(e) => handleChange('dureeContrat1', Number(e.target.value))}
+                              className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400"
+                              placeholder="12"
+                              min="1"
+                              max="120"
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                              <Calendar className="w-4 h-4" />
+                              {isFrench ? 'Date de fin de contrat' : 'Contract End Date'}
+                            </Label>
+                            <DateInput
+                              value={userData.personal?.dateFinContrat1 || ''}
+                              onChange={(value) => handleChange('dateFinContrat1', value)}
+                              className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400"
+                              placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                            />
+                          </div>
+                        </>
+                      )}
+
+                      {/* Suggestions de planification */}
+                      {(() => {
+                        const advice = generatePlanningAdvice('1');
+                        if (advice) {
+                          return (
+                            <Alert className={`border-${advice.urgency === 'high' ? 'red' : 'yellow'}-400 bg-${advice.urgency === 'high' ? 'red' : 'yellow'}-900/20 text-${advice.urgency === 'high' ? 'red' : 'yellow'}-200`}>
+                              <AlertTriangle className={`h-4 w-4 text-${advice.urgency === 'high' ? 'red' : 'yellow'}-400`} />
+                              <AlertDescription className="text-sm">
+                                <strong>{isFrench ? 'Suggestion de planification :' : 'Planning Suggestion:'}</strong><br />
+                                {advice.message}
+                              </AlertDescription>
+                            </Alert>
+                          );
+                        }
+                        return null;
+                      })()}
+                    </>
+                  );
+                })()}
 
                 {/* Informations supplémentaires */}
                 <div className="space-y-2">
@@ -313,7 +537,7 @@ const Revenus: React.FC = () => {
                   </Label>
                   <textarea
                     value={userData.personal?.notesSupplementaires1 || ''}
-                    onChange={(e) => handleChange('notesSupplementaires1', e.target.value)}
+                    onChange={(e) => handleNotesChange('notesSupplementaires1', e.target.value)}
                     className="w-full bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400 rounded-md p-3 min-h-[80px]"
                     placeholder={isFrench ? 'Ajoutez des détails sur vos revenus...' : 'Add details about your income...'}
                   />
@@ -329,7 +553,10 @@ const Revenus: React.FC = () => {
                 <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
                   2
                 </div>
-                {isFrench ? 'Revenus - Personne 2' : 'Income - Person 2'}
+                {userData.personal?.prenom2 
+                  ? `${isFrench ? 'Revenus' : 'Income'} - ${userData.personal.prenom2}`
+                  : (isFrench ? 'Revenus - Personne 2' : 'Income - Person 2')
+                }
               </CardTitle>
               <CardDescription className="text-emerald-200">
                 {userData.personal?.prenom2 || (isFrench ? 'Deuxième personne (optionnel)' : 'Second person (optional)')}
@@ -366,16 +593,13 @@ const Revenus: React.FC = () => {
                     <DollarSign className="w-4 h-4" />
                     {isFrench ? 'Revenu annuel' : 'Annual Income'}
                   </Label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                    <Input
-                      type="text"
-                      value={formatSalaryInput(userData.personal?.salaire2 || 0)}
-                      onChange={(e) => handleSalaryChange('2', e.target.value)}
-                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 pl-8 focus:border-emerald-400 focus:ring-emerald-400"
-                      placeholder="0"
-                    />
-                  </div>
+                  <MoneyInput
+                    value={userData.personal?.salaire2 || 0}
+                    onChange={(value) => handleSalaryChange('2', value)}
+                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400"
+                    placeholder={isFrench ? "Ex: 75 000 ou 75 000,50" : "Ex: 75,000 or 75,000.50"}
+                    allowDecimals={true}
+                  />
                 </div>
 
                 {/* Type de revenu */}
@@ -401,62 +625,144 @@ const Revenus: React.FC = () => {
                   </Select>
                 </div>
 
-                {/* Type d'emploi */}
-                <div className="space-y-2">
-                  <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                    <Users className="w-4 h-4" />
-                    {isFrench ? 'Type d\'emploi' : 'Employment Type'}
-                  </Label>
-                  <Select
-                    value={userData.personal?.typeEmploi2 || 'permanent'}
-                    onValueChange={(value) => handleChange('typeEmploi2', value)}
-                  >
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
-                      {typesEmploi.map(type => (
-                        <SelectItem key={type.value} value={type.value}>
-                          {type.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                {/* Champs adaptatifs selon le type de revenu */}
+                {(() => {
+                  const currentTypeRevenu = userData.personal?.typeRevenu2 || 'salaire';
+                  const metadata = getRevenueTypeMetadata(currentTypeRevenu);
+                  
+                  return (
+                    <>
+                      {/* Type d'emploi (seulement pour salaires) */}
+                      {metadata.needsEmploymentType && (
+                        <div className="space-y-2">
+                          <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                            <Users className="w-4 h-4" />
+                            {isFrench ? 'Type d\'emploi' : 'Employment Type'}
+                          </Label>
+                          <Select
+                            value={userData.personal?.typeEmploi2 || 'permanent'}
+                            onValueChange={(value) => handleChange('typeEmploi2', value)}
+                          >
+                            <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent className="bg-slate-700 border-slate-600">
+                              {typesEmploi.map(type => (
+                                <SelectItem key={type.value} value={type.value}>
+                                  {type.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      )}
 
-                {/* Informations de contrat (si applicable) */}
-                {userData.personal?.typeEmploi2 === 'contrat' && (
-                  <>
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                        <Clock className="w-4 h-4" />
-                        {isFrench ? 'Durée du contrat (mois)' : 'Contract Duration (months)'}
-                      </Label>
-                      <Input
-                        type="number"
-                        value={userData.personal?.dureeContrat2 || ''}
-                        onChange={(e) => handleChange('dureeContrat2', Number(e.target.value))}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400"
-                        placeholder="12"
-                        min="1"
-                        max="120"
-                      />
-                    </div>
+                      {/* Fréquence de paiement (pour revenus non-salariaux) */}
+                      {!metadata.needsEmploymentType && (
+                        <div className="space-y-2">
+                          <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                            <Clock className="w-4 h-4" />
+                            {isFrench ? 'Fréquence de paiement' : 'Payment Frequency'}
+                          </Label>
+                          <Select
+                            value={userData.personal?.[`frequencePaiement2`] || metadata.frequency}
+                            onValueChange={(value) => handleChange('frequencePaiement2', value)}
+                          >
+                            <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent className="bg-slate-700 border-slate-600">
+                              {frequencesPaiement.map(freq => (
+                                <SelectItem key={freq.value} value={freq.value}>
+                                  {freq.label}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      )}
 
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
-                        {isFrench ? 'Date de fin de contrat' : 'Contract End Date'}
-                      </Label>
-                      <DateInput
-                        value={userData.personal?.dateFinContrat2 || ''}
-                        onChange={(value) => handleChange('dateFinContrat2', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400"
-                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
-                      />
-                    </div>
-                  </>
-                )}
+                      {/* Date de fin pour revenus temporaires */}
+                      {metadata.temporary && (
+                        <div className="space-y-2">
+                          <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                            <Calendar className="w-4 h-4" />
+                            {currentTypeRevenu === 'assurance-emploi' 
+                              ? (isFrench ? 'Prend fin le (ou vers le)' : 'Ends on (or around)')
+                              : (isFrench ? 'Date de fin' : 'End Date')
+                            }
+                          </Label>
+                          <DateInput
+                            value={userData.personal?.dateFinRevenu2 || ''}
+                            onChange={(value) => handleChange('dateFinRevenu2', value)}
+                            className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400"
+                            placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                          />
+                          {currentTypeRevenu === 'assurance-emploi' && (
+                            <p className="text-xs text-yellow-300 flex items-center gap-1">
+                              <Info className="w-3 h-3" />
+                              {isFrench 
+                                ? `Maximum ${metadata.maxDuration} semaines selon l'admissibilité`
+                                : `Maximum ${metadata.maxDuration} weeks based on eligibility`
+                              }
+                            </p>
+                          )}
+                        </div>
+                      )}
+
+                      {/* Informations de contrat (pour emplois contractuels) */}
+                      {userData.personal?.typeEmploi2 === 'contrat' && (
+                        <>
+                          <div className="space-y-2">
+                            <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                              <Clock className="w-4 h-4" />
+                              {isFrench ? 'Durée du contrat (mois)' : 'Contract Duration (months)'}
+                            </Label>
+                            <Input
+                              type="number"
+                              value={userData.personal?.dureeContrat2 || ''}
+                              onChange={(e) => handleChange('dureeContrat2', Number(e.target.value))}
+                              className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400"
+                              placeholder="12"
+                              min="1"
+                              max="120"
+                            />
+                          </div>
+
+                          <div className="space-y-2">
+                            <Label className="text-gray-200 font-semibold flex items-center gap-2">
+                              <Calendar className="w-4 h-4" />
+                              {isFrench ? 'Date de fin de contrat' : 'Contract End Date'}
+                            </Label>
+                            <DateInput
+                              value={userData.personal?.dateFinContrat2 || ''}
+                              onChange={(value) => handleChange('dateFinContrat2', value)}
+                              className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400"
+                              placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                            />
+                          </div>
+                        </>
+                      )}
+
+                      {/* Suggestions de planification */}
+                      {(() => {
+                        const advice = generatePlanningAdvice('2');
+                        if (advice) {
+                          return (
+                            <Alert className={`border-${advice.urgency === 'high' ? 'red' : 'yellow'}-400 bg-${advice.urgency === 'high' ? 'red' : 'yellow'}-900/20 text-${advice.urgency === 'high' ? 'red' : 'yellow'}-200`}>
+                              <AlertTriangle className={`h-4 w-4 text-${advice.urgency === 'high' ? 'red' : 'yellow'}-400`} />
+                              <AlertDescription className="text-sm">
+                                <strong>{isFrench ? 'Suggestion de planification :' : 'Planning Suggestion:'}</strong><br />
+                                {advice.message}
+                              </AlertDescription>
+                            </Alert>
+                          );
+                        }
+                        return null;
+                      })()}
+                    </>
+                  );
+                })()}
 
                 {/* Informations supplémentaires */}
                 <div className="space-y-2">
@@ -465,7 +771,7 @@ const Revenus: React.FC = () => {
                   </Label>
                   <textarea
                     value={userData.personal?.notesSupplementaires2 || ''}
-                    onChange={(e) => handleChange('notesSupplementaires2', e.target.value)}
+                    onChange={(e) => handleNotesChange('notesSupplementaires2', e.target.value)}
                     className="w-full bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400 rounded-md p-3 min-h-[80px]"
                     placeholder={isFrench ? 'Ajoutez des détails sur vos revenus...' : 'Add details about your income...'}
                   />

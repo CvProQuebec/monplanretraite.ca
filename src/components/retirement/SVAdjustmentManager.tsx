@@ -22,6 +22,7 @@ import {
 } from 'lucide-react';
 import { SVAdjustment } from '@/features/retirement/types';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
+import MoneyInput from '@/components/ui/MoneyInput';
 
 interface SVAdjustmentManagerProps {
   personNumber: 1 | 2;
@@ -243,16 +244,13 @@ const SVAdjustmentManager: React.FC<SVAdjustmentManagerProps> = ({
                           <Label className="text-gray-200 text-sm">
                             {isFrench ? 'Montant mensuel' : 'Monthly Amount'}
                           </Label>
-                          <div className="relative">
-                            <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                            <Input
-                              type="number"
-                              value={adjustment.montantMensuel}
-                              onChange={(e) => handleEditAdjustment(adjustment.id, { montantMensuel: parseFloat(e.target.value) || 0 })}
-                              className="bg-slate-600 border-slate-500 text-white pl-8"
-                              step="0.01"
-                            />
-                          </div>
+                          <MoneyInput
+                            value={adjustment.montantMensuel}
+                            onChange={(value) => handleEditAdjustment(adjustment.id, { montantMensuel: value })}
+                            className="bg-slate-600 border-slate-500 text-white"
+                            placeholder={isFrench ? "Ex: 713,34" : "Ex: 713.34"}
+                            allowDecimals={true}
+                          />
                         </div>
                         <div>
                           <Label className="text-gray-200 text-sm">
@@ -404,17 +402,13 @@ const SVAdjustmentManager: React.FC<SVAdjustmentManagerProps> = ({
                 <Label className="text-gray-200 text-sm">
                   {isFrench ? 'Montant mensuel' : 'Monthly Amount'}
                 </Label>
-                <div className="relative">
-                  <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">$</span>
-                  <Input
-                    type="number"
-                    value={newAdjustment.montantMensuel || ''}
-                    onChange={(e) => setNewAdjustment(prev => ({ ...prev, montantMensuel: parseFloat(e.target.value) || 0 }))}
-                    className="bg-slate-600 border-slate-500 text-white pl-8"
-                    placeholder="324.91"
-                    step="0.01"
-                  />
-                </div>
+                <MoneyInput
+                  value={newAdjustment.montantMensuel || 0}
+                  onChange={(value) => setNewAdjustment(prev => ({ ...prev, montantMensuel: value }))}
+                  className="bg-slate-600 border-slate-500 text-white"
+                  placeholder={isFrench ? "Ex: 713,34" : "Ex: 713.34"}
+                  allowDecimals={true}
+                />
               </div>
               <div>
                 <Label className="text-gray-200 text-sm">
