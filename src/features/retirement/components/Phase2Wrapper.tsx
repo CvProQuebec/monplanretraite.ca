@@ -1,8 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { InteractiveParticles } from './InteractiveParticles';
 import { useDynamicTheme } from '../hooks/useDynamicTheme';
+import { useScreenContext } from '../hooks/useScreenContext';
 import { useAdaptiveLayout } from '../hooks/useAdaptiveLayout';
+import { useThemeRotation } from '../hooks/useThemeRotation';
+import { usePhysicsToggle } from '../hooks/usePhysicsToggle';
+import { useParticlesToggle } from '../hooks/useParticlesToggle';
+import { useMobileDetection } from '../hooks/useMobileDetection';
 
 interface Phase2WrapperProps {
   children: React.ReactNode;
@@ -12,25 +17,36 @@ interface Phase2WrapperProps {
   className?: string;
   enableThemeRotation?: boolean;
   enableAdaptiveLayout?: boolean;
+  enablePhysicsToggle?: boolean;
+  enableParticlesToggle?: boolean;
+  showControls?: boolean;
 }
 
 export const Phase2Wrapper: React.FC<Phase2WrapperProps> = ({
   children,
   showParticles = true,
-  showPhysics = true,
+  showPhysics = false,
   theme = 'auto',
   className = '',
   enableThemeRotation = true,
-  enableAdaptiveLayout = true
+  enableAdaptiveLayout = true,
+  enablePhysicsToggle = true,
+  enableParticlesToggle = true,
+  showControls = true,
 }) => {
   // Hooks Phase 2
-  const { currentTheme, startThemeRotation, isRotating } = useDynamicTheme();
-  const { currentLayout, screenContext } = useAdaptiveLayout();
+  const { currentTheme, setTheme } = useDynamicTheme(theme);
+  const screenContext = useScreenContext();
+  const { currentLayout } = useAdaptiveLayout(screenContext);
+  const { isRotating, startThemeRotation, stopThemeRotation } = useThemeRotation(currentTheme, setTheme);
+  const { isPhysicsEnabled: physicsFromHook, togglePhysics } = usePhysicsToggle(showPhysics);
+  const { areParticlesEnabled: particlesFromHook, toggleParticles } = useParticlesToggle(showParticles);
+  const isMobile = useMobileDetection();
 
   // États locaux
   const [isParticlesVisible, setIsParticlesVisible] = useState(showParticles);
-  const [isPhysicsEnabled, setIsPhysicsEnabled] = useState(showPhysics);
-  const [showControls, setShowControls] = useState(false);
+  const [isPhysicsEnabledLocal, setIsPhysicsEnabledLocal] = useState(showPhysics);
+  const [showControlsLocal, setShowControlsLocal] = useState(false);
 
   // Rotation automatique des thèmes si activée
   useEffect(() => {
@@ -71,7 +87,7 @@ export const Phase2Wrapper: React.FC<Phase2WrapperProps> = ({
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.altKey && e.shiftKey && e.key === 'P') {
-        setShowControls(prev => !prev);
+        setShowControlsLocal(prev => !prev);
       }
     };
 
@@ -95,7 +111,7 @@ export const Phase2Wrapper: React.FC<Phase2WrapperProps> = ({
 
       {/* Contrôles flottants (Ctrl + Shift + P pour afficher) */}
       <AnimatePresence>
-        {showControls && (
+        {showControlsLocal && (
           <motion.div
             className="fixed top-4 right-4 z-50 bg-white/90 backdrop-blur-sm rounded-xl shadow-2xl border border-gray-200 p-4"
             initial={{ opacity: 0, scale: 0.8, x: 100 }}
@@ -125,8 +141,8 @@ export const Phase2Wrapper: React.FC<Phase2WrapperProps> = ({
                 <input
                   type="checkbox"
                   id="physics-toggle"
-                  checked={isPhysicsEnabled}
-                  onChange={(e) => setIsPhysicsEnabled(e.target.checked)}
+                  checked={isPhysicsEnabledLocal}
+                  onChange={(e) => setIsPhysicsEnabledLocal(e.target.checked)}
                   className="w-4 h-4 text-green-600 rounded focus:ring-green-500"
                 />
                 <label htmlFor="physics-toggle" className="text-sm text-gray-700">
@@ -169,26 +185,28 @@ export const Phase2Wrapper: React.FC<Phase2WrapperProps> = ({
         )}
       </AnimatePresence>
 
-      {/* Indicateur de thème flottant */}
-      <motion.div
-        className="fixed bottom-4 left-4 z-40 bg-white/80 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg border border-gray-200"
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 1, duration: 0.8 }}
-        whileHover={{ scale: 1.05 }}
-      >
-        <div className="flex items-center gap-2 text-sm">
-          <div className={`w-3 h-3 rounded-full ${
-            currentTheme.id === 'morning' ? 'bg-orange-400' :
-            currentTheme.id === 'afternoon' ? 'bg-blue-400' :
-            currentTheme.id === 'evening' ? 'bg-purple-400' :
-            currentTheme.id === 'night' ? 'bg-slate-400' :
-            currentTheme.id === 'premium' ? 'bg-amber-400' :
-            'bg-pink-400'
-          }`} />
-          <span className="font-medium text-gray-700">{currentTheme.name}</span>
-        </div>
-      </motion.div>
+      {/* Indicateur de thème flottant - Masqué sur mobile */}
+      {!isMobile && (
+        <motion.div
+          className="fixed bottom-4 left-4 z-40 bg-white/80 backdrop-blur-sm rounded-full px-3 py-2 shadow-lg border border-gray-200"
+          initial={{ opacity: 0, y: 50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1, duration: 0.8 }}
+          whileHover={{ scale: 1.05 }}
+        >
+          <div className="flex items-center gap-2 text-sm">
+            <div className={`w-3 h-3 rounded-full ${
+              currentTheme.id === 'morning' ? 'bg-orange-400' :
+              currentTheme.id === 'afternoon' ? 'bg-blue-400' :
+              currentTheme.id === 'evening' ? 'bg-purple-400' :
+              currentTheme.id === 'night' ? 'bg-slate-400' :
+              currentTheme.id === 'premium' ? 'bg-amber-400' :
+              'bg-pink-400'
+            }`} />
+            <span className="font-medium text-gray-700">{currentTheme.name}</span>
+          </div>
+        </motion.div>
+      )}
 
       {/* Contenu principal avec animations d'entrée */}
       <motion.div
@@ -200,15 +218,17 @@ export const Phase2Wrapper: React.FC<Phase2WrapperProps> = ({
         {children}
       </motion.div>
 
-      {/* Indicateur de raccourci clavier */}
-      <motion.div
-        className="fixed bottom-4 right-4 z-40 bg-black/20 backdrop-blur-sm rounded-full px-3 py-2 text-white text-xs"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.8 }}
-      >
-        Alt + Shift + P
-      </motion.div>
+      {/* Indicateur de raccourci clavier - Masqué sur mobile */}
+      {!isMobile && (
+        <motion.div
+          className="fixed bottom-4 right-4 z-40 bg-black/20 backdrop-blur-sm rounded-full px-3 py-2 text-white text-xs"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 2, duration: 0.8 }}
+        >
+          Alt + Shift + P
+        </motion.div>
+      )}
     </div>
   );
 };

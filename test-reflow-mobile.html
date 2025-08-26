@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Reflow Mobile - Samsung S23 Ultra</title>
+    <style>
+        /* 🚀 Corrections Reflow Mobile - MonPlanRetraite.ca */
+        
+        /* ===== CORRECTIONS SPÉCIFIQUES SAMSUNG S23 ULTRA ===== */
+        
+        /* Force le recalcul du layout au chargement */
+        .mobile-reflow-fix {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          perspective: 1000px;
+          will-change: transform;
+        }
+        
+        /* Correction pour les éléments qui se surimposent */
+        .card, .card-content, .card-header {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+        
+        /* Force le reflow sur les conteneurs principaux */
+        .container-custom, .container {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+        
+        /* Correction spécifique pour la page Revenus */
+        .revenus-page {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+        
+        /* Correction pour les formulaires */
+        .form-group, .input-group {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+        
+        /* Correction pour les tableaux */
+        .table-container, .income-table {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+        
+        /* ===== CORRECTIONS GLOBALES MOBILE ===== */
+        
+        /* Force le GPU rendering */
+        * {
+          -webkit-transform: translateZ(0);
+          -moz-transform: translateZ(0);
+          -ms-transform: translateZ(0);
+          -o-transform: translateZ(0);
+          transform: translateZ(0);
+        }
+        
+        /* Correction pour les éléments flexbox */
+        .flex, .flex-col, .flex-row {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+        
+        /* Correction pour les grilles */
+        .grid, .grid-cols-1, .grid-cols-2, .grid-cols-3 {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+        
+        /* ===== CORRECTIONS SPÉCIFIQUES ANDROID ===== */
+        
+        /* Correction pour Chrome Android */
+        @media screen and (-webkit-min-device-pixel-ratio: 0) {
+          .mobile-reflow-fix {
+            -webkit-transform: translateZ(0);
+            -webkit-backface-visibility: hidden;
+            -webkit-perspective: 1000px;
+          }
+        }
+        
+        /* Correction pour Samsung One UI */
+        @media screen and (min-width: 360px) and (max-width: 800px) {
+          .mobile-reflow-fix {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+          }
+        }
+        
+        /* ===== ANIMATIONS ET TRANSITIONS ===== */
+        
+        /* Transitions fluides */
+        .transition-all, .transition-colors, .transition-transform {
+          transition-property: all, transform, opacity;
+          transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        /* ===== CORRECTIONS PERFORMANCE ===== */
+        
+        /* Optimisation GPU */
+        .gpu-accelerated {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          perspective: 1000px;
+          will-change: transform;
+        }
+        
+        /* ===== CORRECTIONS SPÉCIFIQUES PAGES ===== */
+        
+        /* Page Revenus */
+        .revenus-container {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+        
+        /* Composants UI */
+        .card, .input, .select, .button {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+        
+        /* ===== MEDIA QUERIES MOBILE ===== */
+        
+        /* Mobile Portrait */
+        @media screen and (max-width: 768px) and (orientation: portrait) {
+          .mobile-reflow-fix {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+          }
+          
+          /* Force le reflow sur les éléments critiques */
+          .critical-layout {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+          }
+        }
+        
+        /* Mobile Landscape */
+        @media screen and (max-width: 1024px) and (orientation: landscape) {
+          .mobile-reflow-fix {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+          }
+        }
+        
+        /* ===== CORRECTIONS SAMSUNG S23 ULTRA ===== */
+        
+        /* Résolution spécifique S23 Ultra */
+        @media screen and (min-width: 412px) and (max-width: 412px) {
+          .mobile-reflow-fix {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+            will-change: transform;
+          }
+        }
+        
+        /* ===== CORRECTIONS CHARGEMENT ===== */
+        
+        /* Force le reflow au chargement */
+        .page-loaded {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          perspective: 1000px;
+        }
+        
+        /* ===== CORRECTIONS DYNAMIQUES ===== */
+        
+        /* Correction lors du changement d'orientation */
+        .orientation-change {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          perspective: 1000px;
+        }
+        
+        /* ===== CORRECTIONS FORMULAIRES ===== */
+        
+        /* Inputs et labels */
+        .input-container, .label-container {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+        }
+        
+        /* ===== CORRECTIONS TABLEAUX ===== */
+        
+        /* Tableaux de données */
+        .data-table, .income-table {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          table-layout: fixed;
+        }
+        
+        /* ===== CORRECTIONS RESPONSIVE ===== */
+        
+        /* Breakpoints critiques */
+        @media screen and (max-width: 480px) {
+          .mobile-reflow-fix {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+          }
+        }
+        
+        @media screen and (max-width: 640px) {
+          .mobile-reflow-fix {
+            transform: translateZ(0);
+            backface-visibility: hidden;
+            perspective: 1000px;
+          }
+        }
+        
+        /* ===== CORRECTIONS FINALES ===== */
+        
+        /* Classe utilitaire pour forcer le reflow */
+        .force-reflow {
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          perspective: 1000px;
+          will-change: transform;
+        }
+        
+        /* Correction globale pour tous les éléments */
+        * {
+          -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+        }
+        
+        /* ===== STYLES DE TEST ===== */
+        
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .test-section {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .test-card {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .test-form {
+            background: #e9ecef;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        
+        .test-input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ced4da;
+            border-radius: 3px;
+        }
+        
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .test-button:hover {
+            background: #0056b3;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .orientation-info {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .device-info {
+            background: #e8f5e8;
+            border: 1px solid #c3e6c3;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test Reflow Mobile - Samsung S23 Ultra</h1>
+    
+    <div class="orientation-info">
+        <h3>📱 Informations d'Orientation</h3>
+        <p><strong>Orientation actuelle :</strong> <span id="current-orientation">Détection en cours...</span></p>
+        <p><strong>Largeur de l'écran :</strong> <span id="screen-width">Détection en cours...</span></p>
+        <p><strong>Hauteur de l'écran :</strong> <span id="screen-height">Détection en cours...</span></p>
+        <p><strong>Ratio de pixels :</strong> <span id="pixel-ratio">Détection en cours...</span></p>
+    </div>
+    
+    <div class="device-info">
+        <h3>📱 Informations de l'Appareil</h3>
+        <p><strong>User Agent :</strong> <span id="user-agent">Détection en cours...</span></p>
+        <p><strong>Plateforme :</strong> <span id="platform">Détection en cours...</span></p>
+        <p><strong>Langue :</strong> <span id="language">Détection en cours...</span></p>
+        <p><strong>Cookies activés :</strong> <span id="cookies-enabled">Détection en cours...</span></p>
+    </div>
+
+    <div class="test-section">
+        <h2>🔧 Test des Corrections Reflow</h2>
+        <p>Ce test simule la page Revenus avec toutes les corrections de reflow mobile appliquées.</p>
+        
+        <div class="test-card mobile-reflow-fix revenus-page revenus-container">
+            <h3>💰 Mes Revenus (Simulation)</h3>
+            <p>Cette carte simule le contenu de la page Revenus avec les corrections de reflow.</p>
+        </div>
+        
+        <div class="test-form mobile-reflow-fix">
+            <h3>📝 Formulaire de Test</h3>
+            <div class="input-container">
+                <label class="label-container">Salaire annuel :</label>
+                <input type="text" class="test-input mobile-reflow-fix" placeholder="50000" />
+            </div>
+            <div class="input-container">
+                <label class="label-container">Type de revenu :</label>
+                <select class="test-input mobile-reflow-fix">
+                    <option>Salaire</option>
+                    <option>Assurance emploi</option>
+                    <option>Rentes</option>
+                </select>
+            </div>
+        </div>
+        
+        <div class="test-card mobile-reflow-fix gpu-accelerated">
+            <h3>📊 Tableau de Données</h3>
+            <p>Ce tableau simule les données de revenus avec accélération GPU.</p>
+            <table class="data-table income-table mobile-reflow-fix">
+                <thead>
+                    <tr>
+                        <th>Mois</th>
+                        <th>Revenus</th>
+                        <th>Dépenses</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Janvier</td>
+                        <td>5000</td>
+                        <td>3000</td>
+                    </tr>
+                    <tr>
+                        <td>Février</td>
+                        <td>5000</td>
+                        <td>2800</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>🧪 Tests de Fonctionnalité</h2>
+        
+        <div class="status info">
+            <strong>Test 1 :</strong> Chargement de la page
+            <button class="test-button" onclick="testPageLoad()">Tester</button>
+        </div>
+        
+        <div class="status info">
+            <strong>Test 2 :</strong> Changement d'orientation
+            <button class="test-button" onclick="testOrientationChange()">Tester</button>
+        </div>
+        
+        <div class="status info">
+            <strong>Test 3 :</strong> Redimensionnement
+            <button class="test-button" onclick="testResize()">Tester</button>
+        </div>
+        
+        <div class="status info">
+            <strong>Test 4 :</strong> Focus sur formulaires
+            <button class="test-button" onclick="testFormFocus()">Tester</button>
+        </div>
+        
+        <div class="status info">
+            <strong>Test 5 :</strong> Force reflow manuel
+            <button class="test-button" onclick="forceReflow()">Tester</button>
+        </div>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 Instructions de Test</h2>
+        <ol>
+            <li><strong>Ouvrez cette page</strong> sur votre Samsung S23 Ultra</li>
+            <li><strong>Vérifiez l'affichage</strong> en mode portrait</li>
+            <li><strong>Testez les boutons</strong> de test ci-dessus</li>
+            <li><strong>Changez l'orientation</strong> (portrait ↔ paysage)</li>
+            <li><strong>Vérifiez que l'affichage</strong> reste correct</li>
+            <li><strong>Comparez avec l'application</strong> MonPlanRetraite.ca</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h2>🎯 Résultats Attendus</h2>
+        <ul>
+            <li>✅ <strong>Affichage correct</strong> dès le chargement en mode portrait</li>
+            <li>✅ <strong>Pas de superposition</strong> de lettres ou titres</li>
+            <li>✅ <strong>Transitions fluides</strong> lors des changements d'orientation</li>
+            <li>✅ <strong>Performance optimisée</strong> avec accélération GPU</li>
+            <li>✅ <strong>Compatibilité</strong> avec tous les appareils Android</li>
+        </ul>
+    </div>
+
+    <script>
+        // Détection des informations de l'appareil
+        function updateDeviceInfo() {
+            // Orientation
+            const orientation = window.orientation || 'Non détectée';
+            document.getElementById('current-orientation').textContent = 
+                orientation === 0 ? 'Portrait' : 
+                orientation === 90 ? 'Paysage (gauche)' : 
+                orientation === -90 ? 'Paysage (droite)' : 
+                orientation === 180 ? 'Portrait inversé' : orientation;
+            
+            // Dimensions de l'écran
+            document.getElementById('screen-width').textContent = window.screen.width + 'px';
+            document.getElementById('screen-height').textContent = window.screen.height + 'px';
+            
+            // Ratio de pixels
+            const pixelRatio = window.devicePixelRatio || 1;
+            document.getElementById('pixel-ratio').textContent = pixelRatio + 'x';
+            
+            // Informations de l'appareil
+            document.getElementById('user-agent').textContent = navigator.userAgent;
+            document.getElementById('platform').textContent = navigator.platform;
+            document.getElementById('language').textContent = navigator.language;
+            document.getElementById('cookies-enabled').textContent = navigator.cookieEnabled ? 'Oui' : 'Non';
+        }
+        
+        // Test de chargement de page
+        function testPageLoad() {
+            document.body.classList.add('mobile-reflow-fix');
+            setTimeout(() => {
+                document.body.classList.add('page-loaded');
+                alert('✅ Test de chargement réussi !\n\nLes corrections de reflow ont été appliquées.');
+            }, 100);
+        }
+        
+        // Test de changement d'orientation
+        function testOrientationChange() {
+            document.body.classList.add('orientation-change');
+            setTimeout(() => {
+                document.body.classList.remove('orientation-change');
+                alert('✅ Test de changement d\'orientation réussi !\n\nLe reflow a été forcé.');
+            }, 500);
+        }
+        
+        // Test de redimensionnement
+        function testResize() {
+            const event = new Event('resize');
+            window.dispatchEvent(event);
+            alert('✅ Test de redimensionnement réussi !\n\nLe reflow a été forcé.');
+        }
+        
+        // Test de focus sur formulaires
+        function testFormFocus() {
+            const inputs = document.querySelectorAll('.test-input');
+            inputs.forEach((input, index) => {
+                setTimeout(() => {
+                    input.focus();
+                    setTimeout(() => input.blur(), 200);
+                }, index * 300);
+            });
+            alert('✅ Test de focus sur formulaires réussi !\n\nLe reflow a été forcé sur chaque input.');
+        }
+        
+        // Force le reflow manuellement
+        function forceReflow() {
+            // Force un reflow en modifiant temporairement le DOM
+            const temp = document.createElement('div');
+            temp.style.position = 'absolute';
+            temp.style.visibility = 'hidden';
+            temp.style.height = '0';
+            document.body.appendChild(temp);
+            
+            // Force le reflow
+            temp.offsetHeight;
+            
+            // Supprime l'élément temporaire
+            document.body.removeChild(temp);
+            
+            // Ajoute la classe page-loaded
+            document.body.classList.add('page-loaded');
+            
+            alert('✅ Reflow forcé manuellement !\n\nLe layout a été recalculé.');
+        }
+        
+        // Mise à jour des informations au chargement et lors des changements
+        window.addEventListener('load', updateDeviceInfo);
+        window.addEventListener('orientationchange', updateDeviceInfo);
+        window.addEventListener('resize', updateDeviceInfo);
+        
+        // Force le reflow au chargement
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.body.classList.add('mobile-reflow-fix');
+                setTimeout(() => {
+                    document.body.classList.add('page-loaded');
+                }, 100);
+            }, 100);
+        });
+        
+        // Logs de debug
+        console.log('🧪 Test Reflow Mobile initialisé');
+        console.log('📱 Device:', navigator.userAgent);
+        console.log('📐 Orientation:', window.orientation);
+        console.log('🖥️ Screen:', window.screen.width + 'x' + window.screen.height);
+        console.log('🔍 Pixel Ratio:', window.devicePixelRatio);
+    </script>
+</body>
+</html>

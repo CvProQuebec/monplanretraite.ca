@@ -34,6 +34,10 @@ import RRQInfoCard from '@/components/ui/RRQInfoCard';
 import UnifiedIncomeTable from '@/components/ui/UnifiedIncomeTable';
 import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 
+// Import des corrections mobile pour Samsung S23 Ultra
+import '@/styles/mobile-reflow-fix.css';
+import { useMobileReflowFix } from '@/hooks/useMobileReflowFix';
+
 const Revenus: React.FC = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
@@ -45,6 +49,9 @@ const Revenus: React.FC = () => {
   const [showHelp, setShowHelp] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showRRQInfo, setShowRRQInfo] = useState(false);
+
+  // Correction du reflow mobile pour Samsung S23 Ultra
+  useMobileReflowFix();
 
   const handleChange = (field: string, value: any) => {
     updateUserData('personal', { [field]: value });
@@ -201,7 +208,7 @@ const Revenus: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-green-900 to-emerald-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-green-900 to-emerald-900 text-white mobile-reflow-fix revenus-page revenus-container">
       {/* Particules de fond visibles */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
@@ -213,7 +220,7 @@ const Revenus: React.FC = () => {
         <div className="absolute top-72 left-1/3 w-1 h-1 bg-teal-400 rounded-full animate-bounce"></div>
       </div>
 
-      <div className="container mx-auto px-6 py-8 relative z-10">
+      <div className="container mx-auto px-6 py-8 relative z-10 mobile-reflow-fix">
         {/* En-tête spectaculaire */}
         <div className="text-center mb-12">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-green-400 via-emerald-400 to-teal-500 bg-clip-text text-transparent drop-shadow-2xl">
