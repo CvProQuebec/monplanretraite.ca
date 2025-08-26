@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
-import SVAdjustmentManager from '@/components/retirement/SVAdjustmentManager';
+import SVBiannualManager from '@/components/ui/SVBiannualManager';
 import { 
   DollarSign, 
   Info, 
@@ -30,6 +30,8 @@ import { formatCurrency } from '@/features/retirement/utils/formatters';
 import MoneyInput from '@/components/ui/MoneyInput';
 import AdvancedEIManager from '@/components/ui/AdvancedEIManager';
 import ReturnCalculator from '@/components/ui/ReturnCalculator';
+import RRQInfoCard from '@/components/ui/RRQInfoCard';
+import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 
 const Revenus: React.FC = () => {
   const { language } = useLanguage();
@@ -41,6 +43,7 @@ const Revenus: React.FC = () => {
   
   const [showHelp, setShowHelp] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [showRRQInfo, setShowRRQInfo] = useState(false);
 
   const handleChange = (field: string, value: any) => {
     updateUserData('personal', { [field]: value });
@@ -310,6 +313,60 @@ const Revenus: React.FC = () => {
             </div>
           </div>
         )}
+
+        {/* Section Information RRQ - Affichée quand pertinent */}
+        {(() => {
+          // Logique pour déterminer quand afficher les informations RRQ
+          const shouldShowRRQInfo = 
+            // Si quelqu'un planifie sa retraite
+            userData.personal?.statutProfessionnel1 === 'retraite' ||
+            userData.personal?.statutProfessionnel2 === 'retraite' ||
+            // Si quelqu'un reçoit de l'assurance emploi (transition vers retraite)
+            userData.personal?.typeRevenu1 === 'assurance-emploi' ||
+            userData.personal?.typeRevenu2 === 'assurance-emploi' ||
+            // Si quelqu'un a plus de 60 ans (approche de la retraite)
+            (userData.personal?.naissance1 && new Date().getFullYear() - new Date(userData.personal.naissance1).getFullYear() >= 60) ||
+            (userData.personal?.naissance2 && new Date().getFullYear() - new Date(userData.personal.naissance2).getFullYear() >= 60) ||
+            // Si l'utilisateur a explicitement demandé à voir l'info
+            showRRQInfo;
+
+          if (!shouldShowRRQInfo) return null;
+
+          return (
+            <div className="mb-12">
+              <div className="text-center mb-8">
+                <div className="flex items-center justify-center gap-4">
+                  <h2 className="text-3xl font-bold text-blue-300 mb-4 flex items-center justify-center gap-3">
+                    <Shield className="w-8 h-8 text-blue-400" />
+                    {isFrench ? 'Information Importante - RRQ' : 'Important Information - QPP'}
+                  </h2>
+                  {!showRRQInfo && (
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => setShowRRQInfo(false)}
+                      className="text-gray-400 hover:text-white"
+                    >
+                      ✕
+                    </Button>
+                  )}
+                </div>
+                <p className="text-blue-200 text-lg">
+                  {isFrench 
+                    ? 'Délais et procédures pour votre demande de rente sans carence'
+                    : 'Deadlines and procedures for your pension application without gaps'
+                  }
+                </p>
+              </div>
+              
+              <RRQInfoCard 
+                isFrench={isFrench}
+                isVisible={true}
+                showAsModal={false}
+              />
+            </div>
+          );
+        })()}
 
         {/* Formulaire principal */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
@@ -1249,24 +1306,24 @@ const Revenus: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Personne 1 - Ajustements SV */}
-            <SVAdjustmentManager
+            {/* Personne 1 - Gestion SV Biannuelle */}
+            <SVBiannualManager
               personNumber={1}
               personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
-              adjustments={userData.retirement?.svAjustements1 || []}
-              onAdjustmentsChange={(adjustments) => {
-                updateUserData('retirement', { svAjustements1: adjustments });
+              data={userData.retirement?.svBiannual1}
+              onDataChange={(data) => {
+                updateUserData('retirement', { svBiannual1: data });
               }}
               isFrench={isFrench}
             />
 
-            {/* Personne 2 - Ajustements SV */}
-            <SVAdjustmentManager
+            {/* Personne 2 - Gestion SV Biannuelle */}
+            <SVBiannualManager
               personNumber={2}
               personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
-              adjustments={userData.retirement?.svAjustements2 || []}
-              onAdjustmentsChange={(adjustments) => {
-                updateUserData('retirement', { svAjustements2: adjustments });
+              data={userData.retirement?.svBiannual2}
+              onDataChange={(data) => {
+                updateUserData('retirement', { svBiannual2: data });
               }}
               isFrench={isFrench}
             />
@@ -1447,17 +1504,35 @@ const Revenus: React.FC = () => {
             onClick={async () => {
               setIsSaving(true);
               try {
-                // Simuler un délai de sauvegarde
-                await new Promise(resolve => setTimeout(resolve, 1000));
+                // Utiliser la nouvelle méthode de sauvegarde directe avec gestion des accents
+                const result = await EnhancedSaveManager.saveDirectly(userData, {
+                  includeTimestamp: true
+                });
                 
-                console.log('💾 Données de revenus sauvegardées avec succès');
-                
-                // Afficher un message de succès
-                alert(isFrench ? '✅ Revenus sauvegardés avec succès !' : '✅ Income data saved successfully!');
+                if (result.success) {
+                  console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
+                  
+                  // Afficher un message de succès avec le nom du fichier
+                  alert(isFrench 
+                    ? `✅ Revenus sauvegardés avec succès !\nFichier: ${result.filename}`
+                    : `✅ Income data saved successfully!\nFile: ${result.filename}`
+                  );
+                } else if (result.blocked) {
+                  console.warn('🚫 Sauvegarde bloquée:', result.reason);
+                  alert(isFrench 
+                    ? `🚫 Sauvegarde bloquée: ${result.reason}`
+                    : `🚫 Save blocked: ${result.reason}`
+                  );
+                } else {
+                  throw new Error(result.error || 'Erreur inconnue');
+                }
                 
               } catch (error) {
                 console.error('❌ Erreur lors de la sauvegarde:', error);
-                alert(isFrench ? '❌ Erreur lors de la sauvegarde' : '❌ Error saving data');
+                alert(isFrench 
+                  ? `❌ Erreur lors de la sauvegarde: ${error instanceof Error ? error.message : 'Erreur inconnue'}`
+                  : `❌ Error saving data: ${error instanceof Error ? error.message : 'Unknown error'}`
+                );
               } finally {
                 setIsSaving(false);
               }
@@ -1478,17 +1553,36 @@ const Revenus: React.FC = () => {
           </p>
         </div>
 
-        {/* Bouton d'aide */}
-        <div className="text-center mt-8">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => setShowHelp(!showHelp)}
-            className="border-green-400 text-green-400 hover:bg-green-400 hover:text-slate-900"
-          >
-            <HelpCircle className="w-4 h-4 mr-2" />
-            {isFrench ? 'Afficher l\'aide' : 'Show help'}
-          </Button>
+        {/* Boutons d'aide et d'information */}
+        <div className="text-center mt-8 space-y-4">
+          <div className="flex flex-wrap justify-center gap-4">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowHelp(!showHelp)}
+              className="border-green-400 text-green-400 hover:bg-green-400 hover:text-slate-900"
+            >
+              <HelpCircle className="w-4 h-4 mr-2" />
+              {isFrench ? 'Afficher l\'aide' : 'Show help'}
+            </Button>
+            
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowRRQInfo(!showRRQInfo)}
+              className="border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-slate-900"
+            >
+              <Shield className="w-4 h-4 mr-2" />
+              {isFrench ? 'Info RRQ' : 'QPP Info'}
+            </Button>
+          </div>
+          
+          <p className="text-gray-400 text-sm">
+            {isFrench 
+              ? 'Cliquez sur "Info RRQ" pour consulter les délais de demande de rente'
+              : 'Click "QPP Info" to view pension application deadlines'
+            }
+          </p>
         </div>
       </div>
     </div>

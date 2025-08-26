@@ -3,6 +3,7 @@
  */
 
 import { LicenseManager } from './LicenseManager';
+import { generateFilename } from '../utils/nameUtils';
 
 interface SaveOptions {
   filename?: string;
@@ -218,30 +219,67 @@ export class EnhancedSaveManager {
   }
 
   /**
-   * Génère un nom de fichier basé sur les données utilisateur
+   * Sauvegarde directe sans dialogue (utilise le nom de fichier généré automatiquement)
+   */
+  static async saveDirectly(userData: any, options: SaveOptions = {}): Promise<SaveResult> {
+    try {
+      // Vérifier la licence avant de sauvegarder
+      const licenseCheck = LicenseManager.checkLicense(userData);
+      
+      if (!licenseCheck.isValid) {
+        return {
+          success: false,
+          blocked: true,
+          reason: licenseCheck.reason,
+          error: 'Sauvegarde bloquée par la protection de licence'
+        };
+      }
+
+      // Générer le nom de fichier avec la nouvelle méthode
+      const filename = options.filename || generateFilename(userData, options.includeTimestamp !== false);
+      
+      // Préparer les données à sauvegarder
+      const saveData = this.prepareSaveData(userData);
+      
+      // Créer le blob avec les données
+      const dataStr = JSON.stringify(saveData, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      
+      // Téléchargement direct
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      
+      // Déclencher le téléchargement
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      
+      // Sauvegarder le profil après succès
+      LicenseManager.saveCurrentProfile(userData);
+      LicenseManager.updateLastSaved();
+      
+      return {
+        success: true,
+        filename: filename
+      };
+    } catch (error) {
+      console.error('Erreur lors de la sauvegarde directe:', error);
+      return {
+        success: false,
+        error: `Erreur lors de la sauvegarde: ${error instanceof Error ? error.message : 'Erreur inconnue'}`
+      };
+    }
+  }
+
+  /**
+   * Génère un nom de fichier basé sur les données utilisateur (méthode dépréciée)
    */
   private static generateFilename(userData: any, options: SaveOptions): string {
-    let filename = options.filename || this.DEFAULT_FILENAME;
-    
-    // Ajouter le nom du profil si disponible
-    if (userData.personal?.prenom1) {
-      const nom1 = userData.personal.prenom1.replace(/[^a-zA-Z0-9\-_]/g, '');
-      const nom2 = userData.personal?.prenom2?.replace(/[^a-zA-Z0-9\-_]/g, '') || '';
-      
-      if (nom2) {
-        filename = `${nom1}-et-${nom2}-retraite`;
-      } else {
-        filename = `${nom1}-retraite`;
-      }
-    }
-    
-    // Ajouter timestamp si demandé
-    if (options.includeTimestamp !== false) {
-      const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-      filename += `-${timestamp}`;
-    }
-    
-    return filename + this.FILE_EXTENSION;
+    // Utiliser la nouvelle méthode
+    return options.filename || generateFilename(userData, options.includeTimestamp !== false);
   }
 
   /**
