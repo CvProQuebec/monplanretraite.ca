@@ -31,6 +31,7 @@ import MoneyInput from '@/components/ui/MoneyInput';
 import AdvancedEIManager from '@/components/ui/AdvancedEIManager';
 import ReturnCalculator from '@/components/ui/ReturnCalculator';
 import RRQInfoCard from '@/components/ui/RRQInfoCard';
+import UnifiedIncomeTable from '@/components/ui/UnifiedIncomeTable';
 import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 
 const Revenus: React.FC = () => {
@@ -368,475 +369,44 @@ const Revenus: React.FC = () => {
           );
         })()}
 
-        {/* Formulaire principal */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-          {/* Personne 1 - Revenus */}
-          <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl backdrop-blur-sm">
-            <CardHeader className="border-b border-slate-600 bg-gradient-to-r from-green-600/20 to-emerald-600/20">
-              <CardTitle className="text-2xl font-bold text-green-300 flex items-center gap-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                  1
-                </div>
-                {userData.personal?.prenom1 
-                  ? `${isFrench ? 'Revenus' : 'Income'} - ${userData.personal.prenom1}`
-                  : (isFrench ? 'Revenus - Personne 1' : 'Income - Person 1')
-                }
-              </CardTitle>
-              <CardDescription className="text-green-200">
-                {userData.personal?.prenom1 || (isFrench ? 'Première personne' : 'First person')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-6 space-y-6">
-              <div className="space-y-4">
-                {/* Statut professionnel */}
-                <div className="space-y-2">
-                  <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                    <Briefcase className="w-4 h-4" />
-                    {isFrench ? 'Statut professionnel' : 'Professional Status'}
-                  </Label>
-                  <Select
-                    value={userData.personal?.statutProfessionnel1 || 'actif'}
-                    onValueChange={(value) => handleChange('statutProfessionnel1', value)}
-                  >
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
-                      {statutsProfessionnels.map(statut => (
-                        <SelectItem key={statut.value} value={statut.value}>
-                          {statut.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+        {/* Section Tableau Unifié des Revenus */}
+        <div className="space-y-8 mb-12">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-green-300 mb-4 flex items-center justify-center gap-3">
+              <Calculator className="w-8 h-8 text-green-400" />
+              {isFrench ? 'Tableau Unifié des Revenus' : 'Unified Income Table'}
+            </h2>
+            <p className="text-green-200 text-lg">
+              {isFrench 
+                ? 'Gérez tous vos types de revenus avec calculs automatiques "à ce jour" pour l\'assurance emploi'
+                : 'Manage all your income types with automatic "to date" calculations for employment insurance'
+              }
+            </p>
+          </div>
 
-                {/* Revenu annuel */}
-                <div className="space-y-2">
-                  <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                    <DollarSign className="w-4 h-4" />
-                    {isFrench ? 'Revenu annuel' : 'Annual Income'}
-                  </Label>
-                  <MoneyInput
-                    value={userData.personal?.salaire1 || 0}
-                    onChange={(value) => handleSalaryChange('1', value)}
-                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400"
-                    placeholder={isFrench ? "Ex: 75 000 ou 75 000,50" : "Ex: 75,000 or 75,000.50"}
-                    allowDecimals={true}
-                  />
-                </div>
+          <div className="grid grid-cols-1 gap-8">
+            {/* Personne 1 - Tableau des revenus */}
+            <UnifiedIncomeTable
+              personNumber={1}
+              personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
+              data={(userData.personal as any)?.unifiedIncome1 || []}
+              onDataChange={(data) => {
+                updateUserData('personal', { unifiedIncome1: data } as any);
+              }}
+              isFrench={isFrench}
+            />
 
-                {/* Type de revenu */}
-                <div className="space-y-2">
-                  <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4" />
-                    {isFrench ? 'Type de revenu' : 'Income Type'}
-                  </Label>
-                  <Select
-                    value={userData.personal?.typeRevenu1 || 'salaire'}
-                    onValueChange={(value) => handleChange('typeRevenu1', value)}
-                  >
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
-                      {typesRevenu.map(type => (
-                        <SelectItem key={type.value} value={type.value}>
-                          {type.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Champs adaptatifs selon le type de revenu */}
-                {(() => {
-                  const currentTypeRevenu = userData.personal?.typeRevenu1 || 'salaire';
-                  const metadata = getRevenueTypeMetadata(currentTypeRevenu);
-                  
-                  return (
-                    <>
-                      {/* Type d'emploi (seulement pour salaires) */}
-                      {metadata.needsEmploymentType && (
-                        <div className="space-y-2">
-                          <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                            <Users className="w-4 h-4" />
-                            {isFrench ? 'Type d\'emploi' : 'Employment Type'}
-                          </Label>
-                          <Select
-                            value={userData.personal?.typeEmploi1 || 'permanent'}
-                            onValueChange={(value) => handleChange('typeEmploi1', value)}
-                          >
-                            <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-slate-700 border-slate-600">
-                              {typesEmploi.map(type => (
-                                <SelectItem key={type.value} value={type.value}>
-                                  {type.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      )}
-
-                      {/* Fréquence de paiement (pour revenus non-salariaux) */}
-                      {!metadata.needsEmploymentType && (
-                        <div className="space-y-2">
-                          <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                            <Clock className="w-4 h-4" />
-                            {isFrench ? 'Fréquence de paiement' : 'Payment Frequency'}
-                          </Label>
-                          <Select
-                            value={userData.personal?.[`frequencePaiement1`] || metadata.frequency}
-                            onValueChange={(value) => handleChange('frequencePaiement1', value)}
-                          >
-                            <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-slate-700 border-slate-600">
-                              {frequencesPaiement.map(freq => (
-                                <SelectItem key={freq.value} value={freq.value}>
-                                  {freq.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      )}
-
-                      {/* Date de fin pour revenus temporaires */}
-                      {metadata.temporary && (
-                        <div className="space-y-2">
-                          <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                            <Calendar className="w-4 h-4" />
-                            {currentTypeRevenu === 'assurance-emploi' 
-                              ? (isFrench ? 'Prend fin le (ou vers le)' : 'Ends on (or around)')
-                              : (isFrench ? 'Date de fin' : 'End Date')
-                            }
-                          </Label>
-                          <DateInput
-                            value={userData.personal?.dateFinRevenu1 || ''}
-                            onChange={(value) => handleChange('dateFinRevenu1', value)}
-                            className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400"
-                            placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
-                          />
-                          {currentTypeRevenu === 'assurance-emploi' && (
-                            <p className="text-xs text-yellow-300 flex items-center gap-1">
-                              <Info className="w-3 h-3" />
-                              {isFrench 
-                                ? `Maximum ${metadata.maxDuration} semaines selon l'admissibilité`
-                                : `Maximum ${metadata.maxDuration} weeks based on eligibility`
-                              }
-                            </p>
-                          )}
-                        </div>
-                      )}
-
-                      {/* Informations de contrat (pour emplois contractuels) */}
-                      {userData.personal?.typeEmploi1 === 'contrat' && (
-                        <>
-                          <div className="space-y-2">
-                            <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                              <Clock className="w-4 h-4" />
-                              {isFrench ? 'Durée du contrat (mois)' : 'Contract Duration (months)'}
-                            </Label>
-                            <Input
-                              type="number"
-                              value={userData.personal?.dureeContrat1 || ''}
-                              onChange={(e) => handleChange('dureeContrat1', Number(e.target.value))}
-                              className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400"
-                              placeholder="12"
-                              min="1"
-                              max="120"
-                            />
-                          </div>
-
-                          <div className="space-y-2">
-                            <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                              <Calendar className="w-4 h-4" />
-                              {isFrench ? 'Date de fin de contrat' : 'Contract End Date'}
-                            </Label>
-                            <DateInput
-                              value={userData.personal?.dateFinContrat1 || ''}
-                              onChange={(value) => handleChange('dateFinContrat1', value)}
-                              className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400"
-                              placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
-                            />
-                          </div>
-                        </>
-                      )}
-
-                      {/* Suggestions de planification */}
-                      {(() => {
-                        const advice = generatePlanningAdvice('1');
-                        if (advice) {
-                          return (
-                            <Alert className={`border-${advice.urgency === 'high' ? 'red' : 'yellow'}-400 bg-${advice.urgency === 'high' ? 'red' : 'yellow'}-900/20 text-${advice.urgency === 'high' ? 'red' : 'yellow'}-200`}>
-                              <AlertTriangle className={`h-4 w-4 text-${advice.urgency === 'high' ? 'red' : 'yellow'}-400`} />
-                              <AlertDescription className="text-sm">
-                                <strong>{isFrench ? 'Suggestion de planification :' : 'Planning Suggestion:'}</strong><br />
-                                {advice.message}
-                              </AlertDescription>
-                            </Alert>
-                          );
-                        }
-                        return null;
-                      })()}
-                    </>
-                  );
-                })()}
-
-                {/* Informations supplémentaires */}
-                <div className="space-y-2">
-                  <Label className="text-gray-200 font-semibold">
-                    {isFrench ? 'Notes supplémentaires' : 'Additional Notes'}
-                  </Label>
-                  <textarea
-                    value={userData.personal?.notesSupplementaires1 || ''}
-                    onChange={(e) => handleNotesChange('notesSupplementaires1', e.target.value)}
-                    className="w-full bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-green-400 focus:ring-green-400 rounded-md p-3 min-h-[80px]"
-                    placeholder={isFrench ? 'Ajoutez des détails sur vos revenus...' : 'Add details about your income...'}
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Personne 2 - Revenus */}
-          <Card className="bg-gradient-to-br from-emerald-800/90 to-teal-800/90 border-0 shadow-2xl backdrop-blur-sm">
-            <CardHeader className="border-b border-emerald-600 bg-gradient-to-r from-emerald-600/20 to-teal-600/20">
-              <CardTitle className="text-2xl font-bold text-emerald-300 flex items-center gap-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
-                  2
-                </div>
-                {userData.personal?.prenom2 
-                  ? `${isFrench ? 'Revenus' : 'Income'} - ${userData.personal.prenom2}`
-                  : (isFrench ? 'Revenus - Personne 2' : 'Income - Person 2')
-                }
-              </CardTitle>
-              <CardDescription className="text-emerald-200">
-                {userData.personal?.prenom2 || (isFrench ? 'Deuxième personne (optionnel)' : 'Second person (optional)')}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-6 space-y-6">
-              <div className="space-y-4">
-                {/* Statut professionnel */}
-                <div className="space-y-2">
-                  <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                    <Briefcase className="w-4 h-4" />
-                    {isFrench ? 'Statut professionnel' : 'Professional Status'}
-                  </Label>
-                  <Select
-                    value={userData.personal?.statutProfessionnel2 || 'actif'}
-                    onValueChange={(value) => handleChange('statutProfessionnel2', value)}
-                  >
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
-                      {statutsProfessionnels.map(statut => (
-                        <SelectItem key={statut.value} value={statut.value}>
-                          {statut.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Revenu annuel */}
-                <div className="space-y-2">
-                  <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                    <DollarSign className="w-4 h-4" />
-                    {isFrench ? 'Revenu annuel' : 'Annual Income'}
-                  </Label>
-                  <MoneyInput
-                    value={userData.personal?.salaire2 || 0}
-                    onChange={(value) => handleSalaryChange('2', value)}
-                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400"
-                    placeholder={isFrench ? "Ex: 75 000 ou 75 000,50" : "Ex: 75,000 or 75,000.50"}
-                    allowDecimals={true}
-                  />
-                </div>
-
-                {/* Type de revenu */}
-                <div className="space-y-2">
-                  <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                    <TrendingUp className="w-4 h-4" />
-                    {isFrench ? 'Type de revenu' : 'Income Type'}
-                  </Label>
-                  <Select
-                    value={userData.personal?.typeRevenu2 || 'salaire'}
-                    onValueChange={(value) => handleChange('typeRevenu2', value)}
-                  >
-                    <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent className="bg-slate-700 border-slate-600">
-                      {typesRevenu.map(type => (
-                        <SelectItem key={type.value} value={type.value}>
-                          {type.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Champs adaptatifs selon le type de revenu */}
-                {(() => {
-                  const currentTypeRevenu = userData.personal?.typeRevenu2 || 'salaire';
-                  const metadata = getRevenueTypeMetadata(currentTypeRevenu);
-                  
-                  return (
-                    <>
-                      {/* Type d'emploi (seulement pour salaires) */}
-                      {metadata.needsEmploymentType && (
-                        <div className="space-y-2">
-                          <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                            <Users className="w-4 h-4" />
-                            {isFrench ? 'Type d\'emploi' : 'Employment Type'}
-                          </Label>
-                          <Select
-                            value={userData.personal?.typeEmploi2 || 'permanent'}
-                            onValueChange={(value) => handleChange('typeEmploi2', value)}
-                          >
-                            <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-slate-700 border-slate-600">
-                              {typesEmploi.map(type => (
-                                <SelectItem key={type.value} value={type.value}>
-                                  {type.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      )}
-
-                      {/* Fréquence de paiement (pour revenus non-salariaux) */}
-                      {!metadata.needsEmploymentType && (
-                        <div className="space-y-2">
-                          <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                            <Clock className="w-4 h-4" />
-                            {isFrench ? 'Fréquence de paiement' : 'Payment Frequency'}
-                          </Label>
-                          <Select
-                            value={userData.personal?.[`frequencePaiement2`] || metadata.frequency}
-                            onValueChange={(value) => handleChange('frequencePaiement2', value)}
-                          >
-                            <SelectTrigger className="bg-slate-700 border-slate-600 text-white">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-slate-700 border-slate-600">
-                              {frequencesPaiement.map(freq => (
-                                <SelectItem key={freq.value} value={freq.value}>
-                                  {freq.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      )}
-
-                      {/* Date de fin pour revenus temporaires */}
-                      {metadata.temporary && (
-                        <div className="space-y-2">
-                          <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                            <Calendar className="w-4 h-4" />
-                            {currentTypeRevenu === 'assurance-emploi' 
-                              ? (isFrench ? 'Prend fin le (ou vers le)' : 'Ends on (or around)')
-                              : (isFrench ? 'Date de fin' : 'End Date')
-                            }
-                          </Label>
-                          <DateInput
-                            value={userData.personal?.dateFinRevenu2 || ''}
-                            onChange={(value) => handleChange('dateFinRevenu2', value)}
-                            className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400"
-                            placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
-                          />
-                          {currentTypeRevenu === 'assurance-emploi' && (
-                            <p className="text-xs text-yellow-300 flex items-center gap-1">
-                              <Info className="w-3 h-3" />
-                              {isFrench 
-                                ? `Maximum ${metadata.maxDuration} semaines selon l'admissibilité`
-                                : `Maximum ${metadata.maxDuration} weeks based on eligibility`
-                              }
-                            </p>
-                          )}
-                        </div>
-                      )}
-
-                      {/* Informations de contrat (pour emplois contractuels) */}
-                      {userData.personal?.typeEmploi2 === 'contrat' && (
-                        <>
-                          <div className="space-y-2">
-                            <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                              <Clock className="w-4 h-4" />
-                              {isFrench ? 'Durée du contrat (mois)' : 'Contract Duration (months)'}
-                            </Label>
-                            <Input
-                              type="number"
-                              value={userData.personal?.dureeContrat2 || ''}
-                              onChange={(e) => handleChange('dureeContrat2', Number(e.target.value))}
-                              className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400"
-                              placeholder="12"
-                              min="1"
-                              max="120"
-                            />
-                          </div>
-
-                          <div className="space-y-2">
-                            <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                              <Calendar className="w-4 h-4" />
-                              {isFrench ? 'Date de fin de contrat' : 'Contract End Date'}
-                            </Label>
-                            <DateInput
-                              value={userData.personal?.dateFinContrat2 || ''}
-                              onChange={(value) => handleChange('dateFinContrat2', value)}
-                              className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400"
-                              placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
-                            />
-                          </div>
-                        </>
-                      )}
-
-                      {/* Suggestions de planification */}
-                      {(() => {
-                        const advice = generatePlanningAdvice('2');
-                        if (advice) {
-                          return (
-                            <Alert className={`border-${advice.urgency === 'high' ? 'red' : 'yellow'}-400 bg-${advice.urgency === 'high' ? 'red' : 'yellow'}-900/20 text-${advice.urgency === 'high' ? 'red' : 'yellow'}-200`}>
-                              <AlertTriangle className={`h-4 w-4 text-${advice.urgency === 'high' ? 'red' : 'yellow'}-400`} />
-                              <AlertDescription className="text-sm">
-                                <strong>{isFrench ? 'Suggestion de planification :' : 'Planning Suggestion:'}</strong><br />
-                                {advice.message}
-                              </AlertDescription>
-                            </Alert>
-                          );
-                        }
-                        return null;
-                      })()}
-                    </>
-                  );
-                })()}
-
-                {/* Informations supplémentaires */}
-                <div className="space-y-2">
-                  <Label className="text-gray-200 font-semibold">
-                    {isFrench ? 'Notes supplémentaires' : 'Additional Notes'}
-                  </Label>
-                  <textarea
-                    value={userData.personal?.notesSupplementaires2 || ''}
-                    onChange={(e) => handleNotesChange('notesSupplementaires2', e.target.value)}
-                    className="w-full bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-emerald-400 focus:ring-emerald-400 rounded-md p-3 min-h-[80px]"
-                    placeholder={isFrench ? 'Ajoutez des détails sur vos revenus...' : 'Add details about your income...'}
-                  />
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+            {/* Personne 2 - Tableau des revenus */}
+            <UnifiedIncomeTable
+              personNumber={2}
+              personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
+              data={(userData.personal as any)?.unifiedIncome2 || []}
+              onDataChange={(data) => {
+                updateUserData('personal', { unifiedIncome2: data } as any);
+              }}
+              isFrench={isFrench}
+            />
+          </div>
         </div>
 
         {/* Section Investissements */}
@@ -1310,9 +880,9 @@ const Revenus: React.FC = () => {
             <SVBiannualManager
               personNumber={1}
               personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
-              data={userData.retirement?.svBiannual1}
+              data={(userData.retirement as any)?.svBiannual1}
               onDataChange={(data) => {
-                updateUserData('retirement', { svBiannual1: data });
+                updateUserData('retirement', { svBiannual1: data } as any);
               }}
               isFrench={isFrench}
             />
@@ -1321,9 +891,9 @@ const Revenus: React.FC = () => {
             <SVBiannualManager
               personNumber={2}
               personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
-              data={userData.retirement?.svBiannual2}
+              data={(userData.retirement as any)?.svBiannual2}
               onDataChange={(data) => {
-                updateUserData('retirement', { svBiannual2: data });
+                updateUserData('retirement', { svBiannual2: data } as any);
               }}
               isFrench={isFrench}
             />

@@ -4,6 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../co
 import { Alert, AlertDescription } from '../components/ui/alert';
 import { Badge } from '../components/ui/badge';
 import { Button } from '../components/ui/button';
+import { useRetirementData } from '../features/retirement/hooks/useRetirementData';
+import { IncomeIntegrationService } from '../services/IncomeIntegrationService';
 import { 
   Brain, 
   Shield, 
