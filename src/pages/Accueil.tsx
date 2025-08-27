@@ -880,7 +880,7 @@ const Accueil: React.FC = () => {
                     onClick={() => handleUpgradeClick('ultimate')}
                     className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold"
                   >
-                    {isFrench ? 'Choisir Ultimate' : 'Choose Ultimate'}
+                    {isFrench ? 'Choisir Expert' : 'Choose Expert'}
                   </Button>
                 </div>
               </div>

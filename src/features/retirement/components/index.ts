@@ -66,7 +66,11 @@ export { TaxOptimizationTest } from './TaxOptimizationTest';
 // NOUVEAUX COMPOSANTS GOUVERNEMENTAUX
 export { default as SRGAnalysisSection } from './SRGAnalysisSection';
 export { default as RREGOPAnalysisSection } from './RREGOPAnalysisSection';
+export { default as RREGOPTestComponent } from './RREGOPTestComponent';
 export { default as GovernmentBenefitsTest } from './GovernmentBenefitsTest';
+
+// NOUVEAU COMPOSANT IMMOBILIER 2025
+export { default as RealEstateOptimizationSection } from './RealEstateOptimizationSection';
 
 // NOUVEAU COMPOSANT D'ONBOARDING 2025
 export { default as OnboardingWizard } from './OnboardingWizard';

@@ -1,11 +1,7 @@
 // src/pages/RetraiteModuleEn.tsx
 import React, { useEffect, useState } from 'react';
-import { RetirementApp } from '@/features/retirement';
-import { Phase2Wrapper } from '../features/retirement/components/Phase2Wrapper';
 import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
-// Imports removed - no more internal navigation
-import '@/styles/retirement-module.css';
 
 const RetraiteModuleEn: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -14,7 +10,9 @@ const RetraiteModuleEn: React.FC = () => {
 
   useEffect(() => {
     console.log('🔍 RetraiteModuleEn - Component loaded');
-  }, []);
+    console.log('🔍 RetraiteModuleEn - User:', user);
+    console.log('🔍 RetraiteModuleEn - Active section:', activeSection);
+  }, [user, activeSection]);
 
   // Handle URL parameters for active section
   useEffect(() => {
@@ -26,6 +24,7 @@ const RetraiteModuleEn: React.FC = () => {
   }, [searchParams]);
 
   const handleSectionChange = (newSection: string) => {
+    console.log('🔍 Section change requested:', newSection);
     setActiveSection(newSection);
     // Update URL without reloading the page
     const url = new URL(window.location.href);
@@ -33,69 +32,76 @@ const RetraiteModuleEn: React.FC = () => {
     window.history.replaceState({}, '', url.toString());
   };
 
-  // Different themes per section for immersive experience
-  const getSectionTheme = (section: string) => {
-    switch (section) {
-      case 'dashboard': return 'auto';
-      case 'savings': return 'morning';
-      case 'cashflow': return 'evening';
-      case 'cpp': return 'afternoon';
-      case 'combined-pension': return 'premium';
-      case 'advanced-expenses': return 'creative';
-      case 'tax': return 'night';
-      case 'simulator': return 'premium';
-      case 'session': return 'morning';
-      case 'backup-security': return 'night';
-      case 'reports': return 'evening';
-      case 'premium-features': return 'premium';
-      case 'demos': return 'auto';
-      default: return 'auto';
-    }
-  };
-
-  // Function removed - no more internal access verification
-
-  // Old tabs system removed - navigation handled by UniformHeader
-
-  // Get plan name in English
-  const getPlanName = (plan: string): string => {
-    const planNames = {
-      'free': 'Free',
-      'professional': 'Professional',
-      'ultimate': 'Ultimate'
-    };
-    return planNames[plan as keyof typeof planNames] || 'Free';
-  };
-
-  // Get plan color
-  const getPlanColor = (plan: string): string => {
-    const planColors = {
-      'free': 'bg-gray-600',
-      'professional': 'bg-blue-600',
-      'ultimate': 'bg-purple-600'
-    };
-    return planColors[plan as keyof typeof planColors] || 'bg-gray-600';
-  };
+  console.log('🔍 RetraiteModuleEn - About to render simple version');
 
   return (
-    <Phase2Wrapper 
-      theme={getSectionTheme(activeSection)}
-      showParticles={true} 
-      showPhysics={true}
-      enableThemeRotation={false}
-      enableAdaptiveLayout={true}
-    >
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+      <div className="container mx-auto max-w-6xl">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">
+            Retirement Module - English Version
+          </h1>
+          <p className="text-xl text-gray-600">
+            Welcome to your retirement planning dashboard
+          </p>
+        </div>
 
-      
-      {/* Active section content directly under the menu */}
-      <div className="container mx-auto px-6 py-8">
-        <RetirementApp 
-          activeSection={activeSection} 
-          onSectionChange={handleSectionChange}
-          onDataLoad={(data) => console.log('Data loaded:', data)}
-        />
+        {/* Section Navigation */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">Navigation</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {['dashboard', 'savings', 'cashflow', 'cpp', 'tax', 'simulator'].map((section) => (
+              <button
+                key={section}
+                onClick={() => handleSectionChange(section)}
+                className={`p-3 rounded-lg transition-colors ${
+                  activeSection === section
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                {section.charAt(0).toUpperCase() + section.slice(1)}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Active Section Display */}
+        <div className="bg-white rounded-lg shadow-lg p-6">
+          <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+            Active Section: {activeSection.charAt(0).toUpperCase() + activeSection.slice(1)}
+          </h2>
+          
+          <div className="space-y-4">
+            <div className="p-4 bg-gray-50 rounded-lg">
+              <h3 className="font-semibold text-gray-700 mb-2">Current Status</h3>
+              <p className="text-gray-600">
+                You are currently viewing the <strong>{activeSection}</strong> section.
+              </p>
+            </div>
+
+            <div className="p-4 bg-blue-50 rounded-lg">
+              <h3 className="font-semibold text-blue-700 mb-2">User Information</h3>
+              <p className="text-blue-600">
+                {user ? `Logged in as: ${user.email || 'User'}` : 'Not logged in'}
+              </p>
+            </div>
+
+            <div className="p-4 bg-green-50 rounded-lg">
+              <h3 className="font-semibold text-green-700 mb-2">Debug Information</h3>
+              <p className="text-green-600 text-sm">
+                Component loaded successfully. Check console for detailed logs.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="text-center mt-12 text-gray-500">
+          <p>Retirement Module Test Version - Debug Mode</p>
+        </div>
       </div>
-    </Phase2Wrapper>
+    </div>
   );
 };
 

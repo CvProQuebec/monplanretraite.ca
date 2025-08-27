@@ -20,6 +20,17 @@ export { EmergencyInfoService } from '../features/retirement/services/EmergencyI
 export { UltimatePlanningService } from '../features/retirement/services/UltimatePlanningService';
 export { PDFReportService } from '../features/retirement/services/PDFReportService';
 
+// Services SRG (Supplément de Revenu Garanti)
+export { SRGService } from './SRGService';
+export { SRGCalculationService } from './SRGCalculationService';
+
+// Services RREGOP (Régime de Retraite des Employés du Gouvernement et des Organismes Publics)
+export { RREGOPService } from './RREGOPService';
+export { RREGOPCalculationService } from './RREGOPCalculationService';
+
+// Services Immobiliers (Optimisation Immobilière de Retraite)
+export { RealEstateOptimizationService } from './RealEstateOptimizationService';
+
 // Services de base
 export { promoCodeService } from './promoCodeService';
 export { stripeUpgradeService } from './stripeUpgradeService';

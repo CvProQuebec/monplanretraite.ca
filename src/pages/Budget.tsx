@@ -345,16 +345,21 @@ const Budget: React.FC = () => {
                 </div>
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                Module Budget
+                {isFrench ? 'Module Budget' : 'Budget Module'}
               </h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-                Cette fonctionnalité est réservée aux plans Professionnel et Expert.
+                {isFrench 
+                  ? 'Cette fonctionnalité est réservée aux plans Professionnel et Expert.'
+                  : 'This feature is reserved for Professional and Expert plans.'
+                }
               </p>
               
               <Alert className="max-w-2xl mx-auto mb-8 border-orange-200 bg-orange-50">
                 <AlertTriangle className="h-5 w-5 text-orange-600" />
                 <AlertDescription className="text-orange-800">
-                  <strong>Accès restreint :</strong> {getContextualUpgradeMessage(userPlan, requiredPlan)}
+                  <strong>
+                    {isFrench ? 'Accès restreint :' : 'Restricted access:'}
+                  </strong> {getContextualUpgradeMessage(userPlan, requiredPlan)}
                 </AlertDescription>
               </Alert>
 
@@ -364,7 +369,7 @@ const Budget: React.FC = () => {
                   size="lg"
                   className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-8 py-3 text-lg"
                 >
-                  Upgrader maintenant
+                  {isFrench ? 'Upgrader maintenant' : 'Upgrade now'}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </div>

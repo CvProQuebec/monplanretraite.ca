@@ -138,6 +138,11 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
     }
   };
 
+  const handleSubmenuClick = (path: string) => {
+    handleNavigation(path);
+    setOpenSubmenu(null); // Close submenu after clicking
+  };
+
   const toggleSubmenu = (menuId: string) => {
     setOpenSubmenu(openSubmenu === menuId ? null : menuId);
   };
@@ -209,7 +214,7 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
                     {item.submenu?.map((subItem) => (
                       <button
                         key={subItem.id}
-                        onClick={() => handleNavigation(subItem.path)}
+                        onClick={() => handleSubmenuClick(subItem.path)}
                         className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors first:rounded-t-lg last:rounded-b-lg"
                       >
                         {subItem.label}
@@ -271,7 +276,7 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
                       {item.submenu?.map((subItem) => (
                         <button
                           key={subItem.id}
-                          onClick={() => handleNavigation(subItem.path)}
+                          onClick={() => handleSubmenuClick(subItem.path)}
                           className="w-full text-left px-4 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                         >
                           {subItem.label}

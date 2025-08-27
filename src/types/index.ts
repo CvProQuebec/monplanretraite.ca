@@ -16,6 +16,60 @@ export type {
   PromoCodeValidation 
 } from './subscription';
 
+// Types SRG (Supplément de Revenu Garanti)
+export type {
+  SRGEligibilityData,
+  SRGCalculationResult,
+  SRGOptimization,
+  SRGScenario,
+  CombinedSRGAnalysis,
+  PersonalDataSRGExtension,
+  RetirementDataSRGExtension,
+  CalculationsWithSRG,
+  SRGCalculations,
+  SRGPersonResult,
+  SRGCombinedResult,
+  SRGOptimizationResult,
+  SRGScenarioResult,
+  SRGAnalysisSectionProps,
+  SRGFormData,
+  SRGTestData,
+  SRGValidationResult
+} from './srg';
+
+// Types RREGOP (Régime de Retraite des Employés du Gouvernement et des Organismes Publics)
+export type {
+  RREGOPData,
+  RREGOPCalculationResult,
+  RREGOPContributionYear,
+  RREGOPAnalysis,
+  RREGOPOptimization,
+  RREGOPScenario,
+  RREGOPFormData,
+  RREGOPTestData,
+  RREGOPValidationResult,
+  RREGOPAnalysisSectionProps
+} from './rregop';
+
+// Types Immobiliers (Optimisation Immobilière de Retraite)
+export type {
+  RealEstateProperty,
+  RREGOPContext,
+  PropertyAnalysis,
+  SaleScenario,
+  ReinvestmentStrategy,
+  ScenarioComparison,
+  ExecutionPlan,
+  ExecutionStep,
+  Contact,
+  Document,
+  RealEstateResults,
+  RealEstateFormData,
+  RealEstateTestData,
+  RealEstateValidationResult,
+  RealEstateAnalysisSectionProps
+} from './real-estate';
+
 // Types de retraite
 export type { EmergencyInfo } from '../features/retirement/types/emergency-info';
 export type { CPPData, CPPCalculationResult, CPPContributionYear, RRQAnalysis } from '../features/retirement/types/cpp';

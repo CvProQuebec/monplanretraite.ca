@@ -5,6 +5,7 @@ import { Input } from './input';
 import { Badge } from './badge';
 import { X, Check, Gift, Percent } from 'lucide-react';
 import { usePromoCode } from '@/hooks/usePromoCode';
+import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 
 // Interface pour l'utilisation simple (existante)
 interface SimplePromoCodeInputProps {
@@ -42,10 +43,42 @@ export const PromoCodeInput: React.FC<PromoCodeInputProps> = (props) => {
   const [error, setError] = useState<string | null>(null);
   
   const { applyPromoCode } = usePromoCode();
+  const { language } = useLanguage();
+  const isFrench = language === 'fr';
+
+  // Textes bilingues
+  const t = {
+    fr: {
+      placeholder: 'Entrez votre code promo...',
+      havePromoCode: 'Avez-vous un code promo ?',
+      enterCodeForDiscount: 'Entrez votre code pour bénéficier d\'une réduction',
+      apply: 'Appliquer',
+      pressEnter: 'Appuyez sur Entrée pour valider',
+      invalidCode: 'Code promo invalide',
+      validationError: 'Erreur lors de la validation du code',
+      codeApplied: 'Code promo appliqué',
+      discountApplied: 'Réduction appliquée',
+      clear: 'Effacer',
+      remove: 'Retirer'
+    },
+    en: {
+      placeholder: 'Enter your promo code...',
+      havePromoCode: 'Have a promo code?',
+      enterCodeForDiscount: 'Enter your code to get a discount',
+      apply: 'Apply',
+      pressEnter: 'Press Enter to validate',
+      invalidCode: 'Invalid promo code',
+      validationError: 'Error validating code',
+      codeApplied: 'Promo code applied',
+      discountApplied: 'Discount applied',
+      clear: 'Clear',
+      remove: 'Remove'
+    }
+  };
 
   // Utilisation avancée (modal d'upgrade)
   if (isAdvancedProps(props)) {
-    const { originalPrice, onCodeApplied, onCodeCleared, placeholder = "Entrez votre code promo...", className = "" } = props;
+    const { originalPrice, onCodeApplied, onCodeCleared, placeholder = t[isFrench ? 'fr' : 'en'].placeholder, className = "" } = props;
 
     const handleSubmit = async () => {
       if (!promoCode.trim()) return;
@@ -69,10 +102,10 @@ export const PromoCodeInput: React.FC<PromoCodeInputProps> = (props) => {
           setDiscount(discountPercent);
           onCodeApplied(promoCode.trim(), discountPercent);
         } else {
-          setError(result.message || 'Code promo invalide');
+          setError(result.message || t[isFrench ? 'fr' : 'en'].invalidCode);
         }
       } catch (err) {
-        setError('Erreur lors de la validation du code');
+        setError(t[isFrench ? 'fr' : 'en'].validationError);
       } finally {
         setIsSubmitting(false);
       }
@@ -159,10 +192,10 @@ export const PromoCodeInput: React.FC<PromoCodeInputProps> = (props) => {
         <div className="text-center">
           <h3 className="text-lg font-semibold text-purple-900 mb-2 flex items-center justify-center gap-2">
             <Percent className="h-5 w-5" />
-            Avez-vous un code promo ?
+            {t[isFrench ? 'fr' : 'en'].havePromoCode}
           </h3>
           <p className="text-sm text-purple-700">
-            Entrez votre code pour bénéficier d'une réduction
+            {t[isFrench ? 'fr' : 'en'].enterCodeForDiscount}
           </p>
         </div>
 
@@ -184,7 +217,7 @@ export const PromoCodeInput: React.FC<PromoCodeInputProps> = (props) => {
             disabled={!promoCode.trim() || isSubmitting}
             className="px-6 bg-purple-600 hover:bg-purple-700"
           >
-            {isSubmitting ? '...' : 'Appliquer'}
+            {isSubmitting ? '...' : t[isFrench ? 'fr' : 'en'].apply}
           </Button>
         </div>
 
@@ -197,7 +230,7 @@ export const PromoCodeInput: React.FC<PromoCodeInputProps> = (props) => {
         {promoCode.trim() && !error && (
           <div className="text-center">
             <Badge variant="secondary" className="text-xs">
-              Appuyez sur Entrée pour valider
+              {t[isFrench ? 'fr' : 'en'].pressEnter}
             </Badge>
           </div>
         )}

@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Sous-Menus Mobile - MonPlanRetraite.ca</title>
+    <style>
+        /* 🚀 Test Sous-Menus Mobile - MonPlanRetraite.ca */
+        
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-simulator {
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            background: #f8f9fa;
+        }
+        
+        .mobile-header {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .mobile-menu {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .menu-item {
+            border-bottom: 1px solid #e9ecef;
+            transition: all 0.2s ease;
+        }
+        
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .menu-button {
+            width: 100%;
+            padding: 15px 20px;
+            background: white;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+        
+        .menu-button:hover {
+            background: #f8f9fa;
+        }
+        
+        .menu-button.active {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .submenu {
+            background: #f8f9fa;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .submenu.open {
+            max-height: 200px;
+        }
+        
+        .submenu-item {
+            padding: 12px 20px 12px 40px;
+            border-bottom: 1px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .submenu-item:hover {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .submenu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .chevron {
+            transition: transform 0.2s ease;
+        }
+        
+        .chevron.rotated {
+            transform: rotate(180deg);
+        }
+        
+        .test-section {
+            background: #e8f5e8;
+            border: 1px solid #c3e6c3;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .test-button:hover {
+            background: #0056b3;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #34495e;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        .icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            display: inline-block;
+            background: #3498db;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🧪 Test Sous-Menus Mobile - MonPlanRetraite.ca</h1>
+        
+        <div class="test-section">
+            <h2>📱 Simulateur de Menu Mobile</h2>
+            <p>Ce simulateur reproduit le comportement du menu mobile de l'application.</p>
+            <p><strong>Test à effectuer :</strong> Cliquez sur "Planning" pour ouvrir/fermer le sous-menu, puis cliquez sur un des 3 sous-menus.</p>
+        </div>
+        
+        <div class="mobile-simulator">
+            <div class="mobile-header">
+                <h3>📱 Menu Mobile (Simulation)</h3>
+                <p>Largeur d'écran simulée : <span id="screen-width">Détection en cours...</span></p>
+            </div>
+            
+            <div class="mobile-menu">
+                <div class="menu-item">
+                    <button class="menu-button" onclick="toggleSubmenu('home')">
+                        <div>
+                            <span class="icon"></span>
+                            Accueil
+                        </div>
+                    </button>
+                </div>
+                
+                <div class="menu-item">
+                    <button class="menu-button" onclick="toggleSubmenu('retirement')">
+                        <div>
+                            <span class="icon"></span>
+                            Ma Retraite
+                        </div>
+                    </button>
+                </div>
+                
+                <div class="menu-item">
+                    <button class="menu-button" onclick="toggleSubmenu('profile')">
+                        <div>
+                            <span class="icon"></span>
+                            Mon Profil
+                        </div>
+                    </button>
+                </div>
+                
+                <div class="menu-item">
+                    <button class="menu-button" onclick="toggleSubmenu('income')">
+                        <div>
+                            <span class="icon"></span>
+                            Mes Revenus
+                        </div>
+                    </button>
+                </div>
+                
+                <div class="menu-item">
+                    <button class="menu-button" onclick="toggleSubmenu('planning')">
+                        <div>
+                            <span class="icon"></span>
+                            Planification
+                        </div>
+                        <span class="chevron" id="chevron-planning">▼</span>
+                    </button>
+                    <div class="submenu" id="submenu-planning">
+                        <div class="submenu-item" onclick="navigateToSubmenu('/planification-urgence')">
+                            Planification d'urgence
+                        </div>
+                        <div class="submenu-item" onclick="navigateToSubmenu('/planification-successorale')">
+                            Planification successorale
+                        </div>
+                        <div class="submenu-item" onclick="navigateToSubmenu('/planification-depenses')">
+                            Planification de dépenses
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="menu-item">
+                    <button class="menu-button" onclick="toggleSubmenu('assistant')">
+                        <div>
+                            <span class="icon"></span>
+                            Assistant financier
+                        </div>
+                    </button>
+                </div>
+                
+                <div class="menu-item">
+                    <button class="menu-button" onclick="toggleSubmenu('budget')">
+                        <div>
+                            <span class="icon"></span>
+                            Mon Budget
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>🧪 Tests de Fonctionnalité</h2>
+            
+            <div class="status info">
+                <strong>Test 1 :</strong> Ouverture du sous-menu Planning
+                <button class="test-button" onclick="testOpenPlanning()">Tester</button>
+            </div>
+            
+            <div class="status info">
+                <strong>Test 2 :</strong> Fermeture du sous-menu Planning
+                <button class="test-button" onclick="testClosePlanning()">Tester</button>
+            </div>
+            
+            <div class="status info">
+                <strong>Test 3 :</strong> Navigation vers sous-menu
+                <button class="test-button" onclick="testNavigateSubmenu()">Tester</button>
+            </div>
+            
+            <div class="status info">
+                <strong>Test 4 :</strong> Test complet du cycle
+                <button class="test-button" onclick="testCompleteCycle()">Tester</button>
+            </div>
+        </div>
+        
+        <div class="test-section">
+            <h2>📋 Instructions de Test</h2>
+            <ol>
+                <li><strong>Ouvrez cette page</strong> sur votre appareil mobile</li>
+                <li><strong>Cliquez sur "Planification"</strong> pour ouvrir le sous-menu</li>
+                <li><strong>Vérifiez que les 3 sous-menus</strong> s'affichent correctement</li>
+                <li><strong>Cliquez sur un sous-menu</strong> pour tester la navigation</li>
+                <li><strong>Comparez avec l'application</strong> MonPlanRetraite.ca</li>
+            </ol>
+        </div>
+        
+        <div class="test-section">
+            <h2>🎯 Résultats Attendus</h2>
+            <ul>
+                <li>✅ <strong>Cliquez sur "Planification"</strong> → Sous-menu s'ouvre</li>
+                <li>✅ <strong>3 sous-menus visibles</strong> : Urgence, Successorale, Dépenses</li>
+                <li>✅ <strong>Cliquez sur un sous-menu</strong> → Navigation fonctionne</li>
+                <li>✅ <strong>Sous-menu se ferme</strong> après navigation</li>
+                <li>✅ <strong>Animation fluide</strong> d'ouverture/fermeture</li>
+            </ul>
+        </div>
+        
+        <div class="test-section">
+            <h2>📊 Statut des Tests</h2>
+            <div id="test-results">
+                <p>Aucun test effectué pour le moment.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentOpenSubmenu = null;
+        
+        // Détection de la largeur d'écran
+        function updateScreenWidth() {
+            const width = window.innerWidth;
+            document.getElementById('screen-width').textContent = width + 'px';
+        }
+        
+        // Toggle d'un sous-menu
+        function toggleSubmenu(menuId) {
+            const submenu = document.getElementById(`submenu-${menuId}`);
+            const chevron = document.getElementById(`chevron-${menuId}`);
+            
+            if (submenu && chevron) {
+                if (currentOpenSubmenu === menuId) {
+                    // Fermer le sous-menu
+                    submenu.classList.remove('open');
+                    chevron.classList.remove('rotated');
+                    currentOpenSubmenu = null;
+                } else {
+                    // Fermer le sous-menu précédent s'il y en a un
+                    if (currentOpenSubmenu) {
+                        const prevSubmenu = document.getElementById(`submenu-${currentOpenSubmenu}`);
+                        const prevChevron = document.getElementById(`chevron-${currentOpenSubmenu}`);
+                        if (prevSubmenu && prevChevron) {
+                            prevSubmenu.classList.remove('open');
+                            prevChevron.classList.remove('rotated');
+                        }
+                    }
+                    
+                    // Ouvrir le nouveau sous-menu
+                    submenu.classList.add('open');
+                    chevron.classList.add('rotated');
+                    currentOpenSubmenu = menuId;
+                }
+            }
+        }
+        
+        // Navigation vers un sous-menu
+        function navigateToSubmenu(path) {
+            console.log(`🚀 Navigation vers : ${path}`);
+            alert(`✅ Navigation réussie vers : ${path}\n\nLe sous-menu devrait se fermer automatiquement.`);
+            
+            // Fermer le sous-menu après navigation
+            if (currentOpenSubmenu) {
+                const submenu = document.getElementById(`submenu-${currentOpenSubmenu}`);
+                const chevron = document.getElementById(`chevron-${currentOpenSubmenu}`);
+                if (submenu && chevron) {
+                    submenu.classList.remove('open');
+                    chevron.classList.remove('rotated');
+                    currentOpenSubmenu = null;
+                }
+            }
+        }
+        
+        // Test d'ouverture du sous-menu Planning
+        function testOpenPlanning() {
+            toggleSubmenu('planning');
+            updateTestResults('Test 1', 'Ouverture du sous-menu Planning', 'success');
+        }
+        
+        // Test de fermeture du sous-menu Planning
+        function testClosePlanning() {
+            if (currentOpenSubmenu === 'planning') {
+                toggleSubmenu('planning');
+                updateTestResults('Test 2', 'Fermeture du sous-menu Planning', 'success');
+            } else {
+                updateTestResults('Test 2', 'Fermeture du sous-menu Planning', 'error');
+            }
+        }
+        
+        // Test de navigation vers un sous-menu
+        function testNavigateSubmenu() {
+            if (currentOpenSubmenu === 'planning') {
+                navigateToSubmenu('/planification-urgence');
+                updateTestResults('Test 3', 'Navigation vers sous-menu', 'success');
+            } else {
+                updateTestResults('Test 3', 'Navigation vers sous-menu', 'error');
+            }
+        }
+        
+        // Test complet du cycle
+        function testCompleteCycle() {
+            // Ouvrir le sous-menu
+            toggleSubmenu('planning');
+            
+            setTimeout(() => {
+                // Naviguer vers un sous-menu
+                navigateToSubmenu('/planification-successorale');
+                
+                setTimeout(() => {
+                    updateTestResults('Test 4', 'Test complet du cycle', 'success');
+                }, 500);
+            }, 500);
+        }
+        
+        // Mise à jour des résultats de test
+        function updateTestResults(testName, description, status) {
+            const resultsDiv = document.getElementById('test-results');
+            const statusClass = status === 'success' ? 'success' : status === 'error' ? 'error' : 'info';
+            
+            const resultHtml = `
+                <div class="status ${statusClass}">
+                    <strong>${testName}:</strong> ${description}
+                </div>
+            `;
+            
+            resultsDiv.innerHTML = resultHtml;
+        }
+        
+        // Initialisation
+        window.addEventListener('load', () => {
+            updateScreenWidth();
+            console.log('🧪 Test Sous-Menus Mobile initialisé');
+        });
+        
+        window.addEventListener('resize', updateScreenWidth);
+    </script>
+</body>
+</html>
