@@ -1,0 +1,2 @@
+import{b as i,j as e,b6 as t}from"./index-t5vXI36i.js";const o=({className:s=""})=>{const{language:a}=i(),n=a==="fr";return e.jsxs("div",{className:`min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 ${s}`,children:[e.jsx(t,{}),n?e.jsx("div",{className:"sr-only",children:"Navigation Phase 1 Intégrée"}):e.jsx("div",{className:"sr-only",children:"Integrated Phase 1 Navigation"})]})};export{o as U};
+//# sourceMappingURL=UnifiedRetirementPhase1-BuIey7HA.js.map

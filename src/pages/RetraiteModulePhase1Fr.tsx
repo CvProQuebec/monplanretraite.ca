@@ -1,13 +1,8 @@
 import React from 'react';
-import { RetirementNavigation } from '@/features/retirement';
+import UnifiedRetirementPhase1 from '@/components/retirement/UnifiedRetirementPhase1';
 
 const RetraiteModulePhase1Fr: React.FC = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
-      {/* Navigation Phase 1 Intégrée */}
-      <RetirementNavigation />
-    </div>
-  );
+  return <UnifiedRetirementPhase1 />;
 };
 
 export default RetraiteModulePhase1Fr;

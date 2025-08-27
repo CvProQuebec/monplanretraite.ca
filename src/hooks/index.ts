@@ -19,8 +19,9 @@ export { useIsMobile } from './use-mobile';
 export { useAdaptiveLayout } from './features/retirement/hooks/useAdaptiveLayout';
 export { useDynamicTheme } from './features/retirement/hooks/useDynamicTheme';
 
-// Hooks de retraite
-export { useLanguage, LanguageProvider, useCurrentLanguage, useLanguageSwitcher } from './features/retirement/hooks/useLanguage';
+// Hooks de retraite et de langue
+export { useLanguage } from './useLanguage';
+export { LanguageProvider, useCurrentLanguage, useLanguageSwitcher } from './features/retirement/hooks/useLanguage';
 export { useRetirementData } from './features/retirement/hooks/useRetirementData';
 
 // Hooks de souscription et de promotion

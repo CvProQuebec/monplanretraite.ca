@@ -8,7 +8,6 @@ export { OASGISService } from '../features/retirement/services/OASGISService';
 export { RRQService } from '../features/retirement/services/RRQService';
 export { CPPService } from '../features/retirement/services/CPPService';
 export { CombinedPensionService } from '../features/retirement/services/CombinedPensionService';
-export { EnhancedRRQService } from '../features/retirement/services/EnhancedRRQService';
 export { MonteCarloService } from '../features/retirement/services/MonteCarloService';
 export { TaxOptimizationService } from '../features/retirement/services/TaxOptimizationService';
 export { RecommendationEngine } from '../features/retirement/services/RecommendationEngine';
@@ -22,11 +21,15 @@ export { PDFReportService } from '../features/retirement/services/PDFReportServi
 
 // Services SRG (Supplément de Revenu Garanti)
 export { SRGService } from './SRGService';
-export { SRGCalculationService } from './SRGCalculationService';
 
 // Services RREGOP (Régime de Retraite des Employés du Gouvernement et des Organismes Publics)
+export { UnifiedRREGOPService } from './UnifiedRREGOPService';
+
+// Services SRG Unifiés (Supplément de Revenu Garanti)
+export { UnifiedSRGService } from './UnifiedSRGService';
+
+// Services RREGOP Legacy (pour compatibilité temporaire)
 export { RREGOPService } from './RREGOPService';
-export { RREGOPCalculationService } from './RREGOPCalculationService';
 
 // Services Immobiliers (Optimisation Immobilière de Retraite)
 export { RealEstateOptimizationService } from './RealEstateOptimizationService';

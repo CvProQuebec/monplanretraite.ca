@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './features/retirement/hooks/useLanguage';
 import { AuthProvider } from './hooks/useAuth';
@@ -31,17 +31,17 @@ import ImmobilierPage from './pages/ImmobilierPage';
 // Composants de test et validation
 import FinalValidation from './components/FinalValidation';
 import { AdvancedDemoControls } from './features/retirement/components/AdvancedDemoControls';
-import TestPhase3IA from './components/TestPhase3IA';
 
-// Pages existantes (pour compatibilité)
-import RetraiteFr from './pages/RetraiteFr';
-import RetraiteEn from './pages/RetraiteEn';
-import RetraiteEntreeFr from './pages/RetraiteEntreeFr';
-import RetraiteEntreeEn from './pages/RetraiteEntreeEn';
-import RetraiteModuleFr from './pages/RetraiteModuleFr';
-import RetraiteModuleEn from './pages/RetraiteModuleEn';
-import RetraiteModulePhase1Fr from './pages/RetraiteModulePhase1Fr';
-import RetraiteModulePhase1En from './pages/RetraiteModulePhase1En';
+// Pages unifiées avec lazy loading
+import UnifiedRetirementPage from './pages/UnifiedRetirementPage';
+
+// Pages existantes (pour compatibilité) - Lazy loaded
+const RetraiteEntreeFr = React.lazy(() => import('./pages/RetraiteEntreeFr'));
+const RetraiteEntreeEn = React.lazy(() => import('./pages/RetraiteEntreeEn'));
+const RetraiteModuleFr = React.lazy(() => import('./pages/RetraiteModuleFr'));
+const RetraiteModuleEn = React.lazy(() => import('./pages/RetraiteModuleEn'));
+const RetraiteModulePhase1Fr = React.lazy(() => import('./pages/RetraiteModulePhase1Fr'));
+const RetraiteModulePhase1En = React.lazy(() => import('./pages/RetraiteModulePhase1En'));
 import RapportsRetraiteFr from './pages/RapportsRetraiteFr';
 import RetirementReportsEn from './pages/RetirementReportsEn';
 import Phase2DemoPage from './pages/Phase2DemoPage';
@@ -53,7 +53,12 @@ function App() {
       <LanguageProvider>
         <Router>
           <Layout>
-            <Routes>
+            <Suspense fallback={
+              <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+              </div>
+            }>
+              <Routes>
               {/* 🏠 NOUVELLES ROUTES PRINCIPALES - Navigation restructurée */}
               
               {/* Page d'accueil - "VOTRE RETRAITE, VOTRE HISTOIRE" */}
@@ -99,8 +104,8 @@ function App() {
               {/* 🏛️ NOUVELLES ROUTES - PRESTATIONS GOUVERNEMENTALES */}
               
               {/* Module SRG (Supplément de Revenu Garanti) */}
-              <Route path="/module-srg" element={<SRGAnalysisSection userPlan="professional" />} />
-              <Route path="/srg-module" element={<SRGAnalysisSection userPlan="professional" />} />
+              <Route path="/module-srg" element={<div className="p-8"><SRGAnalysisSection data={{} as any} onUpdate={() => {}} /></div>} />
+              <Route path="/srg-module" element={<div className="p-8"><SRGAnalysisSection data={{} as any} onUpdate={() => {}} /></div>} />
               
               {/* Module RREGOP (Régime de Retraite Gouvernemental) */}
               <Route path="/module-rregop" element={<RREGOPAnalysisSection userPlan="professional" />} />
@@ -157,8 +162,6 @@ function App() {
               {/* Test des contrôles de démonstration avancés */}
               <Route path="/advanced-demo-controls" element={<AdvancedDemoControls />} />
               
-              {/* Test Phase 3 IA */}
-              <Route path="/test-phase3-ia" element={<TestPhase3IA />} />
               
               {/* Validation finale - Dernière étape avant déploiement */}
               <Route path="/validation-finale" element={<FinalValidation />} />
@@ -169,9 +172,9 @@ function App() {
               <Route path="/fr/retraite-entree" element={<RetraiteEntreeFr />} />
               <Route path="/en/retirement-entry" element={<RetraiteEntreeEn />} />
               
-              {/* Routes du module complet - Module Retirement */}
-              <Route path="/fr/retraite" element={<RetraiteFr />} />
-              <Route path="/en/retirement" element={<RetraiteEn />} />
+              {/* Routes du module complet - Module Retirement UNIFIÉES */}
+              <Route path="/fr/retraite" element={<UnifiedRetirementPage />} />
+              <Route path="/en/retirement" element={<UnifiedRetirementPage />} />
               
               <Route path="/fr/retraite-module" element={<RetraiteModuleFr />} />
               <Route path="/en/retirement-module" element={<RetraiteModuleEn />} />
@@ -202,7 +205,8 @@ function App() {
               
               {/* Redirection par défaut vers la nouvelle page d'accueil */}
               <Route path="*" element={<Accueil />} />
-            </Routes>
+              </Routes>
+            </Suspense>
           </Layout>
         </Router>
       </LanguageProvider>

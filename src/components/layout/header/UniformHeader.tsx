@@ -102,18 +102,16 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
       ]
     },
     {
-      id: 'assistant',
-      label: isEnglish ? 'Financial Assistant' : 'Assistant financier',
-      icon: Calculator,
-      path: isEnglish ? '/financial-assistant' : '/assistant-financier',
-      hasSubmenu: false
-    },
-    {
       id: 'planning',
       label: isEnglish ? 'Planning' : 'Planification',
       icon: AlertTriangle,
       hasSubmenu: true,
       submenu: [
+        {
+          id: 'assistant',
+          label: isEnglish ? 'Financial Assistant' : 'Assistant financier',
+          path: isEnglish ? '/financial-assistant' : '/assistant-financier'
+        },
         {
           id: 'emergency-info',
           label: isEnglish ? 'Emergency Planning' : 'Planification d\'urgence',
@@ -244,21 +242,21 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1 submenu-container">
+          <nav className="hidden md:flex items-center space-x-0.5 submenu-container">
             {navigationItems.map((item) => (
               <div key={item.id} className="relative submenu-container">
                 <button
                   onClick={() => handleMenuClick(item)}
-                  className={`flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`flex items-center space-x-1.5 px-2.5 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
                     isActivePath(item.path)
                       ? 'bg-blue-100 text-blue-700 shadow-sm'
                       : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
                   }`}
                 >
-                  <item.icon className="w-4 h-4" />
-                  <span>{item.label}</span>
+                  <item.icon className="w-3.5 h-3.5" />
+                  <span className="whitespace-nowrap">{item.label}</span>
                   {item.hasSubmenu && (
-                    <ChevronDown className={`w-4 h-4 transition-transform ${openSubmenu === item.id ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-3.5 h-3.5 transition-transform ${openSubmenu === item.id ? 'rotate-180' : ''}`} />
                   )}
                 </button>
                 

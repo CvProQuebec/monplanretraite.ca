@@ -412,6 +412,191 @@ const selfComparison = true; // Comparaison avec soi-même uniquement
 - [TypeScript Best Practices](https://github.com/typescript-eslint/typescript-eslint)
 - [Tailwind Best Practices](https://tailwindcss.com/docs/guides/best-practices)
 
+## 🔄 AUDIT DE CONSOLIDATION EN COURS (Août 2025)
+
+### 📊 État d'avancement de l'optimisation
+
+#### ✅ **PHASE 1 COMPLÉTÉE** - Actions immédiates (Gain rapide, faible risque)
+- **1A: Suppression fichiers de test** ✅ TERMINÉ
+  - 20+ fichiers `test-*.html` supprimés de la racine
+  - Gain d'espace et clarté du projet
+  
+- **1B: Consolidation documentation** ✅ TERMINÉ  
+  - Réduction de 47 → 40 fichiers markdown (-15%)
+  - Suppression des doublons de déploiement et navigation
+  
+- **1C: Optimisation dépendances** ✅ TERMINÉ
+  - Suppression de `moment.js` et `@types/moment`
+  - Conservation de `date-fns` comme bibliothèque unique
+
+#### 🚧 **PHASE 2 EN COURS** - Consolidation des composants
+- **Composants unifiés créés** ✅ TERMINÉ
+  - `UnifiedRetirementPhase1.tsx` - Remplace les pages Phase1 Fr/En
+  - `UnifiedRetirementEntry.tsx` - Remplace les pages d'entrée Fr/En  
+  - `UnifiedRetirementModule.tsx` - ⚠️ EN COURS (problème useLanguage)
+
+- **Pages consolidées** ✅ PARTIELLEMENT TERMINÉ
+  - `RetraiteModulePhase1Fr.tsx`: 15 lignes → 3 lignes ✅
+  - `RetraiteModulePhase1En.tsx`: 15 lignes → 3 lignes ✅
+  - `RetraiteEntreeFr.tsx`: 500+ lignes → 7 lignes ✅
+  - `RetraiteEntreeEn.tsx`: 500+ lignes → 7 lignes ✅
+  - `RetraiteModuleFr.tsx`: ⏳ À FAIRE
+  - `RetraiteModuleEn.tsx`: ⏳ À FAIRE
+
+### 🎯 **PROCHAINES ÉTAPES PRIORITAIRES**
+
+#### 1. **CORRECTION IMMÉDIATE** - useLanguage Hook
+```typescript
+// PROBLÈME DÉTECTÉ
+src/components/retirement/UnifiedRetirementModule.tsx
+- [ts Error] Line 5: Cannot find module '@/hooks/useLanguage'
+
+// SOLUTIONS POSSIBLES
+Option A: Créer le hook useLanguage manquant
+Option B: Utiliser une détection de langue alternative
+Option C: Passer la langue en props depuis le parent
+```
+
+#### 2. **FINALISER PHASE 2** - Consolidation des modules
+```bash
+# FICHIERS À TRAITER
+src/pages/RetraiteModuleFr.tsx    # 80+ lignes → ~7 lignes
+src/pages/RetraiteModuleEn.tsx    # 80+ lignes → ~7 lignes
+
+# APPROCHE RECOMMANDÉE
+1. Corriger le problème useLanguage dans UnifiedRetirementModule
+2. Remplacer RetraiteModuleFr.tsx par import du composant unifié
+3. Remplacer RetraiteModuleEn.tsx par import du composant unifié
+4. Tester la compilation et fonctionnalité
+```
+
+#### 3. **PHASE 3 PLANIFIÉE** - Optimisations avancées
+- **Services consolidation**: Identifier les services dupliqués
+- **Routing optimization**: Simplifier les routes redondantes  
+- **CSS cleanup**: Supprimer les styles inutilisés
+- **Component analysis**: Analyser les composants dans `/features/retirement/`
+
+### 🛠️ **DIRECTIVES TECHNIQUES POUR LA SUITE**
+
+#### **Pattern de Consolidation Établi**
+```typescript
+// STRUCTURE STANDARD POUR COMPOSANTS UNIFIÉS
+import React from 'react';
+import { useLanguage } from '@/hooks/useLanguage'; // À CORRIGER
+
+const UnifiedComponent: React.FC = () => {
+  const { language } = useLanguage();
+  const isFrench = language === 'fr';
+  
+  // Objet de traductions
+  const translations = {
+    fr: { /* textes français */ },
+    en: { /* textes anglais */ }
+  };
+  
+  const t = translations[isFrench ? 'fr' : 'en'];
+  
+  // Logique conditionnelle si nécessaire
+  if (isFrench) {
+    return <FrenchSpecificLogic />;
+  }
+  
+  return <SharedLogic translations={t} />;
+};
+```
+
+#### **Remplacement des Pages**
+```typescript
+// AVANT (exemple RetraiteEntreeFr.tsx - 500+ lignes)
+import React from 'react';
+import { Phase2Wrapper } from '../features/retirement/components/Phase2Wrapper';
+// ... 500+ lignes de code dupliqué
+
+// APRÈS (7 lignes)
+import React from 'react';
+import UnifiedRetirementEntry from '@/components/retirement/UnifiedRetirementEntry';
+
+const RetraiteEntreeFr: React.FC = () => {
+  return <UnifiedRetirementEntry />;
+};
+
+export default RetraiteEntreeFr;
+```
+
+### 📈 **MÉTRIQUES DE SUCCÈS**
+
+#### **Réductions Accomplies**
+- **Fichiers test**: 20+ fichiers → 0 fichiers (-100%)
+- **Documentation**: 47 → 40 fichiers (-15%)
+- **Pages Phase1**: 30 lignes → 6 lignes (-80%)
+- **Pages Entry**: 1000+ lignes → 14 lignes (-98.6%)
+
+#### **Objectifs Restants**
+- **Pages Module**: 160+ lignes → ~14 lignes (objectif -91%)
+- **Composants features/**: Analyse et consolidation à déterminer
+- **Services**: Identification des doublons à faire
+- **CSS**: Nettoyage des styles inutilisés
+
+### 🚨 **POINTS D'ATTENTION CRITIQUES**
+
+#### **Sécurité et Fonctionnalité**
+- ✅ **Préserver toute la logique métier** lors des consolidations
+- ✅ **Maintenir la compatibilité** avec le système de sauvegarde/import
+- ✅ **Conserver l'isolation des données** sensibles
+- ✅ **Tester chaque consolidation** avant de passer à la suivante
+
+#### **Qualité du Code**
+- ✅ **Utiliser TypeScript strict** pour tous les nouveaux composants
+- ✅ **Maintenir les conventions OQLF** pour les textes français
+- ✅ **Respecter l'architecture existante** (hooks, services, types)
+- ✅ **Documenter les changements** dans ce fichier AGENTS.md
+
+#### **Performance et UX**
+- ✅ **Préserver les optimisations mobiles** existantes
+- ✅ **Maintenir l'accessibilité seniors** (contraste, taille police)
+- ✅ **Conserver les thèmes dynamiques** et animations
+- ✅ **Tester sur différentes résolutions** après chaque changement
+
+### 🎯 **PLAN D'ACTION IMMÉDIAT**
+
+#### **Étape 1: Correction useLanguage (URGENT)**
+```bash
+# Vérifier l'existence du hook
+ls src/hooks/useLanguage*
+
+# Si absent, créer ou utiliser alternative
+# Exemple: détection via URL ou props
+```
+
+#### **Étape 2: Finaliser UnifiedRetirementModule**
+```bash
+# Corriger l'import useLanguage
+# Tester la compilation
+npm run type-check
+
+# Tester le build
+npm run build
+```
+
+#### **Étape 3: Remplacer les pages restantes**
+```bash
+# RetraiteModuleFr.tsx → import UnifiedRetirementModule
+# RetraiteModuleEn.tsx → import UnifiedRetirementModule
+# Tester fonctionnalité complète
+```
+
+#### **Étape 4: Validation et documentation**
+```bash
+# Mettre à jour ce fichier AGENTS.md
+# Documenter les gains obtenus
+# Planifier Phase 3
+```
+
 ---
 
 *AGENTS.md créé pour MonPlanRetraite.ca - Dernière mise à jour : 27 août 2025*
+*Section Audit de Consolidation ajoutée - État au 27 août 2025 18h03*
+---
+
+*AGENTS.md créé pour MonPlanRetraite.ca - Dernière mise à jour : 27 août 2025*
+*Section Audit de Consolidation ajoutée - État au 27 août 2025 18h03*
