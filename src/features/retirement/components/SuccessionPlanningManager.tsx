@@ -7,7 +7,13 @@ import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Download, Upload, Save, AlertCircle, CheckCircle, Users, FileText, Heart, Gift, Calculator, Building } from 'lucide-react';
 import { usePersonNames } from '../hooks/usePersonNames';
-import { SuccessionPlan, SuccessionPlanningState } from '../types/succession-planning';
+import { SuccessionPlan, SuccessionPlanningState, VolontesFuneraires } from '../types/succession-planning';
+import { BeneficiairesForm } from './succession/BeneficiairesForm';
+import { ActifsForm } from './succession/ActifsForm';
+import { DocumentsForm } from './succession/DocumentsForm';
+import { FuneraillesForm } from './succession/FuneraillesForm';
+import { DonsForm } from './succession/DonsForm';
+import { FiscaliteForm } from './succession/FiscaliteForm';
 
 const STORAGE_KEY = 'succession_planning_data';
 
@@ -22,7 +28,7 @@ const createInitialSuccessionPlan = (personId: 'person1' | 'person2', nom: strin
     type: 'inhumation',
     ceremonieReligieuse: false,
     typeService: 'prive'
-  },
+  } as VolontesFuneraires,
   donsCaritables: [],
   considerationsFiscales: [],
   dateCreation: new Date(),
@@ -377,105 +383,45 @@ export const SuccessionPlanningManager: React.FC = () => {
         </TabsList>
 
         <TabsContent value="beneficiaires">
-          <Card>
-            <CardHeader>
-              <CardTitle>Bénéficiaires</CardTitle>
-              <CardDescription>
-                Définissez qui héritera de vos biens et dans quelles proportions
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-8 text-gray-500">
-                <Users className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>Formulaire des bénéficiaires à implémenter</p>
-              </div>
-            </CardContent>
-          </Card>
+          <BeneficiairesForm
+            beneficiaires={currentPlan.beneficiaires}
+            onUpdate={(beneficiaires) => updateCurrentPlan({ beneficiaires })}
+          />
         </TabsContent>
 
         <TabsContent value="actifs">
-          <Card>
-            <CardHeader>
-              <CardTitle>Actifs et Biens</CardTitle>
-              <CardDescription>
-                Répertoriez tous vos biens et leur valeur estimée
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-8 text-gray-500">
-                <Building className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>Formulaire des actifs à implémenter</p>
-              </div>
-            </CardContent>
-          </Card>
+          <ActifsForm
+            actifs={currentPlan.actifs}
+            onUpdate={(actifs) => updateCurrentPlan({ actifs })}
+          />
         </TabsContent>
 
         <TabsContent value="documents">
-          <Card>
-            <CardHeader>
-              <CardTitle>Documents Légaux</CardTitle>
-              <CardDescription>
-                Testament, mandats, procurations et autres documents importants
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-8 text-gray-500">
-                <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>Formulaire des documents légaux à implémenter</p>
-              </div>
-            </CardContent>
-          </Card>
+          <DocumentsForm
+            documents={currentPlan.documentsLegaux}
+            onUpdate={(documentsLegaux) => updateCurrentPlan({ documentsLegaux })}
+          />
         </TabsContent>
 
         <TabsContent value="funerailles">
-          <Card>
-            <CardHeader>
-              <CardTitle>Souhaits Funéraires</CardTitle>
-              <CardDescription>
-                Vos volontés concernant vos funérailles et arrangements finaux
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-8 text-gray-500">
-                <Heart className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>Formulaire des souhaits funéraires à implémenter</p>
-              </div>
-            </CardContent>
-          </Card>
+          <FuneraillesForm
+            volontes={currentPlan.volontesFuneraires}
+            onUpdate={(volontesFuneraires) => updateCurrentPlan({ volontesFuneraires })}
+          />
         </TabsContent>
 
         <TabsContent value="dons">
-          <Card>
-            <CardHeader>
-              <CardTitle>Dons Caritatifs</CardTitle>
-              <CardDescription>
-                Organismes que vous souhaitez soutenir après votre décès
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-8 text-gray-500">
-                <Gift className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>Formulaire des dons caritatifs à implémenter</p>
-              </div>
-            </CardContent>
-          </Card>
+          <DonsForm
+            dons={currentPlan.donsCaritables}
+            onUpdate={(donsCaritables) => updateCurrentPlan({ donsCaritables })}
+          />
         </TabsContent>
 
         <TabsContent value="fiscalite">
-          <Card>
-            <CardHeader>
-              <CardTitle>Considérations Fiscales</CardTitle>
-              <CardDescription>
-                Optimisation fiscale et planification des impôts successoraux
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="text-center py-8 text-gray-500">
-                <Calculator className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                <p>Formulaire des considérations fiscales à implémenter</p>
-              </div>
-            </CardContent>
-          </Card>
+          <FiscaliteForm
+            considerations={currentPlan.considerationsFiscales}
+            onUpdate={(considerationsFiscales) => updateCurrentPlan({ considerationsFiscales })}
+          />
         </TabsContent>
       </Tabs>
 

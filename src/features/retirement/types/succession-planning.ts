@@ -1,203 +1,313 @@
-// src/features/retirement/types/succession-planning.ts
 // Types pour la planification successorale
-
-export interface Beneficiary {
+export interface Beneficiaire {
   id: string;
-  nom: string;
   prenom: string;
-  relation: 'conjoint' | 'enfant' | 'parent' | 'frere_soeur' | 'ami' | 'organisme' | 'autre';
+  nom: string;
+  relation: string;
+  adresse?: string;
+  telephone?: string;
+  email?: string;
   pourcentage?: number;
   montantFixe?: number;
-  typeLegs: 'universel' | 'particulier' | 'residuaire';
+  typeLegs: 'universel' | 'particulier' | 'residuel';
   conditions?: string;
   notes?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface Asset {
+export interface Actif {
   id: string;
-  type: 'immobilier' | 'vehicule' | 'compte_bancaire' | 'placement' | 'assurance_vie' | 'entreprise' | 'objet_valeur' | 'autre';
   nom: string;
-  description: string;
+  type: 'immobilier' | 'vehicule' | 'compte_bancaire' | 'placement' | 'assurance_vie' | 'entreprise' | 'autre';
+  description?: string;
   valeurEstimee: number;
-  beneficiaire?: string;
-  instructions?: string;
-  documents?: string;
+  localisation?: string;
+  numeroCompte?: string;
+  institution?: string;
+  beneficiaireDesigne?: string;
   notes?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface LegalDocument {
+export interface DocumentLegal {
   id: string;
-  type: 'testament' | 'mandat_incapacite' | 'procuration' | 'contrat_mariage' | 'convention_actionnaires' | 'autre';
-  titre: string;
-  dateCreation: Date;
-  derniereMiseAJour?: Date;
-  notaire?: {
-    nom: string;
-    telephone: string;
-    adresse?: string;
-  };
-  emplacement: string;
+  type: 'testament' | 'mandat_inaptitude' | 'procuration' | 'assurance_vie' | 'autre';
+  nom: string;
+  dateCreation?: Date;
+  localisation: string;
+  notaire?: string;
   numeroReference?: string;
   notes?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface FuneralWishes {
-  type: 'inhumation' | 'cremation' | 'don_science';
+export interface VolontesFuneraires {
+  type: 'inhumation' | 'cremation' | 'don_corps';
   lieu?: string;
+  salonFuneraire?: string;
+  cimetiere?: string;
   ceremonieReligieuse: boolean;
-  typeService: 'prive' | 'public' | 'aucun';
-  volontesSpeciales?: string;
+  typeService: 'prive' | 'public' | 'memorial';
   budgetEstime?: number;
-  prepaiement?: {
-    entreprise: string;
-    numeroContrat: string;
-    montant: number;
-  };
-  personneResponsable?: {
-    nom: string;
-    telephone: string;
-    relation: string;
-  };
+  volontesSpeciales?: string;
+  musique?: string;
+  fleurs?: string;
+  dons_lieu_fleurs?: string;
 }
 
-export interface CharitableDonation {
+export interface DonCaritatif {
   id: string;
   organisme: string;
-  type: 'montant_fixe' | 'pourcentage' | 'bien_specifique';
+  adresse?: string;
+  numeroCharite?: string;
   montant?: number;
   pourcentage?: number;
-  bienSpecifique?: string;
-  numeroCharite?: string;
-  contact?: {
-    nom: string;
-    telephone: string;
-    email?: string;
-  };
+  typeLegs: 'montant_fixe' | 'pourcentage' | 'residuel';
   notes?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
-export interface TaxConsideration {
+export interface ConsiderationFiscale {
   id: string;
-  type: 'reer_ferr' | 'celi' | 'gain_capital' | 'entreprise' | 'autre';
+  type: 'reer_ferr' | 'celi' | 'gains_capital' | 'entreprise' | 'autre';
   description: string;
+  strategie?: string;
   impactEstime?: number;
-  strategieOptimisation?: string;
-  conseillerFiscal?: {
-    nom: string;
-    telephone: string;
-    entreprise: string;
-  };
+  conseillerFiscal?: string;
   notes?: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface SuccessionPlan {
   personId: 'person1' | 'person2';
   nom: string;
   prenom: string;
-  
-  // Bénéficiaires et héritiers
-  beneficiaires: Beneficiary[];
-  
-  // Inventaire des biens
-  actifs: Asset[];
-  
-  // Documents légaux
-  documentsLegaux: LegalDocument[];
-  
-  // Volontés funéraires
-  volontesFuneraires: FuneralWishes;
-  
-  // Dons caritatifs
-  donsCaritables: CharitableDonation[];
-  
-  // Considérations fiscales
-  considerationsFiscales: TaxConsideration[];
-  
-  // Instructions spéciales
-  instructionsSpeciales?: {
-    liquidateur?: {
-      nom: string;
-      relation: string;
-      telephone: string;
-      suppléant?: {
-        nom: string;
-        relation: string;
-        telephone: string;
-      };
-    };
-    
-    tuteur?: {
-      nom: string;
-      relation: string;
-      telephone: string;
-      pourEnfants: string[];
-    };
-    
-    entreprise?: {
-      instructions: string;
-      successeur?: string;
-      vente?: boolean;
-      evaluation?: number;
-    };
-    
-    animaux?: {
-      instructions: string;
-      gardien?: string;
-      budget?: number;
-    };
-    
-    autres?: string;
-  };
-  
-  // Métadonnées
+  beneficiaires: Beneficiaire[];
+  actifs: Actif[];
+  documentsLegaux: DocumentLegal[];
+  volontesFuneraires: VolontesFuneraires;
+  donsCaritables: DonCaritatif[];
+  considerationsFiscales: ConsiderationFiscale[];
   dateCreation: Date;
   derniereMiseAJour: Date;
   version: number;
-  statut: 'brouillon' | 'complet' | 'revise' | 'officialise';
+  statut: 'brouillon' | 'complet' | 'revise';
 }
 
 export interface SuccessionPlanningState {
-  person1Plan?: SuccessionPlan;
-  person2Plan?: SuccessionPlan;
+  person1Plan: SuccessionPlan;
+  person2Plan: SuccessionPlan;
   selectedPerson: 'person1' | 'person2';
   isEditing: boolean;
   lastSaved?: Date;
 }
 
-// Types pour la validation
-export interface SuccessionPlanValidation {
-  isValid: boolean;
-  completionPercentage: number;
-  missingFields: string[];
-  warnings: string[];
-  criticalIssues: string[];
-  recommendations: string[];
+// Types pour les informations d'urgence (basés sur le document Word)
+export interface InformationsPersonnelles {
+  nomComplet: string;
+  dateNaissance?: Date;
+  lieuNaissance?: string;
+  nas?: string;
+  numeroAssuranceMaladie?: string;
+  adresseActuelle?: string;
 }
 
-// Types pour l'export/import
-export interface SuccessionPlanExport {
-  version: string;
-  exportDate: Date;
-  person1Plan?: SuccessionPlan;
-  person2Plan?: SuccessionPlan;
-  metadata: {
-    appVersion: string;
-    exportedBy: string;
-  };
+export interface TestamentSuccession {
+  hasWill: boolean;
+  willType?: 'olographe' | 'notarie' | 'devant_temoins';
+  willDate?: Date;
+  willLocation?: string;
+  notaireName?: string;
+  notaireAddress?: string;
+  notairePhone?: string;
+  numeroDossier?: string;
+  executorName?: string;
+  executorRelation?: string;
+  executorAddress?: string;
+  executorPhone?: string;
+  executorEmail?: string;
+  executorSubstitute?: string;
+  notes?: string;
 }
 
-// Types pour l'impression
-export interface PrintableSuccessionPlan {
-  plan: SuccessionPlan;
-  sections: {
-    beneficiaires: boolean;
-    actifs: boolean;
-    documents: boolean;
-    funerailles: boolean;
-    dons: boolean;
-    fiscal: boolean;
-    instructions: boolean;
-  };
-  format: 'complete' | 'summary' | 'legal_only';
-  includePrivateInfo: boolean;
+export interface ProprieteImmobiliere {
+  id: string;
+  type: 'residence_principale' | 'residence_secondaire' | 'autre';
+  adresse: string;
+  titrePropriete?: string;
+  numeroLotCadastral?: string;
+  hypothequeRestante: boolean;
+  institutionFinanciere?: string;
+  soldeApproximatif?: number;
+  details?: string;
+}
+
+export interface Vehicule {
+  id: string;
+  marque: string;
+  modele: string;
+  annee: number;
+  numeroImmatriculation?: string;
+  certificatPropriete?: string;
+  lieuCles?: string;
+  financementRestant: boolean;
+  institution?: string;
+}
+
+export interface BiensEntreposes {
+  id: string;
+  type: 'entrepot' | 'coffre_fort_bancaire';
+  nomEntreprise?: string;
+  adresse?: string;
+  numeroLocal?: string;
+  codeAcces?: string;
+  lieuCle?: string;
+  coLocataire?: string;
+  contenuPrincipal?: string;
+}
+
+export interface PreferencesGenerales {
+  souhait: 'inhumation' | 'cremation' | 'don_corps';
+  religionRite?: string;
+}
+
+export interface Cimetiere {
+  id: string;
+  nom: string;
+  adresse: string;
+  numeroLot?: string;
+  personnesInhumees?: string;
+}
+
+export interface SalonFuneraire {
+  id: string;
+  nom: string;
+  adresse: string;
+  personneContact?: string;
+  telephone?: string;
+}
+
+export interface Prearrangements {
+  effectues: boolean;
+  entreprise?: string;
+  numeroContrat?: string;
+  lieuContrat?: string;
+}
+
+export interface CompteBancaire {
+  id: string;
+  type: 'cheques' | 'epargne' | 'autre';
+  institution: string;
+  adresseSuccursale?: string;
+  numeroCompte: string;
+  coTitulaire?: string;
+}
+
+export interface CarteCredit {
+  id: string;
+  emetteur: string;
+  numeroQuatreChiffres: string;
+  coSignataire?: string;
+}
+
+export interface PlacementEpargne {
+  id: string;
+  type: 'reer_ferr' | 'celi' | 'autre';
+  institution: string;
+  numeroCompte: string;
+  beneficiaireDesigne?: string;
+  conseiller?: string;
+  details?: string;
+}
+
+export interface ContactMedical {
+  id: string;
+  type: 'medecin_famille' | 'dentiste' | 'specialiste' | 'pharmacie';
+  nom: string;
+  clinique?: string;
+  telephone: string;
+  adresse?: string;
+  specialite?: string;
+}
+
+export interface AssuranceInfo {
+  id: string;
+  type: 'vie' | 'habitation' | 'automobile' | 'autre';
+  compagnie: string;
+  numeroPolice: string;
+  montant?: number;
+  beneficiaire?: string;
+  agent?: string;
+}
+
+export interface DocumentImportant {
+  id: string;
+  type: 'identite' | 'financier' | 'legal';
+  nom: string;
+  emplacement: string;
+}
+
+export interface AccesNumerique {
+  id: string;
+  type: 'appareil' | 'compte_ligne' | 'courriel' | 'reseau_social' | 'telecommunication';
+  nom: string;
+  identifiant?: string;
+  motDePasse?: string;
+  numeroCompte?: string;
+}
+
+export interface ContactImportant {
+  id: string;
+  type: 'famille' | 'ami' | 'professionnel';
+  nom: string;
+  lien?: string;
+  telephone: string;
+  adresse?: string;
+}
+
+export interface EmploiPrestation {
+  id: string;
+  type: 'employeur' | 'regime_retraite';
+  nom: string;
+  adresse?: string;
+  personneRessource?: string;
+  telephone?: string;
+  details?: string;
+}
+
+export interface SoinAnimal {
+  id: string;
+  nomAnimal: string;
+  veterinaire?: string;
+  personneDesignee?: string;
+}
+
+// Interface principale pour toutes les informations d'urgence
+export interface InformationsUrgence {
+  informationsPersonnelles: InformationsPersonnelles;
+  testamentSuccession: TestamentSuccession;
+  proprietesImmobilieres: ProprieteImmobiliere[];
+  vehicules: Vehicule[];
+  biensEntreposes: BiensEntreposes[];
+  preferencesGenerales: PreferencesGenerales;
+  cimetiere?: Cimetiere;
+  salonFuneraire?: SalonFuneraire;
+  prearrangements: Prearrangements;
+  comptesBancaires: CompteBancaire[];
+  cartesCredit: CarteCredit[];
+  placementsEpargne: PlacementEpargne[];
+  contactsMedicaux: ContactMedical[];
+  assurances: AssuranceInfo[];
+  documentsImportants: DocumentImportant[];
+  accesNumeriques: AccesNumerique[];
+  contactsImportants: ContactImportant[];
+  emploiPrestations: EmploiPrestation[];
+  soinsAnimaux: SoinAnimal[];
+  instructionsParticulieres?: string;
+  dateRevision?: Date;
 }
