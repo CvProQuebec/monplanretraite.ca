@@ -2,7 +2,6 @@
 // Page dédiée à la planification successorale
 
 import React from 'react';
-import Layout from '@/components/layout/Layout';
 import { SuccessionPlanningManager } from '@/features/retirement/components/SuccessionPlanningManager';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -21,7 +20,7 @@ import {
 
 const PlanificationSuccessorale: React.FC = () => {
   return (
-    <Layout>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Introduction */}
         <div className="mb-8">
@@ -202,7 +201,7 @@ const PlanificationSuccessorale: React.FC = () => {
           </Card>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 };
 

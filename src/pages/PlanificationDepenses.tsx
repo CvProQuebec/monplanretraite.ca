@@ -52,7 +52,7 @@ export const PlanificationDepenses: React.FC = () => {
             </div>
           </div>
           <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Planification de Dépenses Intelligente
+            Planification de dépenses intelligente
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Analysez l'impact de vos futurs achats sur votre situation financière et 

@@ -7,8 +7,6 @@ import Layout from './components/layout/Layout';
 // Nouvelles pages principales
 import Accueil from './pages/Accueil';
 import Home from './pages/Home';
-import MonProfil from './pages/MonProfil';
-import MyProfile from './pages/MyProfile';
 import MaRetraite from './pages/MaRetraite';
 import Revenus from './pages/Revenus';
 import PlanificationUrgence from './pages/PlanificationUrgence';
@@ -16,6 +14,19 @@ import PlanificationSuccessorale from './pages/PlanificationSuccessorale';
 import PlanificationDepenses from './pages/PlanificationDepenses';
 import AssistantFinancier from './pages/AssistantFinancier';
 import Budget from './pages/Budget';
+
+// NOUVEAUX MODULES INTÉGRÉS
+import { SRGAnalysisSection } from './features/retirement/components/SRGAnalysisSection';
+import RREGOPAnalysisSection from './features/retirement/components/RREGOPAnalysisSection';
+import { RealEstateOptimizationSection } from './features/retirement/components/RealEstateOptimizationSection';
+import { TaxOptimizationDashboard } from './features/retirement/components/TaxOptimizationDashboard';
+import { MonteCarloSimulator } from './features/retirement/components/MonteCarloSimulator';
+import { SensitivityAnalysis } from './features/retirement/components/SensitivityAnalysis';
+import { ScenarioComparison } from './features/retirement/components/ScenarioComparison';
+import { UltimatePlanningDashboard } from './features/retirement/components/UltimatePlanningDashboard';
+import ExpensesPage from './pages/ExpensesPage';
+import RRQCPPAnalysis from './pages/RRQCPPAnalysis';
+import ImmobilierPage from './pages/ImmobilierPage';
 
 // Composants de test et validation
 import FinalValidation from './components/FinalValidation';
@@ -52,9 +63,9 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/en" element={<Home />} />
               
-              {/* Page profil - "VOTRE SITUATION, NOS RESSOURCES" */}
-              <Route path="/mon-profil" element={<MonProfil />} />
-              <Route path="/my-profile" element={<MyProfile />} />
+              {/* Page profil - INTÉGRÉE dans Ma Retraite */}
+              {/* <Route path="/mon-profil" element={<MonProfil />} /> */}
+              {/* <Route path="/my-profile" element={<MyProfile />} /> */}
               
               {/* Page retraite - "TRAVAILLER AVEC CE QU'ON A" */}
               <Route path="/ma-retraite" element={<MaRetraite />} />
@@ -84,6 +95,62 @@ function App() {
               <Route path="/budget" element={<Budget />} />
               <Route path="/mon-budget" element={<Budget />} />
               <Route path="/my-budget" element={<Budget />} />
+              
+              {/* 🏛️ NOUVELLES ROUTES - PRESTATIONS GOUVERNEMENTALES */}
+              
+              {/* Module SRG (Supplément de Revenu Garanti) */}
+              <Route path="/module-srg" element={<SRGAnalysisSection userPlan="professional" />} />
+              <Route path="/srg-module" element={<SRGAnalysisSection userPlan="professional" />} />
+              
+              {/* Module RREGOP (Régime de Retraite Gouvernemental) */}
+              <Route path="/module-rregop" element={<RREGOPAnalysisSection userPlan="professional" />} />
+              <Route path="/rregop-module" element={<RREGOPAnalysisSection userPlan="professional" />} />
+              
+                      {/* Module RRQ/CPP */}
+        <Route path="/rrq-cpp-analysis" element={<RRQCPPAnalysis />} />
+        <Route path="/analyse-rrq-cpp" element={<RRQCPPAnalysis />} />
+              
+              {/* Module OAS/GIS */}
+              <Route path="/oas-gis-analysis" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-gray-800">Analyse OAS/GIS</h1><p className="text-gray-600 mt-4">Module en développement</p></div>} />
+              <Route path="/analyse-oas-gis" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-gray-800">Analyse OAS/GIS</h1><p className="text-gray-600 mt-4">Module en développement</p></div>} />
+              
+              {/* 🏠 NOUVELLES ROUTES - OPTIMISATION IMMOBILIÈRE */}
+              
+              {/* Module Immobilier */}
+              <Route path="/optimisation-immobiliere" element={<RealEstateOptimizationSection userPlan="professional" />} />
+              <Route path="/real-estate-optimization" element={<RealEstateOptimizationSection userPlan="professional" />} />
+              
+              {/* Page Immobilier - Gestion complète du patrimoine immobilier */}
+              <Route path="/immobilier" element={<ImmobilierPage />} />
+              <Route path="/real-estate" element={<ImmobilierPage />} />
+              
+              {/* 📊 NOUVELLES ROUTES - SIMULATIONS */}
+              
+              {/* Simulateur Monte Carlo */}
+              <Route path="/simulateur-monte-carlo" element={<MonteCarloSimulator />} />
+              <Route path="/monte-carlo-simulator" element={<MonteCarloSimulator />} />
+              
+              {/* Analyse de Sensibilité */}
+              <Route path="/analyse-sensibilite" element={<SensitivityAnalysis />} />
+              <Route path="/sensitivity-analysis" element={<SensitivityAnalysis />} />
+              
+              {/* Comparaison de Scénarios */}
+              <Route path="/comparaison-scenarios" element={<ScenarioComparison />} />
+              <Route path="/scenario-comparison" element={<ScenarioComparison />} />
+              
+              {/* 🎯 NOUVELLES ROUTES - OPTIMISATION FISCALE ET PLANIFICATION */}
+              
+              {/* Optimisation Fiscale */}
+              <Route path="/optimisation-fiscale" element={<TaxOptimizationDashboard />} />
+              <Route path="/tax-optimization" element={<TaxOptimizationDashboard />} />
+              
+                      {/* Planification Expert */}
+        <Route path="/planification-expert" element={<UltimatePlanningDashboard />} />
+        <Route path="/expert-planning" element={<UltimatePlanningDashboard />} />
+        
+        {/* Module de Dépenses */}
+        <Route path="/depenses" element={<ExpensesPage />} />
+        <Route path="/expenses" element={<ExpensesPage />} />
               
               {/* 🧪 ROUTES DE TEST ET VALIDATION */}
               

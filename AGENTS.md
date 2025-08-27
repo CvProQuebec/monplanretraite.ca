@@ -359,6 +359,16 @@ const selfComparison = true; // Comparaison avec soi-même uniquement
 - **Respect de la diversité** : Aucun jugement sur les choix financiers
 - **Interface accessible** : Adaptée à tous les niveaux de compétence
 
+### 👁️ **Règles d'Accessibilité pour Utilisateurs Seniors**
+- **Contraste élevé** : Fond blanc pur pour les modals et formulaires
+- **Taille de police** : Minimum 16px pour tous les textes
+- **Espacement généreux** : Marges et padding suffisants entre les éléments
+- **Isolation visuelle** : Modals avec fond blanc opaque, pas de transparence
+- **Icônes claires** : Icônes suffisamment grandes et contrastées
+- **Navigation intuitive** : Boutons d'action bien visibles et espacés
+- **Feedback visuel** : États actifs et erreurs clairement identifiables
+- **Responsive design** : Adaptation optimale pour tous les écrans
+
 ### Architecture
 - **Séparation des responsabilités :** Services, composants, types séparés
 - **Injection de dépendances :** Hooks et context pour l'état global

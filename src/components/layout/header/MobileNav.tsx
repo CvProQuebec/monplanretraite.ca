@@ -27,25 +27,27 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
     if (toEnglish && !isEnglish) {
       // Switch to English
       if (path === "/ma-retraite") path = "/my-retirement";
-      else if (path === "/mon-profil") path = "/my-profile";
       else if (path === "/mes-revenus") path = "/my-income";
+      else if (path === "/depenses") path = "/expenses";
+      else if (path === "/mon-budget") path = "/my-budget";
+      else if (path === "/immobilier") path = "/real-estate";
       else if (path === "/planification-urgence") path = "/emergency-planning";
       else if (path === "/planification-successorale") path = "/succession-planning";
       else if (path === "/planification-depenses") path = "/expense-planning";
       else if (path === "/assistant-financier") path = "/financial-assistant";
-      else if (path === "/mon-budget") path = "/my-budget";
       else if (path === "/") path = "/en";
       else path = "/en" + path;
     } else if (!toEnglish && isEnglish) {
       // Switch to French
       if (path === "/my-retirement") path = "/ma-retraite";
-      else if (path === "/my-profile") path = "/mon-profil";
       else if (path === "/my-income") path = "/mes-revenus";
+      else if (path === "/expenses") path = "/depenses";
+      else if (path === "/my-budget") path = "/mon-budget";
+      else if (path === "/real-estate") path = "/immobilier";
       else if (path === "/emergency-planning") path = "/planification-urgence";
       else if (path === "/succession-planning") path = "/planification-successorale";
       else if (path === "/expense-planning") path = "/planification-depenses";
       else if (path === "/financial-assistant") path = "/assistant-financier";
-      else if (path === "/my-budget") path = "/mon-budget";
       else if (path.startsWith("/en")) path = path.replace(/^\/en/, "") || "/";
     }
     
@@ -82,22 +84,58 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
             {isEnglish ? "My Retirement" : "Ma Retraite"}
           </Link>
           
-          {/* Mon Profil / My Profile */}
-          <Link
-            to={isEnglish ? "/my-profile" : "/mon-profil"}
-            className={getMobileLinkClasses(isEnglish ? "/my-profile" : "/mon-profil")}
-            onClick={toggleMenu}
-          >
-            {isEnglish ? "My Profile" : "Mon Profil"}
-          </Link>
-          
-          {/* Mes Revenus / My Income */}
+          {/* Revenus / Income */}
           <Link
             to={isEnglish ? "/my-income" : "/mes-revenus"}
             className={getMobileLinkClasses(isEnglish ? "/my-income" : "/mes-revenus")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "My Income" : "Mes Revenus"}
+            {isEnglish ? "Income" : "Revenus"}
+          </Link>
+          
+          {/* Dépenses / Expenses */}
+          <Link
+            to={isEnglish ? "/expenses" : "/depenses"}
+            className={getMobileLinkClasses(isEnglish ? "/expenses" : "/depenses")}
+            onClick={toggleMenu}
+          >
+            {isEnglish ? "Expenses" : "Dépenses"}
+          </Link>
+          
+          {/* Budget */}
+          <Link
+            to={isEnglish ? "/my-budget" : "/mon-budget"}
+            className={getMobileLinkClasses(isEnglish ? "/my-budget" : "/mon-budget")}
+            onClick={toggleMenu}
+          >
+            {isEnglish ? "Budget" : "Budget"}
+          </Link>
+          
+          {/* Immobilier / Real Estate */}
+          <Link
+            to={isEnglish ? "/real-estate" : "/immobilier"}
+            className={getMobileLinkClasses(isEnglish ? "/real-estate" : "/immobilier")}
+            onClick={toggleMenu}
+          >
+            {isEnglish ? "Real Estate" : "Immobilier"}
+          </Link>
+          
+          {/* Gouvernement / Government */}
+          <Link
+            to={isEnglish ? "/module-srg" : "/module-srg"}
+            className={getMobileLinkClasses("/module-srg")}
+            onClick={toggleMenu}
+          >
+            {isEnglish ? "Government" : "Gouvernement"}
+          </Link>
+          
+          {/* Assistant financier / Financial Assistant */}
+          <Link
+            to={isEnglish ? "/financial-assistant" : "/assistant-financier"}
+            className={getMobileLinkClasses(isEnglish ? "/financial-assistant" : "/assistant-financier")}
+            onClick={toggleMenu}
+          >
+            {isEnglish ? "Financial Assistant" : "Assistant financier"}
           </Link>
           
           {/* Planification d'urgence / Emergency Planning */}
@@ -127,31 +165,49 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
             {isEnglish ? "Expense Planning" : "Planification de dépenses"}
           </Link>
           
-          {/* Assistant financier / Financial Assistant */}
+          {/* Optimisation fiscale / Tax Optimization */}
           <Link
-            to={isEnglish ? "/financial-assistant" : "/assistant-financier"}
-            className={getMobileLinkClasses(isEnglish ? "/financial-assistant" : "/assistant-financier")}
+            to={isEnglish ? "/tax-optimization" : "/optimisation-fiscale"}
+            className={getMobileLinkClasses(isEnglish ? "/tax-optimization" : "/optimisation-fiscale")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Financial Assistant" : "Assistant financier"}
+            {isEnglish ? "Tax Optimization" : "Optimisation fiscale"}
           </Link>
           
-          {/* Budget */}
+          {/* Planification expert / Expert Planning */}
           <Link
-            to={isEnglish ? "/my-budget" : "/mon-budget"}
-            className={getMobileLinkClasses(isEnglish ? "/my-budget" : "/mon-budget")}
+            to={isEnglish ? "/expert-planning" : "/planification-expert"}
+            className={getMobileLinkClasses(isEnglish ? "/expert-planning" : "/planification-expert")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "My Budget" : "Mon Budget"}
+            {isEnglish ? "Expert Planning" : "Planification expert"}
           </Link>
           
-          {/* Module Retraite / Retirement Module */}
+          {/* Simulateur Monte Carlo / Monte Carlo Simulator */}
           <Link
-            to={isEnglish ? "/en/retirement-module" : "/fr/retraite-module"}
-            className={getMobileLinkClasses(isEnglish ? "/en/retirement-module" : "/fr/retraite-module")}
+            to={isEnglish ? "/monte-carlo-simulator" : "/simulateur-monte-carlo"}
+            className={getMobileLinkClasses(isEnglish ? "/monte-carlo-simulator" : "/simulateur-monte-carlo")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Retirement Module" : "Module Retraite"}
+            {isEnglish ? "Monte Carlo Simulator" : "Simulateur Monte Carlo"}
+          </Link>
+          
+          {/* Analyse de sensibilité / Sensitivity Analysis */}
+          <Link
+            to={isEnglish ? "/sensitivity-analysis" : "/analyse-sensibilite"}
+            className={getMobileLinkClasses(isEnglish ? "/sensitivity-analysis" : "/analyse-sensibilite")}
+            onClick={toggleMenu}
+          >
+            {isEnglish ? "Sensitivity Analysis" : "Analyse de sensibilité"}
+          </Link>
+          
+          {/* Comparaison de scénarios / Scenario Comparison */}
+          <Link
+            to={isEnglish ? "/scenario-comparison" : "/comparaison-scenarios"}
+            className={getMobileLinkClasses(isEnglish ? "/scenario-comparison" : "/comparaison-scenarios")}
+            onClick={toggleMenu}
+          >
+            {isEnglish ? "Scenario Comparison" : "Comparaison de scénarios"}
           </Link>
           
           {/* Rapports / Reports */}

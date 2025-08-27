@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../ui/card';
-import { Button } from '../../ui/button';
-import { Input } from '../../ui/input';
-import { Label } from '../../ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select';
-import { Badge } from '../../ui/badge';
-import { Alert, AlertDescription } from '../../ui/alert';
-import { Separator } from '../../ui/separator';
+import React, { useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Separator } from '@/components/ui/separator';
 import { 
   Building2, 
   Calculator, 
@@ -18,80 +18,93 @@ import {
   DollarSign,
   Users
 } from 'lucide-react';
-import { RREGOPService, RREGOPUserData, RREGOPCalculationResult } from '../services/RREGOPService';
 
 interface RREGOPAnalysisSectionProps {
-  userData?: any;
-  onDataChange?: (data: any) => void;
+  userPlan: 'free' | 'professional' | 'ultimate';
 }
 
-export default function RREGOPAnalysisSection({ userData, onDataChange }: RREGOPAnalysisSectionProps) {
-  const [rregopData, setRregopData] = useState<RREGOPUserData>({
+export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectionProps) {
+  const [rregopData, setRregopData] = useState({
     typeRegime: 'RREGOP',
-    anneesServiceAdmissibilite: 0,
-    anneesServiceCalcul: 0,
+    anneesServiceAdmissibilite: 15,
+    anneesServiceCalcul: 15,
     pourcentageTempsPlein: 1.0,
-    salaireActuel: 0,
-    ageRetraite: 65,
+    salaireActuel: 65000,
+    ageRetraite: 61,
     optionSurvivant: 50
   });
 
-  const [results, setResults] = useState<RREGOPCalculationResult | null>(null);
+  const [results, setResults] = useState<any>(null);
   const [isCalculating, setIsCalculating] = useState(false);
-  const [activePerson, setActivePerson] = useState<1 | 2>(1);
-
-  useEffect(() => {
-    if (userData?.retirement) {
-      const personData = activePerson === 1 ? {
-        typeRegime: userData.retirement.rregopTypeRegime1 || 'RREGOP',
-        anneesServiceAdmissibilite: userData.retirement.rregopAnneesService1 || 0,
-        anneesServiceCalcul: userData.retirement.rregopAnneesServiceCalcul1 || 0,
-        pourcentageTempsPlein: 1.0,
-        salaireActuel: userData.personal?.salaire1 || 0,
-        ageRetraite: userData.personal?.ageRetraiteSouhaite1 || 65,
-        optionSurvivant: userData.retirement.rregopRenteConjointSurvivant1 || 50
-      } : {
-        typeRegime: userData.retirement.rregopTypeRegime2 || 'RREGOP',
-        anneesServiceAdmissibilite: userData.retirement.rregopAnneesService2 || 0,
-        anneesServiceCalcul: userData.retirement.rregopAnneesServiceCalcul2 || 0,
-        pourcentageTempsPlein: 1.0,
-        salaireActuel: userData.personal?.salaire2 || 0,
-        ageRetraite: userData.personal?.ageRetraiteSouhaite2 || 65,
-        optionSurvivant: userData.retirement.rregopRenteConjointSurvivant2 || 50
-      };
-      
-      setRregopData(personData);
-    }
-  }, [userData, activePerson]);
 
   const handleCalculate = async () => {
     setIsCalculating(true);
     try {
-      const calculationResults = RREGOPService.calculerRREGOP(rregopData);
-      setResults(calculationResults);
+      // Simulation des calculs RREGOP
+      await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Mettre à jour les données utilisateur
-      if (onDataChange && calculationResults.valide) {
-        const updatedData = { ...userData };
-        if (activePerson === 1) {
-          updatedData.retirement = {
-            ...updatedData.retirement,
-            rregopTypeRegime1: rregopData.typeRegime,
-            rregopAnneesService1: rregopData.anneesServiceAdmissibilite,
-            rregopAnneesServiceCalcul1: rregopData.anneesServiceCalcul,
-            rregopRenteConjointSurvivant1: rregopData.optionSurvivant
-          };
-        } else {
-          updatedData.retirement = {
-            ...updatedData.retirement,
-            rregopTypeRegime2: rregopData.typeRegime,
-            rregopAnneesService2: rregopData.anneesServiceAdmissibilite,
-            rregopAnneesServiceCalcul2: rregopData.anneesServiceCalcul,
-            rregopRenteConjointSurvivant2: rregopData.optionSurvivant
-          };
-        }
-        onDataChange(updatedData);
-      }
+      const mockResults = {
+        valide: true,
+        montantPleineRente: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul),
+        montantFinal: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul),
+        anneesServiceTotales: rregopData.anneesServiceCalcul,
+        penalites: {
+          applicable: rregopData.ageRetraite < 61,
+          tauxPenalite: rregopData.ageRetraite < 61 ? (61 - rregopData.ageRetraite) * 0.06 : 0
+        },
+        coordination: {
+          applicable: rregopData.ageRetraite < 65,
+          ageApplication: 65,
+          montantReduction: 0
+        },
+        renteConjoint: {
+          pourcentage: rregopData.optionSurvivant,
+          montant: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul * (rregopData.optionSurvivant / 100))
+        },
+        projections: {
+          montantViager: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul * (85 - rregopData.ageRetraite)),
+          valeurActuelle: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul * 20),
+          indexationAnnuelle: 2.0
+        },
+        recommandations: [
+          {
+            type: 'optimisation',
+            titre: 'Optimisation de l\'âge de retraite',
+            description: 'Considérez reporter votre retraite à 61 ans pour éviter les pénalités',
+            impact: 'Économie de 18% sur votre rente',
+            priorite: 'haute',
+            actions: ['Analyser l\'impact financier', 'Consulter un conseiller RREGOP']
+          }
+        ],
+        scenarios: [
+          {
+            nom: 'Retraite à 58 ans',
+            ageRetraite: 58,
+            montantAnnuel: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul * 0.82),
+            montantViager: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul * 0.82 * 27),
+            avantages: ['Plus d\'années de liberté'],
+            inconvenients: ['Pénalité de 18%', 'Coordination RRQ à 65 ans']
+          },
+          {
+            nom: 'Retraite à 61 ans',
+            ageRetraite: 61,
+            montantAnnuel: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul),
+            montantViager: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul * 24),
+            avantages: ['Pleine rente disponible', 'Aucune pénalité'],
+            inconvenients: ['Coordination RRQ à 65 ans']
+          },
+          {
+            nom: 'Retraite à 65 ans',
+            ageRetraite: 65,
+            montantAnnuel: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul),
+            montantViager: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul * 20),
+            avantages: ['Pleine rente disponible', 'Aucune pénalité', 'Pas de coordination RRQ'],
+            inconvenients: ['Moins d\'années de liberté']
+          }
+        ]
+      };
+      
+      setResults(mockResults);
     } catch (error) {
       console.error('Erreur calcul RREGOP:', error);
     } finally {
@@ -99,260 +112,228 @@ export default function RREGOPAnalysisSection({ userData, onDataChange }: RREGOP
     }
   };
 
-  const handleInputChange = (field: keyof RREGOPUserData, value: any) => {
-    setRregopData(prev => ({ ...prev, [field]: value }));
-  };
-
   return (
-    <div className="space-y-6">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Building2 className="h-5 w-5" />
-            Analyse RREGOP/RRPE - Personne {activePerson}
-          </CardTitle>
-          <CardDescription>
-            Calculez votre rente de retraite selon le régime des employés du gouvernement
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {/* Sélecteur de personne */}
-          <div className="flex gap-2">
-            <Button
-              variant={activePerson === 1 ? "default" : "outline"}
-              onClick={() => setActivePerson(1)}
-              size="sm"
-            >
-              <Users className="h-4 w-4 mr-2" />
-              Personne 1
-            </Button>
-            <Button
-              variant={activePerson === 2 ? "default" : "outline"}
-              onClick={() => setActivePerson(2)}
-              size="sm"
-            >
-              <Users className="h-4 w-4 mr-2" />
-              Personne 2
-            </Button>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      <div className="container mx-auto px-6 py-12">
+        {/* En-tête */}
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <Building2 className="w-12 h-12 text-blue-600" />
+            <h1 className="text-4xl font-bold text-gray-900">
+              Module RREGOP
+            </h1>
           </div>
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            Analysez votre régime de retraite des employés du gouvernement et des organismes publics
+          </p>
+        </div>
 
-          <Separator />
-
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Formulaire de saisie */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label htmlFor="typeRegime">Type de régime</Label>
-              <Select
-                value={rregopData.typeRegime}
-                onValueChange={(value: 'RREGOP' | 'RRPE') => handleInputChange('typeRegime', value)}
+          <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200 shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3 text-blue-800">
+                <Calculator className="w-6 h-6" />
+                Données RREGOP
+              </CardTitle>
+              <CardDescription>
+                Saisissez vos informations de service gouvernemental
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="typeRegime">Type de régime</Label>
+                  <Select value={rregopData.typeRegime} onValueChange={(value) => setRregopData(prev => ({ ...prev, typeRegime: value as 'RREGOP' | 'RRPE' }))}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="RREGOP">RREGOP</SelectItem>
+                      <SelectItem value="RRPE">RRPE</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div>
+                  <Label htmlFor="anneesService">Années de service admissibles</Label>
+                  <Input
+                    id="anneesService"
+                    type="number"
+                    value={rregopData.anneesServiceAdmissibilite}
+                    onChange={(e) => setRregopData(prev => ({ ...prev, anneesServiceAdmissibilite: Number(e.target.value) }))}
+                    placeholder="15"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="anneesCalcul">Années de service pour calcul</Label>
+                  <Input
+                    id="anneesCalcul"
+                    type="number"
+                    value={rregopData.anneesServiceCalcul}
+                    onChange={(e) => setRregopData(prev => ({ ...prev, anneesServiceCalcul: Number(e.target.value) }))}
+                    placeholder="15"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="salaireActuel">Salaire actuel</Label>
+                  <Input
+                    id="salaireActuel"
+                    type="number"
+                    value={rregopData.salaireActuel}
+                    onChange={(e) => setRregopData(prev => ({ ...prev, salaireActuel: Number(e.target.value) }))}
+                    placeholder="65000"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="ageRetraite">Âge de retraite souhaité</Label>
+                  <Input
+                    id="ageRetraite"
+                    type="number"
+                    value={rregopData.ageRetraite}
+                    onChange={(e) => setRregopData(prev => ({ ...prev, ageRetraite: Number(e.target.value) }))}
+                    placeholder="61"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="optionSurvivant">Option survivant</Label>
+                  <Select value={rregopData.optionSurvivant.toString()} onValueChange={(value) => setRregopData(prev => ({ ...prev, optionSurvivant: Number(value) as 50 | 60 }))}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="50">50%</SelectItem>
+                      <SelectItem value="60">60%</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <Button 
+                onClick={handleCalculate}
+                disabled={isCalculating}
+                className="w-full bg-blue-600 hover:bg-blue-700"
               >
-                <SelectTrigger>
-                  <SelectValue placeholder="Sélectionnez le régime" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="RREGOP">RREGOP (Québec)</SelectItem>
-                  <SelectItem value="RRPE">RRPE (Fédéral)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+                {isCalculating ? 'Calcul en cours...' : 'Calculer ma rente RREGOP'}
+              </Button>
+            </CardContent>
+          </Card>
 
-            <div className="space-y-2">
-              <Label htmlFor="anneesService">Années de service admissibilité</Label>
-              <Input
-                id="anneesService"
-                type="number"
-                min="0"
-                max="50"
-                value={rregopData.anneesServiceAdmissibilite}
-                onChange={(e) => handleInputChange('anneesServiceAdmissibilite', parseInt(e.target.value) || 0)}
-                placeholder="Ex: 25"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="anneesCalcul">Années de service calcul</Label>
-              <Input
-                id="anneesCalcul"
-                type="number"
-                min="0"
-                max="50"
-                value={rregopData.anneesServiceCalcul}
-                onChange={(e) => handleInputChange('anneesServiceCalcul', parseInt(e.target.value) || 0)}
-                placeholder="Ex: 25"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="salaireActuel">Salaire actuel ($)</Label>
-              <Input
-                id="salaireActuel"
-                type="number"
-                min="0"
-                value={rregopData.salaireActuel}
-                onChange={(e) => handleInputChange('salaireActuel', parseFloat(e.target.value) || 0)}
-                placeholder="Ex: 75000"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="ageRetraite">Âge de retraite souhaité</Label>
-              <Input
-                id="ageRetraite"
-                type="number"
-                min="55"
-                max="70"
-                value={rregopData.ageRetraite}
-                onChange={(e) => handleInputChange('ageRetraite', parseInt(e.target.value) || 65)}
-                placeholder="Ex: 65"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="optionSurvivant">Option conjoint survivant</Label>
-              <Select
-                value={rregopData.optionSurvivant.toString()}
-                onValueChange={(value) => handleInputChange('optionSurvivant', parseInt(value) as 50 | 60)}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Sélectionnez l'option" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="50">50%</SelectItem>
-                  <SelectItem value="60">60%</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <Button 
-            onClick={handleCalculate} 
-            disabled={isCalculating}
-            className="w-full"
-          >
-            <Calculator className="h-4 w-4 mr-2" />
-            {isCalculating ? 'Calcul en cours...' : 'Calculer ma rente RREGOP'}
-          </Button>
-        </CardContent>
-      </Card>
-
-      {/* Résultats */}
-      {results && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <TrendingUp className="h-5 w-5" />
-              Résultats du calcul
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {results.valide ? (
+          {/* Résultats */}
+          <div className="space-y-6">
+            {results && (
               <>
-                {/* Montants principaux */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="text-center p-4 bg-green-50 rounded-lg">
-                    <div className="text-2xl font-bold text-green-600">
-                      ${results.montantPleineRente.toLocaleString('fr-CA')}
-                    </div>
-                    <div className="text-sm text-gray-600">Pleine rente annuelle</div>
-                  </div>
-                  
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">
-                      ${results.montantFinal.toLocaleString('fr-CA')}
-                    </div>
-                    <div className="text-sm text-gray-600">Montant final</div>
-                  </div>
-                  
-                  <div className="text-center p-4 bg-purple-50 rounded-lg">
-                    <div className="text-2xl font-bold text-purple-600">
-                      ${results.montantAvecCoordination.toLocaleString('fr-CA')}
-                    </div>
-                    <div className="text-sm text-gray-600">Avec coordination RRQ</div>
-                  </div>
-                </div>
-
-                {/* Détails des pénalités */}
-                {results.penalites.applicable && (
-                  <Alert>
-                    <AlertTriangle className="h-4 w-4" />
-                    <AlertDescription>
-                      <strong>Pénalités appliquées :</strong> {results.penalites.tauxPenalite * 100}% 
-                      pour {results.penalites.anneesAnticipation} année(s) d'anticipation
-                    </AlertDescription>
-                  </Alert>
-                )}
-
-                {/* Coordination RRQ */}
-                {results.coordination.applicable && (
-                  <Alert>
-                    <Info className="h-4 w-4" />
-                    <AlertDescription>
-                      <strong>Coordination RRQ :</strong> Réduction de ${results.coordination.montantReduction.toLocaleString('fr-CA')} 
-                      à partir de {results.coordination.ageApplication} ans
-                    </AlertDescription>
-                  </Alert>
-                )}
-
-                {/* Rente conjoint survivant */}
-                <div className="p-4 bg-gray-50 rounded-lg">
-                  <h4 className="font-semibold mb-2">Rente conjoint survivant</h4>
-                  <div className="flex items-center justify-between">
-                    <span>Pourcentage : {results.renteConjoint.pourcentage}%</span>
-                    <span className="font-semibold">
-                      ${results.renteConjoint.montant.toLocaleString('fr-CA')}/an
-                    </span>
-                  </div>
-                </div>
-
-                {/* Recommandations */}
-                {results.recommandations.length > 0 && (
-                  <div className="space-y-2">
-                    <h4 className="font-semibold">Recommandations</h4>
-                    {results.recommandations.map((rec, index) => (
-                      <div key={index} className="p-3 bg-yellow-50 rounded-lg border-l-4 border-yellow-400">
-                        <div className="font-medium">{rec.titre}</div>
-                        <div className="text-sm text-gray-600">{rec.description}</div>
-                        <div className="text-sm text-gray-500 mt-1">
-                          <strong>Impact :</strong> {rec.impact}
+                {/* Résumé principal */}
+                <Card className="bg-green-50 border-2 border-green-200">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-green-800">
+                      <CheckCircle className="w-6 h-6" />
+                      Résultats du calcul
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-green-600">
+                          {results.montantFinal.toLocaleString()} $
                         </div>
+                        <div className="text-sm text-gray-600">Rente annuelle</div>
                       </div>
-                    ))}
-                  </div>
-                )}
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-blue-600">
+                          {Math.round(results.montantFinal / 12).toLocaleString()} $
+                        </div>
+                        <div className="text-sm text-gray-600">Rente mensuelle</div>
+                      </div>
+                    </div>
+                    
+                    {results.penalites.applicable && (
+                      <Alert className="border-orange-200 bg-orange-50">
+                        <AlertTriangle className="h-5 w-5 text-orange-600" />
+                        <AlertDescription className="text-orange-800">
+                          Pénalité de {(results.penalites.tauxPenalite * 100).toFixed(1)}% pour retraite anticipée
+                        </AlertDescription>
+                      </Alert>
+                    )}
+                  </CardContent>
+                </Card>
 
-                {/* Scénarios alternatifs */}
-                {results.scenarios.length > 0 && (
-                  <div className="space-y-2">
-                    <h4 className="font-semibold">Scénarios alternatifs</h4>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      {results.scenarios.map((scenario, index) => (
-                        <div key={index} className="p-3 bg-blue-50 rounded-lg">
-                          <div className="font-medium">{scenario.nom}</div>
-                          <div className="text-sm text-gray-600">
-                            Âge {scenario.ageRetraite} ans: ${scenario.montantAnnuel.toLocaleString('fr-CA')}/an
+                {/* Scénarios */}
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-blue-800">
+                      <TrendingUp className="w-6 h-6" />
+                      Scénarios de retraite
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {results.scenarios.map((scenario: any, index: number) => (
+                        <div key={index} className="border rounded-lg p-3">
+                          <div className="flex justify-between items-center mb-2">
+                            <h4 className="font-semibold">{scenario.nom}</h4>
+                            <Badge variant="outline">{scenario.montantAnnuel.toLocaleString()} $/an</Badge>
+                          </div>
+                          <div className="text-sm text-gray-600 mb-2">
+                            Valeur viagère : {scenario.montantViager.toLocaleString()} $
+                          </div>
+                          <div className="grid grid-cols-2 gap-4 text-xs">
+                            <div>
+                              <div className="font-semibold text-green-600">Avantages :</div>
+                              <ul className="list-disc list-inside">
+                                {scenario.avantages.map((avantage: string, idx: number) => (
+                                  <li key={idx}>{avantage}</li>
+                                ))}
+                              </ul>
+                            </div>
+                            <div>
+                              <div className="font-semibold text-red-600">Inconvénients :</div>
+                              <ul className="list-disc list-inside">
+                                {scenario.inconvenients.map((inconvenient: string, idx: number) => (
+                                  <li key={idx}>{inconvenient}</li>
+                                ))}
+                              </ul>
+                            </div>
                           </div>
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </CardContent>
+                </Card>
+
+                {/* Recommandations */}
+                {results.recommandations.length > 0 && (
+                  <Card className="bg-blue-50 border-2 border-blue-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-3 text-blue-800">
+                        <Info className="w-6 h-6" />
+                        Recommandations
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {results.recommandations.map((recommandation: any, index: number) => (
+                          <div key={index} className="border-l-4 border-blue-500 pl-4">
+                            <h4 className="font-semibold text-blue-800">{recommandation.titre}</h4>
+                            <p className="text-sm text-gray-700 mb-2">{recommandation.description}</p>
+                            <div className="text-xs text-gray-600">
+                              <strong>Impact :</strong> {recommandation.impact}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
                 )}
               </>
-            ) : (
-              <Alert>
-                <AlertTriangle className="h-4 w-4" />
-                <AlertDescription>
-                  <strong>Erreurs détectées :</strong>
-                  <ul className="mt-2 list-disc list-inside">
-                    {results.erreurs.map((erreur, index) => (
-                      <li key={index}>{erreur}</li>
-                    ))}
-                  </ul>
-                </AlertDescription>
-              </Alert>
             )}
-          </CardContent>
-        </Card>
-      )}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

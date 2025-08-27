@@ -66,13 +66,18 @@ const Accueil: React.FC = () => {
                   🎁 {isFrench ? 'SERVICE GRATUIT' : 'FREE SERVICE'}
                 </div>
                 <h2 className="text-4xl font-bold mb-4">
-                  {isFrench ? 'Kit de Protection Familiale' : 'Family Protection Kit'}
+                  {isFrench ? 'Forfait de protection familiale' : 'Family Protection Kit'}
                 </h2>
                 <p className="text-xl text-emerald-100 max-w-4xl mx-auto mb-8">
-                  {isFrench 
-                    ? 'Protégez vos proches avec un plan d\'urgence complet.<br />Le premier pas essentiel avant de rencontrer un professionnel.'
-                    : 'Protect your loved ones with a comprehensive emergency plan. The essential first step before meeting a professional.'
-                  }
+                  {isFrench ? (
+                    <>
+                      Protégez vos proches avec un plan d'urgence complet.
+                      <br />
+                      Le premier pas essentiel avant de rencontrer un professionnel.
+                    </>
+                  ) : (
+                    'Protect your loved ones with a comprehensive emergency plan. The essential first step before meeting a professional.'
+                  )}
                 </p>
               </div>
 
@@ -209,10 +214,15 @@ const Accueil: React.FC = () => {
               {isFrench ? 'Votre solution complète avant de rencontrer un professionnel' : 'Your complete solution before meeting a professional'}
             </h2>
             <p className="text-xl text-gray-700 max-w-4xl mx-auto mb-12">
-              {isFrench 
-                ? 'Préparez-vous efficacement avec nos outils professionnels.<br />Gagnez du temps et maximisez la valeur de vos consultations.'
-                : 'Prepare effectively with our professional tools. Save time and maximize the value of your consultations.'
-              }
+              {isFrench ? (
+                <>
+                  Préparez-vous efficacement avec nos outils professionnels.
+                  <br />
+                  Gagnez du temps et maximisez la valeur de vos consultations.
+                </>
+              ) : (
+                'Prepare effectively with our professional tools. Save time and maximize the value of your consultations.'
+              )}
             </p>
 
             {/* Section Notre engagement */}
@@ -316,7 +326,7 @@ const Accueil: React.FC = () => {
                 </h2>
                 <p className="text-xl text-indigo-100 max-w-3xl mx-auto mb-8">
                   {isFrench 
-                    ? 'Le premier assistant IA au monde qui évite les catastrophes financières avant qu\'elles arrivent !'
+                    ? 'Le premier assistant au monde qui évite les catastrophes financières avant qu\'elles arrivent!'
                     : 'The world\'s first AI assistant that prevents financial disasters before they happen!'
                   }
                 </p>

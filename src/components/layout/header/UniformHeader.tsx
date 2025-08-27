@@ -14,7 +14,8 @@ import {
   TrendingUp,
   DollarSign,
   BarChart3,
-  AlertTriangle
+  AlertTriangle,
+  Building
 } from 'lucide-react';
 import LanguageSelector from './LanguageSelector';
 
@@ -28,34 +29,76 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
-  // Navigation items avec sous-menus - CONSOLIDÉ avec Tableau de bord centralisé
+  // Navigation items avec sous-menus - RESTRUCTURÉ et CONSOLIDÉ
   const navigationItems = [
     {
-      id: 'home',
-      label: isEnglish ? 'Home' : 'Accueil',
-      icon: Home,
-      path: isEnglish ? '/en' : '/fr',
-      hasSubmenu: false
-    },
-    {
-      id: 'retirement',
+      id: 'dashboard',
       label: isEnglish ? 'My Retirement' : 'Ma Retraite',
       icon: TrendingUp,
       path: isEnglish ? '/my-retirement' : '/ma-retraite',
       hasSubmenu: false
     },
     {
-      id: 'profile',
-      label: isEnglish ? 'My Profile' : 'Mon Profil',
-      icon: User,
-      path: isEnglish ? '/my-profile' : '/mon-profil',
+      id: 'income',
+      label: isEnglish ? 'Income' : 'Revenus',
+      icon: DollarSign,
+      path: isEnglish ? '/my-income' : '/mes-revenus',
       hasSubmenu: false
     },
     {
-      id: 'income',
-      label: isEnglish ? 'My Income' : 'Mes Revenus',
-      icon: DollarSign,
-      path: isEnglish ? '/my-income' : '/mes-revenus',
+      id: 'expenses',
+      label: isEnglish ? 'Expenses' : 'Dépenses',
+      icon: Calculator,
+      path: isEnglish ? '/expenses' : '/depenses',
+      hasSubmenu: false
+    },
+    {
+      id: 'budget',
+      label: isEnglish ? 'Budget' : 'Budget',
+      icon: BarChart3,
+      path: isEnglish ? '/my-budget' : '/mon-budget',
+      hasSubmenu: false
+    },
+    {
+      id: 'real-estate',
+      label: isEnglish ? 'Real Estate' : 'Immobilier',
+      icon: Home,
+      path: isEnglish ? '/real-estate' : '/immobilier',
+      hasSubmenu: false
+    },
+    {
+      id: 'government-benefits',
+      label: isEnglish ? 'Government' : 'Gouvernement',
+      icon: Building,
+      hasSubmenu: true,
+      submenu: [
+        {
+          id: 'srg-module',
+          label: isEnglish ? 'SRG (GIS) Module' : 'Module SRG (GIS)',
+          path: isEnglish ? '/srg-module' : '/module-srg'
+        },
+        {
+          id: 'rregop-module',
+          label: isEnglish ? 'RREGOP Module' : 'Module RREGOP',
+          path: isEnglish ? '/rregop-module' : '/module-rregop'
+        },
+        {
+          id: 'rrq-cpp',
+          label: isEnglish ? 'RRQ/CPP Analysis' : 'Analyse RRQ/CPP',
+          path: isEnglish ? '/rrq-cpp-analysis' : '/analyse-rrq-cpp'
+        },
+        {
+          id: 'oas-gis',
+          label: isEnglish ? 'OAS/GIS Analysis' : 'Analyse OAS/GIS',
+          path: isEnglish ? '/oas-gis-analysis' : '/analyse-oas-gis'
+        }
+      ]
+    },
+    {
+      id: 'assistant',
+      label: isEnglish ? 'Financial Assistant' : 'Assistant financier',
+      icon: Calculator,
+      path: isEnglish ? '/financial-assistant' : '/assistant-financier',
       hasSubmenu: false
     },
     {
@@ -78,29 +121,41 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           id: 'expenses',
           label: isEnglish ? 'Expense Planning' : 'Planification de dépenses',
           path: isEnglish ? '/expense-planning' : '/planification-depenses'
+        },
+        {
+          id: 'tax-optimization',
+          label: isEnglish ? 'Tax Optimization' : 'Optimisation fiscale',
+          path: isEnglish ? '/tax-optimization' : '/optimisation-fiscale'
+        },
+        {
+          id: 'expert-planning',
+          label: isEnglish ? 'Expert Planning' : 'Planification expert',
+          path: isEnglish ? '/expert-planning' : '/planification-expert'
         }
       ]
     },
     {
-      id: 'assistant',
-      label: isEnglish ? 'Financial Assistant' : 'Assistant financier',
-      icon: Calculator,
-      path: isEnglish ? '/financial-assistant' : '/assistant-financier',
-      hasSubmenu: false
-    },
-    {
-      id: 'budget',
-      label: isEnglish ? 'My Budget' : 'Mon Budget',
+      id: 'simulations',
+      label: isEnglish ? 'Simulations' : 'Simulations',
       icon: BarChart3,
-      path: isEnglish ? '/my-budget' : '/mon-budget',
-      hasSubmenu: false
-    },
-    {
-      id: 'module',
-      label: isEnglish ? 'Retirement Module' : 'Module Retraite',
-      icon: FileText,
-      path: isEnglish ? '/en/retirement-module' : '/fr/retraite-module',
-      hasSubmenu: false
+      hasSubmenu: true,
+      submenu: [
+        {
+          id: 'monte-carlo',
+          label: isEnglish ? 'Monte Carlo Simulator' : 'Simulateur Monte Carlo',
+          path: isEnglish ? '/monte-carlo-simulator' : '/simulateur-monte-carlo'
+        },
+        {
+          id: 'sensitivity-analysis',
+          label: isEnglish ? 'Sensitivity Analysis' : 'Analyse de sensibilité',
+          path: isEnglish ? '/sensitivity-analysis' : '/analyse-sensibilite'
+        },
+        {
+          id: 'scenario-comparison',
+          label: isEnglish ? 'Scenario Comparison' : 'Comparaison de scénarios',
+          path: isEnglish ? '/scenario-comparison' : '/comparaison-scenarios'
+        }
+      ]
     },
     {
       id: 'reports',

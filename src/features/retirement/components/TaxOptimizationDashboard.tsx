@@ -1,559 +1,359 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import {
-  Calculator, TrendingUp, TrendingDown, DollarSign, PieChart as PieChartIcon,
-  AlertTriangle, CheckCircle, Info, Target, ArrowRightLeft, Banknote
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { 
+  Calculator, 
+  TrendingUp, 
+  AlertTriangle, 
+  CheckCircle, 
+  Info,
+  DollarSign,
+  Shield,
+  Target
 } from 'lucide-react';
 
-interface TaxOptimizationDashboardProps {
-  calculations: any;
-  userData: any;
-}
+export function TaxOptimizationDashboard() {
+  const [taxData, setTaxData] = useState({
+    revenuAnnuel: 80000,
+    age: 45,
+    montantREER: 50000,
+    montantCELI: 30000,
+    montantNonEnregistre: 100000,
+    ageRetraite: 65,
+    revenuRetraite: 60000
+  });
 
-export const TaxOptimizationDashboard: React.FC<TaxOptimizationDashboardProps> = ({
-  calculations,
-  userData
-}) => {
-  const [activeTab, setActiveTab] = useState('reer-celi');
-  
-  return (
-    <div className="w-full space-y-6">
-      {/* En-tête avec métriques fiscales clés */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-sm text-gray-600">Économies fiscales REER</div>
-                <div className="text-2xl font-bold text-green-600">
-                  {formatCurrency(calculations.reerCeliOptimization?.impactFiscal?.economieImmediateREER || 0)}
-                </div>
-              </div>
-              <TrendingUp className="w-8 h-8 text-green-500" />
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-sm text-gray-600">Impact PSV potentiel</div>
-                <div className="text-2xl font-bold text-amber-600">
-                  {formatCurrency(calculations.reerCeliOptimization?.impactFiscal?.impactPSV || 0)}
-                </div>
-              </div>
-              <AlertTriangle className="w-8 h-8 text-amber-500" />
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-sm text-gray-600">Avantage net REER</div>
-                <div className="text-2xl font-bold text-blue-600">
-                  {formatCurrency(calculations.reerCeliOptimization?.impactFiscal?.avantageNetREER || 0)}
-                </div>
-              </div>
-              <Calculator className="w-8 h-8 text-blue-500" />
-            </div>
-          </CardContent>
-        </Card>
-      </div>
+  const [results, setResults] = useState<any>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  const runTaxOptimization = async () => {
+    setIsAnalyzing(true);
+    try {
+      // Simulation de l'analyse fiscale
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="reer-celi">REER vs CELI</TabsTrigger>
-          <TabsTrigger value="withdrawal">Décaissement</TabsTrigger>
-          <TabsTrigger value="budget">Budget Retraite</TabsTrigger>
-          <TabsTrigger value="estate">Succession</TabsTrigger>
-        </TabsList>
-        
-        {/* Onglet REER vs CELI */}
-        <TabsContent value="reer-celi" className="space-y-6">
-          <REERCELIAnalysisTab 
-            optimization={calculations.reerCeliOptimization}
-            fondsSolidarite={calculations.fondsSolidariteAnalysis}
-          />
-        </TabsContent>
-        
-        {/* Onglet Stratégie de décaissement */}
-        <TabsContent value="withdrawal" className="space-y-6">
-          <WithdrawalStrategyTab 
-            strategy={calculations.withdrawalStrategy}
-            userData={userData}
-          />
-        </TabsContent>
-        
-        {/* Onglet Budget retraite */}
-        <TabsContent value="budget" className="space-y-6">
-          <RetirementBudgetTab 
-            budgetAnalysis={calculations.budgetAnalysis}
-          />
-        </TabsContent>
-        
-        {/* Onglet Considérations successorales */}
-        <TabsContent value="estate" className="space-y-6">
-          <EstateConsiderationsTab 
-            estateAnalysis={calculations.estateConsiderations}
-            userData={userData}
-          />
-        </TabsContent>
-      </Tabs>
-    </div>
-  );
-};
+      const { revenuAnnuel, age, montantREER, montantCELI, montantNonEnregistre, ageRetraite, revenuRetraite } = taxData;
+      
+      // Calculs d'optimisation fiscale
+      const anneesEpargne = ageRetraite - age;
+      const contributionREERMax = Math.min(revenuAnnuel * 0.18, 29210); // Limite 2025
+      const contributionCELIMax = anneesEpargne * 7000; // Limite annuelle CELI
+      
+      // Stratégies d'optimisation
+      const strategies = [
+        {
+          nom: 'Maximisation REER',
+          description: 'Contribuer au maximum au REER pour réduire l\'impôt immédiatement',
+          impact: 'Économie d\'impôt immédiate',
+          montant: Math.min(contributionREERMax, revenuAnnuel * 0.25),
+          economieAnnuelle: Math.round(Math.min(contributionREERMax, revenuAnnuel * 0.25) * 0.25),
+          priorite: 'haute',
+          couleur: 'bg-blue-100 border-blue-300'
+        },
+        {
+          nom: 'Stratégie CELI',
+          description: 'Utiliser le CELI pour la croissance à long terme sans impôt',
+          impact: 'Croissance libre d\'impôt',
+          montant: Math.min(contributionCELIMax, montantNonEnregistre * 0.3),
+          economieAnnuelle: Math.round(Math.min(contributionCELIMax, montantNonEnregistre * 0.3) * 0.06),
+          priorite: 'haute',
+          couleur: 'bg-green-100 border-green-300'
+        },
+        {
+          nom: 'Conversion REER vers FERR',
+          description: 'Convertir le REER en FERR à 71 ans pour éviter la pénalité',
+          impact: 'Éviter la pénalité de 1% par mois',
+          montant: montantREER,
+          economieAnnuelle: Math.round(montantREER * 0.12),
+          priorite: 'moyenne',
+          couleur: 'bg-purple-100 border-purple-300'
+        },
+        {
+          nom: 'Retrait progressif REER',
+          description: 'Retirer le REER progressivement pour minimiser l\'impôt',
+          impact: 'Réduction de l\'impôt sur le revenu',
+          montant: Math.round(montantREER / 20),
+          economieAnnuelle: Math.round((montantREER / 20) * 0.15),
+          priorite: 'moyenne',
+          couleur: 'bg-yellow-100 border-yellow-300'
+        },
+        {
+          nom: 'Dividendes éligibles',
+          description: 'Utiliser les dividendes éligibles pour réduire l\'impôt',
+          impact: 'Crédit d\'impôt sur dividendes',
+          montant: Math.round(montantNonEnregistre * 0.4),
+          economieAnnuelle: Math.round(montantNonEnregistre * 0.4 * 0.15),
+          priorite: 'basse',
+          couleur: 'bg-orange-100 border-orange-300'
+        }
+      ];
+      
+      // Calcul des économies totales
+      const economieTotale = strategies.reduce((total, s) => total + s.economieAnnuelle, 0);
+      const economieCumulative = economieTotale * anneesEpargne;
+      
+      // Recommandations personnalisées
+      const recommandations = [
+        {
+          type: 'optimisation',
+          titre: 'Priorité aux REER',
+          description: `Avec un revenu de ${revenuAnnuel.toLocaleString()} $, maximisez vos contributions REER pour réduire votre impôt de ${Math.round(contributionREERMax * 0.25).toLocaleString()} $ par année`,
+          impact: 'Élevé',
+          priorite: 'haute'
+        },
+        {
+          type: 'optimisation',
+          titre: 'Stratégie CELI',
+          description: `Vous avez ${anneesEpargne} années pour épargner. Utilisez le CELI pour ${Math.min(contributionCELIMax, montantNonEnregistre * 0.3).toLocaleString()} $ de croissance libre d'impôt`,
+          impact: 'Moyen-élevé',
+          priorite: 'haute'
+        },
+        {
+          type: 'information',
+          titre: 'Planification de retrait',
+          description: `Planifiez vos retraits REER progressivement pour éviter de passer dans une tranche d'impôt plus élevée`,
+          impact: 'Moyen',
+          priorite: 'moyenne'
+        }
+      ];
+      
+      const results = {
+        strategies,
+        economieTotale,
+        economieCumulative,
+        anneesEpargne,
+        recommandations,
+        resume: {
+          contributionREERMax,
+          contributionCELIMax,
+          montantTotalOptimise: strategies.reduce((total, s) => total + s.montant, 0)
+        }
+      };
+      
+      setResults(results);
+    } catch (error) {
+      console.error('Erreur optimisation fiscale:', error);
+    } finally {
+      setIsAnalyzing(false);
+    }
+  };
 
-// ===== COMPOSANTS ONGLETS =====
-
-const REERCELIAnalysisTab: React.FC<any> = ({ optimization, fondsSolidarite }) => {
   return (
-    <div className="space-y-6">
-      {/* Recommandation principale */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Target className="w-5 h-5" />
-            Stratégie recommandée : {optimization?.recommandation || 'En cours d\'analyse'}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Répartition suggérée */}
-            <div>
-              <h3 className="font-medium mb-3">Répartition optimale de votre épargne</h3>
-              <div className="relative w-48 h-48 mx-auto">
-                <div className="absolute inset-0 rounded-full bg-gray-200"></div>
-                <div 
-                  className="absolute inset-0 rounded-full bg-blue-500 transform -rotate-90"
-                  style={{ 
-                    clipPath: `polygon(50% 50%, 50% 0%, ${50 + (optimization?.repartitionSuggeree?.reerPart || 50) * 0.36}% 0%, 50% 50%)` 
-                  }}
-                ></div>
-                <div className="absolute inset-0 rounded-full bg-green-500 transform -rotate-90"
-                  style={{ 
-                    clipPath: `polygon(50% 50%, 50% 0%, ${50 + (optimization?.repartitionSuggeree?.celiPart || 50) * 0.36}% 0%, 50% 50%)` 
-                  }}
-                ></div>
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="text-2xl font-bold">{optimization?.repartitionSuggeree?.reerPart || 50}%</div>
-                    <div className="text-sm">REER</div>
-                  </div>
-                </div>
-              </div>
-              <div className="text-center mt-2">
-                <div className="text-sm text-gray-600">
-                  {optimization?.repartitionSuggeree?.justification || 'Équilibre recommandé'}
-                </div>
-              </div>
-            </div>
-            
-            {/* Raisonnement */}
-            <div>
-              <h3 className="font-medium mb-3">Pourquoi cette stratégie ?</h3>
-              <div className="space-y-2">
-                {optimization?.raisonnement?.map((raison: string, index: number) => (
-                  <div key={index} className="flex items-start gap-2">
-                    <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-                    <span className="text-sm">{raison}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
+    <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-white to-teal-50">
+      <div className="container mx-auto px-6 py-12">
+        {/* En-tête */}
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <Target className="w-12 h-12 text-emerald-600" />
+            <h1 className="text-4xl font-bold text-gray-900">
+              Optimisation Fiscale
+            </h1>
           </div>
-        </CardContent>
-      </Card>
-      
-      {/* Impact fiscal détaillé */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Analyse de l'impact fiscal</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="text-center p-4 bg-green-50 rounded-lg">
-              <div className="text-lg font-bold text-green-700">
-                {formatCurrency(optimization?.impactFiscal?.economieImmediateREER || 0)}
-              </div>
-              <div className="text-sm text-green-600">Économie immédiate REER</div>
-            </div>
-            
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
-              <div className="text-lg font-bold text-blue-700">
-                {formatCurrency(optimization?.impactFiscal?.impactFuturREER || 0)}
-              </div>
-              <div className="text-sm text-blue-600">Impact fiscal futur</div>
-            </div>
-            
-            <div className="text-center p-4 bg-purple-50 rounded-lg">
-              <div className="text-lg font-bold text-purple-700">
-                {formatCurrency(optimization?.impactFiscal?.avantageNetREER || 0)}
-              </div>
-              <div className="text-sm text-purple-600">Avantage net REER</div>
-            </div>
-            
-            <div className="text-center p-4 bg-amber-50 rounded-lg">
-              <div className="text-lg font-bold text-amber-700">
-                {formatCurrency(optimization?.impactFiscal?.impactPSV || 0)}
-              </div>
-              <div className="text-sm text-amber-600">Impact PSV annuel</div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-      
-      {/* Fonds de solidarité */}
-      {fondsSolidarite && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Banknote className="w-5 h-5" />
-              Analyse des fonds de solidarité
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="font-medium mb-3">Fondaction vs Fonds FTQ</h3>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                    <span>Fondaction (10 ans)</span>
-                    <span className="font-medium">13.3%</span>
-                  </div>
-                  <div className="flex justify-between items-center p-3 bg-gray-50 rounded">
-                    <span>Fonds FTQ (10 ans)</span>
-                    <span className="font-medium">13.4%</span>
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    *Rendements incluant les crédits d'impôt de 30%
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <h3 className="font-medium mb-3">Contraintes importantes</h3>
-                <div className="space-y-2">
-                  {fondsSolidarite?.contraintes?.map((contrainte: string, index: number) => (
-                    <div key={index} className="flex items-start gap-2">
-                      <AlertTriangle className="w-4 h-4 text-amber-500 mt-1 flex-shrink-0" />
-                      <span className="text-sm">{contrainte}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      )}
-    </div>
-  );
-};
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            Optimisez votre planification fiscale pour maximiser vos économies d'impôt et votre capital de retraite
+          </p>
+        </div>
 
-const WithdrawalStrategyTab: React.FC<any> = ({ strategy, userData }) => {
-  return (
-    <div className="space-y-6">
-      {/* Séquence de décaissement */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <ArrowRightLeft className="w-5 h-5" />
-            Séquence de décaissement optimisée
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {strategy?.sequencePhases?.map((phase: any, index: number) => (
-              <div key={index} className="border rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-medium">
-                    Phase {index + 1}: {phase.ageDebut}-{phase.ageFin} ans
-                  </h3>
-                  <Badge variant={phase.impactFiscal === 'OPTIMISE' ? 'default' : 'secondary'}>
-                    {phase.impactFiscal}
-                  </Badge>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Paramètres fiscaux */}
+          <Card className="bg-white/80 backdrop-blur-sm border-2 border-emerald-200 shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3 text-emerald-800">
+                <Calculator className="w-6 h-6" />
+                Paramètres Fiscaux
+              </CardTitle>
+              <CardDescription>
+                Configurez vos paramètres financiers pour l'optimisation fiscale
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="revenuAnnuel">Revenu annuel ($)</Label>
+                  <Input
+                    id="revenuAnnuel"
+                    type="number"
+                    value={taxData.revenuAnnuel}
+                    onChange={(e) => setTaxData(prev => ({ ...prev, revenuAnnuel: Number(e.target.value) }))}
+                    placeholder="80000"
+                  />
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Sources prioritaires</div>
-                    <div className="space-y-1">
-                      {phase.sourcesPrioritaires?.map((source: string, i: number) => (
-                        <Badge key={i} variant="outline" className="mr-1">
-                          {source}
-                        </Badge>
+                <div>
+                  <Label htmlFor="age">Âge actuel</Label>
+                  <Input
+                    id="age"
+                    type="number"
+                    value={taxData.age}
+                    onChange={(e) => setTaxData(prev => ({ ...prev, age: Number(e.target.value) }))}
+                    placeholder="45"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="montantREER">Montant REER actuel ($)</Label>
+                  <Input
+                    id="montantREER"
+                    type="number"
+                    value={taxData.montantREER}
+                    onChange={(e) => setTaxData(prev => ({ ...prev, montantREER: Number(e.target.value) }))}
+                    placeholder="50000"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="montantCELI">Montant CELI actuel ($)</Label>
+                  <Input
+                    id="montantCELI"
+                    type="number"
+                    value={taxData.montantCELI}
+                    onChange={(e) => setTaxData(prev => ({ ...prev, montantCELI: Number(e.target.value) }))}
+                    placeholder="30000"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="montantNonEnregistre">Épargne non enregistrée ($)</Label>
+                  <Input
+                    id="montantNonEnregistre"
+                    type="number"
+                    value={taxData.montantNonEnregistre}
+                    onChange={(e) => setTaxData(prev => ({ ...prev, montantNonEnregistre: Number(e.target.value) }))}
+                    placeholder="100000"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="ageRetraite">Âge de retraite souhaité</Label>
+                  <Input
+                    id="ageRetraite"
+                    type="number"
+                    value={taxData.ageRetraite}
+                    onChange={(e) => setTaxData(prev => ({ ...prev, ageRetraite: Number(e.target.value) }))}
+                    placeholder="65"
+                  />
+                </div>
+              </div>
+
+              <Button 
+                onClick={runTaxOptimization}
+                disabled={isAnalyzing}
+                className="w-full bg-emerald-600 hover:bg-emerald-700"
+              >
+                {isAnalyzing ? 'Analyse en cours...' : 'Lancer l\'optimisation fiscale'}
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Résultats */}
+          <div className="space-y-6">
+            {results && (
+              <>
+                {/* Résumé des économies */}
+                <Card className="bg-emerald-50 border-2 border-emerald-200">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-emerald-800">
+                      <CheckCircle className="w-6 h-6" />
+                      Résumé des Économies
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-emerald-600 mb-2">
+                          {results.economieTotale.toLocaleString()} $
+                        </div>
+                        <div className="text-sm text-gray-600">Économie annuelle</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-blue-600 mb-2">
+                          {results.economieCumulative.toLocaleString()} $
+                        </div>
+                        <div className="text-sm text-gray-600">Économie totale ({results.anneesEpargne} ans)</div>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4 p-3 bg-white rounded-lg">
+                      <div className="text-sm text-gray-600 mb-2">Limites annuelles :</div>
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div>REER : {results.resume.contributionREERMax.toLocaleString()} $</div>
+                        <div>CELI : {results.resume.contributionCELIMax.toLocaleString()} $</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Stratégies d'optimisation */}
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-emerald-200">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-emerald-800">
+                      <TrendingUp className="w-6 h-6" />
+                      Stratégies d'Optimisation
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {results.strategies.map((strategy: any, index: number) => (
+                        <div key={index} className={`${strategy.couleur} border rounded-lg p-3`}>
+                          <div className="flex justify-between items-start mb-2">
+                            <div>
+                              <h4 className="font-semibold">{strategy.nom}</h4>
+                              <p className="text-sm text-gray-600">{strategy.description}</p>
+                            </div>
+                            <Badge variant="outline">{strategy.priorite}</Badge>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4 text-sm">
+                            <div>
+                              <div className="font-semibold text-gray-700">Montant :</div>
+                              <div className="text-emerald-600">{strategy.montant.toLocaleString()} $</div>
+                            </div>
+                            <div>
+                              <div className="font-semibold text-gray-700">Économie annuelle :</div>
+                              <div className="text-blue-600">{strategy.economieAnnuelle.toLocaleString()} $</div>
+                            </div>
+                          </div>
+                          <div className="text-xs text-gray-600 mt-2">
+                            <strong>Impact :</strong> {strategy.impact}
+                          </div>
+                        </div>
                       ))}
                     </div>
-                  </div>
-                  
-                  <div>
-                    <div className="text-sm text-gray-600 mb-1">Taux de retrait</div>
-                    <div className="text-lg font-medium">{(phase.tauxRetrait * 100).toFixed(1)}%</div>
-                  </div>
-                </div>
-                
-                <div className="mt-3 text-sm text-gray-600">
-                  <strong>Rationale:</strong> {phase.rationale}
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-      
-      {/* Score de flexibilité */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Flexibilité de votre stratégie</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <span>Score de flexibilité</span>
-              <Progress value={strategy?.flexibiliteScore || 0} className="flex-1" />
-              <span className="text-sm font-medium">
-                {strategy?.flexibiliteScore || 0}/100
-              </span>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <h3 className="font-medium mb-2">Avantages de votre stratégie</h3>
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    Optimisation fiscale progressive
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    Préservation des prestations gouvernementales
-                  </div>
-                  <div className="flex items-center gap-2 text-sm">
-                    <CheckCircle className="w-4 h-4 text-green-500" />
-                    Flexibilité d'ajustement selon les besoins
-                  </div>
-                </div>
-              </div>
-              
-              <div>
-                <h3 className="font-medium mb-2">Recommandations spéciales</h3>
-                <div className="space-y-1">
-                  {strategy?.recommendationsSpeciales?.map((rec: string, index: number) => (
-                    <div key={index} className="flex items-start gap-2 text-sm">
-                      <Info className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
-                      <span>{rec}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-};
+                  </CardContent>
+                </Card>
 
-const RetirementBudgetTab: React.FC<any> = ({ budgetAnalysis }) => {
-  const depensesData = [
-    { 
-      categorie: 'Éliminées', 
-      montant: budgetAnalysis?.depensesProjectees?.eliminees?.reduce((sum: number, dep: any) => sum + dep.montantActuel, 0) || 0,
-      color: '#EF4444'
-    },
-    { 
-      categorie: 'Diminuées', 
-      montant: budgetAnalysis?.depensesProjectees?.diminuees?.reduce((sum: number, dep: any) => sum + dep.montantActuel * (1 - dep.pourcentageReduction/100), 0) || 0,
-      color: '#F59E0B'
-    },
-    { 
-      categorie: 'Stables', 
-      montant: budgetAnalysis?.depensesProjectees?.stables?.reduce((sum: number, dep: any) => sum + dep.montantActuel, 0) || 0,
-      color: '#6B7280'
-    },
-    { 
-      categorie: 'Augmentées', 
-      montant: budgetAnalysis?.depensesProjectees?.augmentees?.reduce((sum: number, dep: any) => sum + dep.montantActuel * (1 + dep.pourcentageAugmentation/100), 0) || 0,
-      color: '#10B981'
-    }
-  ];
-  
-  return (
-    <div className="space-y-6">
-      {/* Changements de dépenses */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Évolution de vos dépenses à la retraite</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <div className="space-y-4">
-                {depensesData.map((categorie, index) => (
-                  <div key={index} className="flex items-center justify-between p-3 rounded" style={{backgroundColor: categorie.color + '20'}}>
-                    <span className="text-sm font-medium">{categorie.categorie}</span>
-                    <span className="text-sm">{formatCurrency(categorie.montant)}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="space-y-4">
-              <h3 className="font-medium">Détail par catégorie</h3>
-              {depensesData.map((categorie, index) => (
-                <div key={index} className="flex items-center justify-between p-2 rounded" style={{backgroundColor: categorie.color + '20'}}>
-                  <span className="text-sm font-medium">{categorie.categorie}</span>
-                  <span className="text-sm">{formatCurrency(categorie.montant)}</span>
-                </div>
-              ))}
-            </div>
+                {/* Recommandations */}
+                {results.recommandations.length > 0 && (
+                  <Card className="bg-blue-50 border-2 border-blue-200">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-3 text-blue-800">
+                        <Info className="w-6 h-6" />
+                        Recommandations Personnalisées
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        {results.recommandations.map((recommandation: any, index: number) => (
+                          <div key={index} className="border-l-4 border-blue-500 pl-4">
+                            <h4 className="font-semibold text-blue-800">{recommandation.titre}</h4>
+                            <p className="text-sm text-gray-700 mb-2">{recommandation.description}</p>
+                            <div className="text-xs text-gray-600">
+                              <strong>Impact :</strong> {recommandation.impact} | <strong>Priorité :</strong> {recommandation.priorite}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                )}
+              </>
+            )}
           </div>
-        </CardContent>
-      </Card>
-      
-      {/* Fond d'urgence et stratégie comptes */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Fond d'urgence recommandé</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-blue-600">
-                {formatCurrency(budgetAnalysis?.fondUrgenceRequis || 0)}
-              </div>
-              <div className="text-sm text-gray-600">
-                Équivaut à 4 mois de dépenses de retraite
-              </div>
-              <div className="mt-4 p-3 bg-blue-50 rounded-lg">
-                <div className="text-sm">
-                  <strong>Recommandation:</strong> Placer dans CELI pour accessibilité maximale sans impact fiscal
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        
-        <Card>
-          <CardHeader>
-            <CardTitle>Stratégie de comptes séparés</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-3">
-              <div className="p-3 border rounded-lg">
-                <div className="font-medium">Compte dépenses fixes</div>
-                <div className="text-sm text-gray-600">
-                  {formatCurrency(budgetAnalysis?.repartitionComptes?.compteDependesFixes || 0)} / mois
-                </div>
-                <div className="text-xs text-gray-500">
-                  Loyer, assurances, taxes, abonnements
-                </div>
-              </div>
-              
-              <div className="p-3 border rounded-lg">
-                <div className="font-medium">Compte gestion courante</div>
-                <div className="text-sm text-gray-600">
-                  {formatCurrency(budgetAnalysis?.repartitionComptes?.compteGestionCourante || 0)} / mois
-                </div>
-                <div className="text-xs text-gray-500">
-                  Épicerie, essence, loisirs, imprévus
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        </div>
       </div>
     </div>
   );
-};
-
-const EstateConsiderationsTab: React.FC<any> = ({ estateAnalysis, userData }) => {
-  return (
-    <div className="space-y-6">
-      {/* Priorités successorales */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <AlertTriangle className="w-5 h-5" />
-            Actions successorales prioritaires
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {estateAnalysis?.prioritesSuccessorales?.map((priorite: any, index: number) => (
-              <div key={index} className="border rounded-lg p-4">
-                <div className="flex items-center justify-between mb-2">
-                  <h3 className="font-medium">#{priorite.ordre} - {priorite.action}</h3>
-                  <Badge variant={priorite.urgence === 'CRITIQUE' ? 'destructive' : 'secondary'}>
-                    {priorite.urgence}
-                  </Badge>
-                </div>
-                <p className="text-sm text-gray-600">{priorite.justification}</p>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-      
-      {/* Avertissement comptes conjoints */}
-      <Alert>
-        <AlertTriangle className="w-4 h-4" />
-        <AlertDescription>
-          <strong>Important:</strong> En cas de décès, l'argent d'un compte conjoint sera bloqué le temps du règlement de la succession, 
-          ce qui peut prendre plusieurs semaines, voire des mois. Assurez-vous que chaque conjoint ait un compte personnel 
-          pour continuer les transactions courantes.
-        </AlertDescription>
-      </Alert>
-      
-      {/* Timeline des actions */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Timeline des actions recommandées</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
-            {estateAnalysis?.timelineActions?.map((action: any, index: number) => (
-              <div key={index} className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-16 text-center">
-                  <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-sm font-medium">
-                    {index + 1}
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <h3 className="font-medium">{action.action}</h3>
-                  <p className="text-sm text-gray-600">{action.description}</p>
-                  <div className="text-xs text-blue-600 mt-1">Délai: {action.delai}</div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-};
-
-// ===== FONCTION UTILITAIRE =====
-function formatCurrency(amount: number, short: boolean = false): string {
-  if (short && Math.abs(amount) >= 1000) {
-    if (Math.abs(amount) >= 1000000) {
-      return `${(amount / 1000000).toFixed(1)}M $`;
-    } else {
-      return `${(amount / 1000).toFixed(0)}k $`;
-    }
-  }
-  
-  return new Intl.NumberFormat('fr-CA', {
-    style: 'currency',
-    currency: 'CAD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-  }).format(amount);
 }

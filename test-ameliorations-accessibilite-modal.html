@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Améliorations d'Accessibilité pour le Modal de Ventilation</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .success { color: green; font-weight: bold; }
+        .info { color: blue; }
+        .warning { color: orange; }
+        .error { color: red; }
+        code { background: #f4f4f4; padding: 2px 4px; border-radius: 3px; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Test - Améliorations d'Accessibilité pour le Modal de Ventilation</h1>
+    
+    <h2>✅ Problème identifié</h2>
+    <p class="success">Le modal de ventilation des dépenses est difficile à lire pour les utilisateurs seniors !</p>
+    
+    <h2>🔍 Diagnostic du problème</h2>
+    <ul>
+        <li>❌ <strong>Fond sombre transparant</strong> : Le fond sombre de l'application transparaît</li>
+        <li>❌ <strong>Contraste insuffisant</strong> : Texte difficile à lire sur fond sombre</li>
+        <li>❌ <strong>Taille de police</strong> : Trop petite pour les utilisateurs seniors</li>
+        <li>❌ <strong>Espacement insuffisant</strong> : Éléments trop rapprochés</li>
+        <li>❌ <strong>Isolation visuelle</strong> : Modal pas assez isolé du contenu arrière</li>
+    </ul>
+    
+    <h2>🎯 Solution : Modal avec Fond Blanc Pur</h2>
+    <p>Le modal doit avoir un fond blanc pur avec une isolation complète pour une lecture optimale :</p>
+    
+    <h3>📋 1. Structure du Modal Amélioré</h3>
+    <pre><code>&lt;DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto bg-white border-2 border-gray-200 shadow-2xl"&gt;
+  &lt;DialogHeader className="bg-gray-50 p-6 border-b border-gray-200"&gt;
+    &lt;DialogTitle className="text-2xl font-bold text-gray-800"&gt;
+      Ajuster la ventilation : {title}
+    &lt;/DialogTitle&gt;
+  &lt;/DialogHeader&gt;
+  
+  &lt;div className="p-6"&gt;
+    &lt;div className="grid grid-cols-1 lg:grid-cols-2 gap-8"&gt;
+      {/* Contenu du modal */}
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/DialogContent&gt;</code></pre>
+    
+    <h3>🎨 2. Améliorations Visuelles</h3>
+    <ul>
+        <li><strong>Fond blanc pur</strong> : <code>bg-white</code> pour le modal principal</li>
+        <li><strong>Header distinct</strong> : <code>bg-gray-50</code> avec bordure</li>
+        <li><strong>Ombre prononcée</strong> : <code>shadow-2xl</code> pour l'isolation</li>
+        <li><strong>Bordure visible</strong> : <code>border-2 border-gray-200</code></li>
+        <li><strong>Espacement généreux</strong> : <code>p-6</code> et <code>gap-8</code></li>
+    </ul>
+    
+    <h3>👁️ 3. Améliorations d'Accessibilité</h3>
+    <ul>
+        <li><strong>Taille de police</strong> : Minimum 16px, idéalement 18px-20px</li>
+        <li><strong>Contraste élevé</strong> : Texte noir sur fond blanc pur</li>
+        <li><strong>Espacement des éléments</strong> : Marges et padding suffisants</li>
+        <li><strong>Icônes plus grandes</strong> : w-5 h-5 au lieu de w-4 h-4</li>
+        <li><strong>Boutons plus visibles</strong> : Taille et couleur améliorées</li>
+    </ul>
+    
+    <h2>🛠️ Implémentation Recommandée</h2>
+    
+    <h3>1. Modal Principal</h3>
+    <pre><code>// Remplacer
+&lt;DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto"&gt;
+
+// Par
+&lt;DialogContent className="max-w-4xl max-h-[85vh] overflow-y-auto bg-white border-2 border-gray-200 shadow-2xl"&gt;</code></pre>
+    
+    <h3>2. Header du Modal</h3>
+    <pre><code>// Remplacer
+&lt;DialogHeader&gt;
+  &lt;DialogTitle className="text-xl"&gt;{title}&lt;/DialogTitle&gt;
+&lt;/DialogHeader&gt;
+
+// Par
+&lt;DialogHeader className="bg-gray-50 p-6 border-b border-gray-200"&gt;
+  &lt;DialogTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3"&gt;
+    &lt;Settings className="w-6 h-6 text-blue-600" /&gt;
+    Ajuster la ventilation : {title}
+  &lt;/DialogTitle&gt;
+&lt;/DialogHeader&gt;</code></pre>
+    
+    <h3>3. Contenu du Modal</h3>
+    <pre><code>// Remplacer
+&lt;div className="grid grid-cols-1 md:grid-cols-2 gap-6"&gt;
+
+// Par
+&lt;div className="p-6"&gt;
+  &lt;div className="grid grid-cols-1 lg:grid-cols-2 gap-8"&gt;</code></pre>
+    
+    <h3>4. Cartes de Total</h3>
+    <pre><code>// Remplacer
+&lt;Card className="bg-blue-50 border-blue-200"&gt;
+  &lt;CardContent className="pt-6"&gt;
+    &lt;div className="text-center space-y-2"&gt;
+      &lt;p className="text-sm text-blue-600"&gt;{label}&lt;/p&gt;
+      &lt;p className="text-3xl font-bold text-blue-800"&gt;{value}&lt;/p&gt;
+      &lt;p className="text-xs text-blue-600"&gt;{description}&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/CardContent&gt;
+&lt;/Card&gt;
+
+// Par
+&lt;Card className="bg-blue-50 border-2 border-blue-400 shadow-lg"&gt;
+  &lt;CardContent className="p-6"&gt;
+    &lt;div className="text-center space-y-3"&gt;
+      &lt;p className="text-lg font-semibold text-blue-700"&gt;{label}&lt;/p&gt;
+      &lt;p className="text-4xl font-bold text-blue-800"&gt;{value}&lt;/p&gt;
+      &lt;p className="text-sm text-blue-600 font-medium"&gt;{description}&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/CardContent&gt;
+&lt;/Card&gt;</code></pre>
+    
+    <h3>5. Section Sous-catégories</h3>
+    <pre><code>// Remplacer
+&lt;div className="space-y-4"&gt;
+  &lt;h3 className="font-semibold text-lg"&gt;Sous-catégories&lt;/h3&gt;
+  {categories.map((category) =&gt; (
+    &lt;div key={category.key} className="space-y-2"&gt;
+      &lt;Label className="flex items-center gap-2 text-sm font-medium"&gt;
+        {category.icon}
+        {category.label}
+      &lt;/Label&gt;
+      &lt;Input className="text-lg p-3" /&gt;
+    &lt;/div&gt;
+  ))}
+&lt;/div&gt;
+
+// Par
+&lt;div className="space-y-6"&gt;
+  &lt;div className="bg-gray-50 p-4 rounded-lg border border-gray-200"&gt;
+    &lt;h3 className="font-bold text-xl text-gray-800 mb-4 flex items-center gap-2"&gt;
+      &lt;FileText className="w-5 h-5 text-blue-600" /&gt;
+      Sous-catégories
+    &lt;/h3&gt;
+    &lt;div className="space-y-4"&gt;
+      {categories.map((category) =&gt; (
+        &lt;div key={category.key} className="space-y-3"&gt;
+          &lt;Label className="flex items-center gap-3 text-base font-semibold text-gray-700"&gt;
+            &lt;div className="w-6 h-6 flex items-center justify-center"&gt;
+              {category.icon}
+            &lt;/div&gt;
+            {category.label}
+          &lt;/Label&gt;
+          &lt;Input className="text-lg p-4 border-2 border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200" /&gt;
+        &lt;/div&gt;
+      ))}
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+    
+    <h3>6. Boutons d'Action</h3>
+    <pre><code>// Remplacer
+&lt;div className="flex justify-end gap-3 pt-4 border-t"&gt;
+  &lt;Button variant="outline" onClick={handleCancel}&gt;Annuler&lt;/Button&gt;
+  &lt;Button onClick={handleSave}&gt;Enregistrer&lt;/Button&gt;
+&lt;/div&gt;
+
+// Par
+&lt;div className="flex justify-end gap-4 pt-6 border-t border-gray-200 bg-gray-50 p-4 rounded-b-lg"&gt;
+  &lt;Button 
+    variant="outline" 
+    onClick={handleCancel}
+    className="px-6 py-3 text-base font-semibold border-2 border-gray-400 hover:border-gray-500 hover:bg-gray-100 transition-all duration-200"
+  &gt;
+    &lt;X className="w-5 h-5 mr-2" /&gt;
+    Annuler
+  &lt;/Button&gt;
+  &lt;Button 
+    onClick={handleSave}
+    className="px-6 py-3 text-base font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+  &gt;
+    &lt;CheckCircle className="w-5 h-5 mr-2" /&gt;
+    Enregistrer
+  &lt;/Button&gt;
+&lt;/div&gt;</code></pre>
+    
+    <h2>🎯 Résultat Attendu</h2>
+    <p class="success">Après ces améliorations, le modal aura :</p>
+    <ul>
+        <li>✅ <strong>Fond blanc pur</strong> avec isolation complète</li>
+        <li>✅ <strong>Contraste élevé</strong> pour une lecture facile</li>
+        <li>✅ <strong>Taille de police</strong> adaptée aux seniors (18px+)</li>
+        <li>✅ <strong>Espacement généreux</strong> entre les éléments</li>
+        <li>✅ <strong>Icônes plus grandes</strong> et mieux visibles</li>
+        <li>✅ <strong>Boutons d'action</strong> clairement identifiables</li>
+        <li>✅ <strong>Navigation intuitive</strong> et accessible</li>
+    </ul>
+    
+    <h2>🔧 Prochaines Étapes</h2>
+    <ol>
+        <li><strong>Restauration du fichier</strong> : Recréer CashflowSection.tsx depuis la sauvegarde</li>
+        <li><strong>Application des améliorations</strong> : Modifier le modal étape par étape</li>
+        <li><strong>Test de compilation</strong> : Vérifier que tout fonctionne</li>
+        <li><strong>Test visuel</strong> : Vérifier la lisibilité du modal</li>
+        <li><strong>Validation d'accessibilité</strong> : Tester avec des utilisateurs seniors</li>
+    </ol>
+    
+    <h2>📝 Règles AGENTS.md Ajoutées</h2>
+    <p>Les règles d'accessibilité ont été ajoutées dans <code>AGENTS.md</code> :</p>
+    <ul>
+        <li><strong>Contraste élevé</strong> : Fond blanc pur pour les modals</li>
+        <li><strong>Taille de police</strong> : Minimum 16px</li>
+        <li><strong>Espacement généreux</strong> : Marges et padding suffisants</li>
+        <li><strong>Isolation visuelle</strong> : Modals avec fond blanc opaque</li>
+        <li><strong>Icônes claires</strong> : Suffisamment grandes et contrastées</li>
+    </ul>
+    
+    <hr>
+    <p class="info"><em>Test créé le 27 août 2025 - Améliorations d'accessibilité pour le modal de ventilation</em></p>
+</body>
+</html>

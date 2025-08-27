@@ -7,6 +7,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { 
   DollarSign, 
   PiggyBank, 
@@ -18,16 +21,33 @@ import {
   Star,
   Building,
   CreditCard,
-  BarChart3
+  BarChart3,
+  AlertTriangle,
+  Users,
+  Info,
+  HelpCircle,
+  Calendar,
+  Target,
+  Rocket,
+  Sparkles,
+  Brain,
+  Shield,
+  Zap,
+  Save,
+  User
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { formatCurrency } from '@/features/retirement/utils/formatters';
+import { InputSanitizer } from '@/utils/inputSanitizer';
+import { LicenseManager } from '@/services/LicenseManager';
+import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 
 
 const MaRetraite: React.FC = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const isFrench = language === 'fr';
-  const [activeTab, setActiveTab] = useState('revenus');
+  const [activeTab, setActiveTab] = useState('profil');
   
   // Hook pour les données de retraite
   const { userData, updateUserData } = useRetirementData();
@@ -80,6 +100,12 @@ const MaRetraite: React.FC = () => {
     epargneNecessaire: ''
   });
 
+  // États pour le profil
+  const [showHelp, setShowHelp] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [licenseBlocked, setLicenseBlocked] = useState(false);
+  const [licenseMessage, setLicenseMessage] = useState('');
+
 
 
   const handleDepensesChange = (field: string, value: string) => {
@@ -88,6 +114,55 @@ const MaRetraite: React.FC = () => {
 
   const handleCalculsChange = (field: string, value: string) => {
     setCalculsData(prev => ({ ...prev, [field]: value }));
+  };
+
+  // Fonctions pour le profil
+  const handleProfileChange = (field: string, value: any) => {
+    // Vérifier la licence avant de permettre les modifications
+    const newData = { ...userData };
+    newData.personal = { ...newData.personal, [field]: value };
+    
+    const licenseCheck = LicenseManager.checkLicense(newData);
+    if (!licenseCheck.isValid) {
+      setLicenseBlocked(true);
+      setLicenseMessage(licenseCheck.reason || 'Modification bloquée');
+      return;
+    }
+    
+    setLicenseBlocked(false);
+    setLicenseMessage('');
+    updateUserData('personal', { [field]: value });
+  };
+
+  const handleNameChange = (field: string, value: string) => {
+    // TEMPORARY FIX: Bypass sanitization completely for name fields to preserve spaces
+    updateUserData('personal', { [field]: value });
+  };
+
+  const handleSalaryChange = (person: '1' | '2', value: string) => {
+    const numericValue = parseFloat(value.replace(/[^\d.]/g, '')) || 0;
+    handleProfileChange(`salaire${person}`, numericValue);
+  };
+
+  const formatSalaryInput = (value: number): string => {
+    return value > 0 ? formatCurrency(value, { showCents: false }) : '';
+  };
+
+  const getProfileProgress = () => {
+    const personalData = userData.personal;
+    if (!personalData) return 0;
+    
+    const requiredFields = [
+      'prenom1', 'naissance1', 'sexe1', 'salaire1', 'statutProfessionnel1', 
+      'ageRetraiteSouhaite1', 'depensesRetraite'
+    ];
+    
+    const filledFields = requiredFields.filter(field => {
+      const value = personalData[field as keyof typeof personalData];
+      return value !== null && value !== undefined && value !== '' && value !== 0;
+    }).length;
+    
+    return Math.round((filledFields / requiredFields.length) * 100);
   };
 
   const handleNavigation = (path: string) => {
@@ -111,18 +186,19 @@ const MaRetraite: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
-
-      
-      <div className="container mx-auto px-6 py-12">
-        {/* En-tête bienveillant */}
-        <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <DollarSign className="w-12 h-12 text-purple-600" />
-            <h1 className="text-4xl font-bold text-gray-900">
+      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
+        {/* En-tête bienveillant - Amélioré pour l'équilibre visuel */}
+        <div className="text-center mb-8 sm:mb-12">
+          <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+            <div className="relative">
+              <DollarSign className="w-10 h-10 sm:w-12 sm:h-12 text-purple-600 drop-shadow-lg" />
+              <div className="absolute -inset-2 bg-purple-200 rounded-full opacity-20 animate-pulse"></div>
+            </div>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
               {isFrench ? 'Ma retraite' : 'My retirement'}
             </h1>
           </div>
-          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed px-4">
             {isFrench 
               ? 'Travaillons ensemble avec vos ressources réelles. Chaque source de revenus et chaque dépense compte pour créer votre plan personnalisé.'
               : 'Let\'s work together with your real resources. Every source of income and every expense counts to create your personalized plan.'
@@ -130,22 +206,611 @@ const MaRetraite: React.FC = () => {
           </p>
         </div>
 
-        {/* Onglets thématiques */}
+        {/* Onglets thématiques - Améliorés pour l'harmonie visuelle */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3 mb-8">
-            <TabsTrigger value="revenus" className="flex items-center gap-2">
-              <Building className="w-5 h-5" />
-              {isFrench ? 'Mes revenus et actifs' : 'My income and assets'}
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-5 mb-6 sm:mb-8 gap-2 p-1 bg-gray-100/50 rounded-xl">
+            <TabsTrigger 
+              value="profil" 
+              className="flex items-center gap-2 px-3 py-2 text-sm sm:text-base font-medium data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-600 transition-all duration-200"
+            >
+              <User className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline">{isFrench ? 'Mon Profil' : 'My Profile'}</span>
+              <span className="sm:hidden">{isFrench ? 'Profil' : 'Profile'}</span>
             </TabsTrigger>
-            <TabsTrigger value="depenses" className="flex items-center gap-2">
-              <CreditCard className="w-5 h-5" />
-              {isFrench ? 'Mes dépenses et budget' : 'My expenses and budget'}
+            <TabsTrigger 
+              value="dashboard" 
+              className="flex items-center gap-2 px-3 py-2 text-sm sm:text-base font-medium data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-600 transition-all duration-200"
+            >
+              <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline">{isFrench ? 'Tableau de Bord' : 'Dashboard'}</span>
+              <span className="sm:hidden">{isFrench ? 'Dashboard' : 'Dashboard'}</span>
             </TabsTrigger>
-            <TabsTrigger value="calculs" className="flex items-center gap-2">
-              <BarChart3 className="w-5 h-5" />
-              {isFrench ? 'Mes calculs de retraite' : 'My retirement calculations'}
+            <TabsTrigger 
+              value="revenus" 
+              className="flex items-center gap-2 px-3 py-2 text-sm sm:text-base font-medium data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-600 transition-all duration-200"
+            >
+              <Building className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline">{isFrench ? 'Mes revenus et actifs' : 'My income and assets'}</span>
+              <span className="sm:hidden">{isFrench ? 'Revenus' : 'Income'}</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="depenses" 
+              className="flex items-center gap-2 px-3 py-2 text-sm sm:text-base font-medium data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-600 transition-all duration-200"
+            >
+              <CreditCard className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline">{isFrench ? 'Mes dépenses et budget' : 'My expenses and budget'}</span>
+              <span className="sm:hidden">{isFrench ? 'Budget' : 'Budget'}</span>
+            </TabsTrigger>
+            <TabsTrigger 
+              value="calculs" 
+              className="flex items-center gap-2 px-3 py-2 text-sm sm:text-base font-medium data-[state=active]:bg-white data-[state=active]:shadow-md data-[state=active]:text-purple-600 transition-all duration-200"
+            >
+              <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline">{isFrench ? 'Mes calculs de retraite' : 'My retirement calculations'}</span>
+              <span className="sm:hidden">{isFrench ? 'Calculs' : 'Calculations'}</span>
             </TabsTrigger>
           </TabsList>
+
+          {/* NOUVEAU - Onglet 0 : Profil Personnel - Intégré depuis MonProfil */}
+          <TabsContent value="profil" className="space-y-6">
+            {/* En-tête du profil */}
+            <div className="text-center mb-8">
+              <h2 className="text-4xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent mb-4">
+                {isFrench ? '🚀 Mon Profil' : '🚀 My Profile'}
+              </h2>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                {isFrench 
+                  ? 'Transformez vos informations en planification financière spectaculaire'
+                  : 'Transform your information into spectacular financial planning'
+                }
+              </p>
+            </div>
+
+            {/* Barre de progression encourageante */}
+            <Card className="bg-gradient-to-br from-green-500 to-emerald-600 text-white border-0 shadow-xl">
+              <CardContent className="py-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <Star className="w-6 h-6 text-yellow-300" />
+                    <span className="text-lg font-semibold text-white">
+                      {isFrench ? 'Votre progression' : 'Your progress'}
+                    </span>
+                  </div>
+                  <span className="text-2xl font-bold text-white">
+                    {getProfileProgress()} %
+                  </span>
+                </div>
+                <div className="w-full bg-white/20 rounded-full h-3">
+                  <div 
+                    className="bg-gradient-to-r from-yellow-300 to-orange-300 h-3 rounded-full transition-all duration-500"
+                    style={{ width: `${getProfileProgress()}%` }}
+                  ></div>
+                </div>
+                <p className="text-sm text-white/90 mt-2 text-center">
+                  {isFrench 
+                    ? `Excellent travail ! Vous avez complété ${getProfileProgress()} % de votre profil.`
+                    : `Great work! You have completed ${getProfileProgress()} % of your profile.`
+                  }
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Message d'aide */}
+            {showHelp && (
+              <Alert className="border-yellow-400 bg-yellow-50 text-yellow-800">
+                <Info className="h-5 w-5 text-yellow-400" />
+                <AlertDescription className="text-lg">
+                  <strong>{isFrench ? 'Conseils :' : 'Tips:'}</strong> {
+                    isFrench 
+                      ? 'Entrez vos noms complets (prénoms composés, noms de famille) pour une personnalisation optimale de vos rapports. Si vous êtes seul(e), laissez la section « Personne 2 » vide. Les montants en dollars n\'incluent pas les centimes pour simplifier la saisie.'
+                      : 'Enter your full names (compound first names, last names) for optimal personalization of your reports. If you are single, leave the "Person 2" section empty. Dollar amounts do not include cents to simplify entry.'
+                  }
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {/* Alerte de protection de licence */}
+            {licenseBlocked && (
+              <Alert className="border-red-400 bg-red-50 text-red-800">
+                <Shield className="h-5 w-5 text-red-400" />
+                <AlertDescription className="text-lg">
+                  <strong>{isFrench ? '🚫 Modification bloquée' : '🚫 Modification blocked'}</strong>
+                  <br />
+                  {licenseMessage}
+                  <br />
+                  <div className="mt-4 space-y-2">
+                    <p className="text-sm">
+                      {isFrench 
+                        ? 'Pour créer un nouveau profil, vous devez souscrire à un plan ou contacter le service à la clientèle.'
+                        : 'To create a new profile, you must subscribe to a plan or contact customer service.'
+                      }
+                    </p>
+                  </div>
+                </AlertDescription>
+              </Alert>
+            )}
+
+            {/* Formulaire principal du profil */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+              {/* Personne 1 */}
+              <Card className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white border-0 shadow-xl">
+                <CardHeader className="border-b border-blue-500/30 bg-blue-500/20">
+                  <CardTitle className="text-2xl font-bold text-white flex items-center gap-3">
+                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white font-bold">
+                      1
+                    </div>
+                    {isFrench ? 'Personne 1' : 'Person 1'}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-6 space-y-6">
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label className="text-white font-semibold">
+                        {isFrench ? 'Nom complet' : 'Full Name'}
+                      </Label>
+                      <Input
+                        type="text"
+                        value={userData.personal?.prenom1 || ''}
+                        onChange={(e) => handleNameChange('prenom1', e.target.value)}
+                        className="bg-white/20 border-white/30 text-white placeholder-white/60 focus:border-white focus:ring-white/20"
+                        placeholder={isFrench ? 'Ex: Jean Philippe ou Louis-Alexandre Veillette' : 'Ex: John Smith or Mary-Jane Watson'}
+                      />
+                      <p className="text-xs text-white/80 mt-1">
+                        {isFrench 
+                          ? 'Entrez votre nom complet tel que vous souhaitez qu\'il apparaisse dans vos rapports'
+                          : 'Enter your full name as you want it to appear in your reports'
+                        }
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-white font-semibold">
+                        {isFrench ? 'Date de naissance' : 'Date of Birth'}
+                      </Label>
+                      <Input
+                        type="date"
+                        value={userData.personal?.naissance1 || ''}
+                        onChange={(e) => handleProfileChange('naissance1', e.target.value)}
+                        className="bg-white/20 border-white/30 text-white placeholder-white/60 focus:border-white focus:ring-white/20"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-white font-semibold">
+                        {isFrench ? 'Sexe' : 'Gender'}
+                      </Label>
+                      <Select
+                        value={userData.personal?.sexe1 || 'homme'}
+                        onValueChange={(value) => handleProfileChange('sexe1', value)}
+                      >
+                        <SelectTrigger className="bg-white/20 border-white/30 text-white">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-white border-gray-200">
+                          <SelectItem value="homme">{isFrench ? 'Homme' : 'Male'}</SelectItem>
+                          <SelectItem value="femme">{isFrench ? 'Femme' : 'Female'}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-white font-semibold">
+                        {isFrench ? 'Salaire annuel' : 'Annual Salary'}
+                      </Label>
+                      <Input
+                        type="text"
+                        value={formatSalaryInput(userData.personal?.salaire1 || 0)}
+                        onChange={(e) => handleSalaryChange('1', e.target.value)}
+                        className="bg-white/20 border-white/30 text-white placeholder-white/60 focus:border-white focus:ring-white/20"
+                        placeholder="0"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-white font-semibold">
+                        {isFrench ? 'Statut professionnel' : 'Professional Status'}
+                      </Label>
+                      <Select
+                        value={userData.personal?.statutProfessionnel1 || 'actif'}
+                        onValueChange={(value) => handleProfileChange('statutProfessionnel1', value)}
+                      >
+                        <SelectTrigger className="bg-white/20 border-white/30 text-white">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-white border-gray-200">
+                          <SelectItem value="actif">{isFrench ? 'Actif' : 'Active'}</SelectItem>
+                          <SelectItem value="retraite">{isFrench ? 'Retraité' : 'Retired'}</SelectItem>
+                          <SelectItem value="inactif">{isFrench ? 'Inactif' : 'Inactive'}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-white font-semibold">
+                        {isFrench ? 'Âge de retraite souhaité' : 'Desired Retirement Age'}
+                      </Label>
+                      <Input
+                        type="number"
+                        value={userData.personal?.ageRetraiteSouhaite1 || 65}
+                        onChange={(e) => handleProfileChange('ageRetraiteSouhaite1', Number(e.target.value))}
+                        className="bg-white/20 border-white/30 text-white placeholder-white/60 focus:border-white focus:ring-white/20"
+                        min="50"
+                        max="100"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-white font-semibold">
+                        {isFrench ? 'Dépenses de retraite annuelles' : 'Annual Retirement Expenses'}
+                      </Label>
+                      <Input
+                        type="number"
+                        value={userData.personal?.depensesRetraite || ''}
+                        onChange={(e) => handleProfileChange('depensesRetraite', Number(e.target.value))}
+                        className="bg-white/20 border-white/30 text-white placeholder-white/60 focus:border-white focus:ring-white/20"
+                        placeholder="0"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Personne 2 */}
+              <Card className="bg-gradient-to-br from-indigo-600 to-purple-700 text-white border-0 shadow-xl">
+                <CardHeader className="border-b border-indigo-500/30 bg-indigo-500/20">
+                  <CardTitle className="text-2xl font-bold text-white flex items-center gap-3">
+                    <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center text-white font-bold">
+                      2
+                    </div>
+                    {isFrench ? 'Personne 2' : 'Person 2'}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-6 space-y-6">
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label className="text-white font-semibold">
+                        {isFrench ? 'Nom complet (optionnel)' : 'Full Name (optional)'}
+                      </Label>
+                      <Input
+                        type="text"
+                        value={userData.personal?.prenom2 || ''}
+                        onChange={(e) => handleNameChange('prenom2', e.target.value)}
+                        className="bg-white/20 border-white/30 text-white placeholder-white/60 focus:border-white focus:ring-white/20"
+                        placeholder={isFrench ? 'Ex: Marie ou Anne-Sophie' : 'Ex: Mary or Anne-Sophie'}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-white font-semibold">
+                        {isFrench ? 'Date de naissance' : 'Date of Birth'}
+                      </Label>
+                      <Input
+                        type="date"
+                        value={userData.personal?.naissance2 || ''}
+                        onChange={(e) => handleProfileChange('naissance2', e.target.value)}
+                        className="bg-white/20 border-white/30 text-white placeholder-white/60 focus:border-white focus:ring-white/20"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-white font-semibold">
+                        {isFrench ? 'Sexe' : 'Gender'}
+                      </Label>
+                      <Select
+                        value={userData.personal?.sexe2 || 'femme'}
+                        onValueChange={(value) => handleProfileChange('sexe2', value)}
+                      >
+                        <SelectTrigger className="bg-white/20 border-white/30 text-white">
+                          <SelectTrigger className="bg-white/20 border-white/30 text-white">
+                            <SelectValue />
+                          </SelectTrigger>
+                        </SelectTrigger>
+                        <SelectContent className="bg-white border-gray-200">
+                          <SelectItem value="homme">{isFrench ? 'Homme' : 'Male'}</SelectItem>
+                          <SelectItem value="femme">{isFrench ? 'Femme' : 'Female'}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-white font-semibold">
+                        {isFrench ? 'Salaire annuel' : 'Annual Salary'}
+                      </Label>
+                      <Input
+                        type="text"
+                        value={formatSalaryInput(userData.personal?.salaire2 || 0)}
+                        onChange={(e) => handleSalaryChange('2', e.target.value)}
+                        className="bg-white/20 border-white/30 text-white placeholder-white/60 focus:border-white focus:ring-white/20"
+                        placeholder="0"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-white font-semibold">
+                        {isFrench ? 'Statut professionnel' : 'Professional Status'}
+                      </Label>
+                      <Select
+                        value={userData.personal?.statutProfessionnel2 || 'actif'}
+                        onValueChange={(value) => handleProfileChange('statutProfessionnel2', value)}
+                      >
+                        <SelectTrigger className="bg-white/20 border-white/30 text-white">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-white border-gray-200">
+                          <SelectItem value="actif">{isFrench ? 'Actif' : 'Active'}</SelectItem>
+                          <SelectItem value="retraite">{isFrench ? 'Retraité' : 'Retired'}</SelectItem>
+                          <SelectItem value="inactif">{isFrench ? 'Inactif' : 'Inactive'}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-white font-semibold">
+                        {isFrench ? 'Âge de retraite souhaité' : 'Desired Retirement Age'}
+                      </Label>
+                      <Input
+                        type="number"
+                        value={userData.personal?.ageRetraiteSouhaite2 || 65}
+                        onChange={(e) => handleProfileChange('ageRetraiteSouhaite2', Number(e.target.value))}
+                        className="bg-white/20 border-white/30 text-white placeholder-white/60 focus:border-white focus:ring-white/20"
+                        min="50"
+                        max="100"
+                      />
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Bouton SAUVEGARDER - Protection des données ! */}
+            <div className="text-center">
+              <Button
+                size="lg"
+                disabled={isSaving}
+                className="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-600 hover:from-green-600 hover:via-emerald-600 hover:to-teal-700 text-white font-bold text-2xl py-6 px-12 shadow-2xl transform hover:scale-110 transition-all duration-300 border-4 border-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={async () => {
+                  setIsSaving(true);
+                  try {
+                    // Calculer automatiquement les dépenses mensuelles si les annuelles sont renseignées
+                    if (userData.personal?.depensesRetraite && userData.personal.depensesRetraite > 0) {
+                      const depensesMensuelles = Math.round(userData.personal.depensesRetraite / 12);
+                      handleProfileChange('depensesMensuelles', depensesMensuelles);
+                      console.log(`🔄 Dépenses mensuelles calculées et sauvegardées: $${depensesMensuelles}`);
+                    }
+                    
+                    // Utiliser le nouveau système de sauvegarde
+                    const saveResult = await EnhancedSaveManager.saveWithDialog(userData, {
+                      includeTimestamp: true
+                    });
+                    
+                    if (saveResult.success) {
+                      alert(isFrench 
+                        ? `✅ Données sauvegardées avec succès dans ${saveResult.filename} !`
+                        : `✅ Data saved successfully to ${saveResult.filename}!`
+                      );
+                    } else if (saveResult.blocked) {
+                      alert(isFrench 
+                        ? `🚫 Sauvegarde bloquée: ${saveResult.reason}`
+                        : `🚫 Save blocked: ${saveResult.reason}`
+                      );
+                    } else {
+                      alert(isFrench 
+                        ? `❌ Erreur: ${saveResult.error}`
+                        : `❌ Error: ${saveResult.error}`
+                      );
+                    }
+                    
+                  } catch (error) {
+                    console.error('❌ Erreur lors de la sauvegarde:', error);
+                    alert(isFrench ? '❌ Erreur lors de la sauvegarde' : '❌ Error saving data');
+                  } finally {
+                    setIsSaving(false);
+                  }
+                }}
+              >
+                <Save className="w-8 h-8 mr-4 animate-pulse" />
+                {isSaving 
+                  ? (isFrench ? '💾 SAUVEGARDE...' : '💾 SAVING...')
+                  : (isFrench ? '💾 SAUVEGARDER' : '💾 SAVE')
+                }
+                <Shield className="w-8 h-8 ml-4 animate-bounce" />
+              </Button>
+              <p className="text-gray-600 mt-4 text-lg">
+                {isFrench 
+                  ? '✨ Protégez vos données et continuez en toute sécurité!'
+                  : '✨ Protect your data and continue safely!'
+                }
+              </p>
+            </div>
+
+            {/* Bouton d'aide */}
+            <div className="text-center mt-8">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowHelp(!showHelp)}
+                className="border-yellow-500 text-yellow-600 hover:bg-yellow-500 hover:text-white"
+              >
+                <HelpCircle className="w-4 h-4 mr-2" />
+                {isFrench ? 'Afficher l\'aide' : 'Show help'}
+              </Button>
+            </div>
+          </TabsContent>
+
+          {/* NOUVEAU - Onglet 1 : Tableau de Bord avec Onboarding - Amélioré */}
+          <TabsContent value="dashboard" className="space-y-6">
+            {/* Section Onboarding et Vue d'ensemble - Harmonisée */}
+            <Card className="bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700 text-white border-0 shadow-2xl overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent"></div>
+              <CardHeader className="relative z-10 pb-4">
+                <CardTitle className="flex items-center gap-3 text-white text-2xl sm:text-3xl font-bold mb-3">
+                  <div className="p-2 bg-white/20 rounded-full">
+                    <TrendingUp className="w-6 h-6 sm:w-7 sm:h-7" />
+                  </div>
+                  {isFrench ? 'Bienvenue dans votre planification de retraite!' : 'Welcome to your retirement planning!'}
+                </CardTitle>
+                <p className="text-blue-100 text-base sm:text-lg leading-relaxed max-w-4xl">
+                  {isFrench 
+                    ? 'Commencez votre parcours avec nos modules spécialisés. Chaque étape vous rapproche de votre retraite rêvée.'
+                    : 'Start your journey with our specialized modules. Each step brings you closer to your dream retirement.'
+                  }
+                </p>
+              </CardHeader>
+              <CardContent className="relative z-10">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                  {/* Module SRG */}
+                  <Button
+                    onClick={() => handleNavigation('/module-srg')}
+                    variant="outline"
+                    className="group bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50 hover:scale-105 transition-all duration-300 h-auto py-4 px-3"
+                  >
+                    <div className="text-center w-full">
+                      <div className="p-2 bg-white/20 rounded-full w-fit mx-auto mb-3 group-hover:bg-white/30 transition-colors">
+                        <Building className="w-6 h-6 sm:w-7 sm:h-7" />
+                      </div>
+                      <div className="font-semibold text-sm sm:text-base mb-1">Module SRG</div>
+                      <div className="text-xs text-blue-100 leading-tight">Supplément de Revenu Garanti</div>
+                    </div>
+                  </Button>
+
+                  {/* Module RREGOP */}
+                  <Button
+                    onClick={() => handleNavigation('/module-rregop')}
+                    variant="outline"
+                    className="group bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50 hover:scale-105 transition-all duration-300 h-auto py-4 px-3"
+                  >
+                    <div className="text-center w-full">
+                      <div className="p-2 bg-white/20 rounded-full w-fit mx-auto mb-3 group-hover:bg-white/30 transition-colors">
+                        <BarChart3 className="w-6 h-6 sm:w-7 sm:h-7" />
+                      </div>
+                      <div className="font-semibold text-sm sm:text-base mb-1">Module RREGOP</div>
+                      <div className="text-xs text-blue-100 leading-tight">Régime de Retraite Gouvernemental</div>
+                    </div>
+                  </Button>
+
+                  {/* Module Immobilier */}
+                  <Button
+                    onClick={() => handleNavigation('/optimisation-immobiliere')}
+                    variant="outline"
+                    className="group bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50 hover:scale-105 transition-all duration-300 h-auto py-4 px-3"
+                  >
+                    <div className="text-center w-full">
+                      <div className="p-2 bg-white/20 rounded-full w-fit mx-auto mb-3 group-hover:bg-white/30 transition-colors">
+                        <Home className="w-6 h-6 sm:w-7 sm:h-7" />
+                      </div>
+                      <div className="font-semibold text-sm sm:text-base mb-1">Optimisation immobilière</div>
+                      <div className="text-xs text-blue-100 leading-tight">Stratégies RREGOP Priority</div>
+                    </div>
+                  </Button>
+
+                  {/* Module d'Optimisation Fiscale */}
+                  <Button
+                    onClick={() => handleNavigation('/optimisation-fiscale')}
+                    variant="outline"
+                    className="group bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50 hover:scale-105 transition-all duration-300 h-auto py-4 px-3"
+                  >
+                    <div className="text-center w-full">
+                      <div className="p-2 bg-white/20 rounded-full w-fit mx-auto mb-3 group-hover:bg-white/30 transition-colors">
+                        <Calculator className="w-6 h-6 sm:w-7 sm:h-7" />
+                      </div>
+                      <div className="font-semibold text-sm sm:text-base mb-1">Optimisation fiscale</div>
+                      <div className="text-xs text-blue-100 leading-tight">Stratégies avancées</div>
+                    </div>
+                  </Button>
+
+                  {/* Simulateur Monte Carlo */}
+                  <Button
+                    onClick={() => handleNavigation('/simulateur-monte-carlo')}
+                    variant="outline"
+                    className="group bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50 hover:scale-105 transition-all duration-300 h-auto py-4 px-3"
+                  >
+                    <div className="text-center w-full">
+                      <div className="p-2 bg-white/20 rounded-full w-fit mx-auto mb-3 group-hover:bg-white/30 transition-colors">
+                        <BarChart3 className="w-6 h-6 sm:w-7 sm:h-7" />
+                      </div>
+                      <div className="font-semibold text-sm sm:text-base mb-1">Simulateur Monte Carlo</div>
+                      <div className="text-xs text-blue-100 leading-tight">Analyses probabilistes</div>
+                    </div>
+                  </Button>
+
+                  {/* Planification d'Urgence */}
+                  <Button
+                    onClick={() => handleNavigation('/planification-urgence')}
+                    variant="outline"
+                    className="group bg-white/10 border-white/30 text-white hover:bg-white/20 hover:border-white/50 hover:scale-105 transition-all duration-300 h-auto py-4 px-3"
+                  >
+                    <div className="text-center w-full">
+                      <div className="p-2 bg-white/20 rounded-full w-fit mx-auto mb-3 group-hover:bg-white/30 transition-colors">
+                        <AlertTriangle className="w-6 h-6 sm:w-7 sm:h-7" />
+                      </div>
+                      <div className="font-semibold text-sm sm:text-base mb-1">Planification d'urgence</div>
+                      <div className="text-xs text-blue-100 leading-tight">Protection familiale</div>
+                    </div>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Section Progression Globale - Harmonisée */}
+            <Card className="bg-gradient-to-br from-white/90 to-green-50/80 backdrop-blur-sm border border-green-200/50 shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-3 text-green-800 text-xl sm:text-2xl font-bold">
+                  <div className="p-2 bg-green-100 rounded-full">
+                    <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" />
+                  </div>
+                  {isFrench ? 'Progression globale de votre planification' : 'Overall Planning Progress'}
+                </CardTitle>
+                <p className="text-gray-600 text-base sm:text-lg leading-relaxed">
+                  {isFrench 
+                    ? 'Suivez votre avancement dans chaque domaine de planification'
+                    : 'Track your progress in each planning area'
+                  }
+                </p>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+                  <div className="text-center p-4 bg-white/60 rounded-xl border border-blue-200/50 hover:bg-white/80 transition-colors duration-200">
+                    <div className="text-2xl sm:text-3xl font-bold text-blue-600 mb-2">{getRevenusProgress()}%</div>
+                    <div className="text-sm sm:text-base text-gray-700 font-medium mb-3">
+                      {isFrench ? 'Revenus et Actifs' : 'Income & Assets'}
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                      <div 
+                        className="bg-gradient-to-r from-blue-500 to-blue-600 h-2.5 rounded-full transition-all duration-700 ease-out"
+                        style={{ width: `${getRevenusProgress()}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                  
+                  <div className="text-center p-4 bg-white/60 rounded-xl border border-green-200/50 hover:bg-white/80 transition-colors duration-200">
+                    <div className="text-2xl sm:text-3xl font-bold text-green-600 mb-2">{getDepensesProgress()}%</div>
+                    <div className="text-sm sm:text-base text-gray-700 font-medium mb-3">
+                      {isFrench ? 'Dépenses et Budget' : 'Expenses & Budget'}
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                      <div 
+                        className="bg-gradient-to-r from-green-500 to-green-600 h-2.5 rounded-full transition-all duration-700 ease-out"
+                        style={{ width: `${getDepensesProgress()}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                  
+                  <div className="text-center p-4 bg-white/60 rounded-xl border border-purple-200/50 hover:bg-white/80 transition-colors duration-200">
+                    <div className="text-2xl sm:text-3xl font-bold text-purple-600 mb-2">{getCalculsProgress()}%</div>
+                    <div className="text-sm sm:text-base text-gray-700 font-medium mb-3">
+                      {isFrench ? 'Calculs de Retraite' : 'Retirement Calculations'}
+                    </div>
+                    <div className="w-full bg-gray-200 rounded-full h-2.5">
+                      <div 
+                        className="bg-gradient-to-r from-purple-500 to-purple-600 h-2.5 rounded-full transition-all duration-700 ease-out"
+                        style={{ width: `${getCalculsProgress()}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
           {/* Onglet 1 : Revenus et actifs */}
           <TabsContent value="revenus" className="space-y-6">

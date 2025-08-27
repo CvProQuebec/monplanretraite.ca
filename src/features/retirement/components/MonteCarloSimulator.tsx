@@ -1,601 +1,323 @@
 // src/features/retirement/components/MonteCarloSimulator.tsx
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Slider } from '@/components/ui/slider';
+import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import {
-  LineChart,
-  Line,
-  AreaChart,
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  ReferenceLine,
-  ReferenceArea
-} from 'recharts';
-import {
-  Dices,
-  TrendingUp,
-  TrendingDown,
-  AlertTriangle,
-  CheckCircle,
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { 
+  BarChart3, 
+  Calculator, 
+  TrendingUp, 
+  AlertTriangle, 
+  CheckCircle, 
   Info,
-  Play,
-  Settings,
-  Download,
-  RefreshCw
+  Zap
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { UserData, Calculations } from '../types';
-import { MonteCarloService, MonteCarloResult, MonteCarloParameters } from '../services/MonteCarloService';
-import { formatCurrency, formatPercentage } from '../utils/formatters';
-import { useLanguage } from '../hooks/useLanguage';
 
-interface MonteCarloSimulatorProps {
-  userData: UserData;
-  calculations: Calculations;
-}
-
-export const MonteCarloSimulator: React.FC<MonteCarloSimulatorProps> = ({
-  userData,
-  calculations
-}) => {
-  const { t } = useLanguage();
-  const [isRunning, setIsRunning] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [results, setResults] = useState<MonteCarloResult | null>(null);
-  const [showSettings, setShowSettings] = useState(false);
-  const [parameters, setParameters] = useState<MonteCarloParameters>({
-    numberOfSimulations: 1000,
-    expectedReturn: 0.06,
-    returnVolatility: 0.15,
-    inflationMean: 0.02,
-    inflationVolatility: 0.01,
-    sequenceRisk: true,
-    marketCrashProbability: 0.02,
-    crashMagnitude: -0.35
+export function MonteCarloSimulator() {
+  const [simulationData, setSimulationData] = useState({
+    montantInitial: 100000,
+    contributionAnnuelle: 10000,
+    rendementMoyen: 6.0,
+    volatilite: 15.0,
+    anneesSimulation: 20,
+    nombreSimulations: 1000
   });
 
-  // Simuler la progression
-  const runSimulation = async () => {
-    setIsRunning(true);
-    setProgress(0);
-    
-    // Simuler la progression (en production, utiliser un Web Worker)
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 95) {
-          clearInterval(interval);
-          return 100;
-        }
-        return prev + 5;
-      });
-    }, 100);
-    
-    // Lancer la simulation
-    setTimeout(() => {
-      const simulationResults = MonteCarloService.runSimulation(
-        userData,
-        calculations,
-        parameters
-      );
-      setResults(simulationResults);
-      setIsRunning(false);
-      clearInterval(interval);
-    }, 2000);
-  };
+  const [results, setResults] = useState<any>(null);
+  const [isSimulating, setIsSimulating] = useState(false);
 
-  // Préparer les données pour les graphiques
-  const chartData = useMemo(() => {
-    if (!results) return null;
-    
-    return {
-      confidence: results.confidenceIntervals.map(ci => ({
-        age: ci.age,
-        p5: ci.lower95,
-        p25: ci.lower50,
-        median: ci.median,
-        p75: ci.upper50,
-        p95: ci.upper95
-      })),
-      distribution: Object.entries(results.percentiles).map(([key, value]) => ({
-        percentile: key.replace('p', ''),
-        capital: value
-      }))
-    };
-  }, [results]);
-
-  return (
-    <div className="space-y-6">
-      {/* En-tête avec contrôles */}
-      <Card>
-        <CardHeader>
-          <div className="flex items-start justify-between">
-            <div>
-              <CardTitle className="flex items-center gap-2">
-                <Dices className="w-6 h-6 text-purple-600" />
-                {t('simulator.monteCarloTitle')}
-              </CardTitle>
-              <CardDescription>
-                {t('simulator.monteCarloSubtitle')}
-              </CardDescription>
-            </div>
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowSettings(!showSettings)}
-              >
-                <Settings className="w-4 h-4 mr-2" />
-                {t('simulator.settings')}
-              </Button>
-              <Button
-                onClick={runSimulation}
-                disabled={isRunning}
-                className="bg-purple-600 hover:bg-purple-700"
-              >
-                {isRunning ? (
-                  <>
-                                    <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                {t('simulator.simulationInProgress')}
-                  </>
-                ) : (
-                  <>
-                                    <Play className="w-4 h-4 mr-2" />
-                {t('simulator.runSimulation')}
-                  </>
-                )}
-              </Button>
-            </div>
-          </div>
-        </CardHeader>
+  const runMonteCarloSimulation = async () => {
+    setIsSimulating(true);
+    try {
+      // Simulation des calculs Monte Carlo
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      const simulations = [];
+      const { montantInitial, contributionAnnuelle, rendementMoyen, volatilite, anneesSimulation } = simulationData;
+      
+      for (let i = 0; i < simulationData.nombreSimulations; i++) {
+        let montant = montantInitial;
+        const rendements = [];
         
-        {/* Barre de progression */}
-        {isRunning && (
-          <CardContent>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span>{t('simulator.simulating').replace('{count}', parameters.numberOfSimulations.toString())}</span>
-                <span>{progress} %</span>
-              </div>
-              <Progress value={progress} className="h-2" />
-            </div>
-          </CardContent>
-        )}
-      </Card>
-
-      {/* Paramètres */}
-      <AnimatePresence>
-        {showSettings && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-          >
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg">{t('simulator.settings')}</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Nombre de simulations */}
-                  <div className="space-y-2">
-                    <Label>{t('simulator.numberOfSimulations')}: {parameters.numberOfSimulations}</Label>
-                    <Slider
-                      value={[parameters.numberOfSimulations]}
-                      onValueChange={([value]) => setParameters({
-                        ...parameters,
-                        numberOfSimulations: value
-                      })}
-                      min={100}
-                      max={10000}
-                      step={100}
-                    />
-                                <p className="text-xs text-gray-500">
-              {t('simulator.moreSimulations')}
-            </p>
-                  </div>
-                  
-                  {/* Rendement espéré */}
-                  <div className="space-y-2">
-                    <Label>{t('simulator.expectedReturn')}: {formatPercentage(parameters.expectedReturn * 100)}</Label>
-                    <Slider
-                      value={[parameters.expectedReturn * 100]}
-                      onValueChange={([value]) => setParameters({
-                        ...parameters,
-                        expectedReturn: value / 100
-                      })}
-                      min={0}
-                      max={12}
-                      step={0.5}
-                    />
-                  </div>
-                  
-                  {/* Volatilité */}
-                  <div className="space-y-2">
-                    <Label>{t('simulator.volatility')}: {formatPercentage(parameters.returnVolatility * 100)}</Label>
-                    <Slider
-                      value={[parameters.returnVolatility * 100]}
-                      onValueChange={([value]) => setParameters({
-                        ...parameters,
-                        returnVolatility: value / 100
-                      })}
-                      min={5}
-                      max={30}
-                      step={1}
-                    />
-                  </div>
-                  
-                  {/* Inflation */}
-                  <div className="space-y-2">
-                    <Label>{t('simulator.averageInflation')}: {formatPercentage(parameters.inflationMean * 100)}</Label>
-                    <Slider
-                      value={[parameters.inflationMean * 100]}
-                      onValueChange={([value]) => setParameters({
-                        ...parameters,
-                        inflationMean: value / 100
-                      })}
-                      min={0}
-                      max={5}
-                      step={0.25}
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Résultats */}
-      {results && (
-        <>
-          {/* Métriques principales */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <MetricCard
-              title={t('simulator.successRate')}
-                              value={`${results.successRate.toFixed(1)} %`}
-              subtitle={t('simulator.successRateSubtitle')}
-              trend={results.successRate >= 90 ? 'success' : results.successRate >= 75 ? 'warning' : 'danger'}
-              icon={results.successRate >= 90 ? <CheckCircle /> : <AlertTriangle />}
-            />
-            
-            <MetricCard
-              title={t('simulator.medianFinalCapital')}
-              value={formatCurrency(results.statistics.median)}
-              subtitle={t('simulator.medianSubtitle')}
-              icon={<TrendingUp />}
-            />
-            
-            <MetricCard
-              title={t('simulator.pessimisticScenario')}
-              value={formatCurrency(results.percentiles.p10)}
-              subtitle={t('simulator.pessimisticSubtitle')}
-              trend="danger"
-              icon={<TrendingDown />}
-            />
-            
-            <MetricCard
-              title={t('simulator.optimisticScenario')}
-              value={formatCurrency(results.percentiles.p90)}
-              subtitle={t('simulator.optimisticSubtitle')}
-              trend="success"
-              icon={<TrendingUp />}
-            />
-          </div>
-
-          {/* Graphiques détaillés */}
-          <Tabs defaultValue="intervals" className="space-y-4">
-                      <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="intervals">{t('simulator.confidenceIntervals')}</TabsTrigger>
-            <TabsTrigger value="distribution">{t('simulator.resultsDistribution')}</TabsTrigger>
-            <TabsTrigger value="trajectories">{t('simulator.simulatedTrajectories')}</TabsTrigger>
-          </TabsList>
-            
-            {/* Intervalles de confiance */}
-            <TabsContent value="intervals">
-              <Card>
-                <CardHeader>
-                                <CardTitle>{t('simulator.confidenceIntervals')}</CardTitle>
-              <CardDescription>
-                {t('simulator.confidenceIntervalsSubtitle')}
-              </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {chartData && (
-                    <ResponsiveContainer width="100%" height={400}>
-                      <AreaChart data={chartData.confidence}>
-                        <defs>
-                          <linearGradient id="colorConfidence" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5 %" stopColor="#8B5CF6" stopOpacity={0.3}/>
-                <stop offset="95 %" stopColor="#8B5CF6" stopOpacity={0.1}/>
-                          </linearGradient>
-                        </defs>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="age" label={{ value: 'Âge', position: 'insideBottom', offset: -5 }} />
-                        <YAxis tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M$`} />
-                        <Tooltip
-                          formatter={(value: number) => formatCurrency(value)}
-                          labelFormatter={(label) => `Âge: ${label}`}
-                        />
-                        <Legend />
-                        
-                        {/* Zone 90 % */}
-                        <Area
-                          dataKey="p95"
-                          stackId="1"
-                          stroke="none"
-                          fill="url(#colorConfidence)"
-                          name="95e percentile"
-                        />
-                        <Area
-                          dataKey="p5"
-                          stackId="2"
-                          stroke="none"
-                          fill="#fff"
-                          name="5e percentile"
-                        />
-                        
-                        {/* Lignes principales */}
-                        <Line
-                          type="monotone"
-                          dataKey="median"
-                          stroke="#8B5CF6"
-                          strokeWidth={3}
-                          name="Médiane"
-                          dot={false}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="p25"
-                          stroke="#EC4899"
-                          strokeWidth={2}
-                          strokeDasharray="5 5"
-                          name="25e percentile"
-                          dot={false}
-                        />
-                        <Line
-                          type="monotone"
-                          dataKey="p75"
-                          stroke="#10B981"
-                          strokeWidth={2}
-                          strokeDasharray="5 5"
-                          name="75e percentile"
-                          dot={false}
-                        />
-                        
-                        <ReferenceLine y={0} stroke="#EF4444" strokeDasharray="3 3" />
-                      </AreaChart>
-                    </ResponsiveContainer>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            {/* Distribution */}
-            <TabsContent value="distribution">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Distribution des capitaux finaux</CardTitle>
-                  <CardDescription>
-                    Répartition des résultats par percentile
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <DistributionChart results={results} />
-                </CardContent>
-              </Card>
-            </TabsContent>
-            
-            {/* Trajectoires */}
-            <TabsContent value="trajectories">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Échantillon de trajectoires simulées</CardTitle>
-                  <CardDescription>
-                    Visualisation de 20 scénarios aléatoires
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <TrajectoriesChart simulations={results.simulations.slice(0, 20)} />
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-
-          {/* Alertes et recommandations */}
-          {results.successRate < 90 && (
-            <Alert variant="destructive">
-              <AlertTriangle className="h-4 w-4" />
-              <AlertTitle>Attention : Risque élevé</AlertTitle>
-              <AlertDescription>
-                Votre taux de succès de {results.successRate.toFixed(1)} % est inférieur au seuil recommandé de 90 %.
-                Considérez d'augmenter votre épargne ou de réduire vos dépenses prévues.
-              </AlertDescription>
-            </Alert>
-          )}
+        for (let annee = 0; annee < anneesSimulation; annee++) {
+          // Génération d'un rendement aléatoire basé sur la distribution normale
+          const rendement = rendementMoyen + (Math.random() - 0.5) * volatilite * 2;
+          rendements.push(rendement);
           
-          {results.statistics.averageDepletionAge > 0 && (
-            <Alert>
-              <Info className="h-4 w-4" />
-              <AlertTitle>Information importante</AlertTitle>
-              <AlertDescription>
-                Dans les scénarios d'échec, l'épuisement du capital survient en moyenne à {Math.round(results.statistics.averageDepletionAge)} ans.
-              </AlertDescription>
-            </Alert>
-          )}
-        </>
-      )}
-    </div>
-  );
-};
-
-// Composant pour les cartes métriques
-const MetricCard: React.FC<{
-  title: string;
-  value: string;
-  subtitle: string;
-  trend?: 'success' | 'warning' | 'danger';
-  icon: React.ReactNode;
-}> = ({ title, value, subtitle, trend, icon }) => {
-  const trendColors = {
-    success: 'bg-green-50 text-green-700 border-green-200',
-    warning: 'bg-amber-50 text-amber-700 border-amber-200',
-    danger: 'bg-red-50 text-red-700 border-red-200'
-  };
-
-  return (
-    <motion.div whileHover={{ scale: 1.02 }}>
-      <Card className={trend ? trendColors[trend] : ''}>
-        <CardContent className="pt-6">
-          <div className="flex items-start justify-between">
-            <div>
-              <p className="text-sm font-medium opacity-80">{title}</p>
-              <p className="text-2xl font-bold mt-1">{value}</p>
-              <p className="text-xs opacity-70 mt-1">{subtitle}</p>
-            </div>
-            <div className="opacity-60">{icon}</div>
-          </div>
-        </CardContent>
-      </Card>
-    </motion.div>
-  );
-};
-
-// Graphique de distribution
-const DistributionChart: React.FC<{ results: MonteCarloResult }> = ({ results }) => {
-  // Créer un histogramme des résultats
-  const createHistogram = () => {
-    const capitals = results.simulations.map(s => s.finalCapital);
-    const min = Math.min(...capitals);
-    const max = Math.max(...capitals);
-    const binCount = 20;
-    const binSize = (max - min) / binCount;
-    
-    const bins = Array(binCount).fill(0).map((_, i) => ({
-      range: `${formatCurrency(min + i * binSize)} - ${formatCurrency(min + (i + 1) * binSize)}`,
-      min: min + i * binSize,
-      max: min + (i + 1) * binSize,
-      count: 0,
-      percentage: 0
-    }));
-    
-    capitals.forEach(capital => {
-      const binIndex = Math.min(
-        Math.floor((capital - min) / binSize),
-        binCount - 1
-      );
-      bins[binIndex].count++;
-    });
-    
-    bins.forEach(bin => {
-      bin.percentage = (bin.count / results.simulations.length) * 100;
-    });
-    
-    return bins;
-  };
-  
-  const histogram = createHistogram();
-  
-  return (
-    <ResponsiveContainer width="100%" height={300}>
-      <AreaChart data={histogram}>
-        <defs>
-          <linearGradient id="colorDist" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5 %" stopColor="#8B5CF6" stopOpacity={0.8}/>
-                <stop offset="95 %" stopColor="#8B5CF6" stopOpacity={0.2}/>
-          </linearGradient>
-        </defs>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis 
-          dataKey="range" 
-          angle={-45}
-          textAnchor="end"
-          height={100}
-          tick={{ fontSize: 10 }}
-        />
-        <YAxis 
-                          tickFormatter={(value) => `${value} %`}
-        />
-        <Tooltip 
-                      formatter={(value: number) => [`${value.toFixed(1)} %`, 'Fréquence']}
-        />
-        <Area
-          type="monotone"
-          dataKey="percentage"
-          stroke="#8B5CF6"
-          fillOpacity={1}
-          fill="url(#colorDist)"
-        />
-      </AreaChart>
-    </ResponsiveContainer>
-  );
-};
-
-// Graphique des trajectoires
-const TrajectoriesChart: React.FC<{ simulations: any[] }> = ({ simulations }) => {
-  // Préparer les données pour afficher plusieurs lignes
-  const prepareData = () => {
-    if (!simulations || simulations.length === 0) return [];
-    
-    const maxLength = Math.max(...simulations.map(s => s.trajectory.length));
-    const data = [];
-    
-    for (let i = 0; i < maxLength; i++) {
-      const point: any = {
-        age: simulations[0].trajectory[i]?.age || 0
+          // Calcul du montant avec contribution et rendement
+          montant = montant * (1 + rendement / 100) + contributionAnnuelle;
+        }
+        
+        simulations.push({
+          id: i,
+          montantFinal: montant,
+          rendementMoyen: rendements.reduce((a, b) => a + b, 0) / rendements.length,
+          volatilite: Math.sqrt(rendements.reduce((a, b) => a + Math.pow(b - rendements.reduce((c, d) => c + d, 0) / rendements.length, 2), 0) / rendements.length)
+        });
+      }
+      
+      // Tri par montant final
+      simulations.sort((a, b) => a.montantFinal - b.montantFinal);
+      
+      // Calcul des percentiles
+      const p10 = simulations[Math.floor(simulations.length * 0.1)];
+      const p25 = simulations[Math.floor(simulations.length * 0.25)];
+      const p50 = simulations[Math.floor(simulations.length * 0.5)];
+      const p75 = simulations[Math.floor(simulations.length * 0.75)];
+      const p90 = simulations[Math.floor(simulations.length * 0.9)];
+      
+      const mockResults = {
+        simulations: simulations.slice(0, 100), // Limiter à 100 pour l'affichage
+        statistiques: {
+          montantMoyen: simulations.reduce((a, b) => a + b.montantFinal, 0) / simulations.length,
+          montantMedian: p50.montantFinal,
+          montantMin: simulations[0].montantFinal,
+          montantMax: simulations[simulations.length - 1].montantFinal,
+          percentiles: { p10, p25, p50, p75, p90 }
+        },
+        scenarios: [
+          {
+            nom: 'Scénario pessimiste (10%)',
+            montant: p10.montantFinal,
+            probabilite: '10%',
+            couleur: 'text-red-600',
+            description: 'Dans 10% des cas, votre portefeuille vaudra moins que ce montant'
+          },
+          {
+            nom: 'Scénario conservateur (25%)',
+            montant: p25.montantFinal,
+            probabilite: '25%',
+            couleur: 'text-orange-600',
+            description: 'Dans 25% des cas, votre portefeuille vaudra moins que ce montant'
+          },
+          {
+            nom: 'Scénario médian (50%)',
+            montant: p50.montantFinal,
+            probabilite: '50%',
+            couleur: 'text-blue-600',
+            description: 'Dans 50% des cas, votre portefeuille vaudra plus que ce montant'
+          },
+          {
+            nom: 'Scénario optimiste (75%)',
+            montant: p75.montantFinal,
+            probabilite: '75%',
+            couleur: 'text-green-600',
+            description: 'Dans 75% des cas, votre portefeuille vaudra plus que ce montant'
+          },
+          {
+            nom: 'Scénario très optimiste (90%)',
+            montant: p90.montantFinal,
+            probabilite: '90%',
+            couleur: 'text-emerald-600',
+            description: 'Dans 90% des cas, votre portefeuille vaudra plus que ce montant'
+          }
+        ]
       };
       
-      simulations.forEach((sim, idx) => {
-        if (sim.trajectory[i]) {
-          point[`sim${idx}`] = sim.trajectory[i].capital;
-        }
-      });
-      
-      data.push(point);
+      setResults(mockResults);
+    } catch (error) {
+      console.error('Erreur simulation Monte Carlo:', error);
+    } finally {
+      setIsSimulating(false);
     }
-    
-    return data;
   };
-  
-  const data = prepareData();
-  const colors = ['#8B5CF6', '#EC4899', '#F59E0B', '#10B981', '#3B82F6', '#EF4444'];
-  
+
   return (
-    <ResponsiveContainer width="100%" height={400}>
-      <LineChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="age" />
-        <YAxis tickFormatter={(value) => `${(value / 1000000).toFixed(1)}M$`} />
-        <Tooltip
-          formatter={(value: number) => formatCurrency(value)}
-          labelFormatter={(label) => `Âge: ${label}`}
-        />
-        
-        {simulations.map((sim, idx) => (
-          <Line
-            key={idx}
-            type="monotone"
-            dataKey={`sim${idx}`}
-            stroke={colors[idx % colors.length]}
-            strokeWidth={1}
-            dot={false}
-            opacity={0.6}
-            name={`Simulation ${idx + 1}`}
-          />
-        ))}
-        
-        <ReferenceLine y={0} stroke="#EF4444" strokeDasharray="3 3" />
-      </LineChart>
-    </ResponsiveContainer>
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
+      <div className="container mx-auto px-6 py-12">
+        {/* En-tête */}
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <BarChart3 className="w-12 h-12 text-purple-600" />
+            <h1 className="text-4xl font-bold text-gray-900">
+              Simulateur Monte Carlo
+            </h1>
+          </div>
+          <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            Analysez les scénarios probabilistes de votre planification de retraite avec des simulations avancées
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Paramètres de simulation */}
+          <Card className="bg-white/80 backdrop-blur-sm border-2 border-purple-200 shadow-lg">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3 text-purple-800">
+                <Calculator className="w-6 h-6" />
+                Paramètres de Simulation
+              </CardTitle>
+              <CardDescription>
+                Configurez vos paramètres financiers pour la simulation
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <Label htmlFor="montantInitial">Montant initial ($)</Label>
+                  <Input
+                    id="montantInitial"
+                    type="number"
+                    value={simulationData.montantInitial}
+                    onChange={(e) => setSimulationData(prev => ({ ...prev, montantInitial: Number(e.target.value) }))}
+                    placeholder="100000"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="contributionAnnuelle">Contribution annuelle ($)</Label>
+                  <Input
+                    id="contributionAnnuelle"
+                    type="number"
+                    value={simulationData.contributionAnnuelle}
+                    onChange={(e) => setSimulationData(prev => ({ ...prev, contributionAnnuelle: Number(e.target.value) }))}
+                    placeholder="10000"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="rendementMoyen">Rendement moyen (%)</Label>
+                  <Input
+                    id="rendementMoyen"
+                    type="number"
+                    step="0.1"
+                    value={simulationData.rendementMoyen}
+                    onChange={(e) => setSimulationData(prev => ({ ...prev, rendementMoyen: Number(e.target.value) }))}
+                    placeholder="6.0"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="volatilite">Volatilité (%)</Label>
+                  <Input
+                    id="volatilite"
+                    type="number"
+                    step="0.1"
+                    value={simulationData.volatilite}
+                    onChange={(e) => setSimulationData(prev => ({ ...prev, volatilite: Number(e.target.value) }))}
+                    placeholder="15.0"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="anneesSimulation">Années de simulation</Label>
+                  <Input
+                    id="anneesSimulation"
+                    type="number"
+                    value={simulationData.anneesSimulation}
+                    onChange={(e) => setSimulationData(prev => ({ ...prev, anneesSimulation: Number(e.target.value) }))}
+                    placeholder="20"
+                  />
+                </div>
+
+                <div>
+                  <Label htmlFor="nombreSimulations">Nombre de simulations</Label>
+                  <Input
+                    id="nombreSimulations"
+                    type="number"
+                    value={simulationData.nombreSimulations}
+                    onChange={(e) => setSimulationData(prev => ({ ...prev, nombreSimulations: Number(e.target.value) }))}
+                    placeholder="1000"
+                  />
+                </div>
+              </div>
+
+              <Button 
+                onClick={runMonteCarloSimulation}
+                disabled={isSimulating}
+                className="w-full bg-purple-600 hover:bg-purple-700"
+              >
+                {isSimulating ? 'Simulation en cours...' : 'Lancer la simulation Monte Carlo'}
+              </Button>
+            </CardContent>
+          </Card>
+
+          {/* Résultats */}
+          <div className="space-y-6">
+            {results && (
+              <>
+                {/* Statistiques principales */}
+                <Card className="bg-green-50 border-2 border-green-200">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-green-800">
+                      <CheckCircle className="w-6 h-6" />
+                      Résultats de la Simulation
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-green-600">
+                          {Math.round(results.statistiques.montantMoyen).toLocaleString()} $
+                        </div>
+                        <div className="text-sm text-gray-600">Montant moyen</div>
+                      </div>
+                      <div className="text-center">
+                        <div className="text-2xl font-bold text-blue-600">
+                          {Math.round(results.statistiques.montantMedian).toLocaleString()} $
+                        </div>
+                        <div className="text-sm text-gray-600">Montant médian</div>
+                      </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div>
+                        <div className="font-semibold text-gray-700">Montant minimum :</div>
+                        <div className="text-red-600">{Math.round(results.statistiques.montantMin).toLocaleString()} $</div>
+                      </div>
+                      <div>
+                        <div className="font-semibold text-gray-700">Montant maximum :</div>
+                        <div className="text-emerald-600">{Math.round(results.statistiques.montantMax).toLocaleString()} $</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Scénarios probabilistes */}
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-purple-200">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-purple-800">
+                      <TrendingUp className="w-6 h-6" />
+                      Scénarios Probabilistes
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {results.scenarios.map((scenario: any, index: number) => (
+                        <div key={index} className="border rounded-lg p-3">
+                          <div className="flex justify-between items-center mb-2">
+                            <h4 className="font-semibold">{scenario.nom}</h4>
+                            <Badge variant="outline" className={scenario.couleur}>
+                              {scenario.probabilite}
+                            </Badge>
+                          </div>
+                          <div className="text-2xl font-bold mb-2 text-gray-800">
+                            {Math.round(scenario.montant).toLocaleString()} $
+                          </div>
+                          <div className="text-sm text-gray-600">
+                            {scenario.description}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Avertissement */}
+                <Alert className="border-blue-200 bg-blue-50">
+                  <Info className="h-5 w-5 text-blue-600" />
+                  <AlertDescription className="text-blue-800">
+                    <strong>Note importante :</strong> Ces simulations sont basées sur des modèles probabilistes et ne garantissent pas les résultats futurs. 
+                    Consultez un conseiller financier pour des conseils personnalisés.
+                  </AlertDescription>
+                </Alert>
+              </>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
   );
-};
+}

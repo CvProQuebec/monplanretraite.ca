@@ -28,37 +28,11 @@ export interface PersonalData {
   salaire2: number;
   
   // Champs existants étendus
-  statutProfessionnel1?: 'actif' | 'retraite' | 'sans-emploi' | 'conge-maladie' | 'conge-parental';
-  statutProfessionnel2?: 'actif' | 'retraite' | 'sans-emploi' | 'conge-maladie' | 'conge-parental';
+  statutProfessionnel1?: 'actif' | 'retraite';
+  statutProfessionnel2?: 'actif' | 'retraite';
   ageRetraiteSouhaite1?: number;
   ageRetraiteSouhaite2?: number;
   depensesRetraite?: number;
-  
-  // NOUVEAUX: Champs pour les revenus détaillés
-  typeRevenu1?: 'salaire' | 'assurance-emploi' | 'rentes' | 'dividendes' | 'revenus-location' | 'travail-autonome' | 'autres';
-  typeRevenu2?: 'salaire' | 'assurance-emploi' | 'rentes' | 'dividendes' | 'revenus-location' | 'travail-autonome' | 'autres';
-  typeEmploi1?: 'permanent' | 'partiel' | 'contrat' | 'saisonnier' | 'autonome';
-  typeEmploi2?: 'permanent' | 'partiel' | 'contrat' | 'saisonnier' | 'autonome';
-  dureeContrat1?: number;
-  dureeContrat2?: number;
-  dateFinContrat1?: string;
-  dateFinContrat2?: string;
-  notesSupplementaires1?: string;
-  notesSupplementaires2?: string;
-  
-  // NOUVEAUX: Champs pour les revenus temporaires et fréquences
-  dateFinRevenu1?: string;
-  dateFinRevenu2?: string;
-  frequencePaiement1?: 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'annual';
-  frequencePaiement2?: 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'annual';
-  
-  // NOUVEAUX: Champs pour la Sécurité de la vieillesse
-  ageSV1?: number;
-  ageSV2?: number;
-  statutSV1?: 'admissible' | 'partiel' | 'incertain' | 'non-admissible';
-  statutSV2?: 'admissible' | 'partiel' | 'incertain' | 'non-admissible';
-  anneesResidenceCanada1?: number;
-  anneesResidenceCanada2?: number;
   
   // Champs manquants pour compatibilité
   nom1?: string;
@@ -67,10 +41,6 @@ export interface PersonalData {
   nombreEnfants?: number;
   province?: string;
   
-  // Champs pour les dépenses de retraite
-  depensesMensuelles?: number;
-  depensesAnnuelles?: number;
-  
   // NOUVEAUX: Informations d'emploi détaillées
   secteurActivite1?: string;
   secteurActivite2?: string;
@@ -78,30 +48,6 @@ export interface PersonalData {
   niveauCompetences2?: 'debutant' | 'intermediaire' | 'expert' | 'specialise';
   regionEconomique?: string;
   tauxChomageRegional?: number;
-  
-  // NOUVEAUX: Investissements avec dates de solde
-  soldeREER1?: number;
-  soldeREER2?: number;
-  dateREER1?: string;
-  dateREER2?: string;
-  soldeCELI1?: number;
-  soldeCELI2?: number;
-  dateCELI1?: string;
-  dateCELI2?: string;
-  soldeCRI1?: number;
-  soldeCRI2?: number;
-  dateCRI1?: string;
-  dateCRI2?: string;
-  soldeCrypto1?: number;
-  soldeCrypto2?: number;
-  dateCrypto1?: string;
-  dateCrypto2?: string;
-  detailsCrypto1?: string;
-  detailsCrypto2?: string;
-  
-  // NOUVEAUX: Calculette de rendement
-  returnCalculatorAccounts?: any[];
-  returnCalculatorResults?: any[];
 }
 
 export interface RetirementData {
@@ -126,55 +72,9 @@ export interface RetirementData {
   svAgeDebut1?: number;
   svAgeDebut2?: number;
   
-  // NOUVEAUX: Ajustements de la Sécurité de la vieillesse par période
-  svAjustements1?: SVAdjustment[];
-  svAjustements2?: SVAdjustment[];
-  
-  // NOUVEAUX: Données SRG (Supplément de Revenu Garanti)
-  srgEligibilite1?: boolean;
-  srgEligibilite2?: boolean;
-  srgRevenus1?: number;
-  srgRevenus2?: number;
-  srgMontant1?: number;
-  srgMontant2?: number;
-  srgStatutConjoint?: 'celibataire' | 'conjoint-avec-sv' | 'conjoint-sans-sv';
-  
-  // NOUVEAUX: Données RREGOP détaillées
-  rregopTypeRegime1?: 'RREGOP' | 'RRPE';
-  rregopAnneesService1?: number;
-  rregopAnneesServiceCalcul1?: number;
-  rregopSalaireActuel1?: number;
-  rregopAgePleineRente1?: number;
-  rregopMontantPleineRente1?: number;
-  rregopCoordinationRRQ1?: number;
-  rregopIndexation1?: number;
-  rregopRenteConjointSurvivant1?: 50 | 60;
-  
-  rregopTypeRegime2?: 'RREGOP' | 'RRPE';
-  rregopAnneesService2?: number;
-  rregopAnneesServiceCalcul2?: number;
-  rregopSalaireActuel2?: number;
-  rregopAgePleineRente2?: number;
-  rregopMontantPleineRente2?: number;
-  rregopCoordinationRRQ2?: number;
-  rregopIndexation2?: number;
-  rregopRenteConjointSurvivant2?: 50 | 60;
-  
   // Propriétés existantes
   revenusTempsPartiel1?: number;
   revenusTempsPartiel2?: number;
-}
-
-// Interface pour les ajustements de la Sécurité de la vieillesse
-export interface SVAdjustment {
-  id: string;
-  dateDebut: string; // Format YYYY-MM-DD
-  dateFin: string; // Format YYYY-MM-DD
-  montantMensuel: number;
-  raison: string; // Ex: "Ajustement basé sur les revenus de l'année précédente"
-  typeAjustement: 'reduction' | 'augmentation' | 'suspension' | 'retablissement';
-  montantOriginal?: number; // Pour référence
-  pourcentageAjustement?: number; // Pourcentage de réduction/augmentation
 }
 
 export interface SavingsData {

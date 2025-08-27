@@ -17,10 +17,6 @@ import {
 } from 'lucide-react';
 
 import { RealEstateOptimizationService, RealEstateProperty, RREGOPContext, SaleScenario } from '@/services/RealEstateOptimizationService';
-import { useRetirementData } from '@/hooks/useRetirementData';
-import { hasFeatureAccess, getRequiredPlanForFeature } from '@/config/plans';
-import { PlanRestrictedSection } from './PlanRestrictedSection';
-
 interface RealEstateOptimizationSectionProps {
   className?: string;
   userPlan: 'free' | 'professional' | 'ultimate';
@@ -30,7 +26,22 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
   className, 
   userPlan 
 }) => {
-  const { userData, updateUserData } = useRetirementData();
+  // Données utilisateur simulées
+  const userData = {
+    personal: {
+      age: 55,
+      situationFamiliale: 'couple',
+      revenuAnnuel: 80000
+    },
+    retirement: {
+      ageRetraiteSouhaite: 62,
+      epargneActuelle: 150000
+    }
+  };
+  
+  const updateUserData = (data: any) => {
+    console.log('Mise à jour des données utilisateur:', data);
+  };
   const [activeTab, setActiveTab] = useState('analyse');
   const [isCalculating, setIsCalculating] = useState(false);
   
@@ -74,10 +85,10 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
     executionPlan?: any;
   }>({});
   
-  // Vérification des accès selon le plan
-  const hasRealEstateAccess = hasFeatureAccess('hasBudgetModule', userPlan); // Associé au module budget
-  const hasAdvancedAnalytics = hasFeatureAccess('hasAdvancedAnalytics', userPlan);
-  const hasMonteCarloAccess = hasFeatureAccess('hasMonteCarloSimulations', userPlan);
+  // Vérification des accès selon le plan (simplifiée)
+  const hasRealEstateAccess = userPlan !== 'free';
+  const hasAdvancedAnalytics = userPlan === 'ultimate';
+  const hasMonteCarloAccess = userPlan !== 'free';
   
   // Calculs en temps réel
   const liveCalculations = useMemo(() => {
@@ -145,7 +156,7 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
   if (!hasRealEstateAccess) {
     return (
       <PlanRestrictedSection
-        featureName="Module d'Optimisation Immobilière de Retraite"
+        featureName="Module d'optimisation immobilière de retraite"
         requiredPlan="professional"
         userPlan={userPlan}
         description="Analysez vos propriétés à revenus et optimisez votre retraite avec des stratégies RREGOP avancées."
@@ -164,7 +175,7 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
           </div>
         </div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Optimisation Immobilière de Retraite
+          Optimisation immobilière de retraite
         </h1>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
           Analysez vos propriétés à revenus et optimisez votre retraite avec des stratégies RREGOP avancées
@@ -176,11 +187,11 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
         <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="analyse" className="flex items-center gap-2">
             <Calculator className="h-4 w-4" />
-            Analyse Propriété
+            Analyse propriété
           </TabsTrigger>
           <TabsTrigger value="scenarios" className="flex items-center gap-2">
             <TrendingUp className="h-4 w-4" />
-            Scénarios de Vente
+            Scénarios de vente
           </TabsTrigger>
           <TabsTrigger value="reinvestissement" className="flex items-center gap-2">
             <DollarSign className="h-4 w-4" />
@@ -192,7 +203,7 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
           </TabsTrigger>
           <TabsTrigger value="execution" className="flex items-center gap-2">
             <Clock className="h-4 w-4" />
-            Plan d'Exécution
+            Plan d'exécution
           </TabsTrigger>
         </TabsList>
         
@@ -202,14 +213,14 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Calculator className="h-5 w-5" />
-                Analyse de la Propriété
+                Analyse de la propriété
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6">
               {/* Données de base */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <h3 className="font-semibold text-lg">Données de Base</h3>
+                  <h3 className="font-semibold text-lg">Données de base</h3>
                   <div className="space-y-3">
                     <div>
                       <Label htmlFor="valeurMarchande">Valeur marchande</Label>
@@ -254,7 +265,7 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
                 </div>
                 
                 <div className="space-y-4">
-                  <h3 className="font-semibold text-lg">Calculs en Temps Réel</h3>
+                  <h3 className="font-semibold text-lg">Calculs en temps réel</h3>
                   {liveCalculations && (
                     <div className="space-y-3">
                       <div className="flex justify-between">
@@ -349,7 +360,7 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <DollarSign className="h-5 w-5" />
-                Stratégies de Réinvestissement
+                Stratégies de réinvestissement
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -405,7 +416,7 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <BarChart3 className="h-5 w-5" />
-                Comparaison des Scénarios
+                Comparaison des scénarios
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -414,14 +425,14 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
                   {/* Meilleur scénario */}
                   <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                     <h4 className="font-semibold text-green-800 mb-2">
-                      🏆 Meilleur Scénario: {results.scenarioComparison.meilleurScenario.nom}
+                      🏆 Meilleur scénario: {results.scenarioComparison.meilleurScenario.nom}
                     </h4>
                     <p className="text-green-700">{results.scenarioComparison.recommandation}</p>
                   </div>
                   
                   {/* Analyse des risques */}
                   <div>
-                    <h4 className="font-semibold mb-3">Analyse des Risques</h4>
+                    <h4 className="font-semibold mb-3">Analyse des risques</h4>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="text-center">
                         <div className="text-2xl font-bold text-blue-600">
@@ -466,7 +477,7 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Clock className="h-5 w-5" />
-                Plan d'Exécution
+                Plan d'exécution
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -493,7 +504,7 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
                   
                   {/* Étapes */}
                   <div>
-                    <h4 className="font-semibold mb-3">Étapes d'Exécution</h4>
+                    <h4 className="font-semibold mb-3">Étapes d'exécution</h4>
                     <div className="space-y-3">
                       {results.executionPlan.etapes.map((etape, index) => (
                         <div key={index} className="border rounded-lg p-3">
