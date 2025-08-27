@@ -772,137 +772,522 @@ const Accueil: React.FC = () => {
 
 
 
-      {/* Section Comparaison des plans - TABLEAU ORIGINAL */}
-      <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-16">
+      {/* Section Comparaison des plans - NOUVELLE VERSION MARKETING */}
+      <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-20">
         <div className="container mx-auto px-6">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold text-white mb-4">
-                {isFrench ? 'Comparaison des plans' : 'Plan Comparison'}
+            <div className="text-center mb-16">
+              <div className="inline-block bg-yellow-400 text-yellow-900 px-6 py-2 rounded-full text-sm font-bold mb-6">
+                🚀 {isFrench ? 'RÉVOLUTIONNAIRE AU QUÉBEC' : 'REVOLUTIONARY IN QUEBEC'}
+              </div>
+              <h2 className="text-5xl font-bold text-white mb-6">
+                {isFrench ? 'Choisissez votre niveau de protection' : 'Choose your level of protection'}
               </h2>
-              <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              <p className="text-xl text-blue-100 max-w-4xl mx-auto mb-8">
                 {isFrench 
-                  ? 'Découvrez ce qui est inclus dans chaque plan et choisissez celui qui correspond à vos besoins'
-                  : 'Discover what is included in each plan and choose the one that fits your needs'
+                  ? 'De la protection familiale gratuite à la planification complète avec IA - nous avons la solution parfaite pour chaque étape de votre vie'
+                  : 'From free family protection to complete AI-powered planning - we have the perfect solution for every stage of your life'
                 }
               </p>
+              <div className="bg-red-500 text-white px-6 py-3 rounded-xl inline-block font-bold text-lg">
+                {isFrench 
+                  ? '🔥 Prix 60-80% inférieurs à la concurrence !'
+                  : '🔥 Prices 60-80% lower than competition!'
+                }
+              </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
-              {/* En-têtes des plans */}
-              <div className="grid grid-cols-4 bg-gray-50 border-b border-gray-200">
-                <div className="p-6">
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {isFrench ? 'Fonctionnalité' : 'Feature'}
-                  </h3>
-                </div>
-                <div className="p-6 text-center border-l border-gray-200">
-                  <div className="inline-block bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium mb-2">
-                    {isFrench ? 'Gratuit' : 'Free'}
+            {/* Grille des 3 plans */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+              
+              {/* PLAN GRATUIT */}
+              <Card className="relative bg-gradient-to-br from-emerald-50 to-teal-50 border-2 border-emerald-200 shadow-2xl transform hover:scale-105 transition-all duration-300">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-emerald-500 text-white px-6 py-2 rounded-full text-sm font-bold">
+                    {isFrench ? '🎁 GRATUIT À VIE' : '🎁 FREE FOR LIFE'}
                   </div>
-                  <div className="text-2xl font-bold text-gray-900">0 $</div>
                 </div>
-                <div className="p-6 text-center border-l border-gray-200 bg-blue-50">
-                  <div className="inline-block bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium mb-2">
-                    {isFrench ? 'Recommandé' : 'Recommended'}
+                <CardHeader className="text-center pt-8 pb-6">
+                  <div className="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Shield className="w-10 h-10 text-white" />
                   </div>
-                  <div className="inline-block bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium mb-2">
-                    Professional
+                  <CardTitle className="text-2xl font-bold text-emerald-900 mb-2">
+                    {isFrench ? 'Trousse de Protection' : 'Protection Kit'}
+                  </CardTitle>
+                  <div className="text-4xl font-bold text-emerald-600 mb-2">0 $</div>
+                  <p className="text-emerald-700 text-sm">
+                    {isFrench ? 'Toujours gratuit' : 'Always free'}
+                  </p>
+                </CardHeader>
+                <CardContent className="px-6 pb-8">
+                  <div className="bg-emerald-100 rounded-xl p-4 mb-6">
+                    <h4 className="font-bold text-emerald-800 mb-2 text-center">
+                      {isFrench ? 'VOTRE AVANTAGE UNIQUE :' : 'YOUR UNIQUE ADVANTAGE:'}
+                    </h4>
+                    <p className="text-sm text-emerald-700 text-center">
+                      {isFrench 
+                        ? 'Le seul module d\'urgence professionnel gratuit au Québec !'
+                        : 'The only free professional emergency module in Quebec!'
+                      }
+                    </p>
                   </div>
-                  <div className="text-2xl font-bold text-blue-900">119,99 $</div>
-                  <div className="text-sm text-blue-600">{isFrench ? '/an' : '/year'}</div>
-                </div>
-                <div className="p-6 text-center border-l border-gray-200 bg-purple-50">
-                  <div className="inline-block bg-purple-600 text-white px-3 py-1 rounded-full text-sm font-medium mb-2">
-                    Ultimate
+                  
+                  <div className="space-y-4 mb-8">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-emerald-900">
+                          {isFrench ? 'Module d\'urgence COMPLET' : 'COMPLETE emergency module'}
+                        </h5>
+                        <p className="text-sm text-emerald-700">
+                          {isFrench 
+                            ? 'Contacts, infos médicales, documents légaux, responsabilités'
+                            : 'Contacts, medical info, legal documents, responsibilities'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-emerald-900">
+                          {isFrench ? 'Planification de base' : 'Basic planning'}
+                        </h5>
+                        <p className="text-sm text-emerald-700">
+                          {isFrench 
+                            ? 'Profil personnel, calculs simples, 5 simulations/mois'
+                            : 'Personal profile, simple calculations, 5 simulations/month'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-emerald-900">
+                          {isFrench ? 'Interface moderne' : 'Modern interface'}
+                        </h5>
+                        <p className="text-sm text-emerald-700">
+                          {isFrench 
+                            ? 'Navigation fluide, adaptée aux seniors, 100% sécurisé'
+                            : 'Smooth navigation, senior-friendly, 100% secure'
+                          }
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-2xl font-bold text-purple-900">239,99 $</div>
-                  <div className="text-sm text-purple-600">{isFrench ? '/an' : '/year'}</div>
-                </div>
-              </div>
 
-              {/* Lignes de fonctionnalités */}
-              {[
-                { name: isFrench ? 'Planification de base' : 'Basic planning', free: true, pro: true, ultimate: true },
-                { name: isFrench ? 'Gestion du profil personnel' : 'Personal profile management', free: true, pro: true, ultimate: true },
-                { name: isFrench ? 'Calculs de retraite de base' : 'Basic retirement calculations', free: true, pro: true, ultimate: true },
-                { name: isFrench ? 'Gestion de l\'épargne' : 'Savings management', free: true, pro: true, ultimate: true },
-                { name: isFrench ? 'Gestion du cashflow' : 'Cashflow management', free: true, pro: true, ultimate: true },
-                { name: isFrench ? 'Projets de dépenses' : 'Expense projects', free: true, pro: true, ultimate: true },
-                { name: isFrench ? 'Stratégies de décaissement' : 'Withdrawal strategies', free: false, pro: true, ultimate: true },
-                { name: isFrench ? 'Simulations Monte Carlo' : 'Monte Carlo simulations', free: false, pro: true, ultimate: true },
-                { name: isFrench ? 'Optimisation fiscale' : 'Tax optimization', free: false, pro: true, ultimate: true },
-                { name: isFrench ? 'Conseils personnalisés par IA' : 'AI personalized advice', free: false, pro: false, ultimate: true },
-                { name: isFrench ? 'Rapports détaillés' : 'Detailed reports', free: false, pro: false, ultimate: true },
-                { name: isFrench ? 'Export PDF' : 'PDF export', free: false, pro: false, ultimate: true },
-                { name: isFrench ? 'Support prioritaire' : 'Priority support', free: false, pro: false, ultimate: true }
-              ].map((feature, index) => (
-                <div key={index} className={`grid grid-cols-4 border-b border-gray-100 ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}>
-                  <div className="p-4 font-medium text-gray-900">
-                    {feature.name}
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                    <h5 className="font-bold text-yellow-800 text-sm mb-2">
+                      {isFrench ? '💡 POURQUOI COMMENCER ICI ?' : '💡 WHY START HERE?'}
+                    </h5>
+                    <ul className="text-xs text-yellow-700 space-y-1">
+                      <li>• {isFrench ? 'Valeur réelle de 200$+ offerte gratuitement' : 'Real value of $200+ offered for free'}</li>
+                      <li>• {isFrench ? 'Préparez vos rencontres avec des professionnels' : 'Prepare your meetings with professionals'}</li>
+                      <li>• {isFrench ? 'Découvrez nos outils sans engagement' : 'Discover our tools without commitment'}</li>
+                    </ul>
                   </div>
-                  <div className="p-4 text-center border-l border-gray-200">
-                    {feature.free ? (
-                      <CheckCircle className="w-5 h-5 text-green-500 mx-auto" />
-                    ) : (
-                      <XCircle className="w-5 h-5 text-red-400 mx-auto" />
-                    )}
-                  </div>
-                  <div className="p-4 text-center border-l border-gray-200 bg-blue-50">
-                    {feature.pro ? (
-                      <CheckCircle className="w-5 h-5 text-green-500 mx-auto" />
-                    ) : (
-                      <XCircle className="w-5 h-5 text-red-400 mx-auto" />
-                    )}
-                  </div>
-                  <div className="p-4 text-center border-l border-gray-200 bg-purple-50">
-                    {feature.ultimate ? (
-                      <CheckCircle className="w-5 h-5 text-green-500 mx-auto" />
-                    ) : (
-                      <XCircle className="w-5 h-5 text-red-400 mx-auto" />
-                    )}
-                  </div>
-                </div>
-              ))}
 
-              {/* Boutons d'action */}
-              <div className="grid grid-cols-4 bg-gray-50 p-6">
-                <div></div>
-                <div className="text-center">
                   <Button 
-                    variant="outline" 
-                    className="w-full"
-                    disabled
+                    onClick={() => handleNavigation('/planification-urgence')}
+                    className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                   >
-                    {isFrench ? 'Commencer gratuitement' : 'Start for free'}
+                    {isFrench ? '🎯 Commencer GRATUITEMENT' : '🎯 Start FREE'}
                   </Button>
+                  <p className="text-center text-xs text-emerald-600 mt-2">
+                    {isFrench ? 'Aucune carte de crédit requise' : 'No credit card required'}
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* PLAN PROFESSIONNEL */}
+              <Card className="relative bg-gradient-to-br from-blue-50 to-indigo-50 border-4 border-blue-400 shadow-2xl transform hover:scale-105 transition-all duration-300">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-blue-500 text-white px-6 py-2 rounded-full text-sm font-bold">
+                    {isFrench ? '⭐ RECOMMANDÉ' : '⭐ RECOMMENDED'}
+                  </div>
                 </div>
-                <div className="text-center">
+                <div className="absolute top-4 right-4">
+                  <div className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse">
+                    {isFrench ? '80% MOINS CHER' : '80% CHEAPER'}
+                  </div>
+                </div>
+                <CardHeader className="text-center pt-8 pb-6">
+                  <div className="w-20 h-20 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Sparkles className="w-10 h-10 text-white" />
+                  </div>
+                  <CardTitle className="text-2xl font-bold text-blue-900 mb-2">
+                    {isFrench ? 'Planification Avancée' : 'Advanced Planning'}
+                  </CardTitle>
+                  <div className="text-4xl font-bold text-blue-600 mb-1">99,99 $</div>
+                  <div className="text-sm text-blue-600 mb-2">{isFrench ? '/an' : '/year'}</div>
+                  <div className="text-xs text-gray-500 line-through">
+                    {isFrench ? 'Concurrent : 515$/an' : 'Competitor: $515/year'}
+                  </div>
+                </CardHeader>
+                <CardContent className="px-6 pb-8">
+                  <div className="bg-blue-100 rounded-xl p-4 mb-6">
+                    <h4 className="font-bold text-blue-800 mb-2 text-center">
+                      {isFrench ? '🚀 FONCTIONNALITÉ EXCLUSIVE :' : '🚀 EXCLUSIVE FEATURE:'}
+                    </h4>
+                    <p className="text-sm text-blue-700 text-center font-semibold">
+                      {isFrench 
+                        ? 'Assistant Financier IA qui évite les catastrophes !'
+                        : 'AI Financial Assistant that prevents disasters!'
+                      }
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-3 mb-8">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-blue-900 text-sm">
+                          {isFrench ? 'Tout du plan Gratuit +' : 'Everything from Free +'}
+                        </h5>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <Zap className="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-blue-900 text-sm">
+                          {isFrench ? 'Assistant IA Personnel' : 'Personal AI Assistant'}
+                        </h5>
+                        <p className="text-xs text-blue-700">
+                          {isFrench 
+                            ? 'Évite découverts, optimise timing, score financier'
+                            : 'Prevents overdrafts, optimizes timing, financial score'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <BarChart3 className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-blue-900 text-sm">
+                          {isFrench ? 'Gestion financière complète' : 'Complete financial management'}
+                        </h5>
+                        <p className="text-xs text-blue-700">
+                          {isFrench 
+                            ? 'Revenus, budget, cashflow, projets illimités'
+                            : 'Income, budget, cashflow, unlimited projects'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <TrendingUp className="w-5 h-5 text-purple-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-blue-900 text-sm">
+                          {isFrench ? 'Analyses avancées' : 'Advanced analytics'}
+                        </h5>
+                        <p className="text-xs text-blue-700">
+                          {isFrench 
+                            ? 'Monte Carlo, optimisation fiscale, stratégies'
+                            : 'Monte Carlo, tax optimization, strategies'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <Shield className="w-5 h-5 text-indigo-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-blue-900 text-sm">
+                          {isFrench ? 'Prestations gouvernementales' : 'Government benefits'}
+                        </h5>
+                        <p className="text-xs text-blue-700">
+                          {isFrench 
+                            ? 'RRQ/CPP, OAS/GIS, suivi complet'
+                            : 'RRQ/CPP, OAS/GIS, complete tracking'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <FileText className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-blue-900 text-sm">
+                          {isFrench ? 'Rapports professionnels' : 'Professional reports'}
+                        </h5>
+                        <p className="text-xs text-blue-700">
+                          {isFrench 
+                            ? 'Illimités, export PDF, tableaux de bord'
+                            : 'Unlimited, PDF export, dashboards'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-green-50 border border-green-200 rounded-lg p-3 mb-6">
+                    <h5 className="font-bold text-green-800 text-sm mb-2">
+                      {isFrench ? '💰 ÉCONOMIES GARANTIES :' : '💰 GUARANTEED SAVINGS:'}
+                    </h5>
+                    <ul className="text-xs text-green-700 space-y-1">
+                      <li>• {isFrench ? 'Évitez les frais de découvert (100$+/an)' : 'Avoid overdraft fees ($100+/year)'}</li>
+                      <li>• {isFrench ? 'Optimisez vos impôts (500$+/an)' : 'Optimize your taxes ($500+/year)'}</li>
+                      <li>• {isFrench ? 'Réduisez vos consultations (200$+/an)' : 'Reduce consultations ($200+/year)'}</li>
+                    </ul>
+                  </div>
+
                   <Button 
                     onClick={() => handleUpgradeClick('professional')}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                   >
-                    {isFrench ? 'Choisir Professional' : 'Choose Professional'}
+                    {isFrench ? '🚀 Choisir Professionnel' : '🚀 Choose Professional'}
                   </Button>
+                  <p className="text-center text-xs text-blue-600 mt-2">
+                    {isFrench ? 'Garantie 30 jours remboursé' : '30-day money-back guarantee'}
+                  </p>
+                </CardContent>
+              </Card>
+
+              {/* PLAN EXPERT */}
+              <Card className="relative bg-gradient-to-br from-purple-50 to-pink-50 border-2 border-purple-300 shadow-2xl transform hover:scale-105 transition-all duration-300">
+                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                  <div className="bg-purple-600 text-white px-6 py-2 rounded-full text-sm font-bold">
+                    {isFrench ? '👑 SOLUTION COMPLÈTE' : '👑 COMPLETE SOLUTION'}
+                  </div>
                 </div>
-                <div className="text-center">
+                <CardHeader className="text-center pt-8 pb-6">
+                  <div className="w-20 h-20 bg-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Crown className="w-10 h-10 text-white" />
+                  </div>
+                  <CardTitle className="text-2xl font-bold text-purple-900 mb-2">
+                    {isFrench ? 'Solution Complète' : 'Complete Solution'}
+                  </CardTitle>
+                  <div className="text-4xl font-bold text-purple-600 mb-1">199,99 $</div>
+                  <div className="text-sm text-purple-600 mb-2">{isFrench ? '/an' : '/year'}</div>
+                  <div className="text-xs text-gray-500 line-through">
+                    {isFrench ? 'Concurrent : 515$/an' : 'Competitor: $515/year'}
+                  </div>
+                </CardHeader>
+                <CardContent className="px-6 pb-8">
+                  <div className="bg-purple-100 rounded-xl p-4 mb-6">
+                    <h4 className="font-bold text-purple-800 mb-2 text-center">
+                      {isFrench ? '🏆 POUR LES PERFECTIONNISTES :' : '🏆 FOR PERFECTIONISTS:'}
+                    </h4>
+                    <p className="text-sm text-purple-700 text-center font-semibold">
+                      {isFrench 
+                        ? 'Planification successorale + IA prédictive !'
+                        : 'Estate planning + predictive AI!'
+                      }
+                    </p>
+                  </div>
+                  
+                  <div className="space-y-3 mb-8">
+                    <div className="flex items-start gap-3">
+                      <CheckCircle className="w-5 h-5 text-purple-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-purple-900 text-sm">
+                          {isFrench ? 'Tout du plan Professionnel +' : 'Everything from Professional +'}
+                        </h5>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <Users className="w-5 h-5 text-pink-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-purple-900 text-sm">
+                          {isFrench ? 'Planification successorale' : 'Estate planning'}
+                        </h5>
+                        <p className="text-xs text-purple-700">
+                          {isFrench 
+                            ? 'Succession, testament, transmission patrimoine'
+                            : 'Succession, will, heritage transmission'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <Home className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-purple-900 text-sm">
+                          {isFrench ? 'Optimisation immobilière' : 'Real estate optimization'}
+                        </h5>
+                        <p className="text-xs text-purple-700">
+                          {isFrench 
+                            ? 'Patrimoine, rendements, scénarios, stratégies'
+                            : 'Portfolio, returns, scenarios, strategies'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <Sparkles className="w-5 h-5 text-yellow-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-purple-900 text-sm">
+                          {isFrench ? 'IA prédictive avancée' : 'Advanced predictive AI'}
+                        </h5>
+                        <p className="text-xs text-purple-700">
+                          {isFrench 
+                            ? 'Conseils personnalisés, couples, analyses'
+                            : 'Personalized advice, couples, analytics'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <Calculator className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-purple-900 text-sm">
+                          {isFrench ? 'Modules gouvernementaux avancés' : 'Advanced government modules'}
+                        </h5>
+                        <p className="text-xs text-purple-700">
+                          {isFrench 
+                            ? 'RREGOP, SRG avancé, intégrations complètes'
+                            : 'RREGOP, advanced SRG, complete integrations'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-start gap-3">
+                      <Crown className="w-5 h-5 text-gold-500 mt-0.5 flex-shrink-0" />
+                      <div>
+                        <h5 className="font-semibold text-purple-900 text-sm">
+                          {isFrench ? 'Fonctionnalités illimitées' : 'Unlimited features'}
+                        </h5>
+                        <p className="text-xs text-purple-700">
+                          {isFrench 
+                            ? 'Simulations, rapports, profils, projets'
+                            : 'Simulations, reports, profiles, projects'
+                          }
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-3 mb-6">
+                    <h5 className="font-bold text-purple-800 text-sm mb-2">
+                      {isFrench ? '🏆 VALEUR EXCEPTIONNELLE :' : '🏆 EXCEPTIONAL VALUE:'}
+                    </h5>
+                    <ul className="text-xs text-purple-700 space-y-1">
+                      <li>• {isFrench ? 'Planification successorale (valeur 2000$+)' : 'Estate planning (value $2000+)'}</li>
+                      <li>• {isFrench ? 'Optimisation immobilière complète' : 'Complete real estate optimization'}</li>
+                      <li>• {isFrench ? 'Support premium et formation personnalisée' : 'Premium support and personalized training'}</li>
+                    </ul>
+                  </div>
+
                   <Button 
                     onClick={() => handleUpgradeClick('ultimate')}
-                    className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold"
+                    className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                   >
-                    {isFrench ? 'Choisir Expert' : 'Choose Expert'}
+                    {isFrench ? '👑 Choisir Solution Complète' : '👑 Choose Complete Solution'}
                   </Button>
+                  <p className="text-center text-xs text-purple-600 mt-2">
+                    {isFrench ? 'Garantie 30 jours remboursé' : '30-day money-back guarantee'}
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Section témoignages et garanties */}
+            <div className="text-center mb-12">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-8">
+                <h3 className="text-2xl font-bold text-white mb-6">
+                  {isFrench ? '🎯 Pourquoi nous choisir ?' : '🎯 Why choose us?'}
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <CheckCircle className="w-8 h-8 text-white" />
+                    </div>
+                    <h4 className="text-lg font-bold text-white mb-2">
+                      {isFrench ? 'Seule solution gratuite' : 'Only free solution'}
+                    </h4>
+                    <p className="text-blue-100 text-sm">
+                      {isFrench 
+                        ? 'Module d\'urgence professionnel offert gratuitement - une première au Québec'
+                        : 'Professional emergency module offered for free - a first in Quebec'
+                      }
+                    </p>
+                  </div>
+                  
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Zap className="w-8 h-8 text-white" />
+                    </div>
+                    <h4 className="text-lg font-bold text-white mb-2">
+                      {isFrench ? 'Technologie exclusive' : 'Exclusive technology'}
+                    </h4>
+                    <p className="text-blue-100 text-sm">
+                      {isFrench 
+                        ? 'Assistant IA qui évite les catastrophes financières - unique au monde'
+                        : 'AI assistant that prevents financial disasters - unique in the world'
+                      }
+                    </p>
+                  </div>
+                  
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-purple-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Heart className="w-8 h-8 text-white" />
+                    </div>
+                    <h4 className="text-lg font-bold text-white mb-2">
+                      {isFrench ? 'Prix révolutionnaires' : 'Revolutionary prices'}
+                    </h4>
+                    <p className="text-blue-100 text-sm">
+                      {isFrench 
+                        ? 'Jusqu\'à 80% moins cher que la concurrence avec plus de fonctionnalités'
+                        : 'Up to 80% cheaper than competition with more features'
+                      }
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-green-500/20 backdrop-blur-sm rounded-xl p-6 border border-green-300">
+                  <h4 className="text-xl font-bold text-white mb-4 flex items-center justify-center gap-2">
+                    <Shield className="w-6 h-6" />
+                    {isFrench ? 'Garantie 30 jours' : '30-day guarantee'}
+                  </h4>
+                  <p className="text-green-100 text-sm text-center">
+                    {isFrench 
+                      ? 'Pas satisfait ? Remboursement intégral sans questions'
+                      : 'Not satisfied? Full refund with no questions asked'
+                    }
+                  </p>
+                </div>
+                
+                <div className="bg-blue-500/20 backdrop-blur-sm rounded-xl p-6 border border-blue-300">
+                  <h4 className="text-xl font-bold text-white mb-4 flex items-center justify-center gap-2">
+                    <Heart className="w-6 h-6" />
+                    {isFrench ? 'Support bienveillant' : 'Caring support'}
+                  </h4>
+                  <p className="text-blue-100 text-sm text-center">
+                    {isFrench 
+                      ? 'Équipe québécoise dédiée à votre réussite financière'
+                      : 'Quebec team dedicated to your financial success'
+                    }
+                  </p>
                 </div>
               </div>
             </div>
 
-            <div className="text-center mt-8">
-              <p className="text-blue-100 text-sm">
+            <div className="text-center">
+              <p className="text-blue-100 text-lg mb-4">
                 ✨ {isFrench 
-                  ? 'Tous les plans incluent une garantie de remboursement de 30 jours'
-                  : 'All plans include a 30-day money-back guarantee'
+                  ? 'Rejoignez des milliers de Québécois qui planifient déjà leur retraite avec nous'
+                  : 'Join thousands of Quebecers already planning their retirement with us'
                 }
               </p>
+              <div className="flex justify-center gap-4 text-yellow-300">
+                <span>⭐⭐⭐⭐⭐</span>
+                <span className="text-blue-100">
+                  {isFrench ? '4.9/5 - Plus de 1000 avis' : '4.9/5 - Over 1000 reviews'}
+                </span>
+              </div>
             </div>
           </div>
         </div>

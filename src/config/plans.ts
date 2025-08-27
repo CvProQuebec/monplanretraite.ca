@@ -5,11 +5,11 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
   free: {
     plan: 'free',
     price: '0 $',
-    badge: 'Essai',
-    description: 'Accès de base pour commencer',
+    badge: 'Trousse de Protection',
+    description: 'Module d\'urgence professionnel gratuit',
     features: {
-      maxSimulations: 0,
-      maxReports: 0,
+      maxSimulations: 5, // 5 simulations par mois pour donner un avant-goût
+      maxReports: 1,
       maxProfiles: 1,
       hasAdvancedAnalytics: false,
       hasAIConsulting: false,
@@ -18,9 +18,9 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
       hasPersonalizedTraining: false,
       hasExportPDF: false,
       hasMonteCarloSimulations: false,
-      hasCashflowManagement: true,
+      hasCashflowManagement: true, // Gestion de base
       hasWithdrawalStrategies: false,
-      hasExpensePlanning: true,
+      hasExpensePlanning: true, // Planification de base
       hasTaxOptimization: false,
       hasFinancialAssistant: false, // RESTREINT : Plans payants uniquement
       hasBudgetModule: false, // RESTREINT : Plans payants uniquement
@@ -29,16 +29,16 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
   },
   professional: {
     plan: 'professional',
-    price: '119,99 $/an',
+    price: '99,99 $/an',
     priceId: 'price_professional_annual',
-    badge: 'Recommandé',
-    description: 'Pour les utilisateurs sérieux',
+    badge: 'Planification Avancée',
+    description: 'Assistant IA + Gestion financière complète',
     features: {
-      maxSimulations: 100,
-      maxReports: 10,
+      maxSimulations: -1, // Illimité
+      maxReports: -1, // Illimité
       maxProfiles: 3,
       hasAdvancedAnalytics: true,
-      hasAIConsulting: false,
+      hasAIConsulting: false, // Réservé au plan Expert
       hasIntegrations: false,
       hasPrioritySupport: false,
       hasPersonalizedTraining: false,
@@ -47,27 +47,27 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
       hasCashflowManagement: true,
       hasWithdrawalStrategies: true,
       hasExpensePlanning: true,
-      hasTaxOptimization: true,
+      hasTaxOptimization: true, // Optimisation fiscale de base
       hasFinancialAssistant: true, // INCLUS : Assistant Financier Personnel
       hasBudgetModule: true, // INCLUS : Module Budget
-      maxExpenseProjects: 5
+      maxExpenseProjects: -1 // Illimité
     }
   },
   ultimate: {
     plan: 'ultimate',
-    price: '239,99 $/an',
+    price: '199,99 $/an',
     priceId: 'price_ultimate_annual',
-    badge: 'Expert',
-    description: 'Solution complète avec IA',
+    badge: 'Solution Complète',
+    description: 'Planification successorale + IA prédictive',
     features: {
       maxSimulations: -1, // Illimité
       maxReports: -1, // Illimité
       maxProfiles: -1, // Illimité
       hasAdvancedAnalytics: true,
-      hasAIConsulting: true,
-      hasIntegrations: true,
-      hasPrioritySupport: false,
-      hasPersonalizedTraining: false,
+      hasAIConsulting: true, // IA prédictive avancée
+      hasIntegrations: true, // Intégrations complètes
+      hasPrioritySupport: true, // Support premium
+      hasPersonalizedTraining: true, // Formation personnalisée
       hasExportPDF: true,
       hasMonteCarloSimulations: true,
       hasCashflowManagement: true,
@@ -89,10 +89,10 @@ export const UPGRADE_PATHS: UpgradePath[] = [
   {
     from: 'free',
     to: 'professional',
-    upgradePrice: '119,99 $/an',
+    upgradePrice: '99,99 $/an',
     priceId: 'price_professional_annual',
     upgradeType: 'immediate',
-    savings: 'Économisez 40 % vs mensuel',
+    savings: '80% moins cher que la concurrence',
     isRecommended: true,
     features: [
       'Assistant Financier Personnel',
@@ -107,10 +107,10 @@ export const UPGRADE_PATHS: UpgradePath[] = [
   {
     from: 'free',
     to: 'ultimate',
-    upgradePrice: '239,99 $/an',
+    upgradePrice: '199,99 $/an',
     priceId: 'price_ultimate_annual',
     upgradeType: 'immediate',
-    savings: 'Économisez 45 % vs mensuel',
+    savings: '60% moins cher que la concurrence',
     features: [
       'tout inclus',
       'profils illimités',
@@ -122,7 +122,7 @@ export const UPGRADE_PATHS: UpgradePath[] = [
   {
     from: 'professional',
     to: 'ultimate',
-    upgradePrice: '120,00 $/an', // Prix de base - sera ajusté selon le temps
+    upgradePrice: '100,00 $/an', // Prix de base - sera ajusté selon le temps
     priceId: 'price_upgrade_pro_to_ultimate',
     upgradeType: 'time_adjusted', // Ajustement selon le temps restant
     savings: 'Prix ajusté selon votre temps restant',
@@ -226,13 +226,13 @@ export const calculateUpgradePrice = (
   toPlan: SubscriptionPlan
 ): string => {
   if (fromPlan === 'free' && toPlan === 'professional') {
-    return '119,99 $/an';
+    return '99,99 $/an';
   }
   if (fromPlan === 'free' && toPlan === 'ultimate') {
-    return '239,99 $/an';
+    return '199,99 $/an';
   }
   if (fromPlan === 'professional' && toPlan === 'ultimate') {
-    return '120,00 $/an'; // Prix de base - sera ajusté selon le temps
+    return '100,00 $/an'; // Prix de base - sera ajusté selon le temps
   }
   return PLAN_CONFIG[toPlan].price;
 };
