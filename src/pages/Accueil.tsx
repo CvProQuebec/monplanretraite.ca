@@ -791,8 +791,8 @@ const Accueil: React.FC = () => {
               </p>
               <div className="bg-red-500 text-white px-6 py-3 rounded-xl inline-block font-bold text-lg">
                 {isFrench 
-                  ? '🔥 Prix 60-80% inférieurs à la concurrence !'
-                  : '🔥 Prices 60-80% lower than competition!'
+                  ? '🔥 Prix 25-50 % inférieurs à la concurrence!'
+                  : '🔥 Prices 24-50% lower than competition!'
                 }
               </div>
             </div>
@@ -826,7 +826,7 @@ const Accueil: React.FC = () => {
                     </h4>
                     <p className="text-sm text-emerald-700 text-center">
                       {isFrench 
-                        ? 'Le seul module d\'urgence professionnel gratuit au Québec !'
+                        ? 'Le seul module d\'urgence professionnel gratuit au Québec!'
                         : 'The only free professional emergency module in Quebec!'
                       }
                     </p>
@@ -871,7 +871,7 @@ const Accueil: React.FC = () => {
                         </h5>
                         <p className="text-sm text-emerald-700">
                           {isFrench 
-                            ? 'Navigation fluide, adaptée aux seniors, 100% sécurisé'
+                            ? 'Navigation fluide, adaptée aux seniors, 100 % sécurisé'
                             : 'Smooth navigation, senior-friendly, 100% secure'
                           }
                         </p>
@@ -881,10 +881,10 @@ const Accueil: React.FC = () => {
 
                   <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
                     <h5 className="font-bold text-yellow-800 text-sm mb-2">
-                      {isFrench ? '💡 POURQUOI COMMENCER ICI ?' : '💡 WHY START HERE?'}
+                      {isFrench ? '💡 POURQUOI COMMENCER ICI?' : '💡 WHY START HERE?'}
                     </h5>
                     <ul className="text-xs text-yellow-700 space-y-1">
-                      <li>• {isFrench ? 'Valeur réelle de 200$+ offerte gratuitement' : 'Real value of $200+ offered for free'}</li>
+                      <li>• {isFrench ? 'Valeur réelle de 200 $+ offerte gratuitement' : 'Real value of $200+ offered for free'}</li>
                       <li>• {isFrench ? 'Préparez vos rencontres avec des professionnels' : 'Prepare your meetings with professionals'}</li>
                       <li>• {isFrench ? 'Découvrez nos outils sans engagement' : 'Discover our tools without commitment'}</li>
                     </ul>
@@ -911,7 +911,7 @@ const Accueil: React.FC = () => {
                 </div>
                 <div className="absolute top-4 right-4">
                   <div className="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold animate-pulse">
-                    {isFrench ? '80% MOINS CHER' : '80% CHEAPER'}
+                    {isFrench ? '50% MOINS CHER' : '50% CHEAPER'}
                   </div>
                 </div>
                 <CardHeader className="text-center pt-8 pb-6">
@@ -923,9 +923,6 @@ const Accueil: React.FC = () => {
                   </CardTitle>
                   <div className="text-4xl font-bold text-blue-600 mb-1">99,99 $</div>
                   <div className="text-sm text-blue-600 mb-2">{isFrench ? '/an' : '/year'}</div>
-                  <div className="text-xs text-gray-500 line-through">
-                    {isFrench ? 'Concurrent : 515$/an' : 'Competitor: $515/year'}
-                  </div>
                 </CardHeader>
                 <CardContent className="px-6 pb-8">
                   <div className="bg-blue-100 rounded-xl p-4 mb-6">
@@ -934,7 +931,7 @@ const Accueil: React.FC = () => {
                     </h4>
                     <p className="text-sm text-blue-700 text-center font-semibold">
                       {isFrench 
-                        ? 'Assistant Financier IA qui évite les catastrophes !'
+                        ? 'Assistant Financier IA qui évite les catastrophes!'
                         : 'AI Financial Assistant that prevents disasters!'
                       }
                     </p>
@@ -1032,8 +1029,8 @@ const Accueil: React.FC = () => {
                     </h5>
                     <ul className="text-xs text-green-700 space-y-1">
                       <li>• {isFrench ? 'Évitez les frais de découvert (100$+/an)' : 'Avoid overdraft fees ($100+/year)'}</li>
-                      <li>• {isFrench ? 'Optimisez vos impôts (500$+/an)' : 'Optimize your taxes ($500+/year)'}</li>
-                      <li>• {isFrench ? 'Réduisez vos consultations (200$+/an)' : 'Reduce consultations ($200+/year)'}</li>
+                      <li>• {isFrench ? 'Optimisez vos impôts (500 $+/an)' : 'Optimize your taxes ($500+/year)'}</li>
+                      <li>• {isFrench ? 'Réduisez vos consultations (200 $+/an)' : 'Reduce consultations ($200+/year)'}</li>
                     </ul>
                   </div>
 
@@ -1063,11 +1060,8 @@ const Accueil: React.FC = () => {
                   <CardTitle className="text-2xl font-bold text-purple-900 mb-2">
                     {isFrench ? 'Solution Complète' : 'Complete Solution'}
                   </CardTitle>
-                  <div className="text-4xl font-bold text-purple-600 mb-1">199,99 $</div>
+                  <div className="text-4xl font-bold text-purple-600 mb-1">249,99 $</div>
                   <div className="text-sm text-purple-600 mb-2">{isFrench ? '/an' : '/year'}</div>
-                  <div className="text-xs text-gray-500 line-through">
-                    {isFrench ? 'Concurrent : 515$/an' : 'Competitor: $515/year'}
-                  </div>
                 </CardHeader>
                 <CardContent className="px-6 pb-8">
                   <div className="bg-purple-100 rounded-xl p-4 mb-6">
@@ -1076,7 +1070,7 @@ const Accueil: React.FC = () => {
                     </h4>
                     <p className="text-sm text-purple-700 text-center font-semibold">
                       {isFrench 
-                        ? 'Planification successorale + IA prédictive !'
+                        ? 'Planification successorale + IA prédictive!'
                         : 'Estate planning + predictive AI!'
                       }
                     </p>
@@ -1196,7 +1190,7 @@ const Accueil: React.FC = () => {
             <div className="text-center mb-12">
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 mb-8">
                 <h3 className="text-2xl font-bold text-white mb-6">
-                  {isFrench ? '🎯 Pourquoi nous choisir ?' : '🎯 Why choose us?'}
+                  {isFrench ? '🎯 Pourquoi nous choisir?' : '🎯 Why choose us?'}
                 </h3>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                   <div className="text-center">
@@ -1275,20 +1269,7 @@ const Accueil: React.FC = () => {
               </div>
             </div>
 
-            <div className="text-center">
-              <p className="text-blue-100 text-lg mb-4">
-                ✨ {isFrench 
-                  ? 'Rejoignez des milliers de Québécois qui planifient déjà leur retraite avec nous'
-                  : 'Join thousands of Quebecers already planning their retirement with us'
-                }
-              </p>
-              <div className="flex justify-center gap-4 text-yellow-300">
-                <span>⭐⭐⭐⭐⭐</span>
-                <span className="text-blue-100">
-                  {isFrench ? '4.9/5 - Plus de 1000 avis' : '4.9/5 - Over 1000 reviews'}
-                </span>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>
