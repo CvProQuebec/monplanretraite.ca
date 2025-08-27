@@ -18,13 +18,13 @@ import {
 
 export function TaxOptimizationDashboard() {
   const [taxData, setTaxData] = useState({
-    revenuAnnuel: 80000,
-    age: 45,
-    montantREER: 50000,
-    montantCELI: 30000,
-    montantNonEnregistre: 100000,
-    ageRetraite: 65,
-    revenuRetraite: 60000
+    revenuAnnuel: 0, // Initialisé à 0
+    age: 0, // Initialisé à 0
+    montantREER: 0, // Initialisé à 0
+    montantCELI: 0, // Initialisé à 0
+    montantNonEnregistre: 0, // Initialisé à 0
+    ageRetraite: 0, // Initialisé à 0
+    revenuRetraite: 0 // Initialisé à 0
   });
 
   const [results, setResults] = useState<any>(null);

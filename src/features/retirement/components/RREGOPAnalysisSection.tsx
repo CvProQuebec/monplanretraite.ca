@@ -26,11 +26,11 @@ interface RREGOPAnalysisSectionProps {
 export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectionProps) {
   const [rregopData, setRregopData] = useState({
     typeRegime: 'RREGOP',
-    anneesServiceAdmissibilite: 15,
-    anneesServiceCalcul: 15,
+    anneesServiceAdmissibilite: 0, // Initialisé à 0
+    anneesServiceCalcul: 0, // Initialisé à 0
     pourcentageTempsPlein: 1.0,
-    salaireActuel: 65000,
-    ageRetraite: 61,
+    salaireActuel: 0, // Initialisé à 0
+    ageRetraite: 0, // Initialisé à 0
     optionSurvivant: 50
   });
 

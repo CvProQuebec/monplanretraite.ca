@@ -27,14 +27,14 @@ const demoUserData = {
     ageRetraiteSouhaite1: 65, ageRetraiteSouhaite2: 65, depensesRetraite: 4000
   },
   retirement: {
-    rrqAgeActuel1: 1200,
-    rrqMontantActuel1: 1200,
-    rrqMontant70_1: 1600,
-    esperanceVie1: 85,
-    rrqAgeActuel2: 1100,
-    rrqMontantActuel2: 1100,
-    rrqMontant70_2: 1500,
-    esperanceVie2: 87
+    rrqAgeActuel1: 0, // Champ vide par défaut
+    rrqMontantActuel1: 0, // Champ vide par défaut
+    rrqMontant70_1: 0, // Champ vide par défaut
+    esperanceVie1: 0, // Champ vide par défaut
+    rrqAgeActuel2: 0, // Champ vide par défaut
+    rrqMontantActuel2: 0, // Champ vide par défaut
+    rrqMontant70_2: 0, // Champ vide par défaut
+    esperanceVie2: 0 // Champ vide par défaut
   },
   savings: {},
   cashflow: {}

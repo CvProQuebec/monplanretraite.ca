@@ -347,44 +347,6 @@ export const SuccessionPlanningManager: React.FC = () => {
         </Alert>
       )}
 
-      {/* Actions principales */}
-      <Card>
-        <CardContent className="pt-6">
-          <div className="flex flex-wrap gap-3">
-            <Button onClick={handleValidation} variant="outline">
-              <CheckCircle className="h-4 w-4 mr-2" />
-              Valider
-            </Button>
-            
-            <Button onClick={saveToFile} variant="outline">
-              <Download className="h-4 w-4 mr-2" />
-              Sauvegarder
-            </Button>
-            
-            <div className="relative">
-              <input
-                type="file"
-                accept=".json"
-                onChange={restoreFromFile}
-                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                id="restore-file"
-              />
-              <Button variant="outline" asChild>
-                <label htmlFor="restore-file" className="cursor-pointer flex items-center">
-                  <Upload className="h-4 w-4 mr-2" />
-                  Restaurer
-                </label>
-              </Button>
-            </div>
-            
-            <Button onClick={printPlan} variant="outline">
-              <FileText className="h-4 w-4 mr-2" />
-              Imprimer
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
       {/* Contenu principal avec onglets */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
         <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6">
@@ -516,6 +478,44 @@ export const SuccessionPlanningManager: React.FC = () => {
           </Card>
         </TabsContent>
       </Tabs>
+
+      {/* Actions principales - DÉPLACÉES VERS LE BAS */}
+      <Card className="mt-6">
+        <CardContent className="pt-6">
+          <div className="flex flex-wrap gap-3">
+            <Button onClick={handleValidation} variant="outline">
+              <CheckCircle className="h-4 w-4 mr-2" />
+              Valider
+            </Button>
+            
+            <Button onClick={saveToFile} variant="outline">
+              <Download className="h-4 w-4 mr-2" />
+              Sauvegarder
+            </Button>
+            
+            <div className="relative">
+              <input
+                type="file"
+                accept=".json"
+                onChange={restoreFromFile}
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                id="restore-file"
+              />
+              <Button variant="outline" asChild>
+                <label htmlFor="restore-file" className="cursor-pointer flex items-center">
+                  <Upload className="h-4 w-4 mr-2" />
+                  Restaurer
+                </label>
+              </Button>
+            </div>
+            
+            <Button onClick={printPlan} variant="outline">
+              <FileText className="h-4 w-4 mr-2" />
+              Imprimer
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };

@@ -18,12 +18,12 @@ import {
 
 export function UltimatePlanningDashboard() {
   const [planningData, setPlanningData] = useState({
-    age: 45,
-    revenuAnnuel: 80000,
-    epargneActuelle: 150000,
-    objectifRetraite: 60000,
+    age: 0, // Initialisé à 0
+    revenuAnnuel: 0, // Initialisé à 0
+    epargneActuelle: 0, // Initialisé à 0
+    objectifRetraite: 0, // Initialisé à 0
     toleranceRisque: 'modere',
-    horizonTemps: 20,
+    horizonTemps: 0, // Initialisé à 0
     situationFamiliale: 'couple'
   });
 

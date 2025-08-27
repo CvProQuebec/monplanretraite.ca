@@ -17,6 +17,9 @@ import {
   Clock
 } from 'lucide-react';
 
+// Import du vrai composant EmergencyPlanningManager
+import { EmergencyPlanningManager } from '@/features/retirement/components/EmergencyPlanningManager';
+
 const PlanificationUrgence: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
@@ -159,7 +162,7 @@ const PlanificationUrgence: React.FC = () => {
           </Card>
         </div>
 
-        {/* Composant principal de planification d'urgence - Version simplifiée */}
+        {/* Composant principal de planification d'urgence - VRAI COMPOSANT */}
         <div className="bg-white rounded-lg border border-gray-200 p-6">
           <div className="text-center mb-6">
             <Shield className="w-16 h-16 text-blue-600 mx-auto mb-4" />
@@ -167,67 +170,12 @@ const PlanificationUrgence: React.FC = () => {
               Gestionnaire de Planification d'Urgence
             </h2>
             <p className="text-gray-600">
-              Interface simplifiée pour la gestion de vos plans d'urgence
+              Interface complète pour la gestion de vos plans d'urgence
             </p>
           </div>
           
-          {/* Section temporaire - En développement */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 text-center">
-            <Info className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-blue-900 mb-2">
-              Module en cours de développement
-            </h3>
-            <p className="text-blue-700 mb-4">
-              Le composant EmergencyPlanningManager est en cours d'optimisation pour assurer une expérience utilisateur fluide.
-            </p>
-            <div className="flex flex-wrap gap-3 justify-center">
-              <Badge variant="outline" className="bg-blue-100 text-blue-800">
-                Contacts d'urgence
-              </Badge>
-              <Badge variant="outline" className="bg-green-100 text-green-800">
-                Informations médicales
-              </Badge>
-              <Badge variant="outline" className="bg-purple-100 text-purple-800">
-                Documents légaux
-              </Badge>
-              <Badge variant="outline" className="bg-orange-100 text-orange-800">
-                Responsabilités familiales
-              </Badge>
-            </div>
-          </div>
-          
-          {/* Informations sur les fonctionnalités à venir */}
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card className="bg-green-50 border-green-200">
-              <CardContent className="p-4">
-                <h4 className="font-semibold text-green-900 mb-2 flex items-center gap-2">
-                  <CheckCircle className="w-5 h-5" />
-                  Fonctionnalités disponibles
-                </h4>
-                <ul className="text-sm text-green-700 space-y-1">
-                  <li>• Gestion des contacts d'urgence</li>
-                  <li>• Informations médicales essentielles</li>
-                  <li>• Documents légaux et testamentaires</li>
-                  <li>• Responsabilités familiales</li>
-                </ul>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-blue-50 border-blue-200">
-              <CardContent className="p-4">
-                <h4 className="font-semibold text-blue-900 mb-2 flex items-center gap-2">
-                  <Clock className="w-5 h-5" />
-                  Prochainement
-                </h4>
-                <ul className="text-sm text-blue-700 space-y-1">
-                  <li>• Interface complète de gestion</li>
-                  <li>• Sauvegarde et synchronisation</li>
-                  <li>• Export et impression</li>
-                  <li>• Validation et vérification</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
+          {/* Utilisation du vrai composant EmergencyPlanningManager */}
+          <EmergencyPlanningManager />
         </div>
 
         {/* Conseils et ressources */}

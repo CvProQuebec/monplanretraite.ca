@@ -1,5 +1,6 @@
 // src/features/retirement/services/SecurityService.ts
 import CryptoJS from 'crypto-js';
+import { DataCollectionService, CompleteBackupData } from './DataCollectionService';
 
 // Configuration sécurisée
 const PBKDF2_ITERATIONS = 100000; // Sécurité renforcée
@@ -103,6 +104,28 @@ export class SecurityService {
       return backupFile;
     } catch (error) {
       console.error('Erreur lors de la création des données de sauvegarde:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Crée une sauvegarde complète de tous les modules
+   */
+  static async createCompleteBackup(userPassword: string, description?: string): Promise<RetirementBackupFile> {
+    try {
+      console.log('🔄 Création d\'une sauvegarde complète de tous les modules...');
+      
+      // Collecter toutes les données de tous les modules
+      const completeData = DataCollectionService.collectAllData();
+      
+      // Créer la sauvegarde chiffrée
+      const backupFile = await this.createBackupData(completeData, userPassword, description);
+      
+      console.log('✅ Sauvegarde complète créée avec succès');
+      return backupFile;
+      
+    } catch (error) {
+      console.error('❌ Erreur lors de la création de la sauvegarde complète:', error);
       throw error;
     }
   }

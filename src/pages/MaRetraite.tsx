@@ -41,6 +41,7 @@ import { formatCurrency } from '@/features/retirement/utils/formatters';
 import { InputSanitizer } from '@/utils/inputSanitizer';
 import { LicenseManager } from '@/services/LicenseManager';
 import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
+import OnboardingWizard from '@/features/retirement/components/OnboardingWizard';
 
 
 const MaRetraite: React.FC = () => {
@@ -48,6 +49,7 @@ const MaRetraite: React.FC = () => {
   const navigate = useNavigate();
   const isFrench = language === 'fr';
   const [activeTab, setActiveTab] = useState('profil');
+  const [showOnboardingWizard, setShowOnboardingWizard] = useState(false);
   
   // Hook pour les données de retraite
   const { userData, updateUserData } = useRetirementData();
@@ -82,6 +84,19 @@ const MaRetraite: React.FC = () => {
       const numericValue = parseFloat(value.replace(/[^\d.]/g, '')) || 0;
       updateUserData('personal', { salaire1: numericValue });
     }
+  };
+
+  const handleOnboardingComplete = (userData: any) => {
+    console.log('✅ Onboarding terminé avec succès:', userData);
+    setShowOnboardingWizard(false);
+    // Mettre à jour les données locales avec les nouvelles informations
+    if (userData.personal) {
+      updateUserData('personal', userData.personal);
+    }
+  };
+
+  const handleOnboardingSkip = () => {
+    setShowOnboardingWizard(false);
   };
 
   const [depensesData, setDepensesData] = useState({
@@ -258,12 +273,20 @@ const MaRetraite: React.FC = () => {
               <h2 className="text-4xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent mb-4">
                 {isFrench ? '🚀 Mon Profil' : '🚀 My Profile'}
               </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
                 {isFrench 
                   ? 'Transformez vos informations en planification financière spectaculaire'
                   : 'Transform your information into spectacular financial planning'
                 }
               </p>
+              
+              {/* Bouton "Commencez ici" pour l'Onboarding Wizard */}
+              <Button 
+                onClick={() => setShowOnboardingWizard(true)}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
+              >
+                {isFrench ? '🎯 Commencez ici' : '🎯 Start here'}
+              </Button>
             </div>
 
             {/* Barre de progression encourageante */}
@@ -1176,6 +1199,15 @@ const MaRetraite: React.FC = () => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Onboarding Wizard */}
+      {showOnboardingWizard && (
+        <OnboardingWizard
+          onComplete={handleOnboardingComplete}
+          onSkip={handleOnboardingSkip}
+          isFrench={isFrench}
+        />
+      )}
     </div>
   );
 };

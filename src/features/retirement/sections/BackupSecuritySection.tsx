@@ -103,12 +103,8 @@ export const BackupSecuritySection: React.FC<BackupSecuritySectionProps> = ({ da
       setIsSaving(true);
       const filename = saveFilename || generateDefaultFilename();
       
-      // Utiliser le service de sécurité pour la sauvegarde
-      const backupData = await SecurityService.createBackup(data, savePassword, {
-        filename,
-        description: saveDescription,
-        timestamp: new Date().toISOString()
-      });
+      // Utiliser le service de sécurité pour la sauvegarde complète
+      const backupData = await SecurityService.createCompleteBackup(savePassword, saveDescription);
 
       // Télécharger le fichier
       const blob = new Blob([backupData], { type: 'application/json' });

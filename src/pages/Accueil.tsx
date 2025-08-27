@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import OnboardingWizard from '@/features/retirement/components/OnboardingWizard';
 import { 
   CheckCircle,
   XCircle,
@@ -33,6 +34,7 @@ const Accueil: React.FC = () => {
   const isFrench = language === 'fr';
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
   const [targetPlan, setTargetPlan] = useState<'professional' | 'ultimate'>('professional');
+  const [showOnboardingWizard, setShowOnboardingWizard] = useState(false);
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -41,6 +43,17 @@ const Accueil: React.FC = () => {
   const handleUpgradeClick = (plan: 'professional' | 'ultimate') => {
     setTargetPlan(plan);
     setIsUpgradeModalOpen(true);
+  };
+
+  const handleOnboardingComplete = (userData: any) => {
+    console.log('✅ Onboarding terminé avec succès:', userData);
+    setShowOnboardingWizard(false);
+    // Rediriger vers Ma Retraite avec les données complétées
+    navigate('/ma-retraite');
+  };
+
+  const handleOnboardingSkip = () => {
+    setShowOnboardingWizard(false);
   };
 
   return (
@@ -891,7 +904,7 @@ const Accueil: React.FC = () => {
                   </div>
 
                   <Button 
-                    onClick={() => handleNavigation('/planification-urgence')}
+                    onClick={() => setShowOnboardingWizard(true)}
                     className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     {isFrench ? '🎯 Commencer GRATUITEMENT' : '🎯 Start FREE'}
@@ -1028,7 +1041,7 @@ const Accueil: React.FC = () => {
                       {isFrench ? '💰 ÉCONOMIES GARANTIES :' : '💰 GUARANTEED SAVINGS:'}
                     </h5>
                     <ul className="text-xs text-green-700 space-y-1">
-                      <li>• {isFrench ? 'Évitez les frais de découvert (100$+/an)' : 'Avoid overdraft fees ($100+/year)'}</li>
+                      <li>• {isFrench ? 'Évitez les frais de découvert (100 $+/an)' : 'Avoid overdraft fees ($100+/year)'}</li>
                       <li>• {isFrench ? 'Optimisez vos impôts (500 $+/an)' : 'Optimize your taxes ($500+/year)'}</li>
                       <li>• {isFrench ? 'Réduisez vos consultations (200 $+/an)' : 'Reduce consultations ($200+/year)'}</li>
                     </ul>
@@ -1167,7 +1180,7 @@ const Accueil: React.FC = () => {
                       {isFrench ? '🏆 VALEUR EXCEPTIONNELLE :' : '🏆 EXCEPTIONAL VALUE:'}
                     </h5>
                     <ul className="text-xs text-purple-700 space-y-1">
-                      <li>• {isFrench ? 'Planification successorale (valeur 2000$+)' : 'Estate planning (value $2000+)'}</li>
+                      <li>• {isFrench ? 'Planification successorale (valeur 2 000 $+)' : 'Estate planning (value $2000+)'}</li>
                       <li>• {isFrench ? 'Optimisation immobilière complète' : 'Complete real estate optimization'}</li>
                       <li>• {isFrench ? 'Support premium et formation personnalisée' : 'Premium support and personalized training'}</li>
                     </ul>
@@ -1248,7 +1261,7 @@ const Accueil: React.FC = () => {
                   </h4>
                   <p className="text-green-100 text-sm text-center">
                     {isFrench 
-                      ? 'Pas satisfait ? Remboursement intégral sans questions'
+                      ? 'Pas satisfait? Remboursement intégral sans questions'
                       : 'Not satisfied? Full refund with no questions asked'
                     }
                   </p>
@@ -1347,6 +1360,15 @@ const Accueil: React.FC = () => {
         featureName="plan_upgrade"
         currentPlan="free"
       />
+
+      {/* Onboarding Wizard */}
+      {showOnboardingWizard && (
+        <OnboardingWizard
+          onComplete={handleOnboardingComplete}
+          onSkip={handleOnboardingSkip}
+          isFrench={isFrench}
+        />
+      )}
 
     </div>
   );

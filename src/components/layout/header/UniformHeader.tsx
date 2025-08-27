@@ -32,6 +32,13 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
   // Navigation items avec sous-menus - RESTRUCTURÉ et CONSOLIDÉ
   const navigationItems = [
     {
+      id: 'home',
+      label: isEnglish ? 'Home' : 'Accueil',
+      icon: Home,
+      path: isEnglish ? '/' : '/',
+      hasSubmenu: false
+    },
+    {
       id: 'dashboard',
       label: isEnglish ? 'My Retirement' : 'Ma Retraite',
       icon: TrendingUp,
@@ -226,21 +233,13 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           <div className="flex items-center">
             <button
               onClick={() => handleNavigation(isEnglish ? '/en' : '/fr')}
-              className="flex items-center space-x-3 hover:opacity-80 transition-opacity"
+              className="flex items-center hover:opacity-80 transition-opacity"
             >
               <img 
                 src="/logo-planretraite.png" 
                 alt="MonPlanRetraite.ca Logo" 
                 className="h-8 w-auto"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  target.nextElementSibling?.classList.remove('hidden');
-                }}
               />
-              <div className="hidden text-xl font-bold text-blue-600 bg-blue-50 px-3 py-1 rounded-lg">
-                MonPlanRetraite.ca
-              </div>
             </button>
           </div>
 

@@ -218,7 +218,7 @@ export const RRQSection: React.FC<RRQSectionProps> = ({ data, onUpdate }) => {
                       type="number"
                       value={rrqAgeActuel || ''}
                       onChange={(e) => handleChange('rrqAgeActuel1', parseFloat(e.target.value) || 0)}
-                      placeholder={isFrench ? 'Ex: 60' : 'Ex: 60'}
+                      placeholder={isFrench ? 'Ex: 58' : 'Ex: 58'}
                       className="bg-white/20 border-blue-300/30 text-white placeholder-blue-200"
                     />
                   </div>
@@ -227,13 +227,13 @@ export const RRQSection: React.FC<RRQSectionProps> = ({ data, onUpdate }) => {
                     <Label className="text-blue-300 flex items-center gap-2">
                       <DollarSign className="w-4 h-4" />
                       {isFrench ? 'Prestation RRQ actuelle' : 'Current QPP benefit'}
-                      <HelpTooltip content={isFrench ? 'Votre prestation RRQ mensuelle actuelle' : 'Your current monthly QPP benefit'} />
+                      <HelpTooltip content={isFrench ? 'Consultez "Mon Dossier" du RRQ pour obtenir cette information précise' : 'Check "My File" from QPP to get this precise information'} />
                     </Label>
                     <Input
                       type="number"
                       value={rrqMontantActuel || ''}
                       onChange={(e) => handleChange('rrqMontantActuel1', parseFloat(e.target.value) || 0)}
-                      placeholder={isFrench ? 'Ex: 1000' : 'Ex: 1000'}
+                      placeholder={isFrench ? 'Consultez Mon Dossier RRQ' : 'Check My QPP File'}
                       className="bg-white/20 border-blue-300/30 text-white placeholder-blue-200"
                     />
                   </div>
@@ -242,13 +242,13 @@ export const RRQSection: React.FC<RRQSectionProps> = ({ data, onUpdate }) => {
                     <Label className="text-blue-300 flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
                       {isFrench ? 'Prestation à 70 ans' : 'Benefit at 70 years'}
-                      <HelpTooltip content={isFrench ? 'Votre prestation RRQ mensuelle à 70 ans' : 'Your monthly QPP benefit at 70 years'} />
+                      <HelpTooltip content={isFrench ? 'Consultez "Mon Dossier" du RRQ pour obtenir cette information précise' : 'Check "My File" from QPP to get this precise information'} />
                     </Label>
                     <Input
                       type="number"
                       value={rrqMontant70 || ''}
                       onChange={(e) => handleChange('rrqMontant70_1', parseFloat(e.target.value) || 0)}
-                      placeholder={isFrench ? 'Ex: 1400' : 'Ex: 1400'}
+                      placeholder={isFrench ? 'Consultez Mon Dossier RRQ' : 'Check My QPP File'}
                       className="bg-white/20 border-blue-300/30 text-white placeholder-blue-200"
                     />
                   </div>
@@ -277,6 +277,17 @@ export const RRQSection: React.FC<RRQSectionProps> = ({ data, onUpdate }) => {
                     </AlertDescription>
                   </Alert>
                 )}
+
+                {/* Alerte pour guider vers Mon Dossier RRQ */}
+                <Alert className="bg-indigo-900/50 border-indigo-400/30">
+                  <Info className="h-4 w-4" />
+                  <AlertDescription className="text-indigo-200">
+                    {isFrench 
+                      ? '💡 Pour des informations précises sur vos prestations RRQ, consultez "Mon Dossier" sur le site du Régime des rentes du Québec'
+                      : '💡 For precise information about your QPP benefits, check "My File" on the Quebec Pension Plan website'
+                    }
+                  </AlertDescription>
+                </Alert>
               </CardContent>
             </Card>
           </TabsContent>

@@ -254,10 +254,10 @@ export const CPPRRQComparison: React.FC<CPPRRQComparisonProps> = ({ className })
           <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="overview">{t.overview}</TabsTrigger>
             <TabsTrigger value="differences">{t.differences}</TabsTrigger>
-            <TabsTrigger value="similarities">{t.commonSimilarities}</TabsTrigger>
-            <TabsTrigger value="eligibility">{t.eligibilityRules}</TabsTrigger>
-            <TabsTrigger value="calculation">{t.calculationMethod}</TabsTrigger>
-            <TabsTrigger value="benefits">{t.benefitFeatures}</TabsTrigger>
+            <TabsTrigger value="similarities">{t.similarities}</TabsTrigger>
+            <TabsTrigger value="eligibility">{t.eligibility}</TabsTrigger>
+            <TabsTrigger value="calculation">{t.calculation}</TabsTrigger>
+            <TabsTrigger value="benefits">{t.benefits}</TabsTrigger>
           </TabsList>
 
           {/* Vue d'ensemble */}
@@ -285,7 +285,7 @@ export const CPPRRQComparison: React.FC<CPPRRQComparisonProps> = ({ className })
                     <Shield className="w-8 h-8 text-blue-600" />
                   </div>
                   <CardTitle className="text-xl text-blue-900">{t.rrq}</CardTitle>
-                  <CardDescription className="text-blue-700">{t.rrqDescription}</CardDescription>
+                  <CardDescription className="text-red-700">{t.rrqDescription}</CardDescription>
                 </CardHeader>
               </Card>
             </div>
@@ -322,20 +322,26 @@ export const CPPRRQComparison: React.FC<CPPRRQComparisonProps> = ({ className })
           {/* Similitudes */}
           <TabsContent value="similarities" className="space-y-6">
             <Card>
-              <CardContent className="p-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                  Similitudes entre CPP et RRQ
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul className="space-y-2">
                   {t.commonSimilarities.map((similarity, index) => (
-                    <div key={index} className="flex items-start gap-2">
-                      <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 flex-shrink-0" />
+                    <li key={index} className="flex items-start gap-2">
+                      <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                       <span className="text-gray-700">{similarity}</span>
-                    </div>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* Admissibilité */}
+          {/* Règles d'admissibilité */}
           <TabsContent value="eligibility" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card className="border-red-200">
@@ -347,10 +353,10 @@ export const CPPRRQComparison: React.FC<CPPRRQComparisonProps> = ({ className })
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
-                    {t.eligibilityRules.cpp.map((requirement, index) => (
+                    {t.eligibilityRules.cpp.map((rule, index) => (
                       <li key={index} className="flex items-start gap-2">
                         <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700">{requirement}</span>
+                        <span className="text-gray-700">{rule}</span>
                       </li>
                     ))}
                   </ul>
@@ -366,10 +372,10 @@ export const CPPRRQComparison: React.FC<CPPRRQComparisonProps> = ({ className })
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
-                    {t.eligibilityRules.rrq.map((requirement, index) => (
+                    {t.eligibilityRules.rrq.map((rule, index) => (
                       <li key={index} className="flex items-start gap-2">
                         <CheckCircle className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700">{requirement}</span>
+                        <span className="text-gray-700">{rule}</span>
                       </li>
                     ))}
                   </ul>

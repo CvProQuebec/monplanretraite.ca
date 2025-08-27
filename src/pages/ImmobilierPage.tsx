@@ -22,13 +22,13 @@ import {
 } from 'lucide-react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 
-// Données de démonstration
-const demoImmobilierData = {
+// Données initiales vides pour la confidentialité
+const initialImmobilierData = {
   residencePrincipale: {
-    valeur: 450000,
-    hypotheque: 250000,
-    taxes: 3000,
-    assurances: 1200
+    valeur: 0,
+    hypotheque: 0,
+    taxes: 0,
+    assurances: 0
   },
   deuxiemeResidence: {
     valeur: 0,
@@ -53,16 +53,37 @@ const demoImmobilierData = {
 const ImmobilierPage: React.FC = () => {
   const { language } = useLanguage();
   const [activeTab, setActiveTab] = useState('residence');
-  const [immobilierData, setImmobilierData] = useState(demoImmobilierData);
+  const [immobilierData, setImmobilierData] = useState(initialImmobilierData);
 
-  const handleChange = (section: string, field: string, value: number) => {
+  const handleChange = (section: string, field: string, value: string | number) => {
+    // Traiter les leading zeros et convertir en nombre
+    let numericValue: number;
+    
+    if (typeof value === 'string') {
+      // Éliminer les leading zeros et convertir en nombre
+      const cleanValue = value.replace(/^0+/, '') || '0';
+      numericValue = Number(cleanValue);
+    } else {
+      numericValue = value;
+    }
+    
     setImmobilierData(prev => ({
       ...prev,
       [section]: {
         ...prev[section as keyof typeof prev],
-        [field]: value
+        [field]: numericValue
       }
     }));
+  };
+
+  // Fonction pour formater les pourcentages selon les normes OQLF
+  const formatPourcentageOQLF = (pourcentage: number): string => {
+    if (pourcentage === 0) return '0 %';
+    if (pourcentage === 100) return '100 %';
+    
+    // Pour les autres valeurs, arrondir à l'entier le plus proche
+    const pourcentageArrondi = Math.round(pourcentage);
+    return `${pourcentageArrondi} %`;
   };
 
   const t = {
@@ -227,7 +248,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.residencePrincipale.valeur}
-                          onChange={(e) => handleChange('residencePrincipale', 'valeur', Number(e.target.value))}
+                          onChange={(e) => handleChange('residencePrincipale', 'valeur', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-blue-200"
                           placeholder="0"
                         />
@@ -239,7 +260,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.residencePrincipale.hypotheque}
-                          onChange={(e) => handleChange('residencePrincipale', 'hypotheque', Number(e.target.value))}
+                          onChange={(e) => handleChange('residencePrincipale', 'hypotheque', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-blue-200"
                           placeholder="0"
                         />
@@ -254,7 +275,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.residencePrincipale.taxes}
-                          onChange={(e) => handleChange('residencePrincipale', 'taxes', Number(e.target.value))}
+                          onChange={(e) => handleChange('residencePrincipale', 'taxes', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-blue-200"
                           placeholder="0"
                         />
@@ -266,7 +287,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.residencePrincipale.assurances}
-                          onChange={(e) => handleChange('residencePrincipale', 'assurances', Number(e.target.value))}
+                          onChange={(e) => handleChange('residencePrincipale', 'assurances', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-blue-200"
                           placeholder="0"
                         />
@@ -310,7 +331,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.deuxiemeResidence.valeur}
-                          onChange={(e) => handleChange('deuxiemeResidence', 'valeur', Number(e.target.value))}
+                          onChange={(e) => handleChange('deuxiemeResidence', 'valeur', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-indigo-200"
                           placeholder="0"
                         />
@@ -322,7 +343,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.deuxiemeResidence.hypotheque}
-                          onChange={(e) => handleChange('deuxiemeResidence', 'hypotheque', Number(e.target.value))}
+                          onChange={(e) => handleChange('deuxiemeResidence', 'hypotheque', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-indigo-200"
                           placeholder="0"
                         />
@@ -337,7 +358,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.deuxiemeResidence.revenus}
-                          onChange={(e) => handleChange('deuxiemeResidence', 'revenus', Number(e.target.value))}
+                          onChange={(e) => handleChange('deuxiemeResidence', 'revenus', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-indigo-200"
                           placeholder="0"
                         />
@@ -349,7 +370,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.deuxiemeResidence.charges}
-                          onChange={(e) => handleChange('deuxiemeResidence', 'charges', Number(e.target.value))}
+                          onChange={(e) => handleChange('deuxiemeResidence', 'charges', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-indigo-200"
                           placeholder="0"
                         />
@@ -389,7 +410,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.troisiemePropriete.valeur}
-                          onChange={(e) => handleChange('troisiemePropriete', 'valeur', Number(e.target.value))}
+                          onChange={(e) => handleChange('troisiemePropriete', 'valeur', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-purple-200"
                           placeholder="0"
                         />
@@ -401,7 +422,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.troisiemePropriete.hypotheque}
-                          onChange={(e) => handleChange('troisiemePropriete', 'hypotheque', Number(e.target.value))}
+                          onChange={(e) => handleChange('troisiemePropriete', 'hypotheque', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-purple-200"
                           placeholder="0"
                         />
@@ -416,7 +437,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.troisiemePropriete.revenus}
-                          onChange={(e) => handleChange('troisiemePropriete', 'revenus', Number(e.target.value))}
+                          onChange={(e) => handleChange('troisiemePropriete', 'revenus', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-purple-200"
                           placeholder="0"
                         />
@@ -428,7 +449,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.troisiemePropriete.charges}
-                          onChange={(e) => handleChange('troisiemePropriete', 'charges', Number(e.target.value))}
+                          onChange={(e) => handleChange('troisiemePropriete', 'charges', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-purple-200"
                           placeholder="0"
                         />
@@ -468,7 +489,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.quatriemePropriete.valeur}
-                          onChange={(e) => handleChange('quatriemePropriete', 'valeur', Number(e.target.value))}
+                          onChange={(e) => handleChange('quatriemePropriete', 'valeur', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-emerald-200"
                           placeholder="0"
                         />
@@ -480,7 +501,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.quatriemePropriete.hypotheque}
-                          onChange={(e) => handleChange('quatriemePropriete', 'hypotheque', Number(e.target.value))}
+                          onChange={(e) => handleChange('quatriemePropriete', 'hypotheque', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-emerald-200"
                           placeholder="0"
                         />
@@ -495,7 +516,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.quatriemePropriete.revenus}
-                          onChange={(e) => handleChange('quatriemePropriete', 'revenus', Number(e.target.value))}
+                          onChange={(e) => handleChange('quatriemePropriete', 'revenus', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-emerald-200"
                           placeholder="0"
                         />
@@ -507,7 +528,7 @@ const ImmobilierPage: React.FC = () => {
                         <Input
                           type="number"
                           value={immobilierData.quatriemePropriete.charges}
-                          onChange={(e) => handleChange('quatriemePropriete', 'charges', Number(e.target.value))}
+                          onChange={(e) => handleChange('quatriemePropriete', 'charges', e.target.value)}
                           className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-emerald-200"
                           placeholder="0"
                         />
