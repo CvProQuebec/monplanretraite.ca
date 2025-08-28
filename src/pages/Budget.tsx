@@ -378,7 +378,7 @@ const Budget: React.FC = () => {
                   size="lg"
                   className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-8 py-3 text-lg"
                 >
-                  {isFrench ? 'Upgrader maintenant' : 'Upgrade now'}
+                  {isFrench ? 'Mettre à niveau maintenant' : 'Upgrade now'}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </div>

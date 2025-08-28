@@ -16,7 +16,7 @@ export const useSubscriptionLimits = () => {
   
   const getPlanLimits = (plan: string): SubscriptionLimits => {
     switch (plan) {
-      case 'ultimate':
+      case 'expert':
         return {
           hasCashflowManagement: true,
           hasMonteCarloSimulations: true,
@@ -78,6 +78,6 @@ export const useSubscriptionLimits = () => {
     getRemainingQuota,
     isFree: currentPlan === 'free',
     isProfessional: currentPlan === 'professional',
-    isUltimate: currentPlan === 'ultimate'
+    isExpert: currentPlan === 'expert'
   };
 };

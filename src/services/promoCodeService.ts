@@ -110,14 +110,14 @@ export class PromoCodeService {
       return currentPlan;
     }
 
-    // Codes 100% gratuits donnent accès Ultimate
+    // Codes 100% gratuits donnent accès Expert
     if (validation.code.unlimitedFeatures) {
-      return 'ultimate';
+      return 'expert';
     }
 
-    // Codes de test donnent accès Ultimate
+    // Codes de test donnent accès Expert
     if (validation.code.testMode) {
-      return 'ultimate';
+      return 'expert';
     }
 
     return currentPlan;

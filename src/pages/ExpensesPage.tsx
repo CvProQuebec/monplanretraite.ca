@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { CashflowSection } from '@/features/retirement/sections/CashflowSection';
 import { UserData } from '@/features/retirement/types';
+import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 
-// Données de démonstration pour le composant CashflowSection
+// Données de démonstration
 const demoUserData: UserData = {
   personal: {
     prenom1: 'Jean',
@@ -19,116 +20,69 @@ const demoUserData: UserData = {
     ageRetraiteSouhaite2: 65,
     depensesRetraite: 4000
   },
-  retirement: {
-    rrqAgeActuel1: 45,
-    rrqMontantActuel1: 800,
-    rrqMontant70_1: 1200,
-    esperanceVie1: 85,
-    rrqAgeActuel2: 43,
-    rrqMontantActuel2: 750,
-    rrqMontant70_2: 1100,
-    esperanceVie2: 87,
-    rregopMembre1: 'non',
-    rregopAnnees1: 0,
-    pensionPrivee1: 0,
-    pensionPrivee2: 0
-  },
-  savings: {
-    reer1: 50000,
-    reer2: 45000,
-    celi1: 15000,
-    celi2: 12000,
-    placements1: 25000,
-    placements2: 20000,
-    epargne1: 10000,
-    epargne2: 8000,
-    cri1: 5000,
-    cri2: 4000,
-    residenceValeur: 400000,
-    residenceHypotheque: 250000
-  },
+  retirement: {},
+  savings: {},
   cashflow: {
     logement: 1200,
-    servicesPublics: 300,
-    assurances: 200,
-    telecom: 150,
+    servicesPublics: 200,
+    assurances: 150,
+    telecom: 100,
     alimentation: 600,
     transport: 400,
-    sante: 150,
-    loisirs: 300,
-    // Ventilation des dépenses
-    logementBreakdown: {
-      loyer: 1200,
-      hypotheque: 0,
-      taxesMunicipales: 0,
-      assuranceHabitation: 0,
-      entretien: 0
-    },
-    servicesPublicsBreakdown: {
-      electricite: 150,
-      eau: 50,
-      gazNaturel: 0,
-      chauffage: 100,
-      dechets: 0
-    },
-    assurancesBreakdown: {
-      habitation: 100,
-      auto: 100,
-      vie: 0,
-      invalidite: 0,
-      maladie: 0
-    },
-    transportBreakdown: {
-      location: 0,
-      essence: 200,
-      maintenance: 100,
-      reparation: 0,
-      transportCommun: 100
-    },
-    santeBreakdown: {
-      medecinePrivee: 0,
-      medicaments: 50,
-      dentiste: 50,
-      lunettes: 0,
-      autresSoins: 50
-    },
-    telecomBreakdown: {
-      internet: 80,
-      telephone: 0,
-      cellulaire: 50,
-      tv: 20,
-      streaming: 0
-    }
+    sante: 200,
+    loisirs: 300
   }
 };
 
 export const ExpensesPage: React.FC = () => {
   const [userData, setUserData] = useState<UserData>(demoUserData);
+  const { language } = useLanguage();
+  const isFrench = language === 'fr';
+
+  // Traductions
+  const t = {
+    title: isFrench ? 'Gestion des dépenses mensuelles' : 'Monthly Expense Management',
+    subtitle: isFrench 
+      ? 'Planifiez et suivez vos dépenses mensuelles pour optimiser votre budget de retraite'
+      : 'Plan and track your monthly expenses to optimize your retirement budget',
+    budgetManagement: isFrench ? 'Gestion du budget' : 'Budget Management',
+    budgetSubtitle: isFrench 
+      ? 'Suivez vos revenus et dépenses mensuels'
+      : 'Track your monthly income and expenses',
+    help: isFrench ? 'Aide' : 'Help',
+    cashflowManagement: isFrench 
+      ? 'Gestion du flux de trésorerie : Suivez vos dépenses mensuelles pour identifier les opportunités d\'épargne. La règle du 50/30/20 recommande 50 % pour les besoins essentiels, 30 % pour les envies, et 20 % pour l\'épargne.'
+      : 'Cash flow management: Track your monthly expenses to identify savings opportunities. The 50/30/20 rule recommends 50% for essential needs, 30% for wants, and 20% for savings.',
+    expenseBreakdown: isFrench 
+      ? 'Ventilation des dépenses : Utilisez le bouton "Ventiler" pour détailler chaque catégorie de dépenses en sous-catégories.'
+      : 'Expense breakdown: Use the "Breakdown" button to detail each expense category into sub-categories.'
+  };
 
   const handleUpdate = (section: keyof UserData, updates: any) => {
-    setUserData(prev => ({
-      ...prev,
+    setUserData(prevData => ({
+      ...prevData,
       [section]: {
-        ...prev[section],
+        ...prevData[section],
         ...updates
       }
     }));
   };
 
-  // Sauvegarder dans localStorage
+  // Charger les données depuis le stockage local
   useEffect(() => {
-    localStorage.setItem('expenses_user_data', JSON.stringify(userData));
-  }, [userData]);
-
-  // Charger depuis localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('expenses_user_data');
-    if (saved) {
-      try {
-        setUserData(JSON.parse(saved));
-      } catch (error) {
-        console.error('Erreur lors du chargement des données:', error);
+    try {
+      const savedData = localStorage.getItem('retirement_data');
+      if (savedData) {
+        const data = JSON.parse(savedData);
+        if (data.cashflow) {
+          setUserData(prevData => ({
+            ...prevData,
+            cashflow: { ...prevData.cashflow, ...data.cashflow }
+          }));
+        }
       }
+    } catch (error) {
+      console.error('Erreur lors du chargement des données:', error);
     }
   }, []);
 
@@ -145,11 +99,27 @@ export const ExpensesPage: React.FC = () => {
             </div>
           </div>
           <h1 className="text-3xl font-bold text-white mb-2">
-            Gestion des dépenses mensuelles
+            {t.title}
           </h1>
           <p className="text-lg text-blue-100 max-w-3xl mx-auto">
-            Planifiez et suivez vos dépenses mensuelles pour optimiser votre budget de retraite
+            {t.subtitle}
           </p>
+        </div>
+
+        {/* Section Budget Management */}
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold text-orange-300 mb-2">
+            {t.budgetManagement}
+          </h2>
+          <p className="text-lg text-blue-100">
+            {t.budgetSubtitle}
+          </p>
+          <button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
+            <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {t.help}
+          </button>
         </div>
 
         {/* Composant CashflowSection existant */}
@@ -157,6 +127,22 @@ export const ExpensesPage: React.FC = () => {
           data={userData} 
           onUpdate={handleUpdate} 
         />
+
+        {/* Informations supplémentaires */}
+        <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="text-white">
+              <p className="text-sm leading-relaxed">
+                {t.cashflowManagement}
+              </p>
+            </div>
+            <div className="text-white">
+              <p className="text-sm leading-relaxed">
+                {t.expenseBreakdown}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

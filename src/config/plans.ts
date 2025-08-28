@@ -5,78 +5,204 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
   free: {
     plan: 'free',
     price: '0 $',
-    badge: 'Trousse de Protection',
-    description: 'Module d\'urgence professionnel gratuit',
+    badge: 'Gratuit',
+    description: '🔍 DÉCOUVREZ VOTRE POTENTIEL ! Initiation professionnelle pour développer votre confiance - Parfait pour se familiariser avec MonPlanRetraite.ca',
     features: {
-      maxSimulations: 5, // 5 simulations par mois pour donner un avant-goût
-      maxReports: 1,
-      maxProfiles: 1,
+      // Limites numériques - RÉDUITES pour initiation
+      maxSimulations: 2, // 2 simulations pour découvrir le potentiel
+      maxReports: 1, // 1 rapport pour voir la qualité
+      maxProfiles: 1, // Individuel seulement (couple = upgrade)
+      maxExpenseProjects: 1, // 1 projet pour tester
+      maxSavedScenarios: 1, // 1 scénario sauvegardé
+      
+      // Fonctionnalités de base - GARDÉES pour rassurer
       hasAdvancedAnalytics: false,
+      hasExportPDF: false,
+      hasCashflowManagement: true, // ✅ GARDÉ - Gestion cashflow basique
+      hasExpensePlanning: true, // ✅ GARDÉ - Planification dépenses basique
+      
+      // Fonctionnalités avancées - TOUTES verrouillées
+      hasMonteCarloSimulations: false,
+      hasWithdrawalStrategies: false,
+      hasTaxOptimization: false,
+      hasFinancialAssistant: false, // 🔒 PROFESSIONNEL
+      hasBudgetModule: false, // 🔒 PROFESSIONNEL
+      
+      // Fonctionnalités premium - DÉPLACÉES vers Professionnel
       hasAIConsulting: false,
+      hasSuccessionPlanning: false,
+      hasEmergencyPlanning: false, // 🔒 → PROFESSIONNEL (valeur 500$)
+      hasRealEstateOptimization: false,
+      
+      // Modules gouvernementaux - DÉPLACÉS vers Professionnel
+      hasRREGOPModule: false,
+      hasSRGModule: false,
+      hasRRQCPPOptimization: false,
+      hasOASGISAnalysis: false, // 🔒 → PROFESSIONNEL (valeur 200$)
+      
+      // Calculateurs spécialisés - DÉPLACÉS vers Professionnel
+      hasAdvancedCalculators: false,
+      hasCoastFIRECalculator: false, // 🔒 → PROFESSIONNEL (valeur 300$)
+      hasMortgageCalculator: false, // 🔒 → PROFESSIONNEL (valeur 200$)
+      hasRetirementProjections: false, // 🔒 → PROFESSIONNEL (valeur 400$)
+      
+      // Rapports et analyses - Basiques
+      hasProfessionalReports: false,
+      hasComparativeAnalysis: false,
+      hasPredictiveAnalytics: false,
+      hasStressTestAnalysis: false,
+      
+      // Sécurité et sauvegarde - GARDÉES pour confiance
+      hasSecureStorage: true, // ✅ GARDÉ - Sécurité (argument de vente)
+      hasAutomaticBackup: false, // 🔒 → PROFESSIONNEL (valeur 100$)
+      hasDataEncryption: true, // ✅ GARDÉ - Chiffrement (confiance)
+      
+      // Interface et expérience - GARDÉES pour expérience
+      hasAdvancedInterface: true, // ✅ GARDÉ - Interface moderne
+      hasMultiLanguageSupport: true, // ✅ GARDÉ - Français/Anglais
+      hasMobileOptimization: true, // ✅ GARDÉ - Optimisation mobile
+      hasAccessibilityFeatures: true, // ✅ GARDÉ - Accessibilité seniors
+      
+      // Fonctionnalités supprimées
       hasIntegrations: false,
       hasPrioritySupport: false,
-      hasPersonalizedTraining: false,
-      hasExportPDF: false,
-      hasMonteCarloSimulations: false,
-      hasCashflowManagement: true, // Gestion de base
-      hasWithdrawalStrategies: false,
-      hasExpensePlanning: true, // Planification de base
-      hasTaxOptimization: false,
-      hasFinancialAssistant: false, // RESTREINT : Plans payants uniquement
-      hasBudgetModule: false, // RESTREINT : Plans payants uniquement
-      maxExpenseProjects: 1
+      hasPersonalizedTraining: false
     }
   },
   professional: {
     plan: 'professional',
-    price: '99,99 $/an',
+    price: '297 $/an',
     priceId: 'price_professional_annual',
-    badge: 'Planification Avancée',
-    description: 'Assistant IA + Gestion financière complète',
+    badge: 'Professionnel',
+    description: '💪 OUTILS COMPLETS POUR COUPLES ! Récupère tout ce qui était gratuit + suite professionnelle complète (5 000 $ de valeur) - Parfait pour planification autonome sérieuse',
     features: {
-      maxSimulations: -1, // Illimité
-      maxReports: -1, // Illimité
-      maxProfiles: 3,
-      hasAdvancedAnalytics: true,
-      hasAIConsulting: false, // Réservé au plan Expert
+      // Limites numériques - ILLIMITÉES
+      maxSimulations: -1, // ✅ ILLIMITÉ - Testez tous vos scénarios
+      maxReports: -1, // ✅ ILLIMITÉ - Rapports professionnels
+      maxProfiles: 2, // Couple ou individuel
+      maxExpenseProjects: -1, // ✅ ILLIMITÉ - Tous vos projets
+      maxSavedScenarios: -1, // ✅ ILLIMITÉ - Sauvegardez tout
+      
+      // Fonctionnalités de base - TOUTES INCLUSES
+      hasAdvancedAnalytics: true, // ✅ INCLUS - Analyses avancées complètes
+      hasExportPDF: true, // ✅ INCLUS - Rapports PDF professionnels
+      hasCashflowManagement: true, // ✅ INCLUS - Gestion cashflow avancée
+      hasExpensePlanning: true, // ✅ INCLUS - Planification dépenses complète
+      
+      // Fonctionnalités avancées - TOUTES INCLUSES
+      hasMonteCarloSimulations: true, // ✅ INCLUS - Simulations Monte Carlo
+      hasWithdrawalStrategies: true, // ✅ INCLUS - Stratégies de décaissement
+      hasTaxOptimization: true, // ✅ INCLUS - Optimisation fiscale REER/CELI
+      hasFinancialAssistant: true, // ✅ INCLUS - Assistant IA (prévention catastrophes)
+      hasBudgetModule: true, // ✅ INCLUS - Module Budget complet
+      
+      // Fonctionnalités premium - Sélectionnées
+      hasAIConsulting: false, // 🔒 EXPERT - IA prédictive avancée
+      hasSuccessionPlanning: false, // 🔒 EXPERT - Planification successorale avancée
+      hasEmergencyPlanning: true, // ✅ INCLUS - Module d'urgence complet
+      hasRealEstateOptimization: false, // 🔒 EXPERT - Optimisation immobilière experte
+      
+      // Modules gouvernementaux - TOUS INCLUS
+      hasRREGOPModule: true, // ✅ INCLUS - Module RREGOP complet
+      hasSRGModule: true, // ✅ INCLUS - Module SRG/GIS complet
+      hasRRQCPPOptimization: true, // ✅ INCLUS - Optimisation RRQ/CPP
+      hasOASGISAnalysis: true, // ✅ INCLUS - Analyse OAS/GIS complète
+      
+      // Calculateurs spécialisés - TOUS INCLUS
+      hasAdvancedCalculators: true, // ✅ INCLUS - IRR, TWR, MWR
+      hasCoastFIRECalculator: true, // ✅ INCLUS - Calculateur FIRE complet
+      hasMortgageCalculator: true, // ✅ INCLUS - Calculateur hypothécaire avancé
+      hasRetirementProjections: true, // ✅ INCLUS - Projections complètes
+      
+      // Rapports et analyses - Avancés
+      hasProfessionalReports: true, // ✅ INCLUS - Rapports niveau consultant
+      hasComparativeAnalysis: true, // ✅ INCLUS - Analyses comparatives
+      hasPredictiveAnalytics: false, // 🔒 EXPERT - IA prédictive
+      hasStressTestAnalysis: false, // 🔒 EXPERT - Tests de résistance experts
+      
+      // Sécurité et sauvegarde - MAXIMALES
+      hasSecureStorage: true, // ✅ INCLUS - Stockage sécurisé AES-256
+      hasAutomaticBackup: true, // ✅ INCLUS - Sauvegarde automatique
+      hasDataEncryption: true, // ✅ INCLUS - Chiffrement niveau bancaire
+      
+      // Interface et expérience - COMPLÈTES
+      hasAdvancedInterface: true, // ✅ INCLUS - Interface avancée
+      hasMultiLanguageSupport: true, // ✅ INCLUS - Français/Anglais
+      hasMobileOptimization: true, // ✅ INCLUS - Optimisation mobile
+      hasAccessibilityFeatures: true, // ✅ INCLUS - Accessibilité seniors
+      
+      // Fonctionnalités supprimées
       hasIntegrations: false,
       hasPrioritySupport: false,
-      hasPersonalizedTraining: false,
-      hasExportPDF: true,
-      hasMonteCarloSimulations: true,
-      hasCashflowManagement: true,
-      hasWithdrawalStrategies: true,
-      hasExpensePlanning: true,
-      hasTaxOptimization: true, // Optimisation fiscale de base
-      hasFinancialAssistant: true, // INCLUS : Assistant Financier Personnel
-      hasBudgetModule: true, // INCLUS : Module Budget
-      maxExpenseProjects: -1 // Illimité
+      hasPersonalizedTraining: false
     }
   },
-  ultimate: {
-    plan: 'ultimate',
-    price: '199,99 $/an',
-    priceId: 'price_ultimate_annual',
-    badge: 'Solution Complète',
-    description: 'Planification successorale + IA prédictive',
+  expert: {
+    plan: 'expert',
+    price: '597 $/an',
+    priceId: 'price_expert_annual',
+    badge: 'Expert',
+    description: '🚀 MAÎTRISEZ L\'AVENIR ! IA prédictive + optimisation maximale (10 000$+ de valeur) - Pour ceux qui refusent de laisser le hasard décider de leur retraite',
     features: {
-      maxSimulations: -1, // Illimité
-      maxReports: -1, // Illimité
-      maxProfiles: -1, // Illimité
-      hasAdvancedAnalytics: true,
-      hasAIConsulting: true, // IA prédictive avancée
-      hasIntegrations: true, // Intégrations complètes
-      hasPrioritySupport: true, // Support premium
-      hasPersonalizedTraining: true, // Formation personnalisée
-      hasExportPDF: true,
-      hasMonteCarloSimulations: true,
-      hasCashflowManagement: true,
-      hasWithdrawalStrategies: true,
-      hasExpensePlanning: true,
-      hasTaxOptimization: true,
-      hasFinancialAssistant: true, // INCLUS : Assistant Financier Personnel
-      hasBudgetModule: true, // INCLUS : Module Budget
-      maxExpenseProjects: -1 // Illimité
+      // Limites numériques - TOUT ILLIMITÉ
+      maxSimulations: -1, // ✅ ILLIMITÉ - Simulations infinies
+      maxReports: -1, // ✅ ILLIMITÉ - Rapports professionnels illimités
+      maxProfiles: -1, // ✅ ILLIMITÉ - Famille élargie et scénarios multiples
+      maxExpenseProjects: -1, // ✅ ILLIMITÉ - Tous vos projets de vie
+      maxSavedScenarios: -1, // ✅ ILLIMITÉ - Sauvegardez tout
+      
+      // Fonctionnalités de base - MAXIMALES
+      hasAdvancedAnalytics: true, // ✅ INCLUS - Analyses ultra-avancées
+      hasExportPDF: true, // ✅ INCLUS - Rapports PDF niveau consultant
+      hasCashflowManagement: true, // ✅ INCLUS - Gestion cashflow experte
+      hasExpensePlanning: true, // ✅ INCLUS - Planification dépenses maximale
+      
+      // Fonctionnalités avancées - TOUTES MAXIMALES
+      hasMonteCarloSimulations: true, // ✅ INCLUS - Monte Carlo 1000+ itérations
+      hasWithdrawalStrategies: true, // ✅ INCLUS - Stratégies décaissement expertes
+      hasTaxOptimization: true, // ✅ INCLUS - Optimisation fiscale maximale
+      hasFinancialAssistant: true, // ✅ INCLUS - Assistant IA ultra-avancé
+      hasBudgetModule: true, // ✅ INCLUS - Module Budget expert
+      
+      // Fonctionnalités premium - TOUTES INCLUSES
+      hasAIConsulting: true, // ✅ INCLUS - IA prédictive + conseils avancés
+      hasSuccessionPlanning: true, // ✅ INCLUS - Planification successorale complète
+      hasEmergencyPlanning: true, // ✅ INCLUS - Module d'urgence expert
+      hasRealEstateOptimization: true, // ✅ INCLUS - Optimisation immobilière avancée
+      
+      // Modules gouvernementaux - TOUS OPTIMISÉS
+      hasRREGOPModule: true, // ✅ INCLUS - Module RREGOP expert
+      hasSRGModule: true, // ✅ INCLUS - Module SRG/GIS expert
+      hasRRQCPPOptimization: true, // ✅ INCLUS - Optimisation RRQ/CPP maximale
+      hasOASGISAnalysis: true, // ✅ INCLUS - Analyse OAS/GIS experte
+      
+      // Calculateurs spécialisés - TOUS EXPERTS
+      hasAdvancedCalculators: true, // ✅ INCLUS - IRR, TWR, MWR experts
+      hasCoastFIRECalculator: true, // ✅ INCLUS - Calculateur FIRE expert
+      hasMortgageCalculator: true, // ✅ INCLUS - Calculateur hypothécaire expert
+      hasRetirementProjections: true, // ✅ INCLUS - Projections expertes
+      
+      // Rapports et analyses - NIVEAU CONSULTANT
+      hasProfessionalReports: true, // ✅ INCLUS - Rapports niveau consultant
+      hasComparativeAnalysis: true, // ✅ INCLUS - Analyses comparatives expertes
+      hasPredictiveAnalytics: true, // ✅ INCLUS - IA prédictive complète
+      hasStressTestAnalysis: true, // ✅ INCLUS - Tests de résistance experts
+      
+      // Sécurité et sauvegarde - NIVEAU BANCAIRE
+      hasSecureStorage: true, // ✅ INCLUS - Stockage ultra-sécurisé
+      hasAutomaticBackup: true, // ✅ INCLUS - Sauvegarde automatique avancée
+      hasDataEncryption: true, // ✅ INCLUS - Chiffrement niveau bancaire
+      
+      // Interface et expérience - PREMIUM
+      hasAdvancedInterface: true, // ✅ INCLUS - Interface premium
+      hasMultiLanguageSupport: true, // ✅ INCLUS - Support multilingue complet
+      hasMobileOptimization: true, // ✅ INCLUS - Optimisation mobile premium
+      hasAccessibilityFeatures: true, // ✅ INCLUS - Accessibilité maximale
+      
+      // Fonctionnalités supprimées (pour sécurité/conformité)
+      hasIntegrations: false, // Supprimé pour sécurité
+      hasPrioritySupport: false, // Supprimé (opération solo)
+      hasPersonalizedTraining: false // Supprimé (pas de permis AMF)
     }
   }
 };
@@ -89,7 +215,7 @@ export const UPGRADE_PATHS: UpgradePath[] = [
   {
     from: 'free',
     to: 'professional',
-    upgradePrice: '99,99 $/an',
+    upgradePrice: '297 $/an',
     priceId: 'price_professional_annual',
     upgradeType: 'immediate',
     savings: '80% moins cher que la concurrence',
@@ -106,9 +232,9 @@ export const UPGRADE_PATHS: UpgradePath[] = [
   },
   {
     from: 'free',
-    to: 'ultimate',
-    upgradePrice: '199,99 $/an',
-    priceId: 'price_ultimate_annual',
+    to: 'expert',
+    upgradePrice: '597 $/an',
+    priceId: 'price_expert_annual',
     upgradeType: 'immediate',
     savings: '60% moins cher que la concurrence',
     features: [
@@ -121,9 +247,9 @@ export const UPGRADE_PATHS: UpgradePath[] = [
   },
   {
     from: 'professional',
-    to: 'ultimate',
+    to: 'expert',
     upgradePrice: '100,00 $/an', // Prix de base - sera ajusté selon le temps
-    priceId: 'price_upgrade_pro_to_ultimate',
+    priceId: 'price_upgrade_pro_to_expert',
     upgradeType: 'time_adjusted', // Ajustement selon le temps restant
     savings: 'Prix ajusté selon votre temps restant',
     isRecommended: true,
@@ -142,26 +268,26 @@ export const calculateSmartUpgradePrice = (
   toPlan: SubscriptionPlan,
   monthsRemaining: number
 ): { price: number; description: string; savings: string; totalPaid: number } => {
-  if (fromPlan === 'professional' && toPlan === 'ultimate') {
+  if (fromPlan === 'professional' && toPlan === 'expert') {
     // Prix mensuels
-    const professionalMonthly = 119.99 / 12; // ~10$/mois
-    const ultimateMonthly = 239.99 / 12;     // ~20$/mois
+    const professionalMonthly = 297 / 12; // ~25$/mois
+    const expertMonthly = 597 / 12;     // ~50$/mois
     
-    // Différence mensuelle : Ultimate - Professional = 10$/mois
-    const monthlyDifference = ultimateMonthly - professionalMonthly;
+    // Différence mensuelle : Expert - Professional = 10$/mois
+    const monthlyDifference = expertMonthly - professionalMonthly;
     
     // Prix d'upgrade : différence × mois restants
     const upgradePrice = monthsRemaining * monthlyDifference;
     
     // Total payé par le client
-    const totalPaid = 119.99 + upgradePrice;
+    const totalPaid = 297 + upgradePrice;
     
     // Économies vs achat séparé
-    const savings = 239.99 - totalPaid;
+    const savings = 597 - totalPaid;
     
     return {
       price: upgradePrice,
-      description: `Upgrade Ultimate pour ${monthsRemaining} mois restants`,
+      description: `Upgrade Expert pour ${monthsRemaining} mois restants`,
       savings: `Économisez ${savings.toFixed(2)} $ vs achat séparé`,
       totalPaid: totalPaid
     };
@@ -191,7 +317,7 @@ export const getUpgradePriceWithTimeAdjustment = (
     // Abonnement expiré, prix normal
     return {
       price: '239,99 $/an',
-      description: 'Nouvel abonnement Ultimate',
+      description: 'Nouvel abonnement Expert',
       savings: 'Prix standard',
       monthsRemaining: 0,
       totalPaid: '239,99 $'
@@ -226,12 +352,12 @@ export const calculateUpgradePrice = (
   toPlan: SubscriptionPlan
 ): string => {
   if (fromPlan === 'free' && toPlan === 'professional') {
-    return '99,99 $/an';
+    return '297 $/an';
   }
-  if (fromPlan === 'free' && toPlan === 'ultimate') {
-    return '199,99 $/an';
+  if (fromPlan === 'free' && toPlan === 'expert') {
+    return '597 $/an';
   }
-  if (fromPlan === 'professional' && toPlan === 'ultimate') {
+  if (fromPlan === 'professional' && toPlan === 'expert') {
     return '100,00 $/an'; // Prix de base - sera ajusté selon le temps
   }
   return PLAN_CONFIG[toPlan].price;
@@ -242,7 +368,7 @@ export const canUpgrade = (
   fromPlan: SubscriptionPlan,
   toPlan: SubscriptionPlan
 ): boolean => {
-  const planHierarchy = { free: 0, professional: 1, ultimate: 2 };
+  const planHierarchy = { free: 0, professional: 1, expert: 2 };
   return planHierarchy[toPlan] > planHierarchy[fromPlan];
 };
 
@@ -287,14 +413,60 @@ export const checkFeatureAccess = (
 export const getRequiredPlanForFeature = (
   feature: keyof PlanLimits['features']
 ): SubscriptionPlan => {
-  if (feature === 'hasAdvancedAnalytics' || feature === 'hasMonteCarloSimulations' || 
-      feature === 'hasFinancialAssistant' || feature === 'hasBudgetModule') {
+  // Fonctionnalités du plan Professionnel (ÉTENDUES avec celles déplacées du gratuit)
+  if (feature === 'hasAdvancedAnalytics' || 
+      feature === 'hasMonteCarloSimulations' || 
+      feature === 'hasFinancialAssistant' || 
+      feature === 'hasBudgetModule' ||
+      feature === 'hasExportPDF' ||
+      feature === 'hasWithdrawalStrategies' ||
+      feature === 'hasTaxOptimization' ||
+      feature === 'hasRREGOPModule' ||
+      feature === 'hasSRGModule' ||
+      feature === 'hasRRQCPPOptimization' ||
+      feature === 'hasAdvancedCalculators' ||
+      feature === 'hasProfessionalReports' ||
+      feature === 'hasComparativeAnalysis' ||
+      // NOUVELLES fonctionnalités déplacées du gratuit vers professionnel
+      feature === 'hasEmergencyPlanning' ||      // 🔒 → PROFESSIONNEL (valeur 500$)
+      feature === 'hasOASGISAnalysis' ||         // 🔒 → PROFESSIONNEL (valeur 200$)
+      feature === 'hasCoastFIRECalculator' ||    // 🔒 → PROFESSIONNEL (valeur 300$)
+      feature === 'hasMortgageCalculator' ||     // 🔒 → PROFESSIONNEL (valeur 200$)
+      feature === 'hasRetirementProjections' ||  // 🔒 → PROFESSIONNEL (valeur 400$)
+      feature === 'hasAutomaticBackup') {        // 🔒 → PROFESSIONNEL (valeur 100$)
     return 'professional';
   }
-  if (feature === 'hasAIConsulting' || feature === 'hasIntegrations' || feature === 'hasPersonalizedTraining') {
-    return 'ultimate';
+  
+  // Fonctionnalités exclusives au plan Expert (ÉTENDUES)
+  if (feature === 'hasAIConsulting' ||
+      feature === 'hasPredictiveAnalytics' ||
+      feature === 'hasSuccessionPlanning' ||     // 🔒 → EXPERT - Planification successorale avancée
+      feature === 'hasRealEstateOptimization' || // 🔒 → EXPERT - Optimisation immobilière experte
+      feature === 'hasStressTestAnalysis') {     // 🔒 → EXPERT - Tests de résistance experts
+    return 'expert';
   }
-  return 'free';
+  
+  // Fonctionnalités supprimées (plus disponibles) - Forcer upgrade vers Expert
+  if (feature === 'hasIntegrations' || 
+      feature === 'hasPersonalizedTraining' || 
+      feature === 'hasPrioritySupport') {
+    return 'expert';
+  }
+  
+  // Fonctionnalités RESTANTES dans le plan gratuit (RÉDUITES)
+  if (feature === 'hasCashflowManagement' ||     // ✅ GARDÉ - Gestion cashflow basique
+      feature === 'hasExpensePlanning' ||        // ✅ GARDÉ - Planification dépenses basique
+      feature === 'hasSecureStorage' ||          // ✅ GARDÉ - Sécurité (argument de vente)
+      feature === 'hasDataEncryption' ||         // ✅ GARDÉ - Chiffrement (confiance)
+      feature === 'hasAdvancedInterface' ||      // ✅ GARDÉ - Interface moderne
+      feature === 'hasMultiLanguageSupport' ||   // ✅ GARDÉ - Français/Anglais
+      feature === 'hasMobileOptimization' ||     // ✅ GARDÉ - Optimisation mobile
+      feature === 'hasAccessibilityFeatures') {  // ✅ GARDÉ - Accessibilité seniors
+    return 'free';
+  }
+  
+  // Par défaut, retourner 'professional' pour les fonctionnalités non spécifiées
+  return 'professional';
 };
 
 // Fonction pour vérifier les limites numériques
@@ -315,7 +487,7 @@ export const getUpgradeMessage = (
 ): string => {
   const planNames = {
     professional: 'Professional',
-    ultimate: 'Ultimate'
+    expert: 'Expert'
   };
 
   const featureNames = {
@@ -342,10 +514,10 @@ export const getContextualUpgradeMessage = (
   requiredPlan: SubscriptionPlan
 ): string => {
   if (currentPlan === 'free') {
-    return `Upgradez de ${PLAN_CONFIG.free.badge} à ${PLAN_CONFIG[requiredPlan].badge} pour débloquer cette fonctionnalité`;
+    return `Passez de la version gratuite à la version ${PLAN_CONFIG[requiredPlan].badge} pour débloquer cette fonctionnalité`;
   }
-  if (currentPlan === 'professional' && requiredPlan === 'ultimate') {
-    return `Upgradez de ${PLAN_CONFIG.professional.badge} à ${PLAN_CONFIG.ultimate.badge} pour accéder aux fonctionnalités premium`;
+  if (currentPlan === 'professional' && requiredPlan === 'expert') {
+    return `Passez de la version ${PLAN_CONFIG.professional.badge} à la version ${PLAN_CONFIG.expert.badge} pour accéder aux fonctionnalités premium`;
   }
   return `Cette fonctionnalité nécessite le forfait ${PLAN_CONFIG[requiredPlan].badge}`;
 };

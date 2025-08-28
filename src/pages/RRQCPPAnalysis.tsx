@@ -93,6 +93,7 @@ const RRQCPPAnalysis: React.FC = () => {
   };
 
   const currentT = t[language as keyof typeof t];
+  const isFrench = language === 'fr';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
@@ -183,23 +184,29 @@ const RRQCPPAnalysis: React.FC = () => {
                     <CardHeader>
                       <CardTitle className="text-2xl text-blue-200 flex items-center gap-3">
                         <BarChart3 className="w-8 h-8 text-blue-400" />
-                        Statistiques RRQ/CPP
+                        {isFrench ? 'Statistiques RRQ/CPP' : 'RRQ/CPP Statistics'}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <div className="grid grid-cols-2 gap-4">
                         <div className="text-center p-4 bg-blue-500/20 rounded-lg border border-blue-400/30">
                           <p className="text-2xl font-bold text-blue-200">2025</p>
-                          <p className="text-sm text-blue-300">Année de référence</p>
+                          <p className="text-sm text-blue-300">
+                            {isFrench ? 'Année de référence' : 'Reference Year'}
+                          </p>
                         </div>
                         <div className="text-center p-4 bg-indigo-500/20 rounded-lg border border-indigo-400/30">
                           <p className="text-2xl font-bold text-indigo-200">6.40%</p>
-                          <p className="text-sm text-indigo-300">Taux RRQ 2025</p>
+                          <p className="text-sm text-indigo-300">
+                            {isFrench ? 'Taux RRQ 2025' : 'RRQ Rate 2025'}
+                          </p>
                         </div>
                       </div>
                       <div className="text-center p-4 bg-purple-500/20 rounded-lg border border-purple-400/30">
                         <p className="text-2xl font-bold text-purple-200">66,600 $</p>
-                        <p className="text-sm text-purple-300">Gains maximums 2025</p>
+                        <p className="text-sm text-purple-300">
+                          {isFrench ? 'Gains maximums 2025' : 'Maximum Earnings 2025'}
+                        </p>
                       </div>
                     </CardContent>
                   </Card>

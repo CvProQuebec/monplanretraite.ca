@@ -3,7 +3,7 @@ import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import OnboardingWizard from '@/components/ui/OnboardingWizard';
-import { 
+import {
   CheckCircle,
   XCircle,
   BarChart3,
@@ -64,27 +64,36 @@ const Accueil: React.FC = () => {
           {/* SECTION 1: Hook émotionnel - NOUVEAU */}
           <div className="text-center mb-16">
             <h1 className="text-5xl font-bold text-gray-900 mb-6">
-              {isFrench ? 'Votre retraite mérite mieux qu\'un plan sur le coin d\'une table' : 'Your retirement deserves better than a plan on a napkin'}
+              {isFrench ? (
+                <>
+                  Votre retraite mérite mieux<br />
+                  qu'un plan sur le coin d'une table
+                </>
+              ) : 'Your retirement deserves better than a plan on a napkin'}
             </h1>
             <p className="text-2xl text-gray-700 max-w-4xl mx-auto mb-8">
-              {isFrench 
-                ? 'Préparez-vous efficacement avec nos outils professionnels. Gagnez du temps et maximisez la valeur de vos consultations.'
-                : 'Prepare effectively with our professional tools. Save time and maximize the value of your consultations.'
-              }
+              {isFrench ? (
+                <>
+                  Préparez-vous efficacement avec nos outils professionnels.<br />
+                  Gagnez du temps et maximisez la valeur de vos consultations.
+                </>
+              ) : 'Prepare effectively with our professional tools. Save time and maximize the value of your consultations.'}
             </p>
             <div className="space-y-4 mb-8">
               <div className="inline-block bg-red-500 text-white px-6 py-3 rounded-xl font-bold text-lg">
                 {isFrench 
-                  ? '💰 Évitez des erreurs de 10 000$+ avec nos outils professionnels'
+                  ? '💰 Évitez des erreurs de 10 000 $+ avec nos outils professionnels'
                   : '💰 Avoid $10,000+ mistakes with our professional tools'
                 }
               </div>
               <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg max-w-4xl mx-auto">
                 <p className="text-yellow-800 font-medium">
-                  {isFrench 
-                    ? '⚠️ Une mauvaise décision de retraite peut coûter des dizaines de milliers de dollars. Nos outils vous aident à prendre les bonnes décisions dès le départ.'
-                    : '⚠️ One bad retirement decision can cost tens of thousands of dollars. Our tools help you make the right decisions from the start.'
-                  }
+                  {isFrench ? (
+                    <>
+                      ⚠️ Une mauvaise décision de retraite peut coûter des dizaines de milliers de dollars.<br />
+                      Nos outils vous aident à prendre les bonnes décisions dès le départ.
+                    </>
+                  ) : '⚠️ One bad retirement decision can cost tens of thousands of dollars. Our tools help you make the right decisions from the start.'}
                 </p>
               </div>
             </div>
@@ -98,12 +107,12 @@ const Accueil: React.FC = () => {
                   🎁 {isFrench ? 'SERVICE GRATUIT' : 'FREE SERVICE'}
                 </div>
                 <h2 className="text-4xl font-bold mb-4">
-                  {isFrench ? 'Kit de Protection Familiale' : 'Family Protection Kit'}
+                  {isFrench ? 'Trousse de protection familiale' : 'Family Protection Kit'}
                 </h2>
                 <p className="text-xl text-emerald-100 max-w-3xl mx-auto mb-8">
                   {isFrench 
-                    ? 'Le premier pas essentiel avant de rencontrer un professionnel.'
-                    : 'The essential first step before meeting a professional.'
+                    ? 'Complétez l\'information, imprimez et partagez avec les membres de votre famille ou votre personne de confiance.'
+                    : 'Complete the information, print and share with family members or your trusted person.'
                   }
                 </p>
               </div>
@@ -138,7 +147,7 @@ const Accueil: React.FC = () => {
                   <ArrowRight className="ml-3 w-6 h-6" />
                 </Button>
                 <p className="text-emerald-200 text-sm mt-4">
-                  {isFrench ? '✨ Aucune inscription requise • Données 100% privées' : '✨ No registration required • 100% private data'}
+                  {isFrench ? '✨ Aucune inscription requise • Données 100 % privées' : '✨ No registration required • 100% private data'}
                 </p>
               </div>
             </CardContent>
@@ -233,7 +242,7 @@ const Accueil: React.FC = () => {
                     <div className="space-y-2 mb-6">
                       <div className="bg-emerald-50 p-3 rounded-lg mb-3">
                         <div className="text-emerald-800 font-bold text-sm mb-1">
-                          {isFrench ? '🎁 VALEUR : 500$+ GRATUIT' : '🎁 VALUE: $500+ FREE'}
+                          {isFrench ? '🎁 VALEUR : 500 $ GRATUIT' : '🎁 VALUE: $500+ FREE'}
                         </div>
                         <div className="text-emerald-700 text-xs">
                           {isFrench ? 'Seule plateforme au Québec à offrir cela gratuitement' : 'Only platform in Quebec offering this for free'}
@@ -261,7 +270,7 @@ const Accueil: React.FC = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-emerald-500" />
-                        <span className="text-xs">{isFrench ? '5 simulations/mois • Données 100% privées' : '5 simulations/month • 100% private data'}</span>
+                        <span className="text-xs">{isFrench ? '5 simulations/mois • Données 100 % privées' : '5 simulations/month • 100% private data'}</span>
                       </div>
                     </div>
                     <Button 
@@ -294,10 +303,10 @@ const Accueil: React.FC = () => {
                     <div className="space-y-2 mb-6">
                       <div className="bg-blue-50 p-3 rounded-lg mb-3">
                         <div className="text-blue-800 font-bold text-sm mb-1">
-                          {isFrench ? '💎 VALEUR : 5000$+ pour 297$' : '💎 VALUE: $5000+ for $297'}
+                          {isFrench ? '💎 VALEUR : 5 000 $ pour 297 $' : '💎 VALUE: $5000+ for $297'}
                         </div>
                         <div className="text-blue-700 text-xs">
-                          {isFrench ? 'Économie de 94% • Équivaut à 2 consultations' : '94% savings • Equals 2 consultations'}
+                          {isFrench ? 'Économie de 94 % • Équivaut à 2 consultations' : '94% savings • Equals 2 consultations'}
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
@@ -350,10 +359,10 @@ const Accueil: React.FC = () => {
                     <div className="space-y-2 mb-6">
                       <div className="bg-purple-50 p-3 rounded-lg mb-3">
                         <div className="text-purple-800 font-bold text-sm mb-1">
-                          {isFrench ? '👑 VALEUR : 10 000$+ pour 597$' : '👑 VALUE: $10,000+ for $597'}
+                          {isFrench ? '👑 VALEUR : 10 000 $ pour 597 $' : '👑 VALUE: $10,000+ for $597'}
                         </div>
                         <div className="text-purple-700 text-xs">
-                          {isFrench ? 'Niveau consultant • Économie de 94% • Évite erreurs coûteuses' : 'Consultant level • 94% savings • Prevents costly mistakes'}
+                          {isFrench ? 'Niveau consultant • Économie de 94 % • Évite erreurs coûteuses' : 'Consultant level • 94% savings • Prevents costly mistakes'}
                         </div>
                       </div>
                       <div className="flex items-center gap-2">

@@ -188,7 +188,7 @@ export interface RealEstateValidationResult {
 
 export interface RealEstateAnalysisSectionProps {
   className?: string;
-  userPlan: 'free' | 'professional' | 'ultimate';
+  userPlan: 'free' | 'professional' | 'expert';
   onDataUpdate?: (data: RealEstateFormData) => void;
   onResultsUpdate?: (results: RealEstateResults) => void;
 }

@@ -23,11 +23,17 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
 
   // Formater la valeur pour l'affichage (19870908 -> 1987-09-08)
   const formatDisplayValue = (rawValue: string): string => {
-    if (!rawValue || rawValue.length !== 8) return '';
+    if (!rawValue) return '';
     
-    const year = rawValue.substring(0, 4);
-    const month = rawValue.substring(4, 6);
-    const day = rawValue.substring(6, 8);
+    // Si la valeur est trop courte, ne pas formater
+    if (rawValue.length < 8) return rawValue;
+    
+    // Tronquer si trop long et prendre seulement les 8 premiers caractères
+    const cleanValue = rawValue.substring(0, 8);
+    
+    const year = cleanValue.substring(0, 4);
+    const month = cleanValue.substring(4, 6);
+    const day = cleanValue.substring(6, 8);
     
     return `${year}-${month}-${day}`;
   };
@@ -39,12 +45,56 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
 
   // Initialiser l'affichage
   useEffect(() => {
-    if (value && value.length === 8) {
-      setDisplayValue(formatDisplayValue(value));
+    if (value) {
+      // Nettoyer la valeur (enlever tout ce qui n'est pas un chiffre)
+      const cleanValue = value.replace(/[^\d]/g, '');
+      
+      // Si la valeur a plus de 8 caractères, la tronquer à 8
+      if (cleanValue.length > 8) {
+        const truncatedValue = cleanValue.substring(0, 8);
+        setDisplayValue(formatDisplayValue(truncatedValue));
+        onChange(truncatedValue); // Mettre à jour la valeur
+      } else if (cleanValue.length === 8) {
+        setDisplayValue(formatDisplayValue(cleanValue));
+        // Si la valeur nettoyée est différente de l'originale, la mettre à jour
+        if (cleanValue !== value) {
+          onChange(cleanValue);
+        }
+      } else if (cleanValue.length >= 4 && cleanValue.length < 8) {
+        // Pour les valeurs partielles comme "198564" (6 chiffres), les afficher telles quelles
+        // mais ne pas les formater car elles sont incomplètes
+        setDisplayValue(cleanValue);
+        
+        // Si c'est exactement 6 chiffres et que ça ressemble à une année + mois invalide
+        // (comme 198564), on peut essayer de corriger automatiquement
+        if (cleanValue.length === 6) {
+          const year = cleanValue.substring(0, 4);
+          const monthDay = cleanValue.substring(4, 6);
+          
+          // Si l'année semble valide (entre 1900 et année actuelle)
+          // et que les 2 derniers chiffres sont > 12 (mois invalide)
+          const currentYear = new Date().getFullYear();
+          const yearNum = parseInt(year);
+          const monthNum = parseInt(monthDay);
+          
+          if (yearNum >= 1900 && yearNum <= currentYear && monthNum > 12) {
+            // Probablement une erreur de saisie, on garde juste l'année
+            const correctedValue = year + '0101'; // Ajouter 01-01 par défaut
+            setDisplayValue(formatDisplayValue(correctedValue));
+            onChange(correctedValue);
+            console.log(`🔧 Correction automatique: ${cleanValue} → ${correctedValue}`);
+          }
+        }
+      } else if (cleanValue.length >= 1) {
+        // Afficher les valeurs très courtes telles quelles
+        setDisplayValue(cleanValue);
+      } else {
+        setDisplayValue('');
+      }
     } else {
       setDisplayValue('');
     }
-  }, [value]);
+  }, [value, onChange]);
 
   // Gérer le changement de valeur
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,6 +102,13 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
     
     // Permettre la saisie de chiffres et de tirets
     const cleanValue = inputValue.replace(/[^\d-]/g, '');
+    
+    // Si l'utilisateur efface le champ
+    if (!cleanValue) {
+      setDisplayValue('');
+      onChange('');
+      return;
+    }
     
     // Si l'utilisateur tape une date complète sans tirets (ex: 19870908)
     if (cleanValue.length === 8 && !cleanValue.includes('-')) {
@@ -63,7 +120,7 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
     }
     
     // Si l'utilisateur tape avec des tirets (ex: 1987-09-08)
-    if (cleanValue.length <= 10) {
+    if (cleanValue.includes('-') && cleanValue.length <= 10) {
       setDisplayValue(cleanValue);
       
       // Si la date est complète, la valider et la sauvegarder
@@ -74,6 +131,31 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
           setIsEditing(false);
         }
       }
+      return;
+    }
+    
+    // Gestion spéciale pour l'entrée progressive de chiffres (sans tirets)
+    if (cleanValue.length <= 8 && !cleanValue.includes('-')) {
+      setDisplayValue(cleanValue);
+      
+      // Si on atteint exactement 8 chiffres, formater automatiquement
+      if (cleanValue.length === 8) {
+        const formattedValue = formatDisplayValue(cleanValue);
+        setDisplayValue(formattedValue);
+        onChange(cleanValue);
+        setIsEditing(false);
+      }
+      return;
+    }
+    
+    // Empêcher l'entrée de plus de 8 chiffres (sans tirets)
+    if (cleanValue.length > 8 && !cleanValue.includes('-')) {
+      const truncatedValue = cleanValue.substring(0, 8);
+      const formattedValue = formatDisplayValue(truncatedValue);
+      setDisplayValue(formattedValue);
+      onChange(truncatedValue);
+      setIsEditing(false);
+      console.log(`🔧 Troncature automatique: ${cleanValue} → ${truncatedValue}`);
     }
   };
 
@@ -93,6 +175,9 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
       const formattedValue = formatDisplayValue(displayValue);
       setDisplayValue(formattedValue);
       onChange(displayValue);
+    } else if (displayValue.length > 0 && displayValue.length < 8) {
+      // Si l'utilisateur a commencé à taper mais n'a pas fini, effacer
+      setDisplayValue('');
     }
   };
 
@@ -153,7 +238,7 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
         <Input
           id={id}
           type="text"
-          placeholder="1987-09-08 ou 19870908"
+          placeholder="19870605 ou 1987-06-05"
           value={displayValue}
           onChange={handleInputChange}
           onFocus={handleFocus}
@@ -182,8 +267,8 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
         {isEditing && (
           <div className="absolute top-full left-0 right-0 mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800 shadow-lg z-20">
             <div className="font-semibold mb-1">💡 Conseils de saisie :</div>
-            <div>• Tapez directement : <span className="font-mono bg-blue-100 px-1 rounded">19870908</span></div>
-            <div>• Ou utilisez le format : <span className="font-mono bg-blue-100 px-1 rounded">1987-09-08</span></div>
+            <div>• Tapez directement : <span className="font-mono bg-blue-100 px-1 rounded">19870605</span> → <span className="font-mono bg-green-100 px-1 rounded">1987-06-05</span></div>
+            <div>• Ou utilisez le format : <span className="font-mono bg-blue-100 px-1 rounded">1987-06-05</span></div>
             <div>• La date sera automatiquement formatée et validée</div>
           </div>
         )}

@@ -1,25 +1,67 @@
 // src/types/subscription.ts
 
-export type SubscriptionPlan = 'free' | 'professional' | 'ultimate';
+export type SubscriptionPlan = 'free' | 'professional' | 'expert';
 
 export interface PlanFeatures {
+  // Limites numériques
   maxSimulations: number;
   maxReports: number;
   maxProfiles: number;
-  hasAdvancedAnalytics: boolean;
-  hasAIConsulting: boolean;
-  hasIntegrations: boolean;
-  hasPrioritySupport: boolean;
-  hasPersonalizedTraining: boolean;
-  hasExportPDF: boolean;
-  hasMonteCarloSimulations: boolean;
-  hasCashflowManagement: boolean;
-  hasWithdrawalStrategies: boolean;
-  hasExpensePlanning: boolean;
-  hasTaxOptimization: boolean;
-  hasFinancialAssistant: boolean; // NOUVEAU : Assistant Financier Personnel
-  hasBudgetModule: boolean; // NOUVEAU : Module Budget
   maxExpenseProjects: number;
+  maxSavedScenarios: number;
+  
+  // Fonctionnalités de base
+  hasAdvancedAnalytics: boolean;
+  hasExportPDF: boolean;
+  hasCashflowManagement: boolean;
+  hasExpensePlanning: boolean;
+  
+  // Fonctionnalités avancées
+  hasMonteCarloSimulations: boolean;
+  hasWithdrawalStrategies: boolean;
+  hasTaxOptimization: boolean;
+  hasFinancialAssistant: boolean; // Assistant IA Personnel
+  hasBudgetModule: boolean; // Module Budget complet
+  
+  // Fonctionnalités premium
+  hasAIConsulting: boolean; // IA prédictive et conseils avancés
+  hasSuccessionPlanning: boolean; // Planification successorale
+  hasEmergencyPlanning: boolean; // Planification d'urgence (8 sections)
+  hasRealEstateOptimization: boolean; // Optimisation immobilière
+  
+  // Modules gouvernementaux
+  hasRREGOPModule: boolean; // Module RREGOP complet
+  hasSRGModule: boolean; // Module SRG/GIS complet
+  hasRRQCPPOptimization: boolean; // Optimisation RRQ/CPP
+  hasOASGISAnalysis: boolean; // Analyse OAS/GIS
+  
+  // Calculateurs spécialisés
+  hasAdvancedCalculators: boolean; // IRR, TWR, MWR
+  hasCoastFIRECalculator: boolean; // Indépendance financière
+  hasMortgageCalculator: boolean; // Calculateur hypothécaire avancé
+  hasRetirementProjections: boolean; // Projections de retraite
+  
+  // Rapports et analyses
+  hasProfessionalReports: boolean; // Rapports niveau consultant
+  hasComparativeAnalysis: boolean; // Analyses comparatives
+  hasPredictiveAnalytics: boolean; // Analyses prédictives IA
+  hasStressTestAnalysis: boolean; // Tests de résistance
+  
+  // Sécurité et sauvegarde
+  hasSecureStorage: boolean; // Stockage sécurisé AES-256
+  hasAutomaticBackup: boolean; // Sauvegarde automatique
+  hasDataEncryption: boolean; // Chiffrement niveau bancaire
+  
+  // Interface et expérience
+  hasAdvancedInterface: boolean; // Interface avancée
+  hasMultiLanguageSupport: boolean; // Support multilingue
+  hasMobileOptimization: boolean; // Optimisation mobile
+  hasAccessibilityFeatures: boolean; // Fonctionnalités d'accessibilité
+  
+  // Fonctionnalités supprimées (pour compatibilité)
+  hasIntegrations: boolean; // Supprimé pour sécurité
+  hasPrioritySupport: boolean; // Supprimé (opération solo)
+  hasPersonalizedTraining: boolean; // Supprimé (pas de permis AMF)
 }
 
 export interface PlanLimits {
@@ -89,4 +131,14 @@ export interface PromoCodeValidation {
   discount: number;
   message: string;
   code?: PromoCode;
+}
+
+export interface User {
+  id: string;
+  email: string;
+  displayName: string;
+  plan: SubscriptionPlan;
+  createdAt: Date;
+  updatedAt: Date;
+  subscription?: UserSubscription;
 }

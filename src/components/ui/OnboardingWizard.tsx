@@ -32,6 +32,7 @@ import {
   OnboardingStep, 
   UserProfile 
 } from '../../services/OnboardingService';
+import { useLanguage } from '../../features/retirement/hooks/useLanguage';
 
 interface OnboardingWizardProps {
   isOpen: boolean;
@@ -57,6 +58,9 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
   userProfile,
   className = ''
 }) => {
+  const { language } = useLanguage();
+  const isFrench = language === 'fr';
+  
   const [wizardState, setWizardState] = useState<WizardState>({
     currentPath: null,
     currentStepIndex: 0,
@@ -71,6 +75,53 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
   const [currentStep, setCurrentStep] = useState<OnboardingStep | null>(null);
 
   const onboardingService = OnboardingService.getInstance();
+
+  // Textes bilingues
+  const t = {
+    // Navigation
+    next: isFrench ? 'Continuer' : 'Next',
+    back: isFrench ? 'Précédent' : 'Back',
+    finish: isFrench ? 'Commencer ma planification' : 'Start My Planning',
+    skip: isFrench ? 'Passer cette étape' : 'Skip This Step',
+    
+    // Titres et labels
+    pathTitle: isFrench ? 'Parcours d\'accompagnement' : 'Guidance Path',
+    progression: isFrench ? 'Progression' : 'Progress',
+    steps: isFrench ? 'étapes' : 'steps',
+    details: isFrench ? 'Détails' : 'Details',
+    essential: isFrench ? 'Essentiel' : 'Essential',
+    recommended: isFrench ? 'Recommandé' : 'Recommended',
+    advanced: isFrench ? 'Avancé' : 'Advanced',
+    optional: isFrench ? 'Optionnel' : 'Optional',
+    minutes: isFrench ? 'min' : 'min',
+    
+    // Boutons
+    markCompleted: isFrench ? 'Marquer comme terminé' : 'Mark as Completed',
+    skipStep: isFrench ? 'Passer cette étape' : 'Skip This Step',
+    restart: isFrench ? 'Recommencer' : 'Restart',
+    previous: isFrench ? 'Précédent' : 'Previous',
+    step: isFrench ? 'Étape' : 'Step',
+    of: isFrench ? 'sur' : 'of',
+    
+    // Contenu
+    stepContent: isFrench ? 'Contenu interactif de l\'étape' : 'Interactive Step Content',
+    stepComponent: isFrench ? 'Ici sera intégré le composant spécifique à cette étape' : 'Here will be integrated the specific component for this step',
+    
+    // Conseils
+    practicalTips: isFrench ? '💡 Conseils pratiques :' : '💡 Practical Tips:',
+    explanatoryVideo: isFrench ? '🎥 Vidéo explicative disponible' : '🎥 Explanatory video available',
+    watchVideo: isFrench ? 'Regarder la vidéo' : 'Watch Video',
+    
+    // Parcours terminé
+    pathCompleted: isFrench ? 'Parcours terminé !' : 'Path Completed!',
+    congratulations: isFrench ? 'Félicitations ! Vous avez terminé le parcours d\'accompagnement.' : 'Congratulations! You have completed the guidance path.',
+    startPlanning: isFrench ? 'Commencer ma planification' : 'Start My Planning',
+    
+    // Messages de sécurité
+    securityMessage: isFrench 
+      ? '🛡️ Vos données restent sur VOTRE appareil - Aucune transmission à nos serveurs'
+      : '🛡️ Your data stays on YOUR device - No transmission to our servers'
+  };
 
   useEffect(() => {
     if (profile && !wizardState.currentPath) {
@@ -203,14 +254,31 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
   }
 
   // Écran principal du wizard
+  if (!isOpen) return null;
+  
   return (
-    <div className={`fixed inset-0 bg-white bg-opacity-95 flex items-start justify-center z-50 pt-8 ${className}`}>
-      <Card className="w-full max-w-4xl max-h-[85vh] overflow-y-auto m-4 shadow-2xl border-2 border-blue-200">
+    <div 
+      className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 ${className} animate-in fade-in duration-300`}
+      onClick={onClose}
+    >
+      <Card 
+        className="w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl border-2 border-blue-200 relative animate-in slide-in-from-bottom-4 duration-300"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Bouton de fermeture en haut à droite */}
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          onClick={onClose}
+          className="absolute top-4 right-4 z-10 hover:bg-red-100 hover:text-red-600"
+        >
+          <X className="h-5 w-5" />
+        </Button>
         <CardHeader className="border-b bg-gradient-to-r from-blue-50 to-indigo-50">
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="text-xl text-blue-900">
-                {wizardState.currentPath?.name || 'Parcours d\'accompagnement'}
+                {wizardState.currentPath?.name || t.pathTitle}
               </CardTitle>
               <p className="text-sm text-blue-700 mt-1">
                 {wizardState.currentPath?.description}
@@ -221,17 +289,14 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                 <Clock className="h-3 w-3 mr-1" />
                 {formatTime(wizardState.timeSpent)}
               </Badge>
-              <Button variant="ghost" size="sm" onClick={onClose}>
-                <X className="h-4 w-4" />
-              </Button>
             </div>
           </div>
           
           {/* Barre de progression */}
           <div className="mt-4">
             <div className="flex items-center justify-between text-sm text-blue-700 mb-2">
-              <span>Progression</span>
-              <span>{progress.completed}/{progress.total} étapes</span>
+              <span>{t.progression}</span>
+              <span>{progress.completed}/{progress.total} {t.steps}</span>
             </div>
             <Progress value={progress.percentage} className="h-2" />
           </div>
@@ -249,8 +314,8 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                       {currentStep.title}
                     </h2>
                     <Badge className={`text-xs ${getCategoryColor(currentStep.category)}`}>
-                      {currentStep.category === 'essential' ? 'Essentiel' :
-                       currentStep.category === 'recommended' ? 'Recommandé' : 'Avancé'}
+                      {currentStep.category === 'essential' ? t.essential :
+                       currentStep.category === 'recommended' ? t.recommended : t.advanced}
                     </Badge>
                   </div>
                   <p className="text-gray-600 text-lg">
@@ -259,11 +324,11 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                   <div className="flex items-center space-x-4 mt-3 text-sm text-gray-500">
                     <span className="flex items-center">
                       <Clock className="h-4 w-4 mr-1" />
-                      ~{currentStep.estimatedTime} min
+                      ~{currentStep.estimatedTime} {t.minutes}
                     </span>
                     {currentStep.isOptional && (
                       <Badge variant="outline" className="text-xs">
-                        Optionnel
+                        {t.optional}
                       </Badge>
                     )}
                   </div>
@@ -278,7 +343,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                   }))}
                 >
                   <Info className="h-4 w-4 mr-1" />
-                  Détails
+                  {t.details}
                 </Button>
               </div>
 
@@ -292,7 +357,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                       
                       {currentStep.tips.length > 0 && (
                         <div>
-                          <h4 className="font-medium text-sm mb-2">💡 Conseils pratiques :</h4>
+                          <h4 className="font-medium text-sm mb-2">{t.practicalTips}</h4>
                           <ul className="text-sm space-y-1">
                             {currentStep.tips.map((tip, index) => (
                               <li key={index} className="flex items-start">
@@ -306,10 +371,10 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                       
                       {currentStep.videoUrl && (
                         <div>
-                          <h4 className="font-medium text-sm mb-2">🎥 Vidéo explicative disponible</h4>
+                          <h4 className="font-medium text-sm mb-2">{t.explanatoryVideo}</h4>
                           <Button variant="outline" size="sm">
                             <Play className="h-3 w-3 mr-1" />
-                            Regarder la vidéo
+                            {t.watchVideo}
                           </Button>
                         </div>
                       )}
@@ -326,10 +391,10 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                       {getCategoryIcon(currentStep.category)}
                     </div>
                     <h3 className="text-lg font-semibold">
-                      Contenu interactif de l'étape
+                      {t.stepContent}
                     </h3>
                     <p className="text-gray-600">
-                      Ici sera intégré le composant spécifique à cette étape : {currentStep.component}
+                      {t.stepComponent}
                     </p>
                     <div className="flex items-center justify-center space-x-3 pt-4">
                       <Button
@@ -337,11 +402,11 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                         className="bg-green-600 hover:bg-green-700"
                       >
                         <CheckCircle className="h-4 w-4 mr-2" />
-                        Marquer comme terminé
+                        {t.markCompleted}
                       </Button>
                       {currentStep.isOptional && (
                         <Button variant="outline" onClick={handleSkipStep}>
-                          Passer cette étape
+                          {t.skipStep}
                         </Button>
                       )}
                     </div>
@@ -358,7 +423,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                     disabled={wizardState.currentStepIndex === 0}
                   >
                     <ChevronLeft className="h-4 w-4 mr-1" />
-                    Précédent
+                    {t.previous}
                   </Button>
                   <Button
                     variant="outline"
@@ -366,7 +431,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                     size="sm"
                   >
                     <RotateCcw className="h-4 w-4 mr-1" />
-                    Recommencer
+                    {t.restart}
                   </Button>
                 </div>
 
@@ -386,7 +451,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                     )}
                   </Button>
                   <span className="text-sm text-gray-500">
-                    Étape {wizardState.currentStepIndex + 1} sur {wizardState.currentPath?.steps.length || 0}
+                    {t.step} {wizardState.currentStepIndex + 1} {t.of} {wizardState.currentPath?.steps.length || 0}
                   </span>
                 </div>
               </div>
@@ -398,7 +463,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                 <CheckCircle className="h-10 w-10 text-green-600" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Félicitations ! Parcours terminé
+                {t.pathCompleted}
               </h2>
               <p className="text-gray-600 mb-6">
                 Vous avez complété votre parcours d'accompagnement en {formatTime(wizardState.timeSpent)}.
@@ -406,10 +471,10 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
               </p>
               <div className="flex items-center justify-center space-x-3">
                 <Button onClick={onComplete} className="bg-green-600 hover:bg-green-700">
-                  Commencer à planifier
+                  {t.startPlanning}
                 </Button>
                 <Button variant="outline" onClick={handleRestartPath}>
-                  Refaire le parcours
+                  {t.restart}
                 </Button>
               </div>
             </div>

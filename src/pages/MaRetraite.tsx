@@ -42,6 +42,7 @@ import { InputSanitizer } from '@/utils/inputSanitizer';
 import { LicenseManager } from '@/services/LicenseManager';
 import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 import OnboardingWizard from '@/features/retirement/components/OnboardingWizard';
+import { CustomBirthDateInput } from '@/features/retirement/components/CustomBirthDateInput';
 
 
 const MaRetraite: React.FC = () => {
@@ -387,14 +388,12 @@ const MaRetraite: React.FC = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-white font-semibold">
-                        {isFrench ? 'Date de naissance' : 'Date of Birth'}
-                      </Label>
-                      <Input
-                        type="date"
+                      <CustomBirthDateInput
+                        id="naissance1"
+                        label={isFrench ? 'Date de naissance' : 'Date of Birth'}
                         value={userData.personal?.naissance1 || ''}
-                        onChange={(e) => handleProfileChange('naissance1', e.target.value)}
-                        className="bg-white/20 border-white/30 text-white placeholder-white/60 focus:border-white focus:ring-white/20"
+                        onChange={(date) => handleProfileChange('naissance1', date)}
+                        className="bg-white/20 border-white/30 text-white"
                       />
                     </div>
 
@@ -504,14 +503,12 @@ const MaRetraite: React.FC = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-white font-semibold">
-                        {isFrench ? 'Date de naissance' : 'Date of Birth'}
-                      </Label>
-                      <Input
-                        type="date"
+                      <CustomBirthDateInput
+                        id="naissance2"
+                        label={isFrench ? 'Date de naissance' : 'Date of Birth'}
                         value={userData.personal?.naissance2 || ''}
-                        onChange={(e) => handleProfileChange('naissance2', e.target.value)}
-                        className="bg-white/20 border-white/30 text-white placeholder-white/60 focus:border-white focus:ring-white/20"
+                        onChange={(date) => handleProfileChange('naissance2', date)}
+                        className="bg-white/20 border-white/30 text-white"
                       />
                     </div>
 

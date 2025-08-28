@@ -128,8 +128,10 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
                     {isFrench ? 'Date de naissance' : 'Date of Birth'}
                   </Label>
                   <CustomBirthDateInput
-                    value={data.personal?.dateNaissance1}
-                    onChange={(date) => handleChange('dateNaissance1', date)}
+                    id="naissance1"
+                    label={isFrench ? 'Date de naissance' : 'Date of Birth'}
+                    value={data.personal?.naissance1}
+                    onChange={(date) => handleChange('naissance1', date)}
                     className="bg-slate-700 border-slate-600 text-white"
                   />
                 </div>
@@ -234,8 +236,10 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
                     {isFrench ? 'Date de naissance' : 'Date of Birth'}
                   </Label>
                   <CustomBirthDateInput
-                    value={data.personal?.dateNaissance2}
-                    onChange={(date) => handleChange('dateNaissance2', date)}
+                    id="naissance2"
+                    label={isFrench ? 'Date de naissance' : 'Date of Birth'}
+                    value={data.personal?.naissance2}
+                    onChange={(date) => handleChange('naissance2', date)}
                     className="bg-slate-700 border-slate-600 text-white"
                   />
                 </div>

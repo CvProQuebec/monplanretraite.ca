@@ -4,9 +4,9 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Check, Crown, Zap, Shield, ArrowRight, X, Star, TrendingUp, Clock, Loader2 } from 'lucide-react';
-import { SubscriptionPlan, PlanLimits, UpgradePath } from '@/types/subscription';
-import { PLAN_CONFIG, getAvailableUpgrades, getUpgradePriceWithTimeAdjustment } from '@/config/plans';
+import { Check, Crown, Zap, Shield, ArrowRight, X, Star } from 'lucide-react';
+import { SubscriptionPlan, PlanLimits } from '@/types/subscription';
+import { PLAN_CONFIG } from '@/config/plans';
 import { stripeUpgradeService } from '@/services/stripeUpgradeService';
 import { useAuth } from '@/hooks/useAuth';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
@@ -18,7 +18,7 @@ interface AdvancedUpgradeModalProps {
   requiredPlan: SubscriptionPlan;
   featureName: string;
   currentPlan: SubscriptionPlan;
-  subscriptionStartDate?: Date; // NOUVEAU : Date de début de l'abonnement
+  subscriptionStartDate?: Date;
 }
 
 const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
@@ -27,7 +27,7 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
   requiredPlan,
   featureName,
   currentPlan,
-  subscriptionStartDate = new Date() // Par défaut, aujourd'hui
+  subscriptionStartDate = new Date()
 }) => {
   const { user } = useAuth();
   const { language } = useLanguage();
@@ -40,100 +40,20 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
   
   const requiredPlanInfo = PLAN_CONFIG[requiredPlan];
   const currentPlanInfo = PLAN_CONFIG[currentPlan];
-  const availableUpgrades = getAvailableUpgrades(currentPlan);
 
-  // Prix original pour le plan Ultimate (pour les codes promo)
-  const ultimatePrice = 239.99;
+  // Prix original pour le plan Expert (pour les codes promo)
+  const expertPrice = 597;
 
-  // Textes bilingues
   const t = {
     fr: {
-      errorNotLoggedIn: 'Vous devez être connecté pour effectuer un upgrade',
-      errorUpgrade: 'Erreur lors de l\'upgrade',
-      upgradeNotAuthorized: 'Upgrade non autorisé',
-      upgradeError: 'Erreur lors de l\'upgrade',
+      errorNotLoggedIn: 'Vous devez être connecté pour effectuer une mise à niveau',
+      errorUpgrade: 'Erreur lors de la mise à niveau',
+      upgradeNotAuthorized: 'Mise à niveau non autorisée',
+      upgradeError: 'Erreur lors de la mise à niveau',
       choosePlan: 'Choisissez votre plan',
-      upgradePlan: 'Upgradez votre plan',
+      upgradePlan: 'Mise à niveau de votre plan',
       selectPlanDescription: 'Sélectionnez le plan qui correspond à vos besoins',
-      unlockFeaturesDescription: 'Débloquez de nouvelles fonctionnalités premium',
-      upgradeNow: 'Upgrader maintenant',
-      upgradeInProgress: 'Upgrade en cours...',
-      currentPlan: 'Plan actuel',
-      upgradeTo: 'Upgradez vers',
-      monthlyPrice: 'Prix mensuel',
-      yearlyPrice: 'Prix annuel',
-      savings: 'Économies',
-      features: 'Fonctionnalités',
-      unlimited: 'Illimité',
-      included: 'Inclus',
-      notIncluded: 'Non inclus',
-      upgrade: 'Upgrade',
-      cancel: 'Annuler',
-      close: 'Fermer',
-      promoCodeApplied: 'Code promo appliqué',
-      promoCodeError: 'Erreur avec le code promo',
-      promoCodeInvalid: 'Code promo invalide',
-      promoCodeExpired: 'Code promo expiré',
-      promoCodeUsed: 'Code promo déjà utilisé',
-      promoCodeLimit: 'Limite d\'utilisation atteinte',
-      promoCodeSuccess: 'Code promo appliqué avec succès',
-      promoCodeDiscount: 'Réduction appliquée',
-      promoCodeFree: '100% gratuit avec ce code promo !',
-      promoCodeInput: 'Code promo',
-      promoCodeApply: 'Appliquer',
-      promoCodeRemove: 'Retirer',
-      promoCodePlaceholder: 'Entrez votre code promo',
-      promoCodeHelp: 'Avez-vous un code promo ?',
-      promoCodeHelpText: 'Entrez votre code promo pour obtenir une réduction',
-      promoCodeHelpText2: 'ou un accès gratuit aux fonctionnalités premium',
-      promoCodeHelpText3: 'Codes promo valides :',
-      promoCodeHelpText4: 'EARLYBIRD30, SAVINGS40, FOUNDER50, TESTER100, Calvin2025',
-      promoCodeHelpText5: 'Certains codes offrent 100% gratuit !',
-      promoCodeHelpText6: 'Vérifiez la validité et les conditions',
-      promoCodeHelpText7: 'Un seul code promo par transaction',
-      promoCodeHelpText8: 'Les codes promo ne peuvent pas être combinés',
-      promoCodeHelpText9: 'Les codes promo sont valides jusqu\'au 31 décembre 2025',
-      promoCodeHelpText10: 'Sauf TESTER100 et Calvin2025 qui sont valides jusqu\'au 31 décembre 2026',
-      promoCodeHelpText11: 'Les codes promo sont limités en nombre d\'utilisations',
-      promoCodeHelpText12: 'Vérifiez la disponibilité avant utilisation',
-      promoCodeHelpText13: 'Les codes promo ne s\'appliquent qu\'aux nouveaux abonnements',
-      promoCodeHelpText14: 'Les codes promo ne s\'appliquent pas aux renouvellements',
-      promoCodeHelpText15: 'Les codes promo ne s\'appliquent qu\'aux plans payants',
-      promoCodeHelpText16: 'Les codes promo ne s\'appliquent pas au plan gratuit',
-      promoCodeHelpText17: 'Les codes promo ne s\'appliquent qu\'aux plans mensuels',
-      promoCodeHelpText18: 'Les codes promo ne s\'appliquent pas aux plans annuels',
-      promoCodeHelpText19: 'Les codes promo ne s\'appliquent qu\'aux plans individuels',
-      promoCodeHelpText20: 'Les codes promo ne s\'appliquent pas aux plans familiaux',
-      promoCodeHelpText21: 'Les codes promo ne s\'appliquent qu\'aux plans canadiens',
-      promoCodeHelpText22: 'Les codes promo ne s\'appliquent pas aux plans internationaux',
-      promoCodeHelpText23: 'Les codes promo ne s\'appliquent qu\'aux plans en dollars canadiens',
-      promoCodeHelpText24: 'Les codes promo ne s\'appliquent pas aux plans en autres devises',
-      promoCodeHelpText25: 'Les codes promo ne s\'appliquent qu\'aux plans en ligne',
-      promoCodeHelpText26: 'Les codes promo ne s\'appliquent pas aux plans par téléphone',
-      promoCodeHelpText27: 'Les codes promo ne s\'appliquent qu\'aux plans par email',
-      promoCodeHelpText28: 'Les codes promo ne s\'appliquent pas aux plans par courrier',
-      promoCodeHelpText29: 'Les codes promo ne s\'appliquent qu\'aux plans par chat',
-      promoCodeHelpText30: 'Les codes promo ne s\'appliquent pas aux plans par vidéo',
-      promoCodeHelpText31: 'Les codes promo ne s\'appliquent qu\'aux plans par SMS',
-      promoCodeHelpText32: 'Les codes promo ne s\'appliquent pas aux plans par WhatsApp',
-      promoCodeHelpText33: 'Les codes promo ne s\'appliquent qu\'aux plans par Telegram',
-      promoCodeHelpText34: 'Les codes promo ne s\'appliquent pas aux plans par Signal',
-      promoCodeHelpText35: 'Les codes promo ne s\'appliquent qu\'aux plans par Discord',
-      promoCodeHelpText36: 'Les codes promo ne s\'appliquent pas aux plans par Slack',
-      promoCodeHelpText37: 'Les codes promo ne s\'appliquent qu\'aux plans par Teams',
-      promoCodeHelpText38: 'Les codes promo ne s\'appliquent pas aux plans par Zoom',
-      promoCodeHelpText39: 'Les codes promo ne s\'appliquent qu\'aux plans par Skype',
-      promoCodeHelpText40: 'Les codes promo ne s\'appliquent pas aux plans par FaceTime',
-      promoCodeHelpText41: 'Les codes promo ne s\'appliquent qu\'aux plans par Google Meet',
-      promoCodeHelpText42: 'Les codes promo ne s\'appliquent pas aux plans par Webex',
-      promoCodeHelpText43: 'Les codes promo ne s\'appliquent qu\'aux plans par BlueJeans',
-      promoCodeHelpText44: 'Les codes promo ne s\'appliquent pas aux plans par GoToMeeting',
-      promoCodeHelpText45: 'Les codes promo ne s\'appliquent qu\'aux plans par Join.me',
-      promoCodeHelpText46: 'Les codes promo ne s\'appliquent pas aux plans par AnyMeeting',
-      promoCodeHelpText47: 'Les codes promo ne s\'appliquent qu\'aux plans par ClickMeeting',
-      promoCodeHelpText48: 'Les codes promo ne s\'appliquent pas aux plans par BigBlueButton',
-      promoCodeHelpText49: 'Les codes promo ne s\'appliquent qu\'aux plans par Jitsi',
-      promoCodeHelpText50: 'Les codes promo ne s\'appliquent pas aux plans par OpenMeetings'
+      unlockFeaturesDescription: 'Débloquez de nouvelles fonctionnalités premium'
     },
     en: {
       errorNotLoggedIn: 'You must be logged in to perform an upgrade',
@@ -143,85 +63,7 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
       choosePlan: 'Choose your plan',
       upgradePlan: 'Upgrade your plan',
       selectPlanDescription: 'Select the plan that matches your needs',
-      unlockFeaturesDescription: 'Unlock new premium features',
-      upgradeNow: 'Upgrade now',
-      upgradeInProgress: 'Upgrade in progress...',
-      currentPlan: 'Current plan',
-      upgradeTo: 'Upgrade to',
-      monthlyPrice: 'Monthly price',
-      yearlyPrice: 'Yearly price',
-      savings: 'Savings',
-      features: 'Features',
-      unlimited: 'Unlimited',
-      included: 'Included',
-      notIncluded: 'Not included',
-      upgrade: 'Upgrade',
-      cancel: 'Cancel',
-      close: 'Close',
-      promoCodeApplied: 'Promo code applied',
-      promoCodeError: 'Promo code error',
-      promoCodeInvalid: 'Invalid promo code',
-      promoCodeExpired: 'Expired promo code',
-      promoCodeUsed: 'Promo code already used',
-      promoCodeLimit: 'Usage limit reached',
-      promoCodeSuccess: 'Promo code applied successfully',
-      promoCodeDiscount: 'Discount applied',
-      promoCodeFree: '100% free with this promo code!',
-      promoCodeInput: 'Promo code',
-      promoCodeApply: 'Apply',
-      promoCodeRemove: 'Remove',
-      promoCodePlaceholder: 'Enter your promo code',
-      promoCodeHelp: 'Have a promo code?',
-      promoCodeHelpText: 'Enter your promo code to get a discount',
-      promoCodeHelpText2: 'or free access to premium features',
-      promoCodeHelpText3: 'Valid promo codes:',
-      promoCodeHelpText4: 'EARLYBIRD30, SAVINGS40, FOUNDER50, TESTER100, Calvin2025',
-      promoCodeHelpText5: 'Some codes offer 100% free!',
-      promoCodeHelpText6: 'Check validity and conditions',
-      promoCodeHelpText7: 'One promo code per transaction',
-      promoCodeHelpText8: 'Promo codes cannot be combined',
-      promoCodeHelpText9: 'Promo codes are valid until December 31, 2025',
-      promoCodeHelpText10: 'Except TESTER100 and Calvin2025 which are valid until December 31, 2026',
-      promoCodeHelpText11: 'Promo codes are limited in number of uses',
-      promoCodeHelpText12: 'Check availability before use',
-      promoCodeHelpText13: 'Promo codes only apply to new subscriptions',
-      promoCodeHelpText14: 'Promo codes do not apply to renewals',
-      promoCodeHelpText15: 'Promo codes only apply to paid plans',
-      promoCodeHelpText16: 'Promo codes do not apply to free plan',
-      promoCodeHelpText17: 'Promo codes only apply to monthly plans',
-      promoCodeHelpText18: 'Promo codes do not apply to yearly plans',
-      promoCodeHelpText19: 'Promo codes only apply to individual plans',
-      promoCodeHelpText20: 'Promo codes do not apply to family plans',
-      promoCodeHelpText21: 'Promo codes only apply to Canadian plans',
-      promoCodeHelpText22: 'Promo codes do not apply to international plans',
-      promoCodeHelpText23: 'Promo codes only apply to plans in Canadian dollars',
-      promoCodeHelpText24: 'Promo codes do not apply to plans in other currencies',
-      promoCodeHelpText25: 'Promo codes only apply to online plans',
-      promoCodeHelpText26: 'Promo codes do not apply to phone plans',
-      promoCodeHelpText27: 'Promo codes only apply to email plans',
-      promoCodeHelpText28: 'Promo codes do not apply to mail plans',
-      promoCodeHelpText29: 'Promo codes only apply to chat plans',
-      promoCodeHelpText30: 'Promo codes do not apply to video plans',
-      promoCodeHelpText31: 'Promo codes only apply to SMS plans',
-      promoCodeHelpText32: 'Promo codes do not apply to WhatsApp plans',
-      promoCodeHelpText33: 'Promo codes only apply to Telegram plans',
-      promoCodeHelpText34: 'Promo codes do not apply to Signal plans',
-      promoCodeHelpText35: 'Promo codes only apply to Discord plans',
-      promoCodeHelpText36: 'Promo codes do not apply to Slack plans',
-      promoCodeHelpText37: 'Promo codes only apply to Teams plans',
-      promoCodeHelpText38: 'Promo codes do not apply to Zoom plans',
-      promoCodeHelpText39: 'Promo codes only apply to Skype plans',
-      promoCodeHelpText40: 'Promo codes do not apply to FaceTime plans',
-      promoCodeHelpText41: 'Promo codes only apply to Google Meet plans',
-      promoCodeHelpText42: 'Promo codes do not apply to Webex plans',
-      promoCodeHelpText43: 'Promo codes only apply to BlueJeans plans',
-      promoCodeHelpText44: 'Promo codes do not apply to GoToMeeting plans',
-      promoCodeHelpText45: 'Promo codes only apply to Join.me plans',
-      promoCodeHelpText46: 'Promo codes do not apply to AnyMeeting plans',
-      promoCodeHelpText47: 'Promo codes only apply to ClickMeeting plans',
-      promoCodeHelpText48: 'Promo codes do not apply to BigBlueButton plans',
-      promoCodeHelpText49: 'Promo codes only apply to Jitsi plans',
-      promoCodeHelpText50: 'Promo codes do not apply to OpenMeetings plans'
+      unlockFeaturesDescription: 'Unlock new premium features'
     }
   };
 
@@ -231,10 +73,8 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
       return;
     }
 
-    // Si un code promo 100% gratuit est appliqué, déverrouiller directement
     if (appliedPromoCode && promoDiscount === 100) {
-      // Déverrouiller les fonctionnalités sans passer par Stripe
-      console.log('Code promo 100% appliqué - Accès Ultimate déverrouillé');
+      console.log('Code promo 100% appliqué - Accès Expert déverrouillé');
       onClose();
       return;
     }
@@ -243,28 +83,23 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
     setError(null);
 
     try {
-      // 1. Vérifier si l'upgrade est possible
       if (!stripeUpgradeService.canUpgrade(currentPlan, targetPlan)) {
         throw new Error(t[isFrench ? 'fr' : 'en'].upgradeNotAuthorized);
       }
 
-      // 2. Créer la session de paiement (avec prix réduit si code promo)
       const { sessionId, url } = await stripeUpgradeService.createUpgradeCheckoutSession(
         currentPlan,
         targetPlan,
-        user.uid, // Utiliser l'UID Firebase comme customer ID
+        user.id,
         subscriptionStartDate
       );
 
-      // 3. Rediriger vers Stripe Checkout
       if (url) {
         window.location.href = url;
       } else {
-        // Fallback : rediriger via l'API Stripe
         await stripeUpgradeService.redirectToCheckout(sessionId);
       }
 
-      // 4. Fermer le modal
       onClose();
     } catch (error) {
       console.error('Erreur lors de l\'upgrade:', error);
@@ -278,9 +113,8 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
     setAppliedPromoCode(code);
     setPromoDiscount(discount);
     
-    // Si c'est un code 100% gratuit, afficher un message spécial
     if (discount === 100) {
-      setError(null); // Effacer les erreurs précédentes
+      setError(null);
     }
   };
 
@@ -316,7 +150,14 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
         hasPrioritySupport: 'Support prioritaire',
         hasPersonalizedTraining: 'Formation personnalisée',
         hasExportPDF: 'Export PDF',
-        hasMonteCarloSimulations: 'Simulations Monte Carlo'
+        hasMonteCarloSimulations: 'Simulations Monte Carlo',
+        hasCashflowManagement: 'Gestion du flux de trésorerie',
+        hasWithdrawalStrategies: 'Stratégies de décaissement',
+        hasExpensePlanning: 'Planification des dépenses',
+        hasTaxOptimization: 'Optimisation fiscale',
+        hasFinancialAssistant: 'Assistant Financier Personnel',
+        hasBudgetModule: 'Module Budget',
+        maxExpenseProjects: 'Projets de dépenses'
       },
       en: {
         maxSimulations: 'Unlimited simulations',
@@ -328,154 +169,18 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
         hasPrioritySupport: 'Priority support',
         hasPersonalizedTraining: 'Personalized training',
         hasExportPDF: 'PDF export',
-        hasMonteCarloSimulations: 'Monte Carlo simulations'
+        hasMonteCarloSimulations: 'Monte Carlo simulations',
+        hasCashflowManagement: 'Cash flow management',
+        hasWithdrawalStrategies: 'Withdrawal strategies',
+        hasExpensePlanning: 'Expense planning',
+        hasTaxOptimization: 'Tax optimization',
+        hasFinancialAssistant: 'Personal Financial Assistant',
+        hasBudgetModule: 'Budget Module',
+        maxExpenseProjects: 'Expense projects'
       }
     };
     return featureNames[isFrench ? 'fr' : 'en'][feature] || feature;
   };
-
-  const renderUpgradeCard = (upgrade: UpgradePath) => {
-    // NOUVEAU : Calcul du prix intelligent si c'est un upgrade temporel
-    let displayPrice = upgrade.upgradePrice;
-    let displayDescription = upgrade.savings;
-    let timeInfo = null;
-
-    if (upgrade.upgradeType === 'time_adjusted' && currentPlan === 'professional') {
-      const smartPrice = getUpgradePriceWithTimeAdjustment(
-        currentPlan,
-        upgrade.to,
-        subscriptionStartDate
-      );
-      
-      displayPrice = smartPrice.price;
-      displayDescription = smartPrice.savings;
-      
-      // Affichage des informations temporelles
-      timeInfo = (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-3">
-          <div className="flex items-center gap-2 text-blue-800 mb-2">
-            <Clock className="h-4 w-4" />
-            <span className="font-medium">{isFrench ? 'Détails de l\'upgrade' : 'Upgrade details'}</span>
-          </div>
-          <div className="text-sm space-y-1">
-            <div className="flex justify-between">
-              <span>{isFrench ? 'Mois restants :' : 'Months remaining:'}</span>
-              <span className="font-medium">{smartPrice.monthsRemaining} {isFrench ? 'mois' : 'months'}</span>
-            </div>
-            <div className="flex justify-between">
-              <span>{isFrench ? 'Déjà payé :' : 'Already paid:'}</span>
-              <span className="font-medium">119,99 $ (Professional)</span>
-            </div>
-            <div className="flex justify-between">
-              <span>{isFrench ? 'Prix upgrade :' : 'Upgrade price:'}</span>
-              <span className="font-medium text-green-600">{smartPrice.price}</span>
-            </div>
-            <div className="flex justify-between border-t pt-1">
-              <span className="font-medium">{isFrench ? 'Total :' : 'Total:'}</span>
-              <span className="font-bold text-green-700">{smartPrice.totalPaid}</span>
-            </div>
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <Card 
-        key={upgrade.to}
-        className={`border-2 ${
-          upgrade.isRecommended 
-            ? 'border-purple-500 bg-gradient-to-br from-purple-50 to-pink-50' 
-            : 'border-gray-200'
-        } relative`}
-      >
-        {upgrade.isRecommended && (
-          <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-            <Badge className="bg-gradient-to-r from-purple-600 to-pink-600 text-white">
-              <Star className="h-3 w-3 mr-1" />
-              {isFrench ? 'Recommandé' : 'Recommended'}
-            </Badge>
-          </div>
-        )}
-        
-        <CardHeader className="text-center pb-3">
-          <CardTitle className="text-lg">{PLAN_CONFIG[upgrade.to].badge}</CardTitle>
-          <CardDescription className="text-2xl font-bold text-gray-900">
-            {displayPrice}
-          </CardDescription>
-          <Badge variant="outline" className="text-green-600 border-green-300">
-            <TrendingUp className="h-3 w-3 mr-1" />
-            {displayDescription}
-          </Badge>
-        </CardHeader>
-        
-        <CardContent className="space-y-3">
-          {timeInfo}
-          
-          <div className="text-sm text-gray-600 mb-3">
-            {upgrade.features.length} {isFrench ? 'nouvelles fonctionnalités débloquées' : 'new features unlocked'}
-          </div>
-          
-          {upgrade.features.map((feature, index) => (
-            <div key={index} className="flex items-center gap-2 text-sm">
-              <Check className="h-4 w-4 text-green-600" />
-              <span className="text-gray-700">{feature}</span>
-            </div>
-          ))}
-          
-          <Button
-            onClick={() => handleUpgrade(upgrade.to)}
-            disabled={isProcessing}
-            className={`w-full mt-4 ${
-              upgrade.isRecommended
-                ? 'bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700'
-                : 'bg-gray-600 hover:bg-gray-700'
-            } text-white`}
-          >
-            {isProcessing ? (
-              <>
-                <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                {isFrench ? 'Traitement...' : 'Processing...'}
-              </>
-            ) : (
-              <>
-                <Crown className="h-4 w-4 mr-2" />
-                {isFrench ? 'Upgrade vers' : 'Upgrade to'} {PLAN_CONFIG[upgrade.to].badge}
-                <ArrowRight className="h-4 w-4 ml-2" />
-              </>
-            )}
-          </Button>
-        </CardContent>
-      </Card>
-    );
-  };
-
-  const renderCurrentPlanCard = () => (
-    <Card className="border-2 border-gray-200 bg-gray-50">
-      <CardHeader className="text-center pb-3">
-        <Badge variant="secondary" className="mb-2">
-          {isFrench ? 'Plan Actuel' : 'Current Plan'}
-        </Badge>
-        <CardTitle className="text-lg">{currentPlanInfo.badge}</CardTitle>
-        <CardDescription className="text-2xl font-bold text-gray-900">
-          {currentPlanInfo.price}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        {Object.entries(currentPlanInfo.features).map(([key, value]) => (
-          <div key={key} className="flex items-center gap-2 text-sm">
-            {value === true || value === -1 ? (
-              <Check className="h-4 w-4 text-green-600" />
-            ) : (
-              <X className="h-4 w-4 text-gray-400" />
-            )}
-            <span className={value === true || value === -1 ? 'text-gray-700' : 'text-gray-400'}>
-              {getFeatureName(key as keyof PlanLimits['features'])}
-            </span>
-          </div>
-        ))}
-      </CardContent>
-    </Card>
-  );
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -525,12 +230,12 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
           <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
             <div className="flex items-center gap-2 text-green-800">
               <Crown className="h-5 w-5" />
-              <span className="font-medium">🎉 {isFrench ? 'Accès Ultimate déverrouillé !' : 'Ultimate access unlocked!'}</span>
+              <span className="font-medium">🎉 {isFrench ? 'Accès Expert déverrouillé !' : 'Expert access unlocked!'}</span>
             </div>
             <p className="text-green-700 text-sm mt-1">
               {isFrench 
-                ? `Votre code promo ${appliedPromoCode} vous donne accès à toutes les fonctionnalités Ultimate gratuitement !`
-                : `Your promo code ${appliedPromoCode} gives you access to all Ultimate features for free!`
+                ? `Votre code promo ${appliedPromoCode} vous donne accès à toutes les fonctionnalités Expert gratuitement !`
+                : `Your promo code ${appliedPromoCode} gives you access to all Expert features for free!`
               }
             </p>
           </div>
@@ -557,29 +262,246 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
             </div>
           )}
 
-          {/* Codes promo - AVANT les options d'upgrade */}
+          {/* Codes promo */}
           <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-6">
             <PromoCodeInput
-              originalPrice={ultimatePrice}
+              originalPrice={expertPrice}
               onCodeApplied={handlePromoCodeApplied}
               onCodeCleared={handlePromoCodeCleared}
             />
           </div>
 
-          {/* Upgrade Options */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Current Plan */}
-            {renderCurrentPlanCard()}
-            
-            {/* Available Upgrades */}
-            {availableUpgrades.map(renderUpgradeCard)}
+          {/* Grille complète des 3 plans */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Plan Gratuit */}
+            <Card className={`border-2 relative ${currentPlan === 'free' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}>
+              {currentPlan === 'free' && (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <Badge className="bg-blue-100 text-blue-800 border border-blue-200">
+                    {isFrench ? 'Plan Actuel' : 'Current Plan'}
+                  </Badge>
+                </div>
+              )}
+              <CardHeader className="text-center pb-3">
+                <div className="w-12 h-12 mx-auto mb-2 bg-green-100 rounded-full flex items-center justify-center">
+                  <Shield className="h-6 w-6 text-green-600" />
+                </div>
+                <CardTitle className="text-lg text-gray-900">{PLAN_CONFIG.free.badge}</CardTitle>
+                <CardDescription className="text-3xl font-bold text-gray-900">
+                  {PLAN_CONFIG.free.price}
+                </CardDescription>
+                <div className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                  {isFrench ? 'VALEUR : 500 $ GRATUIT' : 'VALUE: 500$+ FREE'}
+                </div>
+                <div className="text-xs text-green-600">
+                  {isFrench ? 'Seule plateforme au Québec à offrir cela gratuitement' : 'Only platform in Quebec to offer this for free'}
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="flex items-center gap-2 text-sm">
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-700">{isFrench ? 'Module d\'urgence professionnel (8 sections)' : 'Professional emergency module (8 sections)'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-700">{isFrench ? 'Planification budget et dépenses' : 'Budget and expense planning'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-700">{isFrench ? 'Calculateurs de base (5 outils)' : 'Basic calculators (5 tools)'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-700">{isFrench ? 'Gestion revenus et prestations RREGOP/CPP' : 'Income and benefits management RREGOP/CPP'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-700">{isFrench ? 'Sécurité bancaire (chiffrement AES-256)' : 'Banking security (AES-256 encryption)'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-700">{isFrench ? '2 simulations/mois • Données 100 % privées' : '2 simulations/month • 100% private data'}</span>
+                </div>
+                {currentPlan === 'free' && (
+                  <Button 
+                    className="w-full mt-4 bg-green-600 hover:bg-green-700 text-white"
+                    disabled
+                  >
+                    <Check className="h-4 w-4 mr-2" />
+                    {isFrench ? 'Commencer GRATUITEMENT' : 'Start FREE'}
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Plan Professionnel */}
+            <Card className={`border-2 relative ${currentPlan === 'professional' ? 'border-blue-500 bg-blue-50' : 'border-purple-500'}`}>
+              {currentPlan === 'professional' ? (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <Badge className="bg-blue-100 text-blue-800 border border-blue-200">
+                    {isFrench ? 'Plan Actuel' : 'Current Plan'}
+                  </Badge>
+                </div>
+              ) : (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <Badge className="bg-purple-100 text-purple-800 border border-purple-200">
+                    ☆ {isFrench ? 'Recommandé' : 'Recommended'}
+                  </Badge>
+                </div>
+              )}
+              <CardHeader className="text-center pb-3">
+                <div className="w-12 h-12 mx-auto mb-2 bg-blue-100 rounded-full flex items-center justify-center">
+                  <Star className="h-6 w-6 text-blue-600" />
+                </div>
+                <CardTitle className="text-lg text-purple-900">{PLAN_CONFIG.professional.badge}</CardTitle>
+                <CardDescription className="text-3xl font-bold text-purple-900">
+                  {PLAN_CONFIG.professional.price}
+                </CardDescription>
+                <div className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                  {isFrench ? '80 % moins cher que la concurrence' : '80% cheaper than competition'}
+                </div>
+                <div className="text-xs text-blue-600">
+                  {isFrench ? 'Économie de 94 % • Équivaut à 2 consultations' : 'Save 94% • Equivalent to 2 consultations'}
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mb-2">
+                  {isFrench ? `VALEUR : 5 000 $ pour 297 $` : `VALUE: 5000$+ for 297 $`}
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-700">{isFrench ? 'Tout du plan Gratuit + 45 fonctionnalités' : 'All Free plan + 45 features'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-700">{isFrench ? 'Assistant IA Personnel (prévention catastrophes)' : 'Personal AI Assistant (disaster prevention)'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-700">{isFrench ? 'Calculateurs avancés (IRR, TWR, Monte Carlo)' : 'Advanced calculators (IRR, TWR, Monte Carlo)'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-700">{isFrench ? 'Modules RREGOP + SRG complets' : 'Complete RREGOP + SRG modules'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-700">{isFrench ? 'Optimisation fiscale avancée (REER/CELI)' : 'Advanced tax optimization (RRSP/TFSA)'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-700">{isFrench ? 'Rapports professionnels • Simulations illimitées' : 'Professional reports • Unlimited simulations'}</span>
+                </div>
+                {currentPlan !== 'professional' && currentPlan !== 'expert' && (
+                  <Button 
+                    className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white"
+                    onClick={() => handleUpgrade('professional')}
+                    disabled={isProcessing}
+                  >
+                    {isProcessing ? (
+                      <>{isFrench ? 'Mise à niveau en cours...' : 'Upgrading...'}</>
+                    ) : (
+                      <>
+                        <ArrowRight className="h-4 w-4 mr-2" />
+                        {isFrench ? 'Choisir Professionnel' : 'Choose Professional'}
+                      </>
+                    )}
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Plan Expert */}
+            <Card className={`border-2 relative ${currentPlan === 'expert' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}>
+              {currentPlan === 'expert' && (
+                <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
+                  <Badge className="bg-blue-100 text-blue-800 border border-blue-200">
+                    {isFrench ? 'Plan Actuel' : 'Current Plan'}
+                  </Badge>
+                </div>
+              )}
+              <CardHeader className="text-center pb-3">
+                <div className="w-12 h-12 mx-auto mb-2 bg-purple-100 rounded-full flex items-center justify-center">
+                  <Crown className="h-6 w-6 text-purple-600" />
+                </div>
+                <CardTitle className="text-lg text-gray-900">{PLAN_CONFIG.expert.badge}</CardTitle>
+                <CardDescription className="text-3xl font-bold text-gray-900">
+                  {appliedPromoCode && promoDiscount > 0 ? (
+                    <div>
+                      <span className="line-through text-gray-500 text-xl">{PLAN_CONFIG.expert.price}</span>
+                      <br />
+                      <span className="text-green-600">
+                        {promoDiscount === 100 ? (
+                          isFrench ? 'GRATUIT !' : 'FREE!'
+                        ) : (
+                          `${Math.round(expertPrice * (1 - promoDiscount / 100))} $ ${isFrench ? '/an' : '/year'}`
+                        )}
+                      </span>
+                    </div>
+                  ) : (
+                    PLAN_CONFIG.expert.price
+                  )}
+                </CardDescription>
+                <div className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
+                  {isFrench ? '60 % moins cher que la concurrence' : '60% cheaper than competition'}
+                </div>
+                <div className="text-xs text-purple-600">
+                  {isFrench ? 'Niveau consultant • Économie de 94 % • Évite erreurs coûteuses' : 'Consultant level • Save 94% • Avoid costly errors'}
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-2">
+                <div className="bg-purple-100 text-purple-800 text-xs px-2 py-1 rounded-full mb-2">
+                  {isFrench ? `VALEUR : 10 000 $ pour 597 $` : `VALUE: 10 000$+ for 597 $`}
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Check className="h-4 w-4 text-green-600" />
+                  <span className="text-gray-700">{isFrench ? 'Suite complète : 75+ fonctionnalités' : 'Complete suite: 75+ features'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Crown className="h-4 w-4 text-purple-600" />
+                  <span className="text-gray-700">{isFrench ? 'Planification successorale complète' : 'Complete succession planning'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Crown className="h-4 w-4 text-purple-600" />
+                  <span className="text-gray-700">{isFrench ? 'Monte Carlo 1000+ itérations • IA prédictive' : 'Monte Carlo 1000+ iterations • Predictive AI'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Crown className="h-4 w-4 text-purple-600" />
+                  <span className="text-gray-700">{isFrench ? 'Optimisation immobilière avancée' : 'Advanced real estate optimization'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Crown className="h-4 w-4 text-purple-600" />
+                  <span className="text-gray-700">{isFrench ? 'Rapports niveau consultant • Export PDF' : 'Consultant-level reports • PDF export'}</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm">
+                  <Crown className="h-4 w-4 text-purple-600" />
+                  <span className="text-gray-700">{isFrench ? 'Support prioritaire • Consultation virtuelle' : 'Priority support • Virtual consultation'}</span>
+                </div>
+                {currentPlan !== 'expert' && (
+                  <Button 
+                    className="w-full mt-4 bg-purple-600 hover:bg-purple-700 text-white"
+                    onClick={() => handleUpgrade('expert')}
+                    disabled={isProcessing}
+                  >
+                    {isProcessing ? (
+                      <>{isFrench ? 'Mise à niveau en cours...' : 'Upgrading...'}</>
+                    ) : (
+                      <>
+                        <Crown className="h-4 w-4 mr-2" />
+                        {isFrench ? 'Choisir Expert' : 'Choose Expert'}
+                      </>
+                    )}
+                  </Button>
+                )}
+              </CardContent>
+            </Card>
           </div>
 
           {/* Upgrade Benefits */}
           <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-6">
             <h3 className="font-semibold text-purple-900 mb-4 flex items-center gap-2">
               <Zap className="h-5 w-5" />
-              {isFrench ? 'Pourquoi upgrader ?' : 'Why upgrade?'}
+              {isFrench ? 'Pourquoi mettre à niveau ?' : 'Why upgrade?'}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center gap-2">
@@ -624,9 +546,27 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
           <div className="text-center text-sm text-gray-500">
             <Shield className="h-4 w-4 inline mr-1" />
             {isFrench 
-              ? 'Paiement sécurisé par Stripe • Annulation à tout moment'
-              : 'Secure payment by Stripe • Cancel at any time'
+              ? 'Paiement sécurisé par Stripe • Annulation 30 jours'
+              : 'Secure payment by Stripe • 30-day cancellation'
             }
+          </div>
+          
+          {/* Important Notice */}
+          <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+            <div className="flex items-start gap-2">
+              <Shield className="h-5 w-5 text-orange-600 mt-0.5" />
+              <div>
+                <h4 className="font-medium text-orange-800 mb-1">
+                  {isFrench ? 'Important' : 'Important'}
+                </h4>
+                <p className="text-orange-700 text-sm">
+                  {isFrench 
+                    ? 'Si le forfait est annulé, les données du module annulé ne seront plus considérées/utilisées/traitées par l\'application web.'
+                    : 'If the plan is cancelled, the cancelled module data will no longer be considered/used/processed by the web application.'
+                  }
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </DialogContent>

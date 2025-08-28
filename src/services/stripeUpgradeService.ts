@@ -32,16 +32,16 @@ interface UpgradeResult {
 
 // Configuration Stripe (à remplacer par vos vraies clés)
 const STRIPE_CONFIG = {
-  publishableKey: import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY,
-  secretKey: import.meta.env.VITE_STRIPE_SECRET_KEY, // Utilisé côté serveur uniquement
-  webhookSecret: import.meta.env.VITE_STRIPE_WEBHOOK_SECRET
+  publishableKey: (import.meta as any).env?.VITE_STRIPE_PUBLISHABLE_KEY,
+  secretKey: (import.meta as any).env?.VITE_STRIPE_SECRET_KEY, // Utilisé côté serveur uniquement
+  webhookSecret: (import.meta as any).env?.VITE_STRIPE_WEBHOOK_SECRET
 };
 
 // Plan IDs Stripe (à remplacer par vos vrais IDs)
 const STRIPE_PLAN_IDS = {
   professional: 'price_professional_annual', // À remplacer
-  ultimate: 'price_ultimate_annual', // À remplacer
-  upgrade_pro_to_ultimate: 'price_upgrade_pro_to_ultimate' // À remplacer
+  expert: 'price_expert_annual', // À remplacer
+  upgrade_pro_to_expert: 'price_upgrade_pro_to_expert' // À remplacer
 };
 
 export class StripeUpgradeService {
@@ -86,8 +86,8 @@ export class StripeUpgradeService {
    */
   canUpgrade(fromPlan: SubscriptionPlan, toPlan: SubscriptionPlan): boolean {
     if (fromPlan === 'free' && toPlan === 'professional') return true;
-    if (fromPlan === 'free' && toPlan === 'ultimate') return true;
-    if (fromPlan === 'professional' && toPlan === 'ultimate') return true;
+    if (fromPlan === 'free' && toPlan === 'expert') return true;
+    if (fromPlan === 'professional' && toPlan === 'expert') return true;
     return false;
   }
 
@@ -98,8 +98,8 @@ export class StripeUpgradeService {
     switch (plan) {
       case 'professional':
         return STRIPE_PLAN_IDS.professional;
-      case 'ultimate':
-        return STRIPE_PLAN_IDS.ultimate;
+      case 'expert':
+        return STRIPE_PLAN_IDS.expert;
       default:
         throw new Error(`Plan non supporté: ${plan}`);
     }

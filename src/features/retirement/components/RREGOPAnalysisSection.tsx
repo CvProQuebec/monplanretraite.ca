@@ -18,12 +18,65 @@ import {
   DollarSign,
   Users
 } from 'lucide-react';
+import { useLanguage } from '../hooks/useLanguage';
 
 interface RREGOPAnalysisSectionProps {
   userPlan: 'free' | 'professional' | 'ultimate';
 }
 
 export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectionProps) {
+  const { language } = useLanguage();
+  const isFrench = language === 'fr';
+
+  // Traductions
+  const t = {
+    title: isFrench ? 'Module RREGOP' : 'RREGOP Module',
+    subtitle: isFrench 
+      ? 'Analysez votre régime de retraite des employés du gouvernement et des organismes publics'
+      : 'Analyze your retirement plan for government and public agency employees',
+    rregopData: isFrench ? 'Données RREGOP' : 'RREGOP Data',
+    dataDescription: isFrench 
+      ? 'Saisissez vos informations de service gouvernemental'
+      : 'Enter your government service information',
+    regimeType: isFrench ? 'Type de régime' : 'Scheme type',
+    eligibleYears: isFrench ? 'Années de service admissibles' : 'Eligible years of service',
+    calculationYears: isFrench ? 'Années de service pour calcul' : 'Years of service for calculation',
+    currentSalary: isFrench ? 'Salaire actuel' : 'Current salary',
+    retirementAge: isFrench ? 'Âge de retraite souhaité' : 'Desired retirement age',
+    survivorOption: isFrench ? 'Option survivant' : 'Survivor option',
+    calculate: isFrench ? 'Calculer ma rente RREGOP' : 'Calculate my RREGOP pension',
+    calculating: isFrench ? 'Calcul en cours...' : 'Calculating...',
+    results: isFrench ? 'Résultats du calcul' : 'Calculation Results',
+    annualPension: isFrench ? 'Rente annuelle' : 'Annual pension',
+    monthlyPension: isFrench ? 'Rente mensuelle' : 'Monthly pension',
+    earlyRetirementPenalty: isFrench ? 'Pénalité de' : 'Penalty of',
+    forEarlyRetirement: isFrench ? 'pour retraite anticipée' : 'for early retirement',
+    retirementScenarios: isFrench ? 'Scénarios de retraite' : 'Retirement Scenarios',
+    lifetimeValue: isFrench ? 'Valeur viagère :' : 'Lifetime value:',
+    advantages: isFrench ? 'Avantages :' : 'Advantages:',
+    disadvantages: isFrench ? 'Inconvénients :' : 'Disadvantages:',
+    recommendations: isFrench ? 'Recommandations' : 'Recommendations',
+    impact: isFrench ? 'Impact :' : 'Impact:',
+    moreYearsOfFreedom: isFrench ? 'Plus d\'années de liberté' : 'More years of freedom',
+    penalty18: isFrench ? 'Pénalité de 18%' : '18% penalty',
+    rrqCoordination: isFrench ? 'Coordination RRQ à 65 ans' : 'RRQ coordination at 65',
+    fullPensionAvailable: isFrench ? 'Pleine rente disponible' : 'Full pension available',
+    noPenalty: isFrench ? 'Aucune pénalité' : 'No penalty',
+    noRRQCoordination: isFrench ? 'Pas de coordination RRQ' : 'No RRQ coordination',
+    fewerYearsOfFreedom: isFrench ? 'Moins d\'années de liberté' : 'Fewer years of freedom',
+    retirementAgeOptimization: isFrench ? 'Optimisation de l\'âge de retraite' : 'Retirement Age Optimization',
+    retirementAgeDescription: isFrench 
+      ? 'Considérez reporter votre retraite à 61 ans pour éviter les pénalités'
+      : 'Consider postponing your retirement to age 61 to avoid penalties',
+    savings18: isFrench ? 'Économie de 18% sur votre rente' : '18% savings on your pension',
+    highPriority: isFrench ? 'Priorité haute' : 'High Priority',
+    analyzeFinancialImpact: isFrench ? 'Analyser l\'impact financier' : 'Analyze financial impact',
+    consultRREGOPAdvisor: isFrench ? 'Consulter un conseiller RREGOP' : 'Consult a RREGOP advisor',
+    retirementAt58: isFrench ? 'Retraite à 58 ans' : 'Retirement at 58',
+    retirementAt61: isFrench ? 'Retraite à 61 ans' : 'Retirement at 61',
+    retirementAt65: isFrench ? 'Retraite à 65 ans' : 'Retirement at 65'
+  };
+
   const [rregopData, setRregopData] = useState({
     typeRegime: 'RREGOP',
     anneesServiceAdmissibilite: 0, // Initialisé à 0
@@ -69,37 +122,37 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
         recommandations: [
           {
             type: 'optimisation',
-            titre: 'Optimisation de l\'âge de retraite',
-            description: 'Considérez reporter votre retraite à 61 ans pour éviter les pénalités',
-            impact: 'Économie de 18% sur votre rente',
+            titre: t.retirementAgeOptimization,
+            description: t.retirementAgeDescription,
+            impact: t.savings18,
             priorite: 'haute',
-            actions: ['Analyser l\'impact financier', 'Consulter un conseiller RREGOP']
+            actions: [t.analyzeFinancialImpact, t.consultRREGOPAdvisor]
           }
         ],
         scenarios: [
           {
-            nom: 'Retraite à 58 ans',
+            nom: t.retirementAt58,
             ageRetraite: 58,
             montantAnnuel: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul * 0.82),
             montantViager: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul * 0.82 * 27),
-            avantages: ['Plus d\'années de liberté'],
-            inconvenients: ['Pénalité de 18%', 'Coordination RRQ à 65 ans']
+            avantages: [t.moreYearsOfFreedom],
+            inconvenients: [t.penalty18, t.rrqCoordination]
           },
           {
-            nom: 'Retraite à 61 ans',
+            nom: t.retirementAt61,
             ageRetraite: 61,
             montantAnnuel: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul),
             montantViager: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul * 24),
-            avantages: ['Pleine rente disponible', 'Aucune pénalité'],
-            inconvenients: ['Coordination RRQ à 65 ans']
+            avantages: [t.fullPensionAvailable, t.noPenalty],
+            inconvenients: [t.rrqCoordination]
           },
           {
-            nom: 'Retraite à 65 ans',
+            nom: t.retirementAt65,
             ageRetraite: 65,
             montantAnnuel: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul),
             montantViager: Math.round(rregopData.salaireActuel * 0.02 * rregopData.anneesServiceCalcul * 20),
-            avantages: ['Pleine rente disponible', 'Aucune pénalité', 'Pas de coordination RRQ'],
-            inconvenients: ['Moins d\'années de liberté']
+            avantages: [t.fullPensionAvailable, t.noPenalty, t.noRRQCoordination],
+            inconvenients: [t.fewerYearsOfFreedom]
           }
         ]
       };
@@ -120,11 +173,11 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
           <div className="flex items-center justify-center gap-3 mb-6">
             <Building2 className="w-12 h-12 text-blue-600" />
             <h1 className="text-4xl font-bold text-gray-900">
-              Module RREGOP
+              {t.title}
             </h1>
           </div>
           <p className="text-xl text-gray-700 max-w-3xl mx-auto leading-relaxed">
-            Analysez votre régime de retraite des employés du gouvernement et des organismes publics
+            {t.subtitle}
           </p>
         </div>
 
@@ -134,16 +187,16 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-blue-800">
                 <Calculator className="w-6 h-6" />
-                Données RREGOP
+                {t.rregopData}
               </CardTitle>
               <CardDescription>
-                Saisissez vos informations de service gouvernemental
+                {t.dataDescription}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="typeRegime">Type de régime</Label>
+                  <Label htmlFor="typeRegime">{t.regimeType}</Label>
                   <Select value={rregopData.typeRegime} onValueChange={(value) => setRregopData(prev => ({ ...prev, typeRegime: value as 'RREGOP' | 'RRPE' }))}>
                     <SelectTrigger>
                       <SelectValue />
@@ -156,7 +209,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                 </div>
                 
                 <div>
-                  <Label htmlFor="anneesService">Années de service admissibles</Label>
+                  <Label htmlFor="anneesService">{t.eligibleYears}</Label>
                   <Input
                     id="anneesService"
                     type="number"
@@ -167,7 +220,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                 </div>
 
                 <div>
-                  <Label htmlFor="anneesCalcul">Années de service pour calcul</Label>
+                  <Label htmlFor="anneesCalcul">{t.calculationYears}</Label>
                   <Input
                     id="anneesCalcul"
                     type="number"
@@ -178,7 +231,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                 </div>
 
                 <div>
-                  <Label htmlFor="salaireActuel">Salaire actuel</Label>
+                  <Label htmlFor="salaireActuel">{t.currentSalary}</Label>
                   <Input
                     id="salaireActuel"
                     type="number"
@@ -189,7 +242,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                 </div>
 
                 <div>
-                  <Label htmlFor="ageRetraite">Âge de retraite souhaité</Label>
+                  <Label htmlFor="ageRetraite">{t.retirementAge}</Label>
                   <Input
                     id="ageRetraite"
                     type="number"
@@ -200,7 +253,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                 </div>
 
                 <div>
-                  <Label htmlFor="optionSurvivant">Option survivant</Label>
+                  <Label htmlFor="optionSurvivant">{t.survivorOption}</Label>
                   <Select value={rregopData.optionSurvivant.toString()} onValueChange={(value) => setRregopData(prev => ({ ...prev, optionSurvivant: Number(value) as 50 | 60 }))}>
                     <SelectTrigger>
                       <SelectValue />
@@ -218,7 +271,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                 disabled={isCalculating}
                 className="w-full bg-blue-600 hover:bg-blue-700"
               >
-                {isCalculating ? 'Calcul en cours...' : 'Calculer ma rente RREGOP'}
+                {isCalculating ? t.calculating : t.calculate}
               </Button>
             </CardContent>
           </Card>
@@ -232,7 +285,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3 text-green-800">
                       <CheckCircle className="w-6 h-6" />
-                      Résultats du calcul
+                      {t.results}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -241,13 +294,13 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                         <div className="text-2xl font-bold text-green-600">
                           {results.montantFinal.toLocaleString()} $
                         </div>
-                        <div className="text-sm text-gray-600">Rente annuelle</div>
+                        <div className="text-sm text-gray-600">{t.annualPension}</div>
                       </div>
                       <div className="text-center">
                         <div className="text-2xl font-bold text-blue-600">
                           {Math.round(results.montantFinal / 12).toLocaleString()} $
                         </div>
-                        <div className="text-sm text-gray-600">Rente mensuelle</div>
+                        <div className="text-sm text-gray-600">{t.monthlyPension}</div>
                       </div>
                     </div>
                     
@@ -255,7 +308,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                       <Alert className="border-orange-200 bg-orange-50">
                         <AlertTriangle className="h-5 w-5 text-orange-600" />
                         <AlertDescription className="text-orange-800">
-                          Pénalité de {(results.penalites.tauxPenalite * 100).toFixed(1)}% pour retraite anticipée
+                          {t.earlyRetirementPenalty} {(results.penalites.tauxPenalite * 100).toFixed(1)}% {t.forEarlyRetirement}
                         </AlertDescription>
                       </Alert>
                     )}
@@ -267,7 +320,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                   <CardHeader>
                     <CardTitle className="flex items-center gap-3 text-blue-800">
                       <TrendingUp className="w-6 h-6" />
-                      Scénarios de retraite
+                      {t.retirementScenarios}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -279,11 +332,11 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                             <Badge variant="outline">{scenario.montantAnnuel.toLocaleString()} $/an</Badge>
                           </div>
                           <div className="text-sm text-gray-600 mb-2">
-                            Valeur viagère : {scenario.montantViager.toLocaleString()} $
+                            {t.lifetimeValue} {scenario.montantViager.toLocaleString()} $
                           </div>
                           <div className="grid grid-cols-2 gap-4 text-xs">
                             <div>
-                              <div className="font-semibold text-green-600">Avantages :</div>
+                              <div className="font-semibold text-green-600">{t.advantages}</div>
                               <ul className="list-disc list-inside">
                                 {scenario.avantages.map((avantage: string, idx: number) => (
                                   <li key={idx}>{avantage}</li>
@@ -291,7 +344,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                               </ul>
                             </div>
                             <div>
-                              <div className="font-semibold text-red-600">Inconvénients :</div>
+                              <div className="font-semibold text-red-600">{t.disadvantages}</div>
                               <ul className="list-disc list-inside">
                                 {scenario.inconvenients.map((inconvenient: string, idx: number) => (
                                   <li key={idx}>{inconvenient}</li>
@@ -311,7 +364,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                     <CardHeader>
                       <CardTitle className="flex items-center gap-3 text-blue-800">
                         <Info className="w-6 h-6" />
-                        Recommandations
+                        {t.recommendations}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -321,7 +374,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                             <h4 className="font-semibold text-blue-800">{recommandation.titre}</h4>
                             <p className="text-sm text-gray-700 mb-2">{recommandation.description}</p>
                             <div className="text-xs text-gray-600">
-                              <strong>Impact :</strong> {recommandation.impact}
+                              <strong>{t.impact}</strong> {recommandation.impact}
                             </div>
                           </div>
                         ))}

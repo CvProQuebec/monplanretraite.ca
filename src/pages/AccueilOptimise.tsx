@@ -257,7 +257,7 @@ const AccueilOptimise: React.FC = () => {
                     <CardTitle className="text-2xl font-bold text-blue-900">
                       {isFrench ? 'Professionnel' : 'Professional'}
                     </CardTitle>
-                    <div className="text-4xl font-bold text-blue-600 mb-1">99,99 $</div>
+                    <div className="text-4xl font-bold text-blue-600 mb-1">297 $</div>
                     <div className="text-sm text-blue-600">{isFrench ? '/an' : '/year'}</div>
                   </CardHeader>
                   <CardContent className="px-6 pb-8">
@@ -297,7 +297,7 @@ const AccueilOptimise: React.FC = () => {
                     <CardTitle className="text-2xl font-bold text-purple-900">
                       {isFrench ? 'Expert' : 'Ultimate'}
                     </CardTitle>
-                    <div className="text-4xl font-bold text-purple-600 mb-1">249,99 $</div>
+                    <div className="text-4xl font-bold text-purple-600 mb-1">597 $</div>
                     <div className="text-sm text-purple-600">{isFrench ? '/an' : '/year'}</div>
                   </CardHeader>
                   <CardContent className="px-6 pb-8">

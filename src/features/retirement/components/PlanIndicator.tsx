@@ -84,13 +84,13 @@ const getPlanPrice = (plan: SubscriptionPlan, language: 'fr' | 'en'): string => 
   const prices = {
     fr: {
       'free': 'Gratuit',
-      'professional': '119,99 $/an',
-      'ultimate': '239,99 $/an'
+      'professional': '297 $/an',
+      'ultimate': '597 $/an'
     },
     en: {
       'free': 'Free',
-      'professional': '$119.99/year',
-      'ultimate': '$239.99/year'
+      'professional': '$297/year',
+      'ultimate': '$597/year'
     }
   };
   return prices[language][plan];
@@ -276,7 +276,7 @@ export const CompactPlanIndicator: React.FC = () => {
       <span className="text-sm font-medium text-charcoal-700">
         {getPlanName(user.plan, language)}
       </span>
-      <Badge variant="outline" size="sm">
+      <Badge variant="outline">
         {PLAN_CONFIG[user.plan]?.badge || 'Actuel'}
       </Badge>
     </div>

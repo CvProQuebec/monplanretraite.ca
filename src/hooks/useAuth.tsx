@@ -8,8 +8,7 @@ import {
 } from 'firebase/auth';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { auth, db, googleProvider } from '@/lib/firebase';
-import { User, PlanType } from '@/types/subscription';
-import { getPlan } from '@/config/plans';
+import { SubscriptionPlan, UserSubscription, User } from '@/types/subscription';
 
 // Mode développement local - DÉSACTIVE Firebase pour les tests
 const LOCAL_DEV_MODE = true; // FORCÉ pour les tests
@@ -19,7 +18,7 @@ interface AuthContextType {
   loading: boolean;
   signInWithGoogle: () => Promise<void>;
   signOut: () => Promise<void>;
-  updateUserPlan: (plan: PlanType) => Promise<void>;
+  updateUserPlan: (plan: SubscriptionPlan) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -69,7 +68,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         id: 'local-dev-user',
         email: 'dev@monplanretraite.ca',
         displayName: 'Développeur Local',
-        plan: 'ultimate', // Plan Ultimate pour tester toutes les fonctionnalités
+        plan: 'expert', // Plan Expert pour tester toutes les fonctionnalités
         createdAt: new Date(),
         updatedAt: new Date()
       };
@@ -102,7 +101,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   // Mettre à jour le plan utilisateur
-  const updateUserPlan = async (plan: PlanType) => {
+  const updateUserPlan = async (plan: SubscriptionPlan) => {
     if (!user) return;
     
     if (LOCAL_DEV_MODE) {
@@ -129,7 +128,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         id: 'local-dev-user',
         email: 'dev@monplanretraite.ca',
         displayName: 'Développeur Local',
-        plan: 'ultimate', // Plan Ultimate pour tester toutes les fonctionnalités
+        plan: 'expert', // Plan Expert pour tester toutes les fonctionnalités
         createdAt: new Date(),
         updatedAt: new Date()
       };
@@ -140,11 +139,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
     console.log('🔍 useAuth - Démarrage de l\'écouteur d\'authentification');
     console.log('🔍 useAuth - Firebase auth disponible:', !!auth);
-    console.log('🔍 useAuth - Variables Firebase dans useAuth:', {
-      apiKey: import.meta.env.VITE_FIREBASE_API_KEY ? '***MASKED***' : 'undefined',
-      authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN ? '***MASKED***' : 'undefined',
-      projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID ? '***MASKED***' : 'undefined'
-    });
+      console.log('🔍 useAuth - Variables Firebase dans useAuth:', {
+        apiKey: (import.meta as any).env?.VITE_FIREBASE_API_KEY ? '***MASKED***' : 'undefined',
+        authDomain: (import.meta as any).env?.VITE_FIREBASE_AUTH_DOMAIN ? '***MASKED***' : 'undefined',
+        projectId: (import.meta as any).env?.VITE_FIREBASE_PROJECT_ID ? '***MASKED***' : 'undefined'
+      });
     
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       console.log('🔍 useAuth - Changement d\'état Firebase détecté:', !!firebaseUser);
@@ -183,4 +182,4 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-}; 
+};
