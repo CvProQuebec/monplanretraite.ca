@@ -82,22 +82,17 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
         {
           id: 'srg-module',
           label: isEnglish ? 'SRG (GIS) Module' : 'Module SRG (GIS)',
-          path: isEnglish ? '/srg-module' : '/module-srg'
+          path: '/module-srg'
         },
         {
           id: 'rregop-module',
           label: isEnglish ? 'RREGOP Module' : 'Module RREGOP',
-          path: isEnglish ? '/rregop-module' : '/module-rregop'
+          path: '/module-rregop'
         },
         {
           id: 'rrq-cpp',
           label: isEnglish ? 'RRQ/CPP Analysis' : 'Analyse RRQ/CPP',
-          path: isEnglish ? '/rrq-cpp-analysis' : '/analyse-rrq-cpp'
-        },
-        {
-          id: 'oas-gis',
-          label: isEnglish ? 'OAS/GIS Analysis' : 'Analyse OAS/GIS',
-          path: isEnglish ? '/oas-gis-analysis' : '/analyse-oas-gis'
+          path: '/rrq-cpp-analysis'
         }
       ]
     },
@@ -123,42 +118,9 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           path: isEnglish ? '/succession-planning' : '/planification-successorale'
         },
         {
-          id: 'expenses',
+          id: 'expenses-planning',
           label: isEnglish ? 'Expense Planning' : 'Planification de dépenses',
           path: isEnglish ? '/expense-planning' : '/planification-depenses'
-        },
-        {
-          id: 'tax-optimization',
-          label: isEnglish ? 'Tax Optimization' : 'Optimisation fiscale',
-          path: isEnglish ? '/tax-optimization' : '/optimisation-fiscale'
-        },
-        {
-          id: 'expert-planning',
-          label: isEnglish ? 'Expert Planning' : 'Planification expert',
-          path: isEnglish ? '/expert-planning' : '/planification-expert'
-        }
-      ]
-    },
-    {
-      id: 'simulations',
-      label: isEnglish ? 'Simulations' : 'Simulations',
-      icon: BarChart3,
-      hasSubmenu: true,
-      submenu: [
-        {
-          id: 'monte-carlo',
-          label: isEnglish ? 'Monte Carlo Simulator' : 'Simulateur Monte Carlo',
-          path: isEnglish ? '/monte-carlo-simulator' : '/simulateur-monte-carlo'
-        },
-        {
-          id: 'sensitivity-analysis',
-          label: isEnglish ? 'Sensitivity Analysis' : 'Analyse de sensibilité',
-          path: isEnglish ? '/sensitivity-analysis' : '/analyse-sensibilite'
-        },
-        {
-          id: 'scenario-comparison',
-          label: isEnglish ? 'Scenario Comparison' : 'Comparaison de scénarios',
-          path: isEnglish ? '/scenario-comparison' : '/comparaison-scenarios'
         }
       ]
     },
@@ -237,7 +199,17 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
                 src="/logo-planretraite.png" 
                 alt="MonPlanRetraite.ca Logo" 
                 className="h-8 w-auto"
+                onError={(e) => {
+                  console.error('Logo failed to load:', e);
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  const fallback = target.nextElementSibling as HTMLElement;
+                  if (fallback) fallback.style.display = 'block';
+                }}
               />
+              <div className="hidden text-lg font-bold text-blue-600">
+                MonPlanRetraite.ca
+              </div>
             </button>
           </div>
 
@@ -280,8 +252,8 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
 
           {/* Language Selector & Mobile Menu Button */}
           <div className="flex items-center space-x-3">
-            {/* Language Selector */}
-            <div className="hidden sm:block">
+            {/* Language Selector - Visible on all screen sizes */}
+            <div className="block">
               <LanguageSelector isEnglish={isEnglish} />
             </div>
 
@@ -340,7 +312,7 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
               ))}
               
               {/* Mobile Language Selector */}
-              <div className="px-4 py-3 border-t border-gray-200 mt-4">
+              <div className="px-4 py-3 border-t border-gray-200 mt-4 sm:hidden">
                 <div className="flex items-center justify-between">
                   <span className="text-sm font-medium text-gray-700">
                     {isEnglish ? 'Language' : 'Langue'}

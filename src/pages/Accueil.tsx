@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import OnboardingWizard from '@/features/retirement/components/OnboardingWizard';
+import OnboardingWizard from '@/components/ui/OnboardingWizard';
 import { 
   CheckCircle,
   XCircle,
@@ -44,8 +44,8 @@ const Accueil: React.FC = () => {
     setIsUpgradeModalOpen(true);
   };
 
-  const handleOnboardingComplete = (userData: any) => {
-    console.log('✅ Onboarding terminé avec succès:', userData);
+  const handleOnboardingComplete = () => {
+    console.log('✅ Onboarding terminé avec succès');
     setShowOnboardingWizard(false);
     navigate('/ma-retraite');
   };
@@ -72,11 +72,21 @@ const Accueil: React.FC = () => {
                 : 'Prepare effectively with our professional tools. Save time and maximize the value of your consultations.'
               }
             </p>
-            <div className="inline-block bg-red-500 text-white px-6 py-3 rounded-xl font-bold text-lg mb-8">
-              {isFrench 
-                ? '🔥 Prix 50% inférieurs à la concurrence!'
-                : '🔥 Prices 50% lower than competition!'
-              }
+            <div className="space-y-4 mb-8">
+              <div className="inline-block bg-red-500 text-white px-6 py-3 rounded-xl font-bold text-lg">
+                {isFrench 
+                  ? '💰 Évitez des erreurs de 10 000$+ avec nos outils professionnels'
+                  : '💰 Avoid $10,000+ mistakes with our professional tools'
+                }
+              </div>
+              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg max-w-4xl mx-auto">
+                <p className="text-yellow-800 font-medium">
+                  {isFrench 
+                    ? '⚠️ Une mauvaise décision de retraite peut coûter des dizaines de milliers de dollars. Nos outils vous aident à prendre les bonnes décisions dès le départ.'
+                    : '⚠️ One bad retirement decision can cost tens of thousands of dollars. Our tools help you make the right decisions from the start.'
+                  }
+                </p>
+              </div>
             </div>
           </div>
 
@@ -220,25 +230,45 @@ const Accueil: React.FC = () => {
                     <div className="text-4xl font-bold text-emerald-600 mb-2">0 $</div>
                   </CardHeader>
                   <CardContent className="px-6 pb-8">
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? 'Module d\'urgence complet' : 'Complete emergency module'}</span>
+                    <div className="space-y-2 mb-6">
+                      <div className="bg-emerald-50 p-3 rounded-lg mb-3">
+                        <div className="text-emerald-800 font-bold text-sm mb-1">
+                          {isFrench ? '🎁 VALEUR : 500$+ GRATUIT' : '🎁 VALUE: $500+ FREE'}
+                        </div>
+                        <div className="text-emerald-700 text-xs">
+                          {isFrench ? 'Seule plateforme au Québec à offrir cela gratuitement' : 'Only platform in Quebec offering this for free'}
+                        </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? 'Planification de base' : 'Basic planning'}</span>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-emerald-500" />
+                        <span className="text-xs">{isFrench ? 'Module d\'urgence professionnel (8 sections)' : 'Professional emergency module (8 sections)'}</span>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? '5 simulations/mois' : '5 simulations/month'}</span>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-emerald-500" />
+                        <span className="text-xs">{isFrench ? 'Planification budget et dépenses' : 'Budget and expense planning'}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-emerald-500" />
+                        <span className="text-xs">{isFrench ? 'Calculateurs de base (5 outils)' : 'Basic calculators (5 tools)'}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-emerald-500" />
+                        <span className="text-xs">{isFrench ? 'Gestion revenus et prestations RRQ/CPP' : 'Income and RRQ/CPP benefits management'}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-emerald-500" />
+                        <span className="text-xs">{isFrench ? 'Sécurité bancaire (chiffrement AES-256)' : 'Banking security (AES-256 encryption)'}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-emerald-500" />
+                        <span className="text-xs">{isFrench ? '5 simulations/mois • Données 100% privées' : '5 simulations/month • 100% private data'}</span>
                       </div>
                     </div>
                     <Button 
                       onClick={() => setShowOnboardingWizard(true)}
                       className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3"
                     >
-                      {isFrench ? 'Commencer GRATUITEMENT' : 'Start FREE'}
+                      {isFrench ? '🎯 Commencer GRATUITEMENT' : '🎯 Start FREE'}
                     </Button>
                   </CardContent>
                 </Card>
@@ -257,26 +287,42 @@ const Accueil: React.FC = () => {
                     <CardTitle className="text-2xl font-bold text-blue-900">
                       {isFrench ? 'Professionnel' : 'Professional'}
                     </CardTitle>
-                    <div className="text-4xl font-bold text-blue-600 mb-1">99,99 $</div>
+                    <div className="text-4xl font-bold text-blue-600 mb-1">297 $</div>
                     <div className="text-sm text-blue-600">{isFrench ? '/an' : '/year'}</div>
                   </CardHeader>
                   <CardContent className="px-6 pb-8">
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-blue-500" />
-                        <span className="text-sm">{isFrench ? 'Tout du plan Gratuit +' : 'Everything from Free +'}</span>
+                    <div className="space-y-2 mb-6">
+                      <div className="bg-blue-50 p-3 rounded-lg mb-3">
+                        <div className="text-blue-800 font-bold text-sm mb-1">
+                          {isFrench ? '💎 VALEUR : 5000$+ pour 297$' : '💎 VALUE: $5000+ for $297'}
+                        </div>
+                        <div className="text-blue-700 text-xs">
+                          {isFrench ? 'Économie de 94% • Équivaut à 2 consultations' : '94% savings • Equals 2 consultations'}
+                        </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <Sparkles className="w-5 h-5 text-yellow-500" />
-                        <span className="text-sm font-semibold">{isFrench ? 'Assistant IA Personnel' : 'Personal AI Assistant'}</span>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-blue-500" />
+                        <span className="text-xs font-medium">{isFrench ? 'Tout du plan Gratuit + 45 fonctionnalités' : 'Everything from Free + 45 features'}</span>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-blue-500" />
-                        <span className="text-sm">{isFrench ? 'Simulations illimitées' : 'Unlimited simulations'}</span>
+                      <div className="flex items-center gap-2">
+                        <Sparkles className="w-4 h-4 text-yellow-500" />
+                        <span className="text-xs font-semibold">{isFrench ? 'Assistant IA Personnel (prévention catastrophes)' : 'Personal AI Assistant (disaster prevention)'}</span>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-blue-500" />
-                        <span className="text-sm">{isFrench ? 'Optimisation fiscale' : 'Tax optimization'}</span>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-blue-500" />
+                        <span className="text-xs">{isFrench ? 'Calculateurs avancés (IRR, TWR, Monte Carlo)' : 'Advanced calculators (IRR, TWR, Monte Carlo)'}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-blue-500" />
+                        <span className="text-xs">{isFrench ? 'Modules RREGOP + SRG complets' : 'Complete RREGOP + SRG modules'}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-blue-500" />
+                        <span className="text-xs">{isFrench ? 'Optimisation fiscale avancée (REER/CELI)' : 'Advanced tax optimization (RRSP/TFSA)'}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-blue-500" />
+                        <span className="text-xs">{isFrench ? 'Rapports professionnels • Simulations illimitées' : 'Professional reports • Unlimited simulations'}</span>
                       </div>
                     </div>
                     <Button 
@@ -297,26 +343,42 @@ const Accueil: React.FC = () => {
                     <CardTitle className="text-2xl font-bold text-purple-900">
                       {isFrench ? 'Expert' : 'Ultimate'}
                     </CardTitle>
-                    <div className="text-4xl font-bold text-purple-600 mb-1">249,99 $</div>
+                    <div className="text-4xl font-bold text-purple-600 mb-1">597 $</div>
                     <div className="text-sm text-purple-600">{isFrench ? '/an' : '/year'}</div>
                   </CardHeader>
                   <CardContent className="px-6 pb-8">
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-purple-500" />
-                        <span className="text-sm">{isFrench ? 'Tout du plan Professionnel +' : 'Everything from Professional +'}</span>
+                    <div className="space-y-2 mb-6">
+                      <div className="bg-purple-50 p-3 rounded-lg mb-3">
+                        <div className="text-purple-800 font-bold text-sm mb-1">
+                          {isFrench ? '👑 VALEUR : 10 000$+ pour 597$' : '👑 VALUE: $10,000+ for $597'}
+                        </div>
+                        <div className="text-purple-700 text-xs">
+                          {isFrench ? 'Niveau consultant • Économie de 94% • Évite erreurs coûteuses' : 'Consultant level • 94% savings • Prevents costly mistakes'}
+                        </div>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <Users className="w-5 h-5 text-pink-500" />
-                        <span className="text-sm font-semibold">{isFrench ? 'Planification successorale' : 'Estate planning'}</span>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-purple-500" />
+                        <span className="text-xs font-medium">{isFrench ? 'Suite complète : 75+ fonctionnalités' : 'Complete suite: 75+ features'}</span>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-purple-500" />
-                        <span className="text-sm">{isFrench ? 'Simulations Monte Carlo' : 'Monte Carlo simulations'}</span>
+                      <div className="flex items-center gap-2">
+                        <Users className="w-4 h-4 text-pink-500" />
+                        <span className="text-xs font-semibold">{isFrench ? 'Planification successorale complète' : 'Complete estate planning'}</span>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-purple-500" />
-                        <span className="text-sm">{isFrench ? 'Support prioritaire' : 'Priority support'}</span>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-purple-500" />
+                        <span className="text-xs">{isFrench ? 'Monte Carlo 1000+ itérations • IA prédictive' : 'Monte Carlo 1000+ iterations • Predictive AI'}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-purple-500" />
+                        <span className="text-xs">{isFrench ? 'Optimisation immobilière avancée' : 'Advanced real estate optimization'}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <CheckCircle className="w-4 h-4 text-purple-500" />
+                        <span className="text-xs">{isFrench ? 'Rapports niveau consultant • Export PDF' : 'Consultant-level reports • PDF export'}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Crown className="w-4 h-4 text-purple-500" />
+                        <span className="text-xs font-semibold">{isFrench ? 'Support prioritaire • Consultation virtuelle' : 'Priority support • Virtual consultation'}</span>
                       </div>
                     </div>
                     <Button 
@@ -337,38 +399,6 @@ const Accueil: React.FC = () => {
             </div>
           </div>
 
-          {/* SECTION 5: CTA Final - Optimisé */}
-          <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-2xl">
-            <CardContent className="text-center p-12">
-              <h2 className="text-4xl font-bold mb-6">
-                {isFrench ? 'Prêt à prendre le contrôle de votre avenir?' : 'Ready to take control of your future?'}
-              </h2>
-              <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-                {isFrench 
-                  ? 'Rejoignez des milliers de Québécois qui ont déjà commencé leur planification.'
-                  : 'Join thousands of Quebecers who have already started their planning.'
-                }
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  onClick={() => setShowOnboardingWizard(true)}
-                  size="lg"
-                  className="bg-white text-blue-600 hover:bg-gray-100 font-bold px-8 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  {isFrench ? '🎯 Commencer GRATUITEMENT' : '🎯 Start FREE'}
-                  <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
-                <Button 
-                  onClick={() => handleUpgradeClick('professional')}
-                  size="lg"
-                  variant="outline"
-                  className="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold px-8 py-4 text-lg rounded-xl transition-all duration-300"
-                >
-                  {isFrench ? '🚀 Voir les plans payants' : '🚀 View paid plans'}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
 
         </div>
       </div>
@@ -382,13 +412,11 @@ const Accueil: React.FC = () => {
         currentPlan="free"
       />
 
-      {showOnboardingWizard && (
-        <OnboardingWizard
-          onComplete={handleOnboardingComplete}
-          onSkip={handleOnboardingSkip}
-          isFrench={isFrench}
-        />
-      )}
+      <OnboardingWizard
+        isOpen={showOnboardingWizard}
+        onClose={() => setShowOnboardingWizard(false)}
+        onComplete={handleOnboardingComplete}
+      />
 
     </div>
   );

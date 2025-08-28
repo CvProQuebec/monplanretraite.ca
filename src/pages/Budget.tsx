@@ -43,6 +43,15 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
+import { SmartAlerts } from '@/components/ui/SmartAlerts';
+import { OnboardingWizard } from '@/components/ui/OnboardingWizard';
+import { LearningModule } from '@/components/ui/LearningModule';
+import { CoastFIRECalculator } from '@/components/ui/CoastFIRECalculator';
+import { EconomyTipsGuide } from '@/components/ui/EconomyTipsGuide';
+import { SeasonalWorkerBudget } from '@/components/ui/SeasonalWorkerBudget';
+import { ErrorPreventionService } from '@/services/ErrorPreventionService';
+import { OnboardingService } from '@/services/OnboardingService';
+import { GamificationService } from '@/services/GamificationService';
 
 // Types pour le budget
 interface ExpenseEntry {
@@ -480,10 +489,13 @@ const Budget: React.FC = () => {
 
         {/* Onglets principaux */}
         <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-slate-800/50 backdrop-blur-sm">
+          <TabsList className="grid w-full grid-cols-7 bg-slate-800/50 backdrop-blur-sm">
             <TabsTrigger value="overview">{isFrench ? 'Vue d\'ensemble' : 'Overview'}</TabsTrigger>
             <TabsTrigger value="expenses">{isFrench ? 'Dépenses' : 'Expenses'}</TabsTrigger>
             <TabsTrigger value="calendar">{isFrench ? 'Calendrier' : 'Calendar'}</TabsTrigger>
+            <TabsTrigger value="coastfire">{isFrench ? 'CoastFIRE' : 'CoastFIRE'}</TabsTrigger>
+            <TabsTrigger value="tips">{isFrench ? '99 Trucs' : '99 Tips'}</TabsTrigger>
+            <TabsTrigger value="learning">{isFrench ? 'Apprentissage' : 'Learning'}</TabsTrigger>
             <TabsTrigger value="settings">{isFrench ? 'Paramètres' : 'Settings'}</TabsTrigger>
           </TabsList>
 
@@ -821,6 +833,29 @@ const Budget: React.FC = () => {
                 </div>
               </CardContent>
             </Card>
+          </TabsContent>
+
+          {/* CoastFIRE Calculator */}
+          <TabsContent value="coastfire" className="space-y-6">
+            <CoastFIRECalculator />
+          </TabsContent>
+
+          {/* 99 Trucs pour économiser */}
+          <TabsContent value="tips" className="space-y-6">
+            <EconomyTipsGuide />
+          </TabsContent>
+
+          {/* Module d'apprentissage */}
+          <TabsContent value="learning" className="space-y-6">
+            <LearningModule 
+              moduleId="budget-basics"
+              onComplete={() => {
+                console.log('Module budget-basics complété');
+              }}
+              onClose={() => {
+                console.log('Module fermé');
+              }}
+            />
           </TabsContent>
 
           {/* Paramètres */}

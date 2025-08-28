@@ -109,7 +109,7 @@ export class UltimatePlanningService {
   // ===== GESTION DES RAPPORTS DE PRÉPARATION =====
 
   static createPreparationReport(
-    type: 'notaire' | 'avocat' | 'conseiller' | 'assureur',
+    type: 'notaire' | 'avocat' | 'conseiller' | 'assureur' | 'fiscal' | 'financial_planning' | 'banking' | 'real_estate' | 'emergency',
     emergencyData: EmergencyInfoData
   ): PreparationReport {
     const reportId = `report_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -187,12 +187,12 @@ export class UltimatePlanningService {
   }
 
   private static generateExecutiveSummary(emergencyData: EmergencyInfoData): string {
-    const contactCount = emergencyData.emergencyContacts.length;
-    const medicalCount = emergencyData.medicalInfo.medications.length;
-    const dependentCount = emergencyData.dependents.length;
-    const documentCount = emergencyData.importantDocuments.length;
-    const propertyCount = emergencyData.properties.length;
-    const insuranceCount = emergencyData.insurances.length;
+    const contactCount = emergencyData.contactsUrgence?.length || 0;
+    const medicalCount = emergencyData.informationsMedicales?.medicaments?.length || 0;
+    const dependentCount = emergencyData.personnesCharge?.length || 0;
+    const documentCount = emergencyData.documentsImportants?.length || 0;
+    const propertyCount = emergencyData.proprietes?.length || 0;
+    const insuranceCount = emergencyData.assurances?.length || 0;
 
     return `Ce rapport présente un résumé complet de votre situation personnelle, financière et successorale. 
     Il contient ${contactCount} contacts d'urgence, ${medicalCount} médicaments, ${dependentCount} personnes à charge, 
@@ -202,55 +202,55 @@ export class UltimatePlanningService {
 
   private static generatePersonalInfoSummary(emergencyData: EmergencyInfoData): any {
     // Extraction des informations personnelles depuis les données d'urgence
-    const primaryContact = emergencyData.emergencyContacts[0];
+    const primaryContact = emergencyData.contactsUrgence?.[0];
     
     return {
-      fullName: primaryContact?.fullName || 'Non spécifié',
-      dateOfBirth: emergencyData.medicalInfo.dateOfBirth || new Date(),
-      maritalStatus: emergencyData.employmentInfo.maritalStatus || 'Non spécifié',
-      dependents: emergencyData.dependents.length,
-      province: emergencyData.employmentInfo.province || 'Non spécifié',
+      fullName: primaryContact?.nomComplet || 'Non spécifié',
+      dateOfBirth: emergencyData.informationsMedicales?.dateNaissance || new Date(),
+      maritalStatus: emergencyData.informationsEmploi?.statutMatrimonial || 'Non spécifié',
+      dependents: emergencyData.personnesCharge?.length || 0,
+      province: emergencyData.informationsEmploi?.province || 'Non spécifié',
       citizenship: 'Canadien' // Valeur par défaut
     };
   }
 
   private static generateFinancialSummary(emergencyData: EmergencyInfoData): any {
-    const totalAssets = emergencyData.properties.reduce((sum, prop) => sum + (prop.estimatedValue || 0), 0);
-    const totalLiabilities = emergencyData.financialInfo.personalLoans.reduce((sum, loan) => sum + (loan.outstandingBalance || 0), 0);
-    const insuranceCoverage = emergencyData.insurances.reduce((sum, ins) => sum + (ins.coverageAmount || 0), 0);
+    const totalAssets = emergencyData.proprietes?.reduce((sum, prop) => sum + (prop.valeurEstimee || 0), 0) || 0;
+    const totalLiabilities = emergencyData.informationsFinancieres?.pretsPersonnels?.reduce((sum, loan) => sum + (loan.soldeRestant || 0), 0) || 0;
+    const insuranceCoverage = emergencyData.assurances?.reduce((sum, ins) => sum + (ins.montantCouverture || 0), 0) || 0;
 
     return {
       totalAssets,
       totalLiabilities,
       netWorth: totalAssets - totalLiabilities,
-      liquidAssets: emergencyData.financialInfo.bankAccounts.reduce((sum, acc) => sum + (acc.currentBalance || 0), 0),
+      liquidAssets: emergencyData.informationsFinancieres?.comptesBancaires?.reduce((sum, acc) => sum + (acc.soldeActuel || 0), 0) || 0,
       realEstate: totalAssets,
-      investments: emergencyData.financialInfo.investments.reduce((sum, inv) => sum + (inv.currentValue || 0), 0),
+      investments: emergencyData.informationsFinancieres?.investissements?.reduce((sum, inv) => sum + (inv.valeurActuelle || 0), 0) || 0,
       insuranceCoverage,
-      monthlyIncome: emergencyData.employmentInfo.monthlyIncome || 0,
+      monthlyIncome: emergencyData.informationsEmploi?.revenuMensuel || 0,
       monthlyExpenses: 0 // À calculer selon les données disponibles
     };
   }
 
   private static generateFamilySummary(emergencyData: EmergencyInfoData): any {
     return {
-      spouse: emergencyData.employmentInfo.spouseName || 'Non spécifié',
-      children: emergencyData.dependents.filter(d => d.relationship === 'enfant').map(d => d.fullName),
-      parents: emergencyData.dependents.filter(d => d.relationship === 'parent').map(d => d.fullName),
-      siblings: emergencyData.dependents.filter(d => d.relationship === 'frère/sœur').map(d => d.fullName),
-      otherDependents: emergencyData.dependents.filter(d => !['enfant', 'parent', 'frère/sœur'].includes(d.relationship)).map(d => d.fullName),
+      spouse: emergencyData.informationsEmploi?.nomConjoint || 'Non spécifié',
+      children: emergencyData.personnesCharge?.filter(d => d.lienParente === 'enfant').map(d => d.nomComplet) || [],
+      parents: emergencyData.personnesCharge?.filter(d => d.lienParente === 'parent').map(d => d.nomComplet) || [],
+      siblings: emergencyData.personnesCharge?.filter(d => d.lienParente === 'frère/sœur').map(d => d.nomComplet) || [],
+      otherDependents: emergencyData.personnesCharge?.filter(d => !['enfant', 'parent', 'frère/sœur'].includes(d.lienParente)).map(d => d.nomComplet) || [],
       familyBusiness: false // À déterminer selon les données
     };
   }
 
   private static generateAssetsSummary(emergencyData: EmergencyInfoData): any {
-    const properties = emergencyData.properties.length;
-    const totalValue = emergencyData.properties.reduce((sum, prop) => sum + (prop.estimatedValue || 0), 0);
+    const properties = emergencyData.proprietes?.length || 0;
+    const totalValue = emergencyData.proprietes?.reduce((sum, prop) => sum + (prop.valeurEstimee || 0), 0) || 0;
 
     return {
       properties,
       vehicles: 0, // À ajouter si nécessaire
-      investments: emergencyData.financialInfo.investments.length,
+      investments: emergencyData.informationsFinancieres?.investissements?.length || 0,
       collectibles: 0, // À ajouter si nécessaire
       businessInterests: 0, // À ajouter si nécessaire
       totalValue
@@ -258,26 +258,26 @@ export class UltimatePlanningService {
   }
 
   private static generateInsuranceSummary(emergencyData: EmergencyInfoData): any {
-    const lifeInsurance = emergencyData.insurances.filter(ins => ins.type === 'vie').reduce((sum, ins) => sum + (ins.coverageAmount || 0), 0);
-    const totalCoverage = emergencyData.insurances.reduce((sum, ins) => sum + (ins.coverageAmount || 0), 0);
-    const monthlyPremiums = emergencyData.insurances.reduce((sum, ins) => sum + (ins.monthlyPremium || 0), 0);
+    const lifeInsurance = emergencyData.assurances?.filter(ins => ins.type === 'vie').reduce((sum, ins) => sum + (ins.montantCouverture || 0), 0) || 0;
+    const totalCoverage = emergencyData.assurances?.reduce((sum, ins) => sum + (ins.montantCouverture || 0), 0) || 0;
+    const monthlyPremiums = emergencyData.assurances?.reduce((sum, ins) => sum + (ins.primeMensuelle || 0), 0) || 0;
 
     return {
       lifeInsurance,
-      healthInsurance: emergencyData.insurances.some(ins => ins.type === 'santé'),
-      disabilityInsurance: emergencyData.insurances.some(ins => ins.type === 'invalidité'),
-      propertyInsurance: emergencyData.insurances.some(ins => ins.type === 'habitation'),
+      healthInsurance: emergencyData.assurances?.some(ins => ins.type === 'santé') || false,
+      disabilityInsurance: emergencyData.assurances?.some(ins => ins.type === 'invalidité') || false,
+      propertyInsurance: emergencyData.assurances?.some(ins => ins.type === 'habitation') || false,
       totalCoverage,
       monthlyPremiums
     };
   }
 
   private static generateDigitalAccessSummary(emergencyData: EmergencyInfoData): any {
-    const emailAccounts = emergencyData.digitalAccess.emailAccounts.length;
-    const socialNetworks = emergencyData.digitalAccess.socialNetworks.length;
-    const onlineBanking = emergencyData.digitalAccess.onlineBankingServices.length;
-    const twoFactorEnabled = emergencyData.digitalAccess.emailAccounts.filter(e => e.twoFactorEnabled).length +
-                             emergencyData.digitalAccess.onlineBankingServices.filter(b => b.hasTwoFactor).length;
+    const emailAccounts = emergencyData.accesNumeriques?.comptesCourriel?.length || 0;
+    const socialNetworks = emergencyData.accesNumeriques?.reseauxSociaux?.length || 0;
+    const onlineBanking = emergencyData.accesNumeriques?.servicesBancairesEnLigne?.length || 0;
+    const twoFactorEnabled = (emergencyData.accesNumeriques?.comptesCourriel?.filter(e => e.doubleAuthentification).length || 0) +
+                             (emergencyData.accesNumeriques?.servicesBancairesEnLigne?.filter(b => b.doubleAuthentification).length || 0);
 
     return {
       emailAccounts,
@@ -285,18 +285,18 @@ export class UltimatePlanningService {
       onlineBanking,
       digitalAssets: emailAccounts + socialNetworks + onlineBanking,
       twoFactorEnabled,
-      securityScore: Math.min(100, Math.round((twoFactorEnabled / (emailAccounts + onlineBanking)) * 100))
+      securityScore: Math.min(100, Math.round((twoFactorEnabled / Math.max(1, emailAccounts + onlineBanking)) * 100))
     };
   }
 
   private static generatePreferencesSummary(emergencyData: EmergencyInfoData): any {
     return {
-      funeralPreferences: emergencyData.funeralPreferences.type || 'Non spécifié',
-      organDonation: emergencyData.funeralPreferences.organDonation || false,
-      medicalDirectives: emergencyData.funeralPreferences.medicalDirectives || false,
-      powerOfAttorney: emergencyData.funeralPreferences.powerOfAttorney || false,
-      executor: emergencyData.willAndSuccession.executor || 'Non spécifié',
-      backupExecutor: emergencyData.willAndSuccession.backupExecutor || 'Non spécifié'
+      funeralPreferences: emergencyData.preferencesFuneraires?.type || 'Non spécifié',
+      organDonation: emergencyData.preferencesFuneraires?.donOrganes || false,
+      medicalDirectives: emergencyData.preferencesFuneraires?.directivesMedicales || false,
+      powerOfAttorney: emergencyData.preferencesFuneraires?.procurationMedicale || false,
+      executor: emergencyData.testamentSuccession?.executeur || 'Non spécifié',
+      backupExecutor: emergencyData.testamentSuccession?.executeurSuppleant || 'Non spécifié'
     };
   }
 
@@ -345,6 +345,106 @@ export class UltimatePlanningService {
             importance: 'élevée',
             status: 'à vérifier',
             notes: 'Identification et mitigation des risques légaux'
+          }
+        );
+        break;
+      case 'fiscal':
+        baseChecklist.push(
+          {
+            id: 'check_5',
+            category: 'fiscal',
+            description: 'Analyser l\'optimisation fiscale actuelle',
+            importance: 'élevée',
+            status: 'à vérifier',
+            notes: 'Révision des stratégies REER/CELI et décaissement'
+          },
+          {
+            id: 'check_6',
+            category: 'fiscal',
+            description: 'Vérifier les déclarations fiscales récentes',
+            importance: 'critique',
+            status: 'à vérifier',
+            notes: 'Conformité et opportunités d\'optimisation'
+          }
+        );
+        break;
+      case 'financial_planning':
+        baseChecklist.push(
+          {
+            id: 'check_7',
+            category: 'financier',
+            description: 'Évaluer l\'allocation d\'actifs actuelle',
+            importance: 'élevée',
+            status: 'à vérifier',
+            notes: 'Diversification et adéquation au profil de risque'
+          },
+          {
+            id: 'check_8',
+            category: 'financier',
+            description: 'Réviser les objectifs de retraite',
+            importance: 'critique',
+            status: 'à vérifier',
+            notes: 'Réalisme et faisabilité des objectifs'
+          }
+        );
+        break;
+      case 'banking':
+        baseChecklist.push(
+          {
+            id: 'check_9',
+            category: 'financier',
+            description: 'Analyser les produits bancaires actuels',
+            importance: 'moyenne',
+            status: 'à vérifier',
+            notes: 'Optimisation des comptes et services bancaires'
+          },
+          {
+            id: 'check_10',
+            category: 'financier',
+            description: 'Évaluer les besoins de crédit',
+            importance: 'élevée',
+            status: 'à vérifier',
+            notes: 'Lignes de crédit et financement optimal'
+          }
+        );
+        break;
+      case 'real_estate':
+        baseChecklist.push(
+          {
+            id: 'check_11',
+            category: 'immobilier',
+            description: 'Évaluer le portefeuille immobilier',
+            importance: 'élevée',
+            status: 'à vérifier',
+            notes: 'Valeur marchande et potentiel d\'optimisation'
+          },
+          {
+            id: 'check_12',
+            category: 'immobilier',
+            description: 'Analyser les stratégies de financement',
+            importance: 'critique',
+            status: 'à vérifier',
+            notes: 'Hypothèques et leviers financiers'
+          }
+        );
+        break;
+      case 'emergency':
+        baseChecklist.push(
+          {
+            id: 'check_13',
+            category: 'urgence',
+            description: 'Vérifier la complétude du plan d\'urgence',
+            importance: 'critique',
+            status: 'à vérifier',
+            notes: 'Tous les éléments essentiels sont-ils couverts ?'
+          },
+          {
+            id: 'check_14',
+            category: 'urgence',
+            description: 'Valider l\'accessibilité des informations',
+            importance: 'élevée',
+            status: 'à vérifier',
+            notes: 'Les proches peuvent-ils accéder aux informations ?'
           }
         );
         break;
@@ -476,7 +576,7 @@ export class UltimatePlanningService {
 
   private static calculateKeyMetrics(projections: FinancialProjection[]): KeyMetrics {
     const firstYear = projections[0];
-    const lastYear = projections[projections[projections.length - 1]];
+    const lastYear = projections[projections.length - 1];
     
     return {
       netWorthGrowth: ((lastYear.netWorth - firstYear.netWorth) / firstYear.netWorth) * 100,
@@ -574,7 +674,12 @@ export class UltimatePlanningService {
       'notaire': 'Notaire',
       'avocat': 'Avocat',
       'conseiller': 'Conseiller financier',
-      'assureur': 'Conseiller en assurance'
+      'assureur': 'Conseiller en assurance',
+      'fiscal': 'Comptable/Fiscaliste',
+      'financial_planning': 'Planificateur financier',
+      'banking': 'Conseiller bancaire',
+      'real_estate': 'Conseiller immobilier',
+      'emergency': 'Plan d\'urgence'
     };
     return labels[type] || type;
   }

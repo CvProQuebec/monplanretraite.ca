@@ -1182,7 +1182,7 @@ const MaRetraite: React.FC = () => {
               <Button 
                 variant="outline"
                 size="lg"
-                onClick={() => handleNavigation('/mon-profil')}
+                onClick={() => setActiveTab('profil')}
                 className="border-purple-600 text-purple-600 hover:bg-purple-50"
               >
                 {isFrench ? 'Retour à mon profil' : 'Back to my profile'}
@@ -1190,7 +1190,7 @@ const MaRetraite: React.FC = () => {
               <Button 
                 size="lg" 
                 className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
-                onClick={() => handleNavigation('/mes-resultats')}
+                onClick={() => handleNavigation('/fr/rapports-retraite')}
               >
                 {isFrench ? 'Voir mes résultats' : 'View my results'}
                 <ArrowRight className="w-5 h-5 ml-2" />

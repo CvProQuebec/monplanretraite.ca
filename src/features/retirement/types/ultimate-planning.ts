@@ -26,7 +26,7 @@ export interface UltimatePlanningData {
 export interface PreparationReport {
   id: string;
   title: string;
-  type: 'notaire' | 'avocat' | 'conseiller' | 'assureur';
+  type: 'notaire' | 'avocat' | 'conseiller' | 'assureur' | 'fiscal' | 'financial_planning' | 'banking' | 'real_estate' | 'emergency';
   createdAt: Date;
   lastModified: Date;
   status: 'brouillon' | 'finalisé' | 'partagé';
@@ -78,7 +78,7 @@ export interface ReportContent {
 
 export interface VerificationItem {
   id: string;
-  category: 'légal' | 'financier' | 'fiscal' | 'assurance' | 'succession' | 'autre';
+  category: 'légal' | 'financier' | 'fiscal' | 'assurance' | 'succession' | 'immobilier' | 'urgence' | 'autre';
   description: string;
   importance: 'critique' | 'élevée' | 'moyenne' | 'faible';
   status: 'à vérifier' | 'en cours' | 'validé' | 'problème détecté';
@@ -170,6 +170,15 @@ export interface SimulationResults {
   
   // Résumé des résultats
   summary: string;
+}
+
+export interface ChartData {
+  id: string;
+  type: 'line' | 'bar' | 'pie' | 'area';
+  title: string;
+  data: any[];
+  labels: string[];
+  colors: string[];
 }
 
 export interface FinancialProjection {

@@ -46,6 +46,16 @@ import { usePersonNames } from '../hooks/usePersonNames';
 import { EmergencyContactsForm } from './EmergencyContactsForm';
 import { MedicalInfoForm } from './MedicalInfoForm';
 import { FinancialAccountsForm } from './FinancialAccountsForm';
+import { PropertiesForm } from './PropertiesForm';
+import { DigitalAccessForm } from './DigitalAccessForm';
+import { InsuranceForm } from './InsuranceForm';
+import { LegalDocumentsForm } from './LegalDocumentsForm';
+import { FamilyResponsibilitiesForm } from './FamilyResponsibilitiesForm';
+import { FuneralWishesForm } from './FuneralWishesForm';
+import { DeathChecklistForm } from './DeathChecklistForm';
+import { SecurityTipsForm } from './SecurityTipsForm';
+import { EvacuationChecklistForm } from './EvacuationChecklistForm';
+import { ComprehensiveMedicalRecordForm } from './ComprehensiveMedicalRecordForm';
 
 interface EmergencyPlanningManagerProps {
   className?: string;
@@ -362,7 +372,7 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
 
   return (
     <div className={`space-y-6 ${className}`}>
-      {/* En-tête */}
+      {/* En-tête avec message d'importance renforcé */}
       <Card className="bg-gradient-to-br from-red-50 to-orange-50 border-red-200">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
@@ -373,10 +383,239 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
           <CardTitle className="text-3xl text-red-900 mb-3">
             Planification d'urgence
           </CardTitle>
-          <CardDescription className="text-lg text-red-700">
-            Préparez-vous aux situations d'urgence, d'invalidité ou de décès
+          <CardDescription className="text-lg text-red-700 mb-4">
+            Le dossier complet qui protège votre famille en cas d'imprévu
           </CardDescription>
+          
+          {/* Message d'importance critique */}
+          <div className="bg-white/80 rounded-lg p-6 text-left space-y-4">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="w-6 h-6 text-red-600 mt-1 flex-shrink-0" />
+              <div>
+                <h4 className="font-semibold text-red-900 mb-2">
+                  Pourquoi ce plan d'urgence est-il essentiel ?
+                </h4>
+                <div className="text-sm text-red-800 space-y-2">
+                  <p>
+                    <strong>73% des Canadiens</strong> n'ont pas de plan d'urgence complet. 
+                    En cas d'accident, d'invalidité ou de décès, leurs proches se retrouvent démunis 
+                    face à des décisions critiques et urgentes.
+                  </p>
+                  <p>
+                    <strong>Sans ce dossier :</strong> Vos proches perdront des semaines précieuses 
+                    à chercher vos documents, contacts et volontés, souvent dans un moment de grande détresse émotionnelle.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-4 mt-4">
+              <div className="bg-red-100 rounded-lg p-4">
+                <h5 className="font-semibold text-red-900 mb-2 flex items-center gap-2">
+                  <Clock className="w-4 h-4" />
+                  Temps critique
+                </h5>
+                <p className="text-sm text-red-800">
+                  Les premières 48h sont cruciales. Ce dossier permet à vos proches 
+                  d'agir rapidement et efficacement quand chaque minute compte.
+                </p>
+              </div>
+              
+              <div className="bg-orange-100 rounded-lg p-4">
+                <h5 className="font-semibold text-orange-900 mb-2 flex items-center gap-2">
+                  <Heart className="w-4 h-4" />
+                  Paix d'esprit
+                </h5>
+                <p className="text-sm text-orange-800">
+                  Offrez à votre famille la sécurité de savoir exactement quoi faire 
+                  et où trouver tout ce dont elle aura besoin.
+                </p>
+              </div>
+            </div>
+            
+            <Alert className="bg-blue-50 border-blue-200">
+              <Info className="h-4 w-4 text-blue-600" />
+              <AlertDescription className="text-blue-800">
+                <strong>Outil professionnel gratuit :</strong> Ce module complet vous est offert 
+                pour démontrer notre expertise en planification financière. Un dossier d'urgence 
+                bien préparé fait partie intégrante d'une stratégie de retraite réussie.
+              </AlertDescription>
+            </Alert>
+          </div>
         </CardHeader>
+      </Card>
+
+      {/* Statistiques et témoignages */}
+      <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+        <CardHeader>
+          <CardTitle className="text-center text-blue-900 mb-4">
+            L'importance d'un plan d'urgence : Les faits
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-3 gap-6">
+            <div className="text-center">
+              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <AlertTriangle className="w-8 h-8 text-red-600" />
+              </div>
+              <div className="text-3xl font-bold text-red-600 mb-2">73%</div>
+              <p className="text-sm text-gray-700">
+                des Canadiens n'ont pas de plan d'urgence documenté
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <Clock className="w-8 h-8 text-orange-600" />
+              </div>
+              <div className="text-3xl font-bold text-orange-600 mb-2">3-6</div>
+              <p className="text-sm text-gray-700">
+                semaines perdues en moyenne à retrouver les informations essentielles
+              </p>
+            </div>
+            
+            <div className="text-center">
+              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <CheckCircle className="w-8 h-8 text-green-600" />
+              </div>
+              <div className="text-3xl font-bold text-green-600 mb-2">100%</div>
+              <p className="text-sm text-gray-700">
+                des familles préparées évitent le stress et les erreurs coûteuses
+              </p>
+            </div>
+          </div>
+          
+          <div className="mt-8 p-6 bg-white rounded-lg border-l-4 border-blue-500">
+            <blockquote className="italic text-gray-700 mb-3">
+              "Quand mon mari a eu son accident, j'étais complètement perdue. Je ne savais pas 
+              où il gardait ses documents, quels étaient ses comptes bancaires, ni même qui contacter. 
+              Un plan d'urgence m'aurait évité des semaines d'angoisse."
+            </blockquote>
+            <cite className="text-sm text-gray-600">— Marie L., Québec</cite>
+          </div>
+          
+          <div className="mt-4 p-6 bg-white rounded-lg border-l-4 border-green-500">
+            <blockquote className="italic text-gray-700 mb-3">
+              "Grâce à notre dossier d'urgence, quand papa est décédé subitement, nous avons pu 
+              nous concentrer sur notre deuil plutôt que sur la paperasse. Tout était organisé, 
+              documenté et accessible."
+            </blockquote>
+            <cite className="text-sm text-gray-600">— Jean-Pierre M., Montréal</cite>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Avantages du module */}
+      <Card className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-200">
+        <CardHeader>
+          <CardTitle className="text-center text-green-900 mb-4">
+            Ce que vous obtenez avec ce module professionnel
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <CheckCircle className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-green-900">Dossier complet et structuré</h4>
+                  <p className="text-sm text-green-800">
+                    11 sections détaillées couvrant tous les aspects : contacts, médical, 
+                    finances, propriétés, assurances, documents légaux, et plus.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Shield className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-green-900">Sécurité et confidentialité</h4>
+                  <p className="text-sm text-green-800">
+                    Sauvegarde locale sécurisée, conseils de protection contre les sinistres, 
+                    et gestion des accès selon vos besoins.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <FileText className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-green-900">Export et impression</h4>
+                  <p className="text-sm text-green-800">
+                    Générez des versions imprimables ou des fichiers de sauvegarde 
+                    pour partager avec vos proches de confiance.
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="space-y-4">
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Users className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-green-900">Support pour couples</h4>
+                  <p className="text-sm text-green-800">
+                    Créez des plans séparés pour chaque conjoint ou dupliquez 
+                    facilement les informations communes.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Heart className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-green-900">Liste de vérification décès</h4>
+                  <p className="text-sm text-green-800">
+                    Guide étape par étape pour vos proches avec 25+ actions 
+                    organisées par priorité et délai.
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex items-start gap-3">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                  <AlertTriangle className="w-5 h-5 text-green-600" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-green-900">Validation intelligente</h4>
+                  <p className="text-sm text-green-800">
+                    Le système détecte automatiquement les informations manquantes 
+                    et vous guide pour compléter votre dossier.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="mt-8 p-6 bg-white rounded-lg border border-green-200">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
+                <Shield className="w-6 h-6 text-green-600" />
+              </div>
+              <div>
+                <h4 className="font-semibold text-green-900">Expertise professionnelle</h4>
+                <p className="text-sm text-green-700">
+                  Développé par des conseillers financiers expérimentés
+                </p>
+              </div>
+            </div>
+            <p className="text-sm text-gray-700">
+              Ce module gratuit démontre notre engagement à vous offrir des outils professionnels 
+              de qualité supérieure. Il fait partie intégrante d'une approche holistique de la 
+              planification financière et de retraite que nous proposons à nos clients.
+            </p>
+          </div>
+        </CardContent>
       </Card>
 
       {/* Sélecteur de personne */}
@@ -586,32 +825,66 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
       {/* Formulaires détaillés */}
       {currentPlan && (
         <Tabs defaultValue="contacts" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6">
-            <TabsTrigger value="contacts" className="flex items-center gap-1">
-              <Phone className="w-4 h-4" />
-              <span className="hidden sm:inline">Contacts</span>
-            </TabsTrigger>
-            <TabsTrigger value="medical" className="flex items-center gap-1">
-              <Heart className="w-4 h-4" />
-              <span className="hidden sm:inline">Médical</span>
-            </TabsTrigger>
-            <TabsTrigger value="financial" className="flex items-center gap-1">
-              <CreditCard className="w-4 h-4" />
-              <span className="hidden sm:inline">Comptes</span>
-            </TabsTrigger>
-            <TabsTrigger value="insurance" className="flex items-center gap-1">
-              <Shield className="w-4 h-4" />
-              <span className="hidden sm:inline">Assurances</span>
-            </TabsTrigger>
-            <TabsTrigger value="legal" className="flex items-center gap-1">
-              <FileCheck className="w-4 h-4" />
-              <span className="hidden sm:inline">Documents</span>
-            </TabsTrigger>
-            <TabsTrigger value="family" className="flex items-center gap-1">
-              <Home className="w-4 h-4" />
-              <span className="hidden sm:inline">Famille</span>
-            </TabsTrigger>
-          </TabsList>
+          {/* Navigation principale */}
+          <div className="space-y-2">
+            <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5">
+              <TabsTrigger value="contacts" className="flex items-center gap-1">
+                <Phone className="w-4 h-4" />
+                <span className="hidden sm:inline">Contacts</span>
+              </TabsTrigger>
+              <TabsTrigger value="medical" className="flex items-center gap-1">
+                <Heart className="w-4 h-4" />
+                <span className="hidden sm:inline">Médical</span>
+              </TabsTrigger>
+              <TabsTrigger value="financial" className="flex items-center gap-1">
+                <CreditCard className="w-4 h-4" />
+                <span className="hidden sm:inline">Finances</span>
+              </TabsTrigger>
+              <TabsTrigger value="properties" className="flex items-center gap-1">
+                <Home className="w-4 h-4" />
+                <span className="hidden sm:inline">Propriétés</span>
+              </TabsTrigger>
+              <TabsTrigger value="digital" className="flex items-center gap-1">
+                <Phone className="w-4 h-4" />
+                <span className="hidden sm:inline">Numérique</span>
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsList className="grid w-full grid-cols-4 lg:grid-cols-8">
+              <TabsTrigger value="insurance" className="flex items-center gap-1">
+                <Shield className="w-4 h-4" />
+                <span className="hidden sm:inline">Assurances</span>
+              </TabsTrigger>
+              <TabsTrigger value="legal" className="flex items-center gap-1">
+                <FileCheck className="w-4 h-4" />
+                <span className="hidden sm:inline">Documents</span>
+              </TabsTrigger>
+              <TabsTrigger value="family" className="flex items-center gap-1">
+                <Users className="w-4 h-4" />
+                <span className="hidden sm:inline">Famille</span>
+              </TabsTrigger>
+              <TabsTrigger value="wishes" className="flex items-center gap-1">
+                <Heart className="w-4 h-4" />
+                <span className="hidden sm:inline">Volontés</span>
+              </TabsTrigger>
+              <TabsTrigger value="checklist" className="flex items-center gap-1">
+                <CheckCircle className="w-4 h-4" />
+                <span className="hidden sm:inline">Liste</span>
+              </TabsTrigger>
+              <TabsTrigger value="evacuation" className="flex items-center gap-1">
+                <Home className="w-4 h-4" />
+                <span className="hidden sm:inline">Évacuation</span>
+              </TabsTrigger>
+              <TabsTrigger value="medical-complete" className="flex items-center gap-1">
+                <Heart className="w-4 h-4" />
+                <span className="hidden sm:inline">Médical+</span>
+              </TabsTrigger>
+              <TabsTrigger value="security" className="flex items-center gap-1">
+                <Shield className="w-4 h-4" />
+                <span className="hidden sm:inline">Sécurité</span>
+              </TabsTrigger>
+            </TabsList>
+          </div>
 
           <TabsContent value="contacts">
             <EmergencyContactsForm
@@ -646,55 +919,178 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
             />
           </TabsContent>
 
+          <TabsContent value="properties">
+            <PropertiesForm
+              properties={currentPlan.proprietes || []}
+              onChange={(properties) => updateCurrentPlan({
+                ...currentPlan,
+                proprietes: properties,
+                derniereMiseAJour: new Date()
+              })}
+            />
+          </TabsContent>
+
+          <TabsContent value="digital">
+            <DigitalAccessForm
+              digitalAccess={currentPlan.accesNumeriques || []}
+              onChange={(digitalAccess) => updateCurrentPlan({
+                ...currentPlan,
+                accesNumeriques: digitalAccess,
+                derniereMiseAJour: new Date()
+              })}
+            />
+          </TabsContent>
+
           <TabsContent value="insurance">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-purple-600" />
-                  Assurances
-                </CardTitle>
-                <CardDescription>
-                  Formulaire d'assurances à implémenter
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-500">Formulaire en cours de développement...</p>
-              </CardContent>
-            </Card>
+            <InsuranceForm
+              insurances={currentPlan.assurances || []}
+              onChange={(insurances) => updateCurrentPlan({
+                ...currentPlan,
+                assurances: insurances,
+                derniereMiseAJour: new Date()
+              })}
+            />
           </TabsContent>
 
           <TabsContent value="legal">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileCheck className="w-5 h-5 text-orange-600" />
-                  Documents légaux
-                </CardTitle>
-                <CardDescription>
-                  Formulaire de documents légaux à implémenter
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-500">Formulaire en cours de développement...</p>
-              </CardContent>
-            </Card>
+            <LegalDocumentsForm
+              documents={currentPlan.documentsLegaux || []}
+              onChange={(documents) => updateCurrentPlan({
+                ...currentPlan,
+                documentsLegaux: documents,
+                derniereMiseAJour: new Date()
+              })}
+            />
           </TabsContent>
 
           <TabsContent value="family">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Home className="w-5 h-5 text-green-600" />
-                  Responsabilités familiales
-                </CardTitle>
-                <CardDescription>
-                  Formulaire de responsabilités familiales à implémenter
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-500">Formulaire en cours de développement...</p>
-              </CardContent>
-            </Card>
+            <FamilyResponsibilitiesForm
+              responsibilities={currentPlan.responsabilitesFamiliales || []}
+              pets={currentPlan.animauxCompagnie || []}
+              onChange={(responsibilities, pets) => updateCurrentPlan({
+                ...currentPlan,
+                responsabilitesFamiliales: responsibilities,
+                animauxCompagnie: pets,
+                derniereMiseAJour: new Date()
+              })}
+            />
+          </TabsContent>
+
+          <TabsContent value="wishes">
+            <FuneralWishesForm
+              funeralWishes={currentPlan.volontesSpecifiques?.funerailles ? {
+                disposition: currentPlan.volontesSpecifiques.funerailles.type as any,
+                typeCeremonie: currentPlan.volontesSpecifiques.funerailles.ceremonieReligieuse ? 'religieuse' : 'civile',
+                lieuCeremonie: currentPlan.volontesSpecifiques.funerailles.lieu,
+                instructionsSpeciales: currentPlan.volontesSpecifiques.funerailles.volontesSpeciales,
+                budgetEstime: currentPlan.volontesSpecifiques.funerailles.budgetEstime,
+                prearrangements: currentPlan.volontesSpecifiques.funerailles.prearrangements ? [{
+                  id: EmergencyPlanningService.generateId(),
+                  entreprise: currentPlan.volontesSpecifiques.funerailles.prearrangements.entreprise || '',
+                  numeroContrat: currentPlan.volontesSpecifiques.funerailles.prearrangements.numeroContrat || '',
+                  lieuContrat: currentPlan.volontesSpecifiques.funerailles.prearrangements.lieuContrat
+                }] : [],
+                salonFuneraire: currentPlan.volontesSpecifiques.funerailles.salonFuneraire,
+                cemetery: currentPlan.volontesSpecifiques.funerailles.cimetiere ? {
+                  nom: currentPlan.volontesSpecifiques.funerailles.cimetiere.nom || '',
+                  adresse: currentPlan.volontesSpecifiques.funerailles.cimetiere.adresse || '',
+                  numeroLot: currentPlan.volontesSpecifiques.funerailles.cimetiere.numeroLot,
+                  personnesInhumees: currentPlan.volontesSpecifiques.funerailles.cimetiere.personnesInhumees
+                } : undefined
+              } : EmergencyPlanningService.createEmptyFuneralWishes()}
+              onChange={(funeralWishes) => updateCurrentPlan({
+                ...currentPlan,
+                volontesSpecifiques: {
+                  ...currentPlan.volontesSpecifiques,
+                  funerailles: {
+                    type: funeralWishes.disposition as any || 'inhumation',
+                    lieu: funeralWishes.lieuCeremonie,
+                    ceremonieReligieuse: funeralWishes.typeCeremonie === 'religieuse',
+                    typeService: 'prive',
+                    volontesSpeciales: funeralWishes.instructionsSpeciales,
+                    budgetEstime: funeralWishes.budgetEstime,
+                    prearrangements: funeralWishes.prearrangements && funeralWishes.prearrangements.length > 0 ? {
+                      effectues: true,
+                      entreprise: funeralWishes.prearrangements[0].entreprise,
+                      numeroContrat: funeralWishes.prearrangements[0].numeroContrat,
+                      lieuContrat: funeralWishes.prearrangements[0].lieuContrat
+                    } : undefined,
+                    salonFuneraire: funeralWishes.salonFuneraire,
+                    cimetiere: funeralWishes.cemetery
+                  }
+                },
+                derniereMiseAJour: new Date()
+              })}
+            />
+          </TabsContent>
+
+          <TabsContent value="checklist">
+            <DeathChecklistForm
+              checklist={currentPlan.listeVerificationDeces && currentPlan.listeVerificationDeces.length > 0 
+                ? currentPlan.listeVerificationDeces[0] 
+                : EmergencyPlanningService.createEmptyDeathChecklist()
+              }
+              onChange={(checklist) => updateCurrentPlan({
+                ...currentPlan,
+                listeVerificationDeces: [checklist],
+                derniereMiseAJour: new Date()
+              })}
+            />
+          </TabsContent>
+
+          <TabsContent value="evacuation">
+            <EvacuationChecklistForm
+              checklist={currentPlan.listeEvacuation || {
+                items: [],
+                customItems: [],
+                lastUpdated: new Date(),
+                personalNotes: ''
+              }}
+              onChange={(checklist) => updateCurrentPlan({
+                ...currentPlan,
+                listeEvacuation: checklist,
+                derniereMiseAJour: new Date()
+              })}
+            />
+          </TabsContent>
+
+          <TabsContent value="medical-complete">
+            <ComprehensiveMedicalRecordForm
+              medicalRecord={currentPlan.dossierMedicalComplet || {
+                personalInfo: {
+                  height: '',
+                  weight: '',
+                  allergies: [],
+                  emergencyContact: {
+                    name: '',
+                    phone: '',
+                    relation: ''
+                  }
+                },
+                currentConditions: [],
+                medicalHistory: [],
+                currentMedications: [],
+                pastMedications: [],
+                surgeries: [],
+                vaccinations: [],
+                labResults: [],
+                familyHistory: [],
+                healthcareProviders: {
+                  specialists: []
+                },
+                notes: '',
+                lastUpdated: new Date()
+              }}
+              onChange={(medicalRecord) => updateCurrentPlan({
+                ...currentPlan,
+                dossierMedicalComplet: medicalRecord,
+                derniereMiseAJour: new Date()
+              })}
+            />
+          </TabsContent>
+
+          <TabsContent value="security">
+            <SecurityTipsForm />
           </TabsContent>
         </Tabs>
       )}

@@ -21,22 +21,96 @@ export class EmergencyPlanningService {
       personId,
       nom,
       prenom,
+      
+      // Informations personnelles de base
+      informationsPersonnelles: {
+        numeroAssuranceMaladie: '',
+        numeroAssuranceSociale: ''
+      },
+      
+      // Contacts d'urgence
       contactsUrgence: [],
+      
+      // Informations médicales
       informationsMedicales: {
         numeroAssuranceMaladie: '',
+        numeroAssuranceSociale: '',
         allergies: [],
+        allergiesMedicamenteuses: [],
         medicaments: [],
-        conditionsMedicales: []
+        conditionsMedicales: [],
+        specialistes: []
       },
+      
+      // Finances
       comptesBancaires: [],
+      cartesCredit: [],
+      accesBancairesEnLigne: [],
+      investissements: [],
+      dettes: [],
+      
+      // Assurances
       assurances: [],
+      
+      // Documents légaux
       documentsLegaux: [],
+      
+      // Propriétés et biens
+      proprietes: [],
+      vehicules: [],
+      coffresForts: [],
+      entreposage: [],
+      
+      // Emploi et prestations
+      emploi: undefined,
+      
+      // Accès numériques et abonnements
+      accesNumeriques: [],
+      abonnements: [],
+      
+      // Responsabilités familiales
       responsabilitesFamiliales: [],
+      animauxCompagnie: [],
+      
+      // Volontés spécifiques
       volontesSpecifiques: {},
+      
+      // Liste de vérification pour les proches
+      listeVerificationDeces: [],
+      
+      // Métadonnées
       dateCreation: new Date(),
       derniereMiseAJour: new Date(),
       version: 1,
       statut: 'brouillon'
+    };
+  }
+
+  /**
+   * Créer une liste de vérification de décès vide
+   */
+  static createEmptyDeathChecklist() {
+    return {
+      items: [],
+      lastUpdated: new Date()
+    };
+  }
+
+  /**
+   * Créer des préférences funéraires vides
+   */
+  static createEmptyFuneralWishes() {
+    return {
+      disposition: undefined,
+      typeCeremonie: undefined,
+      religion: undefined,
+      lieuCeremonie: undefined,
+      instructionsSpeciales: undefined,
+      budgetEstime: undefined,
+      prearrangements: [],
+      salonFuneraire: undefined,
+      cemetery: undefined,
+      notes: undefined
     };
   }
 
