@@ -47,6 +47,13 @@ import RetirementReportsEn from './pages/RetirementReportsEn';
 import Phase2DemoPage from './pages/Phase2DemoPage';
 import SauvegarderCharger from './pages/SauvegarderCharger';
 
+// NOUVEAUX MODULES PHASE 3
+import { FourPercentRuleModule } from './components/ui/FourPercentRuleModule';
+import { OptimalAllocationModule } from './components/ui/OptimalAllocationModule';
+import { ExcessLiquidityDetector } from './components/ui/ExcessLiquidityDetector';
+import { InflationProtectionCenter } from './components/ui/InflationProtectionCenter';
+import { BehavioralBiasEducator } from './components/ui/BehavioralBiasEducator';
+
 function App() {
   return (
     <AuthProvider>
@@ -156,6 +163,150 @@ function App() {
         {/* Module de Dépenses */}
         <Route path="/depenses" element={<ExpensesPage />} />
         <Route path="/expenses" element={<ExpensesPage />} />
+        
+        {/* 🚀 NOUVEAUX MODULES PHASE 1, 2 ET 3 */}
+        
+        {/* Phase 1 - Modules Essentiels */}
+        <Route path="/module-celi-succession" element={
+          <div className="p-8">
+            <div className="max-w-4xl mx-auto">
+              <h1 className="text-3xl font-bold text-gray-900 mb-6">Module Succession CÉLI</h1>
+              <p className="text-gray-600 mb-8">Optimisez la transmission de votre CÉLI selon les conseils d'experts.</p>
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                <h2 className="text-xl font-semibold text-blue-900 mb-4">Points Clés:</h2>
+                <ul className="space-y-2 text-blue-800">
+                  <li>• Nommez un titulaire successeur pour éviter les taxes</li>
+                  <li>• Évitez les erreurs coûteuses de désignation</li>
+                  <li>• Maximisez la transmission tax-free</li>
+                  <li>• Protégez contre les frais d'homologation</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        } />
+        
+        <Route path="/calculateur-impact-fiscal-65" element={
+          <div className="p-8">
+            <div className="max-w-4xl mx-auto">
+              <h1 className="text-3xl font-bold text-gray-900 mb-6">Calculateur Impact Fiscal à 65 ans</h1>
+              <p className="text-gray-600 mb-8">Découvrez les économies fiscales automatiques à 65 ans.</p>
+              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
+                <h2 className="text-xl font-semibold text-green-900 mb-4">Économies Potentielles:</h2>
+                <ul className="space-y-2 text-green-800">
+                  <li>• Crédit d'âge fédéral et provincial</li>
+                  <li>• Crédit pour revenu de pension (2000$ premiers)</li>
+                  <li>• Fractionnement du revenu de pension</li>
+                  <li>• Réduction d'impôt de 1600$+ par année</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        } />
+        
+        <Route path="/tableau-bord-10-conseils" element={
+          <div className="p-8">
+            <div className="max-w-4xl mx-auto">
+              <h1 className="text-3xl font-bold text-gray-900 mb-6">Tableau de Bord - 10 Conseils Essentiels</h1>
+              <p className="text-gray-600 mb-8">Suivez votre progression sur les 10 conseils cruciaux pour la retraite.</p>
+              <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
+                <h2 className="text-xl font-semibold text-orange-900 mb-4">Conseils Intégrés:</h2>
+                <ul className="space-y-2 text-orange-800">
+                  <li>• Connaître ses dépenses mensuelles</li>
+                  <li>• Être libre de dettes</li>
+                  <li>• Consolider ses actifs</li>
+                  <li>• Automatiser les retraits</li>
+                  <li>• Et 6 autres conseils essentiels</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        } />
+        
+        {/* Phase 2 - Optimisation Avancée */}
+        <Route path="/module-consolidation-actifs" element={
+          <div className="p-8">
+            <div className="max-w-4xl mx-auto">
+              <h1 className="text-3xl font-bold text-gray-900 mb-6">Module Consolidation d'Actifs</h1>
+              <p className="text-gray-600 mb-8">Simplifiez et optimisez la gestion de vos placements.</p>
+              <div className="bg-purple-50 border border-purple-200 rounded-lg p-6">
+                <h2 className="text-xl font-semibold text-purple-900 mb-4">Avantages:</h2>
+                <ul className="space-y-2 text-purple-800">
+                  <li>• Réduction des frais de gestion</li>
+                  <li>• Simplification administrative</li>
+                  <li>• Meilleur suivi de performance</li>
+                  <li>• Économies de 0.5-2% par année</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        } />
+        
+        <Route path="/module-coussin-liquidites" element={
+          <div className="p-8">
+            <div className="max-w-4xl mx-auto">
+              <h1 className="text-3xl font-bold text-gray-900 mb-6">Module Coussin de Liquidités</h1>
+              <p className="text-gray-600 mb-8">Protégez-vous contre la volatilité avec la stratégie bucket.</p>
+              <div className="bg-cyan-50 border border-cyan-200 rounded-lg p-6">
+                <h2 className="text-xl font-semibold text-cyan-900 mb-4">Stratégie Bucket:</h2>
+                <ul className="space-y-2 text-cyan-800">
+                  <li>• 3-5 ans de liquidités protégées</li>
+                  <li>• Éviter de vendre en baisse de marché</li>
+                  <li>• Maintenir le style de vie désiré</li>
+                  <li>• Réduire le stress financier</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        } />
+        
+        <Route path="/centre-education-fiscale" element={
+          <div className="p-8">
+            <div className="max-w-4xl mx-auto">
+              <h1 className="text-3xl font-bold text-gray-900 mb-6">Centre d'Éducation Fiscale</h1>
+              <p className="text-gray-600 mb-8">Maîtrisez les stratégies fiscales pour la retraite.</p>
+              <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-6">
+                <h2 className="text-xl font-semibold text-indigo-900 mb-4">Sujets Couverts:</h2>
+                <ul className="space-y-2 text-indigo-800">
+                  <li>• Fractionnement du revenu</li>
+                  <li>• Optimisation des retraits</li>
+                  <li>• Crédits d'impôt disponibles</li>
+                  <li>• Planification successorale fiscale</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        } />
+        
+        {/* Phase 3 - Optimisation Experte */}
+        <Route path="/module-regle-4-pourcent" element={
+          <div className="p-8">
+            <FourPercentRuleModule />
+          </div>
+        } />
+        
+        <Route path="/module-allocation-optimale" element={
+          <div className="p-8">
+            <OptimalAllocationModule userPlan="professional" />
+          </div>
+        } />
+        
+        <Route path="/detecteur-liquidites-excessives" element={
+          <div className="p-8">
+            <ExcessLiquidityDetector userPlan="professional" />
+          </div>
+        } />
+        
+        <Route path="/centre-protection-inflation" element={
+          <div className="p-8">
+            <InflationProtectionCenter userPlan="professional" />
+          </div>
+        } />
+        
+        <Route path="/educateur-biais-comportementaux" element={
+          <div className="p-8">
+            <BehavioralBiasEducator userPlan="professional" />
+          </div>
+        } />
               
               {/* 🧪 ROUTES DE TEST ET VALIDATION */}
               

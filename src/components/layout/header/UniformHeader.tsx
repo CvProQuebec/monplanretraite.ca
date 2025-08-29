@@ -125,6 +125,69 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
       ]
     },
     {
+      id: 'advanced-modules',
+      label: isEnglish ? 'Advanced Modules' : 'Modules Avancés',
+      icon: TrendingUp,
+      hasSubmenu: true,
+      submenu: [
+        {
+          id: 'celi-succession',
+          label: isEnglish ? 'TFSA Succession' : 'Succession CÉLI',
+          path: '/module-celi-succession'
+        },
+        {
+          id: 'tax-impact-65',
+          label: isEnglish ? 'Tax Impact at 65' : 'Impact Fiscal à 65 ans',
+          path: '/calculateur-impact-fiscal-65'
+        },
+        {
+          id: 'ten-tips-dashboard',
+          label: isEnglish ? '10 Essential Tips' : '10 Conseils Essentiels',
+          path: '/tableau-bord-10-conseils'
+        },
+        {
+          id: 'asset-consolidation',
+          label: isEnglish ? 'Asset Consolidation' : 'Consolidation d\'Actifs',
+          path: '/module-consolidation-actifs'
+        },
+        {
+          id: 'cash-wedge-bucket',
+          label: isEnglish ? 'Cash Wedge Strategy' : 'Stratégie Coussin Liquidités',
+          path: '/module-coussin-liquidites'
+        },
+        {
+          id: 'tax-education',
+          label: isEnglish ? 'Tax Education Center' : 'Centre Éducation Fiscale',
+          path: '/centre-education-fiscale'
+        },
+        {
+          id: 'four-percent-rule',
+          label: isEnglish ? '4% Rule Analysis' : 'Analyse Règle 4%',
+          path: '/module-regle-4-pourcent'
+        },
+        {
+          id: 'optimal-allocation',
+          label: isEnglish ? 'Optimal Allocation' : 'Allocation Optimale',
+          path: '/module-allocation-optimale'
+        },
+        {
+          id: 'excess-liquidity',
+          label: isEnglish ? 'Excess Liquidity Detector' : 'Détecteur Liquidités Excessives',
+          path: '/detecteur-liquidites-excessives'
+        },
+        {
+          id: 'inflation-protection',
+          label: isEnglish ? 'Inflation Protection' : 'Protection Inflation',
+          path: '/centre-protection-inflation'
+        },
+        {
+          id: 'behavioral-bias',
+          label: isEnglish ? 'Behavioral Bias Educator' : 'Éducateur Biais Comportementaux',
+          path: '/educateur-biais-comportementaux'
+        }
+      ]
+    },
+    {
       id: 'reports',
       label: isEnglish ? 'Reports' : 'Rapports',
       icon: FileText,

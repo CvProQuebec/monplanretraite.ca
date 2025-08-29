@@ -23,6 +23,23 @@ export interface PlanFeatures {
   hasFinancialAssistant: boolean; // Assistant IA Personnel
   hasBudgetModule: boolean; // Module Budget complet
   
+  // NOUVEAUX MODULES PHASE 1
+  hasCELISuccessionModule: boolean; // Module CELI et succession
+  hasTaxImpactAt65Calculator: boolean; // Calculateur impact fiscal 65 ans
+  hasTenEssentialTipsDashboard: boolean; // Dashboard 10 conseils essentiels
+  
+  // NOUVEAUX MODULES PHASE 2
+  hasAssetConsolidationModule: boolean; // Module consolidation d'actifs
+  hasCashWedgeBucketModule: boolean; // Module stratégie de seau/cash wedge
+  hasTaxEducationCenter: boolean; // Centre d'éducation fiscale
+  
+  // NOUVEAUX MODULES PHASE 3 (Optimisation Avancée)
+  hasFourPercentRuleModule: boolean; // Module règle des 4% modernisée
+  hasOptimalAllocationModule: boolean; // Optimisateur allocation retraite
+  hasExcessLiquidityDetector: boolean; // Détecteur sur-liquidités
+  hasInflationProtectionCenter: boolean; // Centre anti-inflation
+  hasBehavioralBiasEducator: boolean; // Éducateur biais comportementaux
+  
   // Fonctionnalités premium
   hasAIConsulting: boolean; // IA prédictive et conseils avancés
   hasSuccessionPlanning: boolean; // Planification successorale

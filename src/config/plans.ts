@@ -28,6 +28,23 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
       hasFinancialAssistant: false, // 🔒 PROFESSIONNEL
       hasBudgetModule: false, // 🔒 PROFESSIONNEL
       
+      // NOUVEAUX MODULES PHASE 1 - VERROUILLÉS
+      hasCELISuccessionModule: false, // 🔒 PROFESSIONNEL
+      hasTaxImpactAt65Calculator: false, // 🔒 PROFESSIONNEL
+      hasTenEssentialTipsDashboard: false, // 🔒 PROFESSIONNEL
+      
+      // NOUVEAUX MODULES PHASE 2 - VERROUILLÉS
+      hasAssetConsolidationModule: false, // 🔒 PROFESSIONNEL
+      hasCashWedgeBucketModule: false, // 🔒 PROFESSIONNEL
+      hasTaxEducationCenter: false, // 🔒 PROFESSIONNEL
+      
+      // NOUVEAUX MODULES PHASE 3 - VERROUILLÉS
+      hasFourPercentRuleModule: false, // 🔒 PROFESSIONNEL
+      hasOptimalAllocationModule: false, // 🔒 PROFESSIONNEL
+      hasExcessLiquidityDetector: false, // 🔒 PROFESSIONNEL
+      hasInflationProtectionCenter: false, // 🔒 PROFESSIONNEL
+      hasBehavioralBiasEducator: false, // 🔒 PROFESSIONNEL
+      
       // Fonctionnalités premium - DÉPLACÉES vers Professionnel
       hasAIConsulting: false,
       hasSuccessionPlanning: false,
@@ -74,7 +91,7 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
     price: '297 $/an',
     priceId: 'price_professional_annual',
     badge: 'Professionnel',
-    description: '💪 OUTILS COMPLETS POUR COUPLES ! Récupère tout ce qui était gratuit + suite professionnelle complète (5 000 $ de valeur) - Parfait pour planification autonome sérieuse',
+    description: '💪 OUTILS COMPLETS POUR COUPLES ! Récupère tout ce qui était gratuit + suite professionnelle complète (5 000 $ de valeur) + 11 NOUVEAUX MODULES EXCLUSIFS basés sur l\'expertise d\'Adam Parallel Wealth - Parfait pour planification autonome sérieuse',
     features: {
       // Limites numériques - ILLIMITÉES
       maxSimulations: -1, // ✅ ILLIMITÉ - Testez tous vos scénarios
@@ -95,6 +112,23 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
       hasTaxOptimization: true, // ✅ INCLUS - Optimisation fiscale REER/CELI
       hasFinancialAssistant: true, // ✅ INCLUS - Assistant IA (prévention catastrophes)
       hasBudgetModule: true, // ✅ INCLUS - Module Budget complet
+      
+      // NOUVEAUX MODULES PHASE 1 - INCLUS
+      hasCELISuccessionModule: true, // ✅ INCLUS - Module CELI et succession
+      hasTaxImpactAt65Calculator: true, // ✅ INCLUS - Calculateur impact fiscal 65 ans
+      hasTenEssentialTipsDashboard: true, // ✅ INCLUS - Dashboard 10 conseils essentiels
+      
+      // NOUVEAUX MODULES PHASE 2 - INCLUS
+      hasAssetConsolidationModule: true, // ✅ INCLUS - Module consolidation d'actifs
+      hasCashWedgeBucketModule: true, // ✅ INCLUS - Module stratégie de seau/cash wedge
+      hasTaxEducationCenter: true, // ✅ INCLUS - Centre d'éducation fiscale
+      
+      // NOUVEAUX MODULES PHASE 3 - INCLUS
+      hasFourPercentRuleModule: true, // ✅ INCLUS - Module règle des 4% modernisée
+      hasOptimalAllocationModule: true, // ✅ INCLUS - Optimisateur allocation retraite
+      hasExcessLiquidityDetector: true, // ✅ INCLUS - Détecteur sur-liquidités
+      hasInflationProtectionCenter: true, // ✅ INCLUS - Centre anti-inflation
+      hasBehavioralBiasEducator: true, // ✅ INCLUS - Éducateur biais comportementaux
       
       // Fonctionnalités premium - Sélectionnées
       hasAIConsulting: false, // 🔒 EXPERT - IA prédictive avancée
@@ -142,7 +176,7 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
     price: '597 $/an',
     priceId: 'price_expert_annual',
     badge: 'Expert',
-    description: '🚀 MAÎTRISEZ L\'AVENIR ! IA prédictive + optimisation maximale (10 000$+ de valeur) - Pour ceux qui refusent de laisser le hasard décider de leur retraite',
+    description: '🚀 MAÎTRISEZ L\'AVENIR ! IA prédictive + optimisation maximale (10 000$+ de valeur) + 11 NOUVEAUX MODULES EXCLUSIFS basés sur l\'expertise d\'Adam Parallel Wealth + Analyses comportementales avancées - Pour ceux qui refusent de laisser le hasard décider de leur retraite',
     features: {
       // Limites numériques - TOUT ILLIMITÉ
       maxSimulations: -1, // ✅ ILLIMITÉ - Simulations infinies
@@ -163,6 +197,23 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
       hasTaxOptimization: true, // ✅ INCLUS - Optimisation fiscale maximale
       hasFinancialAssistant: true, // ✅ INCLUS - Assistant IA ultra-avancé
       hasBudgetModule: true, // ✅ INCLUS - Module Budget expert
+      
+      // NOUVEAUX MODULES PHASE 1 - INCLUS
+      hasCELISuccessionModule: true, // ✅ INCLUS - Module CELI et succession
+      hasTaxImpactAt65Calculator: true, // ✅ INCLUS - Calculateur impact fiscal 65 ans
+      hasTenEssentialTipsDashboard: true, // ✅ INCLUS - Dashboard 10 conseils essentiels
+      
+      // NOUVEAUX MODULES PHASE 2 - INCLUS
+      hasAssetConsolidationModule: true, // ✅ INCLUS - Module consolidation d'actifs
+      hasCashWedgeBucketModule: true, // ✅ INCLUS - Module stratégie de seau/cash wedge
+      hasTaxEducationCenter: true, // ✅ INCLUS - Centre d'éducation fiscale
+      
+      // NOUVEAUX MODULES PHASE 3 - INCLUS
+      hasFourPercentRuleModule: true, // ✅ INCLUS - Module règle des 4% modernisée
+      hasOptimalAllocationModule: true, // ✅ INCLUS - Optimisateur allocation retraite
+      hasExcessLiquidityDetector: true, // ✅ INCLUS - Détecteur sur-liquidités
+      hasInflationProtectionCenter: true, // ✅ INCLUS - Centre anti-inflation
+      hasBehavioralBiasEducator: true, // ✅ INCLUS - Éducateur biais comportementaux
       
       // Fonctionnalités premium - TOUTES INCLUSES
       hasAIConsulting: true, // ✅ INCLUS - IA prédictive + conseils avancés
