@@ -334,7 +334,7 @@ export const InsuranceTab: React.FC<InsuranceTabProps> = ({ data, onUpdate }) =>
                   id="insurance-provider"
                   value={newInsurance.provider}
                   onChange={(e) => setNewInsurance({ ...newInsurance, provider: e.target.value })}
-                  placeholder="Ex : Desjardins, Intact, SSQ"
+                  placeholder="Ex : Assureur, Intact, SSQ"
                 />
               </div>
             </div>

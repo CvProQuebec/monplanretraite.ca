@@ -35,23 +35,43 @@ export const Header: React.FC = () => {
   // Sections regroupées par catégorie
   const sectionGroups = [
     {
-      title: language === 'fr' ? 'Planification de base' : 'Basic Planning',
+      title: language === 'fr' ? 'Outils' : 'Tools',
       sections: [
         { id: 'dashboard', label: t.navigation.dashboard, icon: BarChart3, requiredPlan: 'free' },
         { id: 'personal', label: t.navigation.profile, icon: Users, requiredPlan: 'free' },
         { id: 'retirement', label: t.navigation.retirement, icon: Shield, requiredPlan: 'free' },
         { id: 'savings', label: t.navigation.savings, icon: DollarSign, requiredPlan: 'free' },
-      ]
-    },
-    {
-      title: language === 'fr' ? 'Fonctionnalités avancées' : 'Advanced Features',
-      sections: [
+        // Modules de calcul déplacés des "Modules Avancés"
         { id: 'cashflow', label: t.navigation.cashflow, icon: TrendingUp, requiredPlan: 'professional' },
         { id: 'cpp', label: 'CPP', icon: Flag, requiredPlan: 'professional' },
         { id: 'combined-pension', label: 'CPP+RRQ', icon: BarChart3, requiredPlan: 'professional' },
         { id: 'advanced-expenses', label: t.navigation.advancedExpenses, icon: Calendar, requiredPlan: 'professional' },
         { id: 'tax', label: t.navigation.taxOptimization, icon: Calculator, requiredPlan: 'professional' },
         { id: 'simulator', label: t.navigation.simulator, icon: Zap, requiredPlan: 'professional' },
+        // Calculette de Rendement Avancée ajoutée
+        { id: 'advanced-performance', label: language === 'fr' ? 'Calculette de Rendement Avancée' : 'Advanced Performance Calculator', icon: Calculator, requiredPlan: 'professional' },
+        // Modules avec formulaires de calcul
+        { id: 'ferr-optimization', label: language === 'fr' ? 'Optimisation FERR' : 'RRIF Optimization', icon: Calculator, requiredPlan: 'professional' },
+        { id: 'celiapp', label: 'CELIAPP', icon: Calculator, requiredPlan: 'free' },
+        { id: 'withdrawal-sequence', label: language === 'fr' ? 'Séquence de Retrait' : 'Withdrawal Sequence', icon: Calculator, requiredPlan: 'expert' },
+        { id: 'healthcare-cost', label: language === 'fr' ? 'Coûts de Santé' : 'Healthcare Costs', icon: Calculator, requiredPlan: 'professional' },
+        { id: 'tax-optimization', label: language === 'fr' ? 'Optimisation Fiscale Multi-Sources' : 'Multi-Source Tax Optimization', icon: Calculator, requiredPlan: 'expert' },
+        { id: 'longevity-planning', label: language === 'fr' ? 'Planification Longévité' : 'Longevity Planning', icon: Calculator, requiredPlan: 'professional' },
+        { id: 'consolidation', label: language === 'fr' ? 'Consolidation Financière' : 'Financial Consolidation', icon: Calculator, requiredPlan: 'professional' },
+        { id: 'progressive-retirement', label: language === 'fr' ? 'Retraite Progressive' : 'Progressive Retirement', icon: Calculator, requiredPlan: 'professional' },
+        { id: 'inflation-protection', label: language === 'fr' ? 'Protection Inflation' : 'Inflation Protection', icon: Calculator, requiredPlan: 'professional' },
+        { id: 'rrsp-meltdown', label: language === 'fr' ? 'Stratégies REER Meltdown' : 'RRSP Meltdown Strategies', icon: Calculator, requiredPlan: 'expert' },
+        { id: 'cpp-timing', label: language === 'fr' ? 'Optimisation Timing CPP' : 'CPP Timing Optimization', icon: Calculator, requiredPlan: 'professional' },
+        { id: 'spending-psychology', label: language === 'fr' ? 'Psychologie des Dépenses' : 'Spending Psychology', icon: Calculator, requiredPlan: 'professional' },
+        { id: 'dynamic-withdrawal', label: language === 'fr' ? 'Planification Retrait Dynamique' : 'Dynamic Withdrawal Planning', icon: Calculator, requiredPlan: 'expert' },
+        { id: 'four-percent-rule', label: language === 'fr' ? 'Règle des 4%' : '4% Rule', icon: Calculator, requiredPlan: 'free' },
+        { id: 'rvdaa', label: 'RVDAA', icon: Calculator, requiredPlan: 'expert' },
+      ]
+    },
+    {
+      title: language === 'fr' ? 'Modules Éducatifs' : 'Educational Modules',
+      sections: [
+        { id: 'government-education', label: language === 'fr' ? 'Centre d\'Éducation Gouvernementale' : 'Government Education Center', icon: Shield, requiredPlan: 'free' },
       ]
     },
     {

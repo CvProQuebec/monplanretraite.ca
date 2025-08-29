@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import OnboardingWizard from '@/components/ui/OnboardingWizard';
 import {
   CheckCircle,
@@ -22,7 +23,9 @@ import {
   Users,
   Calculator,
   Phone,
-  FileText
+  FileText,
+  Key,
+  Unlock
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
@@ -32,15 +35,20 @@ const Accueil: React.FC = () => {
   const navigate = useNavigate();
   const isFrench = language === 'fr';
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
-  const [targetPlan, setTargetPlan] = useState<'professional' | 'ultimate'>('professional');
+  const [targetPlan, setTargetPlan] = useState<'professional' | 'expert'>('professional');
   const [showOnboardingWizard, setShowOnboardingWizard] = useState(false);
+  
+  // Système de code de test temporaire
+  const [testCode, setTestCode] = useState('');
+  const [isTestModeActive, setIsTestModeActive] = useState(false);
+  const [showTestCodeInput, setShowTestCodeInput] = useState(false);
 
   const handleNavigation = (path: string) => {
     navigate(path);
   };
 
   const handleUpgradeClick = (plan: 'professional' | 'ultimate') => {
-    setTargetPlan(plan);
+    setTargetPlan(plan === 'ultimate' ? 'expert' : plan);
     setIsUpgradeModalOpen(true);
   };
 
@@ -54,8 +62,112 @@ const Accueil: React.FC = () => {
     setShowOnboardingWizard(false);
   };
 
+  const handleTestCodeSubmit = () => {
+    if (testCode.trim().toUpperCase() === 'TESTER100') {
+      setIsTestModeActive(true);
+      setTestCode('');
+      setShowTestCodeInput(false);
+      // Store test mode in localStorage for persistence across pages
+      localStorage.setItem('testModeActive', 'true');
+      alert(isFrench ? '✅ Mode test activé! Tous les modules sont maintenant débloqués.' : '✅ Test mode activated! All modules are now unlocked.');
+    } else {
+      alert(isFrench ? '❌ Code incorrect. Veuillez réessayer.' : '❌ Incorrect code. Please try again.');
+      setTestCode('');
+    }
+  };
+
+  const handleTestCodeKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleTestCodeSubmit();
+    }
+  };
+
+  // Check if test mode was previously activated
+  React.useEffect(() => {
+    const testModeStored = localStorage.getItem('testModeActive');
+    if (testModeStored === 'true') {
+      setIsTestModeActive(true);
+    }
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      
+      {/* Section de code de test temporaire */}
+      {!isTestModeActive && (
+        <div className="fixed bottom-4 right-4 z-50">
+          {!showTestCodeInput ? (
+            <Button
+              onClick={() => setShowTestCodeInput(true)}
+              className="bg-gray-600 hover:bg-gray-700 text-white p-3 rounded-full shadow-lg"
+              title={isFrench ? "Code de test" : "Test code"}
+            >
+              <Key className="w-5 h-5" />
+            </Button>
+          ) : (
+            <Card className="bg-white shadow-xl border-2 border-gray-300 p-4 min-w-[280px]">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 text-sm text-gray-600">
+                  <Unlock className="w-4 h-4" />
+                  <span>{isFrench ? 'Code de test' : 'Test code'}</span>
+                </div>
+                <div className="flex gap-2">
+                  <Input
+                    type="text"
+                    placeholder={isFrench ? "Entrez le code..." : "Enter code..."}
+                    value={testCode}
+                    onChange={(e) => setTestCode(e.target.value)}
+                    onKeyPress={handleTestCodeKeyPress}
+                    className="flex-1"
+                    autoFocus
+                  />
+                  <Button
+                    onClick={handleTestCodeSubmit}
+                    size="sm"
+                    className="bg-blue-600 hover:bg-blue-700"
+                  >
+                    {isFrench ? 'OK' : 'OK'}
+                  </Button>
+                </div>
+                <Button
+                  onClick={() => {
+                    setShowTestCodeInput(false);
+                    setTestCode('');
+                  }}
+                  variant="ghost"
+                  size="sm"
+                  className="w-full text-xs text-gray-500"
+                >
+                  {isFrench ? 'Annuler' : 'Cancel'}
+                </Button>
+              </div>
+            </Card>
+          )}
+        </div>
+      )}
+
+      {/* Indicateur de mode test actif */}
+      {isTestModeActive && (
+        <div className="fixed top-4 right-4 z-50">
+          <div className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2">
+            <Unlock className="w-4 h-4" />
+            <span className="text-sm font-medium">
+              {isFrench ? 'Mode Test Actif' : 'Test Mode Active'}
+            </span>
+            <Button
+              onClick={() => {
+                setIsTestModeActive(false);
+                localStorage.removeItem('testModeActive');
+              }}
+              variant="ghost"
+              size="sm"
+              className="text-white hover:bg-green-600 p-1 h-auto"
+            >
+              <XCircle className="w-4 h-4" />
+            </Button>
+          </div>
+        </div>
+      )}
       
       {/* Contenu principal optimisé */}
       <div className="container mx-auto px-6 py-8">

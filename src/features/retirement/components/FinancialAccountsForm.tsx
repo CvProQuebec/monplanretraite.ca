@@ -47,8 +47,7 @@ const accountTypeOptions = [
 ];
 
 const commonInstitutions = [
-  'Banque Nationale', 'RBC Banque Royale', 'TD Canada Trust', 'Banque Scotia',
-  'BMO Banque de Montréal', 'CIBC', 'Desjardins', 'Banque Laurentienne',
+  'Institution financière', 'Caisse populaire', 'Banque',
   'Tangerine', 'Simplii', 'HSBC Canada', 'Autre'
 ];
 

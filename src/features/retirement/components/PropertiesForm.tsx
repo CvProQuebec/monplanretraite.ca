@@ -364,7 +364,7 @@ export const PropertiesForm: React.FC<PropertiesFormProps> = ({
                           <Label htmlFor="hypothequeInstitution">Institution financière *</Label>
                           <Input
                             id="hypothequeInstitution"
-                            placeholder="ex: Banque Nationale"
+                            placeholder="ex: Institution financière"
                             value={formData.hypotheque.institution || ''}
                             onChange={(e) => updateFormData('hypotheque.institution', e.target.value)}
                             className={errors.hypothequeInstitution ? 'border-red-500' : ''}

@@ -15,6 +15,10 @@ import PlanificationDepenses from './pages/PlanificationDepenses';
 import AssistantFinancier from './pages/AssistantFinancier';
 import Budget from './pages/Budget';
 
+// Blog pages
+import BlogPage from './pages/BlogPage';
+import OptimiserTransmissionCeli from './pages/blog/OptimiserTransmissionCeli';
+
 // NOUVEAUX MODULES INTÉGRÉS
 import { SRGAnalysisSection } from './features/retirement/components/SRGAnalysisSection';
 import RREGOPAnalysisSection from './features/retirement/components/RREGOPAnalysisSection';
@@ -107,6 +111,35 @@ function App() {
               <Route path="/budget" element={<Budget />} />
               <Route path="/mon-budget" element={<Budget />} />
               <Route path="/my-budget" element={<Budget />} />
+              
+              {/* 📝 NOUVELLES ROUTES - BLOG */}
+              
+              {/* Page principale du blog */}
+              <Route path="/blog" element={<BlogPage />} />
+              
+              {/* Catégories du blog */}
+              <Route path="/blog/guides" element={<BlogPage />} />
+              <Route path="/blog/conseils-experts" element={<BlogPage />} />
+              <Route path="/blog/expert-tips" element={<BlogPage />} />
+              <Route path="/blog/etudes-cas" element={<BlogPage />} />
+              <Route path="/blog/case-studies" element={<BlogPage />} />
+              <Route path="/blog/actualites-fiscales" element={<BlogPage />} />
+              <Route path="/blog/tax-news" element={<BlogPage />} />
+              
+              {/* Articles spécifiques du blog */}
+              <Route path="/blog/guides/optimiser-transmission-celi" element={<OptimiserTransmissionCeli />} />
+              <Route path="/blog/guides/strategies-fiscales-retraite" element={<BlogPage />} />
+              <Route path="/blog/conseils-experts/10-conseils-retraite-reussie" element={<BlogPage />} />
+              <Route path="/blog/conseils-experts/eviter-biais-comportementaux" element={<BlogPage />} />
+              <Route path="/blog/etudes-cas/retraite-anticipee-55-ans" element={<BlogPage />} />
+              <Route path="/blog/etudes-cas/optimisation-successorale-4-enfants" element={<BlogPage />} />
+              <Route path="/blog/actualites-fiscales/budget-2024-retraites" element={<BlogPage />} />
+              <Route path="/blog/actualites-fiscales/nouvelles-regles-ferr-2024" element={<BlogPage />} />
+              
+              {/* Articles populaires */}
+              <Route path="/blog/guides/reer-vs-celi-optimization" element={<BlogPage />} />
+              <Route path="/blog/conseils-experts/5-erreurs-couteuses-retraite" element={<BlogPage />} />
+              <Route path="/blog/actualites-fiscales/impact-inflation-retraite" element={<BlogPage />} />
               
               {/* 🏛️ NOUVELLES ROUTES - PRESTATIONS GOUVERNEMENTALES */}
               
@@ -245,7 +278,7 @@ function App() {
           <div className="p-8">
             <div className="max-w-4xl mx-auto">
               <h1 className="text-3xl font-bold text-gray-900 mb-6">Module Coussin de Liquidités</h1>
-              <p className="text-gray-600 mb-8">Protégez-vous contre la volatilité avec la stratégie bucket.</p>
+              <p className="text-gray-600 mb-8">Gérez la volatilité avec la stratégie bucket.</p>
               <div className="bg-cyan-50 border border-cyan-200 rounded-lg p-6">
                 <h2 className="text-xl font-semibold text-cyan-900 mb-4">Stratégie Bucket:</h2>
                 <ul className="space-y-2 text-cyan-800">

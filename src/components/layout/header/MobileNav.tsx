@@ -129,86 +129,227 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
             {isEnglish ? "Government" : "Gouvernement"}
           </Link>
           
-          {/* Assistant financier / Financial Assistant */}
-          <Link
-            to={isEnglish ? "/financial-assistant" : "/assistant-financier"}
-            className={getMobileLinkClasses(isEnglish ? "/financial-assistant" : "/assistant-financier")}
-            onClick={toggleMenu}
-          >
-            {isEnglish ? "Financial Assistant" : "Assistant financier"}
-          </Link>
+          {/* Section Outils / Tools */}
+          <div className="py-2 border-t border-gray-200">
+            <h3 className="text-sm font-bold text-blue-600 uppercase tracking-wide mb-2">
+              {isEnglish ? "Tools" : "Outils"}
+            </h3>
+            
+            {/* Assistant financier / Financial Assistant */}
+            <Link
+              to={isEnglish ? "/financial-assistant" : "/assistant-financier"}
+              className={getMobileLinkClasses(isEnglish ? "/financial-assistant" : "/assistant-financier")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Financial Assistant" : "Assistant financier"}
+            </Link>
+            
+            {/* Planification d'urgence / Emergency Planning */}
+            <Link
+              to={isEnglish ? "/emergency-planning" : "/planification-urgence"}
+              className={getMobileLinkClasses(isEnglish ? "/emergency-planning" : "/planification-urgence")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Emergency Planning" : "Planification d'urgence"}
+            </Link>
+            
+            {/* Planification successorale / Succession Planning */}
+            <Link
+              to={isEnglish ? "/succession-planning" : "/planification-successorale"}
+              className={getMobileLinkClasses(isEnglish ? "/succession-planning" : "/planification-successorale")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Succession Planning" : "Planification successorale"}
+            </Link>
+            
+            {/* Planification de dépenses / Expense Planning */}
+            <Link
+              to={isEnglish ? "/expense-planning" : "/planification-depenses"}
+              className={getMobileLinkClasses(isEnglish ? "/expense-planning" : "/planification-depenses")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Expense Planning" : "Planification de dépenses"}
+            </Link>
+            
+            {/* Calculette de Rendement Avancée / Advanced Performance Calculator */}
+            <Link
+              to={isEnglish ? "/advanced-performance-calculator" : "/calculette-rendement-avancee"}
+              className={getMobileLinkClasses(isEnglish ? "/advanced-performance-calculator" : "/calculette-rendement-avancee")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Advanced Performance Calculator" : "Calculette de Rendement Avancée"}
+            </Link>
+            
+            {/* Modules de calcul déplacés des "Modules Avancés" */}
+            <Link
+              to={isEnglish ? "/ferr-optimization" : "/optimisation-ferr"}
+              className={getMobileLinkClasses(isEnglish ? "/ferr-optimization" : "/optimisation-ferr")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "RRIF Optimization" : "Optimisation FERR"}
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/celiapp" : "/celiapp"}
+              className={getMobileLinkClasses("/celiapp")}
+              onClick={toggleMenu}
+            >
+              CELIAPP
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/withdrawal-sequence" : "/sequence-retrait"}
+              className={getMobileLinkClasses(isEnglish ? "/withdrawal-sequence" : "/sequence-retrait")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Withdrawal Sequence" : "Séquence de Retrait"}
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/healthcare-costs" : "/couts-sante"}
+              className={getMobileLinkClasses(isEnglish ? "/healthcare-costs" : "/couts-sante")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Healthcare Costs" : "Coûts de Santé"}
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/tax-optimization" : "/optimisation-fiscale"}
+              className={getMobileLinkClasses(isEnglish ? "/tax-optimization" : "/optimisation-fiscale")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Multi-Source Tax Optimization" : "Optimisation Fiscale Multi-Sources"}
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/longevity-planning" : "/planification-longevite"}
+              className={getMobileLinkClasses(isEnglish ? "/longevity-planning" : "/planification-longevite")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Longevity Planning" : "Planification Longévité"}
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/financial-consolidation" : "/consolidation-financiere"}
+              className={getMobileLinkClasses(isEnglish ? "/financial-consolidation" : "/consolidation-financiere")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Financial Consolidation" : "Consolidation Financière"}
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/progressive-retirement" : "/retraite-progressive"}
+              className={getMobileLinkClasses(isEnglish ? "/progressive-retirement" : "/retraite-progressive")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Progressive Retirement" : "Retraite Progressive"}
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/inflation-protection" : "/protection-inflation"}
+              className={getMobileLinkClasses(isEnglish ? "/inflation-protection" : "/protection-inflation")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Inflation Protection" : "Protection Inflation"}
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/rrsp-meltdown" : "/strategies-reer-meltdown"}
+              className={getMobileLinkClasses(isEnglish ? "/rrsp-meltdown" : "/strategies-reer-meltdown")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "RRSP Meltdown Strategies" : "Stratégies REER Meltdown"}
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/cpp-timing" : "/optimisation-timing-cpp"}
+              className={getMobileLinkClasses(isEnglish ? "/cpp-timing" : "/optimisation-timing-cpp")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "CPP Timing Optimization" : "Optimisation Timing CPP"}
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/spending-psychology" : "/psychologie-depenses"}
+              className={getMobileLinkClasses(isEnglish ? "/spending-psychology" : "/psychologie-depenses")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Spending Psychology" : "Psychologie des Dépenses"}
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/dynamic-withdrawal" : "/planification-retrait-dynamique"}
+              className={getMobileLinkClasses(isEnglish ? "/dynamic-withdrawal" : "/planification-retrait-dynamique")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Dynamic Withdrawal Planning" : "Planification Retrait Dynamique"}
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/four-percent-rule" : "/regle-quatre-pourcent"}
+              className={getMobileLinkClasses(isEnglish ? "/four-percent-rule" : "/regle-quatre-pourcent")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "4% Rule" : "Règle des 4%"}
+            </Link>
+            
+            <Link
+              to={isEnglish ? "/rvdaa" : "/rvdaa"}
+              className={getMobileLinkClasses("/rvdaa")}
+              onClick={toggleMenu}
+            >
+              RVDAA
+            </Link>
+          </div>
           
-          {/* Planification d'urgence / Emergency Planning */}
-          <Link
-            to={isEnglish ? "/emergency-planning" : "/planification-urgence"}
-            className={getMobileLinkClasses(isEnglish ? "/emergency-planning" : "/planification-urgence")}
-            onClick={toggleMenu}
-          >
-            {isEnglish ? "Emergency Planning" : "Planification d'urgence"}
-          </Link>
+          {/* Section Modules Éducatifs / Educational Modules */}
+          <div className="py-2 border-t border-gray-200">
+            <h3 className="text-sm font-bold text-blue-600 uppercase tracking-wide mb-2">
+              {isEnglish ? "Educational Modules" : "Modules Éducatifs"}
+            </h3>
+            
+            <Link
+              to={isEnglish ? "/government-education" : "/education-gouvernementale"}
+              className={getMobileLinkClasses(isEnglish ? "/government-education" : "/education-gouvernementale")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Government Education Center" : "Centre d'Éducation Gouvernementale"}
+            </Link>
+          </div>
           
-          {/* Planification successorale / Succession Planning */}
-          <Link
-            to={isEnglish ? "/succession-planning" : "/planification-successorale"}
-            className={getMobileLinkClasses(isEnglish ? "/succession-planning" : "/planification-successorale")}
-            onClick={toggleMenu}
-          >
-            {isEnglish ? "Succession Planning" : "Planification successorale"}
-          </Link>
-          
-          {/* Planification de dépenses / Expense Planning */}
-          <Link
-            to={isEnglish ? "/expense-planning" : "/planification-depenses"}
-            className={getMobileLinkClasses(isEnglish ? "/expense-planning" : "/planification-depenses")}
-            onClick={toggleMenu}
-          >
-            {isEnglish ? "Expense Planning" : "Planification de dépenses"}
-          </Link>
-          
-          {/* Optimisation fiscale / Tax Optimization */}
-          <Link
-            to={isEnglish ? "/tax-optimization" : "/optimisation-fiscale"}
-            className={getMobileLinkClasses(isEnglish ? "/tax-optimization" : "/optimisation-fiscale")}
-            onClick={toggleMenu}
-          >
-            {isEnglish ? "Tax Optimization" : "Optimisation fiscale"}
-          </Link>
-          
-          {/* Planification expert / Expert Planning */}
-          <Link
-            to={isEnglish ? "/expert-planning" : "/planification-expert"}
-            className={getMobileLinkClasses(isEnglish ? "/expert-planning" : "/planification-expert")}
-            onClick={toggleMenu}
-          >
-            {isEnglish ? "Expert Planning" : "Planification expert"}
-          </Link>
-          
-          {/* Simulateur Monte Carlo / Monte Carlo Simulator */}
-          <Link
-            to={isEnglish ? "/monte-carlo-simulator" : "/simulateur-monte-carlo"}
-            className={getMobileLinkClasses(isEnglish ? "/monte-carlo-simulator" : "/simulateur-monte-carlo")}
-            onClick={toggleMenu}
-          >
-            {isEnglish ? "Monte Carlo Simulator" : "Simulateur Monte Carlo"}
-          </Link>
-          
-          {/* Analyse de sensibilité / Sensitivity Analysis */}
-          <Link
-            to={isEnglish ? "/sensitivity-analysis" : "/analyse-sensibilite"}
-            className={getMobileLinkClasses(isEnglish ? "/sensitivity-analysis" : "/analyse-sensibilite")}
-            onClick={toggleMenu}
-          >
-            {isEnglish ? "Sensitivity Analysis" : "Analyse de sensibilité"}
-          </Link>
-          
-          {/* Comparaison de scénarios / Scenario Comparison */}
-          <Link
-            to={isEnglish ? "/scenario-comparison" : "/comparaison-scenarios"}
-            className={getMobileLinkClasses(isEnglish ? "/scenario-comparison" : "/comparaison-scenarios")}
-            onClick={toggleMenu}
-          >
-            {isEnglish ? "Scenario Comparison" : "Comparaison de scénarios"}
-          </Link>
+          {/* Autres sections existantes */}
+          <div className="py-2 border-t border-gray-200">
+            <h3 className="text-sm font-bold text-blue-600 uppercase tracking-wide mb-2">
+              {isEnglish ? "Analysis Tools" : "Outils d'Analyse"}
+            </h3>
+            
+            {/* Simulateur Monte Carlo / Monte Carlo Simulator */}
+            <Link
+              to={isEnglish ? "/monte-carlo-simulator" : "/simulateur-monte-carlo"}
+              className={getMobileLinkClasses(isEnglish ? "/monte-carlo-simulator" : "/simulateur-monte-carlo")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Monte Carlo Simulator" : "Simulateur Monte Carlo"}
+            </Link>
+            
+            {/* Analyse de sensibilité / Sensitivity Analysis */}
+            <Link
+              to={isEnglish ? "/sensitivity-analysis" : "/analyse-sensibilite"}
+              className={getMobileLinkClasses(isEnglish ? "/sensitivity-analysis" : "/analyse-sensibilite")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Sensitivity Analysis" : "Analyse de sensibilité"}
+            </Link>
+            
+            {/* Comparaison de scénarios / Scenario Comparison */}
+            <Link
+              to={isEnglish ? "/scenario-comparison" : "/comparaison-scenarios"}
+              className={getMobileLinkClasses(isEnglish ? "/scenario-comparison" : "/comparaison-scenarios")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "Scenario Comparison" : "Comparaison de scénarios"}
+            </Link>
+          </div>
           
           {/* Rapports / Reports */}
           <Link

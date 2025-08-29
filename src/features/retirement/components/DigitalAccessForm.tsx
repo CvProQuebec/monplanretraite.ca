@@ -268,7 +268,7 @@ export const DigitalAccessForm: React.FC<DigitalAccessFormProps> = ({
                     <Label htmlFor="service">Nom du service *</Label>
                     <Input
                       id="service"
-                      placeholder="ex: Gmail, Facebook, Banque Nationale"
+                      placeholder="ex: Gmail, Facebook, Institution financière"
                       value={formData.service || ''}
                       onChange={(e) => updateFormData('service', e.target.value)}
                       className={errors.service ? 'border-red-500' : ''}

@@ -312,7 +312,7 @@ export const InsuranceForm: React.FC<InsuranceFormProps> = ({
                     <Label htmlFor="compagnie">Compagnie d'assurance *</Label>
                     <Input
                       id="compagnie"
-                      placeholder="ex: Sun Life, Desjardins, etc."
+                      placeholder="ex: Sun Life, Assureur, etc."
                       value={formData.compagnie || ''}
                       onChange={(e) => updateFormData('compagnie', e.target.value)}
                       className={errors.compagnie ? 'border-red-500' : ''}

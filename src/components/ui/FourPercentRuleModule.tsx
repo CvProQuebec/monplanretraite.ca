@@ -191,7 +191,7 @@ export const FourPercentRuleModule: React.FC<FourPercentRuleModuleProps> = ({ cl
             <CardTitle>Règle des 4% Modernisée</CardTitle>
           </div>
           <CardDescription>
-            Basé sur l'étude de William Bengen mise à jour par RBC. Testez la viabilité de votre stratégie de décaissement sur 30 ans.
+            Basé sur l'étude de William Bengen et les recherches académiques. Testez la viabilité de votre stratégie de décaissement sur 30 ans.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -510,7 +510,7 @@ export const FourPercentRuleModule: React.FC<FourPercentRuleModuleProps> = ({ cl
                   </div>
                   
                   <Card className="p-4 bg-blue-50">
-                    <h4 className="font-semibold text-blue-800 mb-2">Citation de Dan Chornus (RBC) :</h4>
+                    <h4 className="font-semibold text-blue-800 mb-2">Principe académique :</h4>
                     <blockquote className="text-sm italic text-blue-700">
                       "Si vous ne prenez pas un certain risque, il n'y a pas de création de richesse réelle. 
                       Il n'y a certainement pas de compensation pour l'inflation. Vous vous exposez 
@@ -528,4 +528,3 @@ export const FourPercentRuleModule: React.FC<FourPercentRuleModuleProps> = ({ cl
 };
 
 export default FourPercentRuleModule;
-</content>

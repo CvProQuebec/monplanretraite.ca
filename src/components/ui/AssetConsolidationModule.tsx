@@ -195,7 +195,7 @@ const AssetConsolidationModule: React.FC = () => {
                         id={`name-${institution.id}`}
                         value={institution.name}
                         onChange={(e) => updateInstitution(institution.id, 'name', e.target.value)}
-                        placeholder="Ex: Banque Nationale"
+                        placeholder="Ex: Institution financière"
                       />
                     </div>
                     <div>

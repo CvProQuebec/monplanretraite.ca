@@ -408,7 +408,7 @@ const CELISuccessionModule: React.FC = () => {
               <div className="space-y-2 text-sm">
                 <div className="p-3 bg-white rounded-lg border">
                   <div className="font-medium">Banques principales</div>
-                  <div className="text-gray-600">RBC, TD, BMO, Banque Scotia, CIBC</div>
+                  <div className="text-gray-600">Institution financière, Caisse populaire, Banque</div>
                 </div>
                 
                 <div className="p-3 bg-white rounded-lg border">
@@ -418,7 +418,7 @@ const CELISuccessionModule: React.FC = () => {
                 
                 <div className="p-3 bg-white rounded-lg border">
                   <div className="font-medium">Caisses populaires</div>
-                  <div className="text-gray-600">Desjardins, autres caisses locales</div>
+                  <div className="text-gray-600">Caisse populaire, autres caisses locales</div>
                 </div>
               </div>
 

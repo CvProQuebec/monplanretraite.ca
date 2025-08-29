@@ -31,7 +31,7 @@ const PlanificationUrgence: React.FC = () => {
               Planification d'urgence
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Protégez-vous et protégez vos proches en préparant un plan complet pour les situations d'urgence, 
+              Préparez un plan complet pour les situations d'urgence,
               d'invalidité ou de décès. Chaque personne du couple peut avoir son propre plan personnalisé.
             </p>
           </div>

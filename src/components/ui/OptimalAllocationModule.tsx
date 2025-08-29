@@ -61,14 +61,14 @@ export const OptimalAllocationModule: React.FC<OptimalAllocationModuleProps> = (
   const [optimalAllocation, setOptimalAllocation] = useState<OptimalAllocation | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
-  // Calcul de l'allocation optimale basé sur la recherche RBC
+  // Calcul de l'allocation optimale basé sur les principes académiques
   const calculateOptimalAllocation = () => {
     setIsCalculating(true);
     
     setTimeout(() => {
       const { age, riskTolerance, timeHorizon } = allocationData;
       
-      // Formule basée sur la recherche RBC: 70-75% actions pour la retraite
+      // Formule basée sur les principes académiques: 70-75% actions pour la retraite
       let baseStocks = 70;
       
       // Ajustements selon l'âge et l'horizon temporel
@@ -150,7 +150,7 @@ export const OptimalAllocationModule: React.FC<OptimalAllocationModuleProps> = (
             Module d'Allocation Optimale
           </CardTitle>
           <CardDescription className="text-lg text-gray-600">
-            Optimisez votre portefeuille selon la recherche RBC
+            Optimisez votre portefeuille selon les principes académiques
           </CardDescription>
         </CardHeader>
         <CardContent className="text-center py-12">
@@ -160,7 +160,7 @@ export const OptimalAllocationModule: React.FC<OptimalAllocationModuleProps> = (
               Fonctionnalité Premium
             </h3>
             <p className="text-gray-600 mb-6">
-              L'optimisation d'allocation basée sur la recherche RBC est disponible avec les plans Professionnel et Expert.
+              L'optimisation d'allocation basée sur les principes académiques est disponible avec les plans Professionnel et Expert.
             </p>
             <div className="bg-orange-50 border border-orange-200 rounded-lg p-4 mb-6">
               <p className="text-sm text-orange-800">
@@ -188,7 +188,7 @@ export const OptimalAllocationModule: React.FC<OptimalAllocationModuleProps> = (
             Module d'Allocation Optimale
           </CardTitle>
           <CardDescription className="text-lg text-gray-600">
-            Basé sur la recherche RBC: 70-75% actions pour maximiser les rendements en retraite
+            Basé sur les principes académiques: 70-75% actions pour maximiser les rendements en retraite
           </CardDescription>
         </CardHeader>
       </Card>

@@ -97,93 +97,208 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
       ]
     },
     {
-      id: 'planning',
-      label: isEnglish ? 'Planning' : 'Planification',
-      icon: AlertTriangle,
+      id: 'tools',
+      label: isEnglish ? 'Tools' : 'Outils',
+      icon: Calculator,
       hasSubmenu: true,
       submenu: [
+        // 🟢 OUTILS GRATUITS (ordre alphabétique)
+        {
+          id: 'free-tools-header',
+          label: isEnglish ? '🟢 FREE TOOLS' : '🟢 OUTILS GRATUITS',
+          isHeader: true
+        },
         {
           id: 'assistant',
           label: isEnglish ? 'Financial Assistant' : 'Assistant financier',
-          path: isEnglish ? '/financial-assistant' : '/assistant-financier'
+          path: isEnglish ? '/financial-assistant' : '/assistant-financier',
+          planLevel: 'free'
         },
         {
           id: 'emergency-info',
           label: isEnglish ? 'Emergency Planning' : 'Planification d\'urgence',
-          path: isEnglish ? '/emergency-planning' : '/planification-urgence'
-        },
-        {
-          id: 'succession',
-          label: isEnglish ? 'Succession Planning' : 'Planification successorale',
-          path: isEnglish ? '/succession-planning' : '/planification-successorale'
+          path: isEnglish ? '/emergency-planning' : '/planification-urgence',
+          planLevel: 'free'
         },
         {
           id: 'expenses-planning',
           label: isEnglish ? 'Expense Planning' : 'Planification de dépenses',
-          path: isEnglish ? '/expense-planning' : '/planification-depenses'
-        }
-      ]
-    },
-    {
-      id: 'advanced-modules',
-      label: isEnglish ? 'Advanced Modules' : 'Modules Avancés',
-      icon: TrendingUp,
-      hasSubmenu: true,
-      submenu: [
+          path: isEnglish ? '/expense-planning' : '/planification-depenses',
+          planLevel: 'free'
+        },
+        
+        // 🔵 OUTILS PROFESSIONNELS (ordre alphabétique)
         {
-          id: 'celi-succession',
-          label: isEnglish ? 'TFSA Succession' : 'Succession CÉLI',
-          path: '/module-celi-succession'
+          id: 'professional-tools-header',
+          label: isEnglish ? '🔵 PROFESSIONAL TOOLS' : '🔵 OUTILS PROFESSIONNELS',
+          isHeader: true
         },
         {
-          id: 'tax-impact-65',
-          label: isEnglish ? 'Tax Impact at 65' : 'Impact Fiscal à 65 ans',
-          path: '/calculateur-impact-fiscal-65'
-        },
-        {
-          id: 'ten-tips-dashboard',
-          label: isEnglish ? '10 Essential Tips' : '10 Conseils Essentiels',
-          path: '/tableau-bord-10-conseils'
-        },
-        {
-          id: 'asset-consolidation',
-          label: isEnglish ? 'Asset Consolidation' : 'Consolidation d\'Actifs',
-          path: '/module-consolidation-actifs'
-        },
-        {
-          id: 'cash-wedge-bucket',
-          label: isEnglish ? 'Cash Wedge Strategy' : 'Stratégie Coussin Liquidités',
-          path: '/module-coussin-liquidites'
-        },
-        {
-          id: 'tax-education',
-          label: isEnglish ? 'Tax Education Center' : 'Centre Éducation Fiscale',
-          path: '/centre-education-fiscale'
+          id: 'advanced-performance',
+          label: isEnglish ? 'Advanced Performance Calculator' : 'Calculette de Rendement Avancée',
+          path: isEnglish ? '/advanced-performance-calculator' : '/calculette-rendement-avancee',
+          planLevel: 'professional'
         },
         {
           id: 'four-percent-rule',
           label: isEnglish ? '4% Rule Analysis' : 'Analyse Règle 4%',
-          path: '/module-regle-4-pourcent'
+          path: '/module-regle-4-pourcent',
+          planLevel: 'professional'
         },
         {
           id: 'optimal-allocation',
           label: isEnglish ? 'Optimal Allocation' : 'Allocation Optimale',
-          path: '/module-allocation-optimale'
+          path: '/module-allocation-optimale',
+          planLevel: 'professional'
+        },
+        {
+          id: 'celiapp',
+          label: 'CELIAPP',
+          path: '/celiapp',
+          planLevel: 'professional'
+        },
+        {
+          id: 'asset-consolidation',
+          label: isEnglish ? 'Asset Consolidation' : 'Consolidation d\'Actifs',
+          path: '/module-consolidation-actifs',
+          planLevel: 'professional'
+        },
+        {
+          id: 'financial-consolidation',
+          label: isEnglish ? 'Financial Consolidation' : 'Consolidation Financière',
+          path: isEnglish ? '/financial-consolidation' : '/consolidation-financiere',
+          planLevel: 'professional'
+        },
+        {
+          id: 'healthcare-costs',
+          label: isEnglish ? 'Healthcare Costs' : 'Coûts de Santé',
+          path: isEnglish ? '/healthcare-costs' : '/couts-sante',
+          planLevel: 'professional'
         },
         {
           id: 'excess-liquidity',
           label: isEnglish ? 'Excess Liquidity Detector' : 'Détecteur Liquidités Excessives',
-          path: '/detecteur-liquidites-excessives'
+          path: '/detecteur-liquidites-excessives',
+          planLevel: 'professional'
+        },
+        {
+          id: 'tax-impact-65',
+          label: isEnglish ? 'Tax Impact at 65' : 'Impact Fiscal à 65 ans',
+          path: '/calculateur-impact-fiscal-65',
+          planLevel: 'professional'
+        },
+        {
+          id: 'ferr-optimization',
+          label: isEnglish ? 'RRIF Optimization' : 'Optimisation FERR',
+          path: isEnglish ? '/ferr-optimization' : '/optimisation-ferr',
+          planLevel: 'professional'
+        },
+        {
+          id: 'multi-source-tax',
+          label: isEnglish ? 'Multi-Source Tax Optimization' : 'Optimisation Fiscale Multi-Sources',
+          path: isEnglish ? '/multi-source-tax-optimization' : '/optimisation-fiscale-multi-sources',
+          planLevel: 'professional'
+        },
+        {
+          id: 'cpp-timing',
+          label: isEnglish ? 'CPP Timing Optimization' : 'Optimisation Timing CPP',
+          path: isEnglish ? '/cpp-timing' : '/optimisation-timing-cpp',
+          planLevel: 'professional'
+        },
+        {
+          id: 'longevity-planning',
+          label: isEnglish ? 'Longevity Planning' : 'Planification Longévité',
+          path: isEnglish ? '/longevity-planning' : '/planification-longevite',
+          planLevel: 'professional'
+        },
+        {
+          id: 'dynamic-withdrawal',
+          label: isEnglish ? 'Dynamic Withdrawal Planning' : 'Planification Retrait Dynamique',
+          path: isEnglish ? '/dynamic-withdrawal' : '/planification-retrait-dynamique',
+          planLevel: 'professional'
         },
         {
           id: 'inflation-protection',
           label: isEnglish ? 'Inflation Protection' : 'Protection Inflation',
-          path: '/centre-protection-inflation'
+          path: '/centre-protection-inflation',
+          planLevel: 'professional'
         },
         {
-          id: 'behavioral-bias',
-          label: isEnglish ? 'Behavioral Bias Educator' : 'Éducateur Biais Comportementaux',
-          path: '/educateur-biais-comportementaux'
+          id: 'spending-psychology',
+          label: isEnglish ? 'Spending Psychology' : 'Psychologie des Dépenses',
+          path: isEnglish ? '/spending-psychology' : '/psychologie-depenses',
+          planLevel: 'professional'
+        },
+        {
+          id: 'progressive-retirement',
+          label: isEnglish ? 'Progressive Retirement' : 'Retraite Progressive',
+          path: isEnglish ? '/progressive-retirement' : '/retraite-progressive',
+          planLevel: 'professional'
+        },
+        {
+          id: 'rvdaa',
+          label: 'RVDAA',
+          path: '/rvdaa',
+          planLevel: 'professional'
+        },
+        {
+          id: 'withdrawal-sequence',
+          label: isEnglish ? 'Withdrawal Sequence' : 'Séquence de Retrait',
+          path: isEnglish ? '/withdrawal-sequence' : '/sequence-retrait',
+          planLevel: 'professional'
+        },
+        {
+          id: 'rrsp-meltdown',
+          label: isEnglish ? 'RRSP Meltdown Strategies' : 'Stratégies REER Meltdown',
+          path: isEnglish ? '/rrsp-meltdown' : '/strategies-reer-meltdown',
+          planLevel: 'professional'
+        },
+        {
+          id: 'cash-wedge-bucket',
+          label: isEnglish ? 'Cash Wedge Strategy' : 'Stratégie Coussin Liquidités',
+          path: '/module-coussin-liquidites',
+          planLevel: 'professional'
+        },
+        
+        // 🟣 OUTILS EXPERTS (ordre alphabétique)
+        {
+          id: 'expert-tools-header',
+          label: isEnglish ? '🟣 EXPERT TOOLS' : '🟣 OUTILS EXPERTS',
+          isHeader: true
+        },
+        {
+          id: 'succession',
+          label: isEnglish ? 'Succession Planning' : 'Planification successorale',
+          path: isEnglish ? '/succession-planning' : '/planification-successorale',
+          planLevel: 'expert'
+        }
+      ]
+    },
+    {
+      id: 'blog',
+      label: isEnglish ? 'Blog' : 'Blog',
+      icon: FileText,
+      hasSubmenu: true,
+      submenu: [
+        {
+          id: 'blog-guides',
+          label: isEnglish ? '📚 Practical Guides' : '📚 Guides Pratiques',
+          path: isEnglish ? '/blog/guides' : '/blog/guides'
+        },
+        {
+          id: 'blog-expert-tips',
+          label: isEnglish ? '💡 Expert Tips' : '💡 Conseils d\'Experts',
+          path: isEnglish ? '/blog/expert-tips' : '/blog/conseils-experts'
+        },
+        {
+          id: 'blog-case-studies',
+          label: isEnglish ? '📊 Case Studies' : '📊 Études de Cas',
+          path: isEnglish ? '/blog/case-studies' : '/blog/etudes-cas'
+        },
+        {
+          id: 'blog-tax-news',
+          label: isEnglish ? '🔍 Tax News' : '🔍 Actualités Fiscales',
+          path: isEnglish ? '/blog/tax-news' : '/blog/actualites-fiscales'
         }
       ]
     },
@@ -297,16 +412,41 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
                 
                 {/* Sous-menu déroulant */}
                 {item.hasSubmenu && openSubmenu === item.id && (
-                  <div className="absolute top-full left-0 mt-1 w-64 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-                    {item.submenu?.map((subItem) => (
-                      <button
-                        key={subItem.id}
-                        onClick={() => handleSubmenuClick(subItem.path)}
-                        className="w-full text-left px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors first:rounded-t-lg last:rounded-b-lg"
-                      >
-                        {subItem.label}
-                      </button>
-                    ))}
+                  <div className="absolute top-full left-0 mt-1 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
+                    {item.submenu?.map((subItem, index) => {
+                      if (subItem.isHeader) {
+                        return (
+                          <div
+                            key={subItem.id}
+                            className={`px-4 py-2 text-xs font-bold text-gray-500 bg-gray-50 border-b border-gray-100 ${
+                              index === 0 ? 'rounded-t-lg' : ''
+                            }`}
+                          >
+                            {subItem.label}
+                          </div>
+                        );
+                      }
+                      
+                      const planLevelColors = {
+                        free: 'hover:bg-green-50 hover:text-green-700 border-l-2 border-l-green-400',
+                        professional: 'hover:bg-blue-50 hover:text-blue-700 border-l-2 border-l-blue-400',
+                        expert: 'hover:bg-purple-50 hover:text-purple-700 border-l-2 border-l-purple-400'
+                      };
+                      
+                      const planLevelColor = subItem.planLevel ? planLevelColors[subItem.planLevel] : 'hover:bg-gray-50 hover:text-gray-700';
+                      
+                      return (
+                        <button
+                          key={subItem.id}
+                          onClick={() => handleSubmenuClick(subItem.path)}
+                          className={`w-full text-left px-4 py-2.5 text-sm text-gray-700 transition-colors ${planLevelColor} ${
+                            index === item.submenu.length - 1 ? 'rounded-b-lg' : ''
+                          }`}
+                        >
+                          {subItem.label}
+                        </button>
+                      );
+                    })}
                   </div>
                 )}
               </div>
@@ -359,16 +499,37 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
                   
                   {/* Sous-menu mobile */}
                   {item.hasSubmenu && openSubmenu === item.id && (
-                    <div className="ml-8 mt-2 space-y-1">
-                      {item.submenu?.map((subItem) => (
-                        <button
-                          key={subItem.id}
-                          onClick={() => handleSubmenuClick(subItem.path)}
-                          className="w-full text-left px-4 py-2 text-sm text-gray-600 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                        >
-                          {subItem.label}
-                        </button>
-                      ))}
+                    <div className="ml-4 mt-2 space-y-1 max-h-80 overflow-y-auto">
+                      {item.submenu?.map((subItem) => {
+                        if (subItem.isHeader) {
+                          return (
+                            <div
+                              key={subItem.id}
+                              className="px-4 py-2 text-xs font-bold text-gray-500 bg-gray-50 rounded-lg border border-gray-200"
+                            >
+                              {subItem.label}
+                            </div>
+                          );
+                        }
+                        
+                        const planLevelColors = {
+                          free: 'hover:bg-green-50 hover:text-green-700 border-l-4 border-l-green-400',
+                          professional: 'hover:bg-blue-50 hover:text-blue-700 border-l-4 border-l-blue-400',
+                          expert: 'hover:bg-purple-50 hover:text-purple-700 border-l-4 border-l-purple-400'
+                        };
+                        
+                        const planLevelColor = subItem.planLevel ? planLevelColors[subItem.planLevel] : 'hover:bg-gray-50 hover:text-gray-700';
+                        
+                        return (
+                          <button
+                            key={subItem.id}
+                            onClick={() => handleSubmenuClick(subItem.path)}
+                            className={`w-full text-left px-4 py-2.5 text-sm text-gray-600 rounded-lg transition-colors ${planLevelColor}`}
+                          >
+                            {subItem.label}
+                          </button>
+                        );
+                      })}
                     </div>
                   )}
                 </div>

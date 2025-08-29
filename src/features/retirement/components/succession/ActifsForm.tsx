@@ -277,7 +277,7 @@ export const ActifsForm: React.FC<ActifsFormProps> = ({ actifs, onUpdate }) => {
                   id="institution"
                   value={formData.institution}
                   onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-                  placeholder="Ex: Banque Nationale, Desjardins..."
+                  placeholder="Ex: Institution financière, Caisse populaire..."
                 />
               </div>
               
