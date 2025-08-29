@@ -1,0 +1,216 @@
+/* 🚀 Optimisation Mobile - MonPlanRetraite.ca */
+
+/* ===== MASQUAGE DES ÉLÉMENTS NON PERTINENTS SUR MOBILE ===== */
+
+/* Indicateur de thème flottant - Masqué sur mobile */
+@media screen and (max-width: 768px) {
+  .theme-indicator {
+    display: none !important;
+  }
+  
+  .theme-indicator-mobile {
+    display: block !important;
+  }
+}
+
+/* Indicateur de raccourci clavier - Masqué sur mobile */
+@media screen and (max-width: 768px) {
+  .keyboard-shortcut {
+    display: none !important;
+  }
+}
+
+/* Contrôles de debug - Masqués sur mobile */
+@media screen and (max-width: 768px) {
+  .debug-controls {
+    display: none !important;
+  }
+  
+  .debug-info {
+    display: none !important;
+  }
+}
+
+/* ===== OPTIMISATIONS SPÉCIFIQUES MOBILE ===== */
+
+/* Masquage des éléments de navigation complexe sur mobile */
+@media screen and (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+  
+  .mobile-only {
+    display: block !important;
+  }
+}
+
+/* Masquage des raccourcis clavier sur mobile */
+@media screen and (max-width: 768px) {
+  .keyboard-shortcuts {
+    display: none !important;
+  }
+  
+  .shortcut-hint {
+    display: none !important;
+  }
+}
+
+/* Masquage des informations de debug sur mobile */
+@media screen and (max-width: 768px) {
+  .debug-panel {
+    display: none !important;
+  }
+  
+  .performance-info {
+    display: none !important;
+  }
+  
+  .system-stats {
+    display: none !important;
+  }
+}
+
+/* ===== OPTIMISATIONS PERFORMANCE MOBILE ===== */
+
+/* Désactivation des animations complexes sur mobile */
+@media screen and (max-width: 768px) {
+  .complex-animation {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .heavy-animation {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Optimisation des particules sur mobile */
+@media screen and (max-width: 768px) {
+  .particles-container {
+    max-particles: 50 !important;
+  }
+  
+  .physics-simulation {
+    enabled: false !important;
+  }
+}
+
+/* ===== OPTIMISATIONS AFFICHAGE MOBILE ===== */
+
+/* Masquage des éléments de navigation flottants sur mobile */
+@media screen and (max-width: 768px) {
+  .floating-nav {
+    display: none !important;
+  }
+  
+  .floating-controls {
+    display: none !important;
+  }
+}
+
+/* Masquage des informations de statut sur mobile */
+@media screen and (max-width: 768px) {
+  .status-indicator {
+    display: none !important;
+  }
+  
+  .system-status {
+    display: none !important;
+  }
+}
+
+/* ===== OPTIMISATIONS SPÉCIFIQUES SAMSUNG S23 ULTRA ===== */
+
+/* Résolution spécifique S23 Ultra */
+@media screen and (min-width: 412px) and (max-width: 412px) {
+  .theme-indicator,
+  .keyboard-shortcut,
+  .debug-controls,
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+/* ===== CLASSES UTILITAIRES ===== */
+
+/* Classe pour masquer sur mobile */
+.hide-mobile {
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  .hide-mobile {
+    display: none !important;
+  }
+}
+
+/* Classe pour afficher seulement sur mobile */
+.show-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .show-mobile {
+    display: block !important;
+  }
+}
+
+/* Classe pour masquer sur très petits écrans */
+.hide-small-mobile {
+  display: block;
+}
+
+@media screen and (max-width: 480px) {
+  .hide-small-mobile {
+    display: none !important;
+  }
+}
+
+/* ===== OPTIMISATIONS RESPONSIVE ===== */
+
+/* Breakpoints critiques */
+@media screen and (max-width: 640px) {
+  .theme-indicator,
+  .keyboard-shortcut {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .debug-controls,
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+/* ===== OPTIMISATIONS ORIENTATION ===== */
+
+/* Mode portrait */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  .theme-indicator,
+  .keyboard-shortcut {
+    display: none !important;
+  }
+}
+
+/* Mode paysage */
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+  .theme-indicator,
+  .keyboard-shortcut {
+    display: none !important;
+  }
+}
+
+/* ===== OPTIMISATIONS FINALES ===== */
+
+/* Masquage global des éléments non pertinents sur mobile */
+@media screen and (max-width: 768px) {
+  [data-mobile-hidden="true"] {
+    display: none !important;
+  }
+  
+  [data-mobile-visible="true"] {
+    display: block !important;
+  }
+}

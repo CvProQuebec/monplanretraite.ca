@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Headers</title>
+</head>
+<body>
+    <h1>Test des Headers Netlify</h1>
+    <button onclick="testHeaders()">Tester les Headers</button>
+    <div id="results"></div>
+    
+    <script>
+    function testHeaders() {
+        fetch(window.location.href)
+            .then(response => {
+                const results = document.getElementById('results');
+                results.innerHTML = '<h2>Headers reçus:</h2>';
+                
+                response.headers.forEach((value, key) => {
+                    results.innerHTML += `<p><strong>${key}:</strong> ${value}</p>`;
+                });
+                
+                console.log('All headers:', [...response.headers.entries()]);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('results').innerHTML = 'Error: ' + error.message;
+            });
+    }
+    </script>
+</body>
+</html>

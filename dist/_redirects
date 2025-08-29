@@ -1,0 +1,13 @@
+# Redirection SPA - Gère toutes les routes React
+/*    /index.html   200
+
+# Redirections API
+/api/*  /.netlify/functions/:splat  200
+/submit-potentiel  /.netlify/functions/submit-potentiel  200
+/send-nda  /.netlify/functions/send-nda  200
+/generate-prospects  /.netlify/functions/generate-prospects  200
+/admin-auth  /.netlify/functions/admin-auth  200
+/check-nda-status  /.netlify/functions/check-nda-status  200
+/validate-env  /.netlify/functions/validate-env  200
+/telegram-alert  /.netlify/functions/telegramAlert  200
+/security-email  /.netlify/functions/security-email  200

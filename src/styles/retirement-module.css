@@ -1,0 +1,108 @@
+/* Styles spécifiques pour la page retraite-module */
+
+/* Masquer les footers du RetirementApp */
+.retirement-module-wrapper .footer,
+.retirement-module-wrapper footer,
+.retirement-module-wrapper [class*="footer"],
+.retirement-module-wrapper [class*="Footer"] {
+  display: none !important;
+}
+
+/* Masquer les sections de promotion en bas de page */
+.retirement-module-wrapper [class*="promo"],
+.retirement-module-wrapper [class*="Promo"],
+.retirement-module-wrapper [class*="cta"],
+.retirement-module-wrapper [class*="CTA"] {
+  display: none !important;
+}
+
+/* Masquer les sections "Brève analyse gratuite" et "Obtenez votre diagnostic" */
+.retirement-module-wrapper [class*="analyse"],
+.retirement-module-wrapper [class*="diagnostic"],
+.retirement-module-wrapper [class*="analysis"],
+.retirement-module-wrapper [class*="diagnosis"] {
+  display: none !important;
+}
+
+/* Masquer spécifiquement les sections du Footer avec les classes exactes */
+.retirement-module-wrapper .bg-sapphire,
+.retirement-module-wrapper .bg-white.text-charcoal-900,
+.retirement-module-wrapper .bg-white.text-charcoal-900.py-12,
+.retirement-module-wrapper .bg-white.text-charcoal-900.px-4 {
+  display: none !important;
+}
+
+/* Masquer les sections avec des liens spécifiques */
+.retirement-module-wrapper a[href*="rentabilite"],
+.retirement-module-wrapper a[href*="roicalcul"],
+.retirement-module-wrapper a[href*="potentiel"],
+.retirement-module-wrapper a[href*="potential"] {
+  display: none !important;
+}
+
+/* Masquer les sections contenant des listes spécifiques */
+.retirement-module-wrapper .text-gold-200.list-disc,
+.retirement-module-wrapper .text-sapphire.list-disc {
+  display: none !important;
+}
+
+/* Masquer les sections avec des boutons spécifiques */
+.retirement-module-wrapper .bg-gold.hover\:bg-gold-600 {
+  display: none !important;
+}
+
+/* Masquer les composants de consultation */
+.retirement-module-wrapper .AiConsultationForm,
+.retirement-module-wrapper [class*="consultation"] {
+  display: none !important;
+}
+
+/* Masquer le footer principal avec le gradient */
+.retirement-module-wrapper footer.relative.overflow-hidden {
+  display: none !important;
+}
+
+/* Masquer les éléments décoratifs du footer */
+.retirement-module-wrapper .bg-gradient-to-b.from-charcoal-900,
+.retirement-module-wrapper .bg-gradient-to-r.from-gold.via-sapphire.to-gold {
+  display: none !important;
+}
+
+/* Masquer les éléments de contact */
+.retirement-module-wrapper #contact-section {
+  display: none !important;
+}
+
+/* Améliorer la visibilité de la navigation intégrée */
+.retirement-module-wrapper .bg-gradient-to-r {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+
+/* Assurer que le contenu principal est bien visible */
+.retirement-module-wrapper main,
+.retirement-module-wrapper .main-content {
+  margin-top: 2rem;
+}
+
+/* Masquer les sections avec des textes spécifiques en utilisant des sélecteurs d'attributs */
+.retirement-module-wrapper div[class*="bg-sapphire"] {
+  display: none !important;
+}
+
+.retirement-module-wrapper div[class*="bg-white"]:has(.text-charcoal-900) {
+  display: none !important;
+}
+
+/* Masquer les sections avec des icônes spécifiques */
+.retirement-module-wrapper span[aria-label="analyse"],
+.retirement-module-wrapper span[aria-label="chrono"] {
+  display: none !important;
+}
+
+/* Masquer les sections avec des classes de couleur spécifiques */
+.retirement-module-wrapper .text-gold-200,
+.retirement-module-wrapper .text-sapphire {
+  display: none !important;
+}

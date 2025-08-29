@@ -1,0 +1,224 @@
+/* 🚀 Corrections Reflow Mobile - MonPlanRetraite.ca */
+
+/* ===== CORRECTIONS SPÉCIFIQUES SAMSUNG S23 ULTRA ===== */
+
+/* Force le recalcul du layout au chargement */
+.mobile-reflow-fix {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* Correction pour les éléments qui se surimposent */
+.card, .card-content, .card-header {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Force le reflow sur les conteneurs principaux */
+.container-custom, .container {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Correction spécifique pour la page Revenus */
+.revenus-page {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Correction pour les formulaires */
+.form-group, .input-group {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Correction pour les tableaux */
+.table-container, .income-table {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ===== CORRECTIONS GLOBALES MOBILE ===== */
+
+/* Force le GPU rendering */
+* {
+  -webkit-transform: translateZ(0);
+  -moz-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  -o-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Correction pour les éléments flexbox */
+.flex, .flex-col, .flex-row {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Correction pour les grilles */
+.grid, .grid-cols-1, .grid-cols-2, .grid-cols-3 {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ===== CORRECTIONS SPÉCIFIQUES ANDROID ===== */
+
+/* Correction pour Chrome Android */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .mobile-reflow-fix {
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    -webkit-perspective: 1000px;
+  }
+}
+
+/* Correction pour Samsung One UI */
+@media screen and (min-width: 360px) and (max-width: 800px) {
+  .mobile-reflow-fix {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+}
+
+/* ===== ANIMATIONS ET TRANSITIONS ===== */
+
+/* Transitions fluides */
+.transition-all, .transition-colors, .transition-transform {
+  transition-property: all, transform, opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== CORRECTIONS PERFORMANCE ===== */
+
+/* Optimisation GPU */
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* ===== CORRECTIONS SPÉCIFIQUES PAGES ===== */
+
+/* Page Revenus */
+.revenus-container {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Composants UI */
+.card, .input, .select, .button {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ===== MEDIA QUERIES MOBILE ===== */
+
+/* Mobile Portrait */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+  .mobile-reflow-fix {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+  
+  /* Force le reflow sur les éléments critiques */
+  .critical-layout {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+}
+
+/* Mobile Landscape */
+@media screen and (max-width: 1024px) and (orientation: landscape) {
+  .mobile-reflow-fix {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+}
+
+/* ===== CORRECTIONS SAMSUNG S23 ULTRA ===== */
+
+/* Résolution spécifique S23 Ultra */
+@media screen and (min-width: 412px) and (max-width: 412px) {
+  .mobile-reflow-fix {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+  }
+}
+
+/* ===== CORRECTIONS CHARGEMENT ===== */
+
+/* Force le reflow au chargement */
+.page-loaded {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* ===== CORRECTIONS DYNAMIQUES ===== */
+
+/* Correction lors du changement d'orientation */
+.orientation-change {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* ===== CORRECTIONS FORMULAIRES ===== */
+
+/* Inputs et labels */
+.input-container, .label-container {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* ===== CORRECTIONS TABLEAUX ===== */
+
+/* Tableaux de données */
+.data-table, .income-table {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  table-layout: fixed;
+}
+
+/* ===== CORRECTIONS RESPONSIVE ===== */
+
+/* Breakpoints critiques */
+@media screen and (max-width: 480px) {
+  .mobile-reflow-fix {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .mobile-reflow-fix {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+  }
+}
+
+/* ===== CORRECTIONS FINALES ===== */
+
+/* Classe utilitaire pour forcer le reflow */
+.force-reflow {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform;
+}
+
+/* Correction globale pour tous les éléments */
+* {
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
