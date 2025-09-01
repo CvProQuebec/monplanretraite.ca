@@ -31,6 +31,7 @@ import { UltimatePlanningDashboard } from './features/retirement/components/Ulti
 import ExpensesPage from './pages/ExpensesPage';
 import RRQCPPAnalysis from './pages/RRQCPPAnalysis';
 import ImmobilierPage from './pages/ImmobilierPage';
+import CCQPage from './pages/CCQPage';
 
 // Composants de test et validation
 import FinalValidation from './components/FinalValidation';
@@ -151,9 +152,13 @@ function App() {
               <Route path="/module-rregop" element={<RREGOPAnalysisSection userPlan="professional" />} />
               <Route path="/rregop-module" element={<RREGOPAnalysisSection userPlan="professional" />} />
               
-                      {/* Module RRQ/CPP */}
-        <Route path="/rrq-cpp-analysis" element={<RRQCPPAnalysis />} />
-        <Route path="/analyse-rrq-cpp" element={<RRQCPPAnalysis />} />
+              {/* Module RRQ/CPP */}
+              <Route path="/rrq-cpp-analysis" element={<RRQCPPAnalysis />} />
+              <Route path="/analyse-rrq-cpp" element={<RRQCPPAnalysis />} />
+              
+              {/* Module CCQ - Commission de la Construction du Québec */}
+              <Route path="/module-ccq" element={<CCQPage />} />
+              <Route path="/ccq-module" element={<CCQPage />} />
               
               {/* Module OAS/GIS */}
               <Route path="/oas-gis-analysis" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-gray-800">Analyse OAS/GIS</h1><p className="text-gray-600 mt-4">Module en développement</p></div>} />

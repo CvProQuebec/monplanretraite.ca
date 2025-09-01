@@ -48,6 +48,14 @@ export interface PersonalData {
   niveauCompetences2?: 'debutant' | 'intermediaire' | 'expert' | 'specialise';
   regionEconomique?: string;
   tauxChomageRegional?: number;
+  
+  // NOUVEAUX: Emplois saisonniers
+  seasonalJobs1?: SeasonalJob[];
+  seasonalJobs2?: SeasonalJob[];
+  
+  // NOUVEAUX: Revenus unifiés
+  unifiedIncome1?: IncomeEntry[];
+  unifiedIncome2?: IncomeEntry[];
 }
 
 export interface RetirementData {
@@ -101,6 +109,7 @@ export interface CashflowData {
   transport: number;
   sante: number;
   loisirs: number;
+  depensesSaisonnieres?: number;
   
   // Propriétés de ventilation des dépenses
   logementBreakdown?: Record<string, number>;
@@ -113,6 +122,58 @@ export interface CashflowData {
   // Propriétés manquantes ajoutées
   epargne?: number;
   placements?: number;
+  
+  // NOUVEAU: Dates d'échéance pour les dépenses régulières
+  dueDates?: ExpenseDueDates;
+}
+
+// NOUVEAU: Interface pour les dates d'échéance des dépenses
+export interface ExpenseDueDates {
+  logement?: ExpenseDueDate[];
+  servicesPublics?: ExpenseDueDate[];
+  assurances?: ExpenseDueDate[];
+  telecom?: ExpenseDueDate[];
+  alimentation?: ExpenseDueDate[];
+  transport?: ExpenseDueDate[];
+  sante?: ExpenseDueDate[];
+  loisirs?: ExpenseDueDate[];
+}
+
+// NOUVEAU: Interface pour une date d'échéance spécifique
+export interface ExpenseDueDate {
+  id: string;
+  name: string; // ex: "Hydro-Québec", "Téléphone cellulaire"
+  amount: number;
+  frequency: 'monthly' | 'bimonthly' | 'quarterly' | 'biannual' | 'annual' | 'irregular';
+  dueDay?: number; // Jour du mois (1-31) pour les paiements mensuels
+  dueDates?: string[]; // Dates spécifiques pour les paiements irréguliers (format: "MM-DD")
+  nextDueDate?: string; // Prochaine date d'échéance calculée (format: "YYYY-MM-DD")
+  isActive: boolean;
+  notes?: string;
+}
+
+// NOUVEAU: Interface pour le plan budgétaire mensuel
+export interface MonthlyBudgetPlan {
+  month: string; // Format: "YYYY-MM"
+  totalIncome: number;
+  plannedExpenses: PlannedExpense[];
+  totalPlannedExpenses: number;
+  remainingBudget: number;
+  savingsTarget: number;
+  actualSavings: number;
+}
+
+// NOUVEAU: Interface pour une dépense planifiée
+export interface PlannedExpense {
+  id: string;
+  name: string;
+  category: string;
+  amount: number;
+  dueDate: string; // Format: "YYYY-MM-DD"
+  isPaid: boolean;
+  isRecurring: boolean;
+  frequency?: string;
+  notes?: string;
 }
 
 export interface AdvancedExpensesData {
@@ -214,3 +275,44 @@ export interface RRQOptimizationResult {
 
 // Import des types d'emploi précaire
 import { EmploymentStatusData, EmploymentImpactAnalysis } from './employment-status';
+
+// Import des types pour emplois saisonniers et revenus unifiés
+export interface SeasonalJob {
+  id: string;
+  jobTitle: string;
+  employer: string;
+  startDate: string;
+  endDate: string;
+  estimatedEarnings: number;
+  actualEarnings?: number;
+  isCompleted: boolean;
+  jobType: 'summer' | 'winter' | 'spring' | 'fall' | 'custom';
+  notes?: string;
+}
+
+export interface IncomeEntry {
+  id: string;
+  type: 'salaire' | 'rentes' | 'assurance-emploi' | 'dividendes' | 'revenus-location' | 'travail-autonome' | 'autres';
+  description: string;
+  
+  // Montants selon la fréquence
+  annualAmount?: number;
+  monthlyAmount?: number;
+  weeklyAmount?: number;
+  
+  // Spécifique à l'assurance emploi
+  weeklyGross?: number;
+  weeklyNet?: number;
+  startDate?: string;
+  endDate?: string;
+  weeksUsed?: number;
+  maxWeeks?: number;
+  
+  // Calculs "à ce jour"
+  toDateAmount?: number;
+  projectedAnnual?: number;
+  
+  // Métadonnées
+  isActive: boolean;
+  notes?: string;
+}

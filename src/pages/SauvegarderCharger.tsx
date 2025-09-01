@@ -34,7 +34,7 @@ interface SecuritySettings {
 
 export default function SauvegarderCharger() {
   const { user } = useAuth();
-  const { isFrench } = useLanguage();
+  const { language } = useLanguage();
 
   const [backupProgress, setBackupProgress] = useState(0);
   const [isBackingUp, setIsBackingUp] = useState(false);
@@ -51,10 +51,14 @@ export default function SauvegarderCharger() {
   const [showEncryptionKey, setShowEncryptionKey] = useState(false);
   const [encryptionKey, setEncryptionKey] = useState('');
   const [importFile, setImportFile] = useState<File | null>(null);
+  // UI améliorée pour seniors: glisser-déposer, messages clairs, états visuels
+  const [dragActive, setDragActive] = useState(false);
+  const [importMessage, setImportMessage] = useState<string>('');
+  const [importSuccess, setImportSuccess] = useState<boolean | null>(null);
 
   // Détection simple de la langue depuis l'URL
   const isFrenchUrl = window.location.pathname.includes('/fr/') || !window.location.pathname.includes('/en/');
-  const currentLanguage = isFrench || isFrenchUrl;
+  const currentLanguage = isFrenchUrl || language === 'fr';
 
   useEffect(() => {
     // Charger les sauvegardes existantes
@@ -108,30 +112,62 @@ export default function SauvegarderCharger() {
     setBackupProgress(0);
 
     try {
-      // Simuler le processus de sauvegarde
+      // Progression visuelle
       for (let i = 0; i <= 100; i += 10) {
         setBackupProgress(i);
-        await new Promise(resolve => setTimeout(resolve, 100));
+        await new Promise(resolve => setTimeout(resolve, 80));
       }
 
-      // Créer la sauvegarde
-      const backupData = {
+      // Récupérer les données réelles de l'application depuis le stockage local
+      let payload: any = {};
+      try {
+        const raw = localStorage.getItem('retirement_data');
+        payload = raw ? JSON.parse(raw) : {};
+      } catch (e) {
+        console.warn('Impossible de lire retirement_data, export par défaut.');
+      }
+
+      // Construire un fichier structuré et reconnaissable
+      const fileObject = {
+        schema: 'monplanretraite.v1',
+        savedAt: new Date().toISOString(),
+        user: user?.email || 'local-user',
+        language: currentLanguage ? 'fr' : 'en',
+        data: payload
+      };
+
+      const json = JSON.stringify(fileObject, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+
+      // Déclencher le téléchargement (clair et explicite pour l’utilisateur)
+      const a = document.createElement('a');
+      a.href = url;
+      const safeName = backupName.replace(/[^\w\- ]+/g, '').trim().replace(/\s+/g, '-').toLowerCase();
+      a.download = `monplanretraite-${safeName || 'sauvegarde'}-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+
+      // Enregistrer un résumé de la sauvegarde dans la liste des sauvegardes locales
+      const backupData: BackupData = {
         id: Date.now().toString(),
         name: backupName,
         date: new Date(),
-        size: Math.floor(Math.random() * 1000000) + 100000, // Taille simulée
+        size: blob.size,
         type: securitySettings.encryptionEnabled ? 'encrypted' : 'local',
         description: currentLanguage 
-          ? `Sauvegarde automatique du ${new Date().toLocaleDateString('fr-CA')}`
-          : `Automatic backup from ${new Date().toLocaleDateString('en-CA')}`
+          ? `Sauvegarde créée et téléchargée`
+          : `Backup created and downloaded`
       };
 
       const newBackups = [backupData, ...backups];
       setBackups(newBackups);
       localStorage.setItem('retirement-backups', JSON.stringify(newBackups));
-      
+
       setBackupName('');
-      alert(currentLanguage ? 'Sauvegarde créée avec succès !' : 'Backup created successfully!');
+      alert(currentLanguage ? 'Votre fichier de sauvegarde a été téléchargé.' : 'Your backup file has been downloaded.');
     } catch (error) {
       console.error('Erreur lors de la création de la sauvegarde:', error);
       alert(currentLanguage ? 'Erreur lors de la création de la sauvegarde' : 'Error creating backup');
@@ -176,9 +212,45 @@ export default function SauvegarderCharger() {
   };
 
   const handleFileImport = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (file) {
-      setImportFile(file);
+    const file = event.target.files?.[0] || null;
+    setImportSuccess(null);
+    if (!file) {
+      setImportFile(null);
+      setImportMessage(currentLanguage ? 'Aucun fichier sélectionné' : 'No file selected');
+      return;
+    }
+    const isJson = /\.json$/i.test(file.name);
+    if (!isJson) {
+      setImportFile(null);
+      setImportMessage(currentLanguage ? 'Format invalide. Sélectionnez un fichier .json' : 'Invalid format. Please choose a .json file');
+      return;
+    }
+    setImportFile(file);
+    setImportMessage(
+      currentLanguage
+        ? `Fichier prêt: ${file.name} (${(file.size / 1024).toFixed(0)} Ko)`
+        : `File ready: ${file.name} (${(file.size / 1024).toFixed(0)} KB)`
+    );
+  };
+  
+  // Gestion du glisser-déposer (drag & drop) pour faciliter l'import
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(true);
+  };
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+  };
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      const file = e.dataTransfer.files[0];
+      handleFileImport({ target: { files: [file] } } as any);
     }
   };
 
@@ -189,36 +261,79 @@ export default function SauvegarderCharger() {
     }
 
     try {
-      // Simuler l'importation
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      alert(currentLanguage ? 'Données importées avec succès !' : 'Data imported successfully!');
+      setImportMessage(currentLanguage ? 'Importation en cours…' : 'Import in progress…');
+
+      // Lire le contenu du fichier (API moderne, simple pour l’utilisateur)
+      const text = await importFile.text();
+      const parsed = JSON.parse(text);
+
+      // Détecter la structure
+      const payload = parsed?.data ?? parsed;
+
+      if (!payload || typeof payload !== 'object') {
+        throw new Error('Invalid content');
+      }
+
+      // Sauvegarder dans le stockage local au format attendu par l’application
+      localStorage.setItem('retirement_data', JSON.stringify(payload));
+
+      setImportSuccess(true);
+      setImportMessage(
+        currentLanguage
+          ? 'Importation terminée. Vos données personnelles ont été chargées.'
+          : 'Import completed. Your personal data has been loaded.'
+      );
+
+      // Optionnel: signal visuel clair
+      setTimeout(() => {
+        setImportMessage(
+          currentLanguage
+            ? 'Vous pouvez maintenant retourner dans les sections (ex: Dépenses) – vos champs seront remplis.'
+            : 'You can now return to the sections (e.g., Expenses) – your fields will be filled.'
+        );
+      }, 1200);
+
+      // Nettoyer la sélection de fichier
       setImportFile(null);
     } catch (error) {
-      console.error('Erreur lors de l\'importation:', error);
-      alert(currentLanguage ? 'Erreur lors de l\'importation' : 'Error during import');
+      console.error("Erreur d'import:", error);
+      setImportSuccess(false);
+      setImportMessage(
+        currentLanguage
+          ? 'Erreur: fichier invalide. Choisissez un fichier .json créé par "Créer la sauvegarde".'
+          : 'Error: invalid file. Please choose a .json file created by "Create Backup".'
+      );
     }
   };
 
   const exportData = () => {
     try {
-      // Créer un fichier de données simulé
-      const data = {
-        timestamp: new Date().toISOString(),
-        user: user?.email || 'anonymous',
-        data: 'Données simulées de retraite'
+      // Export direct (raccourci) du même contenu que la sauvegarde
+      let payload: any = {};
+      try {
+        const raw = localStorage.getItem('retirement_data');
+        payload = raw ? JSON.parse(raw) : {};
+      } catch {
+        // ignore
+      }
+      const fileObject = {
+        schema: 'monplanretraite.v1',
+        savedAt: new Date().toISOString(),
+        user: user?.email || 'local-user',
+        language: currentLanguage ? 'fr' : 'en',
+        data: payload
       };
-      
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const blob = new Blob([JSON.stringify(fileObject, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = `retirement-data-${new Date().toISOString().split('T')[0]}.json`;
+      a.download = `monplanretraite-export-${new Date().toISOString().split('T')[0]}.json`;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
       URL.revokeObjectURL(url);
-      
-      alert(currentLanguage ? 'Données exportées avec succès !' : 'Data exported successfully!');
+
+      alert(currentLanguage ? 'Votre fichier a été téléchargé.' : 'Your file has been downloaded.');
     } catch (error) {
       console.error('Erreur lors de l\'exportation:', error);
       alert(currentLanguage ? 'Erreur lors de l\'exportation' : 'Error during export');
@@ -399,33 +514,91 @@ export default function SauvegarderCharger() {
                 }
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-3">
-                <Label htmlFor="import-file">
-                  {currentLanguage ? 'Fichier à importer' : 'File to import'}
-                </Label>
-                <Input
-                  id="import-file"
-                  type="file"
-                  accept=".json,.txt"
-                  onChange={handleFileImport}
-                  className="cursor-pointer"
-                />
-                {importFile && (
-                  <div className="flex items-center gap-2 text-sm text-gray-600">
-                    <FileText className="w-4 h-4" />
-                    <span>{importFile.name}</span>
-                    <span className="text-gray-400">({formatFileSize(importFile.size)})</span>
-                  </div>
-                )}
-                <Button 
-                  onClick={importData}
-                  disabled={!importFile}
-                  className="w-full"
+            <CardContent className="space-y-6">
+              {/* Étapes très visuelles pour seniors */}
+              <div className="grid grid-cols-1 gap-4">
+                <div
+                  onDragOver={handleDragOver}
+                  onDragLeave={handleDragLeave}
+                  onDrop={handleDrop}
+                  className={`rounded-2xl border-4 ${dragActive ? 'border-green-500 bg-green-50' : 'border-gray-300 bg-white'} p-6 text-center transition-colors`}
                 >
-                  <Upload className="w-4 h-4 mr-2" />
-                  {currentLanguage ? 'Importer les données' : 'Import Data'}
-                </Button>
+                  <div className="flex items-center justify-center gap-3 mb-4">
+                    <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center text-xl font-bold">1</div>
+                    <h4 className="text-xl font-bold">
+                      {currentLanguage ? 'Choisir votre fichier de sauvegarde' : 'Choose your backup file'}
+                    </h4>
+                  </div>
+
+                  <p className="text-gray-600 mb-4">
+                    {currentLanguage
+                      ? 'Glissez votre fichier ici ou cliquez sur le bouton ci-dessous'
+                      : 'Drag your file here or click the button below'}
+                  </p>
+
+                  <div className="flex items-center justify-center">
+                    <label
+                      htmlFor="import-file"
+                      className="cursor-pointer inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-lg font-semibold"
+                    >
+                      <Upload className="w-5 h-5" />
+                      {currentLanguage ? 'Choisir un fichier' : 'Choose a file'}
+                    </label>
+                    <input
+                      id="import-file"
+                      type="file"
+                      accept=".json"
+                      onChange={handleFileImport}
+                      className="hidden"
+                    />
+                  </div>
+
+                  <div className="mt-4 text-sm">
+                    {importMessage && (
+                      <div className={`inline-block px-3 py-2 rounded-lg ${importSuccess === false ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-700'}`}>
+                        {importMessage}
+                      </div>
+                    )}
+                    {importFile && (
+                      <div className="mt-2 flex items-center justify-center gap-2 text-gray-700">
+                        <FileText className="w-4 h-4" />
+                        <span>{importFile.name}</span>
+                        <span className="text-gray-400">({formatFileSize(importFile.size)})</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="rounded-2xl border-4 border-gray-300 bg-white p-6 text-center">
+                  <div className="flex items-center justify-center gap-3 mb-4">
+                    <div className="w-9 h-9 rounded-full bg-green-600 text-white flex items-center justify-center text-xl font-bold">2</div>
+                    <h4 className="text-xl font-bold">
+                      {currentLanguage ? 'Importer vos données' : 'Import your data'}
+                    </h4>
+                  </div>
+                  <p className="text-gray-600 mb-4">
+                    {currentLanguage
+                      ? 'Après l’import, vos champs seront remplis automatiquement.'
+                      : 'After import, your fields will be filled automatically.'}
+                  </p>
+                  <Button
+                    onClick={importData}
+                    disabled={!importFile}
+                    className={`w-full text-lg py-6 ${importFile ? 'bg-green-600 hover:bg-green-700 animate-pulse' : ''}`}
+                  >
+                    <Upload className="w-5 h-5 mr-2" />
+                    {currentLanguage ? 'Importer maintenant' : 'Import now'}
+                  </Button>
+
+                  {importSuccess && (
+                    <div className="mt-4 p-3 rounded-lg bg-green-50 text-green-800">
+                      <CheckCircle className="w-4 h-4 inline mr-1" />
+                      {currentLanguage
+                        ? 'Importation réussie. Vous pouvez retourner à vos sections.'
+                        : 'Import successful. You can return to your sections.'}
+                    </div>
+                  )}
+                </div>
               </div>
             </CardContent>
           </Card>

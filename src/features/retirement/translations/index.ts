@@ -59,6 +59,10 @@ export const translations = {
 			additionalIncome: 'Revenu additionnel',
 			optimizeTaxDeductions: 'Optimiser les déductions fiscales',
 			savingsGoal: "Économiser chaque mois",
+			suggestionsToReduce: "Suggestions pour réduire les coûts",
+		},
+		cashFlowEvaluation: {
+			insufficientSavings: "Votre taux d'épargne est inférieur à 20%. Réduisez vos dépenses ou augmentez vos revenus.",
 		},
 		taxOptimization: {
 			title: 'Optimisation fiscale',
@@ -132,6 +136,10 @@ export const translations = {
 			additionalIncome: 'Additional income',
 			optimizeTaxDeductions: 'Optimize tax deductions',
 			savingsGoal: 'Save each month',
+			suggestionsToReduce: 'Suggestions to reduce costs',
+		},
+		cashFlowEvaluation: {
+			insufficientSavings: 'Your savings rate is below 20%. Reduce your expenses or increase your income.',
 		},
 		taxOptimization: {
 			title: 'Tax optimization',
@@ -158,5 +166,3 @@ export const translations = {
 export function useTranslation(language: SupportedLanguage) {
 	return translations[language];
 }
-
-

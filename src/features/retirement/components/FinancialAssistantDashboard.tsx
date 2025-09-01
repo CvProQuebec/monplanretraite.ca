@@ -13,6 +13,9 @@ import {
   FinancialAlert 
 } from '../types/expense-scenarios';
 import { ExpenseScenarioService } from '../services/ExpenseScenarioService';
+import { AdvancedIncomeCalculator } from '../../../services/AdvancedIncomeCalculator';
+import { CCQService } from '../../../services/CCQService';
+import { CCQData, CCQCalculationResult } from '../../../types/ccq';
 import { 
   Brain, 
   TrendingUp, 
@@ -30,7 +33,9 @@ import {
   Clock,
   ArrowRight,
   Star,
-  Award
+  Award,
+  HardHat,
+  Phone
 } from 'lucide-react';
 
 interface FinancialAssistantDashboardProps {
@@ -470,6 +475,83 @@ export const FinancialAssistantDashboard: React.FC<FinancialAssistantDashboardPr
 
           <TabsContent value="insights" className="space-y-6">
             <div className="grid gap-6">
+              {/* Section spécialisée pour les travailleurs de la construction */}
+              <Card className="border-orange-200 bg-gradient-to-r from-orange-50 to-yellow-50">
+                <CardHeader>
+                  <CardTitle className="flex items-center text-orange-800">
+                    <HardHat className="h-5 w-5 mr-2" />
+                    Conseils spécialisés - Travailleurs de la construction
+                  </CardTitle>
+                  <CardDescription className="text-orange-700">
+                    Recommandations adaptées aux spécificités du secteur de la construction au Québec
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <Alert className="border-orange-300 bg-orange-100">
+                      <AlertTriangle className="h-4 w-4 text-orange-600" />
+                      <AlertDescription className="text-orange-800">
+                        <strong>Travailleur de la construction?</strong> Votre régime de retraite CCQ nécessite une planification spécialisée.
+                        <div className="mt-2 flex items-center space-x-4">
+                          <Button 
+                            size="sm" 
+                            className="bg-orange-600 hover:bg-orange-700 text-white"
+                            onClick={() => window.location.href = '/module-ccq'}
+                          >
+                            <HardHat className="h-4 w-4 mr-2" />
+                            Analyser mon régime CCQ
+                          </Button>
+                          <div className="flex items-center text-sm text-orange-700">
+                            <Phone className="h-4 w-4 mr-1" />
+                            CCQ: 1-888-842-8282
+                          </div>
+                        </div>
+                      </AlertDescription>
+                    </Alert>
+
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div className="p-4 bg-white rounded-lg border border-orange-200">
+                        <h4 className="font-semibold text-orange-800 mb-2 flex items-center">
+                          <Target className="h-4 w-4 mr-2" />
+                          Défis spécifiques construction
+                        </h4>
+                        <ul className="text-sm text-orange-700 space-y-1">
+                          <li>• Revenus saisonniers et variables</li>
+                          <li>• Périodes de chômage fréquentes</li>
+                          <li>• Usure physique prématurée</li>
+                          <li>• Régime de retraite hybride complexe</li>
+                          <li>• Coordination CCQ + RRQ + PSV</li>
+                        </ul>
+                      </div>
+
+                      <div className="p-4 bg-white rounded-lg border border-orange-200">
+                        <h4 className="font-semibold text-orange-800 mb-2 flex items-center">
+                          <Lightbulb className="h-4 w-4 mr-2" />
+                          Stratégies recommandées
+                        </h4>
+                        <ul className="text-sm text-orange-700 space-y-1">
+                          <li>• Fonds d'urgence de 6+ mois minimum</li>
+                          <li>• Épargne automatique en haute saison</li>
+                          <li>• Planification retraite dès 50 ans</li>
+                          <li>• Optimisation timing CCQ/RRQ</li>
+                          <li>• Formation continue pour longévité</li>
+                        </ul>
+                      </div>
+                    </div>
+
+                    <div className="p-4 bg-gradient-to-r from-orange-100 to-yellow-100 rounded-lg border border-orange-300">
+                      <h4 className="font-semibold text-orange-800 mb-2">💡 Conseil de l'assistant</h4>
+                      <p className="text-sm text-orange-700">
+                        <strong>Secteur construction:</strong> Votre fonds d'urgence devrait représenter 6-9 mois de dépenses 
+                        (vs 3-6 mois pour les autres secteurs) en raison de la variabilité saisonnière. 
+                        Profitez des périodes de revenus élevés pour épargner davantage et planifiez 
+                        votre retraite CCQ dès 55 ans pour optimiser vos options.
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center">

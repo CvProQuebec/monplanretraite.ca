@@ -93,6 +93,11 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           id: 'rrq-cpp',
           label: isEnglish ? 'RRQ/CPP Analysis' : 'Analyse RRQ/CPP',
           path: '/rrq-cpp-analysis'
+        },
+        {
+          id: 'ccq-module',
+          label: isEnglish ? 'CCQ Construction Workers' : 'CCQ Travailleurs Construction',
+          path: '/module-ccq'
         }
       ]
     },

@@ -1,0 +1,195 @@
+/* Styles d'accessibilité pour la section Cashflow - Optimisé pour utilisateurs 60-90 ans */
+
+/* Amélioration de la visibilité des champs de saisie */
+.cashflow-input-enhanced {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  padding: 1.5rem !important;
+  border-width: 4px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+  transition: all 0.3s ease !important;
+}
+
+.cashflow-input-enhanced:focus {
+  transform: scale(1.02) !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* Amélioration des labels */
+.cashflow-label-enhanced {
+  font-size: 1.25rem !important;
+  font-weight: 700 !important;
+  color: #1f2937 !important;
+  margin-bottom: 0.75rem !important;
+}
+
+/* Amélioration des icônes */
+.cashflow-icon-enhanced {
+  width: 1.75rem !important;
+  height: 1.75rem !important;
+}
+
+/* Amélioration du résumé des dépenses */
+.cashflow-summary-enhanced {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+  border: 4px solid #cbd5e1 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
+  padding: 2rem !important;
+}
+
+.cashflow-summary-title {
+  font-size: 1.5rem !important;
+  font-weight: 800 !important;
+  color: #1f2937 !important;
+  text-align: center !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.cashflow-summary-item {
+  padding: 1rem 1.5rem !important;
+  border-radius: 12px !important;
+  border-width: 3px !important;
+  margin-bottom: 1rem !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+}
+
+.cashflow-summary-essential {
+  background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%) !important;
+  border-color: #fca5a5 !important;
+}
+
+.cashflow-summary-discretionary {
+  background: linear-gradient(135deg, #fff7ed 0%, #fed7aa 100%) !important;
+  border-color: #fdba74 !important;
+}
+
+.cashflow-summary-total {
+  background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%) !important;
+  border-color: #94a3b8 !important;
+}
+
+.cashflow-summary-amount {
+  font-size: 2.5rem !important;
+  font-weight: 800 !important;
+}
+
+.cashflow-summary-essential .cashflow-summary-amount {
+  color: #dc2626 !important;
+}
+
+.cashflow-summary-discretionary .cashflow-summary-amount {
+  color: #ea580c !important;
+}
+
+.cashflow-summary-total .cashflow-summary-amount {
+  color: #1e293b !important;
+}
+
+/* Amélioration des métriques principales */
+.cashflow-metric-enhanced {
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%) !important;
+  border-left-width: 8px !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+.cashflow-metric-enhanced:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15) !important;
+}
+
+.cashflow-metric-value {
+  font-size: 3rem !important;
+  font-weight: 800 !important;
+  text-align: center !important;
+}
+
+.cashflow-metric-label {
+  font-size: 1.125rem !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+}
+
+.cashflow-metric-description {
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  text-align: center !important;
+}
+
+/* Amélioration des onglets */
+.cashflow-tabs-enhanced {
+  background: white !important;
+  padding: 0.5rem !important;
+  border-radius: 16px !important;
+  border: 3px solid #d1d5db !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1) !important;
+}
+
+.cashflow-tab-enhanced {
+  padding: 1rem 1.5rem !important;
+  font-size: 1.125rem !important;
+  font-weight: 700 !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease !important;
+}
+
+.cashflow-tab-enhanced[data-state="active"] {
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+  transform: scale(1.05) !important;
+}
+
+/* Amélioration de l'espacement général */
+.cashflow-section-enhanced {
+  margin-bottom: 2rem !important;
+}
+
+.cashflow-card-enhanced {
+  border-radius: 16px !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.3s ease !important;
+}
+
+.cashflow-card-enhanced:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Styles pour les utilisateurs avec des problèmes de vision */
+@media (prefers-reduced-motion: no-preference) {
+  .cashflow-input-enhanced:focus {
+    animation: pulse-glow 2s infinite !important;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15) !important;
+  }
+  50% {
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3) !important;
+  }
+}
+
+/* Amélioration du contraste pour l'accessibilité */
+.cashflow-high-contrast {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+/* Styles pour les écrans tactiles */
+@media (hover: none) and (pointer: coarse) {
+  .cashflow-input-enhanced {
+    min-height: 4rem !important;
+    font-size: 2.5rem !important;
+  }
+  
+  .cashflow-tab-enhanced {
+    min-height: 3.5rem !important;
+    padding: 1.25rem 2rem !important;
+  }
+}

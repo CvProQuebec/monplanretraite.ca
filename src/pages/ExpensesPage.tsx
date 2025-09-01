@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CashflowSection } from '@/features/retirement/sections/CashflowSection';
+import SeasonalIrregularExpensesModule from '@/components/ui/SeasonalIrregularExpensesModule';
+import MonthlyBudgetPlanningModule from '@/components/ui/MonthlyBudgetPlanningModule';
 import { UserData } from '@/features/retirement/types';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 
@@ -20,8 +22,34 @@ const demoUserData: UserData = {
     ageRetraiteSouhaite2: 65,
     depensesRetraite: 4000
   },
-  retirement: {},
-  savings: {},
+  retirement: {
+    rrqAgeActuel1: 0,
+    rrqMontantActuel1: 0,
+    rrqMontant70_1: 0,
+    esperanceVie1: 85,
+    rrqAgeActuel2: 0,
+    rrqMontantActuel2: 0,
+    rrqMontant70_2: 0,
+    esperanceVie2: 87,
+    rregopMembre1: 'non',
+    rregopAnnees1: 0,
+    pensionPrivee1: 0,
+    pensionPrivee2: 0
+  },
+  savings: {
+    reer1: 0,
+    reer2: 0,
+    celi1: 0,
+    celi2: 0,
+    placements1: 0,
+    placements2: 0,
+    epargne1: 0,
+    epargne2: 0,
+    cri1: 0,
+    cri2: 0,
+    residenceValeur: 0,
+    residenceHypotheque: 0
+  },
   cashflow: {
     logement: 1200,
     servicesPublics: 200,
@@ -30,7 +58,14 @@ const demoUserData: UserData = {
     alimentation: 600,
     transport: 400,
     sante: 200,
-    loisirs: 300
+    loisirs: 300,
+    // Initialiser les ventilations vides
+    logementBreakdown: {},
+    servicesPublicsBreakdown: {},
+    assurancesBreakdown: {},
+    transportBreakdown: {},
+    santeBreakdown: {},
+    telecomBreakdown: {}
   }
 };
 
@@ -59,26 +94,58 @@ export const ExpensesPage: React.FC = () => {
   };
 
   const handleUpdate = (section: keyof UserData, updates: any) => {
-    setUserData(prevData => ({
-      ...prevData,
-      [section]: {
-        ...prevData[section],
-        ...updates
+    setUserData(prevData => {
+      const newData = {
+        ...prevData,
+        [section]: {
+          ...prevData[section],
+          ...updates
+        }
+      };
+      
+      // Sauvegarder automatiquement dans localStorage avec toutes les ventilations
+      try {
+        localStorage.setItem('retirement_data', JSON.stringify(newData));
+        console.log('Données sauvegardées dans localStorage (incluant ventilations):', newData);
+        console.log('Ventilations sauvegardées:', {
+          logementBreakdown: newData.cashflow?.logementBreakdown,
+          servicesPublicsBreakdown: newData.cashflow?.servicesPublicsBreakdown,
+          assurancesBreakdown: newData.cashflow?.assurancesBreakdown,
+          transportBreakdown: newData.cashflow?.transportBreakdown,
+          santeBreakdown: newData.cashflow?.santeBreakdown,
+          telecomBreakdown: newData.cashflow?.telecomBreakdown
+        });
+      } catch (error) {
+        console.error('Erreur lors de la sauvegarde:', error);
       }
-    }));
+      
+      return newData;
+    });
   };
 
-  // Charger les données depuis le stockage local
+  // Charger les données depuis le stockage local incluant les ventilations
   useEffect(() => {
     try {
       const savedData = localStorage.getItem('retirement_data');
       if (savedData) {
         const data = JSON.parse(savedData);
         if (data.cashflow) {
+          // Charger toutes les données cashflow incluant les ventilations
           setUserData(prevData => ({
             ...prevData,
-            cashflow: { ...prevData.cashflow, ...data.cashflow }
+            cashflow: { 
+              ...prevData.cashflow, 
+              ...data.cashflow,
+              // S'assurer que toutes les ventilations sont chargées
+              logementBreakdown: data.cashflow.logementBreakdown || {},
+              servicesPublicsBreakdown: data.cashflow.servicesPublicsBreakdown || {},
+              assurancesBreakdown: data.cashflow.assurancesBreakdown || {},
+              transportBreakdown: data.cashflow.transportBreakdown || {},
+              santeBreakdown: data.cashflow.santeBreakdown || {},
+              telecomBreakdown: data.cashflow.telecomBreakdown || {}
+            }
           }));
+          console.log('Données chargées depuis localStorage (incluant ventilations):', data.cashflow);
         }
       }
     } catch (error) {
@@ -127,6 +194,24 @@ export const ExpensesPage: React.FC = () => {
           data={userData} 
           onUpdate={handleUpdate} 
         />
+
+        {/* Nouveau volet Dépenses Saisonnières et Irrégulières */}
+        <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+          <SeasonalIrregularExpensesModule
+            data={userData}
+            onUpdate={(updates) => handleUpdate('cashflow', updates)}
+            language={language}
+          />
+        </div>
+
+        {/* Nouveau volet Planification Budgétaire Mensuelle */}
+        <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+          <MonthlyBudgetPlanningModule
+            data={userData}
+            onUpdate={(updates) => handleUpdate('cashflow', updates)}
+            language={language}
+          />
+        </div>
 
         {/* Informations supplémentaires */}
         <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">

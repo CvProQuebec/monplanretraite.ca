@@ -27,12 +27,15 @@ import {
   Shield,
   Plus,
   X,
-  Settings
+  Settings,
+  Calendar,
+  RefreshCw
 } from 'lucide-react';
 import { UserData } from '../types';
 import { formatCurrency } from '../utils/formatters';
 import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../translations/index';
+import '@/styles/cashflow-accessibility.css';
 
 interface CashflowSectionProps {
   data: UserData;
@@ -44,7 +47,7 @@ interface ExpenseBreakdownProps {
   title: string;
   total: number;
   breakdown: Record<string, number>;
-  onUpdate: (breakdown: Record<string, number>) => void;
+  onUpdate: (breakdown: Record<string, number>, newTotal?: number) => void;
   categories: { key: string; label: string; icon: React.ReactNode }[];
 }
 
@@ -58,7 +61,21 @@ const ExpenseBreakdown: React.FC<ExpenseBreakdownProps> = ({
   const { language } = useLanguage();
   const t = translations[language];
   const [isOpen, setIsOpen] = useState(false);
-  const [localBreakdown, setLocalBreakdown] = useState(breakdown);
+  const [localBreakdown, setLocalBreakdown] = useState(breakdown || {});
+
+  // Synchroniser les données locales quand le popup s'ouvre ou que les données changent
+  React.useEffect(() => {
+    if (isOpen) {
+      // S'assurer que les données persistantes sont chargées
+      setLocalBreakdown(breakdown || {});
+      console.log(`📂 Chargement ventilation ${title}:`, breakdown);
+    }
+  }, [isOpen, breakdown, title]);
+  
+  // Mettre à jour les données locales quand les props changent
+  React.useEffect(() => {
+    setLocalBreakdown(breakdown || {});
+  }, [breakdown]);
 
   const handleChange = (key: string, value: number) => {
     const newBreakdown = { ...localBreakdown, [key]: value };
@@ -66,8 +83,17 @@ const ExpenseBreakdown: React.FC<ExpenseBreakdownProps> = ({
   };
 
   const handleSave = () => {
-    onUpdate(localBreakdown);
+    // Calculer le nouveau total basé sur la ventilation
+    const newTotal = Object.values(localBreakdown).reduce((sum, value) => sum + (value || 0), 0);
+    
+    // Mettre à jour la ventilation ET utiliser le total calculé comme nouveau total principal
+    onUpdate(localBreakdown, newTotal);
+    
+    // Fermer le dialog
     setIsOpen(false);
+    
+    // Optionnel: Afficher un message de confirmation
+    console.log('Ventilation sauvegardée:', localBreakdown, 'Nouveau total appliqué au champ maître:', newTotal);
   };
 
   const handleCancel = () => {
@@ -214,12 +240,32 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
     onUpdate('cashflow', { [field]: value });
   };
 
-  const handleBreakdownUpdate = (category: string, breakdown: Record<string, number>) => {
-    const total = Object.values(breakdown).reduce((sum, value) => sum + (value || 0), 0);
-    onUpdate('cashflow', { 
+  const handleBreakdownUpdate = (category: string, breakdown: Record<string, number>, newTotal?: number) => {
+    // Utiliser le nouveau total s'il est fourni, sinon calculer à partir de la ventilation
+    const total = newTotal !== undefined ? newTotal : Object.values(breakdown).reduce((sum, value) => sum + (value || 0), 0);
+    
+    // Mettre à jour à la fois le total et la ventilation
+    const updates = { 
       [category]: total,
       [`${category}Breakdown`]: breakdown 
+    };
+    
+    console.log(`🔄 DÉBUT handleBreakdownUpdate pour ${category}:`);
+    console.log(`   - Breakdown reçu:`, breakdown);
+    console.log(`   - newTotal reçu:`, newTotal);
+    console.log(`   - Total calculé:`, total);
+    console.log(`   - Updates à appliquer:`, updates);
+    console.log(`   - Données actuelles avant mise à jour:`, data.cashflow);
+    
+    // Force la mise à jour immédiate du champ principal
+    handleChange(category, total);
+    
+    // Puis sauvegarde aussi la ventilation
+    onUpdate('cashflow', {
+      [`${category}Breakdown`]: breakdown
     });
+    
+    console.log(`✅ FIN handleBreakdownUpdate pour ${category}`);
   };
 
   // Calculs pour le flux de trésorerie
@@ -230,7 +276,8 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                        (data.cashflow.alimentation || 0) + 
                        (data.cashflow.transport || 0) + 
                        (data.cashflow.sante || 0) + 
-                       (data.cashflow.loisirs || 0);
+                       (data.cashflow.loisirs || 0) + 
+                       (data.cashflow.depensesSaisonnieres || 0);
 
   const revenusMensuels = (data.personal.salaire1 || 0) / 12 + (data.personal.salaire2 || 0) / 12;
   const surplusDeficit = revenusMensuels - totalDepenses;
@@ -240,7 +287,8 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
   const depensesEssentielles = (data.cashflow.logement || 0) + (data.cashflow.servicesPublics || 0) + 
                               (data.cashflow.assurances || 0) + (data.cashflow.alimentation || 0) + 
                               (data.cashflow.transport || 0) + (data.cashflow.sante || 0);
-  const depensesDiscretionnaires = (data.cashflow.telecom || 0) + (data.cashflow.loisirs || 0);
+  const depensesDiscretionnaires = (data.cashflow.telecom || 0) + (data.cashflow.loisirs || 0) + 
+                                  (data.cashflow.depensesSaisonnieres || 0);
 
   const ratioEssentiels = revenusMensuels > 0 ? (depensesEssentielles / revenusMensuels) * 100 : 0;
   const ratioDiscretionnaires = revenusMensuels > 0 ? (depensesDiscretionnaires / revenusMensuels) * 100 : 0;
@@ -296,42 +344,31 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
-      {/* Particules de fond visibles */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
-        <div className="absolute top-60 left-1/4 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
-        <div className="absolute top-80 right-1/3 w-1 h-1 bg-red-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-96 left-1/2 w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
-        <div className="absolute top-32 right-1/4 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-72 left-1/3 w-1 h-1 bg-pink-400 rounded-full animate-bounce"></div>
-      </div>
-
-      <div className="container mx-auto px-6 py-8 relative z-10">
+    <div className="seniors-mode min-h-screen bg-white">
+      <div className="container mx-auto px-6 py-8">
         <div className="space-y-6">
-          {/* En-tête avec aide - Style Phase 2 */}
+          {/* En-tête avec aide - Style optimisé pour seniors */}
           <div className="text-center mb-8">
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent drop-shadow-2xl mb-4">
+            <h1 className="text-5xl font-bold text-gray-900 mb-4">
               {t.cashflow.title}
             </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               {t.cashflow.subtitle}
             </p>
             <button
               onClick={() => setShowHelp(!showHelp)}
-              className="mt-4 bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors backdrop-blur-sm border border-white/20"
+              className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg font-semibold transition-colors border-2 border-blue-600"
             >
-              <Info className="w-4 h-4 inline mr-2" />
+              <Info className="w-5 h-5 inline mr-2" />
               {t.personalData.help}
             </button>
           </div>
 
       {/* Message d'aide */}
       {showHelp && (
-        <Alert className="border-sapphire-200 bg-sapphire-50">
-          <Info className="h-5 w-5 text-sapphire-600" />
-          <AlertDescription className="text-sapphire-800">
+        <Alert className="border-blue-300 bg-blue-50 mb-6">
+          <Info className="h-6 w-6 text-blue-700" />
+          <AlertDescription className="text-blue-900 text-lg leading-relaxed">
             <strong>Gestion du flux de trésorerie :</strong> Suivez vos dépenses mensuelles pour identifier les opportunités d'épargne. 
             La règle du 50/30/20 recommande 50 % pour les besoins essentiels, 30 % pour les désirs, et 20 % pour l'épargne.
             <br /><br />
@@ -341,48 +378,48 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
       )}
 
       {/* Métriques principales */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-l-4 border-l-green-500">
-          <CardContent className="pt-6">
-            <div className="space-y-2">
-              <p className="text-sm text-gray-600">{t.cashflow.monthlyIncome}</p>
-              <p className="text-2xl font-bold text-green-600">{formatCurrency(revenusMensuels)}</p>
-              <p className="text-xs text-gray-500">{language === 'fr' ? 'Salaire net des deux personnes' : 'Net salary of both persons'}</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Card className="cashflow-metric-enhanced border-l-8 border-l-green-500 bg-gradient-to-br from-green-50 to-green-100 shadow-xl">
+          <CardContent className="pt-8 pb-6">
+            <div className="space-y-3 text-center">
+              <p className="cashflow-metric-label text-lg font-semibold text-green-700">{t.cashflow.monthlyIncome}</p>
+              <p className="cashflow-metric-value text-4xl font-bold text-green-800">{formatCurrency(revenusMensuels)}</p>
+              <p className="cashflow-metric-description text-sm text-green-600">{language === 'fr' ? 'Salaire net des deux personnes' : 'Net salary of both persons'}</p>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-red-500">
-          <CardContent className="pt-6">
-            <div className="space-y-2">
-              <p className="text-sm text-gray-600">{language === 'fr' ? 'Dépenses mensuelles' : 'Monthly Expenses'}</p>
-              <p className="text-2xl font-bold text-red-600">{formatCurrency(totalDepenses)}</p>
-              <p className="text-xs text-gray-500">{language === 'fr' ? 'Total de toutes les dépenses' : 'Total of all expenses'}</p>
+        <Card className="cashflow-metric-enhanced border-l-8 border-l-red-500 bg-gradient-to-br from-red-50 to-red-100 shadow-xl">
+          <CardContent className="pt-8 pb-6">
+            <div className="space-y-3 text-center">
+              <p className="cashflow-metric-label text-lg font-semibold text-red-700">{language === 'fr' ? 'Dépenses mensuelles' : 'Monthly Expenses'}</p>
+              <p className="cashflow-metric-value text-4xl font-bold text-red-800">{formatCurrency(totalDepenses)}</p>
+              <p className="cashflow-metric-description text-sm text-red-600">{language === 'fr' ? 'Total de toutes les dépenses' : 'Total of all expenses'}</p>
             </div>
           </CardContent>
         </Card>
 
-        <Card className={`border-l-4 ${surplusDeficit >= 0 ? 'border-l-emerald-500' : 'border-l-orange-500'}`}>
-          <CardContent className="pt-6">
-            <div className="space-y-2">
-              <p className="text-sm text-gray-600">{language === 'fr' ? 'Surplus/Déficit' : 'Surplus/Deficit'}</p>
-              <p className={`text-2xl font-bold ${surplusDeficit >= 0 ? 'text-emerald-600' : 'text-orange-600'}`}>
+        <Card className={`cashflow-metric-enhanced border-l-8 ${surplusDeficit >= 0 ? 'border-l-emerald-500 bg-gradient-to-br from-emerald-50 to-emerald-100' : 'border-l-orange-500 bg-gradient-to-br from-orange-50 to-orange-100'} shadow-xl`}>
+          <CardContent className="pt-8 pb-6">
+            <div className="space-y-3 text-center">
+              <p className="cashflow-metric-label text-lg font-semibold ${surplusDeficit >= 0 ? 'text-emerald-700' : 'text-orange-700'}">{language === 'fr' ? 'Surplus/Déficit' : 'Surplus/Deficit'}</p>
+              <p className={`cashflow-metric-value text-4xl font-bold ${surplusDeficit >= 0 ? 'text-emerald-800' : 'text-orange-800'}`}>
                 {surplusDeficit >= 0 ? '+' : ''}{formatCurrency(surplusDeficit)}
               </p>
-              <p className="text-xs text-gray-500">{surplusDeficit >= 0 ? (language === 'fr' ? 'Épargne disponible' : 'Available savings') : (language === 'fr' ? 'Déficit à combler' : 'Deficit to cover')}</p>
+              <p className="cashflow-metric-description text-sm ${surplusDeficit >= 0 ? 'text-emerald-600' : 'text-orange-600'}">{surplusDeficit >= 0 ? (language === 'fr' ? 'Épargne disponible' : 'Available savings') : (language === 'fr' ? 'Déficit à combler' : 'Deficit to cover')}</p>
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-blue-500">
-          <CardContent className="pt-6">
-            <div className="space-y-2">
-              <p className="text-sm text-gray-600">{language === 'fr' ? 'Taux d\'épargne' : 'Savings Rate'}</p>
-              <div className="flex items-center gap-2">
-                <Progress value={Math.max(0, tauxEpargne)} className="flex-1 h-2" />
-                <span className="text-sm font-semibold">{tauxEpargne.toFixed(1)}%</span>
+        <Card className="cashflow-metric-enhanced border-l-8 border-l-blue-500 bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl">
+          <CardContent className="pt-8 pb-6">
+            <div className="space-y-3 text-center">
+              <p className="cashflow-metric-label text-lg font-semibold text-blue-700">{language === 'fr' ? 'Taux d\'épargne' : 'Savings Rate'}</p>
+              <div className="flex items-center gap-3 mb-2">
+                <Progress value={Math.max(0, tauxEpargne)} className="flex-1 h-3" />
+                <span className="cashflow-metric-value text-2xl font-bold text-blue-800">{tauxEpargne.toFixed(1)}%</span>
               </div>
-                              <p className="text-xs text-gray-500">{language === 'fr' ? 'Objectif : 20 %' : 'Goal: 20%'}</p>
+              <p className="cashflow-metric-description text-sm text-blue-600">{language === 'fr' ? 'Objectif : 20 %' : 'Goal: 20%'}</p>
             </div>
           </CardContent>
         </Card>
@@ -392,22 +429,22 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
       <Card>
         <CardContent className="p-6">
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-                         <TabsList className="grid w-full grid-cols-3 bg-white p-2 rounded-xl h-14 border-2 border-gray-300 shadow-lg">
+                         <TabsList className="cashflow-tabs-enhanced grid w-full grid-cols-3 bg-white p-2 rounded-xl h-14 border-2 border-gray-300 shadow-lg">
                <TabsTrigger 
                  value="depenses" 
-                 className="data-[state=active]:bg-red-500 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-200 px-4 py-2 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-200"
+                 className="cashflow-tab-enhanced data-[state=active]:bg-red-500 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-red-200 px-4 py-2 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-200"
                >
                  {language === 'fr' ? 'Dépenses' : 'Expenses'}
                </TabsTrigger>
                <TabsTrigger 
                  value="analyse"
-                 className="data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-200 px-4 py-2 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-200"
+                 className="cashflow-tab-enhanced data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-200 px-4 py-2 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-200"
                >
                  {language === 'fr' ? 'Analyse 50/30/20' : '50/30/20 Analysis'}
                </TabsTrigger>
                <TabsTrigger 
                  value="optimisation"
-                 className="data-[state=active]:bg-emerald-500 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-emerald-200 px-4 py-2 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-200"
+                 className="cashflow-tab-enhanced data-[state=active]:bg-emerald-500 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-emerald-200 px-4 py-2 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-200"
                >
                  {language === 'fr' ? 'Optimisation' : 'Optimization'}
                </TabsTrigger>
@@ -417,23 +454,29 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
             <TabsContent value="depenses" className="space-y-6 mt-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Dépenses essentielles */}
-                <Card className="border-l-4 border-l-red-500">
+                <Card className="cashflow-card-enhanced border-l-4 border-l-red-500">
                   <CardHeader>
                     <CardTitle className="text-lg text-red-700">{t.cashflow.essentialExpenses}</CardTitle>
                     <CardDescription>{t.cashflow.basicNecessities}</CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
+                  <CardContent className="space-y-6">
+                    <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <Label className="flex items-center gap-2">
-                          <Home className="w-4 h-4 text-red-500" />
+                        <Label className="flex items-center gap-3 text-xl font-bold text-gray-800">
+                          <Home className="w-6 h-6 text-red-500" />
                           {language === 'fr' ? 'Logement (loyer/hypothèque)' : 'Housing (rent/mortgage)'}
+                          <div className="flex items-center gap-2 ml-2">
+                            <RefreshCw className="w-4 h-4 text-blue-500" />
+                            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">
+                              {language === 'fr' ? 'Synchronisé' : 'Synced'}
+                            </span>
+                          </div>
                         </Label>
                         <ExpenseBreakdown
                           title={language === 'fr' ? 'Logement' : 'Housing'}
                           total={data.cashflow.logement || 0}
                           breakdown={data.cashflow.logementBreakdown || {}}
-                          onUpdate={(breakdown) => handleBreakdownUpdate('logement', breakdown)}
+                          onUpdate={(breakdown, newTotal) => handleBreakdownUpdate('logement', breakdown, newTotal)}
                           categories={logementCategories}
                         />
                       </div>
@@ -441,22 +484,22 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.logement || ''}
                         onChange={(e) => handleChange('logement', parseFloat(e.target.value) || 0)}
-                        placeholder="0"
-                        className="text-lg p-3"
+                        placeholder=""
+                        className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <Label className="flex items-center gap-2">
-                          <Zap className="w-4 h-4 text-red-500" />
+                        <Label className="flex items-center gap-3 text-xl font-bold text-gray-800">
+                          <Zap className="w-6 h-6 text-red-500" />
                           {language === 'fr' ? 'Services publics (électricité, eau, etc.)' : 'Utilities (electricity, water, etc.)'}
                         </Label>
                         <ExpenseBreakdown
                           title={language === 'fr' ? 'Services publics' : 'Utilities'}
                           total={data.cashflow.servicesPublics || 0}
                           breakdown={data.cashflow.servicesPublicsBreakdown || {}}
-                          onUpdate={(breakdown) => handleBreakdownUpdate('servicesPublics', breakdown)}
+                          onUpdate={(breakdown, newTotal) => handleBreakdownUpdate('servicesPublics', breakdown, newTotal)}
                           categories={servicesPublicsCategories}
                         />
                       </div>
@@ -464,22 +507,28 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.servicesPublics || ''}
                         onChange={(e) => handleChange('servicesPublics', parseFloat(e.target.value) || 0)}
-                        placeholder="0"
-                        className="text-lg p-3"
+                        placeholder=""
+                        className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <Label className="flex items-center gap-2">
-                          <Shield className="w-4 h-4 text-red-500" />
+                        <Label className="flex items-center gap-3 text-xl font-bold text-gray-800">
+                          <Shield className="w-6 h-6 text-red-500" />
                           {language === 'fr' ? 'Assurances (habitation, auto, vie)' : 'Insurance (home, auto, life)'}
+                          <div className="flex items-center gap-2 ml-2">
+                            <RefreshCw className="w-4 h-4 text-blue-500" />
+                            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">
+                              {language === 'fr' ? 'Synchronisé' : 'Synced'}
+                            </span>
+                          </div>
                         </Label>
                         <ExpenseBreakdown
                           title={language === 'fr' ? 'Assurances' : 'Insurance'}
                           total={data.cashflow.assurances || 0}
                           breakdown={data.cashflow.assurancesBreakdown || {}}
-                          onUpdate={(breakdown) => handleBreakdownUpdate('assurances', breakdown)}
+                          onUpdate={(breakdown, newTotal) => handleBreakdownUpdate('assurances', breakdown, newTotal)}
                           categories={assurancesCategories}
                         />
                       </div>
@@ -487,36 +536,36 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.assurances || ''}
                         onChange={(e) => handleChange('assurances', parseFloat(e.target.value) || 0)}
-                        placeholder="0"
-                        className="text-lg p-3"
+                        placeholder=""
+                        className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
 
-                    <div className="space-y-2">
-                      <Label className="flex items-center gap-2">
-                        <ShoppingCart className="w-4 h-4 text-red-500" />
+                    <div className="space-y-4">
+                      <Label className="flex items-center gap-3 text-xl font-bold text-gray-800">
+                        <ShoppingCart className="w-6 h-6 text-red-500" />
                         {language === 'fr' ? 'Alimentation et produits de base' : 'Food and basic products'}
                       </Label>
                       <Input
                         type="number"
                         value={data.cashflow.alimentation || ''}
                         onChange={(e) => handleChange('alimentation', parseFloat(e.target.value) || 0)}
-                        placeholder="0"
-                        className="text-lg p-3"
+                        placeholder=""
+                        className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <Label className="flex items-center gap-2">
-                          <Car className="w-4 h-4 text-red-500" />
+                        <Label className="flex items-center gap-3 text-xl font-bold text-gray-800">
+                          <Car className="w-6 h-6 text-red-500" />
                           {language === 'fr' ? 'Transport (essence, transport en commun)' : 'Transportation (gas, public transit)'}
                         </Label>
                         <ExpenseBreakdown
                           title={language === 'fr' ? 'Transport' : 'Transportation'}
                           total={data.cashflow.transport || 0}
                           breakdown={data.cashflow.transportBreakdown || {}}
-                          onUpdate={(breakdown) => handleBreakdownUpdate('transport', breakdown)}
+                          onUpdate={(breakdown, newTotal) => handleBreakdownUpdate('transport', breakdown, newTotal)}
                           categories={transportCategories}
                         />
                       </div>
@@ -524,22 +573,22 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.transport || ''}
                         onChange={(e) => handleChange('transport', parseFloat(e.target.value) || 0)}
-                        placeholder="0"
-                        className="text-lg p-3"
+                        placeholder=""
+                        className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <Label className="flex items-center gap-2">
-                          <Heart className="w-4 h-4 text-red-500" />
+                        <Label className="flex items-center gap-3 text-xl font-bold text-gray-800">
+                          <Heart className="w-6 h-6 text-red-500" />
                           {language === 'fr' ? 'Santé (médicaments, soins)' : 'Health (medications, care)'}
                         </Label>
                         <ExpenseBreakdown
                           title={language === 'fr' ? 'Santé' : 'Health'}
                           total={data.cashflow.sante || 0}
                           breakdown={data.cashflow.santeBreakdown || {}}
-                          onUpdate={(breakdown) => handleBreakdownUpdate('sante', breakdown)}
+                          onUpdate={(breakdown, newTotal) => handleBreakdownUpdate('sante', breakdown, newTotal)}
                           categories={santeCategories}
                         />
                       </div>
@@ -547,31 +596,31 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.sante || ''}
                         onChange={(e) => handleChange('sante', parseFloat(e.target.value) || 0)}
-                        placeholder="0"
-                        className="text-lg p-3"
+                        placeholder=""
+                        className="text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
                   </CardContent>
                 </Card>
 
                 {/* Dépenses discrétionnaires */}
-                <Card className="border-l-4 border-l-orange-500">
+                <Card className="cashflow-card-enhanced border-l-4 border-l-orange-500">
                   <CardHeader>
                     <CardTitle className="text-lg text-orange-700">{t.cashflow.discretionaryExpenses}</CardTitle>
                     <CardDescription>{t.cashflow.wantsAndLeisure}</CardDescription>
                   </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
+                  <CardContent className="space-y-6">
+                    <div className="space-y-4">
                       <div className="flex items-center justify-between">
-                        <Label className="flex items-center gap-2">
-                          <Phone className="w-4 h-4 text-orange-500" />
+                        <Label className="flex items-center gap-3 text-xl font-bold text-gray-800">
+                          <Phone className="w-6 h-6 text-orange-500" />
                           {language === 'fr' ? 'Télécommunications (téléphone, internet, TV)' : 'Telecommunications (phone, internet, TV)'}
                         </Label>
                         <ExpenseBreakdown
                           title={language === 'fr' ? 'Télécommunications' : 'Telecommunications'}
                           total={data.cashflow.telecom || 0}
                           breakdown={data.cashflow.telecomBreakdown || {}}
-                          onUpdate={(breakdown) => handleBreakdownUpdate('telecom', breakdown)}
+                          onUpdate={(breakdown, newTotal) => handleBreakdownUpdate('telecom', breakdown, newTotal)}
                           categories={telecomCategories}
                         />
                       </div>
@@ -579,42 +628,62 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.telecom || ''}
                         onChange={(e) => handleChange('telecom', parseFloat(e.target.value) || 0)}
-                        placeholder="0"
-                        className="text-lg p-3"
+                        placeholder=""
+                        className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-orange-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
 
-                    <div className="space-y-2">
-                      <Label className="flex items-center gap-2">
-                        <Gamepad2 className="w-4 h-4 text-orange-500" />
+                    <div className="space-y-4">
+                      <Label className="flex items-center gap-3 text-xl font-bold text-gray-800">
+                        <Gamepad2 className="w-6 h-6 text-orange-500" />
                         {language === 'fr' ? 'Loisirs et divertissements' : 'Leisure and entertainment'}
                       </Label>
                       <Input
                         type="number"
                         value={data.cashflow.loisirs || ''}
                         onChange={(e) => handleChange('loisirs', parseFloat(e.target.value) || 0)}
-                        placeholder="0"
-                        className="text-lg p-3"
+                        placeholder=""
+                        className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-orange-300 focus:ring-orange-500 focus:ring-4 focus:ring-orange-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
-                      <p className="text-xs text-gray-600">Restaurants, sorties, hobbies, etc.</p>
+                      <p className="text-sm text-gray-700 font-medium">Restaurants, sorties, hobbies, etc.</p>
+                    </div>
+
+                    <div className="space-y-4">
+                      <Label className="flex items-center gap-3 text-xl font-bold text-gray-800">
+                        <Calendar className="w-6 h-6 text-orange-500" />
+                        {language === 'fr' ? 'Dépenses saisonnières' : 'Seasonal expenses'}
+                      </Label>
+                      <Input
+                        type="number"
+                        value={data.cashflow.depensesSaisonnieres || ''}
+                        onChange={(e) => handleChange('depensesSaisonnieres', parseFloat(e.target.value) || 0)}
+                        placeholder=""
+                        className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-orange-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-200 rounded-lg shadow-lg placeholder:text-gray-400"
+                      />
+                      <p className="text-sm text-gray-700 font-medium">
+                        {language === 'fr' 
+                          ? 'Cadeaux de Noël, vacances, réparations saisonnières, etc.' 
+                          : 'Christmas gifts, vacations, seasonal repairs, etc.'
+                        }
+                      </p>
                     </div>
 
                     {/* Résumé des dépenses */}
-                    <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                      <h4 className="font-semibold mb-3">{t.cashflow.expenseSummary}</h4>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span>{t.cashflow.essential}</span>
-                          <span className="font-semibold text-red-600">{formatCurrency(depensesEssentielles)}</span>
+                    <div className="cashflow-summary-enhanced mt-6 p-6 bg-gradient-to-r from-gray-100 to-gray-200 rounded-xl border-4 border-gray-300 shadow-xl">
+                      <h4 className="cashflow-summary-title text-2xl font-bold text-gray-800 mb-4 text-center">{t.cashflow.expenseSummary}</h4>
+                      <div className="space-y-4">
+                        <div className="cashflow-summary-item cashflow-summary-essential flex justify-between items-center p-3 bg-red-100 rounded-lg border-2 border-red-300">
+                          <span className="text-lg font-semibold text-red-800">{t.cashflow.essential}</span>
+                          <span className="cashflow-summary-amount text-3xl font-bold text-red-700">{formatCurrency(depensesEssentielles)}</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span>{t.cashflow.discretionary}</span>
-                          <span className="font-semibold text-orange-600">{formatCurrency(depensesDiscretionnaires)}</span>
+                        <div className="cashflow-summary-item cashflow-summary-discretionary flex justify-between items-center p-3 bg-orange-100 rounded-lg border-2 border-orange-300">
+                          <span className="text-lg font-semibold text-orange-800">{t.cashflow.discretionary}</span>
+                          <span className="cashflow-summary-amount text-3xl font-bold text-orange-700">{formatCurrency(depensesDiscretionnaires)}</span>
                         </div>
-                        <div className="border-t pt-2">
-                          <div className="flex justify-between font-bold">
-                            <span>{t.cashflow.total}:</span>
-                            <span className="text-charcoal-600">{formatCurrency(totalDepenses)}</span>
+                        <div className="border-t-4 border-gray-400 pt-4">
+                          <div className="cashflow-summary-item cashflow-summary-total flex justify-between items-center p-4 bg-gray-200 rounded-lg border-2 border-gray-400">
+                            <span className="text-xl font-bold text-gray-800">{t.cashflow.total}:</span>
+                            <span className="cashflow-summary-amount text-4xl font-bold text-gray-900">{formatCurrency(totalDepenses)}</span>
                           </div>
                         </div>
                       </div>

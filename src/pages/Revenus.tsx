@@ -32,6 +32,7 @@ import AdvancedEIManager from '@/components/ui/AdvancedEIManager';
 import ReturnCalculator from '@/components/ui/ReturnCalculator';
 import RRQInfoCard from '@/components/ui/RRQInfoCard';
 import UnifiedIncomeTable from '@/components/ui/UnifiedIncomeTable';
+import SeasonalJobsManager from '@/components/ui/SeasonalJobsManager';
 import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 
 // Import des corrections mobile pour Samsung S23 Ultra
@@ -410,6 +411,46 @@ const Revenus: React.FC = () => {
               data={(userData.personal as any)?.unifiedIncome2 || []}
               onDataChange={(data) => {
                 updateUserData('personal', { unifiedIncome2: data } as any);
+              }}
+              isFrench={isFrench}
+            />
+          </div>
+        </div>
+
+        {/* Section Emplois Saisonniers */}
+        <div className="space-y-8 mb-12">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-amber-300 mb-4 flex items-center justify-center gap-3">
+              <Calendar className="w-8 h-8 text-amber-400" />
+              {isFrench ? 'Emplois Saisonniers' : 'Seasonal Jobs'}
+            </h2>
+            <p className="text-amber-200 text-lg">
+              {isFrench 
+                ? 'Gérez vos emplois saisonniers avec périodes et gains approximatifs'
+                : 'Manage your seasonal jobs with periods and estimated earnings'
+              }
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8">
+            {/* Personne 1 - Emplois saisonniers */}
+            <SeasonalJobsManager
+              personNumber={1}
+              personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
+              data={(userData.personal as any)?.seasonalJobs1 || []}
+              onDataChange={(data) => {
+                updateUserData('personal', { seasonalJobs1: data } as any);
+              }}
+              isFrench={isFrench}
+            />
+
+            {/* Personne 2 - Emplois saisonniers */}
+            <SeasonalJobsManager
+              personNumber={2}
+              personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
+              data={(userData.personal as any)?.seasonalJobs2 || []}
+              onDataChange={(data) => {
+                updateUserData('personal', { seasonalJobs2: data } as any);
               }}
               isFrench={isFrench}
             />

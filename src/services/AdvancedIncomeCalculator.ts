@@ -1,5 +1,9 @@
 // ===== CALCULATEUR AVANCÉ DE REVENUS =====
 // Gestion des scénarios complexes d'assurance emploi et transitions
+// Intégration CCQ pour travailleurs de la construction
+
+import { CCQService } from './CCQService';
+import { CCQData, CCQCalculationResult } from '../types/ccq';
 
 export interface EmploymentPeriod {
   id: string;
@@ -305,6 +309,146 @@ export class AdvancedIncomeCalculator {
       canExtend,
       explanation
     };
+  }
+
+  /**
+   * Intègre les calculs CCQ dans les projections de revenus
+   * Spécialement conçu pour les travailleurs de la construction
+   */
+  static integrateConstructionWorkerIncome(
+    periods: EmploymentPeriod[],
+    ccqData: CCQData,
+    birthDate: string,
+    currentDate: string = new Date().toISOString().split('T')[0]
+  ): {
+    totalProjectedIncome: number;
+    ccqPension: CCQCalculationResult;
+    eiDetails: EICalculationResult;
+    transitionStrategy: {
+      optimalRetirementAge: number;
+      monthlyIncomeAtRetirement: number;
+      recommendations: string[];
+    };
+  } {
+    
+    // Calculs CCQ
+    const ccqResult = CCQService.calculateCCQPension(ccqData);
+    
+    // Calculs AE standards
+    const eiResult = this.calculateEIDetails(periods, birthDate, currentDate);
+    
+    const currentAge = this.calculateAge(birthDate, currentDate);
+    
+    // Stratégie de transition optimisée pour construction
+    const transitionStrategy = this.generateConstructionTransitionStrategy(
+      currentAge,
+      ccqResult,
+      eiResult,
+      ccqData
+    );
+    
+    // Projection totale des revenus
+    const totalProjectedIncome = this.calculateTotalConstructionIncome(
+      eiResult.projectedAnnualIncome,
+      ccqResult,
+      currentAge
+    );
+    
+    return {
+      totalProjectedIncome,
+      ccqPension: ccqResult,
+      eiDetails: eiResult,
+      transitionStrategy
+    };
+  }
+
+  /**
+   * Génère une stratégie de transition spécialisée pour les travailleurs de la construction
+   */
+  private static generateConstructionTransitionStrategy(
+    currentAge: number,
+    ccqResult: CCQCalculationResult,
+    eiResult: EICalculationResult,
+    ccqData: CCQData
+  ): {
+    optimalRetirementAge: number;
+    monthlyIncomeAtRetirement: number;
+    recommendations: string[];
+  } {
+    
+    const recommendations: string[] = [];
+    let optimalRetirementAge = 65;
+    let monthlyIncomeAtRetirement = 0;
+    
+    // Analyse de l'éligibilité CCQ
+    if (ccqResult.admissibilite.retraiteNormale.eligible) {
+      optimalRetirementAge = 65;
+      monthlyIncomeAtRetirement = ccqResult.renteMensuelleTotale;
+      recommendations.push("✅ Éligible à la retraite normale CCQ à 65 ans sans réduction");
+    }
+    
+    if (ccqResult.admissibilite.retraiteAnticipeeSansReduction.eligible) {
+      const ageEligible = ccqResult.admissibilite.retraiteAnticipeeSansReduction.ageRequis;
+      if (ageEligible && ageEligible < optimalRetirementAge) {
+        optimalRetirementAge = ageEligible;
+        monthlyIncomeAtRetirement = ccqResult.renteMensuelleTotale;
+        recommendations.push(`🎯 Retraite anticipée CCQ possible à ${ageEligible} ans sans réduction`);
+      }
+    }
+    
+    if (ccqResult.admissibilite.retraiteAnticipeeAvecReduction.eligible) {
+      const ageMin = ccqResult.admissibilite.retraiteAnticipeeAvecReduction.ageRequis;
+      const reduction = ccqResult.facteurReduction ? (ccqResult.facteurReduction * 100).toFixed(1) : '3.0';
+      recommendations.push(`⚠️ Retraite anticipée possible dès ${ageMin} ans avec réduction de ${reduction}%`);
+    }
+    
+    // Recommandations spécifiques construction
+    if (currentAge >= 55) {
+      recommendations.push("🏗️ Secteur construction: Considérer la retraite partielle si éligible");
+      recommendations.push("📞 Contacter CCQ au 1-888-842-8282 pour validation des heures");
+    }
+    
+    if (ccqData.heuresAjusteesAvant2005 > 0) {
+      recommendations.push("📋 Vérifier les heures ajustées pré-2005 avec la CCQ");
+    }
+    
+    // Coordination avec RRQ
+    if (currentAge >= 60) {
+      recommendations.push("🔄 Coordonner la prise du RRQ avec la rente CCQ pour optimiser les revenus");
+    }
+    
+    // Optimisation fiscale
+    if (ccqResult.renteMajoreeReduite.recommande) {
+      recommendations.push("💰 Analyser l'option rente majorée-réduite pour maximiser les revenus avant 65 ans");
+    }
+    
+    return {
+      optimalRetirementAge,
+      monthlyIncomeAtRetirement,
+      recommendations
+    };
+  }
+
+  /**
+   * Calcule le revenu total projeté incluant CCQ
+   */
+  private static calculateTotalConstructionIncome(
+    currentAnnualIncome: number,
+    ccqResult: CCQCalculationResult,
+    currentAge: number
+  ): number {
+    
+    // Revenu actuel (AE + emploi)
+    let totalIncome = currentAnnualIncome;
+    
+    // Ajouter la rente CCQ si éligible
+    if (currentAge >= 55 && ccqResult.admissibilite.retraiteAnticipeeAvecReduction.eligible) {
+      totalIncome += ccqResult.renteAnnuelleTotale;
+    } else if (currentAge >= 65) {
+      totalIncome += ccqResult.renteAnnuelleTotale;
+    }
+    
+    return totalIncome;
   }
   
   // Méthodes utilitaires

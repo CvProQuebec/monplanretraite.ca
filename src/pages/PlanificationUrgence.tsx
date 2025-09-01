@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 
 // Import du vrai composant EmergencyPlanningManager
-import { EmergencyPlanningManager } from '@/features/retirement/components/EmergencyPlanningManager';
+import { EmergencyPlanningManager } from '../features/retirement/components/EmergencyPlanningManager';
 
 const PlanificationUrgence: React.FC = () => {
   return (
