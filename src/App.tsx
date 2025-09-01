@@ -15,6 +15,9 @@ import PlanificationDepenses from './pages/PlanificationDepenses';
 import AssistantFinancier from './pages/AssistantFinancier';
 import Budget from './pages/Budget';
 
+// Module MVP Hypothèses de Calcul
+import SimpleAssumptionsPage from './pages/SimpleAssumptionsPage';
+
 // Blog pages
 import BlogPage from './pages/BlogPage';
 import OptimiserTransmissionCeli from './pages/blog/OptimiserTransmissionCeli';
@@ -112,6 +115,14 @@ function App() {
               <Route path="/budget" element={<Budget />} />
               <Route path="/mon-budget" element={<Budget />} />
               <Route path="/my-budget" element={<Budget />} />
+              
+              {/* 📊 MODULE MVP HYPOTHÈSES DE CALCUL - TRANSPARENCE TOTALE */}
+              
+              {/* Page Hypothèses de Calcul - Interface Seniors-Friendly */}
+              <Route path="/hypotheses" element={<SimpleAssumptionsPage />} />
+              <Route path="/hypotheses-calcul" element={<SimpleAssumptionsPage />} />
+              <Route path="/assumptions" element={<SimpleAssumptionsPage />} />
+              <Route path="/calculation-assumptions" element={<SimpleAssumptionsPage />} />
               
               {/* 📝 NOUVELLES ROUTES - BLOG */}
               
