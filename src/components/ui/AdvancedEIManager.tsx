@@ -163,13 +163,13 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
   };
   
   return (
-    <Card className="bg-gradient-to-br from-indigo-800/90 to-purple-800/90 border-0 shadow-2xl backdrop-blur-sm">
-      <CardHeader className="border-b border-indigo-600 bg-gradient-to-r from-indigo-600/20 to-purple-600/20">
-        <CardTitle className="text-2xl font-bold text-indigo-300 flex items-center gap-3">
-          <Calculator className="w-8 h-8 text-indigo-400" />
+    <Card className="bg-white border border-gray-300">
+      <CardHeader className="border-b border-gray-300">
+        <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+          <Calculator className="w-8 h-8 text-gray-600" />
           {isFrench ? 'Assurance Emploi Avancée' : 'Advanced Employment Insurance'} - {personName}
         </CardTitle>
-        <CardDescription className="text-indigo-200">
+        <CardDescription className="text-gray-600">
           {isFrench 
             ? 'Gestion complète des périodes d\'emploi et transitions'
             : 'Complete management of employment periods and transitions'
@@ -180,7 +180,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
       <CardContent className="p-6 space-y-6">
         {/* Section Emploi Précédent */}
         <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-indigo-300 flex items-center gap-2">
+          <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
             <Users className="w-5 h-5" />
             {isFrench ? 'Emploi Précédent' : 'Previous Employment'}
           </h3>

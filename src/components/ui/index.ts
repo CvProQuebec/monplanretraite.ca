@@ -88,6 +88,7 @@ export { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 
 // Composants de promotion
 export { PromoCodeInput } from './promo-code-input';
+export { default as UnlockButton } from './UnlockButton';
 
 // Composants de vidéo
 export { VideoPlayer } from './video-player';

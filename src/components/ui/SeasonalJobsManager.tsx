@@ -212,16 +212,16 @@ const SeasonalJobsManager: React.FC<SeasonalJobsManagerProps> = ({
   const totals = calculateTotals();
 
   return (
-    <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl backdrop-blur-sm">
-      <CardHeader className="border-b border-slate-600 bg-gradient-to-r from-amber-600/20 to-orange-600/20">
-        <CardTitle className="text-2xl font-bold text-amber-300 flex items-center gap-3">
-          <div className={`w-8 h-8 bg-gradient-to-r ${personNumber === 1 ? 'from-amber-500 to-orange-500' : 'from-orange-500 to-red-500'} rounded-full flex items-center justify-center text-white font-bold shadow-lg`}>
+    <Card className="bg-white border border-gray-300">
+      <CardHeader className="border-b border-gray-300">
+        <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+          <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold">
             {personNumber}
           </div>
-          <Calendar className="w-6 h-6 text-amber-400" />
+          <Calendar className="w-6 h-6 text-gray-600" />
           {isFrench ? 'Emplois saisonniers' : 'Seasonal Jobs'} - {personName}
         </CardTitle>
-        <CardDescription className="text-amber-200">
+        <CardDescription className="text-gray-600">
           {isFrench 
             ? 'Gérez vos emplois saisonniers avec périodes et gains approximatifs'
             : 'Manage your seasonal jobs with periods and estimated earnings'
@@ -232,46 +232,46 @@ const SeasonalJobsManager: React.FC<SeasonalJobsManagerProps> = ({
       <CardContent className="p-6 space-y-6">
         
         {/* Résumé des totaux */}
-        <Card className="bg-gradient-to-r from-amber-900/50 to-orange-900/50 border border-amber-500/30">
+        <Card className="bg-gray-50 border border-gray-300">
           <CardContent className="p-4">
-            <h4 className="text-lg font-bold text-amber-300 mb-4 flex items-center gap-2">
+            <h4 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
               <Calculator className="w-5 h-5" />
               {isFrench ? 'Résumé des emplois saisonniers' : 'Seasonal Jobs Summary'}
             </h4>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
               <div>
-                <div className="text-2xl font-bold text-green-400">
+                <div className="text-2xl font-bold text-gray-800">
                   {formatCurrency(totals.currentYearEstimated)}
                 </div>
-                <div className="text-sm text-gray-300">
+                <div className="text-sm text-gray-600">
                   {isFrench ? 'Estimé cette année' : 'Estimated This Year'}
                 </div>
               </div>
               
               <div>
-                <div className="text-2xl font-bold text-blue-400">
+                <div className="text-2xl font-bold text-gray-800">
                   {formatCurrency(totals.currentYearActual)}
                 </div>
-                <div className="text-sm text-gray-300">
+                <div className="text-sm text-gray-600">
                   {isFrench ? 'Réel cette année' : 'Actual This Year'}
                 </div>
               </div>
               
               <div>
-                <div className="text-2xl font-bold text-purple-400">
+                <div className="text-2xl font-bold text-gray-800">
                   {totals.completedJobs}
                 </div>
-                <div className="text-sm text-gray-300">
+                <div className="text-sm text-gray-600">
                   {isFrench ? 'Emplois terminés' : 'Completed Jobs'}
                 </div>
               </div>
               
               <div>
-                <div className="text-2xl font-bold text-orange-400">
+                <div className="text-2xl font-bold text-gray-800">
                   {totals.upcomingJobs}
                 </div>
-                <div className="text-sm text-gray-300">
+                <div className="text-sm text-gray-600">
                   {isFrench ? 'Emplois à venir' : 'Upcoming Jobs'}
                 </div>
               </div>
@@ -382,7 +382,7 @@ const SeasonalJobsManager: React.FC<SeasonalJobsManagerProps> = ({
                             value={job.estimatedEarnings}
                             onChange={(value) => updateSeasonalJob(job.id, { estimatedEarnings: value })}
                             className="bg-slate-600 border-slate-500 text-white text-sm"
-                            placeholder={isFrench ? 'Estimé' : 'Estimated'}
+                            placeholder="0"
                             allowDecimals={true}
                           />
                           {job.isCompleted && (
@@ -390,7 +390,7 @@ const SeasonalJobsManager: React.FC<SeasonalJobsManagerProps> = ({
                               value={job.actualEarnings || 0}
                               onChange={(value) => updateSeasonalJob(job.id, { actualEarnings: value })}
                               className="bg-slate-600 border-slate-500 text-white text-sm"
-                              placeholder={isFrench ? 'Réel' : 'Actual'}
+                              placeholder="0"
                               allowDecimals={true}
                             />
                           )}

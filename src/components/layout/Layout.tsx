@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { UniformHeader } from './header/UniformHeader';
 import { NavigationToggle } from '../../features/retirement/components/SeniorsAccessibilityToggle';
 import { useLanguage } from '../../features/retirement/hooks/useLanguage';
+import UnlockButton from '../ui/UnlockButton';
 
 // Import du CSS d'accessibilité pour seniors - appliqué globalement
 import '../../styles/accessibility-seniors.css';
@@ -34,10 +35,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       {/* Header uniforme pour toutes les pages (sauf exceptions) */}
       {shouldShowUniformHeader && <UniformHeader isEnglish={isEnglish} />}
       
-      {/* Bouton de navigation unifié - Repositionné pour ne pas bloquer la navigation principale */}
+      {/* Boutons flottants - Navigation et déverrouillage */}
       <div className="fixed bottom-6 right-6 z-40 hidden md:block">
         <NavigationToggle />
       </div>
+      
+      {/* Bouton de déverrouillage discret */}
+      <UnlockButton />
       
       <main>{children}</main>
     </div>

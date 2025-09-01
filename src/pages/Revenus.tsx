@@ -209,25 +209,14 @@ const Revenus: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-green-900 to-emerald-900 text-white mobile-reflow-fix revenus-page revenus-container">
-      {/* Particules de fond visibles */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-3 h-3 bg-emerald-400 rounded-full animate-bounce"></div>
-        <div className="absolute top-60 left-1/4 w-2 h-2 bg-teal-400 rounded-full animate-ping"></div>
-        <div className="absolute top-80 right-1/3 w-1 h-1 bg-lime-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-96 left-1/2 w-2 h-2 bg-green-400 rounded-full animate-bounce"></div>
-        <div className="absolute top-32 right-1/4 w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-72 left-1/3 w-1 h-1 bg-teal-400 rounded-full animate-bounce"></div>
-      </div>
-
-      <div className="container mx-auto px-6 py-8 relative z-10 mobile-reflow-fix">
-        {/* En-tête spectaculaire */}
+    <div className="min-h-screen bg-gray-50 mobile-reflow-fix revenus-page revenus-container">
+      <div className="container mx-auto px-6 py-8 mobile-reflow-fix">
+        {/* En-tête simple */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-green-400 via-emerald-400 to-teal-500 bg-clip-text text-transparent drop-shadow-2xl">
+          <h1 className="text-4xl font-bold mb-6 text-gray-800">
             {isFrench ? '💰 Mes revenus' : '💰 My Income'}
           </h1>
-          <p className="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
             {isFrench 
               ? 'Gérez vos sources de revenus pour optimiser votre planification de retraite'
               : 'Manage your income sources to optimize your retirement planning'
@@ -235,27 +224,27 @@ const Revenus: React.FC = () => {
           </p>
         </div>
 
-        {/* Barre de progression encourageante */}
-        <Card className="bg-white/10 backdrop-blur-sm border-2 border-green-200 shadow-lg mb-8">
+        {/* Barre de progression simple */}
+        <Card className="bg-white border border-gray-300 mb-8">
           <CardContent className="py-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                <Star className="w-6 h-6 text-yellow-500" />
-                <span className="text-lg font-semibold text-white">
+                <Star className="w-6 h-6 text-gray-600" />
+                <span className="text-lg font-semibold text-gray-800">
                   {isFrench ? 'Progression des revenus' : 'Income progress'}
                 </span>
               </div>
-              <span className="text-2xl font-bold text-green-400">
+              <span className="text-2xl font-bold text-gray-800">
                 {progress} %
               </span>
             </div>
-            <div className="w-full bg-gray-700 rounded-full h-3">
+            <div className="w-full bg-gray-200 rounded-full h-3">
               <div 
-                className="bg-gradient-to-r from-green-500 to-emerald-500 h-3 rounded-full transition-all duration-500"
+                className="bg-gray-600 h-3 rounded-full transition-all duration-500"
                 style={{ width: `${progress}%` }}
               ></div>
             </div>
-            <p className="text-sm text-gray-300 mt-2 text-center">
+            <p className="text-sm text-gray-600 mt-2 text-center">
               {isFrench 
                 ? `Excellent ! Vous avez complété ${progress} % de vos informations de revenus.`
                 : `Great! You have completed ${progress} % of your income information.`
@@ -474,10 +463,10 @@ const Revenus: React.FC = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Personne 1 - Investissements */}
-            <Card className="bg-gradient-to-br from-orange-800/90 to-red-800/90 border-0 shadow-2xl backdrop-blur-sm">
-              <CardHeader className="border-b border-orange-600 bg-gradient-to-r from-orange-600/20 to-red-600/20">
-                <CardTitle className="text-2xl font-bold text-orange-300 flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+            <Card className="bg-white border border-gray-300">
+              <CardHeader className="border-b border-gray-300">
+                <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold">
                     1
                   </div>
                   {userData.personal?.prenom1 
@@ -485,7 +474,7 @@ const Revenus: React.FC = () => {
                     : (isFrench ? 'Investissements - Personne 1' : 'Investments - Person 1')
                   }
                 </CardTitle>
-                <CardDescription className="text-orange-200">
+                <CardDescription className="text-gray-600">
                   {userData.personal?.prenom1 || (isFrench ? 'Première personne' : 'First person')}
                 </CardDescription>
               </CardHeader>
@@ -643,10 +632,10 @@ const Revenus: React.FC = () => {
             </Card>
 
             {/* Personne 2 - Investissements */}
-            <Card className="bg-gradient-to-br from-amber-800/90 to-orange-800/90 border-0 shadow-2xl backdrop-blur-sm">
-              <CardHeader className="border-b border-amber-600 bg-gradient-to-r from-amber-600/20 to-orange-600/20">
-                <CardTitle className="text-2xl font-bold text-amber-300 flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+            <Card className="bg-white border border-gray-300">
+              <CardHeader className="border-b border-gray-300">
+                <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold">
                     2
                   </div>
                   {userData.personal?.prenom2 
@@ -654,7 +643,7 @@ const Revenus: React.FC = () => {
                     : (isFrench ? 'Investissements - Personne 2' : 'Investments - Person 2')
                   }
                 </CardTitle>
-                <CardDescription className="text-amber-200">
+                <CardDescription className="text-gray-600">
                   {userData.personal?.prenom2 || (isFrench ? 'Deuxième personne (optionnel)' : 'Second person (optional)')}
                 </CardDescription>
               </CardHeader>
@@ -824,7 +813,7 @@ const Revenus: React.FC = () => {
                   <div className="text-2xl font-bold text-blue-400">
                     ${((userData.personal?.soldeREER1 || 0) + (userData.personal?.soldeREER2 || 0)).toLocaleString()}
                   </div>
-                  <div className="text-sm text-gray-300">
+                  <div className="text-sm text-gray-600">
                     {isFrench ? 'Total REER' : 'Total RRSP'}
                   </div>
                 </div>
@@ -832,7 +821,7 @@ const Revenus: React.FC = () => {
                   <div className="text-2xl font-bold text-green-400">
                     ${((userData.personal?.soldeCELI1 || 0) + (userData.personal?.soldeCELI2 || 0)).toLocaleString()}
                   </div>
-                  <div className="text-sm text-gray-300">
+                  <div className="text-sm text-gray-600">
                     {isFrench ? 'Total CELI' : 'Total TFSA'}
                   </div>
                 </div>
@@ -840,7 +829,7 @@ const Revenus: React.FC = () => {
                   <div className="text-2xl font-bold text-yellow-400">
                     ${((userData.personal?.soldeCRI1 || 0) + (userData.personal?.soldeCRI2 || 0)).toLocaleString()}
                   </div>
-                  <div className="text-sm text-gray-300">
+                  <div className="text-sm text-gray-600">
                     {isFrench ? 'Total CRI' : 'Total LIRA'}
                   </div>
                 </div>
@@ -848,7 +837,7 @@ const Revenus: React.FC = () => {
                   <div className="text-2xl font-bold text-purple-400">
                     ${((userData.personal?.soldeCrypto1 || 0) + (userData.personal?.soldeCrypto2 || 0)).toLocaleString()}
                   </div>
-                  <div className="text-sm text-gray-300">
+                  <div className="text-sm text-gray-600">
                     {isFrench ? 'Total Crypto' : 'Total Crypto'}
                   </div>
                 </div>
@@ -977,13 +966,13 @@ const Revenus: React.FC = () => {
         </div>
 
         {/* Résumé des revenus */}
-        <Card className="bg-gradient-to-br from-blue-800/90 to-indigo-800/90 border-0 shadow-2xl backdrop-blur-sm mb-8">
-          <CardHeader className="border-b border-blue-600 bg-gradient-to-r from-blue-600/20 to-indigo-600/20">
-            <CardTitle className="text-2xl font-bold text-blue-300 flex items-center gap-3">
-              <Target className="w-8 h-8 text-blue-400" />
+        <Card className="bg-white border border-gray-300 mb-8">
+          <CardHeader className="border-b border-gray-300">
+            <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+              <Target className="w-8 h-8 text-gray-600" />
               {isFrench ? 'Résumé des revenus' : 'Income Summary'}
             </CardTitle>
-            <CardDescription className="text-blue-200">
+            <CardDescription className="text-gray-600">
               {isFrench 
                 ? 'Vue d\'ensemble de vos revenus pour la planification de retraite'
                 : 'Overview of your income for retirement planning'
@@ -993,15 +982,15 @@ const Revenus: React.FC = () => {
           <CardContent className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="text-center">
-                <div className="text-3xl font-bold text-green-400">
+                <div className="text-3xl font-bold text-gray-800">
                   ${((userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0)).toLocaleString()}
                 </div>
-                <div className="text-sm text-gray-300">
+                <div className="text-sm text-gray-600">
                   {isFrench ? 'Revenus d\'emploi annuels' : 'Annual Employment Income'}
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-purple-400">
+                <div className="text-3xl font-bold text-gray-800">
                   ${(() => {
                     const baseSV = 707.68;
                     const ageSV1 = userData.personal?.ageSV1 || 65;
@@ -1013,12 +1002,12 @@ const Revenus: React.FC = () => {
                     return (sv1 + sv2).toLocaleString();
                   })()}
                 </div>
-                <div className="text-sm text-gray-300">
+                <div className="text-sm text-gray-600">
                   {isFrench ? 'SV annuelle estimée' : 'Estimated Annual OAS'}
                 </div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-400">
+                <div className="text-3xl font-bold text-gray-800">
                   ${(() => {
                     const emploi = (userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0);
                     const baseSV = 707.68;
@@ -1032,7 +1021,7 @@ const Revenus: React.FC = () => {
                     return Math.round(total / 12).toLocaleString();
                   })()}
                 </div>
-                <div className="text-sm text-gray-300">
+                <div className="text-sm text-gray-600">
                   {isFrench ? 'Revenus mensuels totaux' : 'Total Monthly Income'}
                 </div>
               </div>
@@ -1040,7 +1029,7 @@ const Revenus: React.FC = () => {
                 <div className="text-3xl font-bold text-yellow-400">
                   {userData.personal?.statutProfessionnel1 === 'actif' || userData.personal?.statutProfessionnel2 === 'actif' ? '✅' : '⚠️'}
                 </div>
-                <div className="text-sm text-gray-300">
+                <div className="text-sm text-gray-600">
                   {isFrench ? 'Statut d\'activité' : 'Activity Status'}
                 </div>
               </div>

@@ -201,20 +201,17 @@ const MaRetraite: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        {/* En-tête bienveillant - Amélioré pour l'équilibre visuel */}
+        {/* En-tête simple */}
         <div className="text-center mb-8 sm:mb-12">
           <div className="flex items-center justify-center gap-2 sm:gap-3 mb-4 sm:mb-6">
-            <div className="relative">
-              <DollarSign className="w-10 h-10 sm:w-12 sm:h-12 text-purple-600 drop-shadow-lg" />
-              <div className="absolute -inset-2 bg-purple-200 rounded-full opacity-20 animate-pulse"></div>
-            </div>
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+            <DollarSign className="w-10 h-10 sm:w-12 sm:h-12 text-gray-600" />
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-800">
               {isFrench ? 'Ma retraite' : 'My retirement'}
             </h1>
           </div>
-          <p className="text-lg sm:text-xl text-gray-700 max-w-4xl mx-auto leading-relaxed px-4">
+          <p className="text-lg sm:text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed px-4">
             {isFrench 
               ? 'Travaillons ensemble avec vos ressources réelles. Chaque source de revenus et chaque dépense compte pour créer votre plan personnalisé.'
               : 'Let\'s work together with your real resources. Every source of income and every expense counts to create your personalized plan.'

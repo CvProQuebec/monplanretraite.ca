@@ -1,5 +1,5 @@
 // src/hooks/usePromoCode.ts
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface PromoCodeValidation {
   success: boolean;
@@ -11,16 +11,29 @@ export const usePromoCode = () => {
   const [promoCode, setPromoCode] = useState('');
   const [appliedCode, setAppliedCode] = useState<string | null>(null);
 
+  // Charger le code promo sauvegardé au montage du composant
+  useEffect(() => {
+    const savedCode = localStorage.getItem('promo-code');
+    if (savedCode) {
+      setAppliedCode(savedCode);
+    }
+  }, []);
+
   const applyPromoCode = async (code: string): Promise<PromoCodeValidation> => {
-    // Simulation de validation - à remplacer par votre logique réelle
+    // Codes valides avec leurs propriétés
     const validCodes = ['TESTER100', 'Calvin2025', 'EARLYBIRD30', 'SAVINGS40'];
     
     if (validCodes.includes(code.toUpperCase())) {
-      setAppliedCode(code.toUpperCase());
+      const upperCode = code.toUpperCase();
+      setAppliedCode(upperCode);
+      
+      // Sauvegarder dans localStorage pour persistance
+      localStorage.setItem('promo-code', upperCode);
+      
       return {
         success: true,
-        message: `Code promo "${code.toUpperCase()}" appliqué avec succès !`,
-        code: code.toUpperCase()
+        message: `Code promo "${upperCode}" appliqué avec succès !`,
+        code: upperCode
       };
     } else {
       return {
@@ -33,6 +46,7 @@ export const usePromoCode = () => {
   const clearPromoCode = () => {
     setPromoCode('');
     setAppliedCode(null);
+    localStorage.removeItem('promo-code');
   };
 
   return {

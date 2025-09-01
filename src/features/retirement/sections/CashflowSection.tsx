@@ -484,7 +484,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.logement || ''}
                         onChange={(e) => handleChange('logement', parseFloat(e.target.value) || 0)}
-                        placeholder=""
+                        placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
@@ -507,7 +507,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.servicesPublics || ''}
                         onChange={(e) => handleChange('servicesPublics', parseFloat(e.target.value) || 0)}
-                        placeholder=""
+                        placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
@@ -536,7 +536,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.assurances || ''}
                         onChange={(e) => handleChange('assurances', parseFloat(e.target.value) || 0)}
-                        placeholder=""
+                        placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
@@ -550,7 +550,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.alimentation || ''}
                         onChange={(e) => handleChange('alimentation', parseFloat(e.target.value) || 0)}
-                        placeholder=""
+                        placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
@@ -573,7 +573,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.transport || ''}
                         onChange={(e) => handleChange('transport', parseFloat(e.target.value) || 0)}
-                        placeholder=""
+                        placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
@@ -596,7 +596,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.sante || ''}
                         onChange={(e) => handleChange('sante', parseFloat(e.target.value) || 0)}
-                        placeholder=""
+                        placeholder="0"
                         className="text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
@@ -628,7 +628,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.telecom || ''}
                         onChange={(e) => handleChange('telecom', parseFloat(e.target.value) || 0)}
-                        placeholder=""
+                        placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-orange-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                     </div>
@@ -642,7 +642,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.loisirs || ''}
                         onChange={(e) => handleChange('loisirs', parseFloat(e.target.value) || 0)}
-                        placeholder=""
+                        placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-orange-300 focus:ring-orange-500 focus:ring-4 focus:ring-orange-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                       <p className="text-sm text-gray-700 font-medium">Restaurants, sorties, hobbies, etc.</p>
@@ -657,7 +657,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         type="number"
                         value={data.cashflow.depensesSaisonnieres || ''}
                         onChange={(e) => handleChange('depensesSaisonnieres', parseFloat(e.target.value) || 0)}
-                        placeholder=""
+                        placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-orange-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
                       <p className="text-sm text-gray-700 font-medium">
