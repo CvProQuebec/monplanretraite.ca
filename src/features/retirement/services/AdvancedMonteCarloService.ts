@@ -1,29 +1,31 @@
 // ===== ADVANCED MONTE CARLO SERVICE =====
 // Basé sur l'expertise de 149 spécialistes en planification de retraite
+// Conforme aux Normes IPF 2025
 
 import { UserData, Calculations } from '../types';
+import { FINANCIAL_ASSUMPTIONS, FINANCIAL_UTILS } from '../../../config/financial-assumptions';
 
 export interface AdvancedMonteCarloParameters {
   // Paramètres économiques réalistes (basés sur données historiques canadiennes)
   inflation: {
-    mean: 0.025;      // 2.5% moyenne historique Canada
-    stdDev: 0.008;    // Volatilité inflation
-    min: 0.005;       // Déflation rare mais possible
-    max: 0.06;        // Inflation extrême (années 80)
+    mean: number;      // Moyenne inflation
+    stdDev: number;    // Volatilité inflation
+    min: number;       // Déflation rare mais possible
+    max: number;       // Inflation extrême (années 80)
   };
   
   stockReturns: {
-    mean: 0.074;      // 7.4% TSX historique long terme
-    stdDev: 0.16;     // 16% volatilité stocks canadiens
-    min: -0.45;       // Crash 2008 niveau
-    max: 0.35;        // Années exceptionnelles
+    mean: number;      // Moyenne actions
+    stdDev: number;    // Volatilité stocks canadiens
+    min: number;       // Crash 2008 niveau
+    max: number;       // Années exceptionnelles
   };
   
   bondReturns: {
-    mean: 0.042;      // 4.2% obligations gouvernementales long terme
-    stdDev: 0.045;    // 4.5% volatilité obligations
-    min: -0.15;       // Hausse taux dramatique
-    max: 0.25;        // Baisse taux extrême
+    mean: number;      // Moyenne obligations gouvernementales long terme
+    stdDev: number;    // Volatilité obligations
+    min: number;       // Hausse taux dramatique
+    max: number;       // Baisse taux extrême
   };
   
   // Corrélations économiques importantes
@@ -166,9 +168,35 @@ export interface SimulationSetup {
 export class AdvancedMonteCarloService {
   
   private static readonly DEFAULT_PARAMS: AdvancedMonteCarloParameters = {
-    inflation: { mean: 0.025, stdDev: 0.008, min: 0.005, max: 0.06 },
-    stockReturns: { mean: 0.074, stdDev: 0.16, min: -0.45, max: 0.35 },
-    bondReturns: { mean: 0.042, stdDev: 0.045, min: -0.15, max: 0.25 },
+    // Paramètres IPF 2025 - Inflation
+    inflation: { 
+      mean: FINANCIAL_ASSUMPTIONS.MONTE_CARLO.INFLATION_MEAN, 
+      stdDev: FINANCIAL_ASSUMPTIONS.MONTE_CARLO.INFLATION_STD, 
+      min: FINANCIAL_ASSUMPTIONS.MONTE_CARLO.INFLATION_MIN, 
+      max: FINANCIAL_ASSUMPTIONS.MONTE_CARLO.INFLATION_MAX 
+    },
+    // Paramètres IPF 2025 - Actions (moyenne géométrique + ajustement)
+    stockReturns: { 
+      mean: FINANCIAL_UTILS.convertGeometricToArithmetic(
+        FINANCIAL_ASSUMPTIONS.MONTE_CARLO.STOCKS_CAN_MEAN, 
+        FINANCIAL_ASSUMPTIONS.MONTE_CARLO.STOCKS_CAN_STD, 
+        true
+      ), 
+      stdDev: FINANCIAL_ASSUMPTIONS.MONTE_CARLO.STOCKS_CAN_STD, 
+      min: FINANCIAL_ASSUMPTIONS.MONTE_CARLO.STOCKS_CAN_MIN, 
+      max: FINANCIAL_ASSUMPTIONS.MONTE_CARLO.STOCKS_CAN_MAX 
+    },
+    // Paramètres IPF 2025 - Obligations
+    bondReturns: { 
+      mean: FINANCIAL_UTILS.convertGeometricToArithmetic(
+        FINANCIAL_ASSUMPTIONS.MONTE_CARLO.BONDS_MEAN, 
+        FINANCIAL_ASSUMPTIONS.MONTE_CARLO.BONDS_STD, 
+        false
+      ), 
+      stdDev: FINANCIAL_ASSUMPTIONS.MONTE_CARLO.BONDS_STD, 
+      min: FINANCIAL_ASSUMPTIONS.MONTE_CARLO.BONDS_MIN, 
+      max: FINANCIAL_ASSUMPTIONS.MONTE_CARLO.BONDS_MAX 
+    },
     correlations: { stocksInflation: -0.3, bondsInflation: -0.7, stocksBonds: 0.1 },
     numberOfSimulations: 10000,
     yearlyRebalancing: true,

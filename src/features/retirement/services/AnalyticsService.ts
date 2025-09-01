@@ -1,5 +1,6 @@
 // src/features/retirement/services/AnalyticsService.ts
 import { UserData, Calculations } from '../types';
+import { FINANCIAL_ASSUMPTIONS } from '../../../config/financial-assumptions';
 
 export interface ChartDataPoint {
   age: number;
@@ -88,9 +89,9 @@ export class AnalyticsService {
     const data: ChartDataPoint[] = [];
     const currentYear = new Date().getFullYear();
     
-    // Paramètres de projection
-    const inflationRate = 0.02; // 2%
-    const returnRate = 0.06; // 6% rendement moyen
+    // Paramètres de projection IPF 2025
+    const inflationRate = FINANCIAL_ASSUMPTIONS.INFLATION; // 2.1%
+    const returnRate = FINANCIAL_ASSUMPTIONS.ACTIONS_CANADIENNES; // 6.6%
     const retirementAge = userData.retirement.rrqAgeActuel1 || 65;
     
     // Utiliser des valeurs sécurisées avec des fallbacks
@@ -108,9 +109,9 @@ export class AnalyticsService {
         // Revenus de retraite
         annualIncome = this.calculateRetirementIncome(userData, age);
       } else {
-        // Croissance des salaires avec l'inflation
-        annualIncome = ((userData.personal.salaire1 || 0) + (userData.personal.salaire2 || 0)) * 
-                      Math.pow(1 + inflationRate, yearsFromNow);
+      // Croissance des salaires avec l'inflation + productivité (IPF 2025)
+      annualIncome = ((userData.personal.salaire1 || 0) + (userData.personal.salaire2 || 0)) * 
+                    Math.pow(1 + FINANCIAL_ASSUMPTIONS.CROISSANCE_SALAIRE, yearsFromNow);
       }
       
       // Ajuster les dépenses avec l'inflation
