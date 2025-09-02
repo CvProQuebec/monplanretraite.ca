@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../ui/card';
-import { Button } from '../../ui/button';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../ui/tabs';
-import { Badge } from '../../ui/badge';
-import { Alert, AlertDescription } from '../../ui/alert';
-import { Separator } from '../../ui/separator';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Separator } from '@/components/ui/separator';
 import { 
   Building2, 
   Calculator, 
@@ -22,8 +22,9 @@ import {
 
 // Import des composants gouvernementaux
 import { SRGAnalysisSection } from '../components/SRGAnalysisSection';
-import { RREGOPAnalysisSection } from '../components/RREGOPAnalysisSection';
+import RREGOPAnalysisSection from '../components/RREGOPAnalysisSection';
 import { CalculationService } from '../services/CalculationService';
+import type { UserData } from '../types';
 
 interface GovernmentBenefitsSectionProps {
   userData?: any;
@@ -52,6 +53,16 @@ export default function GovernmentBenefitsSection({ userData, onDataChange }: Go
   const handleDataChange = (newData: any) => {
     if (onDataChange) {
       onDataChange(newData);
+    }
+  };
+
+  const handleSRGUpdate = (section: keyof UserData, updates: any) => {
+    if (onDataChange) {
+      const merged = {
+        ...(userData || {}),
+        [section]: { ...(userData?.[section as keyof UserData] as any || {}), ...updates }
+      };
+      onDataChange(merged);
     }
   };
 
@@ -244,11 +255,11 @@ export default function GovernmentBenefitsSection({ userData, onDataChange }: Go
         </TabsContent>
 
         <TabsContent value="srg">
-          <SRGAnalysisSection userData={userData} onDataChange={handleDataChange} />
+          <SRGAnalysisSection data={userData as UserData} onUpdate={handleSRGUpdate} />
         </TabsContent>
 
         <TabsContent value="rregop">
-          <RREGOPAnalysisSection userData={userData} onDataChange={handleDataChange} />
+          <RREGOPAnalysisSection userPlan="free" />
         </TabsContent>
 
         <TabsContent value="details">

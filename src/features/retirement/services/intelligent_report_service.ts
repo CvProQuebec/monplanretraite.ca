@@ -673,7 +673,7 @@ export class IntelligentReportService {
     const currentSituation = {
       age: this.calculateAge(userData.personal?.naissance1 || '1970-01-01'),
       salaire: userData.personal?.salaire1 || 0,
-      epargne: (userData.savings?.reer1 || 0) + (userData.savings?.celi1 || 0) + (userData.savings?.nonEnregistre || 0),
+      epargne: (userData.savings?.reer1 || 0) + (userData.savings?.celi1 || 0) + (userData.savings?.placements1 || 0) + (userData.savings?.epargne1 || 0),
       dettes: 0 // À implémenter si nécessaire
     };
 
@@ -944,5 +944,3 @@ export class IntelligentReportService {
     };
   }
 }
-
-export { IntelligentReportService };

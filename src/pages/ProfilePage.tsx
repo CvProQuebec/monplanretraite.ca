@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
@@ -21,14 +21,15 @@ import {
 } from 'lucide-react';
 
 // Import des composants
-import { OnboardingWizard } from '../features/retirement/components/OnboardingWizard';
+import OnboardingWizard from '../features/retirement/components/OnboardingWizard';
 import { SRGAnalysisSection } from '../features/retirement/components/SRGAnalysisSection';
-import { RREGOPAnalysisSection } from '../features/retirement/components/RREGOPAnalysisSection';
-import { GovernmentBenefitsTest } from '../features/retirement/components/GovernmentBenefitsTest';
+import RREGOPAnalysisSection from '../features/retirement/components/RREGOPAnalysisSection';
+import GovernmentBenefitsTest from '../features/retirement/components/GovernmentBenefitsTest';
 import { IntelligentReportSection } from '../features/retirement/components/IntelligentReportSection';
 
 // Import des services
 import { OnboardingService } from '../features/retirement/services/OnboardingService';
+import SRGService from '../features/retirement/services/SRGService';
 import { UserData } from '../features/retirement/types';
 
 export default function ProfilePage() {
@@ -48,6 +49,15 @@ export default function ProfilePage() {
       }
     }
   }, []);
+
+  const srgEligible = useMemo(() => {
+    try {
+      if (!userData) return false;
+      return SRGService.calculerSRG(userData as UserData).eligible;
+    } catch {
+      return false;
+    }
+  }, [userData]);
 
   // Sauvegarder les données utilisateur
   const saveUserData = (data: UserData) => {
@@ -121,6 +131,70 @@ export default function ProfilePage() {
     if (val === 'intermediaire') return 'intermediaire';
     if (val === 'expert') return 'expert';
     return 'specialise';
+  };
+
+  // Converters for union-typed personal fields
+  const asEtatSante = (v: string): 'excellent' | 'tresbon' | 'bon' | 'moyen' | 'fragile' => {
+    const val = (v || '').toLowerCase();
+    if (val === 'excellent') return 'excellent';
+    if (val === 'tresbon') return 'tresbon';
+    if (val === 'bon') return 'bon';
+    if (val === 'moyen') return 'moyen';
+    return 'fragile';
+  };
+  const asModeVie = (v: string): 'sedentaire' | 'legerementActif' | 'modere' | 'actif' | 'tresActif' => {
+    const val = (v || '');
+    if (val === 'sedentaire') return 'sedentaire';
+    if (val === 'legerementActif') return 'legerementActif';
+    if (val === 'modere') return 'modere';
+    if (val === 'actif') return 'actif';
+    return 'tresActif';
+  };
+  const asTolerance = (v: string): 'conservateur' | 'modere' | 'equilibre' | 'dynamique' | 'agressif' => {
+    const val = (v || '');
+    if (val === 'conservateur') return 'conservateur';
+    if (val === 'modere') return 'modere';
+    if (val === 'equilibre') return 'equilibre';
+    if (val === 'dynamique') return 'dynamique';
+    return 'agressif';
+  };
+  const asHorizon = (v: string): 'court' | 'moyen' | 'long' | 'retraite' => {
+    const val = (v || '');
+    if (val === 'court') return 'court';
+    if (val === 'moyen') return 'moyen';
+    if (val === 'long') return 'long';
+    return 'retraite';
+  };
+  const asExperience = (v: string): 'debutant' | 'intermediaire' | 'experimente' | 'expert' => {
+    const val = (v || '').toLowerCase();
+    if (val === 'debutant') return 'debutant';
+    if (val === 'intermediaire') return 'intermediaire';
+    if (val === 'experimente') return 'experimente';
+    return 'expert';
+  };
+  const asObjectif = (v: string): 'epargne' | 'retraite' | 'investissement' | 'dettes' | 'urgence' | 'fiscalite' => {
+    const val = (v || '').toLowerCase();
+    if (val === 'epargne') return 'epargne';
+    if (val === 'retraite') return 'retraite';
+    if (val === 'investissement') return 'investissement';
+    if (val === 'dettes') return 'dettes';
+    if (val === 'urgence') return 'urgence';
+    return 'fiscalite';
+  };
+  const asTemps = (v: string): 'tres-limite' | 'limite' | 'modere' | 'disponible' => {
+    const val = (v || '');
+    if (val === 'tres-limite') return 'tres-limite';
+    if (val === 'limite') return 'limite';
+    if (val === 'modere') return 'modere';
+    return 'disponible';
+  };
+  const asTolInv = (v: string): 'tres-conservateur' | 'conservateur' | 'equilibre' | 'dynamique' | 'agressif' => {
+    const val = (v || '');
+    if (val === 'tres-conservateur') return 'tres-conservateur';
+    if (val === 'conservateur') return 'conservateur';
+    if (val === 'equilibre') return 'equilibre';
+    if (val === 'dynamique') return 'dynamique';
+    return 'agressif';
   };
 
   // Si l'onboarding est affiché
@@ -226,6 +300,8 @@ export default function ProfilePage() {
                         esperanceVie2: 0,
                         rregopMembre1: 'non',
                         rregopAnnees1: 0,
+                        pensionPrivee1: 0,
+                        pensionPrivee2: 0,
                         svMontant1: 717.15,
                         svMontant2: 0,
                         svRevenus1: 50000,
@@ -393,8 +469,8 @@ export default function ProfilePage() {
                   </div>
                   <div className="flex justify-between items-center">
                     <span>SRG:</span>
-                    <Badge variant={userData.retirement?.srgEligibilite1 ? 'default' : 'secondary'}>
-                      {userData.retirement?.srgEligibilite1 ? 'Éligible' : 'Non éligible'}
+                    <Badge variant={srgEligible ? 'default' : 'secondary'}>
+                      {srgEligible ? 'Éligible' : 'Non éligible'}
                     </Badge>
                   </div>
                 </CardContent>
@@ -428,12 +504,23 @@ export default function ProfilePage() {
           <TabsContent value="benefits" className="space-y-6">
             <div className="grid gap-6">
               {/* Section SRG */}
-              <SRGAnalysisSection userData={userData} />
+              <SRGAnalysisSection
+                data={userData as UserData}
+                onUpdate={(section, updates) => {
+                  const updatedData = {
+                    ...(userData as UserData),
+                    [section]: { ...((userData as any)[section] || {}), ...updates }
+                  };
+                  setUserData(updatedData);
+                  localStorage.setItem('userData', JSON.stringify(updatedData));
+                }}
+                isFrench={isFrench}
+              />
               
               <Separator />
               
               {/* Section RREGOP */}
-              <RREGOPAnalysisSection userData={userData} />
+              <RREGOPAnalysisSection userPlan="free" />
             </div>
           </TabsContent>
 
@@ -617,7 +704,7 @@ export default function ProfilePage() {
                             ...userData,
                             personal: {
                               ...userData.personal,
-                              etatSante: e.target.value
+                              etatSante: asEtatSante(e.target.value)
                             }
                           };
                           setUserData(updatedData);
@@ -637,13 +724,14 @@ export default function ProfilePage() {
                       <label className="text-sm font-medium">Mode de vie actif</label>
                       <select
                         className="w-full p-2 border rounded-md"
+                        aria-label="Mode de vie actif"
                         value={userData.personal?.modeVieActif || ''}
                         onChange={(e) => {
                           const updatedData = {
                             ...userData,
                             personal: {
                               ...userData.personal,
-                              modeVieActif: e.target.value
+                              modeVieActif: asModeVie(e.target.value)
                             }
                           };
                           setUserData(updatedData);
@@ -673,13 +761,14 @@ export default function ProfilePage() {
                       <label className="text-sm font-medium">Tolérance au risque</label>
                       <select
                         className="w-full p-2 border rounded-md"
+                        aria-label="Tolérance au risque"
                         value={userData.personal?.toleranceRisque || ''}
                         onChange={(e) => {
                           const updatedData = {
                             ...userData,
                             personal: {
                               ...userData.personal,
-                              toleranceRisque: e.target.value
+                              toleranceRisque: asTolerance(e.target.value)
                             }
                           };
                           setUserData(updatedData);
@@ -699,13 +788,14 @@ export default function ProfilePage() {
                       <label className="text-sm font-medium">Horizon d'investissement</label>
                       <select
                         className="w-full p-2 border rounded-md"
+                        aria-label="Horizon d'investissement"
                         value={userData.personal?.horizonInvestissement || ''}
                         onChange={(e) => {
                           const updatedData = {
                             ...userData,
                             personal: {
                               ...userData.personal,
-                              horizonInvestissement: e.target.value
+                              horizonInvestissement: asHorizon(e.target.value)
                             }
                           };
                           setUserData(updatedData);
@@ -731,6 +821,7 @@ export default function ProfilePage() {
                       <label className="text-sm font-medium">Secteur d'activité</label>
                       <select
                         className="w-full p-2 border rounded-md"
+                        aria-label="Secteur d'activité"
                         value={userData.personal?.secteurActivite1 || ''}
                         onChange={(e) => {
                           const updatedData = {
@@ -762,6 +853,7 @@ export default function ProfilePage() {
                       <label className="text-sm font-medium">Niveau de compétences</label>
                       <select
                         className="w-full p-2 border rounded-md"
+                        aria-label="Niveau de compétences"
                         value={userData.personal?.niveauCompetences1 || ''}
                         onChange={(e) => {
                           const updatedData = {
@@ -862,7 +954,7 @@ export default function ProfilePage() {
                             ...userData,
                             personal: {
                               ...userData.personal,
-                              experienceFinanciere: e.target.value
+                              experienceFinanciere: asExperience(e.target.value)
                             }
                           };
                           setUserData(updatedData);
@@ -888,7 +980,7 @@ export default function ProfilePage() {
                             ...userData,
                             personal: {
                               ...userData.personal,
-                              objectifPrincipal: e.target.value
+                              objectifPrincipal: asObjectif(e.target.value)
                             }
                           };
                           setUserData(updatedData);
@@ -916,7 +1008,7 @@ export default function ProfilePage() {
                             ...userData,
                             personal: {
                               ...userData.personal,
-                              tempsDisponible: e.target.value
+                              tempsDisponible: asTemps(e.target.value)
                             }
                           };
                           setUserData(updatedData);
@@ -942,7 +1034,7 @@ export default function ProfilePage() {
                             ...userData,
                             personal: {
                               ...userData.personal,
-                              toleranceRisqueInvestissement: e.target.value
+                              toleranceRisqueInvestissement: asTolInv(e.target.value)
                             }
                           };
                           setUserData(updatedData);

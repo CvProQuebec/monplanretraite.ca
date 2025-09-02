@@ -72,6 +72,10 @@ export interface PersonalData {
   // NOUVEAUX: Revenus unifiés
   unifiedIncome1?: IncomeEntry[];
   unifiedIncome2?: IncomeEntry[];
+  
+  // Compatibilité UI
+  typeRevenu1?: string;
+  typeEmploi1?: string;
 }
 
 export interface RetirementData {
@@ -114,6 +118,12 @@ export interface SavingsData {
   cri2: number;
   residenceValeur: number;
   residenceHypotheque: number;
+
+  // Champs optionnels additionnels pour UI
+  fondsUrgence?: number;
+  dettesTotales?: number;
+  epargneRetraite?: number;
+  tauxEpargne?: number;
 }
 
 export interface CashflowData {

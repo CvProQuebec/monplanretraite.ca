@@ -6,12 +6,8 @@ export { default as App } from './App';
 
 // Export des composants principaux
 export { default as Layout } from './components/layout/Layout';
-export { default as Header } from './components/layout/header/Header';
-export { default as DesktopNav } from './components/layout/header/DesktopNav';
-export { default as MobileNav } from './components/layout/header/MobileNav';
+export { default as Header } from './components/layout/header/UniformHeader';
 export { default as LanguageSelector } from './components/layout/header/LanguageSelector';
-export { default as NavLink } from './components/layout/header/NavLink';
-export { default as MobileNavLink } from './components/layout/header/MobileNavLink';
 
 // Pages principales
 export { default as RetraiteFr } from './pages/RetraiteFr';
@@ -36,12 +32,13 @@ export { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 export { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './components/ui/select';
 export { Progress } from './components/ui/progress';
 export { Alert, AlertDescription } from './components/ui/alert';
-export { Toast, Toaster } from './components/ui/toast';
+export { Toast } from './components/ui/toast';
+export { Toaster } from './components/ui/toaster';
 
 // Hooks principaux
 export { useAuth } from './hooks/useAuth';
 export { useLanguage } from './features/retirement/hooks/useLanguage';
-export { useMobile } from './hooks/use-mobile';
+export { useIsMobile as useMobile } from './hooks/use-mobile';
 export { useToast } from './hooks/use-toast';
 export { useContactForm } from './hooks/use-contact-form';
 export { useSubscriptionLimits } from './hooks/useSubscriptionLimits';
@@ -53,7 +50,7 @@ export { OASGISService } from './features/retirement/services/OASGISService';
 
 // Types principaux
 export type { SubscriptionPlan, PlanLimits, UpgradePath } from './types/subscription';
-export type { EmergencyInfo } from './features/retirement/types/emergency-info';
+export type { EmergencyInfoData as EmergencyInfo } from './features/retirement/types/emergency-info';
 
 // Configuration
 export { SITE_CONFIG } from './config/branding';
@@ -62,4 +59,4 @@ export { PLANS, PLAN_CONFIG } from './config/plans';
 // Utilitaires
 export { cn } from './lib/utils';
 export { formatCurrency, formatPercentage, formatDate } from './features/retirement/utils/formatters';
-export { formatPhoneForDisplay } from './utils/formatters';
+export { formatPhoneForDisplay } from './utils/formatters.tsx';

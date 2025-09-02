@@ -6,8 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
+    "build:analyze": "npm run build && npx vite-bundle-analyzer dist/assets",
+    "build:report": "npm run build -- --reportCompressedSize",
     "preview": "vite preview",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "test": "jest",
+    "test:performance": "jest --testPathPattern=performance-seniors",
+    "test:coverage": "jest --coverage",
+    "lighthouse": "lhci autorun",
+    "performance:audit": "npm run build:analyze && npm run test:performance"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.12",

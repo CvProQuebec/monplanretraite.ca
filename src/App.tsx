@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './features/retirement/hooks/useLanguage';
 import { AuthProvider } from './hooks/useAuth';
 import Layout from './components/layout/Layout';
+import SeniorsLoadingSpinner from './components/SeniorsLoadingSpinner';
 
 // Nouvelles pages principales
 import Accueil from './pages/Accueil';
@@ -14,6 +15,7 @@ import PlanificationSuccessorale from './pages/PlanificationSuccessorale';
 import PlanificationDepenses from './pages/PlanificationDepenses';
 import AssistantFinancier from './pages/AssistantFinancier';
 import Budget from './pages/Budget';
+import ProfilePage from './pages/ProfilePage';
 
 // Module MVP Hypothèses de Calcul
 import SimpleAssumptionsPage from './pages/SimpleAssumptionsPage';
@@ -22,26 +24,29 @@ import SimpleAssumptionsPage from './pages/SimpleAssumptionsPage';
 import BlogPage from './pages/BlogPage';
 import OptimiserTransmissionCeli from './pages/blog/OptimiserTransmissionCeli';
 
-// NOUVEAUX MODULES INTÉGRÉS
-import { SRGAnalysisSection } from './features/retirement/components/SRGAnalysisSection';
-import RREGOPAnalysisSection from './features/retirement/components/RREGOPAnalysisSection';
-import { RealEstateOptimizationSection } from './features/retirement/components/RealEstateOptimizationSection';
-import { TaxOptimizationDashboard } from './features/retirement/components/TaxOptimizationDashboard';
-import { MonteCarloSimulator } from './features/retirement/components/MonteCarloSimulator';
-import { SensitivityAnalysis } from './features/retirement/components/SensitivityAnalysis';
-import { ScenarioComparison } from './features/retirement/components/ScenarioComparison';
-import { UltimatePlanningDashboard } from './features/retirement/components/UltimatePlanningDashboard';
-import ExpensesPage from './pages/ExpensesPage';
-import RRQCPPAnalysis from './pages/RRQCPPAnalysis';
-import ImmobilierPage from './pages/ImmobilierPage';
-import CCQPage from './pages/CCQPage';
+// NOUVEAUX MODULES INTÉGRÉS - Lazy loading pour performance seniors
+const SRGAnalysisSection = React.lazy(() => import('./features/retirement/components/SRGAnalysisSection').then(module => ({ default: module.SRGAnalysisSection })));
+const RREGOPAnalysisSection = React.lazy(() => import('./features/retirement/components/RREGOPAnalysisSection'));
+const RealEstateOptimizationSection = React.lazy(() => import('./features/retirement/components/RealEstateOptimizationSection').then(module => ({ default: module.RealEstateOptimizationSection })));
+const TaxOptimizationDashboard = React.lazy(() => import('./features/retirement/components/TaxOptimizationDashboard').then(module => ({ default: module.TaxOptimizationDashboard })));
+const MonteCarloSimulator = React.lazy(() => import('./features/retirement/components/MonteCarloSimulator').then(module => ({ default: module.MonteCarloSimulator })));
+const SensitivityAnalysis = React.lazy(() => import('./features/retirement/components/SensitivityAnalysis').then(module => ({ default: module.SensitivityAnalysis })));
+const ScenarioComparison = React.lazy(() => import('./features/retirement/components/ScenarioComparison').then(module => ({ default: module.ScenarioComparison })));
+const UltimatePlanningDashboard = React.lazy(() => import('./features/retirement/components/UltimatePlanningDashboard').then(module => ({ default: module.UltimatePlanningDashboard })));
 
-// Composants de test et validation
-import FinalValidation from './components/FinalValidation';
-import { AdvancedDemoControls } from './features/retirement/components/AdvancedDemoControls';
+// Pages lourdes avec lazy loading
+const ExpensesPage = React.lazy(() => import('./pages/ExpensesPage'));
+const RRQCPPAnalysis = React.lazy(() => import('./pages/RRQCPPAnalysis'));
+const ImmobilierPage = React.lazy(() => import('./pages/ImmobilierPage'));
+const CCQPage = React.lazy(() => import('./pages/CCQPage'));
+const ComparisonPage = React.lazy(() => import('./pages/ComparisonPage'));
+
+// Composants de test et validation - Lazy loading
+const FinalValidation = React.lazy(() => import('./components/FinalValidation'));
+const AdvancedDemoControls = React.lazy(() => import('./features/retirement/components/AdvancedDemoControls').then(module => ({ default: module.AdvancedDemoControls })));
 
 // Pages unifiées avec lazy loading
-import UnifiedRetirementPage from './pages/UnifiedRetirementPage';
+const UnifiedRetirementPage = React.lazy(() => import('./pages/UnifiedRetirementPage'));
 
 // Pages existantes (pour compatibilité) - Lazy loaded
 const RetraiteEntreeFr = React.lazy(() => import('./pages/RetraiteEntreeFr'));
@@ -68,11 +73,7 @@ function App() {
       <LanguageProvider>
         <Router>
           <Layout>
-            <Suspense fallback={
-              <div className="flex items-center justify-center min-h-screen">
-                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
-              </div>
-            }>
+            <Suspense fallback={<SeniorsLoadingSpinner />}>
               <Routes>
               {/* 🏠 NOUVELLES ROUTES PRINCIPALES - Navigation restructurée */}
               
@@ -83,9 +84,9 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/en" element={<Home />} />
               
-              {/* Page profil - INTÉGRÉE dans Ma Retraite */}
-              {/* <Route path="/mon-profil" element={<MonProfil />} /> */}
-              {/* <Route path="/my-profile" element={<MyProfile />} /> */}
+              {/* Page profil - désormais accessible directement (UX seniors) */}
+              <Route path="/profil" element={<ProfilePage />} />
+              <Route path="/profile" element={<ProfilePage />} />
               
               {/* Page retraite - "TRAVAILLER AVEC CE QU'ON A" */}
               <Route path="/ma-retraite" element={<MaRetraite />} />
@@ -365,6 +366,11 @@ function App() {
               
               {/* Validation finale - Dernière étape avant déploiement */}
               <Route path="/validation-finale" element={<FinalValidation />} />
+              
+              {/* Page comparateur concurrentiel */}
+              <Route path="/comparaison" element={<ComparisonPage />} />
+              <Route path="/comparison" element={<ComparisonPage />} />
+              <Route path="/pourquoi-nous-choisir" element={<ComparisonPage />} />
               
               {/* 🌐 ROUTES BILINGUES EXISTANTES (pour compatibilité) */}
               

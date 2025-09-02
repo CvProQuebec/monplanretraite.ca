@@ -29,6 +29,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
+import { ComparisonTeaser } from '@/components/home/ComparisonTeaser';
 
 const Accueil: React.FC = () => {
   const { language } = useLanguage();
@@ -142,6 +143,7 @@ const Accueil: React.FC = () => {
                 </Button>
               </div>
             </Card>
+
           )}
         </div>
       )}
@@ -321,6 +323,9 @@ const Accueil: React.FC = () => {
               </div>
             </CardContent>
           </Card>
+
+          {/* WIDGET TEASER COMPARATEUR */}
+          <ComparisonTeaser className="mb-16" />
 
           {/* SECTION 4: Comparaison des plans - VERSION SIMPLIFIÉE (70% plus courte) */}
           <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-16 rounded-2xl mb-16">
