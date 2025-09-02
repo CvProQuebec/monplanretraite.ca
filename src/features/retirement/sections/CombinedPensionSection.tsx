@@ -228,7 +228,7 @@ export const CombinedPensionSection: React.FC<CombinedPensionSectionProps> = ({ 
           {/* Badge de statut */}
           <div className="text-center">
             <div className="bg-purple-500 text-white px-6 py-3 rounded-lg text-lg font-bold inline-block">
-              🚀 {isFrench ? 'Planification Combinée Disponible' : 'Combined Planning Available'}
+              🚀 {isFrench ? 'Planification combinée disponible' : 'Combined Planning Available'}
             </div>
           </div>
         </div>

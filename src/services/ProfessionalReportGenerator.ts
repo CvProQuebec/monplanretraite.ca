@@ -7,6 +7,7 @@
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { FINANCIAL_ASSUMPTIONS } from '../config/financial-assumptions';
+import { CPM2014_METADATA } from '../config/cpm2014-mortality-table';
 
 export interface ReportData {
   personal: any;
@@ -1122,8 +1123,8 @@ ${this.getReportFooter('legal', currentDate)}
   }
 
   private static getReportFooter(type: string, date: string): string {
-    // Mention IPF pour tous les rapports
-    const ipfDisclaimer = `\n\n**📊 CONFORMITÉ PROFESSIONNELLE**\n${FINANCIAL_ASSUMPTIONS.MENTION_COMPLETE}\n\n`;
+    // Mention IPF et CPM2014 pour tous les rapports
+    const ipfDisclaimer = `\n\n**📊 CONFORMITÉ PROFESSIONNELLE**\n${FINANCIAL_ASSUMPTIONS.MENTION_COMPLETE}\n\n**TABLE DE MORTALITÉ CPM2014**\nCalculs d'espérance de vie basés sur la table CPM2014 de l'Institut canadien des actuaires avec projections 2025.\nSource: ${CPM2014_METADATA.source} - ${CPM2014_METADATA.table}\n\n`;
     
     const footers = {
       fiscal: `${ipfDisclaimer}---\n\n## ⚠️ AVERTISSEMENT LÉGAL ET NON-RESPONSABILITÉ\n\n**IMPORTANT :** Les données contenues dans ce rapport ont été saisies par l'utilisateur sans validation par un professionnel qualifié. MonPlanRetraite.ca se dégage de toute responsabilité quant à l'utilisation de ce rapport pour des décisions financières, fiscales ou d'investissement.\n\n**Ce rapport ne constitue pas :** \n- Des conseils financiers personnalisés\n- Des recommandations d'investissement\n- Des conseils fiscaux ou juridiques\n- Une analyse professionnelle certifiée\n\n**Recommandation :** Consultez toujours un comptable, planificateur financier ou conseiller fiscal qualifié avant de prendre des décisions importantes basées sur ce rapport.\n\n---\n\n*Calculs effectués localement - Vos données demeurent confidentielles*\n*Analyse préparée par MonPlanRetraite.ca - Plateforme certifiée de planification financière et de retraite*\n*Version du document: ${this.VERSION} - ${date}*`,

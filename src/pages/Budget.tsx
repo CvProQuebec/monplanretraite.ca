@@ -4,6 +4,8 @@ import { useRetirementData } from '@/features/retirement/hooks/useRetirementData
 import { IncomeIntegrationService } from '@/services/IncomeIntegrationService';
 import { useAuth } from '@/hooks/useAuth';
 import { checkFeatureAccess, getRequiredPlanForFeature, getContextualUpgradeMessage } from '@/config/plans';
+import { PromoCodeService } from '@/services/promoCodeService';
+import { usePromoCode } from '@/hooks/usePromoCode';
 import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -89,8 +91,9 @@ const Budget: React.FC = () => {
   const { language } = useLanguage();
   const { userData, updateUserData } = useRetirementData();
   const { user } = useAuth();
+  const { appliedCode } = usePromoCode();
   const isFrench = language === 'fr';
-  
+
   const [budgetData, setBudgetData] = useState<BudgetData>({
     currentBalance: 0,
     balanceDate: new Date().toISOString().split('T')[0],
@@ -98,12 +101,13 @@ const Budget: React.FC = () => {
     savingsGoal: 0,
     emergencyFund: 0
   });
-  
+
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
-  // Vérifier l'accès au Module Budget
+  // Vérifier l'accès au Module Budget avec considération des codes promo
   const userPlan = user?.subscription?.plan || 'free';
-  const hasAccess = checkFeatureAccess('hasBudgetModule', userPlan);
+  const effectivePlan = PromoCodeService.getEffectivePlan(userPlan, appliedCode || '');
+  const hasAccess = checkFeatureAccess('hasBudgetModule', effectivePlan);
   const requiredPlan = getRequiredPlanForFeature('hasBudgetModule');
   
   const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth());
@@ -412,7 +416,7 @@ const Budget: React.FC = () => {
         {/* En-tête spectaculaire */}
         <div className="text-center mb-12">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent drop-shadow-2xl">
-            💰 {isFrench ? 'Mon Budget Intelligent' : 'My Smart Budget'}
+            💰 {isFrench ? 'Mon budget intelligent' : 'My Smart Budget'}
           </h1>
           <p className="text-xl md:text-2xl text-gray-200 max-w-4xl mx-auto leading-relaxed">
             {isFrench 

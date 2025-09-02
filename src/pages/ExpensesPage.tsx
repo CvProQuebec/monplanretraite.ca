@@ -195,7 +195,7 @@ export const ExpensesPage: React.FC = () => {
           onUpdate={handleUpdate} 
         />
 
-        {/* Nouveau volet Dépenses Saisonnières et Irrégulières */}
+        {/* Nouveau volet Dépenses saisonnières et irrégulières */}
         <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
           <SeasonalIrregularExpensesModule
             data={userData}

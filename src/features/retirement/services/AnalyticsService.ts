@@ -1,6 +1,6 @@
 // src/features/retirement/services/AnalyticsService.ts
 import { UserData, Calculations } from '../types';
-import { FINANCIAL_ASSUMPTIONS } from '../../../config/financial-assumptions';
+import { FINANCIAL_ASSUMPTIONS, MORTALITY_CPM2014 } from '../../../config/financial-assumptions';
 
 export interface ChartDataPoint {
   age: number;
@@ -38,6 +38,28 @@ export interface DashboardMetrics {
 }
 
 export class AnalyticsService {
+  /**
+   * Calcule la stratégie de retraite optimale utilisant CPM2014
+   */
+  private static calculateOptimalRetirementStrategy(
+    userData: UserData,
+    currentAge: number
+  ): { recommendedAge: number; lifeExpectancy: number; planningHorizon: number } {
+
+    const gender = userData.personal?.sexe1 === 'F' ? 'female' : 'male';
+
+    const mortalityAnalysis = MORTALITY_CPM2014.calculateLifeExpectancy({
+      age: currentAge,
+      gender: gender
+    });
+
+    return {
+      recommendedAge: Math.min(mortalityAnalysis.recommendedPlanningAge, 95),
+      lifeExpectancy: mortalityAnalysis.lifeExpectancy,
+      planningHorizon: mortalityAnalysis.recommendedPlanningAge - currentAge
+    };
+  }
+
   static generateProjections(userData: UserData, calculations: Calculations): FinancialProjection {
     // Vérifier que les calculs sont disponibles
     if (!calculations) {
@@ -54,29 +76,32 @@ export class AnalyticsService {
 
     const currentAge = this.calculateAge(userData.personal.naissance1);
     const retirementAge = userData.retirement.rrqAgeActuel1 || 65;
-    const lifeExpectancy = userData.retirement.esperanceVie1 || 85;
-    
+
+    // Utiliser CPM2014 pour déterminer l'espérance de vie et l'horizon de planification
+    const mortalityStrategy = this.calculateOptimalRetirementStrategy(userData, currentAge);
+    const planningHorizon = Math.min(mortalityStrategy.recommendedAge, 100);
+
     const chartData = this.generateChartData(
       userData,
       calculations,
       currentAge,
-      lifeExpectancy
+      planningHorizon
     );
-    
+
     const milestones = this.identifyMilestones(
       userData,
       calculations,
       currentAge,
       retirementAge
     );
-    
+
     const metrics = this.calculateMetrics(
       userData,
       calculations,
       currentAge,
       retirementAge
     );
-    
+
     return { chartData, milestones, metrics };
   }
   

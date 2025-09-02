@@ -32,14 +32,14 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const isFrench = language === 'fr';
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
-  const [targetPlan, setTargetPlan] = useState<'professional' | 'ultimate'>('professional');
+  const [targetPlan, setTargetPlan] = useState<'professional' | 'expert'>('professional');
   const [showOnboardingWizard, setShowOnboardingWizard] = useState(false);
 
   const handleNavigation = (path: string) => {
     navigate(path);
   };
 
-  const handleUpgradeClick = (plan: 'professional' | 'ultimate') => {
+  const handleUpgradeClick = (plan: 'professional' | 'expert') => {
     setTargetPlan(plan);
     setIsUpgradeModalOpen(true);
   };
@@ -162,7 +162,7 @@ const Home: React.FC = () => {
                   <ArrowRight className="ml-3 w-6 h-6" />
                 </Button>
                 <p className="text-emerald-200 text-sm mt-4">
-                  {isFrench ? '✨ Aucune inscription requise • Données 100% privées' : '✨ No registration required • 100% private data'}
+                  {isFrench ? '✨ Aucune inscription requise • Données  100 % privées' : '✨ No registration required • 100% private data'}
                 </p>
               </div>
             </CardContent>
@@ -257,7 +257,7 @@ const Home: React.FC = () => {
                     <div className="space-y-2 mb-6">
                       <div className="bg-emerald-50 p-3 rounded-lg mb-3">
                         <div className="text-emerald-800 font-bold text-sm mb-1">
-                          {isFrench ? '🎁 VALEUR : 500$+ GRATUIT' : '🎁 VALUE: $500+ FREE'}
+                          {isFrench ? '🎁 VALEUR : 500 $+ GRATUIT' : '🎁 VALUE: $500+ FREE'}
                         </div>
                         <div className="text-emerald-700 text-xs">
                           {isFrench ? 'Seule plateforme au Québec à offrir cela gratuitement' : 'Only platform in Quebec offering this for free'}
@@ -285,7 +285,7 @@ const Home: React.FC = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-emerald-500" />
-                        <span className="text-xs">{isFrench ? '5 simulations/mois • Données 100% privées' : '5 simulations/month • 100% private data'}</span>
+                        <span className="text-xs">{isFrench ? '5 simulations/mois • Données 100 % privées' : '5 simulations/month • 100% private data'}</span>
                       </div>
                     </div>
                     <Button 
@@ -318,10 +318,10 @@ const Home: React.FC = () => {
                     <div className="space-y-2 mb-6">
                       <div className="bg-blue-50 p-3 rounded-lg mb-3">
                         <div className="text-blue-800 font-bold text-sm mb-1">
-                          {isFrench ? '💎 VALEUR : 5000$+ pour 297$' : '💎 VALUE: $5000+ for $297'}
+                          {isFrench ? '💎 VALEUR : 5000 $+ pour 297 $' : '💎 VALUE: $5000+ for $297'}
                         </div>
                         <div className="text-blue-700 text-xs">
-                          {isFrench ? 'Économie de 94% • Équivaut à 2 consultations' : '94% savings • Equals 2 consultations'}
+                          {isFrench ? 'Économie de 94 % • Équivaut à 2 consultations' : '94% savings • Equals 2 consultations'}
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
@@ -365,7 +365,7 @@ const Home: React.FC = () => {
                       <Crown className="w-8 h-8 text-white" />
                     </div>
                     <CardTitle className="text-2xl font-bold text-purple-900">
-                      {isFrench ? 'Expert' : 'Ultimate'}
+                      {isFrench ? 'Expert' : 'Expert'}
                     </CardTitle>
                     <div className="text-4xl font-bold text-purple-600 mb-1">$597</div>
                     <div className="text-sm text-purple-600">{isFrench ? '/an' : '/year'}</div>
@@ -374,10 +374,10 @@ const Home: React.FC = () => {
                     <div className="space-y-2 mb-6">
                       <div className="bg-purple-50 p-3 rounded-lg mb-3">
                         <div className="text-purple-800 font-bold text-sm mb-1">
-                          {isFrench ? '👑 VALEUR : 10 000$+ pour 597$' : '👑 VALUE: $10,000+ for $597'}
+                          {isFrench ? '👑 VALEUR : 10 000 $+ pour 597 $' : '👑 VALUE: $10,000+ for $597'}
                         </div>
                         <div className="text-purple-700 text-xs">
-                          {isFrench ? 'Niveau consultant • Économie de 94% • Évite erreurs coûteuses' : 'Consultant level • 94% savings • Prevents costly mistakes'}
+                          {isFrench ? 'Niveau consultant • Économie de 94 % • Évite erreurs coûteuses' : 'Consultant level • 94% savings • Prevents costly mistakes'}
                         </div>
                       </div>
                       <div className="flex items-center gap-2">
@@ -400,16 +400,13 @@ const Home: React.FC = () => {
                         <CheckCircle className="w-4 h-4 text-purple-500" />
                         <span className="text-xs">{isFrench ? 'Rapports niveau consultant • Export PDF' : 'Consultant-level reports • PDF export'}</span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <Crown className="w-4 h-4 text-purple-500" />
-                        <span className="text-xs font-semibold">{isFrench ? 'Support prioritaire • Consultation virtuelle' : 'Priority support • Virtual consultation'}</span>
-                      </div>
+
                     </div>
-                    <Button 
-                      onClick={() => handleUpgradeClick('ultimate')}
+                    <Button
+                      onClick={() => handleUpgradeClick('expert')}
                       className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3"
                     >
-                      {isFrench ? 'Choisir Expert' : 'Choose Ultimate'}
+                      {isFrench ? 'Choisir Expert' : 'Choose Expert'}
                     </Button>
                   </CardContent>
                 </Card>
@@ -417,7 +414,7 @@ const Home: React.FC = () => {
 
               <div className="text-center mt-8">
                 <p className="text-blue-200 text-sm">
-                  {isFrench ? '✨ Garantie 30 jours remboursé sur tous les plans payants' : '✨ 30-day money-back guarantee on all paid plans'}
+                  {isFrench ? '✨ Garantie 14 jours remboursé sur tous les plans payants' : '✨ 14-day money-back guarantee on all paid plans'}
                 </p>
               </div>
             </div>

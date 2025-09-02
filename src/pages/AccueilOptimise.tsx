@@ -32,14 +32,14 @@ const AccueilOptimise: React.FC = () => {
   const navigate = useNavigate();
   const isFrench = language === 'fr';
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
-  const [targetPlan, setTargetPlan] = useState<'professional' | 'ultimate'>('professional');
+  const [targetPlan, setTargetPlan] = useState<'professional' | 'expert'>('professional');
   const [showOnboardingWizard, setShowOnboardingWizard] = useState(false);
 
   const handleNavigation = (path: string) => {
     navigate(path);
   };
 
-  const handleUpgradeClick = (plan: 'professional' | 'ultimate') => {
+  const handleUpgradeClick = (plan: 'professional' | 'expert') => {
     setTargetPlan(plan);
     setIsUpgradeModalOpen(true);
   };
@@ -88,7 +88,7 @@ const AccueilOptimise: React.FC = () => {
                   🎁 {isFrench ? 'SERVICE GRATUIT' : 'FREE SERVICE'}
                 </div>
                 <h2 className="text-4xl font-bold mb-4">
-                  {isFrench ? 'Kit de Protection Familiale' : 'Family Protection Kit'}
+                  {isFrench ? 'Trousse de protection familiale' : 'Family Protection Kit'}
                 </h2>
                 <p className="text-xl text-emerald-100 max-w-3xl mx-auto mb-8">
                   {isFrench 
@@ -128,7 +128,7 @@ const AccueilOptimise: React.FC = () => {
                   <ArrowRight className="ml-3 w-6 h-6" />
                 </Button>
                 <p className="text-emerald-200 text-sm mt-4">
-                  {isFrench ? '✨ Aucune inscription requise • Données 100% privées' : '✨ No registration required • 100% private data'}
+                  {isFrench ? '✨ Aucune inscription requise • Données 100 % privées' : '✨ No registration required • 100% private data'}
                 </p>
               </div>
             </CardContent>
@@ -295,7 +295,7 @@ const AccueilOptimise: React.FC = () => {
                       <Crown className="w-8 h-8 text-white" />
                     </div>
                     <CardTitle className="text-2xl font-bold text-purple-900">
-                      {isFrench ? 'Expert' : 'Ultimate'}
+                      {isFrench ? 'Expert' : 'Expert'}
                     </CardTitle>
                     <div className="text-4xl font-bold text-purple-600 mb-1">597 $</div>
                     <div className="text-sm text-purple-600">{isFrench ? '/an' : '/year'}</div>
@@ -319,11 +319,11 @@ const AccueilOptimise: React.FC = () => {
                         <span className="text-sm">{isFrench ? 'Support prioritaire' : 'Priority support'}</span>
                       </div>
                     </div>
-                    <Button 
-                      onClick={() => handleUpgradeClick('ultimate')}
+                    <Button
+                      onClick={() => handleUpgradeClick('expert')}
                       className="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3"
                     >
-                      {isFrench ? 'Choisir Expert' : 'Choose Ultimate'}
+                      {isFrench ? 'Choisir Expert' : 'Choose Expert'}
                     </Button>
                   </CardContent>
                 </Card>
@@ -331,7 +331,7 @@ const AccueilOptimise: React.FC = () => {
 
               <div className="text-center mt-8">
                 <p className="text-blue-200 text-sm">
-                  {isFrench ? '✨ Garantie 30 jours remboursé sur tous les plans payants' : '✨ 30-day money-back guarantee on all paid plans'}
+                  {isFrench ? '✨ Garantie 14 jours remboursé sur tous les plans payants' : '✨ 14-day money-back guarantee on all paid plans'}
                 </p>
               </div>
             </div>

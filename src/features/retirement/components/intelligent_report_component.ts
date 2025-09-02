@@ -687,7 +687,7 @@ export const IntelligentReportSection: React.FC<IntelligentReportSectionProps> =
             <div>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="w-6 h-6" />
-                {isFrench ? 'Rapport de Planification Personnalisé' : 'Personalized Planning Report'}
+                {isFrench ? 'Rapport de planification personnalisé' : 'Personalized Planning Report'}
               </CardTitle>
               <p className="text-sm text-gray-600 mt-1">
                 {isFrench 

@@ -87,7 +87,7 @@ export class PromoCodeService {
       return false;
     }
 
-    // Codes 100% gratuits déverrouillent tout
+    // Codes 100 % gratuits déverrouillent tout
     if (validation.code.unlimitedFeatures) {
       return true;
     }
@@ -110,7 +110,7 @@ export class PromoCodeService {
       return currentPlan;
     }
 
-    // Codes 100% gratuits donnent accès Expert
+    // Codes 100 % gratuits donnent accès Expert
     if (validation.code.unlimitedFeatures) {
       return 'expert';
     }

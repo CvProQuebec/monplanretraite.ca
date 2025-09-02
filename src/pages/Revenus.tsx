@@ -267,14 +267,14 @@ const Revenus: React.FC = () => {
           </Alert>
         )}
 
-        {/* Section Assurance Emploi Avancée */}
+        {/* Section Assurance emploi avancée */}
         {((userData.personal?.typeRevenu1 === 'assurance-emploi' && userData.personal?.naissance1) || 
           (userData.personal?.typeRevenu2 === 'assurance-emploi' && userData.personal?.naissance2)) && (
           <div className="mb-12">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-bold text-indigo-300 mb-4 flex items-center justify-center gap-3">
                 <Calculator className="w-8 h-8 text-indigo-400" />
-                {isFrench ? 'Analyse Avancée - Assurance Emploi' : 'Advanced Analysis - Employment Insurance'}
+                {isFrench ? 'Analyse Avancée - Assurance emploi' : 'Advanced Analysis - Employment Insurance'}
               </h2>
               <p className="text-indigo-200 text-lg">
                 {isFrench 
@@ -366,12 +366,12 @@ const Revenus: React.FC = () => {
           );
         })()}
 
-        {/* Section Tableau Unifié des Revenus */}
+        {/* Section Tableau unifié des revenus */}
         <div className="space-y-8 mb-12">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-green-300 mb-4 flex items-center justify-center gap-3">
               <Calculator className="w-8 h-8 text-green-400" />
-              {isFrench ? 'Tableau Unifié des Revenus' : 'Unified Income Table'}
+              {isFrench ? 'Tableau unifié des revenus' : 'Unified Income Table'}
             </h2>
             <p className="text-green-200 text-lg">
               {isFrench 
@@ -411,7 +411,7 @@ const Revenus: React.FC = () => {
           <div className="text-center">
             <h2 className="text-3xl font-bold text-amber-300 mb-4 flex items-center justify-center gap-3">
               <Calendar className="w-8 h-8 text-amber-400" />
-              {isFrench ? 'Emplois Saisonniers' : 'Seasonal Jobs'}
+              {isFrench ? 'Emplois saisonniers' : 'Seasonal Jobs'}
             </h2>
             <p className="text-amber-200 text-lg">
               {isFrench 
@@ -676,7 +676,7 @@ const Revenus: React.FC = () => {
                         value={userData.personal?.dateREER2 || ''}
                         onChange={(value) => handleChange('dateREER2', value)}
                         className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
-                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
                       />
                     </div>
                   </div>
@@ -710,7 +710,7 @@ const Revenus: React.FC = () => {
                         value={userData.personal?.dateCELI2 || ''}
                         onChange={(value) => handleChange('dateCELI2', value)}
                         className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
-                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
                       />
                     </div>
                   </div>
@@ -744,7 +744,7 @@ const Revenus: React.FC = () => {
                         value={userData.personal?.dateCRI2 || ''}
                         onChange={(value) => handleChange('dateCRI2', value)}
                         className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
-                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
                       />
                     </div>
                   </div>
@@ -781,7 +781,7 @@ const Revenus: React.FC = () => {
                         value={userData.personal?.dateCrypto2 || ''}
                         onChange={(value) => handleChange('dateCrypto2', value)}
                         className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400"
-                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
                       />
                     </div>
                   </div>
@@ -1051,7 +1051,7 @@ const Revenus: React.FC = () => {
           </CardContent>
         </Card>
 
-        {/* Section Calculette de Rendement */}
+        {/* Section Calculette de rendement */}
         <div className="space-y-8 mb-12">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-indigo-300 mb-4 flex items-center justify-center gap-3">
@@ -1065,7 +1065,7 @@ const Revenus: React.FC = () => {
               }
             </p>
             
-            {/* Calculette de Rendement */}
+            {/* Calculette de rendement */}
             <div className="flex justify-center">
               <ReturnCalculator isFrench={isFrench} />
             </div>

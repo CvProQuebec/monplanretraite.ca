@@ -139,7 +139,7 @@ const ReportGenerator: React.FC = () => {
     format: isEnglish ? 'Format' : 'Format',
     type: isEnglish ? 'Report Type' : 'Type de rapport',
     upgradeRequired: isEnglish ? 'Upgrade Required' : 'Mise à niveau requise',
-    upgradeMessage: isEnglish ? 'Upgrade to Professional or Ultimate plan to access this report' : 'Mettez à niveau vers le plan Professionnel ou Ultime pour accéder à ce rapport'
+    upgradeMessage: isEnglish ? 'Upgrade to Professional or Expert plan to access this report' : 'Mettez à niveau vers le plan Professionnel ou Expert pour accéder à ce rapport'
   };
 
   return (

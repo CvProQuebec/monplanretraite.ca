@@ -369,7 +369,7 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
           className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-600 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-700 text-white font-bold shadow-xl transform hover:scale-105 transition-all duration-300"
         >
           <Calculator className="w-6 h-6 mr-3" />
-          {isFrench ? '📊 Calculette de Rendement Avancée' : '📊 Advanced Return Calculator'}
+          {isFrench ? '📊 Calculette de rendement avancée' : '📊 Advanced Return Calculator'}
           <TrendingUp className="w-6 h-6 ml-3" />
         </Button>
       </DialogTrigger>
@@ -378,7 +378,7 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold text-indigo-700 flex items-center gap-3">
             <BarChart3 className="w-8 h-8" />
-            {isFrench ? 'Calculette de Rendement Professionnelle' : 'Professional Return Calculator'}
+            {isFrench ? 'Calculette de rendement professionnelle' : 'Professional Return Calculator'}
           </DialogTitle>
           <DialogDescription className="text-lg text-gray-600">
             {isFrench 
@@ -711,7 +711,7 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
             isOpen={showConsentDialog}
             onClose={handleConsentDeclined}
             onConsent={handleConsentAccepted}
-            featureName={isFrench ? 'Calculette de Rendement Avancée' : 'Advanced Return Calculator'}
+            featureName={isFrench ? 'Calculette de rendement avancée' : 'Advanced Return Calculator'}
             isFrench={isFrench}
           />
         </div>

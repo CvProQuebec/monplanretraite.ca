@@ -182,7 +182,7 @@ const t = {
 
 ### Règles strictes
 - ❌ **AUCUNE transmission réseau** des données confidentielles
-- ✅ **Calculs 100% locaux** dans le navigateur
+- ✅ **Calculs 100 % locaux** dans le navigateur
 - ✅ **Chiffrement** des données sensibles
 - ✅ **Validation** stricte des entrées
 

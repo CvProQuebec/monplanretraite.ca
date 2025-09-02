@@ -25,7 +25,7 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
       hasMonteCarloSimulations: false,
       hasWithdrawalStrategies: false,
       hasTaxOptimization: false,
-      hasFinancialAssistant: false, // 🔒 PROFESSIONNEL
+      hasFinancialAssistant: true, // ✅ GRATUIT - Assistant IA (prévention catastrophes)
       hasBudgetModule: false, // 🔒 PROFESSIONNEL
       
       // NOUVEAUX MODULES PHASE 1 - VERROUILLÉS
@@ -465,9 +465,8 @@ export const getRequiredPlanForFeature = (
   feature: keyof PlanLimits['features']
 ): SubscriptionPlan => {
   // Fonctionnalités du plan Professionnel (ÉTENDUES avec celles déplacées du gratuit)
-  if (feature === 'hasAdvancedAnalytics' || 
-      feature === 'hasMonteCarloSimulations' || 
-      feature === 'hasFinancialAssistant' || 
+  if (feature === 'hasAdvancedAnalytics' ||
+      feature === 'hasMonteCarloSimulations' ||
       feature === 'hasBudgetModule' ||
       feature === 'hasExportPDF' ||
       feature === 'hasWithdrawalStrategies' ||
@@ -507,6 +506,7 @@ export const getRequiredPlanForFeature = (
   // Fonctionnalités RESTANTES dans le plan gratuit (RÉDUITES)
   if (feature === 'hasCashflowManagement' ||     // ✅ GARDÉ - Gestion cashflow basique
       feature === 'hasExpensePlanning' ||        // ✅ GARDÉ - Planification dépenses basique
+      feature === 'hasFinancialAssistant' ||     // ✅ GRATUIT - Assistant IA (prévention catastrophes)
       feature === 'hasSecureStorage' ||          // ✅ GARDÉ - Sécurité (argument de vente)
       feature === 'hasDataEncryption' ||         // ✅ GARDÉ - Chiffrement (confiance)
       feature === 'hasAdvancedInterface' ||      // ✅ GARDÉ - Interface moderne

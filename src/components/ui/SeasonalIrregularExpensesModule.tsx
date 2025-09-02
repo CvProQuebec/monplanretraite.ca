@@ -63,7 +63,7 @@ const SeasonalIrregularExpensesModule: React.FC<SeasonalIrregularExpensesProps> 
   const [syncedFields, setSyncedFields] = useState<Record<string, number>>({});
 
   const t = {
-    title: language === 'fr' ? 'Dépenses Saisonnières et Irrégulières' : 'Seasonal and Irregular Expenses',
+    title: language === 'fr' ? 'Dépenses saisonnières et irrégulières' : 'Seasonal and Irregular Expenses',
     subtitle: language === 'fr' 
       ? 'Planifiez vos dépenses non-récurrentes pour une meilleure gestion budgétaire'
       : 'Plan your non-recurring expenses for better budget management',

@@ -167,7 +167,7 @@ const PlanificationUrgence: React.FC = () => {
           <div className="text-center mb-6">
             <Shield className="w-16 h-16 text-blue-600 mx-auto mb-4" />
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Gestionnaire de Planification d'Urgence
+              Gestionnaire de planification d'urgence
             </h2>
             <p className="text-gray-600">
               Interface complète pour la gestion de vos plans d'urgence

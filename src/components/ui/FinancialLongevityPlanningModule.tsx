@@ -191,10 +191,10 @@ const FinancialLongevityPlanningModule: React.FC = () => {
       riskFactors.push('Marge de sécurité financière limitée');
     }
     
-    // Vérification de la règle des 4%
+    // Vérification de la règle des 4 %
     const safeWithdrawalRate = (data.monthlyExpenses * 12) / data.totalAssets * 100;
     if (safeWithdrawalRate > 4) {
-      recommendations.push('Votre taux de retrait dépasse la règle des 4% - risque d\'épuisement');
+      recommendations.push('Votre taux de retrait dépasse la règle des 4 % - risque d\'épuisement');
       riskFactors.push(`Taux de retrait initial de ${safeWithdrawalRate.toFixed(1)}% (>4%)`);
     }
     
@@ -685,7 +685,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                 <div className="p-4 bg-red-50 rounded-lg">
                   <h5 className="font-medium">Règle des 4%</h5>
                   <p className="text-sm text-gray-600 mt-2">
-                    La règle des 4% suggère qu'un taux de retrait initial de 4% de vos actifs 
+                    La règle des 4 % suggère qu'un taux de retrait initial de 4% de vos actifs 
                     devrait permettre de maintenir votre capital pendant 30 ans.
                   </p>
                 </div>

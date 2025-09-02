@@ -32,7 +32,7 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
             </div>
           </div>
           <CardTitle className="text-3xl text-blue-900 mb-3">
-            Gestionnaire de Planification d'Urgence
+            Gestionnaire de planification d'urgence
           </CardTitle>
           <CardDescription className="text-lg text-blue-700 mb-4">
             Module de planification d'urgence en cours de développement

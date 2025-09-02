@@ -101,7 +101,7 @@ export class OnboardingService {
         helpText: 'La sécurité est notre priorité absolue. Comprenez nos mesures de protection.',
         tips: [
           'Chiffrement AES-256-GCM de niveau bancaire',
-          'Calculs 100% locaux dans votre navigateur',
+          'Calculs 100 % locaux dans votre navigateur',
           'Aucun stockage sur serveurs externes'
         ]
       },

@@ -119,7 +119,7 @@ export const RRQSection: React.FC<RRQSectionProps> = ({ data, onUpdate }) => {
                 {isFrench ? 'Prestation mensuelle' : 'Monthly benefit'}
               </div>
               <div className="text-xs text-blue-300 mt-1">
-                {isFrench ? 'Réduction de 36%' : '36% reduction'}
+                {isFrench ? 'Réduction de 36 %' : '36% reduction'}
               </div>
             </CardContent>
           </Card>
@@ -159,7 +159,7 @@ export const RRQSection: React.FC<RRQSectionProps> = ({ data, onUpdate }) => {
                 {isFrench ? 'Prestation mensuelle' : 'Monthly benefit'}
               </div>
               <div className="text-xs text-purple-300 mt-1">
-                {isFrench ? 'Augmentation de 42%' : '42% increase'}
+                {isFrench ? 'Augmentation de 42 %' : '42% increase'}
               </div>
             </CardContent>
           </Card>
@@ -378,7 +378,7 @@ export const RRQSection: React.FC<RRQSectionProps> = ({ data, onUpdate }) => {
                 <div className="space-y-4">
                   <div className="p-4 bg-blue-900/20 rounded-lg border border-blue-300/20">
                     <h4 className="font-semibold text-blue-300 mb-2">
-                      {isFrench ? '🎯 Stratégie Conservatrice' : '🎯 Conservative Strategy'}
+                      {isFrench ? '🎯 Stratégie conservatrice' : '🎯 Conservative Strategy'}
                     </h4>
                     <p className="text-blue-200 text-sm">
                       {isFrench 
@@ -390,7 +390,7 @@ export const RRQSection: React.FC<RRQSectionProps> = ({ data, onUpdate }) => {
 
                   <div className="p-4 bg-indigo-900/20 rounded-lg border border-indigo-300/20">
                     <h4 className="font-semibold text-indigo-300 mb-2">
-                      {isFrench ? '📈 Stratégie Optimale' : '📈 Optimal Strategy'}
+                      {isFrench ? '📈 Stratégie optimale' : '📈 Optimal Strategy'}
                     </h4>
                     <p className="text-blue-200 text-sm">
                       {isFrench 
@@ -402,7 +402,7 @@ export const RRQSection: React.FC<RRQSectionProps> = ({ data, onUpdate }) => {
 
                   <div className="p-4 bg-purple-900/20 rounded-lg border border-purple-300/20">
                     <h4 className="font-semibold text-purple-300 mb-2">
-                      {isFrench ? '⚡ Stratégie Flexible' : '⚡ Flexible Strategy'}
+                      {isFrench ? '⚡ Stratégie flexible' : '⚡ Flexible Strategy'}
                     </h4>
                     <p className="text-blue-200 text-sm">
                       {isFrench 

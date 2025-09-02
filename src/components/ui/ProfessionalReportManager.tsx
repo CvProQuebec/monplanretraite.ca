@@ -192,7 +192,7 @@ export const ProfessionalReportManager: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center text-xl text-blue-900">
             <Briefcase className="h-6 w-6 mr-2" />
-            {isFrench ? 'Rapports Professionnels' : 'Professional Reports'}
+            {isFrench ? 'Rapports professionnels' : 'Professional Reports'}
           </CardTitle>
           <CardDescription className="text-blue-700">
             {isFrench 
@@ -206,10 +206,10 @@ export const ProfessionalReportManager: React.FC = () => {
       <Tabs defaultValue="generator" className="space-y-6">
         <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="generator">
-            {isFrench ? 'Générateur de Rapports' : 'Report Generator'}
+            {isFrench ? 'Générateur de rapports' : 'Report Generator'}
           </TabsTrigger>
           <TabsTrigger value="preview">
-            {isFrench ? 'Aperçu du Rapport' : 'Report Preview'}
+            {isFrench ? 'Aperçu du rapport' : 'Report Preview'}
           </TabsTrigger>
         </TabsList>
 
@@ -220,7 +220,7 @@ export const ProfessionalReportManager: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <FileText className="w-5 h-5" />
-                {isFrench ? 'Type de Rapport' : 'Report Type'}
+                {isFrench ? 'Type de rapport' : 'Report Type'}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -294,7 +294,7 @@ export const ProfessionalReportManager: React.FC = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <CheckCircle className="w-5 h-5" />
-                  {isFrench ? 'Options du Rapport' : 'Report Options'}
+                  {isFrench ? 'Options du rapport' : 'Report Options'}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -371,7 +371,7 @@ export const ProfessionalReportManager: React.FC = () => {
                 ) : (
                   <>
                     <FileText className="w-4 h-4 mr-2" />
-                    {isFrench ? 'Générer le Rapport' : 'Generate Report'}
+                    {isFrench ? 'Générer le rapport' : 'Generate Report'}
                   </>
                 )}
               </Button>
@@ -395,7 +395,7 @@ export const ProfessionalReportManager: React.FC = () => {
                 <div className="flex justify-between items-center">
                   <CardTitle className="flex items-center gap-2">
                     <FileText className="w-5 h-5" />
-                    {isFrench ? 'Aperçu du Rapport' : 'Report Preview'}
+                    {isFrench ? 'Aperçu du rapport' : 'Report Preview'}
                   </CardTitle>
                   <Button onClick={downloadReport} className="bg-green-500 hover:bg-green-600">
                     <Download className="w-4 h-4 mr-2" />
@@ -449,14 +449,14 @@ export const ProfessionalReportManager: React.FC = () => {
       <Card className="border-blue-200 bg-blue-50">
         <CardHeader>
           <CardTitle className="text-blue-900">
-            {isFrench ? 'Guide d\'Utilisation' : 'Usage Guide'}
+            {isFrench ? 'Guide d\'utilisation' : 'Usage Guide'}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-blue-800">
             <div>
               <h4 className="font-semibold mb-2">
-                {isFrench ? '📊 Rapports Fiscaux' : '📊 Tax Reports'}
+                {isFrench ? '📊 Rapports fiscaux' : '📊 Tax Reports'}
               </h4>
               <ul className="space-y-1">
                 <li>• {isFrench ? 'Optimisations fiscales REER/CELI' : 'RRSP/TFSA tax optimizations'}</li>
@@ -466,7 +466,7 @@ export const ProfessionalReportManager: React.FC = () => {
             </div>
             <div>
               <h4 className="font-semibold mb-2">
-                {isFrench ? '🏠 Rapports Immobiliers' : '🏠 Real Estate Reports'}
+                {isFrench ? '🏠 Rapports immobiliers' : '🏠 Real Estate Reports'}
               </h4>
               <ul className="space-y-1">
                 <li>• {isFrench ? 'Analyse de vente 2e propriété' : '2nd property sale analysis'}</li>
@@ -476,7 +476,7 @@ export const ProfessionalReportManager: React.FC = () => {
             </div>
             <div>
               <h4 className="font-semibold mb-2">
-                {isFrench ? '🏦 Dossiers Bancaires' : '🏦 Banking Files'}
+                {isFrench ? '🏦 Dossiers bancaires' : '🏦 Banking Files'}
               </h4>
               <ul className="space-y-1">
                 <li>• {isFrench ? 'Capacité d\'emprunt' : 'Borrowing capacity'}</li>
@@ -486,7 +486,7 @@ export const ProfessionalReportManager: React.FC = () => {
             </div>
             <div>
               <h4 className="font-semibold mb-2">
-                {isFrench ? '⚖️ Dossiers Juridiques' : '⚖️ Legal Files'}
+                {isFrench ? '⚖️ Dossiers juridiques' : '⚖️ Legal Files'}
               </h4>
               <ul className="space-y-1">
                 <li>• {isFrench ? 'Planification successorale' : 'Estate planning'}</li>

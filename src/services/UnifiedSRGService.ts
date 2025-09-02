@@ -1,6 +1,6 @@
 // UnifiedSRGService.ts - Service Unifié Supplément de Revenu Garanti 2025
 // CONSOLIDATION INTELLIGENTE - SÉCURITÉ MAXIMALE + FONCTIONNALITÉS AVANCÉES
-// 100% LOCAL - AUCUNE TRANSMISSION EXTERNE
+// 100 % LOCAL - AUCUNE TRANSMISSION EXTERNE
 
 import { UserData } from '../features/retirement/types';
 
@@ -318,11 +318,11 @@ export class UnifiedSRGService {
       const revenuEmploiAjuste = this.appliquerExemptionEmploi(revenuEmploi);
       revenuTotal += revenuEmploiAjuste;
 
-      // Revenus de pension privée (100% imposables)
+      // Revenus de pension privée (100 % imposables)
       revenuTotal += retirement?.pensionPrivee1 || 0;
       revenuTotal += retirement?.pensionPrivee2 || 0;
 
-      // Retraits REER/FERR (100% imposables) - utilisation des champs existants
+      // Retraits REER/FERR (100 % imposables) - utilisation des champs existants
       revenuTotal += retirement?.revenusTempsPartiel1 || 0;
       revenuTotal += retirement?.revenusTempsPartiel2 || 0;
 

@@ -380,7 +380,7 @@ export const SRGAnalysisSection: React.FC<SRGAnalysisSectionProps> = ({
             <Card className="text-center">
               <CardHeader>
                 <CardTitle className="text-lg">
-                  {isFrench ? 'Impact Annuel' : 'Annual Impact'}
+                  {isFrench ? 'Impact annuel' : 'Annual Impact'}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -412,7 +412,7 @@ export const SRGAnalysisSection: React.FC<SRGAnalysisSectionProps> = ({
             <Card className="text-center">
               <CardHeader>
                 <CardTitle className="text-lg">
-                  {isFrench ? 'Gain Optimisé' : 'Optimized Gain'}
+                  {isFrench ? 'Gain optimisé' : 'Optimized Gain'}
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -430,7 +430,7 @@ export const SRGAnalysisSection: React.FC<SRGAnalysisSectionProps> = ({
           <Card className="border-blue-200 bg-blue-50">
             <CardHeader>
               <CardTitle className="text-blue-800">
-                {isFrench ? 'Recommandations Finales' : 'Final Recommendations'}
+                {isFrench ? 'Recommandations finales' : 'Final Recommendations'}
               </CardTitle>
             </CardHeader>
             <CardContent>

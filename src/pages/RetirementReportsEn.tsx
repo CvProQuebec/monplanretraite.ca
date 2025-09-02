@@ -249,7 +249,7 @@ const RetirementReportsEn: React.FC = () => {
                   <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
                     <Crown className="w-6 h-6 text-red-600" />
                   </div>
-                  <Badge variant="default" className="text-xs">Ultimate</Badge>
+                  <Badge variant="default" className="text-xs">Expert</Badge>
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Estate Planning</h3>
                 <p className="text-sm text-gray-600 mb-4">

@@ -84,7 +84,7 @@ export const PremiumFeaturesSection: React.FC<PremiumFeaturesSectionProps> = ({ 
     },
     en: {
       title: 'CPP Premium Features',
-      subtitle: 'Advanced tools exclusive to Ultimate plan',
+      subtitle: 'Advanced tools exclusive to Expert plan',
       description: 'Access the most advanced features for professional-level retirement planning',
       features: {
         monteCarlo: {
@@ -130,8 +130,8 @@ export const PremiumFeaturesSection: React.FC<PremiumFeaturesSectionProps> = ({ 
       },
       upgradeCTA: {
         title: 'Unlock all premium features',
-        description: 'Upgrade to Ultimate plan to access these advanced tools',
-        button: 'Upgrade to Ultimate',
+        description: 'Upgrade to Expert plan to access these advanced tools',
+        button: 'Upgrade to Expert',
         currentPlan: 'Current plan:'
       },
       officialLinks: {
@@ -146,7 +146,7 @@ export const PremiumFeaturesSection: React.FC<PremiumFeaturesSectionProps> = ({ 
   const t = texts[language];
 
   return (
-    <PlanRestrictedSection sectionId="premium-features" requiredPlan="ultimate" className={className}>
+    <PlanRestrictedSection sectionId="premium-features" requiredPlan="expert">
       <div className="space-y-8">
         {/* En-tête */}
         <div className="text-center space-y-4">

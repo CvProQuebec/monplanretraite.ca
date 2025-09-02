@@ -88,7 +88,7 @@ const ImmobilierPage: React.FC = () => {
 
   const t = {
     fr: {
-      title: 'Gestion Immobilière',
+      title: 'Gestion immobilière',
       subtitle: 'Planifiez votre patrimoine immobilier pour optimiser votre retraite',
       residence: 'Résidence principale',
       deuxiemeResidence: '2e résidence',

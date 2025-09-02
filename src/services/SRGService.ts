@@ -1,6 +1,6 @@
 // src/features/retirement/services/SRGService.ts
 // Service pour le Supplément de Revenu Garanti (SRG)
-// 100% SÉCURISÉ - AUCUNE TRANSMISSION RÉSEAU
+// 100 % SÉCURISÉ - AUCUNE TRANSMISSION RÉSEAU
 
 import { UserData } from '../types';
 

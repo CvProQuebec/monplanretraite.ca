@@ -48,7 +48,7 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
 
   // Traductions
   const t = {
-    title: isFrench ? 'Planification Budgétaire Mensuelle' : 'Monthly Budget Planning',
+    title: isFrench ? 'Planification budgétaire mensuelle' : 'Monthly Budget Planning',
     subtitle: isFrench ? 'Gérez les dates d\'échéance et planifiez votre budget mensuel' : 'Manage due dates and plan your monthly budget',
     dueDatesTab: isFrench ? 'Dates d\'échéance' : 'Due Dates',
     budgetPlanTab: isFrench ? 'Plan budgétaire' : 'Budget Plan',

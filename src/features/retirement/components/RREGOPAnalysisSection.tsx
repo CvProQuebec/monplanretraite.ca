@@ -58,7 +58,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
     recommendations: isFrench ? 'Recommandations' : 'Recommendations',
     impact: isFrench ? 'Impact :' : 'Impact:',
     moreYearsOfFreedom: isFrench ? 'Plus d\'années de liberté' : 'More years of freedom',
-    penalty18: isFrench ? 'Pénalité de 18%' : '18% penalty',
+    penalty18: isFrench ? 'Pénalité de 18 %' : '18% penalty',
     rrqCoordination: isFrench ? 'Coordination RRQ à 65 ans' : 'RRQ coordination at 65',
     fullPensionAvailable: isFrench ? 'Pleine rente disponible' : 'Full pension available',
     noPenalty: isFrench ? 'Aucune pénalité' : 'No penalty',
@@ -68,7 +68,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
     retirementAgeDescription: isFrench 
       ? 'Considérez reporter votre retraite à 61 ans pour éviter les pénalités'
       : 'Consider postponing your retirement to age 61 to avoid penalties',
-    savings18: isFrench ? 'Économie de 18% sur votre rente' : '18% savings on your pension',
+    savings18: isFrench ? 'Économie de 18 % sur votre rente' : '18% savings on your pension',
     highPriority: isFrench ? 'Priorité haute' : 'High Priority',
     analyzeFinancialImpact: isFrench ? 'Analyser l\'impact financier' : 'Analyze financial impact',
     consultRREGOPAdvisor: isFrench ? 'Consulter un conseiller RREGOP' : 'Consult a RREGOP advisor',

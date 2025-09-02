@@ -75,7 +75,7 @@ export const InsuranceForm: React.FC<InsuranceFormProps> = ({
     if (insurance.beneficiaires && insurance.beneficiaires.length > 0) {
       const totalPourcentage = insurance.beneficiaires.reduce((sum, b) => sum + b.pourcentage, 0);
       if (totalPourcentage !== 100) {
-        newErrors.beneficiaires = 'Le total des pourcentages des bénéficiaires doit égaler 100%';
+        newErrors.beneficiaires = 'Le total des pourcentages des bénéficiaires doit égaler 100 %';
       }
       
       // Vérifier que chaque bénéficiaire a un nom

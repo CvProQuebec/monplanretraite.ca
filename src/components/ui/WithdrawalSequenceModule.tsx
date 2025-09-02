@@ -470,7 +470,7 @@ const WithdrawalSequenceModule: React.FC = () => {
                   <div className="p-4 border border-green-200 rounded-lg">
                     <h5 className="font-medium">2. Comptes Non-Enregistrés</h5>
                     <p className="text-sm text-gray-600 mt-1">
-                      Gains en capital imposés à 50% seulement (vs 100% pour intérêts)
+                      Gains en capital imposés à 50 % seulement (vs 100 % pour intérêts)
                     </p>
                   </div>
                   
@@ -648,7 +648,7 @@ const WithdrawalSequenceModule: React.FC = () => {
                   <ul className="text-sm text-gray-600 mt-2 space-y-1">
                     <li>• <strong>CELI :</strong> 0% d'impôt sur retraits</li>
                     <li>• <strong>Gains en capital :</strong> 50% imposable (taux effectif ~17.5%)</li>
-                    <li>• <strong>REER/FERR :</strong> 100% imposable comme revenu ordinaire (~35%)</li>
+                    <li>• <strong>REER/FERR :</strong> 100 % imposable comme revenu ordinaire (~35%)</li>
                   </ul>
                 </div>
                 

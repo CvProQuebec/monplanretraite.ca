@@ -42,7 +42,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
           <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
             <div className="text-center mb-8">
               <div className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold mb-4">
-                📚 {isFrench ? 'Guide Pratique' : 'Practical Guide'}
+                📚 {isFrench ? 'Guide pratique' : 'Practical Guide'}
               </div>
               <h1 className="text-4xl font-bold text-gray-900 mb-4">
                 {isFrench 
@@ -89,7 +89,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
                   <AlertTriangle className="w-5 h-5 text-yellow-600 mt-0.5" />
                   <div>
                     <p className="text-yellow-800 font-semibold mb-1">
-                      {isFrench ? 'Point Important' : 'Important Point'}
+                      {isFrench ? 'Point important' : 'Important Point'}
                     </p>
                     <p className="text-yellow-700 text-sm">
                       {isFrench 
@@ -108,7 +108,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
                   <FileText className="w-4 h-4 text-blue-600" />
                 </div>
-                {isFrench ? 'Les Bases de la Transmission CÉLI' : 'TFSA Transmission Basics'}
+                {isFrench ? 'Les bases de la transmission CÉLI' : 'TFSA Transmission Basics'}
               </h2>
               <p className="text-gray-700 mb-4">
                 {isFrench 
@@ -121,7 +121,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
                   <CardHeader className="pb-3">
                     <CardTitle className="text-lg text-green-800 flex items-center gap-2">
                       <CheckCircle className="w-5 h-5" />
-                      {isFrench ? 'Bénéficiaire Successeur' : 'Successor Holder'}
+                      {isFrench ? 'Bénéficiaire successeur' : 'Successor Holder'}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -137,7 +137,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
                   <CardHeader className="pb-3">
                     <CardTitle className="text-lg text-orange-800 flex items-center gap-2">
                       <AlertTriangle className="w-5 h-5" />
-                      {isFrench ? 'Autres Héritiers' : 'Other Heirs'}
+                      {isFrench ? 'Autres héritiers' : 'Other Heirs'}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -158,7 +158,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
                 <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
                   <Target className="w-4 h-4 text-purple-600" />
                 </div>
-                {isFrench ? 'Stratégies d\'Optimisation' : 'Optimization Strategies'}
+                {isFrench ? 'Stratégies d\'optimisation' : 'Optimization Strategies'}
               </h2>
               
               <div className="space-y-6">
@@ -166,7 +166,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
                 <Card className="border-l-4 border-l-blue-500">
                   <CardHeader>
                     <CardTitle className="text-xl text-blue-900">
-                      1. {isFrench ? 'Nommer un Titulaire Successeur' : 'Name a Successor Holder'}
+                      1. {isFrench ? 'Nommer un titulaire successeur' : 'Name a Successor Holder'}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -202,7 +202,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
                 <Card className="border-l-4 border-l-green-500">
                   <CardHeader>
                     <CardTitle className="text-xl text-green-900">
-                      2. {isFrench ? 'Éviter les Erreurs de Désignation' : 'Avoid Designation Errors'}
+                      2. {isFrench ? 'Éviter les erreurs de désignation' : 'Avoid Designation Errors'}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -243,7 +243,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
                 <Card className="border-l-4 border-l-purple-500">
                   <CardHeader>
                     <CardTitle className="text-xl text-purple-900">
-                      3. {isFrench ? 'Maximiser la Transmission Tax-Free' : 'Maximize Tax-Free Transmission'}
+                      3. {isFrench ? 'Maximiser la transmission Tax-Free' : 'Maximize Tax-Free Transmission'}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -255,14 +255,14 @@ const OptimiserTransmissionCeli: React.FC = () => {
                     </p>
                     <div className="bg-purple-50 p-4 rounded-lg">
                       <h4 className="font-semibold text-purple-900 mb-3">
-                        {isFrench ? 'Stratégie en 3 Étapes :' : '3-Step Strategy:'}
+                        {isFrench ? 'Stratégie en 3 étapes :' : '3-Step Strategy:'}
                       </h4>
                       <div className="space-y-3">
                         <div className="flex items-start gap-3">
                           <div className="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
                           <div>
                             <p className="font-semibold text-purple-900">
-                              {isFrench ? 'Paiement Exempt' : 'Exempt Payment'}
+                              {isFrench ? 'Paiement exempt' : 'Exempt Payment'}
                             </p>
                             <p className="text-purple-800 text-sm">
                               {isFrench 
@@ -276,7 +276,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
                           <div className="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
                           <div>
                             <p className="font-semibold text-purple-900">
-                              {isFrench ? 'Cotisation Immédiate' : 'Immediate Contribution'}
+                              {isFrench ? 'Cotisation immédiate' : 'Immediate Contribution'}
                             </p>
                             <p className="text-purple-800 text-sm">
                               {isFrench 
@@ -290,7 +290,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
                           <div className="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
                           <div>
                             <p className="font-semibold text-purple-900">
-                              {isFrench ? 'Préservation Partielle' : 'Partial Preservation'}
+                              {isFrench ? 'Préservation partielle' : 'Partial Preservation'}
                             </p>
                             <p className="text-purple-800 text-sm">
                               {isFrench 
@@ -313,13 +313,13 @@ const OptimiserTransmissionCeli: React.FC = () => {
                 <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
                   <DollarSign className="w-4 h-4 text-green-600" />
                 </div>
-                {isFrench ? 'Exemple Concret' : 'Concrete Example'}
+                {isFrench ? 'Exemple concret' : 'Concrete Example'}
               </h2>
               
               <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200">
                 <CardHeader>
                   <CardTitle className="text-xl text-green-900">
-                    {isFrench ? 'Famille Tremblay : Optimisation Réussie' : 'Tremblay Family: Successful Optimization'}
+                    {isFrench ? 'Famille Tremblay : Optimisation réussie' : 'Tremblay Family: Successful Optimization'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -367,7 +367,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
                 <div className="w-8 h-8 bg-yellow-100 rounded-full flex items-center justify-center">
                   <Lightbulb className="w-4 h-4 text-yellow-600" />
                 </div>
-                {isFrench ? 'Points Clés à Retenir' : 'Key Takeaways'}
+                {isFrench ? 'Points clés à retenir' : 'Key Takeaways'}
               </h2>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -402,7 +402,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
             {/* Call to Action */}
             <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-8 text-center text-white">
               <h3 className="text-2xl font-bold mb-4">
-                {isFrench ? 'Prêt à Optimiser Votre CÉLI ?' : 'Ready to Optimize Your TFSA?'}
+                {isFrench ? 'Prêt à optimiser votre CÉLI ?' : 'Ready to Optimize Your TFSA?'}
               </h3>
               <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
                 {isFrench 
@@ -415,14 +415,14 @@ const OptimiserTransmissionCeli: React.FC = () => {
                   onClick={() => navigate('/planification-successorale')}
                   className="bg-white text-blue-600 hover:bg-gray-100 font-semibold px-8 py-3"
                 >
-                  {isFrench ? 'Planification Successorale' : 'Estate Planning'}
+                  {isFrench ? 'Planification successorale' : 'Estate Planning'}
                 </Button>
                 <Button 
                   onClick={() => navigate('/blog')}
                   variant="outline" 
                   className="border-white text-white hover:bg-white hover:text-blue-600 font-semibold px-8 py-3"
                 >
-                  {isFrench ? 'Plus d\'Articles' : 'More Articles'}
+                  {isFrench ? 'Plus d\'articles' : 'More Articles'}
                 </Button>
               </div>
             </div>
@@ -433,20 +433,20 @@ const OptimiserTransmissionCeli: React.FC = () => {
           <Card className="bg-white shadow-xl">
             <CardHeader>
               <CardTitle className="text-xl font-bold text-gray-900">
-                {isFrench ? 'Articles Connexes' : 'Related Articles'}
+                {isFrench ? 'Articles connexes' : 'Related Articles'}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[
                   {
-                    title: isFrench ? 'Stratégies Fiscales pour la Retraite' : 'Tax Strategies for Retirement',
-                    category: isFrench ? 'Guide Pratique' : 'Practical Guide',
+                    title: isFrench ? 'Stratégies fiscales pour la retraite' : 'Tax Strategies for Retirement',
+                    category: isFrench ? 'Guide pratique' : 'Practical Guide',
                     path: '/blog/guides/strategies-fiscales-retraite'
                   },
                   {
-                    title: isFrench ? '10 Conseils pour une Retraite Réussie' : '10 Tips for Successful Retirement',
-                    category: isFrench ? 'Conseils d\'Experts' : 'Expert Tips',
+                    title: isFrench ? '10 Conseils pour une retraite réussie' : '10 Tips for Successful Retirement',
+                    category: isFrench ? 'Conseils d\'experts' : 'Expert Tips',
                     path: '/blog/conseils-experts/10-conseils-retraite-reussie'
                   }
                 ].map((article, index) => (

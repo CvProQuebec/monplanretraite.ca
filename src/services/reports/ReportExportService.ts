@@ -1,6 +1,6 @@
 // Service commun pour l'export de rapports
 // Centralise les fonctionnalités d'export en différents formats
-// Respecte les exigences de sécurité (traitement 100% local)
+// Respecte les exigences de sécurité (traitement 100 % local)
 
 import { ReportMetadataService, StandardReportMetadata } from './ReportMetadataService';
 
@@ -330,7 +330,7 @@ export class ReportExportService {
         content += '\n\n' + `${'='.repeat(50)}\n`;
         content += `MONPLANRETRAITE.CA - Planification financière sécurisée\n`;
         content += `Généré le ${new Date().toLocaleDateString('fr-CA')} | Version 2.1.0\n`;
-        content += `Confidentialité garantie : Traitement 100% local\n`;
+        content += `Confidentialité garantie : Traitement 100 % local\n`;
       }
 
       const fileName = opts.fileName || this.generateFileName(reportTitle, 'txt');

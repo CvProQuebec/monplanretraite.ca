@@ -57,7 +57,7 @@ export const NavigationDemo: React.FC = () => {
     {
       id: 'premium',
       label: language === 'fr' ? 'Fonctionnalités premium' : 'Premium Features',
-      description: language === 'fr' ? 'Plan ultime' : 'Ultimate plan',
+      description: language === 'fr' ? 'Plan ultime' : 'Expert plan',
       status: 'premium' as const,
       requiredPlan: 'ultimate' as const,
       icon: Crown

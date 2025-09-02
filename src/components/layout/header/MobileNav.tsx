@@ -171,13 +171,13 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
               {isEnglish ? "Expense Planning" : "Planification de dépenses"}
             </Link>
             
-            {/* Calculette de Rendement Avancée / Advanced Performance Calculator */}
+            {/* Calculette de rendement avancée / Advanced Performance Calculator */}
             <Link
               to={isEnglish ? "/advanced-performance-calculator" : "/calculette-rendement-avancee"}
               className={getMobileLinkClasses(isEnglish ? "/advanced-performance-calculator" : "/calculette-rendement-avancee")}
               onClick={toggleMenu}
             >
-              {isEnglish ? "Advanced Performance Calculator" : "Calculette de Rendement Avancée"}
+              {isEnglish ? "Advanced Performance Calculator" : "Calculette de rendement avancée"}
             </Link>
             
             {/* Modules de calcul déplacés des "Modules Avancés" */}
@@ -290,7 +290,7 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
               className={getMobileLinkClasses(isEnglish ? "/four-percent-rule" : "/regle-quatre-pourcent")}
               onClick={toggleMenu}
             >
-              {isEnglish ? "4% Rule" : "Règle des 4%"}
+              {isEnglish ? "4% Rule" : "Règle des 4 %"}
             </Link>
             
             <Link

@@ -39,7 +39,7 @@ export const AssistantFinancier: React.FC = () => {
   const [isFirstVisit, setIsFirstVisit] = useState(true);
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
-  // Vérifier l'accès à l'Assistant Financier Personnel
+  // Vérifier l'accès à l'Assistant financier personnel
   const userPlan = user?.subscription?.plan || 'free';
   const hasAccess = checkFeatureAccess('hasFinancialAssistant', userPlan);
   const requiredPlan = getRequiredPlanForFeature('hasFinancialAssistant');
@@ -99,7 +99,7 @@ export const AssistantFinancier: React.FC = () => {
                 </div>
               </div>
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-                {isFrench ? 'Assistant Financier Personnel' : 'Personal Financial Assistant'}
+                {isFrench ? 'Assistant financier personnel' : 'Personal Financial Assistant'}
               </h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
                 {isFrench 
@@ -155,7 +155,7 @@ export const AssistantFinancier: React.FC = () => {
               </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Votre Assistant Financier Personnel
+              Votre Assistant financier personnel
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Un compagnon intelligent qui analyse votre situation financière en temps réel, 

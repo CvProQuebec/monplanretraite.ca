@@ -22,7 +22,7 @@ const BlogPage: React.FC = () => {
   const blogCategories = [
     {
       id: 'guides',
-      title: isFrench ? 'Guides Pratiques' : 'Practical Guides',
+      title: isFrench ? 'Guides pratiques' : 'Practical Guides',
       description: isFrench 
         ? 'Des guides détaillés pour optimiser votre planification financière'
         : 'Detailed guides to optimize your financial planning',
@@ -49,7 +49,7 @@ const BlogPage: React.FC = () => {
     },
     {
       id: 'expert-tips',
-      title: isFrench ? 'Conseils d\'Experts' : 'Expert Tips',
+      title: isFrench ? 'Conseils d\'experts' : 'Expert Tips',
       description: isFrench 
         ? 'Les meilleures pratiques et conseils de professionnels de la finance'
         : 'Best practices and advice from finance professionals',
@@ -57,7 +57,7 @@ const BlogPage: React.FC = () => {
       color: 'from-amber-500 to-orange-500',
       articles: [
         {
-          title: isFrench ? '10 Conseils Essentiels pour une Retraite Réussie' : '10 Essential Tips for a Successful Retirement',
+          title: isFrench ? '10 conseils essentiels pour une retraite réussie' : '10 Essential Tips for a Successful Retirement',
           excerpt: isFrench 
             ? 'Les conseils cruciaux que tout futur retraité devrait connaître pour éviter les erreurs coûteuses.'
             : 'Crucial advice every future retiree should know to avoid costly mistakes.',
@@ -65,7 +65,7 @@ const BlogPage: React.FC = () => {
           path: '/blog/conseils-experts/10-conseils-retraite-reussie'
         },
         {
-          title: isFrench ? 'Éviter les Biais Comportementaux en Investissement' : 'Avoiding Behavioral Biases in Investment',
+          title: isFrench ? 'Éviter les biais comportementaux en investissement' : 'Avoiding Behavioral Biases in Investment',
           excerpt: isFrench 
             ? 'Comment reconnaître et éviter les pièges psychologiques qui nuisent à vos décisions financières.'
             : 'How to recognize and avoid psychological traps that harm your financial decisions.',
@@ -76,7 +76,7 @@ const BlogPage: React.FC = () => {
     },
     {
       id: 'case-studies',
-      title: isFrench ? 'Études de Cas' : 'Case Studies',
+      title: isFrench ? 'Études de cas' : 'Case Studies',
       description: isFrench 
         ? 'Analyses détaillées de situations réelles et leurs solutions'
         : 'Detailed analyses of real situations and their solutions',
@@ -84,7 +84,7 @@ const BlogPage: React.FC = () => {
       color: 'from-green-500 to-emerald-600',
       articles: [
         {
-          title: isFrench ? 'Étude de Cas : Retraite Anticipée à 55 ans' : 'Case Study: Early Retirement at 55',
+          title: isFrench ? 'Étude de cas : Retraite Anticipée à 55 ans' : 'Case Study: Early Retirement at 55',
           excerpt: isFrench 
             ? 'Analyse complète d\'une stratégie de retraite anticipée avec optimisation REER/CÉLI.'
             : 'Complete analysis of an early retirement strategy with RRSP/TFSA optimization.',
@@ -92,7 +92,7 @@ const BlogPage: React.FC = () => {
           path: '/blog/etudes-cas/retraite-anticipee-55-ans'
         },
         {
-          title: isFrench ? 'Optimisation Successorale : Famille de 4 Enfants' : 'Estate Optimization: Family of 4 Children',
+          title: isFrench ? 'Optimisation successorale : famille de 4 enfants' : 'Estate Optimization: Family of 4 Children',
           excerpt: isFrench 
             ? 'Comment structurer efficacement la transmission d\'un patrimoine de 2M$ à 4 héritiers.'
             : 'How to efficiently structure the transmission of a $2M estate to 4 heirs.',
@@ -103,7 +103,7 @@ const BlogPage: React.FC = () => {
     },
     {
       id: 'tax-news',
-      title: isFrench ? 'Actualités Fiscales' : 'Tax News',
+      title: isFrench ? 'Actualités fiscales' : 'Tax News',
       description: isFrench 
         ? 'Les dernières nouvelles fiscales et leurs impacts sur votre retraite'
         : 'Latest tax news and their impact on your retirement',
@@ -111,7 +111,7 @@ const BlogPage: React.FC = () => {
       color: 'from-purple-500 to-indigo-600',
       articles: [
         {
-          title: isFrench ? 'Budget 2024 : Nouveautés pour les Retraités' : 'Budget 2024: News for Retirees',
+          title: isFrench ? 'Budget 2024 : Nouveautés pour les retraités' : 'Budget 2024: News for Retirees',
           excerpt: isFrench 
             ? 'Analyse des changements fiscaux du budget 2024 et leur impact sur votre planification.'
             : 'Analysis of tax changes in the 2024 budget and their impact on your planning.',
@@ -216,25 +216,25 @@ const BlogPage: React.FC = () => {
           {/* Featured Articles Section */}
           <div className="bg-white rounded-2xl shadow-xl p-8 mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-              {isFrench ? 'Articles Populaires' : 'Popular Articles'}
+              {isFrench ? 'Articles populaires' : 'Popular Articles'}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 {
-                  title: isFrench ? 'Guide Complet : Optimisation REER vs CÉLI' : 'Complete Guide: RRSP vs TFSA Optimization',
-                  category: isFrench ? 'Guides Pratiques' : 'Practical Guides',
+                  title: isFrench ? 'Guide complet : Optimisation REER vs CÉLI' : 'Complete Guide: RRSP vs TFSA Optimization',
+                  category: isFrench ? 'Guides pratiques' : 'Practical Guides',
                   readTime: '15 min',
                   path: '/blog/guides/reer-vs-celi-optimization'
                 },
                 {
-                  title: isFrench ? '5 Erreurs Coûteuses à Éviter en Retraite' : '5 Costly Mistakes to Avoid in Retirement',
-                  category: isFrench ? 'Conseils d\'Experts' : 'Expert Tips',
+                  title: isFrench ? '5 Erreurs coûteuses à éviter en retraite' : '5 Costly Mistakes to Avoid in Retirement',
+                  category: isFrench ? 'Conseils d\'experts' : 'Expert Tips',
                   readTime: '8 min',
                   path: '/blog/conseils-experts/5-erreurs-couteuses-retraite'
                 },
                 {
-                  title: isFrench ? 'Impact de l\'Inflation sur Votre Retraite' : 'Impact of Inflation on Your Retirement',
-                  category: isFrench ? 'Actualités Fiscales' : 'Tax News',
+                  title: isFrench ? 'Impact de l\'inflation sur votre retraite' : 'Impact of Inflation on Your Retirement',
+                  category: isFrench ? 'Actualités fiscales' : 'Tax News',
                   readTime: '10 min',
                   path: '/blog/actualites-fiscales/impact-inflation-retraite'
                 }

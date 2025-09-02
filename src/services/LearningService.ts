@@ -161,7 +161,7 @@ export class LearningService {
         estimatedTime: 45,
         prerequisites: ['budget-fundamentals', 'emergency-fund-mastery'],
         objectives: [
-          'Comprendre la règle du 4%',
+          'Comprendre la règle du 4 %',
           'Calculer ses besoins de retraite',
           'Optimiser REER et CELI',
           'Stratégies de décaissement'

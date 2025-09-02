@@ -109,8 +109,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
     
     // Conseils
     practicalTips: isFrench ? '💡 Conseils pratiques :' : '💡 Practical Tips:',
-    explanatoryVideo: isFrench ? '🎥 Vidéo explicative disponible' : '🎥 Explanatory video available',
-    watchVideo: isFrench ? 'Regarder la vidéo' : 'Watch Video',
+
     
     // Parcours terminé
     pathCompleted: isFrench ? 'Parcours terminé !' : 'Path Completed!',
@@ -369,15 +368,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                         </div>
                       )}
                       
-                      {currentStep.videoUrl && (
-                        <div>
-                          <h4 className="font-medium text-sm mb-2">{t.explanatoryVideo}</h4>
-                          <Button variant="outline" size="sm">
-                            <Play className="h-3 w-3 mr-1" />
-                            {t.watchVideo}
-                          </Button>
-                        </div>
-                      )}
+
                     </div>
                   </AlertDescription>
                 </Alert>

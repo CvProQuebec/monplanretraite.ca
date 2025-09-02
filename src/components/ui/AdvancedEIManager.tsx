@@ -167,7 +167,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
       <CardHeader className="border-b border-gray-300">
         <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
           <Calculator className="w-8 h-8 text-gray-600" />
-          {isFrench ? 'Assurance Emploi Avancée' : 'Advanced Employment Insurance'} - {personName}
+          {isFrench ? 'Assurance emploi Avancée' : 'Advanced Employment Insurance'} - {personName}
         </CardTitle>
         <CardDescription className="text-gray-600">
           {isFrench 
@@ -182,7 +182,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
             <Users className="w-5 h-5" />
-            {isFrench ? 'Emploi Précédent' : 'Previous Employment'}
+            {isFrench ? 'Emploi précédent' : 'Previous Employment'}
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -225,11 +225,11 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
           </div>
         </div>
         
-        {/* Section Assurance Emploi */}
+        {/* Section Assurance emploi */}
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
             <DollarSign className="w-5 h-5" />
-            {isFrench ? 'Assurance Emploi' : 'Employment Insurance'}
+            {isFrench ? 'Assurance emploi' : 'Employment Insurance'}
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -320,7 +320,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
         <div className="space-y-4">
           <h3 className="text-lg font-semibold text-green-300 flex items-center gap-2">
             <TrendingUp className="w-5 h-5" />
-            {isFrench ? 'Revenus Supplémentaires' : 'Additional Income'}
+            {isFrench ? 'Revenus supplémentaires' : 'Additional Income'}
           </h3>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -376,7 +376,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
             className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-3 px-8"
           >
             <Calculator className="w-5 h-5 mr-2" />
-            {isFrench ? 'Calculer les Projections' : 'Calculate Projections'}
+            {isFrench ? 'Calculer les projections' : 'Calculate Projections'}
           </Button>
         </div>
         
@@ -385,7 +385,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
           <div className="space-y-6 mt-8">
             <h3 className="text-xl font-bold text-white flex items-center gap-2">
               <FileText className="w-6 h-6" />
-              {isFrench ? 'Analyse Détaillée' : 'Detailed Analysis'}
+              {isFrench ? 'Analyse détaillée' : 'Detailed Analysis'}
             </h3>
             
             {/* Résumé financier */}
@@ -459,7 +459,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
             {eiData.calculationResult.transitionRecommendations.length > 0 && (
               <div className="space-y-4">
                 <h4 className="text-lg font-semibold text-white">
-                  {isFrench ? 'Recommandations de Transition' : 'Transition Recommendations'}
+                  {isFrench ? 'Recommandations de transition' : 'Transition Recommendations'}
                 </h4>
                 
                 {eiData.calculationResult.transitionRecommendations.map((rec, index) => (
@@ -469,8 +469,8 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
                       <div className="space-y-2">
                         <div className="font-semibold text-lg">
                           {rec.type === 'rrq' && (isFrench ? '🏛️ Régime de Rentes du Québec' : '🏛️ Quebec Pension Plan')}
-                          {rec.type === 'sv' && (isFrench ? '🛡️ Sécurité de la Vieillesse' : '🛡️ Old Age Security')}
-                          {rec.type === 'employment' && (isFrench ? '💼 Recherche d\'Emploi' : '💼 Job Search')}
+                          {rec.type === 'sv' && (isFrench ? '🛡️ Sécurité de la vieillesse' : '🛡️ Old Age Security')}
+                          {rec.type === 'employment' && (isFrench ? '💼 Recherche d\'emploi' : '💼 Job Search')}
                           {rec.type === 'training' && (isFrench ? '🎓 Formation' : '🎓 Training')}
                         </div>
                         

@@ -68,7 +68,7 @@ export const MonteCarloSection: React.FC<MonteCarloSectionProps> = ({ data, onUp
 
   // Traductions
   const t = {
-    title: isFrench ? 'Modélisation Monte Carlo Avancée' : 'Advanced Monte Carlo Modeling',
+    title: isFrench ? 'Modélisation Monte Carlo avancée' : 'Advanced Monte Carlo Modeling',
     description: isFrench 
       ? 'Simulez des milliers de scénarios pour évaluer les risques et optimiser votre plan de retraite'
       : 'Simulate thousands of scenarios to assess risks and optimize your retirement plan',
@@ -86,7 +86,7 @@ export const MonteCarloSection: React.FC<MonteCarloSectionProps> = ({ data, onUp
     medianIncome: isFrench ? 'Revenu médian' : 'Median Income',
     volatility: isFrench ? 'Volatilité' : 'Volatility',
     riskMetrics: isFrench ? 'Métriques de risque' : 'Risk Metrics',
-    valueAtRisk: isFrench ? 'Value at Risk' : 'Value at Risk',
+    valueAtRisk: isFrench ? 'Valeur a risque' : 'Value at Risk',
     sharpeRatio: isFrench ? 'Ratio de Sharpe' : 'Sharpe Ratio',
     maxDrawdown: isFrench ? 'Perte maximale' : 'Maximum Drawdown',
     scenarios: isFrench ? 'Scénarios' : 'Scenarios',

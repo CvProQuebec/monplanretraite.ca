@@ -199,7 +199,7 @@ export class RREGOPService {
     }
 
     if (donnees.pourcentageTempsPlein && (donnees.pourcentageTempsPlein < 0.1 || donnees.pourcentageTempsPlein > 1.0)) {
-      erreurs.push('Pourcentage temps plein doit être entre 10% et 100%');
+      erreurs.push('Pourcentage temps plein doit être entre 10 % et 100 %');
     }
 
     return erreurs;

@@ -86,7 +86,7 @@ export const ReportsSection: React.FC<ReportsSectionProps> = ({ data, calculatio
     {
       icon: Printer,
       title: isFrench ? 'Optimisé pour l\'impression' : 'Print Optimized',
-      description: isFrench ? 'Format A4 parfaitement adapté' : 'Perfectly adapted A4 format'
+      description: isFrench ? 'Format Lettre parfaitement adapté' : 'Perfectly adapted Letter format'
     }
   ];
 

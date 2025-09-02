@@ -167,20 +167,20 @@ const UpgradeModal: React.FC<UpgradeModalProps> = ({
               </CardContent>
             </Card>
 
-            {/* Ultimate Plan (if not already required) */}
-            {requiredPlan !== 'ultimate' && (
+            {/* Expert Plan (if not already required) */}
+            {requiredPlan !== 'expert' && (
               <Card className="border-2 border-gray-200">
                 <CardHeader className="text-center pb-3">
                   <Badge variant="outline" className="mb-2">
                     Premium
                   </Badge>
-                  <CardTitle className="text-lg">Ultimate</CardTitle>
+                  <CardTitle className="text-lg">Expert</CardTitle>
                   <CardDescription className="text-2xl font-bold text-gray-900">
-                    {PLAN_CONFIG.ultimate.price}
+                    {PLAN_CONFIG.expert.price}
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2">
-                  {Object.entries(PLAN_CONFIG.ultimate.features).map(([key, value]) => (
+                  {Object.entries(PLAN_CONFIG.expert.features).map(([key, value]) => (
                     <div key={key} className="flex items-center gap-2 text-sm">
                       {value === true || value === -1 ? (
                         <Check className="h-4 w-4 text-green-600" />

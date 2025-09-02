@@ -815,7 +815,7 @@ const MaRetraite: React.FC = () => {
                   <div className="text-center p-4 bg-white/60 rounded-xl border border-purple-200/50 hover:bg-white/80 transition-colors duration-200">
                     <div className="text-2xl sm:text-3xl font-bold text-purple-600 mb-2">{getCalculsProgress()}%</div>
                     <div className="text-sm sm:text-base text-gray-700 font-medium mb-3">
-                      {isFrench ? 'Calculs de Retraite' : 'Retirement Calculations'}
+                      {isFrench ? 'Calculs de retraite' : 'Retirement Calculations'}
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2.5">
                       <div 
@@ -1142,7 +1142,7 @@ const MaRetraite: React.FC = () => {
                   <div className="flex items-center gap-3 mb-2">
                     <CheckCircle className="w-6 h-6 text-green-600" />
                     <h3 className="text-lg font-semibold text-purple-800">
-                      {isFrench ? 'Votre plan prend forme !' : 'Your plan is taking shape!'}
+                      {isFrench ? 'Votre plan prend forme!' : 'Your plan is taking shape!'}
                     </h3>
                   </div>
                   <p className="text-purple-700">
@@ -1163,7 +1163,7 @@ const MaRetraite: React.FC = () => {
             <div className="flex items-center justify-center gap-3 mb-4">
               <Star className="w-8 h-8 text-yellow-500" />
               <h2 className="text-2xl font-bold text-gray-800">
-                {isFrench ? 'Excellent travail !' : 'Excellent work!'}
+                {isFrench ? 'Excellent travail!' : 'Excellent work!'}
               </h2>
             </div>
             <p className="text-lg text-gray-700 mb-6">

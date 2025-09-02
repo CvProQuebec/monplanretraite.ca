@@ -192,7 +192,7 @@ export const StepNavigation: React.FC<StepNavigationProps> = ({
                         : 'bg-purple-100 text-purple-700'
                       }
                     `}>
-                      {step.requiredPlan === 'professional' ? 'Pro' : 'Ultimate'}
+                      {step.requiredPlan === 'professional' ? 'Pro' : 'Expert'}
                     </div>
                   )}
                 </div>

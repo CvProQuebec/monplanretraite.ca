@@ -35,7 +35,7 @@ const UnifiedRetirementPage: React.FC = () => {
         isFrench ? 'Calculs de retraite de base' : 'Basic retirement calculations',
         isFrench ? 'Gestion de l\'épargne' : 'Savings management'
       ],
-      button: isFrench ? 'Commencer Gratuitement' : 'Start Free'
+      button: isFrench ? 'Commencer gratuitement' : 'Start Free'
     },
     
     advancedFeatures: {
@@ -57,10 +57,10 @@ const UnifiedRetirementPage: React.FC = () => {
         isFrench ? 'Conseils de sécurité' : 'Security tips',
         isFrench ? 'Informations d\'urgence' : 'Emergency information'
       ],
-      button: isFrench ? 'En Savoir Plus' : 'Learn More'
+      button: isFrench ? 'En savoir plus' : 'Learn More'
     },
     
-    callToAction: isFrench ? '🚀 Accéder au Module Complet' : '🚀 Access Complete Module'
+    callToAction: isFrench ? '🚀 Accéder au module complet' : '🚀 Access Complete Module'
   };
 
   // Routes dynamiques selon la langue

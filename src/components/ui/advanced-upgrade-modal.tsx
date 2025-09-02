@@ -74,7 +74,7 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
     }
 
     if (appliedPromoCode && promoDiscount === 100) {
-      console.log('Code promo 100% appliqué - Accès Expert déverrouillé');
+      console.log('Code promo 100 % appliqué - Accès Expert déverrouillé');
       onClose();
       return;
     }
@@ -147,7 +147,6 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
         hasAdvancedAnalytics: 'Analyses avancées',
         hasAIConsulting: 'Conseils IA',
         hasIntegrations: 'Intégrations',
-        hasPrioritySupport: 'Support prioritaire',
         hasPersonalizedTraining: 'Formation personnalisée',
         hasExportPDF: 'Export PDF',
         hasMonteCarloSimulations: 'Simulations Monte Carlo',
@@ -219,13 +218,13 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
           <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-4">
             <div className="flex items-center gap-2 text-red-800">
               <Shield className="h-5 w-5" />
-              <span className="font-medium">{isFrench ? 'Erreur lors de l\'upgrade' : 'Upgrade error'}</span>
+              <span className="font-medium">{isFrench ? 'Erreur lors de la mise à jour' : 'Upgrade error'}</span>
             </div>
             <p className="text-red-700 text-sm mt-1">{error}</p>
           </div>
         )}
 
-        {/* Message spécial pour les codes 100% gratuits */}
+        {/* Message spécial pour les codes 100 % gratuits */}
         {appliedPromoCode && promoDiscount === 100 && (
           <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-4">
             <div className="flex items-center gap-2 text-green-800">
@@ -416,7 +415,7 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
               {currentPlan === 'expert' && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <Badge className="bg-blue-100 text-blue-800 border border-blue-200">
-                    {isFrench ? 'Plan Actuel' : 'Current Plan'}
+                    {isFrench ? 'Plan actuel' : 'Current Plan'}
                   </Badge>
                 </div>
               )}
@@ -475,7 +474,7 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <Crown className="h-4 w-4 text-purple-600" />
-                  <span className="text-gray-700">{isFrench ? 'Support prioritaire • Consultation virtuelle' : 'Priority support • Virtual consultation'}</span>
+
                 </div>
                 {currentPlan !== 'expert' && (
                   <Button 
@@ -501,7 +500,7 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
           <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-lg p-6">
             <h3 className="font-semibold text-purple-900 mb-4 flex items-center gap-2">
               <Zap className="h-5 w-5" />
-              {isFrench ? 'Pourquoi mettre à niveau ?' : 'Why upgrade?'}
+              {isFrench ? 'Pourquoi mettre à niveau?' : 'Why upgrade?'}
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="flex items-center gap-2">
@@ -512,9 +511,7 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
               </div>
               <div className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-green-600" />
-                <span className="text-sm text-purple-700">
-                  {isFrench ? 'Support prioritaire inclus' : 'Priority support included'}
-                </span>
+
               </div>
               <div className="flex items-center gap-2">
                 <Check className="h-4 w-4 text-green-600" />
@@ -546,7 +543,7 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
           <div className="text-center text-sm text-gray-500">
             <Shield className="h-4 w-4 inline mr-1" />
             {isFrench 
-              ? 'Paiement sécurisé par Stripe • Annulation 30 jours'
+              ? 'Paiement sécurisé par Stripe • Annulation 14 jours'
               : 'Secure payment by Stripe • 30-day cancellation'
             }
           </div>

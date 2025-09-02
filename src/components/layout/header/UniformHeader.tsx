@@ -140,7 +140,7 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
         },
         {
           id: 'advanced-performance',
-          label: isEnglish ? 'Advanced Performance Calculator' : 'Calculette de Rendement Avancée',
+          label: isEnglish ? 'Advanced Performance Calculator' : 'Calculette de rendement avancée',
           path: isEnglish ? '/advanced-performance-calculator' : '/calculette-rendement-avancee',
           planLevel: 'professional'
         },
@@ -287,22 +287,22 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
       submenu: [
         {
           id: 'blog-guides',
-          label: isEnglish ? '📚 Practical Guides' : '📚 Guides Pratiques',
+          label: isEnglish ? '📚 Practical Guides' : '📚 Guides pratiques',
           path: isEnglish ? '/blog/guides' : '/blog/guides'
         },
         {
           id: 'blog-expert-tips',
-          label: isEnglish ? '💡 Expert Tips' : '💡 Conseils d\'Experts',
+          label: isEnglish ? '💡 Expert Tips' : '💡 Conseils d\'experts',
           path: isEnglish ? '/blog/expert-tips' : '/blog/conseils-experts'
         },
         {
           id: 'blog-case-studies',
-          label: isEnglish ? '📊 Case Studies' : '📊 Études de Cas',
+          label: isEnglish ? '📊 Case Studies' : '📊 Études de cas',
           path: isEnglish ? '/blog/case-studies' : '/blog/etudes-cas'
         },
         {
           id: 'blog-tax-news',
-          label: isEnglish ? '🔍 Tax News' : '🔍 Actualités Fiscales',
+          label: isEnglish ? '🔍 Tax News' : '🔍 Actualités fiscales',
           path: isEnglish ? '/blog/tax-news' : '/blog/actualites-fiscales'
         }
       ]

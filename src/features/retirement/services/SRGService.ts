@@ -147,11 +147,11 @@ export class SRGService {
       const revenuEmploiAjuste = this.appliquerExemptionEmploi(revenuEmploi);
       revenuTotal += revenuEmploiAjuste;
 
-      // Revenus de pension privée (100% imposables)
+      // Revenus de pension privée ( 100 % imposables)
       revenuTotal += retirement.pensionPrivee1 || 0;
       revenuTotal += retirement.pensionPrivee2 || 0;
 
-      // Retraits REER/FERR (100% imposables)
+      // Retraits REER/FERR (100 % imposables)
       revenuTotal += retirement.retraitREER1 || 0;
       revenuTotal += retirement.retraitREER2 || 0;
 

@@ -177,7 +177,7 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
               <div className="flex items-center gap-3">
                 <Calendar className="w-5 h-5 text-green-400" />
                 <h4 className="text-lg font-semibold text-green-300">
-                  {isFrench ? 'Période 1 : Janvier à Juin' : 'Period 1: January to June'}
+                  {isFrench ? 'Période 1 : janvier à juin' : 'Period 1: January to June'}
                 </h4>
               </div>
               
@@ -228,7 +228,7 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
               <div className="flex items-center gap-3">
                 <Calendar className="w-5 h-5 text-orange-400" />
                 <h4 className="text-lg font-semibold text-orange-300">
-                  {isFrench ? 'Période 2 : Juillet à Décembre' : 'Period 2: July to December'}
+                  {isFrench ? 'Période 2 : juillet à décembre' : 'Period 2: July to December'}
                 </h4>
                 <span className="text-xs bg-orange-600 px-2 py-1 rounded-full text-white">
                   {isFrench ? 'Récupération fiscale' : 'Tax clawback'}

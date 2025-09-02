@@ -319,7 +319,7 @@ export class UnifiedRREGOPService {
     }
 
     if (data.pourcentageTempsPlein < 0.1 || data.pourcentageTempsPlein > 1.0) {
-      erreurs.push('Pourcentage temps plein doit être entre 10% et 100%');
+      erreurs.push('Pourcentage temps plein doit être entre 10 % et 100 %');
     }
 
     // Validations avancées

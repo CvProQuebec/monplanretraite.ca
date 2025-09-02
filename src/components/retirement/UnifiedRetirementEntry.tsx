@@ -70,7 +70,7 @@ const UnifiedRetirementEntry: React.FC<UnifiedRetirementEntryProps> = ({
       : 'This financial planning platform is an educational and informational tool that does not replace consultation with a qualified professional.',
     
     // Welcome
-    welcome: isFrench ? 'Bienvenue Gerald Dore !' : 'Welcome Gerald Dore!',
+    welcome: isFrench ? 'Bienvenue!' : 'Welcome!',
     promoText: isFrench 
       ? 'Avez-vous un code promo ? Débloquez des fonctionnalités supplémentaires !'
       : 'Do you have a promo code? Unlock additional features!',

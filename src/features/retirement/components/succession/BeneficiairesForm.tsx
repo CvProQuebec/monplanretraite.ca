@@ -186,7 +186,7 @@ export const BeneficiairesForm: React.FC<BeneficiairesFormProps> = ({ beneficiai
       {getTotalPourcentage() > 100 && (
         <Alert className="border-red-200 bg-red-50">
           <AlertDescription className="text-red-800">
-            <strong>Attention :</strong> Le total des pourcentages dépasse 100% ({getTotalPourcentage()}%). 
+            <strong>Attention :</strong> Le total des pourcentages dépasse 100 % ({getTotalPourcentage()}%). 
             Veuillez ajuster la répartition.
           </AlertDescription>
         </Alert>

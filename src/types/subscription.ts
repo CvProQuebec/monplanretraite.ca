@@ -138,7 +138,7 @@ export interface PromoCode {
   description: string;
   validUntil: string; // Date de fin de validité
   maxUses: number;
-  unlimitedFeatures?: boolean; // Pour les codes 100% gratuits
+  unlimitedFeatures?: boolean; // Pour les codes 100 % gratuits
   testMode?: boolean; // Pour les codes de test
   currentUses?: number; // Nombre d'utilisations actuelles
 }

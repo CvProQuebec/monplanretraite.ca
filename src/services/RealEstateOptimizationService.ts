@@ -1,6 +1,6 @@
 // ===== SERVICE D'OPTIMISATION IMMOBILIÈRE DE RETRAITE =====
 // Intégration complète avec RREGOP et système de retraite existant
-// 100% local - Aucune transmission réseau des données confidentielles
+// 100 % local - Aucune transmission réseau des données confidentielles
 
 import {
   RealEstateProperty,

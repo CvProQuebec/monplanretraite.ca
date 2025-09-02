@@ -157,7 +157,7 @@ export const CPPSection: React.FC<CPPSectionProps> = ({ className }) => {
           {/* Badge de statut */}
           <div className="text-center">
             <div className="bg-green-500 text-white px-6 py-3 rounded-lg text-lg font-bold inline-block">
-              ✅ {isFrench ? 'CPP Disponible' : 'CPP Available'}
+              ✅ {isFrench ? 'CPP disponible' : 'CPP Available'}
             </div>
           </div>
         </div>

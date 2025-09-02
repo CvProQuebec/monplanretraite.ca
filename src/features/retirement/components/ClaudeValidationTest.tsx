@@ -498,7 +498,7 @@ export const ClaudeValidationTest: React.FC = () => {
             <div>
               <h4 className="font-semibold mb-2">✅ Critères de Réussite:</h4>
               <p className="text-sm">
-                Tous les tests doivent passer avec succès. Un taux de réussite de 100% 
+                Tous les tests doivent passer avec succès. Un taux de réussite de 100 % 
                 indique que votre implémentation est conforme aux spécifications de Claude.
               </p>
             </div>

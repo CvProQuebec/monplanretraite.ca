@@ -26,7 +26,7 @@ const getPlanIcon = (plan: SubscriptionPlan) => {
   switch (plan) {
     case 'professional':
       return <Star className="w-5 h-5 text-blue-600" />;
-    case 'ultimate':
+    case 'expert':
       return <Crown className="w-5 h-5 text-purple-600" />;
     default:
       return <Lock className="w-5 h-5 text-gray-500" />;
@@ -38,7 +38,7 @@ const getPlanColor = (plan: SubscriptionPlan) => {
   switch (plan) {
     case 'professional':
       return 'text-blue-600';
-    case 'ultimate':
+    case 'expert':
       return 'text-purple-600';
     default:
       return 'text-gray-500';
@@ -51,12 +51,12 @@ const getPlanName = (plan: SubscriptionPlan, language: 'fr' | 'en'): string => {
     fr: {
       'free': 'Gratuit',
       'professional': 'Professionnel',
-      'ultimate': 'Ultimate'
+      'ultimate': 'Expert'
     },
     en: {
       'free': 'Free',
       'professional': 'Professional',
-      'ultimate': 'Ultimate'
+      'ultimate': 'Expert'
     }
   };
   return names[language][plan];

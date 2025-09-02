@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Key, X, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+// Modal personnalisé sans dépendance Dialog
 import { usePromoCode } from '@/hooks/usePromoCode';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 
@@ -76,78 +76,89 @@ const UnlockButton: React.FC = () => {
       </Button>
 
       {/* Modal de saisie du code */}
-      <Dialog open={isOpen} onOpenChange={setIsOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <Key className="w-5 h-5" />
-              {isFrench ? 'Code de déverrouillage' : 'Unlock Code'}
-            </DialogTitle>
-          </DialogHeader>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Overlay */}
+          <div 
+            className="fixed inset-0 bg-black/50" 
+            onClick={() => setIsOpen(false)}
+          />
           
-          <div className="space-y-4">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-gray-700">
-                {isFrench ? 'Entrez votre code :' : 'Enter your code:'}
-              </label>
-              <Input
-                type="text"
-                value={code}
-                onChange={(e) => setCode(e.target.value.toUpperCase())}
-                onKeyPress={handleKeyPress}
-                placeholder={isFrench ? 'TESTER100' : 'TESTER100'}
-                className="text-center font-mono text-lg tracking-wider"
-                disabled={isLoading}
-              />
+          {/* Modal Content */}
+          <div className="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-md mx-4">
+            {/* Header */}
+            <div className="flex items-center gap-2 mb-4">
+              <Key className="w-5 h-5 text-gray-600" />
+              <h2 className="text-lg font-semibold text-gray-800">
+                {isFrench ? 'Code de déverrouillage' : 'Unlock Code'}
+              </h2>
             </div>
             
-            {message && (
-              <div className={`p-3 rounded-lg text-sm ${
-                isSuccess 
-                  ? 'bg-green-50 text-green-800 border border-green-200' 
-                  : 'bg-red-50 text-red-800 border border-red-200'
-              }`}>
-                <div className="flex items-center gap-2">
-                  {isSuccess ? (
-                    <Check className="w-4 h-4" />
-                  ) : (
-                    <X className="w-4 h-4" />
-                  )}
-                  {message}
-                </div>
+            {/* Content */}
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-gray-700">
+                  {isFrench ? 'Entrez votre code :' : 'Enter your code:'}
+                </label>
+                <Input
+                  type="text"
+                  value={code}
+                  onChange={(e) => setCode(e.target.value.toUpperCase())}
+                  onKeyPress={handleKeyPress}
+                  placeholder={isFrench ? 'GRATUIT' : 'GRATUIT'}
+                  className="text-center font-mono text-lg tracking-wider"
+                  disabled={isLoading}
+                />
               </div>
-            )}
-            
-            <div className="flex gap-2">
-              <Button
-                onClick={handleSubmit}
-                disabled={!code.trim() || isLoading}
-                className="flex-1"
-              >
-                {isLoading ? (
+              
+              {message && (
+                <div className={`p-3 rounded-lg text-sm ${
+                  isSuccess 
+                    ? 'bg-green-50 text-green-800 border border-green-200' 
+                    : 'bg-red-50 text-red-800 border border-red-200'
+                }`}>
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    {isFrench ? 'Application...' : 'Applying...'}
+                    {isSuccess ? (
+                      <Check className="w-4 h-4" />
+                    ) : (
+                      <X className="w-4 h-4" />
+                    )}
+                    {message}
                   </div>
-                ) : (
-                  isFrench ? 'Appliquer' : 'Apply'
-                )}
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setIsOpen(false);
-                  setCode('');
-                  setMessage('');
-                  setIsSuccess(false);
-                }}
-              >
-                {isFrench ? 'Annuler' : 'Cancel'}
-              </Button>
+                </div>
+              )}
+              
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleSubmit}
+                  disabled={!code.trim() || isLoading}
+                  className="flex-1"
+                >
+                  {isLoading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      {isFrench ? 'Application...' : 'Applying...'}
+                    </div>
+                  ) : (
+                    isFrench ? 'Appliquer' : 'Apply'
+                  )}
+                </Button>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setIsOpen(false);
+                    setCode('');
+                    setMessage('');
+                    setIsSuccess(false);
+                  }}
+                >
+                  {isFrench ? 'Annuler' : 'Cancel'}
+                </Button>
+              </div>
             </div>
           </div>
-        </DialogContent>
-      </Dialog>
+        </div>
+      )}
     </>
   );
 };

@@ -1,5 +1,5 @@
 // Types pour le module SRG (Supplément de Revenu Garanti)
-// 100% SÉCURISÉ - AUCUNE TRANSMISSION RÉSEAU
+// 100 % SÉCURISÉ - AUCUNE TRANSMISSION RÉSEAU
 
 // ===== TYPES SRG PRINCIPAUX =====
 

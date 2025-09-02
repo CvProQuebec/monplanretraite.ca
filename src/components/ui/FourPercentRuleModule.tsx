@@ -188,7 +188,7 @@ export const FourPercentRuleModule: React.FC<FourPercentRuleModuleProps> = ({ cl
         <CardHeader>
           <div className="flex items-center gap-2">
             <Calculator className="h-6 w-6 text-blue-600" />
-            <CardTitle>Règle des 4% Modernisée</CardTitle>
+            <CardTitle>Règle des 4 % modernisée</CardTitle>
           </div>
           <CardDescription>
             Basé sur l'étude de William Bengen et les recherches académiques. Testez la viabilité de votre stratégie de décaissement sur 30 ans.
@@ -378,7 +378,7 @@ export const FourPercentRuleModule: React.FC<FourPercentRuleModuleProps> = ({ cl
                   <Alert className="mt-6">
                     <CheckCircle className="h-4 w-4" />
                     <AlertDescription>
-                      <strong>Découverte clé :</strong> Contrairement à la croyance populaire, 100% liquidités 
+                      <strong>Découverte clé :</strong> Contrairement à la croyance populaire, 100 % liquidités 
                       est le portefeuille le PLUS risqué avec seulement 19% de chance de succès sur 30 ans.
                     </AlertDescription>
                   </Alert>
@@ -391,7 +391,7 @@ export const FourPercentRuleModule: React.FC<FourPercentRuleModuleProps> = ({ cl
                 <CardHeader>
                   <CardTitle>Données historiques (1928-2024)</CardTitle>
                   <CardDescription>
-                    Performance de la règle des 4% lors des pires moments de l'histoire
+                    Performance de la règle des 4 % lors des pires moments de l'histoire
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -450,7 +450,7 @@ export const FourPercentRuleModule: React.FC<FourPercentRuleModuleProps> = ({ cl
             <TabsContent value="education" className="space-y-6">
               <Card>
                 <CardHeader>
-                  <CardTitle>Comprendre la règle des 4%</CardTitle>
+                  <CardTitle>Comprendre la règle des 4 %</CardTitle>
                   <CardDescription>
                     Les fondements scientifiques de la planification de retraite moderne
                   </CardDescription>
@@ -473,8 +473,8 @@ export const FourPercentRuleModule: React.FC<FourPercentRuleModuleProps> = ({ cl
                         Allocation recommandée
                       </h4>
                       <p className="text-sm text-gray-600">
-                        L'étude originale utilisait 50% actions / 50% obligations. 
-                        Les études modernes suggèrent 60-75% actions pour une meilleure 
+                        L'étude originale utilisait 50 % actions / 50 % obligations. 
+                        Les études modernes suggèrent 60-75 % actions pour une meilleure 
                         protection contre l'inflation.
                       </p>
                     </div>
@@ -486,7 +486,7 @@ export const FourPercentRuleModule: React.FC<FourPercentRuleModuleProps> = ({ cl
                       </h4>
                       <div className="space-y-2 text-sm">
                         <div className="p-2 bg-red-50 rounded">
-                          ❌ "100% liquidités = sécurité" (81% d'échec)
+                          ❌ "100 % liquidités = sécurité" (81 % d'échec)
                         </div>
                         <div className="p-2 bg-red-50 rounded">
                           ❌ "Réduire les actions en retraite" (augmente le risque)

@@ -1,6 +1,6 @@
 // src/features/retirement/examples/SRGUsageExamples.tsx
 // Exemples d'utilisation du module SRG - Guide d'implémentation
-// 100% SÉCURISÉ - AUCUNE TRANSMISSION RÉSEAU
+// 100 % SÉCURISÉ - AUCUNE TRANSMISSION RÉSEAU
 
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
