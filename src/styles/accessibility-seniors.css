@@ -568,3 +568,32 @@ h4 { font-size: 20px; font-weight: 500; }
 .seniors-nav .nav-arrow {
   font-size: 14px;
 }
+
+/* ===== EXCEPTION POUR HEADER DE NAVIGATION COMPACT ===== */
+/* Contourne les styles seniors pour le header principal */
+.header-nav-compact button {
+  padding: 4px 0 !important;        /* Override seniors padding */
+  margin: 0 !important;             /* Override seniors margin */
+  min-height: 32px !important;      /* Override seniors min-height */
+  min-width: auto !important;       /* Override seniors min-width */
+  font-size: 14px !important;       /* Override seniors font-size */
+  line-height: 1.2 !important;      /* Override seniors line-height */
+}
+
+.header-nav-compact .submenu-container {
+  margin: 0 !important;             /* Override seniors margin */
+  padding: 0 !important;            /* Override seniors padding */
+}
+
+/* Assure que les dropdowns ne sont pas affectés par les styles seniors */
+.header-nav-compact .absolute {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.header-nav-compact .absolute button {
+  padding: 6px 12px !important;     /* Padding normal pour les sous-menus */
+  margin: 0 !important;
+  min-height: 32px !important;
+  font-size: 14px !important;
+}

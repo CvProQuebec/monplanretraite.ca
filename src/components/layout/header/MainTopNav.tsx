@@ -19,7 +19,8 @@ import {
   Landmark,
   Wrench,
   BookOpen,
-  FileText
+  FileText,
+  Database
 } from 'lucide-react';
 
 interface MainTopNavProps {
@@ -124,12 +125,6 @@ export const MainTopNav: React.FC<MainTopNavProps> = ({ isEnglish = false }) => 
                 {isEnglish ? 'Sensitivity Analysis' : 'Analyse de Sensibilité'}
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link to={savePath} aria-label={isEnglish ? 'Save/Load' : 'Sauvegarder / Charger'}>
-                {isEnglish ? 'Save / Load' : 'Sauvegarder / Charger'}
-              </Link>
-            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
 
@@ -143,6 +138,12 @@ export const MainTopNav: React.FC<MainTopNavProps> = ({ isEnglish = false }) => 
         <Link to={reportsPath} className={linkClasses} aria-label={isEnglish ? 'Reports' : 'Rapports'}>
           <FileText className="w-4 h-4" />
           <span>{isEnglish ? 'Reports' : 'Rapports'}</span>
+        </Link>
+
+        {/* Sauvegarder/Charger */}
+        <Link to={savePath} className={linkClasses} aria-label={isEnglish ? 'Save/Load' : 'Sauvegarder/Charger'}>
+          <Database className="w-4 h-4" />
+          <span>{isEnglish ? 'Save/Load' : 'Sauvegarder/Charger'}</span>
         </Link>
       </div>
     </nav>

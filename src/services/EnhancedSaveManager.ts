@@ -28,17 +28,18 @@ export class EnhancedSaveManager {
    */
   static async saveWithDialog(userData: any, options: SaveOptions = {}): Promise<SaveResult> {
     try {
+      // TEMPORAIRE: Désactivation du blocage de licence pour 1 mois
       // Vérifier la licence avant de sauvegarder
-      const licenseCheck = LicenseManager.checkLicense(userData);
+      // const licenseCheck = LicenseManager.checkLicense(userData);
       
-      if (!licenseCheck.isValid) {
-        return {
-          success: false,
-          blocked: true,
-          reason: licenseCheck.reason,
-          error: 'Sauvegarde bloquée par la protection de licence'
-        };
-      }
+      // if (!licenseCheck.isValid) {
+      //   return {
+      //     success: false,
+      //     blocked: true,
+      //     reason: licenseCheck.reason,
+      //     error: 'Sauvegarde bloquée par la protection de licence'
+      //   };
+      // }
 
       // Générer le nom de fichier
       const filename = this.generateFilename(userData, options);
@@ -321,20 +322,36 @@ export class EnhancedSaveManager {
 
   /**
    * Vérifie si l'utilisateur peut sauvegarder (protection licence)
+   * TEMPORAIRE: Désactivation du blocage de licence pour 1 mois
    */
   static canSave(userData: any): { canSave: boolean; reason?: string } {
-    const licenseCheck = LicenseManager.checkLicense(userData);
+    // TEMPORAIRE: Désactivation du blocage de licence pour 1 mois
+    // const licenseCheck = LicenseManager.checkLicense(userData);
+    
+    // return {
+    //   canSave: licenseCheck.isValid,
+    //   reason: licenseCheck.reason
+    // };
     
     return {
-      canSave: licenseCheck.isValid,
-      reason: licenseCheck.reason
+      canSave: true,
+      reason: 'Blocage de licence temporairement désactivé'
     };
   }
 
   /**
    * Vérifie si l'utilisateur peut charger un nouveau profil
+   * TEMPORAIRE: Désactivation du blocage de licence pour 1 mois
    */
   static canLoad(): { canLoad: boolean; reason?: string; currentProfile?: string } {
+    // TEMPORAIRE: Toujours autoriser le chargement
+    return {
+      canLoad: true,
+      reason: 'Blocage de licence temporairement désactivé'
+    };
+
+    // CODE ORIGINAL COMMENTÉ POUR RÉACTIVATION DANS 1 MOIS:
+    /*
     const currentProfile = LicenseManager.getCurrentProfile();
     const hasMultiCode = LicenseManager.hasMultiProfileCode();
     
@@ -361,6 +378,7 @@ export class EnhancedSaveManager {
       reason: 'Un profil est déjà actif. Une licence ne peut être utilisée que pour un seul couple.',
       currentProfile: profileName
     };
+    */
   }
 
   /**

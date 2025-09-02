@@ -8,21 +8,21 @@ import SeniorsLoadingSpinner from './components/SeniorsLoadingSpinner';
 // Nouvelles pages principales
 import Accueil from './pages/Accueil';
 import Home from './pages/Home';
-import MaRetraite from './pages/MaRetraite';
-import Revenus from './pages/Revenus';
-import PlanificationUrgence from './pages/PlanificationUrgence';
-import PlanificationSuccessorale from './pages/PlanificationSuccessorale';
-import PlanificationDepenses from './pages/PlanificationDepenses';
-import AssistantFinancier from './pages/AssistantFinancier';
-import Budget from './pages/Budget';
-import ProfilePage from './pages/ProfilePage';
+const MaRetraite = React.lazy(() => import('./pages/MaRetraite'));
+const Revenus = React.lazy(() => import('./pages/Revenus'));
+const PlanificationUrgence = React.lazy(() => import('./pages/PlanificationUrgence'));
+const PlanificationSuccessorale = React.lazy(() => import('./pages/PlanificationSuccessorale'));
+const PlanificationDepenses = React.lazy(() => import('./pages/PlanificationDepenses'));
+const AssistantFinancier = React.lazy(() => import('./pages/AssistantFinancier'));
+const Budget = React.lazy(() => import('./pages/Budget'));
+const ProfilePage = React.lazy(() => import('./pages/ProfilePage'));
 
 // Module MVP Hypothèses de Calcul
-import SimpleAssumptionsPage from './pages/SimpleAssumptionsPage';
+const SimpleAssumptionsPage = React.lazy(() => import('./pages/SimpleAssumptionsPage'));
 
 // Blog pages
-import BlogPage from './pages/BlogPage';
-import OptimiserTransmissionCeli from './pages/blog/OptimiserTransmissionCeli';
+const BlogPage = React.lazy(() => import('./pages/BlogPage'));
+const OptimiserTransmissionCeli = React.lazy(() => import('./pages/blog/OptimiserTransmissionCeli'));
 
 // NOUVEAUX MODULES INTÉGRÉS - Lazy loading pour performance seniors
 const SRGAnalysisSection = React.lazy(() => import('./features/retirement/components/SRGAnalysisSection').then(module => ({ default: module.SRGAnalysisSection })));
@@ -55,10 +55,10 @@ const RetraiteModuleFr = React.lazy(() => import('./pages/RetraiteModuleFr'));
 const RetraiteModuleEn = React.lazy(() => import('./pages/RetraiteModuleEn'));
 const RetraiteModulePhase1Fr = React.lazy(() => import('./pages/RetraiteModulePhase1Fr'));
 const RetraiteModulePhase1En = React.lazy(() => import('./pages/RetraiteModulePhase1En'));
-import RapportsRetraiteFr from './pages/RapportsRetraiteFr';
-import RetirementReportsEn from './pages/RetirementReportsEn';
-import Phase2DemoPage from './pages/Phase2DemoPage';
-import SauvegarderCharger from './pages/SauvegarderCharger';
+const RapportsRetraiteFr = React.lazy(() => import('./pages/RapportsRetraiteFr'));
+const RetirementReportsEn = React.lazy(() => import('./pages/RetirementReportsEn'));
+const Phase2DemoPage = React.lazy(() => import('./pages/Phase2DemoPage'));
+const SauvegarderCharger = React.lazy(() => import('./pages/SauvegarderCharger'));
 
 // NOUVEAUX MODULES PHASE 3
 import { FourPercentRuleModule } from './components/ui/FourPercentRuleModule';

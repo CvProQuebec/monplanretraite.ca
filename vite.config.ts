@@ -1,75 +1,109 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import path from 'path'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import path from 'path';
 
-export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
+// Normalize paths to forward slashes so manualChunks checks work cross-OS
+const norm = (p: string) => p.replace(/\\/g, '/');
+
+export default defineConfig(({ mode }) => {
+  const isAnalyze = mode === 'analyze';
+
+  return {
+    plugins: [
+      react()
+    ],
+    resolve: {
+      alias: {
+        '@': path.resolve(__dirname, './src')
+      }
     },
-  },
-  server: {
-    port: 3001, // Port pour MonPlanRetraite.ca
-    open: true
-  },
-  build: {
-    outDir: 'dist',
-    sourcemap: true,
-    chunkSizeWarningLimit: 500,
-    target: 'es2020',
-    minify: 'terser',
-    rollupOptions: {
-      output: {
-        manualChunks(id: string) {
-          // Séparer les gros modules financiers
-          if (id.includes('./src/config/financial-assumptions') ||
-              id.includes('./src/config/cpm2014-mortality-table')) {
-            return 'financial-core';
+    server: {
+      port: 3001, // Port pour MonPlanRetraite.ca
+      open: true
+    },
+    // Use esbuild (default) and drop console/debugger in prod builds
+    esbuild: {
+      drop: ['console', 'debugger']
+    },
+    build: {
+      outDir: 'dist',
+      // Only enable sourcemaps when analyzing to keep bundles lean by default
+      sourcemap: isAnalyze,
+      chunkSizeWarningLimit: 500,
+      target: 'es2020',
+      rollupOptions: {
+        output: {
+          manualChunks(id: string) {
+            const pid = norm(id);
+
+            // Séparer les gros modules financiers
+            if (
+              pid.includes('/src/config/financial-assumptions') ||
+              pid.includes('/src/config/cpm2014-mortality-table')
+            ) {
+              return 'financial-core';
+            }
+
+            if (
+              pid.includes('/src/features/retirement/services/AnalyticsService') ||
+              pid.includes('/src/features/retirement/services/AdvancedMonteCarloService')
+            ) {
+              return 'analytics';
+            }
+
+            if (
+              pid.includes('/src/services/ProfessionalReportGenerator') ||
+              pid.includes('/src/services/reports/UnifiedReportManager')
+            ) {
+              return 'reports';
+            }
+
+            if (
+              pid.includes('/src/components/charts') ||
+              pid.includes('/src/components/visualization')
+            ) {
+              return 'charts';
+            }
+
+            if (
+              pid.includes('/src/services/CompetitiveComparisonService') ||
+              pid.includes('/src/components/comparison')
+            ) {
+              return 'comparison';
+            }
+
+            // Group date libraries into a single chunk to avoid circular init/TDZ issues across chunks
+            if (pid.includes('date-fns')) {
+              return 'date-lib';
+            }
+
+            // Split large areas for better initial load for seniors
+            if (pid.includes('/src/services/')) return 'core-services';
+            if (pid.includes('/src/components/ui/')) {
+              // Split UI into smaller groups to keep chunks < 500kB
+              // - ui-modules: app-specific heavy modules
+              // - ui-shadcn: base UI primitives (buttons, dialogs, etc.)
+              if (
+                /\/src\/components\/ui\/(AdvancedEIManager|AssetConsolidationModule|FourPercentRuleModule|OptimalAllocationModule|ExcessLiquidityDetector|InflationProtectionCenter|advanced-upgrade-modal)\.tsx?$/
+                  .test(pid)
+              ) {
+                return 'ui-modules';
+              }
+              return 'ui-shadcn';
+            }
+            if (pid.includes('lucide-react')) return 'icons';
+            if (pid.includes('@radix-ui')) return 'radix';
+            if (pid.includes('react-router')) return 'router';
+            if (pid.includes('firebase')) return 'firebase';
+
+            return undefined;
           }
-
-          if (id.includes('./src/features/retirement/services/AnalyticsService') ||
-              id.includes('./src/features/retirement/services/AdvancedMonteCarloService')) {
-            return 'analytics';
-          }
-
-          if (id.includes('./src/services/ProfessionalReportGenerator') ||
-              id.includes('./src/services/reports/UnifiedReportManager')) {
-            return 'reports';
-          }
-
-          if (id.includes('./src/components/charts') ||
-              id.includes('./src/components/visualization')) {
-            return 'charts';
-          }
-
-          if (id.includes('./src/services/CompetitiveComparisonService') ||
-              id.includes('./src/components/comparison')) {
-            return 'comparison';
-          }
-
-          // Group date libraries into a single chunk to avoid circular init/TDZ issues across chunks
-          if (id.includes('date-fns') || id.includes('@date-fns') || id.includes('date-fns-jalali')) {
-            return 'date-lib';
-          }
-
-          // Split large areas for better initial load for seniors
-          if (id.includes('/features/retirement/services')) return 'retirement-services';
-          if (id.includes('/services/')) return 'core-services';
-          if (id.includes('/features/retirement/components')) return 'retirement-components';
-          if (id.includes('/components/ui')) return 'ui-components';
-          if (id.includes('lucide-react')) return 'icons';
-          if (id.includes('@radix-ui')) return 'radix';
-          if (id.includes('react-router')) return 'router';
-          if (id.includes('firebase')) return 'firebase';
-
-          return undefined;
         }
       }
+    },
+    optimizeDeps: {
+      include: ['react', 'react-dom'],
+      exclude: ['@vite/client', '@vite/env']
     }
-  },
-  optimizeDeps: {
-    include: ['react', 'react-dom'],
-    exclude: ['@vite/client', '@vite/env']
-  }
-})
+  };
+});

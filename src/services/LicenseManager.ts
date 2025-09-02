@@ -147,8 +147,18 @@ export class LicenseManager {
 
   /**
    * Vérifie si l'utilisateur peut créer/modifier un profil
+   * TEMPORAIRE: Désactivation du blocage de licence pour 1 mois
    */
   static checkLicense(userData: any): LicenseInfo {
+    // TEMPORAIRE: Toujours autoriser les modifications
+    return {
+      isValid: true,
+      allowMultipleProfiles: true,
+      reason: 'Blocage de licence temporairement désactivé'
+    };
+
+    // CODE ORIGINAL COMMENTÉ POUR RÉACTIVATION DANS 1 MOIS:
+    /*
     // Si le code promo est actif, autoriser tous les profils
     if (this.hasMultiProfileCode()) {
       return {
@@ -196,6 +206,7 @@ export class LicenseManager {
       currentProfile,
       reason: 'Profil différent détecté. Une licence ne peut être utilisée que pour un seul couple.'
     };
+    */
   }
 
   /**

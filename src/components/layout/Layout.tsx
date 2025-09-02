@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { UniformHeader } from './header/UniformHeader';
+import { AdaptiveHeader } from './header/AdaptiveHeader';
 import { useLanguage } from '../../features/retirement/hooks/useLanguage';
 import UnlockButton from '../ui/UnlockButton';
+import { SeniorsOptimizationService } from '../../services/SeniorsOptimizationService';
 
 // Import du CSS d'accessibilité pour seniors - appliqué globalement
 import '../../styles/accessibility-seniors.css';
@@ -19,11 +20,16 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   // Priorité 1: Hook useLanguage, Priorité 2: URL
   const isEnglish = language === 'en' || location.pathname.startsWith('/en');
   
+  // Préchargement séquentiel des modules critiques pour seniors
+  useEffect(() => {
+    SeniorsOptimizationService.preloadCriticalModules();
+  }, []);
+  
 
   return (
     <div className="seniors-mode high-contrast min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-sans">
-      {/* Header uniforme pour toutes les pages */}
-      <UniformHeader isEnglish={isEnglish} />
+      {/* Header adaptatif - ancienne navigation + 4 blocs seniors uniquement sur accueil */}
+      <AdaptiveHeader isEnglish={isEnglish} />
       
       {/* Boutons flottants - (Navigation toggle retiré pour mode seniors par défaut) */}
       
