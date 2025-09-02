@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import LanguageSelector from './LanguageSelector';
-import { SeniorsNavigation } from '../../navigation/SeniorsNavigation';
+import MainTopNav from './MainTopNav';
 
 interface UniformHeaderProps {
   isEnglish: boolean;
@@ -88,15 +88,9 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           <LanguageSelector isEnglish={isEnglish} />
         </div>
 
-        {/* Seniors primary navigation (4 sections) */}
+        {/* Top navigation bar */}
         <div className="mt-1">
-          <SeniorsNavigation
-            title={isEnglish ? 'Main Menu' : 'Menu principal'}
-            subtitle={
-              isEnglish ? 'Click on the desired section' : 'Cliquez sur la section désirée'
-            }
-            pages={pages}
-          />
+          <MainTopNav isEnglish={isEnglish} />
         </div>
       </div>
     </header>
