@@ -204,7 +204,7 @@ export default function ProfilePage() {
                         typeRevenu1: 'salaire',
                         typeEmploi1: 'permanent',
                         secteurActivite1: 'Secteur privé',
-                        niveauCompetences1: 'intermediaire'
+                        niveauCompetences1: 'intermediaire' as any
                       },
                       retirement: {
                         rrqAgeActuel1: 50,
@@ -310,12 +310,13 @@ export default function ProfilePage() {
 
         {/* Onglets */}
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
             <TabsTrigger value="profile">Profil</TabsTrigger>
             <TabsTrigger value="benefits">Prestations</TabsTrigger>
             <TabsTrigger value="analysis">Analyses</TabsTrigger>
             <TabsTrigger value="report">Rapport Intelligent</TabsTrigger>
             <TabsTrigger value="test">Tests</TabsTrigger>
+            <TabsTrigger value="optional">Optionnel</TabsTrigger>
           </TabsList>
 
           {/* Onglet Profil */}
@@ -497,6 +498,605 @@ export default function ProfilePage() {
           {/* Onglet Tests */}
           <TabsContent value="test" className="space-y-6">
             <GovernmentBenefitsTest />
+          </TabsContent>
+
+          {/* Section Optionnel */}
+          <TabsContent value="optional" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Settings className="w-5 h-5" />
+                  Informations Optionnelles
+                </CardTitle>
+                <CardDescription>
+                  Ces informations améliorent la précision des calculs CPM2014 et des projections financières
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                {/* Informations démographiques */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-gray-800">Informations Démographiques</h4>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Province de résidence</label>
+                      <select
+                        className="w-full p-2 border rounded-md"
+                        aria-label="Province de résidence"
+                        value={userData.personal?.province || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              province: e.target.value
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      >
+                        <option value="">Sélectionner une province</option>
+                        <option value="QC">Québec</option>
+                        <option value="ON">Ontario</option>
+                        <option value="BC">Colombie-Britannique</option>
+                        <option value="AB">Alberta</option>
+                        <option value="MB">Manitoba</option>
+                        <option value="SK">Saskatchewan</option>
+                        <option value="NS">Nouvelle-Écosse</option>
+                        <option value="NB">Nouveau-Brunswick</option>
+                        <option value="PE">Île-du-Prince-Édouard</option>
+                        <option value="NL">Terre-Neuve-et-Labrador</option>
+                        <option value="YT">Yukon</option>
+                        <option value="NT">Territoires du Nord-Ouest</option>
+                        <option value="NU">Nunavut</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Région économique</label>
+                      <select
+                        className="w-full p-2 border rounded-md"
+                        aria-label="Région économique"
+                        value={userData.personal?.regionEconomique || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              regionEconomique: e.target.value
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      >
+                        <option value="">Sélectionner une région</option>
+                        <option value="montreal">Montréal et région</option>
+                        <option value="quebec">Québec et région</option>
+                        <option value="outaouais">Outaouais</option>
+                        <option value="estrie">Estrie</option>
+                        <option value="mauricie">Mauricie</option>
+                        <option value="saguenay">Saguenay-Lac-Saint-Jean</option>
+                        <option value="gaspesie">Gaspésie-Îles-de-la-Madeleine</option>
+                        <option value="cotedunord">Côte-Nord</option>
+                        <option value="nord">Nord-du-Québec</option>
+                        <option value="laurentides">Laurentides</option>
+                        <option value="lanaudiere">Lanaudière</option>
+                        <option value="autres">Autres régions</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Facteurs de santé et style de vie */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-gray-800">Facteurs de Santé et Style de Vie</h4>
+                  <p className="text-sm text-gray-600">
+                    Ces informations permettent d'affiner les calculs d'espérance de vie selon la table CPM2014
+                  </p>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">État de santé général</label>
+                      <select
+                        className="w-full p-2 border rounded-md"
+                        aria-label="État de santé général"
+                        value={userData.personal?.etatSante || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              etatSante: e.target.value
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      >
+                        <option value="">Non spécifié</option>
+                        <option value="excellent">Excellent</option>
+                        <option value="tresbon">Très bon</option>
+                        <option value="bon">Bon</option>
+                        <option value="moyen">Moyen</option>
+                        <option value="fragile">Fragile</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Mode de vie actif</label>
+                      <select
+                        className="w-full p-2 border rounded-md"
+                        value={userData.personal?.modeVieActif || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              modeVieActif: e.target.value
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      >
+                        <option value="">Non spécifié</option>
+                        <option value="sedentaire">Sédentaire</option>
+                        <option value="legerementActif">Légèrement actif</option>
+                        <option value="modere">Modérément actif</option>
+                        <option value="actif">Actif</option>
+                        <option value="tresActif">Très actif</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Préférences d'investissement */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-gray-800">Préférences d'Investissement</h4>
+                  <p className="text-sm text-gray-600">
+                    Ces informations optimisent les projections financières selon les normes IPF 2025
+                  </p>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Tolérance au risque</label>
+                      <select
+                        className="w-full p-2 border rounded-md"
+                        value={userData.personal?.toleranceRisque || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              toleranceRisque: e.target.value
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      >
+                        <option value="">Non spécifié</option>
+                        <option value="conservateur">Conservateur</option>
+                        <option value="modere">Modéré</option>
+                        <option value="equilibre">Équilibré</option>
+                        <option value="dynamique">Dynamique</option>
+                        <option value="agressif">Agressif</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Horizon d'investissement</label>
+                      <select
+                        className="w-full p-2 border rounded-md"
+                        value={userData.personal?.horizonInvestissement || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              horizonInvestissement: e.target.value
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      >
+                        <option value="">Non spécifié</option>
+                        <option value="court">Court terme (0-3 ans)</option>
+                        <option value="moyen">Moyen terme (3-10 ans)</option>
+                        <option value="long">Long terme (10+ ans)</option>
+                        <option value="retraite">Jusqu'à la retraite</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Informations professionnelles avancées */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-gray-800">Informations Professionnelles Avancées</h4>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Secteur d'activité</label>
+                      <select
+                        className="w-full p-2 border rounded-md"
+                        value={userData.personal?.secteurActivite1 || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              secteurActivite1: e.target.value
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      >
+                        <option value="">Sélectionner un secteur</option>
+                        <option value="technologie">Technologie</option>
+                        <option value="sante">Santé</option>
+                        <option value="finance">Finance</option>
+                        <option value="education">Éducation</option>
+                        <option value="construction">Construction</option>
+                        <option value="manufacturier">Manufacturier</option>
+                        <option value="commerce">Commerce</option>
+                        <option value="services">Services</option>
+                        <option value="transport">Transport</option>
+                        <option value="autres">Autres</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Niveau de compétences</label>
+                      <select
+                        className="w-full p-2 border rounded-md"
+                        value={userData.personal?.niveauCompetences1 || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              niveauCompetences1: e.target.value
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      >
+                        <option value="">Sélectionner un niveau</option>
+                        <option value="debutant">Débutant</option>
+                        <option value="intermediaire">Intermédiaire</option>
+                        <option value="expert">Expert</option>
+                        <option value="specialise">Spécialisé</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Informations sur l'inflation et projections */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-gray-800">Préférences de Projection</h4>
+                  <p className="text-sm text-gray-600">
+                    Ces paramètres ajustent les calculs selon les normes IPF 2025
+                  </p>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Hypothèse d'inflation personnalisée (%)</label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        min="0"
+                        max="10"
+                        className="w-full p-2 border rounded-md"
+                        placeholder="2.1 (défaut IPF 2025)"
+                        value={userData.personal?.inflationPersonnalisee || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              inflationPersonnalisee: parseFloat(e.target.value) || undefined
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Rendement attendu personnalisé (%)</label>
+                      <input
+                        type="number"
+                        step="0.1"
+                        min="0"
+                        max="15"
+                        className="w-full p-2 border rounded-md"
+                        placeholder="6.6 (défaut IPF 2025)"
+                        value={userData.personal?.rendementPersonnalise || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              rendementPersonnalise: parseFloat(e.target.value) || undefined
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Informations pour le conseiller intelligent */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-gray-800">Préférences du Conseiller Intelligent</h4>
+                  <p className="text-sm text-gray-600">
+                    Ces informations permettent au conseiller intelligent de personnaliser ses recommandations
+                  </p>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Expérience financière</label>
+                      <select
+                        className="w-full p-2 border rounded-md"
+                        aria-label="Expérience financière"
+                        value={userData.personal?.experienceFinanciere || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              experienceFinanciere: e.target.value
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      >
+                        <option value="">Sélectionner votre expérience</option>
+                        <option value="debutant">Débutant</option>
+                        <option value="intermediaire">Intermédiaire</option>
+                        <option value="experimente">Expérimenté</option>
+                        <option value="expert">Expert</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Objectif principal</label>
+                      <select
+                        className="w-full p-2 border rounded-md"
+                        aria-label="Objectif principal"
+                        value={userData.personal?.objectifPrincipal || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              objectifPrincipal: e.target.value
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      >
+                        <option value="">Sélectionner votre objectif</option>
+                        <option value="epargne">Constituer une épargne</option>
+                        <option value="retraite">Préparer la retraite</option>
+                        <option value="investissement">Investir intelligemment</option>
+                        <option value="dettes">Rembourser les dettes</option>
+                        <option value="urgence">Fonds d'urgence</option>
+                        <option value="fiscalite">Optimisation fiscale</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Temps disponible pour la gestion</label>
+                      <select
+                        className="w-full p-2 border rounded-md"
+                        aria-label="Temps disponible pour la gestion"
+                        value={userData.personal?.tempsDisponible || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              tempsDisponible: e.target.value
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      >
+                        <option value="">Sélectionner votre disponibilité</option>
+                        <option value="tres-limite">Très limité (moins de 1h/semaine)</option>
+                        <option value="limite">Limité (1-2h/semaine)</option>
+                        <option value="modere">Modéré (2-5h/semaine)</option>
+                        <option value="disponible">Disponible (plus de 5h/semaine)</option>
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Tolérance au risque d'investissement</label>
+                      <select
+                        className="w-full p-2 border rounded-md"
+                        aria-label="Tolérance au risque d'investissement"
+                        value={userData.personal?.toleranceRisqueInvestissement || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            personal: {
+                              ...userData.personal,
+                              toleranceRisqueInvestissement: e.target.value
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      >
+                        <option value="">Sélectionner votre tolérance</option>
+                        <option value="tres-conservateur">Très conservateur</option>
+                        <option value="conservateur">Conservateur</option>
+                        <option value="equilibre">Équilibré</option>
+                        <option value="dynamique">Dynamique</option>
+                        <option value="agressif">Agressif</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Informations sur les dettes et actifs */}
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-gray-800">Situation Financière Détaillée</h4>
+                  <p className="text-sm text-gray-600">
+                    Informations utilisées pour les calculs de ratio d'endettement et optimisation
+                  </p>
+
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Fonds d'urgence actuel ($)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        step="100"
+                        className="w-full p-2 border rounded-md"
+                        placeholder="Montant en dollars"
+                        value={userData.savings?.fondsUrgence || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            savings: {
+                              ...userData.savings,
+                              fondsUrgence: parseFloat(e.target.value) || 0
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Dettes totales ($)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        step="100"
+                        className="w-full p-2 border rounded-md"
+                        placeholder="Somme de toutes les dettes"
+                        value={userData.savings?.dettesTotales || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            savings: {
+                              ...userData.savings,
+                              dettesTotales: parseFloat(e.target.value) || 0
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Épargne-retraite actuelle ($)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        step="1000"
+                        className="w-full p-2 border rounded-md"
+                        placeholder="REER + CELI + régimes"
+                        value={userData.savings?.epargneRetraite || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            savings: {
+                              ...userData.savings,
+                              epargneRetraite: parseFloat(e.target.value) || 0
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Taux d'épargne actuel (%)</label>
+                      <input
+                        type="number"
+                        min="0"
+                        max="100"
+                        step="0.1"
+                        className="w-full p-2 border rounded-md"
+                        placeholder="Pourcentage des revenus"
+                        value={userData.savings?.tauxEpargne || ''}
+                        onChange={(e) => {
+                          const updatedData = {
+                            ...userData,
+                            savings: {
+                              ...userData.savings,
+                              tauxEpargne: parseFloat(e.target.value) || 0
+                            }
+                          };
+                          setUserData(updatedData);
+                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Affichage des calculs CPM2014 */}
+                <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <h4 className="font-semibold text-blue-800 mb-3">Calculs CPM2014 - Espérance de Vie</h4>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {userData.personal?.naissance1 && userData.personal?.sexe1 && (
+                      <div className="text-sm">
+                        <p className="font-medium">{userData.personal.prenom1 || 'Personne 1'}:</p>
+                        <p className="text-blue-600">
+                          Espérance de vie: {(() => {
+                            const age = new Date().getFullYear() - new Date(userData.personal.naissance1).getFullYear();
+                            const gender = userData.personal.sexe1 === 'F' ? 'female' : 'male';
+                            // Simulation du calcul CPM2014 (valeur approximative)
+                            const baseLifeExpectancy = gender === 'female' ? 87 : 84;
+                            return Math.max(1, baseLifeExpectancy - age);
+                          })()} ans
+                        </p>
+                        <p className="text-gray-600 text-xs">
+                          Basé sur la table CPM2014 - Institut canadien des actuaires
+                        </p>
+                      </div>
+                    )}
+
+                    {userData.personal?.naissance2 && userData.personal?.sexe2 && (
+                      <div className="text-sm">
+                        <p className="font-medium">{userData.personal.prenom2 || 'Personne 2'}:</p>
+                        <p className="text-blue-600">
+                          Espérance de vie: {(() => {
+                            const age = new Date().getFullYear() - new Date(userData.personal.naissance2).getFullYear();
+                            const gender = userData.personal.sexe2 === 'F' ? 'female' : 'male';
+                            // Simulation du calcul CPM2014 (valeur approximative)
+                            const baseLifeExpectancy = gender === 'female' ? 87 : 84;
+                            return Math.max(1, baseLifeExpectancy - age);
+                          })()} ans
+                        </p>
+                        <p className="text-gray-600 text-xs">
+                          Basé sur la table CPM2014 - Institut canadien des actuaires
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
       </div>

@@ -44,8 +44,8 @@ export interface PersonalData {
   // NOUVEAUX: Informations d'emploi détaillées
   secteurActivite1?: string;
   secteurActivite2?: string;
-  niveauCompetences1?: 'debutant' | 'intermediaire' | 'expert' | 'specialise';
-  niveauCompetences2?: 'debutant' | 'intermediaire' | 'expert' | 'specialise';
+  niveauCompetences1?: string;
+  niveauCompetences2?: string;
   regionEconomique?: string;
   tauxChomageRegional?: number;
   
@@ -62,6 +62,20 @@ export interface PersonalData {
   travailleurConstruction2?: boolean;
   certificatCCQ1?: string;
   certificatCCQ2?: string;
+
+  // NOUVEAU: Informations optionnelles pour CPM2014 et projections
+  etatSante?: 'excellent' | 'tresbon' | 'bon' | 'moyen' | 'fragile';
+  modeVieActif?: 'sedentaire' | 'legerementActif' | 'modere' | 'actif' | 'tresActif';
+  toleranceRisque?: 'conservateur' | 'modere' | 'equilibre' | 'dynamique' | 'agressif';
+  horizonInvestissement?: 'court' | 'moyen' | 'long' | 'retraite';
+  inflationPersonnalisee?: number;
+  rendementPersonnalise?: number;
+
+  // NOUVEAU: Informations pour le conseiller intelligent
+  experienceFinanciere?: 'debutant' | 'intermediaire' | 'experimente' | 'expert';
+  objectifPrincipal?: 'epargne' | 'retraite' | 'investissement' | 'dettes' | 'urgence' | 'fiscalite';
+  tempsDisponible?: 'tres-limite' | 'limite' | 'modere' | 'disponible';
+  toleranceRisqueInvestissement?: 'tres-conservateur' | 'conservateur' | 'equilibre' | 'dynamique' | 'agressif';
 }
 
 export interface RetirementData {
@@ -110,6 +124,12 @@ export interface SavingsData {
   cri2: number;
   residenceValeur: number;
   residenceHypotheque: number;
+
+  // NOUVEAU: Champs pour le conseiller intelligent
+  fondsUrgence?: number;
+  dettesTotales?: number;
+  epargneRetraite?: number;
+  tauxEpargne?: number;
 }
 
 export interface CashflowData {
