@@ -46,7 +46,12 @@ export class AnalyticsService {
     currentAge: number
   ): { recommendedAge: number; lifeExpectancy: number; planningHorizon: number } {
 
-    const gender = userData.personal?.sexe1 === 'F' ? 'female' : 'male';
+    const normalizeGender = (val: any): 'male' | 'female' => {
+      const v = String(val || '').toLowerCase();
+      if (v === 'f' || v === 'femme' || v === 'female') return 'female';
+      return 'male';
+    };
+    const gender = normalizeGender(userData.personal?.sexe1);
 
     const mortalityAnalysis = MORTALITY_CPM2014.calculateLifeExpectancy({
       age: currentAge,

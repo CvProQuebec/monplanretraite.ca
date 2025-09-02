@@ -33,6 +33,8 @@ export interface PersonalData {
   ageRetraiteSouhaite1?: number;
   ageRetraiteSouhaite2?: number;
   depensesRetraite?: number;
+  depensesMensuelles?: number;
+  depensesAnnuelles?: number;
   
   // Champs manquants pour compatibilité
   nom1?: string;
@@ -40,6 +42,20 @@ export interface PersonalData {
   situationFamiliale?: string;
   nombreEnfants?: number;
   province?: string;
+
+  // Optionnels: Informations pour CPM2014 et projections (alignés avec src/types/index.ts)
+  etatSante?: 'excellent' | 'tresbon' | 'bon' | 'moyen' | 'fragile';
+  modeVieActif?: 'sedentaire' | 'legerementActif' | 'modere' | 'actif' | 'tresActif';
+  toleranceRisque?: 'conservateur' | 'modere' | 'equilibre' | 'dynamique' | 'agressif';
+  horizonInvestissement?: 'court' | 'moyen' | 'long' | 'retraite';
+  inflationPersonnalisee?: number;
+  rendementPersonnalise?: number;
+
+  // Optionnels: Informations pour le conseiller intelligent
+  experienceFinanciere?: 'debutant' | 'intermediaire' | 'experimente' | 'expert';
+  objectifPrincipal?: 'epargne' | 'retraite' | 'investissement' | 'dettes' | 'urgence' | 'fiscalite';
+  tempsDisponible?: 'tres-limite' | 'limite' | 'modere' | 'disponible';
+  toleranceRisqueInvestissement?: 'tres-conservateur' | 'conservateur' | 'equilibre' | 'dynamique' | 'agressif';
   
   // NOUVEAUX: Informations d'emploi détaillées
   secteurActivite1?: string;

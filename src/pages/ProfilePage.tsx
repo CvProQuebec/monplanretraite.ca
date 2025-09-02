@@ -114,6 +114,15 @@ export default function ProfilePage() {
     reader.readAsText(file);
   };
 
+  // Helper: normalize "niveauCompetences1" to the allowed union type
+  const asNiveau = (v: string): 'debutant' | 'intermediaire' | 'expert' | 'specialise' => {
+    const val = (v || '').toLowerCase();
+    if (val === 'debutant') return 'debutant';
+    if (val === 'intermediaire') return 'intermediaire';
+    if (val === 'expert') return 'expert';
+    return 'specialise';
+  };
+
   // Si l'onboarding est affiché
   if (showOnboarding) {
     return (
@@ -759,7 +768,7 @@ export default function ProfilePage() {
                             ...userData,
                             personal: {
                               ...userData.personal,
-                              niveauCompetences1: e.target.value
+                              niveauCompetences1: asNiveau(e.target.value)
                             }
                           };
                           setUserData(updatedData);

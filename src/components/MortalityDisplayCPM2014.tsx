@@ -5,10 +5,18 @@ interface MortalityDisplayProps {
   age: number;
   gender: 'male' | 'female';
   showDetails?: boolean;
+  // Optionnel: permettre au parent d'injecter un résultat calculé (avec ajustements)
+  resultOverride?: {
+    lifeExpectancy: number;
+    finalAge: number;
+    planningAge: number;
+    source?: string;
+  };
 }
 
-export function MortalityDisplayCPM2014({ age, gender, showDetails = false }: MortalityDisplayProps) {
-  const analysis = MORTALITY_CPM2014.getLifeExpectancyDisplay(age, gender);
+export function MortalityDisplayCPM2014({ age, gender, showDetails = false, resultOverride }: MortalityDisplayProps) {
+  const base = MORTALITY_CPM2014.getLifeExpectancyDisplay(age, gender);
+  const analysis = resultOverride ? { ...base, ...resultOverride } : base;
 
   return (
     <div className="cpm2014-display bg-white p-6 rounded-lg shadow-sm border">
