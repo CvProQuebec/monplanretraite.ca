@@ -1,10 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
-import IncomeCalculationDebug from '@/components/ui/IncomeCalculationDebug';
-import IncomeTestForm from '@/components/ui/IncomeTestForm';
-import UnifiedIncomeDebug from '@/components/ui/UnifiedIncomeDebug';
-import IncomeCalculationTest from '@/components/ui/IncomeCalculationTest';
 import { calculateIncomeFromPeriods } from '@/utils/incomeCalculationUtils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -40,6 +36,7 @@ import SocioEconomicSection from '@/components/ui/SocioEconomicSection';
 import SynchronizedIncomeDisplay from '@/components/ui/SynchronizedIncomeDisplay';
 import HealthFactorsSection from '@/components/ui/HealthFactorsSection';
 import PersonalizedLongevityAnalysis from '@/components/ui/PersonalizedLongevityAnalysis';
+import ValidationAlert from '@/components/ui/ValidationAlert';
 
 const MaRetraite: React.FC = () => {
   const { language } = useLanguage();
@@ -168,9 +165,9 @@ const MaRetraite: React.FC = () => {
   };
 
   const calculatePersonSavings = (personNumber: 1 | 2) => {
-    const personal = userData.personal || {};
+    const personal = (userData.personal as any) || {};
     const savings = userData.savings || {};
-    
+
     if (personNumber === 1) {
       return {
         reer: personal.soldeREER1 || savings.reer1 || 0,
@@ -494,20 +491,6 @@ const MaRetraite: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
-
-
-        {/* Debug Components - Temporaire */}
-        <div className="mb-8 space-y-4">
-          <IncomeCalculationTest isFrench={isFrench} />
-          <UnifiedIncomeDebug userData={userData} isFrench={isFrench} />
-          <IncomeTestForm 
-            userData={userData} 
-            updateUserData={updateUserData} 
-            isFrench={isFrench} 
-          />
-          <IncomeCalculationDebug userData={userData} isFrench={isFrench} />
-        </div>
-
         {/* Sections regroupées sans onglets */}
         <div className="space-y-10">
           {/* Profil */}
@@ -1567,6 +1550,18 @@ const MaRetraite: React.FC = () => {
                       : 'Summary of your health and socio-economic factors for personalized analysis'}
                   </p>
                 </div>
+
+                {/* Validation des champs requis */}
+                <div className="mb-6">
+                  <ValidationAlert
+                    userData={userData}
+                    isFrench={isFrench}
+                    onValidationComplete={(isValid) => {
+                      // Callback pour gérer la validation
+                      console.log('Validation status:', isValid);
+                    }}
+                  />
+                </div>
                 
                 {/* Sommaire personnalisé avec santé et socio-économique */}
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -1589,15 +1584,15 @@ const MaRetraite: React.FC = () => {
                         <div className="space-y-2 text-sm">
                           <div className="flex justify-between">
                             <span className="text-gray-600">{isFrench ? 'État de santé:' : 'Health status:'}</span>
-                            <span className="font-medium">{userData.personal?.etatSante1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                            <span className="font-medium">{(userData.personal as any)?.etatSante1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-gray-600">{isFrench ? 'Mode de vie actif:' : 'Active lifestyle:'}</span>
-                            <span className="font-medium">{userData.personal?.modeVieActif1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                            <span className="font-medium">{(userData.personal as any)?.modeVieActif1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-gray-600">{isFrench ? 'Statut tabagique:' : 'Smoking status:'}</span>
-                            <span className="font-medium">{userData.personal?.statutTabagique1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                            <span className="font-medium">{(userData.personal as any)?.statutTabagique1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
                           </div>
                         </div>
                       </div>
@@ -1666,15 +1661,15 @@ const MaRetraite: React.FC = () => {
                         <div className="space-y-2 text-sm">
                           <div className="flex justify-between">
                             <span className="text-gray-600">{isFrench ? 'État de santé:' : 'Health status:'}</span>
-                            <span className="font-medium">{userData.personal?.etatSante2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                            <span className="font-medium">{(userData.personal as any)?.etatSante2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-gray-600">{isFrench ? 'Mode de vie actif:' : 'Active lifestyle:'}</span>
-                            <span className="font-medium">{userData.personal?.modeVieActif2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                            <span className="font-medium">{(userData.personal as any)?.modeVieActif2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
                           </div>
                           <div className="flex justify-between">
                             <span className="text-gray-600">{isFrench ? 'Statut tabagique:' : 'Smoking status:'}</span>
-                            <span className="font-medium">{userData.personal?.statutTabagique2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                            <span className="font-medium">{(userData.personal as any)?.statutTabagique2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
                           </div>
                         </div>
                       </div>

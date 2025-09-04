@@ -24,7 +24,9 @@ import {
   AlertTriangle,
   Users,
   Calculator,
-  Flag
+  Flag,
+  Expand,
+  Minimize2
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
@@ -36,6 +38,12 @@ import UnifiedIncomeTable from '@/components/ui/UnifiedIncomeTable';
 import SeniorsFriendlyIncomeTable from '@/components/ui/SeniorsFriendlyIncomeTable';
 import SeniorsFinancialHelp from '@/components/ui/SeniorsFinancialHelp';
 import SeasonalJobsManager from '@/components/ui/SeasonalJobsManager';
+import BenefitsTable from '@/components/ui/BenefitsTable';
+import InvestmentsTable from '@/components/ui/InvestmentsTable';
+import GlobalSummary from '@/components/ui/GlobalSummary';
+import CollapsibleSection from '@/components/ui/CollapsibleSection';
+import SeasonalWorkToggle from '@/components/ui/SeasonalWorkToggle';
+import RRQManager from '@/components/ui/RRQManager';
 import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 
 // Import des corrections mobile pour Samsung S23 Ultra
@@ -71,6 +79,12 @@ const Revenus: React.FC = () => {
   const [showHelp, setShowHelp] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showRRQInfo, setShowRRQInfo] = useState(false);
+  
+  // États pour les sections collapsibles
+  const [isRevenusCollapsed, setIsRevenusCollapsed] = useState(false);
+  const [isPrestationsCollapsed, setIsPrestationsCollapsed] = useState(false);
+  const [isInvestissementsCollapsed, setIsInvestissementsCollapsed] = useState(false);
+  const [isAllExpanded, setIsAllExpanded] = useState(true);
 
   // Correction du reflow mobile pour Samsung S23 Ultra
   useMobileReflowFix();
@@ -97,6 +111,15 @@ const Revenus: React.FC = () => {
 
   const handleSalaryChange = (person: '1' | '2', value: number) => {
     handleChange(`salaire${person}`, value);
+  };
+
+  // Fonctions pour gérer l'expansion/réduction des sections
+  const toggleAllSections = () => {
+    const newState = !isAllExpanded;
+    setIsAllExpanded(newState);
+    setIsRevenusCollapsed(!newState);
+    setIsPrestationsCollapsed(!newState);
+    setIsInvestissementsCollapsed(!newState);
   };
 
 
@@ -346,58 +369,55 @@ const Revenus: React.FC = () => {
                 </p>
               </div>
               
-              <RRQInfoCard 
-                isFrench={isFrench}
-                isVisible={true}
-                showAsModal={false}
-              />
             </div>
           );
         })()}
 
-        {/* Section Tableau unifié des revenus - Version Senior-Friendly */}
-        <div className="space-y-8 mb-12">
-                    <div className="text-center">
-            <h2 className="text-4xl font-bold text-green-600 mb-6 flex items-center justify-center gap-4">
-              <Calculator className="w-10 h-10 text-green-500" />
-              {isFrench ? 'Mes revenus avec calculs automatiques' : 'My Income with Automatic Calculations'}
-            </h2>
-            <p className="text-green-700 text-xl max-w-4xl mx-auto leading-relaxed">
-              {isFrench
-                ? 'Ajoutez tous vos types de revenus (salaire, pensions, assurance emploi, etc.) et nous calculons automatiquement vos totaux annuels et mensuels. Simple et clair !'
-                : 'Add all your income types (salary, pensions, employment insurance, etc.) and we automatically calculate your annual and monthly totals. Simple and clear!'
-              }
-            </p>
-            
-            {/* Bouton de débogage temporaire */}
-            <div className="mt-4">
+        {/* Résumé Global */}
+        <GlobalSummary userData={userData} isFrench={isFrench} />
+
+        {/* Bouton Tout développer/réduire */}
+        <div className="text-center mb-8">
               <Button 
-                onClick={() => {
-                  console.log('🔧 Forcer rechargement des données...');
-                  const localStorageData = localStorage.getItem('retirement_data');
-                  if (localStorageData) {
-                    const parsed = JSON.parse(localStorageData);
-                    console.log('🔧 Données dans localStorage:', parsed);
-                    // Forcer la mise à jour
-                    window.dispatchEvent(new CustomEvent('retirementDataImported', { 
-                      detail: { data: parsed } 
-                    }));
-                  }
-                }}
+            onClick={toggleAllSections}
                 variant="outline"
-                size="sm"
-                className="text-xs"
-              >
-                🔧 Debug: Recharger données
+            size="lg"
+            className="bg-white border-2 border-indigo-300 text-indigo-600 hover:bg-indigo-50 font-bold text-lg px-8 py-3"
+          >
+            {isAllExpanded ? (
+              <>
+                <Minimize2 className="w-5 h-5 mr-2" />
+                {isFrench ? 'Tout réduire' : 'Collapse All'}
+              </>
+            ) : (
+              <>
+                <Expand className="w-5 h-5 mr-2" />
+                {isFrench ? 'Tout développer' : 'Expand All'}
+              </>
+            )}
               </Button>
             </div>
+
+        {/* Section Revenus */}
+        <CollapsibleSection
+          title={isFrench ? 'Revenus de travail' : 'Work Income'}
+          isCollapsed={isRevenusCollapsed}
+          onToggle={() => setIsRevenusCollapsed(!isRevenusCollapsed)}
+          icon={<Briefcase className="w-8 h-8 text-green-600" />}
+          className="mb-8"
+        >
+          <div className="space-y-6">
+            <div className="text-center">
+              <p className="text-lg text-gray-600 mb-6">
+                {isFrench
+                  ? 'Gérez vos revenus de travail : salaire, assurance emploi, travail autonome, revenus de location'
+                  : 'Manage your work income: salary, employment insurance, self-employment, rental income'
+                }
+              </p>
           </div>
 
-          {/* Aide contextuelle pour les termes financiers */}
-          <SeniorsFinancialHelp isFrench={isFrench} />
-
           <div className="grid grid-cols-1 gap-8">
-            {/* Personne 1 - Tableau des revenus - Version Senior-Friendly */}
+              {/* Personne 1 - Tableau des revenus */}
             <SeniorsFriendlyIncomeTable
               personNumber={1}
               personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
@@ -406,9 +426,10 @@ const Revenus: React.FC = () => {
                 updateUserData('personal', { unifiedIncome1: data } as any);
               }}
               isFrench={isFrench}
+                userData={userData}
             />
 
-            {/* Personne 2 - Tableau des revenus - Version Senior-Friendly */}
+              {/* Personne 2 - Tableau des revenus */}
             <SeniorsFriendlyIncomeTable
               personNumber={2}
               personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
@@ -417,868 +438,126 @@ const Revenus: React.FC = () => {
                 updateUserData('personal', { unifiedIncome2: data } as any);
               }}
               isFrench={isFrench}
+                userData={userData}
+            />
+        </div>
+
+            {/* Emploi saisonnier */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-amber-800 text-center">
+                {isFrench ? 'Emploi saisonnier (optionnel)' : 'Seasonal Work (optional)'}
+              </h3>
+              
+              <div className="grid grid-cols-1 gap-6">
+                <SeasonalWorkToggle
+              personNumber={1}
+              personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
+                  userData={userData}
+                  onDataChange={(data) => updateUserData('personal', data)}
+              isFrench={isFrench}
+            />
+
+                <SeasonalWorkToggle
+              personNumber={2}
+              personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
+                  userData={userData}
+                  onDataChange={(data) => updateUserData('personal', data)}
+              isFrench={isFrench}
             />
           </div>
         </div>
+          </div>
+        </CollapsibleSection>
 
-        {/* Section Emplois Saisonniers */}
-        <div className="space-y-8 mb-12">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-amber-300 mb-4 flex items-center justify-center gap-3">
-              <Calendar className="w-8 h-8 text-amber-400" />
-              {isFrench ? 'Emplois saisonniers' : 'Seasonal Jobs'}
-            </h2>
-            <p className="text-amber-200 text-lg">
+        {/* Section Prestations */}
+        <CollapsibleSection
+          title={isFrench ? 'Prestations' : 'Benefits'}
+          isCollapsed={isPrestationsCollapsed}
+          onToggle={() => setIsPrestationsCollapsed(!isPrestationsCollapsed)}
+          icon={<Shield className="w-8 h-8 text-purple-600" />}
+          className="mb-8"
+        >
+          <div className="space-y-6">
+                <div className="text-center">
+              <p className="text-lg text-gray-600 mb-6">
               {isFrench 
-                ? 'Gérez vos emplois saisonniers avec périodes et gains approximatifs'
-                : 'Manage your seasonal jobs with periods and estimated earnings'
+                  ? 'Gérez vos prestations gouvernementales : RRQ/CPP, Sécurité de la vieillesse, rentes privées'
+                  : 'Manage your government benefits: QPP/CPP, Old Age Security, private pensions'
               }
             </p>
+            <div className="bg-yellow-100 border border-yellow-400 rounded-lg p-4 mb-4">
+              <p className="text-yellow-800 font-semibold">
+                {isFrench 
+                  ? 'DEBUG: Section Prestations ouverte - RRQ, SV et Rentes privées devraient être visibles'
+                  : 'DEBUG: Benefits section open - RRQ, OAS and Private Pensions should be visible'
+                }
+              </p>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 gap-8">
-            {/* Personne 1 - Emplois saisonniers */}
-            <SeasonalJobsManager
-              personNumber={1}
-              personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
-              data={(userData.personal as any)?.seasonalJobs1 || []}
-              onDataChange={(data) => {
-                updateUserData('personal', { seasonalJobs1: data } as any);
-              }}
-              isFrench={isFrench}
-            />
+              {/* Personne 1 - Prestations */}
+              <BenefitsTable
+                personNumber={1}
+                personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
+                userData={userData}
+                onDataChange={(data) => updateUserData('retirement', data)}
+                isFrench={isFrench}
+              />
 
-            {/* Personne 2 - Emplois saisonniers */}
-            <SeasonalJobsManager
-              personNumber={2}
-              personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
-              data={(userData.personal as any)?.seasonalJobs2 || []}
-              onDataChange={(data) => {
-                updateUserData('personal', { seasonalJobs2: data } as any);
-              }}
-              isFrench={isFrench}
-            />
-          </div>
-        </div>
+              {/* Personne 2 - Prestations */}
+              <BenefitsTable
+                personNumber={2}
+                personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
+                userData={userData}
+                onDataChange={(data) => updateUserData('retirement', data)}
+                isFrench={isFrench}
+              />
+                </div>
+                </div>
+        </CollapsibleSection>
 
         {/* Section Investissements */}
-        <div className="space-y-8 mb-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-orange-300 mb-4 flex items-center justify-center gap-3">
-              <TrendingUp className="w-8 h-8 text-orange-400" />
-              {isFrench ? 'Mes investissements' : 'My Investments'}
-            </h2>
-            <p className="text-orange-200 text-lg">
+        <CollapsibleSection
+          title={isFrench ? 'Investissements' : 'Investments'}
+          isCollapsed={isInvestissementsCollapsed}
+          onToggle={() => setIsInvestissementsCollapsed(!isInvestissementsCollapsed)}
+          icon={<TrendingUp className="w-8 h-8 text-orange-600" />}
+          className="mb-8"
+        >
+          <div className="space-y-6">
+                <div className="text-center">
+              <p className="text-lg text-gray-600 mb-6">
               {isFrench 
-                ? 'Gérez vos comptes d\'investissement et leurs soldes actuels'
-                : 'Manage your investment accounts and their current balances'
+                  ? 'Gérez vos investissements : REER, CELI, CRI, crypto-monnaie'
+                  : 'Manage your investments: RRSP, TFSA, LIRA, cryptocurrency'
               }
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-8">
             {/* Personne 1 - Investissements */}
-            <Card className="bg-white border border-gray-300">
-              <CardHeader className="border-b border-gray-300">
-                <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold">
-                    1
-                  </div>
-                  {userData.personal?.prenom1 
-                    ? `${isFrench ? 'Investissements' : 'Investments'} - ${userData.personal.prenom1}`
-                    : (isFrench ? 'Investissements - Personne 1' : 'Investments - Person 1')
-                  }
-                </CardTitle>
-                <CardDescription className="text-gray-600">
-                  {userData.personal?.prenom1 || (isFrench ? 'Première personne' : 'First person')}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-6 space-y-6">
-                {/* REER */}
-                <div className="space-y-4 p-4 bg-slate-700/50 rounded-lg">
-                  <h4 className="text-lg font-semibold text-orange-300 flex items-center gap-2">
-                    <Shield className="w-5 h-5" />
-                    {isFrench ? 'REER (Régime enregistré d\'épargne-retraite)' : 'RRSP (Registered Retirement Savings Plan)'}
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Solde REER' : 'RRSP Balance'}
-                      </Label>
-                      <MoneyInput
-                        value={userData.personal?.soldeREER1 || 0}
-                        onChange={(value) => handleChange('soldeREER1', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
-                        placeholder={isFrench ? "Ex: 150 000" : "Ex: 150,000"}
-                        allowDecimals={true}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Date du solde' : 'Balance Date'}
-                      </Label>
-                      <DateInput
-                        value={userData.personal?.dateREER1 || ''}
-                        onChange={(value) => handleChange('dateREER1', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
-                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* CELI */}
-                <div className="space-y-4 p-4 bg-slate-700/50 rounded-lg">
-                  <h4 className="text-lg font-semibold text-orange-300 flex items-center gap-2">
-                    <Target className="w-5 h-5" />
-                    {isFrench ? 'CELI (Compte d\'épargne libre d\'impôt)' : 'TFSA (Tax-Free Savings Account)'}
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Solde CELI' : 'TFSA Balance'}
-                      </Label>
-                      <MoneyInput
-                        value={userData.personal?.soldeCELI1 || 0}
-                        onChange={(value) => handleChange('soldeCELI1', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
-                        placeholder={isFrench ? "Ex: 75 000" : "Ex: 75,000"}
-                        allowDecimals={true}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Date du solde' : 'Balance Date'}
-                      </Label>
-                      <DateInput
-                        value={userData.personal?.dateCELI1 || ''}
-                        onChange={(value) => handleChange('dateCELI1', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
-                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* CRI */}
-                <div className="space-y-4 p-4 bg-slate-700/50 rounded-lg">
-                  <h4 className="text-lg font-semibold text-orange-300 flex items-center gap-2">
-                    <Briefcase className="w-5 h-5" />
-                    {isFrench ? 'CRI (Compte de retraite immobilisé)' : 'LIRA (Locked-in Retirement Account)'}
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Solde CRI' : 'LIRA Balance'}
-                      </Label>
-                      <MoneyInput
-                        value={userData.personal?.soldeCRI1 || 0}
-                        onChange={(value) => handleChange('soldeCRI1', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
-                        placeholder={isFrench ? "Ex: 200 000" : "Ex: 200,000"}
-                        allowDecimals={true}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Date du solde' : 'Balance Date'}
-                      </Label>
-                      <DateInput
-                        value={userData.personal?.dateCRI1 || ''}
-                        onChange={(value) => handleChange('dateCRI1', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
-                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Crypto-monnaie */}
-                <div className="space-y-4 p-4 bg-gradient-to-r from-purple-700/50 to-pink-700/50 rounded-lg border border-purple-500/30">
-                  <h4 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
-                    <span className="text-xl">₿</span>
-                    {isFrench ? 'Crypto-monnaie' : 'Cryptocurrency'}
-                    <span className="text-xs bg-purple-600 px-2 py-1 rounded-full">
-                      {isFrench ? 'NOUVEAU' : 'NEW'}
-                    </span>
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Valeur totale crypto' : 'Total Crypto Value'}
-                      </Label>
-                      <MoneyInput
-                        value={userData.personal?.soldeCrypto1 || 0}
-                        onChange={(value) => handleChange('soldeCrypto1', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400"
-                        placeholder={isFrench ? "Ex: 25 000" : "Ex: 25,000"}
-                        allowDecimals={true}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Date d\'évaluation' : 'Valuation Date'}
-                      </Label>
-                      <DateInput
-                        value={userData.personal?.dateCrypto1 || ''}
-                        onChange={(value) => handleChange('dateCrypto1', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400"
-                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-gray-200 font-semibold">
-                      {isFrench ? 'Détails crypto (optionnel)' : 'Crypto Details (optional)'}
-                    </Label>
-                    <textarea
-                      value={userData.personal?.detailsCrypto1 || ''}
-                      onChange={(e) => handleNotesChange('detailsCrypto1', e.target.value)}
-                      className="w-full bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400 rounded-md p-3 min-h-[60px]"
-                      placeholder={isFrench ? 'Ex: Bitcoin, Ethereum, portefeuilles...' : 'Ex: Bitcoin, Ethereum, wallets...'}
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Personne 2 - Investissements */}
-            <Card className="bg-white border border-gray-300">
-              <CardHeader className="border-b border-gray-300">
-                <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-                  <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center text-white font-bold">
-                    2
-                  </div>
-                  {userData.personal?.prenom2 
-                    ? `${isFrench ? 'Investissements' : 'Investments'} - ${userData.personal.prenom2}`
-                    : (isFrench ? 'Investissements - Personne 2' : 'Investments - Person 2')
-                  }
-                </CardTitle>
-                <CardDescription className="text-gray-600">
-                  {userData.personal?.prenom2 || (isFrench ? 'Deuxième personne (optionnel)' : 'Second person (optional)')}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-6 space-y-6">
-                {/* REER */}
-                <div className="space-y-4 p-4 bg-slate-700/50 rounded-lg">
-                  <h4 className="text-lg font-semibold text-amber-300 flex items-center gap-2">
-                    <Shield className="w-5 h-5" />
-                    {isFrench ? 'REER (Régime enregistré d\'épargne-retraite)' : 'RRSP (Registered Retirement Savings Plan)'}
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Solde REER' : 'RRSP Balance'}
-                      </Label>
-                      <MoneyInput
-                        value={userData.personal?.soldeREER2 || 0}
-                        onChange={(value) => handleChange('soldeREER2', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
-                        placeholder={isFrench ? "Ex: 150 000" : "Ex: 150,000"}
-                        allowDecimals={true}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Date du solde' : 'Balance Date'}
-                      </Label>
-                      <DateInput
-                        value={userData.personal?.dateREER2 || ''}
-                        onChange={(value) => handleChange('dateREER2', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
-                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* CELI */}
-                <div className="space-y-4 p-4 bg-slate-700/50 rounded-lg">
-                  <h4 className="text-lg font-semibold text-amber-300 flex items-center gap-2">
-                    <Target className="w-5 h-5" />
-                    {isFrench ? 'CELI (Compte d\'épargne libre d\'impôt)' : 'TFSA (Tax-Free Savings Account)'}
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Solde CELI' : 'TFSA Balance'}
-                      </Label>
-                      <MoneyInput
-                        value={userData.personal?.soldeCELI2 || 0}
-                        onChange={(value) => handleChange('soldeCELI2', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
-                        placeholder={isFrench ? "Ex: 75 000" : "Ex: 75,000"}
-                        allowDecimals={true}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Date du solde' : 'Balance Date'}
-                      </Label>
-                      <DateInput
-                        value={userData.personal?.dateCELI2 || ''}
-                        onChange={(value) => handleChange('dateCELI2', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
-                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* CRI */}
-                <div className="space-y-4 p-4 bg-slate-700/50 rounded-lg">
-                  <h4 className="text-lg font-semibold text-amber-300 flex items-center gap-2">
-                    <Briefcase className="w-5 h-5" />
-                    {isFrench ? 'CRI (Compte de retraite immobilisé)' : 'LIRA (Locked-in Retirement Account)'}
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Solde CRI' : 'LIRA Balance'}
-                      </Label>
-                      <MoneyInput
-                        value={userData.personal?.soldeCRI2 || 0}
-                        onChange={(value) => handleChange('soldeCRI2', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
-                        placeholder={isFrench ? "Ex: 200 000" : "Ex: 200,000"}
-                        allowDecimals={true}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Date du solde' : 'Balance Date'}
-                      </Label>
-                      <DateInput
-                        value={userData.personal?.dateCRI2 || ''}
-                        onChange={(value) => handleChange('dateCRI2', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-amber-400 focus:ring-amber-400"
-                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
-                      />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Crypto-monnaie */}
-                <div className="space-y-4 p-4 bg-gradient-to-r from-purple-700/50 to-pink-700/50 rounded-lg border border-purple-500/30">
-                  <h4 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
-                    <span className="text-xl">₿</span>
-                    {isFrench ? 'Crypto-monnaie' : 'Cryptocurrency'}
-                    <span className="text-xs bg-purple-600 px-2 py-1 rounded-full">
-                      {isFrench ? 'NOUVEAU' : 'NEW'}
-                    </span>
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Valeur totale crypto' : 'Total Crypto Value'}
-                      </Label>
-                      <MoneyInput
-                        value={userData.personal?.soldeCrypto2 || 0}
-                        onChange={(value) => handleChange('soldeCrypto2', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400"
-                        placeholder={isFrench ? "Ex: 25 000" : "Ex: 25,000"}
-                        allowDecimals={true}
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold">
-                        {isFrench ? 'Date d\'évaluation' : 'Valuation Date'}
-                      </Label>
-                      <DateInput
-                        value={userData.personal?.dateCrypto2 || ''}
-                        onChange={(value) => handleChange('dateCrypto2', value)}
-                        className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400"
-                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
-                      />
-                    </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-gray-200 font-semibold">
-                      {isFrench ? 'Détails crypto (optionnel)' : 'Crypto Details (optional)'}
-                    </Label>
-                    <textarea
-                      value={userData.personal?.detailsCrypto2 || ''}
-                      onChange={(e) => handleNotesChange('detailsCrypto2', e.target.value)}
-                      className="w-full bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400 rounded-md p-3 min-h-[60px]"
-                      placeholder={isFrench ? 'Ex: Bitcoin, Ethereum, portefeuilles...' : 'Ex: Bitcoin, Ethereum, wallets...'}
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Résumé des investissements */}
-          <Card className="bg-gradient-to-r from-orange-900/50 to-red-900/50 border border-orange-500/30">
-            <CardContent className="p-6">
-              <h4 className="text-lg font-bold text-orange-300 mb-4 flex items-center gap-2">
-                <TrendingUp className="w-5 h-5" />
-                {isFrench ? 'Résumé des investissements' : 'Investment Summary'}
-              </h4>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                <div>
-                  <div className="text-2xl font-bold text-blue-400">
-                    ${((userData.personal?.soldeREER1 || 0) + (userData.personal?.soldeREER2 || 0)).toLocaleString()}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Total REER' : 'Total RRSP'}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-green-400">
-                    ${((userData.personal?.soldeCELI1 || 0) + (userData.personal?.soldeCELI2 || 0)).toLocaleString()}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Total CELI' : 'Total TFSA'}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-yellow-400">
-                    ${((userData.personal?.soldeCRI1 || 0) + (userData.personal?.soldeCRI2 || 0)).toLocaleString()}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Total CRI' : 'Total LIRA'}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-purple-400">
-                    ${((userData.personal?.soldeCrypto1 || 0) + (userData.personal?.soldeCrypto2 || 0)).toLocaleString()}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Total Crypto' : 'Total Crypto'}
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-gray-600">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-orange-400">
-                    ${(
-                      (userData.personal?.soldeREER1 || 0) + (userData.personal?.soldeREER2 || 0) +
-                      (userData.personal?.soldeCELI1 || 0) + (userData.personal?.soldeCELI2 || 0) +
-                      (userData.personal?.soldeCRI1 || 0) + (userData.personal?.soldeCRI2 || 0) +
-                      (userData.personal?.soldeCrypto1 || 0) + (userData.personal?.soldeCrypto2 || 0)
-                    ).toLocaleString()}
-                  </div>
-                  <div className="text-lg text-gray-300">
-                    {isFrench ? 'Valeur totale des investissements' : 'Total Investment Value'}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Conseils pour les investissements */}
-          <Card className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 border border-indigo-500/30">
-            <CardContent className="p-6">
-              <h4 className="text-lg font-bold text-indigo-300 mb-4 flex items-center gap-2">
-                <Info className="w-5 h-5" />
-                {isFrench ? 'Conseils pour vos investissements' : 'Investment Tips'}
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-300">
-                <div>
-                  <strong className="text-indigo-300">{isFrench ? 'REER :' : 'RRSP:'}</strong>
-                  <ul className="list-disc list-inside mt-2 space-y-1">
-                    <li>{isFrench ? 'Déduction fiscale immédiate' : 'Immediate tax deduction'}</li>
-                    <li>{isFrench ? 'Imposable au retrait' : 'Taxable on withdrawal'}</li>
-                    <li>{isFrench ? 'Conversion obligatoire à 71 ans' : 'Mandatory conversion at 71'}</li>
-                  </ul>
-                </div>
-                <div>
-                  <strong className="text-green-300">{isFrench ? 'CELI :' : 'TFSA:'}</strong>
-                  <ul className="list-disc list-inside mt-2 space-y-1">
-                    <li>{isFrench ? 'Croissance libre d\'impôt' : 'Tax-free growth'}</li>
-                    <li>{isFrench ? 'Retraits non imposables' : 'Tax-free withdrawals'}</li>
-                    <li>{isFrench ? 'Droits de cotisation récupérables' : 'Contribution room recoverable'}</li>
-                  </ul>
-                </div>
-                <div>
-                  <strong className="text-purple-300">{isFrench ? 'Crypto :' : 'Crypto:'}</strong>
-                  <ul className="list-disc list-inside mt-2 space-y-1">
-                    <li>{isFrench ? 'Actif volatil et spéculatif' : 'Volatile and speculative asset'}</li>
-                    <li>{isFrench ? 'Gains en capital imposables' : 'Taxable capital gains'}</li>
-                    <li>{isFrench ? 'Diversification limitée recommandée' : 'Limited diversification recommended'}</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Section RRQ/CPP */}
-        <div className="space-y-8 mb-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-blue-300 mb-4 flex items-center justify-center gap-3">
-              <Flag className="w-8 h-8 text-blue-400" />
-              {isFrench ? 'RRQ/CPP - Régime de rentes du Québec' : 'QPP/CPP - Quebec Pension Plan'}
-            </h2>
-            <p className="text-lg text-gray-400">
-              {isFrench 
-                ? 'Saisissez vos montants RRQ/CPP pour Personne 1 et Personne 2'
-                : 'Enter your QPP/CPP amounts for Person 1 and Person 2'
-              }
-            </p>
-          </div>
-
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Personne 1 - RRQ/CPP */}
-            <Card className="bg-white border border-gray-300">
-              <CardHeader className="border-b border-gray-300">
-                <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
-                    1
-                  </div>
-                  {userData.personal?.prenom1 
-                    ? `${isFrench ? 'RRQ/CPP' : 'QPP/CPP'} - ${userData.personal.prenom1}`
-                    : (isFrench ? 'RRQ/CPP - Personne 1' : 'QPP/CPP - Person 1')
-                  }
-                </CardTitle>
-                <CardDescription className="text-gray-600">
-                  {userData.personal?.prenom1 || (isFrench ? 'Première personne' : 'First person')}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-6 space-y-6">
-                {/* Âge actuel */}
-                <div className="space-y-2">
-                  <Label className="text-gray-700 font-semibold text-lg">
-                    {isFrench ? 'Âge actuel' : 'Current Age'}
-                  </Label>
-                  <Input
-                    type="number"
-                    value={userData.retirement?.rrqAgeActuel1 || ''}
-                    onChange={(e) => handleRetirementChange('rrqAgeActuel1', parseInt(e.target.value) || 0)}
-                    className="bg-white border-2 border-gray-300 text-gray-900 text-xl h-12"
-                    placeholder={isFrench ? "Ex: 58" : "Ex: 58"}
-                  />
-                </div>
-
-                {/* Prestation actuelle */}
-                <div className="space-y-2">
-                  <Label className="text-gray-700 font-semibold text-lg">
-                    {isFrench ? 'Prestation RRQ actuelle' : 'Current QPP Benefit'}
-                  </Label>
-                  <MoneyInput
-                    value={userData.retirement?.rrqMontantActuel1 || 0}
-                    onChange={(value) => handleRetirementChange('rrqMontantActuel1', value)}
-                    className="bg-white border-2 border-gray-300 text-gray-900 text-xl h-12"
-                    placeholder={isFrench ? "Ex: 1 200" : "Ex: 1,200"}
-                    allowDecimals={true}
-                  />
-                  <p className="text-sm text-gray-600">
-                    {isFrench 
-                      ? 'Montant mensuel exact fourni par RRQ (consultez "Mon Dossier")'
-                      : 'Exact monthly amount provided by QPP (check "My File")'
-                    }
-                  </p>
-                </div>
-
-                {/* Prestation à 70 ans */}
-                <div className="space-y-2">
-                  <Label className="text-gray-700 font-semibold text-lg">
-                    {isFrench ? 'Prestation RRQ à 70 ans' : 'QPP Benefit at Age 70'}
-                  </Label>
-                  <MoneyInput
-                    value={userData.retirement?.rrqMontant70_1 || 0}
-                    onChange={(value) => handleRetirementChange('rrqMontant70_1', value)}
-                    className="bg-white border-2 border-gray-300 text-gray-900 text-xl h-12"
-                    placeholder={isFrench ? "Ex: 1 500" : "Ex: 1,500"}
-                    allowDecimals={true}
-                  />
-                  <p className="text-sm text-gray-600">
-                    {isFrench 
-                      ? 'Montant mensuel si vous attendez jusqu\'à 70 ans'
-                      : 'Monthly amount if you wait until age 70'
-                    }
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Personne 2 - RRQ/CPP */}
-            <Card className="bg-white border border-gray-300">
-              <CardHeader className="border-b border-gray-300">
-                <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">
-                    2
-                  </div>
-                  {userData.personal?.prenom2 
-                    ? `${isFrench ? 'RRQ/CPP' : 'QPP/CPP'} - ${userData.personal.prenom2}`
-                    : (isFrench ? 'RRQ/CPP - Personne 2' : 'QPP/CPP - Person 2')
-                  }
-                </CardTitle>
-                <CardDescription className="text-gray-600">
-                  {userData.personal?.prenom2 || (isFrench ? 'Deuxième personne (optionnel)' : 'Second person (optional)')}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="p-6 space-y-6">
-                {/* Âge actuel */}
-                <div className="space-y-2">
-                  <Label className="text-gray-700 font-semibold text-lg">
-                    {isFrench ? 'Âge actuel' : 'Current Age'}
-                  </Label>
-                  <Input
-                    type="number"
-                    value={userData.retirement?.rrqAgeActuel2 || ''}
-                    onChange={(e) => handleRetirementChange('rrqAgeActuel2', parseInt(e.target.value) || 0)}
-                    className="bg-white border-2 border-gray-300 text-gray-900 text-xl h-12"
-                    placeholder={isFrench ? "Ex: 55" : "Ex: 55"}
-                  />
-                </div>
-
-                {/* Prestation actuelle */}
-                <div className="space-y-2">
-                  <Label className="text-gray-700 font-semibold text-lg">
-                    {isFrench ? 'Prestation RRQ actuelle' : 'Current QPP Benefit'}
-                  </Label>
-                  <MoneyInput
-                    value={userData.retirement?.rrqMontantActuel2 || 0}
-                    onChange={(value) => handleRetirementChange('rrqMontantActuel2', value)}
-                    className="bg-white border-2 border-gray-300 text-gray-900 text-xl h-12"
-                    placeholder={isFrench ? "Ex: 1 000" : "Ex: 1,000"}
-                    allowDecimals={true}
-                  />
-                  <p className="text-sm text-gray-600">
-                    {isFrench 
-                      ? 'Montant mensuel exact fourni par RRQ (consultez "Mon Dossier")'
-                      : 'Exact monthly amount provided by QPP (check "My File")'
-                    }
-                  </p>
-                </div>
-
-                {/* Prestation à 70 ans */}
-                <div className="space-y-2">
-                  <Label className="text-gray-700 font-semibold text-lg">
-                    {isFrench ? 'Prestation RRQ à 70 ans' : 'QPP Benefit at Age 70'}
-                  </Label>
-                  <MoneyInput
-                    value={userData.retirement?.rrqMontant70_2 || 0}
-                    onChange={(value) => handleRetirementChange('rrqMontant70_2', value)}
-                    className="bg-white border-2 border-gray-300 text-gray-900 text-xl h-12"
-                    placeholder={isFrench ? "Ex: 1 250" : "Ex: 1,250"}
-                    allowDecimals={true}
-                  />
-                  <p className="text-sm text-gray-600">
-                    {isFrench 
-                      ? 'Montant mensuel si vous attendez jusqu\'à 70 ans'
-                      : 'Monthly amount if you wait until age 70'
-                    }
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Résumé RRQ/CPP */}
-          <Card className="bg-gradient-to-r from-blue-900/50 to-indigo-900/50 border border-blue-500/30">
-            <CardContent className="p-6">
-              <h4 className="text-lg font-bold text-blue-300 mb-4 flex items-center gap-2">
-                <Flag className="w-5 h-5" />
-                {isFrench ? 'Résumé RRQ/CPP' : 'QPP/CPP Summary'}
-              </h4>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
-                <div>
-                  <div className="text-2xl font-bold text-blue-400">
-                    ${(userData.retirement?.rrqMontantActuel1 || 0).toLocaleString()}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'P1 - Actuel' : 'P1 - Current'}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-purple-400">
-                    ${(userData.retirement?.rrqMontant70_1 || 0).toLocaleString()}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'P1 - À 70 ans' : 'P1 - At 70'}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-green-400">
-                    ${(userData.retirement?.rrqMontantActuel2 || 0).toLocaleString()}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'P2 - Actuel' : 'P2 - Current'}
-                  </div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-orange-400">
-                    ${(userData.retirement?.rrqMontant70_2 || 0).toLocaleString()}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'P2 - À 70 ans' : 'P2 - At 70'}
-                  </div>
-                </div>
-              </div>
-              <div className="mt-4 pt-4 border-t border-gray-600">
-                <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-400">
-                    ${(
-                      (userData.retirement?.rrqMontantActuel1 || 0) + 
-                      (userData.retirement?.rrqMontantActuel2 || 0)
-                    ).toLocaleString()}
-                  </div>
-                  <div className="text-lg text-gray-300">
-                    {isFrench ? 'Total RRQ/CPP actuel (mensuel)' : 'Total Current QPP/CPP (monthly)'}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Section Sécurité de la vieillesse avec ajustements */}
-        <div className="space-y-8 mb-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-purple-300 mb-4 flex items-center justify-center gap-3">
-              <Shield className="w-8 h-8 text-purple-400" />
-              {isFrench ? 'Sécurité de la vieillesse (SV)' : 'Old Age Security (OAS)'}
-            </h2>
-            <p className="text-purple-200 text-lg">
-              {isFrench 
-                ? 'Gérez vos prestations réelles avec les ajustements par période'
-                : 'Manage your actual benefits with period-specific adjustments'
-              }
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Personne 1 - Gestion SV Biannuelle */}
-            <SVBiannualManager
+              <InvestmentsTable
               personNumber={1}
               personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
-              data={(userData.retirement as any)?.svBiannual1}
-              onDataChange={(data) => {
-                updateUserData('retirement', { svBiannual1: data } as any);
-              }}
+                userData={userData}
+                onDataChange={(data) => updateUserData('personal', data)}
               isFrench={isFrench}
             />
 
-            {/* Personne 2 - Gestion SV Biannuelle */}
-            <SVBiannualManager
+            {/* Personne 2 - Investissements */}
+              <InvestmentsTable
               personNumber={2}
               personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
-              data={(userData.retirement as any)?.svBiannual2}
-              onDataChange={(data) => {
-                updateUserData('retirement', { svBiannual2: data } as any);
-              }}
+                userData={userData}
+                onDataChange={(data) => updateUserData('personal', data)}
               isFrench={isFrench}
             />
           </div>
+                </div>
+        </CollapsibleSection>
 
-          {/* Recommandations SV */}
-          <Card className="bg-gradient-to-r from-purple-900/50 to-pink-900/50 border border-purple-500/30">
-            <CardContent className="p-6">
-              <h4 className="text-lg font-bold text-purple-300 mb-4 flex items-center gap-2">
-                <Info className="w-5 h-5" />
-                {isFrench ? 'Recommandations pour la SV' : 'OAS Recommendations'}
-              </h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-300">
-                <div>
-                  <strong className="text-purple-300">{isFrench ? 'Stratégie optimale :' : 'Optimal Strategy:'}</strong>
-                  <ul className="list-disc list-inside mt-2 space-y-1">
-                    <li>{isFrench ? 'Reporter si revenus élevés (récupération fiscale)' : 'Defer if high income (tax clawback)'}</li>
-                    <li>{isFrench ? 'Commencer à 65 ans si revenus modestes' : 'Start at 65 if modest income'}</li>
-                    <li>{isFrench ? 'Considérer l\'espérance de vie' : 'Consider life expectancy'}</li>
-                  </ul>
-                </div>
-                <div>
-                  <strong className="text-pink-300">{isFrench ? 'Points importants :' : 'Important Points:'}</strong>
-                  <ul className="list-disc list-inside mt-2 space-y-1">
-                    <li>{isFrench ? 'Récupération si revenu > 90 997$ (2024)' : 'Clawback if income > $90,997 (2024)'}</li>
-                    <li>{isFrench ? 'Demande automatique à 64 ans' : 'Automatic application at 64'}</li>
-                    <li>{isFrench ? 'Indexée à l\'inflation' : 'Indexed to inflation'}</li>
-                  </ul>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
 
-        {/* Résumé des revenus */}
-        <Card className="bg-white border border-gray-300 mb-8">
-          <CardHeader className="border-b border-gray-300">
-            <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-              <Target className="w-8 h-8 text-gray-600" />
-              {isFrench ? 'Résumé des revenus' : 'Income Summary'}
-            </CardTitle>
-            <CardDescription className="text-gray-600">
-              {isFrench 
-                ? 'Vue d\'ensemble de vos revenus pour la planification de retraite'
-                : 'Overview of your income for retirement planning'
-              }
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="p-6">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-              <div className="text-center">
-                <div className="text-3xl font-bold text-gray-800">
-                  ${((userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0)).toLocaleString()}
-                </div>
-                <div className="text-sm text-gray-600">
-                  {isFrench ? 'Revenus d\'emploi annuels' : 'Annual Employment Income'}
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-gray-800">
-                  ${(() => {
-                    const baseSV = 707.68;
-                    const ageSV1 = userData.personal?.ageSV1 || 65;
-                    const ageSV2 = userData.personal?.ageSV2 || 65;
-                    const bonus1 = ageSV1 > 65 ? (ageSV1 - 65) * 0.072 : 0;
-                    const bonus2 = ageSV2 > 65 ? (ageSV2 - 65) * 0.072 : 0;
-                    const sv1 = Math.round(baseSV * (1 + bonus1)) * 12;
-                    const sv2 = Math.round(baseSV * (1 + bonus2)) * 12;
-                    return (sv1 + sv2).toLocaleString();
-                  })()}
-                </div>
-                <div className="text-sm text-gray-600">
-                  {isFrench ? 'SV annuelle estimée' : 'Estimated Annual OAS'}
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-gray-800">
-                  ${(() => {
-                    const emploi = (userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0);
-                    const baseSV = 707.68;
-                    const ageSV1 = userData.personal?.ageSV1 || 65;
-                    const ageSV2 = userData.personal?.ageSV2 || 65;
-                    const bonus1 = ageSV1 > 65 ? (ageSV1 - 65) * 0.072 : 0;
-                    const bonus2 = ageSV2 > 65 ? (ageSV2 - 65) * 0.072 : 0;
-                    const sv1 = Math.round(baseSV * (1 + bonus1)) * 12;
-                    const sv2 = Math.round(baseSV * (1 + bonus2)) * 12;
-                    const total = emploi + sv1 + sv2;
-                    return Math.round(total / 12).toLocaleString();
-                  })()}
-                </div>
-                <div className="text-sm text-gray-600">
-                  {isFrench ? 'Revenus mensuels totaux' : 'Total Monthly Income'}
-                </div>
-              </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold text-yellow-400">
-                  {userData.personal?.statutProfessionnel1 === 'actif' || userData.personal?.statutProfessionnel2 === 'actif' ? '✅' : '⚠️'}
-                </div>
-                <div className="text-sm text-gray-600">
-                  {isFrench ? 'Statut d\'activité' : 'Activity Status'}
-                </div>
-              </div>
-            </div>
-
-            {/* Alertes importantes */}
-            {(userData.personal?.typeEmploi1 === 'contrat' || userData.personal?.typeEmploi2 === 'contrat') && (
-              <Alert className="border-yellow-400 bg-yellow-900/20 text-yellow-200 mt-6">
-                <AlertTriangle className="h-5 w-5 text-yellow-400" />
-                <AlertDescription>
-                  <strong>{isFrench ? 'Attention :' : 'Warning:'}</strong> {
-                    isFrench 
-                      ? 'Vous avez des revenus contractuels. Assurez-vous de planifier la transition après la fin du contrat.'
-                      : 'You have contract income. Make sure to plan for the transition after the contract ends.'
-                  }
-                </AlertDescription>
-              </Alert>
-            )}
-          </CardContent>
-        </Card>
 
         {/* Section Calculette de rendement */}
         <div className="space-y-8 mb-12">

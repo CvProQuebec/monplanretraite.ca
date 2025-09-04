@@ -14,6 +14,8 @@ export interface Person1Data {
     salaire1: number;
     statutProfessionnel1: string;
     ageRetraiteSouhaite1: number;
+    // Données de revenus unifiés
+    unifiedIncome1?: any[];
   };
   
   // Données retraite Personne 1
@@ -62,6 +64,8 @@ export interface Person2Data {
     salaire2: number;
     statutProfessionnel2: string;
     ageRetraiteSouhaite2: number;
+    // Données de revenus unifiés
+    unifiedIncome2?: any[];
   };
   
   // Données retraite Personne 2
@@ -171,6 +175,8 @@ export class IndividualSaveService {
         salaire1: userData.personal.salaire1,
         statutProfessionnel1: userData.personal.statutProfessionnel1,
         ageRetraiteSouhaite1: userData.personal.ageRetraiteSouhaite1,
+        // Inclure les données de revenus unifiés
+        unifiedIncome1: userData.personal.unifiedIncome1 || [],
       },
       retirement: {
         rrqAgeActuel1: userData.retirement.rrqAgeActuel1,
@@ -217,6 +223,8 @@ export class IndividualSaveService {
         salaire2: userData.personal.salaire2,
         statutProfessionnel2: userData.personal.statutProfessionnel2,
         ageRetraiteSouhaite2: userData.personal.ageRetraiteSouhaite2,
+        // Inclure les données de revenus unifiés
+        unifiedIncome2: userData.personal.unifiedIncome2 || [],
       },
       retirement: {
         rrqAgeActuel2: userData.retirement.rrqAgeActuel2,

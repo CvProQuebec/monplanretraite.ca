@@ -19,6 +19,7 @@ import {
   CheckCircle,
   Edit3
 } from 'lucide-react';
+import { PayrollCalendarService } from '@/services/PayrollCalendarService';
 
 export interface IncomeEntry {
   id: string;
@@ -30,13 +31,43 @@ export interface IncomeEntry {
   monthlyAmount?: number;
   weeklyAmount?: number;
   
+  // Spécifique au salaire
+  salaryStartDate?: string; // Date de début d'emploi
+  salaryEndDate?: string; // Date de fin d'emploi
+  salaryFirstPaymentDate?: string; // Date du premier versement
+  salaryFirstPayDateOfYear?: string; // Date du premier versement de l'année courante (ex: "2025-01-02")
+  salaryFrequency?: 'weekly' | 'biweekly' | 'bimonthly' | 'monthly'; // Fréquence de paiement
+  salaryNetAmount?: number; // Montant net par période
+  
+  // Révision salariale
+  salaryRevisionDate?: string; // Date effective de la révision salariale
+  salaryRevisionAmount?: number; // Nouveau montant après révision
+  salaryRevisionFrequency?: 'weekly' | 'biweekly' | 'bimonthly' | 'monthly'; // Nouvelle fréquence (si différente)
+  salaryRevisionDescription?: string; // Description de la révision (promotion, nouveau rôle, etc.)
+  
   // Spécifique à l'assurance emploi
   weeklyGross?: number;
   weeklyNet?: number;
-  startDate?: string;
-  endDate?: string;
+  eiStartDate?: string; // Date de début des prestations
+  eiFirstPaymentDate?: string; // Date du premier versement
+  eiPaymentFrequency?: 'weekly' | 'biweekly'; // Fréquence de versement
+  eiEligibleWeeks?: number; // Nombre de semaines éligibles (15-45)
   weeksUsed?: number;
   maxWeeks?: number;
+  
+  // Révision assurance-emploi
+  eiRevisionDate?: string; // Date effective de la révision
+  eiRevisionAmount?: number; // Nouveau montant après révision
+  eiRevisionDescription?: string; // Description de la révision
+  
+  // Spécifique aux rentes privées (pensions/viagères)
+  pensionAmount?: number; // Montant de la rente
+  pensionFrequency?: 'monthly' | 'quarterly' | 'semi-annual' | 'annual'; // Fréquence de versement
+  pensionStartDate?: string; // Date de début de la rente
+  pensionFirstPaymentDate?: string; // Date du premier versement
+  pensionType?: 'viagere' | 'temporaire' | 'mixte'; // Type de rente
+  survivorBenefit?: 'none' | '50%' | '75%' | '100%'; // Pourcentage versé au survivant
+  isEstatePlanning?: boolean; // Inclure dans la planification successorale
   
   // Calculs "à ce jour"
   toDateAmount?: number;
@@ -53,6 +84,7 @@ interface UnifiedIncomeTableProps {
   data?: IncomeEntry[];
   onDataChange: (data: IncomeEntry[]) => void;
   isFrench: boolean;
+  userData?: any; // Ajouter les données utilisateur pour accéder aux montants RRQ réels
 }
 
 const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
@@ -60,7 +92,8 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
   personName,
   data = [],
   onDataChange,
-  isFrench
+  isFrench,
+  userData
 }) => {
   
   const [incomeEntries, setIncomeEntries] = useState<IncomeEntry[]>(data);
@@ -219,6 +252,9 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
     
     setIncomeEntries(updated);
     onDataChange(updated);
+    
+    // Afficher une confirmation de sauvegarde
+    console.log('✅ Modification sauvegardée:', updates);
   };
   
   const removeIncomeEntry = (id: string) => {
@@ -275,8 +311,282 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
     
     return totals;
   };
+
+  // Nouvelle fonction pour calculer les totaux par type de revenu
+  const getTotalsByIncomeType = () => {
+    const totals = {
+      // Revenus de travail
+      salaire: 0,
+      assuranceEmploi: 0,
+      travailAutonome: 0,
+      // Prestations
+      rrq: 0,
+      securiteVieillesse: 0,
+      rentesPrivees: 0,
+      // Totaux
+      mensuelMoyen: 0,
+      totalAnnuelProjete: 0
+    };
+    
+    // Calculer d'abord les montants automatiques (RRQ et SV) même sans entrées
+    if (userData?.retirement) {
+      const currentDate = new Date();
+      const monthsElapsed = currentDate.getMonth() + 1;
+      
+      // RRQ - utiliser les montants réels depuis userData
+      const rrqMontantActuel = personNumber === 1 ? 
+        userData.retirement.rrqMontantActuel1 : 
+        userData.retirement.rrqMontantActuel2;
+      
+      if (rrqMontantActuel && rrqMontantActuel > 0) {
+        // RRQ est versé le dernier jour ouvrable du mois
+        // Ne pas inclure le mois courant car le paiement n'a pas encore eu lieu
+        const monthsCompleted = Math.max(0, monthsElapsed - 1);
+        totals.rrq = rrqMontantActuel * monthsCompleted;
+      }
+      
+      // Sécurité vieillesse - calculer selon les périodes
+      const svBiannual = personNumber === 1 ? 
+        userData.retirement.svBiannual1 : 
+        userData.retirement.svBiannual2;
+      
+      if (svBiannual && svBiannual.periode1 && svBiannual.periode2) {
+        const currentMonth = currentDate.getMonth() + 1; // 1-12
+        
+        // SV est versé entre le 26 et 29 du mois
+        // Ne pas inclure le mois courant car le paiement n'a pas encore eu lieu
+        const monthsCompleted = Math.max(0, currentMonth - 1);
+        
+        // Calculer le montant à ce jour selon les périodes
+        let totalToDate = 0;
+        
+        // Période Jan-Juin (6 mois)
+        const monthsJanJuin = Math.min(6, monthsCompleted);
+        if (monthsJanJuin > 0) {
+          totalToDate += monthsJanJuin * svBiannual.periode1.montant;
+        }
+        
+        // Période Juil-Déc (6 mois)
+        if (monthsCompleted > 6) {
+          const monthsJuilDec = Math.min(6, monthsCompleted - 6);
+          totalToDate += monthsJuilDec * svBiannual.periode2.montant;
+        }
+        
+        totals.securiteVieillesse = totalToDate;
+      }
+    }
+    
+    incomeEntries.forEach(entry => {
+      if (!entry.isActive) return;
+      
+      // Calculer le montant "à ce jour" pour chaque type
+      let toDateAmount = 0;
+      
+      switch (entry.type) {
+        case 'salaire':
+          // Calculer le salaire à ce jour basé sur le calendrier de paie précis
+          if (entry.salaryNetAmount && entry.salaryFrequency) {
+            // Utiliser le calendrier de paie si disponible
+            if (entry.salaryFirstPayDateOfYear) {
+              
+              const payrollConfig = {
+                firstPayDateOfYear: entry.salaryFirstPayDateOfYear,
+                frequency: entry.salaryFrequency
+              };
+              
+              // Calculer les gains totaux jusqu'à aujourd'hui
+              toDateAmount = PayrollCalendarService.calculateTotalEarnings(
+                payrollConfig,
+                entry.salaryNetAmount,
+                new Date()
+              );
+              
+              // Appliquer la révision salariale si applicable
+              if (entry.salaryRevisionDate && entry.salaryRevisionAmount) {
+                const revisionDate = new Date(entry.salaryRevisionDate);
+                const currentDate = new Date();
+                
+                if (revisionDate <= currentDate) {
+                  // Calculer les gains avant et après révision
+                  const earningsBeforeRevision = PayrollCalendarService.calculateTotalEarnings(
+                    payrollConfig,
+                    entry.salaryNetAmount,
+                    revisionDate
+                  );
+                  
+                  const earningsAfterRevision = PayrollCalendarService.calculateTotalEarnings(
+                    payrollConfig,
+                    entry.salaryRevisionAmount,
+                    currentDate
+                  ) - PayrollCalendarService.calculateTotalEarnings(
+                    payrollConfig,
+                    entry.salaryRevisionAmount,
+                    revisionDate
+                  );
+                  
+                  toDateAmount = earningsBeforeRevision + earningsAfterRevision;
+                }
+              }
+            } else {
+              // Fallback: calcul basé sur les dates exactes (méthode précédente)
+              const startDate = new Date(entry.salaryStartDate || new Date().getFullYear() + '-01-01');
+              const currentDate = new Date();
+              const endDate = entry.salaryEndDate ? new Date(entry.salaryEndDate) : currentDate;
+              
+              // Déterminer la période effective (depuis le 1er janvier de l'année courante)
+              const yearStart = new Date(currentDate.getFullYear(), 0, 1);
+              const effectiveStart = startDate > yearStart ? startDate : yearStart;
+              const effectiveEnd = endDate < currentDate ? endDate : currentDate;
+              
+              if (effectiveEnd >= effectiveStart) {
+                // Calculer le nombre de paiements selon la fréquence
+                let paymentsCount = 0;
+                const daysDiff = Math.floor((effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60 * 24));
+                
+                switch (entry.salaryFrequency) {
+                  case 'weekly':
+                    paymentsCount = Math.floor(daysDiff / 7);
+                    break;
+                  case 'biweekly':
+                    paymentsCount = Math.floor(daysDiff / 14);
+                    break;
+                  case 'bimonthly':
+                    paymentsCount = Math.floor(daysDiff / 15);
+                    break;
+                  case 'monthly':
+                    paymentsCount = Math.floor(daysDiff / 30);
+                    break;
+                }
+                
+                // Utiliser le montant de révision si applicable
+                const amountToUse = entry.salaryRevisionDate && 
+                  new Date(entry.salaryRevisionDate) <= effectiveEnd && 
+                  entry.salaryRevisionAmount ? 
+                  entry.salaryRevisionAmount : entry.salaryNetAmount;
+                
+                toDateAmount = paymentsCount * amountToUse;
+              }
+            }
+          } else if (entry.projectedAnnual) {
+            // Fallback: utiliser le montant projeté annuel divisé par 12 * mois écoulés
+            const currentDate = new Date();
+            const monthsElapsed = currentDate.getMonth() + 1;
+            toDateAmount = (entry.projectedAnnual / 12) * monthsElapsed;
+          }
+          totals.salaire += toDateAmount;
+          break;
+          
+        case 'rentes':
+          // Distinguer entre RRQ, SV et rentes privées selon la description
+          const description = entry.description.toLowerCase();
+          if (description.includes('rrq') || description.includes('cpp') || description.includes('régime de retraite du québec')) {
+            // Si c'est une entrée RRQ explicite, l'ajouter aux calculs automatiques
+            if (entry.projectedAnnual) {
+              const currentDate = new Date();
+              const monthsElapsed = currentDate.getMonth() + 1;
+              toDateAmount = (entry.projectedAnnual / 12) * monthsElapsed;
+            }
+            totals.rrq += toDateAmount;
+          } else if (description.includes('sv') || description.includes('sécurité vieillesse') || description.includes('oas') || description.includes('old age security')) {
+            // Si c'est une entrée SV explicite, l'ajouter aux calculs automatiques
+            if (entry.projectedAnnual) {
+              const currentDate = new Date();
+              const monthsElapsed = currentDate.getMonth() + 1;
+              toDateAmount = (entry.projectedAnnual / 12) * monthsElapsed;
+            }
+            totals.securiteVieillesse += toDateAmount;
+          } else {
+            // Rentes privées normales
+            if (entry.projectedAnnual) {
+              const currentDate = new Date();
+              const monthsElapsed = currentDate.getMonth() + 1;
+              toDateAmount = (entry.projectedAnnual / 12) * monthsElapsed;
+            }
+            totals.rentesPrivees += toDateAmount;
+          }
+          break;
+          
+        case 'assurance-emploi':
+          // Calculer l'assurance emploi à ce jour basé sur les dates exactes
+          if (entry.weeklyNet && entry.eiStartDate) {
+            const startDate = new Date(entry.eiStartDate);
+            const currentDate = new Date();
+            
+            // Calculer le nombre de semaines écoulées depuis le début
+            const weeksElapsed = Math.max(0, Math.floor((currentDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 7)));
+            
+            // Limiter aux semaines éligibles si spécifié
+            const maxWeeks = entry.eiEligibleWeeks || 45;
+            const actualWeeksElapsed = Math.min(weeksElapsed, maxWeeks);
+            
+            // AE: 1270$ par 2 semaines = 635$/semaine
+            // Paiement le jeudi suivant la fin de la période
+            const weeklyAmount = 635; // 1270 / 2
+            
+            // Calculer le montant total en tenant compte de la révision (si applicable)
+            let totalAmount = 0;
+            
+            if (entry.eiRevisionDate && entry.eiRevisionAmount) {
+              const revisionDate = new Date(entry.eiRevisionDate);
+              
+              // Période avant révision
+              const weeksBeforeRevision = Math.max(0, Math.floor((revisionDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 7)));
+              const effectiveWeeksBeforeRevision = Math.min(weeksBeforeRevision, actualWeeksElapsed);
+              totalAmount += effectiveWeeksBeforeRevision * weeklyAmount;
+              
+              // Période après révision
+              const weeksAfterRevision = Math.max(0, actualWeeksElapsed - effectiveWeeksBeforeRevision);
+              totalAmount += weeksAfterRevision * entry.eiRevisionAmount;
+            } else {
+              // Pas de révision - calcul normal
+              totalAmount = actualWeeksElapsed * weeklyAmount;
+            }
+            
+            toDateAmount = totalAmount;
+          } else if (entry.projectedAnnual) {
+            // Fallback: utiliser le montant projeté
+            const currentDate = new Date();
+            const monthsElapsed = currentDate.getMonth() + 1;
+            toDateAmount = (entry.projectedAnnual / 12) * monthsElapsed;
+          }
+          totals.assuranceEmploi += toDateAmount;
+          break;
+          
+        case 'travail-autonome':
+          // Travail autonome - revenu de travail
+          if (entry.projectedAnnual) {
+            const currentDate = new Date();
+            const monthsElapsed = currentDate.getMonth() + 1;
+            toDateAmount = (entry.projectedAnnual / 12) * monthsElapsed;
+          }
+          totals.travailAutonome += toDateAmount;
+          break;
+          
+        case 'dividendes':
+        case 'revenus-location':
+        case 'autres':
+          // Ces types sont considérés comme rentes privées (prestations)
+          if (entry.projectedAnnual) {
+            const currentDate = new Date();
+            const monthsElapsed = currentDate.getMonth() + 1;
+            toDateAmount = (entry.projectedAnnual / 12) * monthsElapsed;
+          }
+          totals.rentesPrivees += toDateAmount;
+          break;
+      }
+      
+      // Calculer le total annuel projeté
+      totals.totalAnnuelProjete += entry.projectedAnnual || 0;
+    });
+    
+    // Calculer le mensuel moyen
+    totals.mensuelMoyen = totals.totalAnnuelProjete / 12;
+    
+    return totals;
+  };
   
   const totals = getTotalsByFrequency();
+  const incomeTypeTotals = getTotalsByIncomeType();
   
   return (
     <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl backdrop-blur-sm">
@@ -508,17 +818,53 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
               <div>
-                <div className="text-2xl font-bold text-green-400">
-                  {formatCurrency(totals.projected)}
+                <div className="text-2xl font-bold text-blue-400">
+                  {formatCurrency(incomeTypeTotals.salaire)}
                 </div>
                 <div className="text-sm text-gray-300">
-                  {isFrench ? 'Total annuel projeté' : 'Projected Annual Total'}
+                  {isFrench ? 'Salaire à ce jour' : 'Salary to date'}
                 </div>
               </div>
               
               <div>
-                <div className="text-2xl font-bold text-blue-400">
-                  {formatCurrency(totals.projected / 12)}
+                <div className="text-2xl font-bold text-purple-400">
+                  {formatCurrency(incomeTypeTotals.rrq)}
+                </div>
+                <div className="text-sm text-gray-300">
+                  {isFrench ? 'RRQ à ce jour' : 'CPP to date'}
+                </div>
+              </div>
+              
+              <div>
+                <div className="text-2xl font-bold text-cyan-400">
+                  {formatCurrency(incomeTypeTotals.securiteVieillesse)}
+                </div>
+                <div className="text-sm text-gray-300">
+                  {isFrench ? 'Sécurité vieillesse à ce jour' : 'OAS to date'}
+                </div>
+              </div>
+              
+              <div>
+                <div className="text-2xl font-bold text-yellow-400">
+                  {formatCurrency(incomeTypeTotals.rentesPrivees)}
+                </div>
+                <div className="text-sm text-gray-300">
+                  {isFrench ? 'Rentes privées à ce jour' : 'Private pensions to date'}
+                </div>
+              </div>
+              
+              <div>
+                <div className="text-2xl font-bold text-orange-400">
+                  {formatCurrency(incomeTypeTotals.assuranceEmploi)}
+                </div>
+                <div className="text-sm text-gray-300">
+                  {isFrench ? 'Assurance emploi à ce jour' : 'EI to date'}
+                </div>
+              </div>
+              
+              <div>
+                <div className="text-2xl font-bold text-green-400">
+                  {formatCurrency(incomeTypeTotals.mensuelMoyen)}
                 </div>
                 <div className="text-sm text-gray-300">
                   {isFrench ? 'Mensuel moyen' : 'Average Monthly'}
@@ -526,16 +872,16 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
               </div>
               
               <div>
-                <div className="text-2xl font-bold text-orange-400">
-                  {formatCurrency(totals.toDate)}
+                <div className="text-2xl font-bold text-emerald-400">
+                  {formatCurrency(incomeTypeTotals.totalAnnuelProjete)}
                 </div>
                 <div className="text-sm text-gray-300">
-                  {isFrench ? 'AE à ce jour' : 'EI To Date'}
+                  {isFrench ? 'Total annuel projeté' : 'Projected Annual Total'}
                 </div>
               </div>
               
               <div>
-                <div className="text-2xl font-bold text-purple-400">
+                <div className="text-2xl font-bold text-pink-400">
                   {incomeEntries.filter(e => e.isActive).length}
                 </div>
                 <div className="text-sm text-gray-300">

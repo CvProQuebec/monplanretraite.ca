@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { UserData, Calculations } from '../types';
 import { CalculationService } from '../services/CalculationService';
 import { InputSanitizer } from '@/utils/inputSanitizer';
+import { DataMigrationService } from '@/services/DataMigrationService';
 
 // Utilisation de sessionStorage pour la persistance temporaire uniquement
 const SESSION_STORAGE_KEY = 'retirement-session-data';
@@ -112,7 +113,10 @@ const validateUserData = (data: any): UserData => {
       ...data,
       personal: {
         ...defaultUserData.personal,
-        ...data.personal
+        ...data.personal,
+        // S'assurer que les revenus unifiés sont des tableaux valides
+        unifiedIncome1: Array.isArray(data.personal?.unifiedIncome1) ? data.personal.unifiedIncome1 : [],
+        unifiedIncome2: Array.isArray(data.personal?.unifiedIncome2) ? data.personal.unifiedIncome2 : []
       },
       retirement: {
         ...defaultUserData.retirement,
@@ -186,6 +190,19 @@ export const useRetirementData = () => {
               console.log('📥 Données brutes chargées depuis localStorage:', parsedData);
               console.log('📊 unifiedIncome1:', parsedData.personal?.unifiedIncome1);
               console.log('📊 unifiedIncome2:', parsedData.personal?.unifiedIncome2);
+              
+              // Vérifier et effectuer la migration si nécessaire
+              if (DataMigrationService.needsMigration()) {
+                console.log('🔄 Migration des données en cours...');
+                const migrationResult = DataMigrationService.migrateUserData(parsedData);
+                if (migrationResult.success) {
+                  console.log('✅ Migration réussie:', migrationResult.migratedFields);
+                  DataMigrationService.saveMigratedData(parsedData);
+                } else {
+                  console.warn('⚠️ Erreurs lors de la migration:', migrationResult.errors);
+                }
+              }
+              
               const validatedData = validateUserData(parsedData);
               console.log('✅ Données validées:', validatedData);
               setUserData(validatedData);
