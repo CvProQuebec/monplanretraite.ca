@@ -381,7 +381,7 @@ const SVAdjustmentManager: React.FC<SVAdjustmentManagerProps> = ({
                   value={newAdjustment.dateDebut || ''}
                   onChange={(value) => setNewAdjustment(prev => ({ ...prev, dateDebut: value }))}
                   className="bg-slate-600 border-slate-500 text-white"
-                  placeholder="YYYY-MM-DD"
+                  placeholder="AAAA-MM-JJ"
                 />
               </div>
               <div>
@@ -392,7 +392,7 @@ const SVAdjustmentManager: React.FC<SVAdjustmentManagerProps> = ({
                   value={newAdjustment.dateFin || ''}
                   onChange={(value) => setNewAdjustment(prev => ({ ...prev, dateFin: value }))}
                   className="bg-slate-600 border-slate-500 text-white"
-                  placeholder="YYYY-MM-DD"
+                  placeholder="AAAA-MM-JJ"
                 />
               </div>
             </div>

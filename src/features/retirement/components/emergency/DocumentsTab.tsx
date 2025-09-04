@@ -9,8 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import DateInput from '@/components/ui/DateInput';
 import { Checkbox } from '@/components/ui/checkbox';
 import { FileText, Plus, Trash2, Calendar as CalendarIcon, AlertTriangle, Info, File, FolderOpen, Clock, Shield } from 'lucide-react';
 import { format } from 'date-fns';
@@ -293,28 +292,11 @@ export const DocumentsTab: React.FC<DocumentsTabProps> = ({ data, onUpdate }) =>
               
               <div className="space-y-2">
                 <Label htmlFor="document-expiry">Date d'expiration</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start text-left font-normal"
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {newDocument.expiryDate ? 
-                        format(newDocument.expiryDate, 'PPP', { locale: fr }) : 
-                        'Sélectionner une date'
-                      }
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={newDocument.expiryDate}
-                      onSelect={(date) => setNewDocument({ ...newDocument, expiryDate: date })}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+                <DateInput
+                  value={newDocument.expiryDate ? format(newDocument.expiryDate, 'yyyy-MM-dd') : ''}
+                  onChange={(value) => setNewDocument({ ...newDocument, expiryDate: value ? new Date(value) : undefined })}
+                  placeholder="AAAA-MM-JJ"
+                />
               </div>
             </div>
 

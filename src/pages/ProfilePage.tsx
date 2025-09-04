@@ -31,24 +31,13 @@ import { IntelligentReportSection } from '../features/retirement/components/Inte
 import { OnboardingService } from '../features/retirement/services/OnboardingService';
 import SRGService from '../features/retirement/services/SRGService';
 import { UserData } from '../features/retirement/types';
+import { useRetirementData } from '../features/retirement/hooks/useRetirementData';
 
 export default function ProfilePage() {
-  const [userData, setUserData] = useState<UserData | null>(null);
+  const { userData, updateUserData, importData, exportData } = useRetirementData();
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [activeTab, setActiveTab] = useState('profile');
   const [isFrench] = useState(true); // Par défaut en français
-
-  // Charger les données utilisateur depuis le localStorage
-  useEffect(() => {
-    const savedData = localStorage.getItem('userData');
-    if (savedData) {
-      try {
-        setUserData(JSON.parse(savedData));
-      } catch (error) {
-        console.error('Erreur lors du chargement des données:', error);
-      }
-    }
-  }, []);
 
   const srgEligible = useMemo(() => {
     try {
@@ -59,25 +48,18 @@ export default function ProfilePage() {
     }
   }, [userData]);
 
-  // Sauvegarder les données utilisateur
-  const saveUserData = (data: UserData) => {
-    try {
-      localStorage.setItem('userData', JSON.stringify(data));
-      setUserData(data);
-      setShowOnboarding(false);
-      
-      // Afficher un message de succès
-      alert('Profil créé avec succès ! Vous pouvez maintenant utiliser toutes les fonctionnalités.');
-      
-    } catch (error) {
-      console.error('Erreur lors de la sauvegarde:', error);
-      alert('Erreur lors de la sauvegarde. Veuillez réessayer.');
-    }
-  };
-
   // Gérer la completion de l'onboarding
   const handleOnboardingComplete = (data: UserData) => {
-    saveUserData(data);
+    // Mettre à jour les données via le hook
+    Object.keys(data).forEach(section => {
+      if (data[section as keyof UserData]) {
+        updateUserData(section as keyof UserData, data[section as keyof UserData]);
+      }
+    });
+    setShowOnboarding(false);
+    
+    // Afficher un message de succès
+    alert('Profil créé avec succès ! Vous pouvez maintenant utiliser toutes les fonctionnalités.');
   };
 
   // Gérer le skip de l'onboarding
@@ -85,43 +67,13 @@ export default function ProfilePage() {
     setShowOnboarding(false);
   };
 
-  // Exporter les données
-  const exportUserData = () => {
-    if (!userData) return;
-    
-    try {
-      const dataStr = JSON.stringify(userData, null, 2);
-      const dataBlob = new Blob([dataStr], { type: 'application/json' });
-      const url = URL.createObjectURL(dataBlob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = `profil_retraite_${new Date().toISOString().split('T')[0]}.json`;
-      link.click();
-      URL.revokeObjectURL(url);
-    } catch (error) {
-      console.error('Erreur lors de l\'export:', error);
-      alert('Erreur lors de l\'export. Veuillez réessayer.');
-    }
-  };
-
   // Importer les données
   const importUserData = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const data = JSON.parse(e.target?.result as string);
-        setUserData(data);
-        localStorage.setItem('userData', JSON.stringify(data));
-        alert('Données importées avec succès !');
-      } catch (error) {
-        console.error('Erreur lors de l\'import:', error);
-        alert('Fichier invalide. Veuillez vérifier le format.');
-      }
-    };
-    reader.readAsText(file);
+    importData(file);
+    alert('Données importées avec succès !');
   };
 
   // Helper: normalize "niveauCompetences1" to the allowed union type
@@ -336,7 +288,7 @@ export default function ProfilePage() {
                         placements: 6000
                       }
                     };
-                    saveUserData(defaultData);
+                    handleOnboardingComplete(defaultData);
                   }}
                 >
                   <Settings className="w-5 h-5" />
@@ -367,7 +319,7 @@ export default function ProfilePage() {
             </div>
             
             <div className="flex gap-3">
-              <Button variant="outline" onClick={exportUserData}>
+              <Button variant="outline" onClick={exportData}>
                 <Download className="w-4 h-4 mr-2" />
                 Exporter
               </Button>
@@ -507,12 +459,7 @@ export default function ProfilePage() {
               <SRGAnalysisSection
                 data={userData as UserData}
                 onUpdate={(section, updates) => {
-                  const updatedData = {
-                    ...(userData as UserData),
-                    [section]: { ...((userData as any)[section] || {}), ...updates }
-                  };
-                  setUserData(updatedData);
-                  localStorage.setItem('userData', JSON.stringify(updatedData));
+                  updateUserData(section, updates);
                 }}
                 isFrench={isFrench}
               />
@@ -621,15 +568,7 @@ export default function ProfilePage() {
                         aria-label="Province de résidence"
                         value={userData.personal?.province || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              province: e.target.value
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { province: e.target.value });
                         }}
                       >
                         <option value="">Sélectionner une province</option>
@@ -656,15 +595,7 @@ export default function ProfilePage() {
                         aria-label="Région économique"
                         value={userData.personal?.regionEconomique || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              regionEconomique: e.target.value
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { regionEconomique: e.target.value });
                         }}
                       >
                         <option value="">Sélectionner une région</option>
@@ -700,15 +631,7 @@ export default function ProfilePage() {
                         aria-label="État de santé général"
                         value={userData.personal?.etatSante || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              etatSante: asEtatSante(e.target.value)
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { etatSante: asEtatSante(e.target.value) });
                         }}
                       >
                         <option value="">Non spécifié</option>
@@ -727,15 +650,7 @@ export default function ProfilePage() {
                         aria-label="Mode de vie actif"
                         value={userData.personal?.modeVieActif || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              modeVieActif: asModeVie(e.target.value)
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { modeVieActif: asModeVie(e.target.value) });
                         }}
                       >
                         <option value="">Non spécifié</option>
@@ -764,15 +679,7 @@ export default function ProfilePage() {
                         aria-label="Tolérance au risque"
                         value={userData.personal?.toleranceRisque || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              toleranceRisque: asTolerance(e.target.value)
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { toleranceRisque: asTolerance(e.target.value) });
                         }}
                       >
                         <option value="">Non spécifié</option>
@@ -791,15 +698,7 @@ export default function ProfilePage() {
                         aria-label="Horizon d'investissement"
                         value={userData.personal?.horizonInvestissement || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              horizonInvestissement: asHorizon(e.target.value)
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { horizonInvestissement: asHorizon(e.target.value) });
                         }}
                       >
                         <option value="">Non spécifié</option>
@@ -824,15 +723,7 @@ export default function ProfilePage() {
                         aria-label="Secteur d'activité"
                         value={userData.personal?.secteurActivite1 || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              secteurActivite1: e.target.value
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { secteurActivite1: e.target.value });
                         }}
                       >
                         <option value="">Sélectionner un secteur</option>
@@ -856,15 +747,7 @@ export default function ProfilePage() {
                         aria-label="Niveau de compétences"
                         value={userData.personal?.niveauCompetences1 || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              niveauCompetences1: asNiveau(e.target.value)
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { niveauCompetences1: asNiveau(e.target.value) });
                         }}
                       >
                         <option value="">Sélectionner un niveau</option>
@@ -896,15 +779,7 @@ export default function ProfilePage() {
                         placeholder="2.1 (défaut IPF 2025)"
                         value={userData.personal?.inflationPersonnalisee || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              inflationPersonnalisee: parseFloat(e.target.value) || undefined
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { inflationPersonnalisee: parseFloat(e.target.value) || undefined });
                         }}
                       />
                     </div>
@@ -920,15 +795,7 @@ export default function ProfilePage() {
                         placeholder="6.6 (défaut IPF 2025)"
                         value={userData.personal?.rendementPersonnalise || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              rendementPersonnalise: parseFloat(e.target.value) || undefined
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { rendementPersonnalise: parseFloat(e.target.value) || undefined });
                         }}
                       />
                     </div>
@@ -950,15 +817,7 @@ export default function ProfilePage() {
                         aria-label="Expérience financière"
                         value={userData.personal?.experienceFinanciere || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              experienceFinanciere: asExperience(e.target.value)
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { experienceFinanciere: asExperience(e.target.value) });
                         }}
                       >
                         <option value="">Sélectionner votre expérience</option>
@@ -976,15 +835,7 @@ export default function ProfilePage() {
                         aria-label="Objectif principal"
                         value={userData.personal?.objectifPrincipal || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              objectifPrincipal: asObjectif(e.target.value)
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { objectifPrincipal: asObjectif(e.target.value) });
                         }}
                       >
                         <option value="">Sélectionner votre objectif</option>
@@ -1004,15 +855,7 @@ export default function ProfilePage() {
                         aria-label="Temps disponible pour la gestion"
                         value={userData.personal?.tempsDisponible || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              tempsDisponible: asTemps(e.target.value)
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { tempsDisponible: asTemps(e.target.value) });
                         }}
                       >
                         <option value="">Sélectionner votre disponibilité</option>
@@ -1030,15 +873,7 @@ export default function ProfilePage() {
                         aria-label="Tolérance au risque d'investissement"
                         value={userData.personal?.toleranceRisqueInvestissement || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            personal: {
-                              ...userData.personal,
-                              toleranceRisqueInvestissement: asTolInv(e.target.value)
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('personal', { toleranceRisqueInvestissement: asTolInv(e.target.value) });
                         }}
                       >
                         <option value="">Sélectionner votre tolérance</option>
@@ -1070,15 +905,7 @@ export default function ProfilePage() {
                         placeholder="Montant en dollars"
                         value={userData.savings?.fondsUrgence || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            savings: {
-                              ...userData.savings,
-                              fondsUrgence: parseFloat(e.target.value) || 0
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('savings', { fondsUrgence: parseFloat(e.target.value) || 0 });
                         }}
                       />
                     </div>
@@ -1093,15 +920,7 @@ export default function ProfilePage() {
                         placeholder="Somme de toutes les dettes"
                         value={userData.savings?.dettesTotales || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            savings: {
-                              ...userData.savings,
-                              dettesTotales: parseFloat(e.target.value) || 0
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('savings', { dettesTotales: parseFloat(e.target.value) || 0 });
                         }}
                       />
                     </div>
@@ -1116,15 +935,7 @@ export default function ProfilePage() {
                         placeholder="REER + CELI + régimes"
                         value={userData.savings?.epargneRetraite || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            savings: {
-                              ...userData.savings,
-                              epargneRetraite: parseFloat(e.target.value) || 0
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('savings', { epargneRetraite: parseFloat(e.target.value) || 0 });
                         }}
                       />
                     </div>
@@ -1140,15 +951,7 @@ export default function ProfilePage() {
                         placeholder="Pourcentage des revenus"
                         value={userData.savings?.tauxEpargne || ''}
                         onChange={(e) => {
-                          const updatedData = {
-                            ...userData,
-                            savings: {
-                              ...userData.savings,
-                              tauxEpargne: parseFloat(e.target.value) || 0
-                            }
-                          };
-                          setUserData(updatedData);
-                          localStorage.setItem('userData', JSON.stringify(updatedData));
+                          updateUserData('savings', { tauxEpargne: parseFloat(e.target.value) || 0 });
                         }}
                       />
                     </div>

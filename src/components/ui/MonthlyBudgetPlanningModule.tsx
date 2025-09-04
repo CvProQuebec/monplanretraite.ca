@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import SeniorsFriendlyInput from '../forms/SeniorsFriendlyInput';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
@@ -191,7 +191,7 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <Label htmlFor="expenseName">{t.expenseName}</Label>
-          <Input
+          <SeniorsFriendlyInput
             id="expenseName"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -202,11 +202,11 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
 
         <div>
           <Label htmlFor="amount">{t.amount}</Label>
-          <Input
+          <SeniorsFriendlyInput
             id="amount"
             type="number"
             value={formData.amount || ''}
-            onChange={(e) => setFormData({ ...formData, amount: parseFloat(e.target.value) || 0 })}
+            onChange={(e) => setFormData({ ...formData, amount: parseFloat((e.target.value || '0').replace(',', '.')) || 0 })}
             placeholder="0"
             required
           />
@@ -235,11 +235,11 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
         {formData.frequency === 'monthly' && (
           <div>
             <Label htmlFor="dueDay">{t.dueDay}</Label>
-            <Input
+            <SeniorsFriendlyInput
               id="dueDay"
               type="number"
-              min="1"
-              max="31"
+              min={1}
+              max={31}
               value={formData.dueDay || ''}
               onChange={(e) => setFormData({ ...formData, dueDay: parseInt(e.target.value) || 1 })}
               placeholder="6"
@@ -250,8 +250,9 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
         {formData.frequency === 'irregular' && (
           <div>
             <Label htmlFor="specificDates">{t.specificDates}</Label>
-            <Input
+            <SeniorsFriendlyInput
               id="specificDates"
+              type="text"
               value={formData.dueDates?.join(', ') || ''}
               onChange={(e) => setFormData({ 
                 ...formData, 
@@ -267,8 +268,9 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
 
         <div>
           <Label htmlFor="notes">{t.notes}</Label>
-          <Input
+          <SeniorsFriendlyInput
             id="notes"
+            type="text"
             value={formData.notes || ''}
             onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
             placeholder={isFrench ? "Notes optionnelles" : "Optional notes"}
@@ -290,24 +292,24 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
   return (
     <div className="space-y-6">
       {/* En-tête */}
-      <div className="text-center">
-        <h2 className="text-3xl font-bold text-white mb-2 flex items-center justify-center gap-3">
+      <div className="text-center bg-white border-2 border-gray-300 rounded-xl p-6">
+        <h2 className="text-3xl font-bold text-black mb-2 flex items-center justify-center gap-3">
           <Calendar className="w-8 h-8 text-blue-300" />
           {t.title}
         </h2>
-        <p className="text-lg text-blue-100">
+        <p className="text-lg text-black">
           {t.subtitle}
         </p>
       </div>
 
       {/* Navigation par onglets */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-2 bg-white/10 backdrop-blur-sm">
-          <TabsTrigger value="dueDates" className="text-white data-[state=active]:bg-blue-600">
+        <TabsList className="grid w-full grid-cols-2 bg-white border-2 border-gray-300 rounded-xl">
+          <TabsTrigger value="dueDates" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700">
             <Clock className="w-4 h-4 mr-2" />
             {t.dueDatesTab}
           </TabsTrigger>
-          <TabsTrigger value="budgetPlan" className="text-white data-[state=active]:bg-green-600">
+          <TabsTrigger value="budgetPlan" className="data-[state=active]:bg-green-600 data-[state=active]:text-white data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700">
             <Target className="w-4 h-4 mr-2" />
             {t.budgetPlanTab}
           </TabsTrigger>
@@ -315,7 +317,7 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
 
         {/* Onglet Dates d'échéance */}
         <TabsContent value="dueDates" className="space-y-4">
-          <Card className="bg-white/95 backdrop-blur-sm">
+          <Card className="bg-white border-2 border-gray-300">
             <CardHeader>
               <div className="flex justify-between items-center">
                 <div>
@@ -340,7 +342,7 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
                       {t.addDueDate}
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-md">
+                  <DialogContent className="max-w-md bg-white border-2 border-gray-300">
                     <DialogHeader>
                       <DialogTitle>{t.addDueDate}</DialogTitle>
                     </DialogHeader>
@@ -451,7 +453,7 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
 
         {/* Onglet Plan budgétaire */}
         <TabsContent value="budgetPlan" className="space-y-4">
-          <Card className="bg-white/95 backdrop-blur-sm">
+          <Card className="bg-white border-2 border-gray-300">
             <CardHeader>
               <CardTitle className="text-xl text-gray-800">{t.budgetPlanTab}</CardTitle>
               <CardDescription>

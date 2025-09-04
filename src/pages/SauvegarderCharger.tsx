@@ -274,8 +274,13 @@ export default function SauvegarderCharger() {
         throw new Error('Invalid content');
       }
 
-      // Sauvegarder dans le stockage local au format attendu par l’application
+      // Sauvegarder dans le stockage local au format attendu par l'application
       localStorage.setItem('retirement_data', JSON.stringify(payload));
+
+      // Déclencher un événement personnalisé pour notifier les autres composants
+      window.dispatchEvent(new CustomEvent('retirementDataImported', { 
+        detail: { data: payload } 
+      }));
 
       setImportSuccess(true);
       setImportMessage(

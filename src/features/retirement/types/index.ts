@@ -73,6 +73,28 @@ export interface PersonalData {
   unifiedIncome1?: IncomeEntry[];
   unifiedIncome2?: IncomeEntry[];
   
+  // Champs de revenus détaillés
+  assuranceEmploi1?: number;
+  assuranceEmploi2?: number;
+  rentesViageres1?: number;
+  rentesViageres2?: number;
+  autresRevenus1?: number;
+  autresRevenus2?: number;
+  
+  // Champs d'investissements
+  soldeREER1?: number;
+  dateREER1?: string;
+  soldeCELI1?: number;
+  dateCELI1?: string;
+  soldeCRI1?: number;
+  dateCRI1?: string;
+  soldeREER2?: number;
+  dateREER2?: string;
+  soldeCELI2?: number;
+  dateCELI2?: string;
+  soldeCRI2?: number;
+  dateCRI2?: string;
+  
   // Compatibilité UI
   typeRevenu1?: string;
   typeEmploi1?: string;
@@ -99,6 +121,38 @@ export interface RetirementData {
   svRevenus2?: number;
   svAgeDebut1?: number;
   svAgeDebut2?: number;
+  
+  // Champs pour la gestion biannuelle SV
+  svBiannual1?: {
+    annee: number;
+    periode1: {
+      dateDebut: string;
+      dateFin: string;
+      montant: number;
+    };
+    periode2: {
+      dateDebut: string;
+      dateFin: string;
+      montant: number;
+    };
+    raisonAjustement?: string;
+    revenus_annee_precedente?: number;
+  };
+  svBiannual2?: {
+    annee: number;
+    periode1: {
+      dateDebut: string;
+      dateFin: string;
+      montant: number;
+    };
+    periode2: {
+      dateDebut: string;
+      dateFin: string;
+      montant: number;
+    };
+    raisonAjustement?: string;
+    revenus_annee_precedente?: number;
+  };
   
   // Propriétés existantes
   revenusTempsPartiel1?: number;
@@ -326,13 +380,42 @@ export interface IncomeEntry {
   monthlyAmount?: number;
   weeklyAmount?: number;
   
+  // Spécifique au salaire
+  salaryStartDate?: string; // Date de début d'emploi
+  salaryEndDate?: string; // Date de fin d'emploi
+  salaryFirstPaymentDate?: string; // Date du premier versement
+  salaryFrequency?: 'weekly' | 'biweekly' | 'bimonthly' | 'monthly'; // Fréquence de paiement
+  salaryNetAmount?: number; // Montant net par période
+  
+  // Révision salariale
+  salaryRevisionDate?: string; // Date effective de la révision salariale
+  salaryRevisionAmount?: number; // Nouveau montant après révision
+  salaryRevisionFrequency?: 'weekly' | 'biweekly' | 'bimonthly' | 'monthly'; // Nouvelle fréquence (si différente)
+  salaryRevisionDescription?: string; // Description de la révision (promotion, nouveau rôle, etc.)
+  
   // Spécifique à l'assurance emploi
   weeklyGross?: number;
   weeklyNet?: number;
-  startDate?: string;
-  endDate?: string;
+  eiStartDate?: string; // Date de début des prestations
+  eiFirstPaymentDate?: string; // Date du premier versement
+  eiPaymentFrequency?: 'weekly' | 'biweekly'; // Fréquence de versement
+  eiEligibleWeeks?: number; // Nombre de semaines éligibles (15-45)
   weeksUsed?: number;
   maxWeeks?: number;
+  
+  // Révision assurance-emploi
+  eiRevisionDate?: string; // Date effective de la révision
+  eiRevisionAmount?: number; // Nouveau montant après révision
+  eiRevisionDescription?: string; // Description de la révision
+  
+  // Spécifique aux rentes privées (pensions/viagères)
+  pensionAmount?: number; // Montant de la rente
+  pensionFrequency?: 'monthly' | 'quarterly' | 'semi-annual' | 'annual'; // Fréquence de versement
+  pensionStartDate?: string; // Date de début de la rente
+  pensionFirstPaymentDate?: string; // Date du premier versement
+  pensionType?: 'viagere' | 'temporaire' | 'mixte'; // Type de rente
+  survivorBenefit?: 'none' | '50%' | '75%' | '100%'; // Pourcentage versé au survivant
+  isEstatePlanning?: boolean; // Inclure dans la planification successorale
   
   // Calculs "à ce jour"
   toDateAmount?: number;

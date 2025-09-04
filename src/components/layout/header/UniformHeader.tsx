@@ -355,7 +355,7 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
   };
 
   return (
-    <header className="bg-white shadow-lg border-b-2 border-blue-100 sticky top-0 z-40">
+    <header className="bg-white shadow-lg border-b-2 border-blue-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14">
           {/* Logo */}
@@ -397,7 +397,7 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
 
                                  {/* Sous-menu déroulant */}
                  {item.hasSubmenu && openSubmenu === item.id && (
-                   <div className="absolute top-full left-0 mt-0.5 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 overflow-y-auto">
+                   <div className="absolute top-full left-0 mt-0.5 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-[9999] max-h-96 overflow-y-auto">
                      {item.submenu?.map((subItem, index) => {
                        if (subItem.isHeader) {
                          return (

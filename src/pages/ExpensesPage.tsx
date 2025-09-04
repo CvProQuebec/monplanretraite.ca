@@ -80,11 +80,6 @@ export const ExpensesPage: React.FC = () => {
     subtitle: isFrench 
       ? 'Planifiez et suivez vos dépenses mensuelles pour optimiser votre budget de retraite'
       : 'Plan and track your monthly expenses to optimize your retirement budget',
-    budgetManagement: isFrench ? 'Gestion du budget' : 'Budget Management',
-    budgetSubtitle: isFrench 
-      ? 'Suivez vos revenus et dépenses mensuels'
-      : 'Track your monthly income and expenses',
-    help: isFrench ? 'Aide' : 'Help',
     cashflowManagement: isFrench 
       ? 'Gestion du flux de trésorerie : Suivez vos dépenses mensuelles pour identifier les opportunités d\'épargne. La règle du 50/30/20 recommande 50 % pour les besoins essentiels, 30 % pour les envies, et 20 % pour l\'épargne.'
       : 'Cash flow management: Track your monthly expenses to identify savings opportunities. The 50/30/20 rule recommends 50% for essential needs, 30% for wants, and 20% for savings.',
@@ -153,41 +148,38 @@ export const ExpensesPage: React.FC = () => {
     }
   }, []);
 
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-purple-900 to-blue-900">
-      <div className="container mx-auto px-4 py-8">
+return (
+    <div className="min-h-screen bg-white seniors-mode">
+      <div className="container mx-auto px-6 py-8" role="main" aria-labelledby="page-title">
+        {/* Breadcrumb + Retour */}
+        <nav aria-label="breadcrumb" className="mb-4 flex items-center justify-between">
+          <button onClick={() => window.history.back()} className="button-primary px-4 py-2" aria-label={isFrench ? 'Retour' : 'Back'}>
+            {isFrench ? 'Retour' : 'Back'}
+          </button>
+          <div className="text-sm">
+            <a href="/" className="navigation-link">{isFrench ? 'Accueil' : 'Home'}</a>
+            <span className="mx-2">›</span>
+            <span className="font-semibold">{isFrench ? 'Dépenses' : 'Expenses'}</span>
+          </div>
+        </nav>
+
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="bg-white border-2 border-gray-300 rounded-xl p-6 text-center mb-8">
           <div className="flex justify-center mb-4">
-            <div className="bg-blue-600 p-3 rounded-full">
-              <svg className="h-8 w-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white p-3 rounded-full border-2 border-blue-600">
+              <svg className="h-8 w-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>
             </div>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">
+          <h1 id="page-title" className="text-4xl font-bold text-black mb-2">
             {t.title}
           </h1>
-          <p className="text-lg text-blue-100 max-w-3xl mx-auto">
+          <p className="text-lg text-black max-w-3xl mx-auto">
             {t.subtitle}
           </p>
         </div>
 
-        {/* Section Budget Management */}
-        <div className="text-center mb-8">
-          <h2 className="text-2xl font-bold text-orange-300 mb-2">
-            {t.budgetManagement}
-          </h2>
-          <p className="text-lg text-blue-100">
-            {t.budgetSubtitle}
-          </p>
-          <button className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium transition-colors">
-            <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            {t.help}
-          </button>
-        </div>
 
         {/* Composant CashflowSection existant */}
         <CashflowSection 
@@ -196,7 +188,7 @@ export const ExpensesPage: React.FC = () => {
         />
 
         {/* Nouveau volet Dépenses saisonnières et irrégulières */}
-        <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+        <div className="mt-8 bg-white rounded-xl p-6 border-2 border-gray-300">
           <SeasonalIrregularExpensesModule
             data={userData}
             onUpdate={(updates) => handleUpdate('cashflow', updates)}
@@ -205,7 +197,7 @@ export const ExpensesPage: React.FC = () => {
         </div>
 
         {/* Nouveau volet Planification Budgétaire Mensuelle */}
-        <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+        <div className="mt-8 bg-white rounded-xl p-6 border-2 border-gray-300">
           <MonthlyBudgetPlanningModule
             data={userData}
             onUpdate={(updates) => handleUpdate('cashflow', updates)}
@@ -214,15 +206,15 @@ export const ExpensesPage: React.FC = () => {
         </div>
 
         {/* Informations supplémentaires */}
-        <div className="mt-8 bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+        <div className="mt-8 bg-white rounded-xl p-6 border-2 border-gray-300">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="text-white">
-              <p className="text-sm leading-relaxed">
+            <div className="text-black">
+              <p className="text-base leading-relaxed">
                 {t.cashflowManagement}
               </p>
             </div>
-            <div className="text-white">
-              <p className="text-sm leading-relaxed">
+            <div className="text-black">
+              <p className="text-base leading-relaxed">
                 {t.expenseBreakdown}
               </p>
             </div>

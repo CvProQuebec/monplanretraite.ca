@@ -6,8 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import DateInput from '@/components/ui/DateInput';
 import { Plus, Trash2, Edit, FileText, Calendar as CalendarIcon, MapPin, User, Building } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
@@ -226,28 +225,11 @@ export const DocumentsForm: React.FC<DocumentsFormProps> = ({ documents, onUpdat
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="dateCreation">Date de création</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start text-left font-normal"
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {formData.dateCreation ? 
-                        format(new Date(formData.dateCreation), 'PPP', { locale: fr }) : 
-                        'Sélectionner une date'
-                      }
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={formData.dateCreation ? new Date(formData.dateCreation) : undefined}
-                      onSelect={(date) => setFormData({ ...formData, dateCreation: date })}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+                <DateInput
+                  value={formData.dateCreation ? format(new Date(formData.dateCreation), 'yyyy-MM-dd') : ''}
+                  onChange={(value) => setFormData({ ...formData, dateCreation: value ? new Date(value) : undefined })}
+                  placeholder="AAAA-MM-JJ"
+                />
               </div>
               
               <div className="space-y-2">

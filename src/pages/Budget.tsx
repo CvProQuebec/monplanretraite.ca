@@ -413,6 +413,7 @@ const Budget: React.FC = () => {
       </div>
 
       <div className="container mx-auto px-6 py-8 relative z-10">
+
         {/* En-tête spectaculaire */}
         <div className="text-center mb-12">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-500 bg-clip-text text-transparent drop-shadow-2xl">

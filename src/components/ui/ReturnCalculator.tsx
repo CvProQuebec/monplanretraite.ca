@@ -90,17 +90,17 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
       returnCalculatorAccounts: accounts,
       returnCalculatorResults: results
     });
-  }, [accounts, results, updateUserData]);
+  }, [accounts, results]);
 
-  // Charger les données depuis le système de retraite quand elles changent
+  // Charger les données depuis le système de retraite au montage uniquement
   useEffect(() => {
-    if (userData.personal?.returnCalculatorAccounts) {
+    if (userData.personal?.returnCalculatorAccounts && userData.personal.returnCalculatorAccounts.length > 0) {
       setAccounts(userData.personal.returnCalculatorAccounts);
     }
-    if (userData.personal?.returnCalculatorResults) {
+    if (userData.personal?.returnCalculatorResults && userData.personal.returnCalculatorResults.length > 0) {
       setResults(userData.personal.returnCalculatorResults);
     }
-  }, [userData.personal?.returnCalculatorAccounts, userData.personal?.returnCalculatorResults]);
+  }, []); // Seulement au montage
 
   // Fonction pour calculer l'IRR (Internal Rate of Return)
   const calculateIRR = (cashFlows: { date: Date; amount: number }[]): number => {

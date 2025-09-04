@@ -144,17 +144,14 @@ const DateInput: React.FC<DateInputProps> = ({ value, onChange, className, place
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
         className={`${className} ${showError ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''}`}
-        placeholder={placeholder || 'YYYY-MM-DD'}
+        placeholder={placeholder || 'AAAA-MM-JJ'}
         maxLength={10}
       />
       {showError && (
         <p className="text-red-400 text-sm">
-          Date invalide. Format attendu: YYYY-MM-DD
+          Date invalide. Format attendu: AAAA-MM-JJ
         </p>
       )}
-      <p className="text-gray-400 text-xs">
-        Tapez 8 chiffres (ex: 19650203 → 1965-02-03)
-      </p>
     </div>
   );
 };

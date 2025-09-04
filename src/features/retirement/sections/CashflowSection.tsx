@@ -1,7 +1,7 @@
 // src/features/retirement/sections/CashflowSection.tsx
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
+import SeniorsFriendlyInput from '@/components/forms/SeniorsFriendlyInput';
 import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Progress } from '@/components/ui/progress';
@@ -115,116 +115,116 @@ const ExpenseBreakdown: React.FC<ExpenseBreakdownProps> = ({
           {t.cashflow.breakdownButton}
         </Button>
       </DialogTrigger>
-             <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-white border-4 border-blue-300 shadow-2xl">
-         <DialogHeader className="bg-blue-100 p-8 border-b-4 border-blue-400">
-           <DialogTitle className="text-3xl font-bold text-blue-900 flex items-center gap-4">
-             <Settings className="w-8 h-8 text-blue-700" />
-             {t.cashflow.breakdownButton} : {title}
-           </DialogTitle>
-         </DialogHeader>
-         
-         <div className="p-8 space-y-8">
-           {/* Section Totaux - Très Simple */}
-           <div className="bg-gray-50 p-6 rounded-xl border-2 border-gray-300">
-             <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
-               {language === 'fr' ? 'Résumé des Totaux' : 'Total Summary'}
-             </h3>
-             
-             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-               {/* Total Manuel */}
-               <div className="bg-blue-100 p-6 rounded-lg border-2 border-blue-400 text-center">
-                 <p className="text-xl font-bold text-blue-800 mb-2">
-                   {language === 'fr' ? 'Total Manuel' : 'Manual Total'}
-                 </p>
-                 <p className="text-4xl font-bold text-blue-900 mb-2">
-                   {formatCurrency(total)}
-                 </p>
-                 <p className="text-lg text-blue-700">
-                   {language === 'fr' ? 'Montant saisi' : 'Entered amount'}
-                 </p>
-               </div>
-               
-               {/* Total Calculé */}
-               <div className="bg-green-100 p-6 rounded-lg border-2 border-green-400 text-center">
-                 <p className="text-xl font-bold text-green-800 mb-2">
-                   {language === 'fr' ? 'Total Calculé' : 'Calculated Total'}
-                 </p>
-                 <p className="text-4xl font-bold text-green-900 mb-2">
-                   {formatCurrency(calculatedTotal)}
-                 </p>
-                 <p className="text-lg text-green-700">
-                   {language === 'fr' ? 'Somme des détails' : 'Sum of details'}
-                 </p>
-               </div>
-             </div>
-             
-             {/* Alerte de différence - Très visible */}
-             {Math.abs(total - calculatedTotal) > 0.01 && (
-               <div className="mt-6 p-4 bg-orange-100 border-4 border-orange-400 rounded-lg">
-                 <div className="flex items-center gap-3">
-                   <AlertCircle className="w-8 h-8 text-orange-700" />
-                   <div>
-                     <p className="text-xl font-bold text-orange-800">
-                       {language === 'fr' ? '⚠️ ATTENTION : Différence détectée' : '⚠️ WARNING: Difference detected'}
-                     </p>
-                     <p className="text-lg text-orange-700">
-                       {formatCurrency(Math.abs(total - calculatedTotal))}
-                     </p>
-                   </div>
-                 </div>
-               </div>
-             )}
-           </div>
-
-                       {/* Section Détails - Ultra-Simple en 2 Colonnes */}
-            <div className="bg-white border-2 border-gray-300 rounded-xl p-6">
-              <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-                <Settings className="w-6 h-6 text-blue-600" />
-                {language === 'fr' ? 'Détails par Catégorie' : 'Category Details'}
-              </h3>
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-white border-4 border-blue-300 shadow-2xl">
+        <DialogHeader className="bg-blue-100 p-8 border-b-4 border-blue-400">
+          <DialogTitle className="text-3xl font-bold text-blue-900 flex items-center gap-4">
+            <Settings className="w-8 h-8 text-blue-700" />
+            {t.cashflow.breakdownButton} : {title}
+          </DialogTitle>
+        </DialogHeader>
+        
+        <div className="p-8 space-y-8">
+          {/* Section Totaux - Très Simple */}
+          <div className="bg-gray-50 p-6 rounded-xl border-2 border-gray-300">
+            <h3 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+              {language === 'fr' ? 'Résumé des Totaux' : 'Total Summary'}
+            </h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Total Manuel */}
+              <div className="bg-blue-100 p-6 rounded-lg border-2 border-blue-400 text-center">
+                <p className="text-xl font-bold text-blue-800 mb-2">
+                  {language === 'fr' ? 'Total Manuel' : 'Manual Total'}
+                </p>
+                <p className="text-4xl font-bold text-blue-900 mb-2">
+                  {formatCurrency(total)}
+                </p>
+                <p className="text-lg text-blue-700">
+                  {language === 'fr' ? 'Montant saisi' : 'Entered amount'}
+                </p>
+              </div>
               
-              <div className="grid grid-cols-2 gap-4">
-                {categories.map((category) => (
-                  <div key={category.key} className="border-2 border-gray-200 rounded-lg p-4 bg-gray-50">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-7 h-7 flex items-center justify-center bg-blue-100 rounded-full">
-                        {category.icon}
-                      </div>
-                      <Label className="text-lg font-bold text-gray-800">
-                        {category.label}
-                      </Label>
-                    </div>
-                    <Input
-                      type="number"
-                      value={localBreakdown[category.key] || ''}
-                      onChange={(e) => handleChange(category.key, parseFloat(e.target.value) || 0)}
-                      placeholder="0"
-                      className="text-xl p-3 border-2 border-gray-400 focus:border-blue-500 focus:ring-4 focus:ring-blue-200 transition-all duration-200"
-                    />
-                  </div>
-                ))}
+              {/* Total Calculé */}
+              <div className="bg-green-100 p-6 rounded-lg border-2 border-green-400 text-center">
+                <p className="text-xl font-bold text-green-800 mb-2">
+                  {language === 'fr' ? 'Total Calculé' : 'Calculated Total'}
+                </p>
+                <p className="text-4xl font-bold text-green-900 mb-2">
+                  {formatCurrency(calculatedTotal)}
+                </p>
+                <p className="text-lg text-green-700">
+                  {language === 'fr' ? 'Somme des détails' : 'Sum of details'}
+                </p>
               </div>
             </div>
-         </div>
+            
+            {/* Alerte de différence - Très visible */}
+            {Math.abs(total - calculatedTotal) > 0.01 && (
+              <div className="mt-6 p-4 bg-orange-100 border-4 border-orange-400 rounded-lg">
+                <div className="flex items-center gap-3">
+                  <AlertCircle className="w-8 h-8 text-orange-700" />
+                  <div>
+                    <p className="text-xl font-bold text-orange-800">
+                      {language === 'fr' ? '⚠️ ATTENTION : Différence détectée' : '⚠️ WARNING: Difference detected'}
+                    </p>
+                    <p className="text-lg text-orange-700">
+                      {formatCurrency(Math.abs(total - calculatedTotal))}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
 
-         {/* Boutons d'Action - Très Visibles */}
-         <div className="flex justify-center gap-6 pt-8 pb-6 bg-gray-100 border-t-4 border-gray-300">
-           <Button 
-             variant="outline" 
-             onClick={handleCancel}
-             className="px-8 py-4 text-xl font-bold border-4 border-gray-500 hover:border-gray-700 hover:bg-gray-200 transition-all duration-200"
-           >
-             <X className="w-6 h-6 mr-3" />
-             {t.cashflow.cancel}
-           </Button>
-           <Button 
-             onClick={handleSave}
-             className="px-8 py-4 text-xl font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 border-4 border-blue-500"
-           >
-             <CheckCircle className="w-6 h-6 mr-3" />
-             {t.cashflow.save}
-           </Button>
-         </div>
+          {/* Section Détails - Ultra-Simple en 2 Colonnes */}
+          <div className="bg-white border-2 border-gray-300 rounded-xl p-6">
+            <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+              <Settings className="w-6 h-6 text-blue-600" />
+              {language === 'fr' ? 'Détails par Catégorie' : 'Category Details'}
+            </h3>
+            
+            <div className="grid grid-cols-2 gap-4">
+              {categories.map((category) => (
+                <div key={category.key} className="border-2 border-gray-200 rounded-lg p-4 bg-gray-50">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-7 h-7 flex items-center justify-center bg-blue-100 rounded-full">
+                      {category.icon}
+                    </div>
+                    <Label className="text-lg font-bold text-gray-800">
+                      {category.label}
+                    </Label>
+                  </div>
+                  <SeniorsFriendlyInput
+                    type="number"
+                    value={localBreakdown[category.key] || ''}
+                    onChange={(e) => handleChange(category.key, parseFloat((e.target.value || '0').replace(',', '.')) || 0)}
+                    placeholder="0"
+                    className="text-xl"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* Boutons d'Action - Très Visibles */}
+        <div className="flex justify-center gap-6 pt-8 pb-6 bg-gray-100 border-t-4 border-gray-300">
+          <Button 
+            variant="outline" 
+            onClick={handleCancel}
+            className="px-8 py-4 text-xl font-bold border-4 border-gray-500 hover:border-gray-700 hover:bg-gray-200 transition-all duration-200"
+          >
+            <X className="w-6 h-6 mr-3" />
+            {t.cashflow.cancel}
+          </Button>
+          <Button 
+            onClick={handleSave}
+            className="px-8 py-4 text-xl font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 border-4 border-blue-500"
+          >
+            <CheckCircle className="w-6 h-6 mr-3" />
+            {t.cashflow.save}
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );
@@ -234,7 +234,6 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
   const { language } = useLanguage();
   const t = translations[language];
   const [activeTab, setActiveTab] = useState('depenses');
-  const [showHelp, setShowHelp] = useState(false);
 
   const handleChange = (field: string, value: any) => {
     onUpdate('cashflow', { [field]: value });
@@ -347,35 +346,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
     <div className="seniors-mode min-h-screen bg-white">
       <div className="container mx-auto px-6 py-8">
         <div className="space-y-6">
-          {/* En-tête avec aide - Style optimisé pour seniors */}
-          <div className="text-center mb-8">
-            <h1 className="text-5xl font-bold text-gray-900 mb-4">
-              {t.cashflow.title}
-            </h1>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
-              {t.cashflow.subtitle}
-            </p>
-            <button
-              onClick={() => setShowHelp(!showHelp)}
-              className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-lg font-semibold transition-colors border-2 border-blue-600"
-            >
-              <Info className="w-5 h-5 inline mr-2" />
-              {t.personalData.help}
-            </button>
-          </div>
 
-      {/* Message d'aide */}
-      {showHelp && (
-        <Alert className="border-blue-300 bg-blue-50 mb-6">
-          <Info className="h-6 w-6 text-blue-700" />
-          <AlertDescription className="text-blue-900 text-lg leading-relaxed">
-            <strong>Gestion du flux de trésorerie :</strong> Suivez vos dépenses mensuelles pour identifier les opportunités d'épargne. 
-            La règle du 50/30/20 recommande 50 % pour les besoins essentiels, 30 % pour les désirs, et 20 % pour l'épargne.
-            <br /><br />
-            <strong>Ventilation des dépenses :</strong> Utilisez le bouton "Ventiler" pour détailler chaque catégorie de dépenses en sous-catégories.
-          </AlertDescription>
-        </Alert>
-      )}
 
       {/* Métriques principales */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -480,10 +451,10 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                           categories={logementCategories}
                         />
                       </div>
-                      <Input
+                      <SeniorsFriendlyInput
                         type="number"
                         value={data.cashflow.logement || ''}
-                        onChange={(e) => handleChange('logement', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => handleChange('logement', parseFloat((e.target.value || '0').replace(',', '.')) || 0)}
                         placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
@@ -503,10 +474,10 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                           categories={servicesPublicsCategories}
                         />
                       </div>
-                      <Input
+                      <SeniorsFriendlyInput
                         type="number"
                         value={data.cashflow.servicesPublics || ''}
-                        onChange={(e) => handleChange('servicesPublics', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => handleChange('servicesPublics', parseFloat((e.target.value || '0').replace(',', '.')) || 0)}
                         placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
@@ -532,10 +503,10 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                           categories={assurancesCategories}
                         />
                       </div>
-                      <Input
+                      <SeniorsFriendlyInput
                         type="number"
                         value={data.cashflow.assurances || ''}
-                        onChange={(e) => handleChange('assurances', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => handleChange('assurances', parseFloat((e.target.value || '0').replace(',', '.')) || 0)}
                         placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
@@ -546,10 +517,10 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         <ShoppingCart className="w-6 h-6 text-red-500" />
                         {language === 'fr' ? 'Alimentation et produits de base' : 'Food and basic products'}
                       </Label>
-                      <Input
+                      <SeniorsFriendlyInput
                         type="number"
                         value={data.cashflow.alimentation || ''}
-                        onChange={(e) => handleChange('alimentation', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => handleChange('alimentation', parseFloat((e.target.value || '0').replace(',', '.')) || 0)}
                         placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
@@ -569,10 +540,10 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                           categories={transportCategories}
                         />
                       </div>
-                      <Input
+                      <SeniorsFriendlyInput
                         type="number"
                         value={data.cashflow.transport || ''}
-                        onChange={(e) => handleChange('transport', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => handleChange('transport', parseFloat((e.target.value || '0').replace(',', '.')) || 0)}
                         placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
@@ -592,10 +563,10 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                           categories={santeCategories}
                         />
                       </div>
-                      <Input
+                      <SeniorsFriendlyInput
                         type="number"
                         value={data.cashflow.sante || ''}
-                        onChange={(e) => handleChange('sante', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => handleChange('sante', parseFloat((e.target.value || '0').replace(',', '.')) || 0)}
                         placeholder="0"
                         className="text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-red-300 focus:border-red-500 focus:ring-4 focus:ring-red-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
@@ -624,10 +595,10 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                           categories={telecomCategories}
                         />
                       </div>
-                      <Input
+                      <SeniorsFriendlyInput
                         type="number"
                         value={data.cashflow.telecom || ''}
-                        onChange={(e) => handleChange('telecom', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => handleChange('telecom', parseFloat((e.target.value || '0').replace(',', '.')) || 0)}
                         placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-orange-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
@@ -638,10 +609,10 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         <Gamepad2 className="w-6 h-6 text-orange-500" />
                         {language === 'fr' ? 'Loisirs et divertissements' : 'Leisure and entertainment'}
                       </Label>
-                      <Input
+                      <SeniorsFriendlyInput
                         type="number"
                         value={data.cashflow.loisirs || ''}
-                        onChange={(e) => handleChange('loisirs', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => handleChange('loisirs', parseFloat((e.target.value || '0').replace(',', '.')) || 0)}
                         placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-orange-300 focus:ring-orange-500 focus:ring-4 focus:ring-orange-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />
@@ -653,10 +624,10 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                         <Calendar className="w-6 h-6 text-orange-500" />
                         {language === 'fr' ? 'Dépenses saisonnières' : 'Seasonal expenses'}
                       </Label>
-                      <Input
+                      <SeniorsFriendlyInput
                         type="number"
                         value={data.cashflow.depensesSaisonnieres || ''}
-                        onChange={(e) => handleChange('depensesSaisonnieres', parseFloat(e.target.value) || 0)}
+                        onChange={(e) => handleChange('depensesSaisonnieres', parseFloat((e.target.value || '0').replace(',', '.')) || 0)}
                         placeholder="0"
                         className="cashflow-input-enhanced text-3xl font-bold p-4 bg-white text-gray-900 border-4 border-orange-300 focus:border-orange-500 focus:ring-4 focus:ring-orange-200 rounded-lg shadow-lg placeholder:text-gray-400"
                       />

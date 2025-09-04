@@ -10,8 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Calendar } from '@/components/ui/calendar';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import DateInput from '@/components/ui/DateInput';
 import { Shield, Plus, Trash2, Edit, Calendar as CalendarIcon, DollarSign, AlertTriangle, Info, FileText, Clock, User, Building, Car, Heart } from 'lucide-react';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
@@ -364,54 +363,20 @@ export const InsuranceTab: React.FC<InsuranceTabProps> = ({ data, onUpdate }) =>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="start-date">Date de début</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start text-left font-normal"
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {newInsurance.startDate ? 
-                        format(newInsurance.startDate, 'PPP', { locale: fr }) : 
-                        'Sélectionner une date'
-                      }
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={newInsurance.startDate}
-                      onSelect={(date) => setNewInsurance({ ...newInsurance, startDate: date })}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+                <DateInput
+                  value={newInsurance.startDate ? format(newInsurance.startDate, 'yyyy-MM-dd') : ''}
+                  onChange={(value) => setNewInsurance({ ...newInsurance, startDate: value ? new Date(value) : undefined })}
+                  placeholder="AAAA-MM-JJ"
+                />
               </div>
               
               <div className="space-y-2">
                 <Label htmlFor="end-date">Date de fin</Label>
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="w-full justify-start text-left font-normal"
-                    >
-                      <CalendarIcon className="mr-2 h-4 w-4" />
-                      {newInsurance.endDate ? 
-                        format(newInsurance.endDate, 'PPP', { locale: fr }) : 
-                        'Sélectionner une date'
-                      }
-                    </Button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
-                    <Calendar
-                      mode="single"
-                      selected={newInsurance.endDate}
-                      onSelect={(date) => setNewInsurance({ ...newInsurance, endDate: date })}
-                      initialFocus
-                    />
-                  </PopoverContent>
-                </Popover>
+                <DateInput
+                  value={newInsurance.endDate ? format(newInsurance.endDate, 'yyyy-MM-dd') : ''}
+                  onChange={(value) => setNewInsurance({ ...newInsurance, endDate: value ? new Date(value) : undefined })}
+                  placeholder="AAAA-MM-JJ"
+                />
               </div>
             </div>
 

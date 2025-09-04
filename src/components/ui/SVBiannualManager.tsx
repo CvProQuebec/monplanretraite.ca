@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -106,16 +106,24 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
     return montantMaximumSV;
   };
 
+  // Synchroniser les données quand elles changent
+  useEffect(() => {
+    if (data) {
+      setEditData(data);
+      setIsEditing(false);
+    }
+  }, [data]);
+
   return (
-    <Card className="bg-gradient-to-br from-purple-800/90 to-pink-800/90 border-0 shadow-2xl backdrop-blur-sm">
-      <CardHeader className="border-b border-purple-600 bg-gradient-to-r from-purple-600/20 to-pink-600/20">
-        <CardTitle className="text-xl font-bold text-purple-300 flex items-center gap-3">
-          <div className={`w-6 h-6 bg-gradient-to-r ${personNumber === 1 ? 'from-purple-500 to-pink-500' : 'from-pink-500 to-purple-500'} rounded-full flex items-center justify-center text-white font-bold text-sm`}>
+    <Card className="bg-white border-4 border-gray-300 shadow-lg">
+      <CardHeader className="border-b-4 border-gray-300 bg-gray-50">
+        <CardTitle className="text-2xl font-bold text-gray-900 flex items-center gap-4">
+          <div className={`w-10 h-10 ${personNumber === 1 ? 'bg-blue-600' : 'bg-green-600'} rounded-full flex items-center justify-center text-white font-bold text-lg`}>
             {personNumber}
           </div>
           {isFrench ? 'Sécurité de la vieillesse' : 'Old Age Security'} - {personName}
         </CardTitle>
-        <CardDescription className="text-purple-200">
+        <CardDescription className="text-lg text-gray-700">
           {isFrench 
             ? 'Gérez vos montants SV par période (récupération fiscale en juillet)'
             : 'Manage your OAS amounts by period (tax clawback in July)'
@@ -125,9 +133,9 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
       
       <CardContent className="p-6 space-y-6">
         {/* Information sur la récupération fiscale */}
-        <Alert className="border-orange-400 bg-orange-900/20 text-orange-200">
-          <AlertTriangle className="h-5 w-5 text-orange-400" />
-          <AlertDescription>
+        <Alert className="border-4 border-orange-500 bg-orange-50">
+          <AlertTriangle className="h-6 w-6 text-orange-600" />
+          <AlertDescription className="text-lg text-gray-900">
             <strong>{isFrench ? 'Important :' : 'Important:'}</strong> {
               isFrench 
                 ? `La récupération fiscale s'applique à partir de juillet selon les revenus de l'année précédente. Seuil 2024 : ${formatCurrency(seuilRecuperation)}`
@@ -139,67 +147,67 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
         {isEditing ? (
           <div className="space-y-6">
             {/* Année */}
-            <div className="bg-slate-700/50 rounded-lg p-4">
-              <Label className="text-purple-300 font-semibold text-lg">
+            <div className="bg-gray-100 border-2 border-gray-300 rounded-lg p-4">
+              <Label className="text-gray-900 font-bold text-xl">
                 {isFrench ? 'Année de référence' : 'Reference Year'}: {editData.annee}
               </Label>
             </div>
 
             {/* Revenus de l'année précédente */}
-            <div className="bg-slate-700/50 rounded-lg p-4 space-y-3">
-              <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                <Calculator className="w-4 h-4" />
+            <div className="bg-gray-100 border-2 border-gray-300 rounded-lg p-6 space-y-4">
+              <Label className="text-gray-900 font-bold text-xl flex items-center gap-3">
+                <Calculator className="w-6 h-6 text-blue-600" />
                 {isFrench ? `Revenus de ${editData.annee - 1} (optionnel)` : `${editData.annee - 1} Income (optional)`}
               </Label>
               <MoneyInput
                 value={editData.revenus_annee_precedente || 0}
                 onChange={(value) => setEditData(prev => ({ ...prev, revenus_annee_precedente: value }))}
-                className="bg-slate-600 border-slate-500 text-white"
+                className="bg-white border-4 border-gray-300 text-gray-900 text-xl h-16"
                 placeholder={isFrench ? "Ex: 95 000" : "Ex: 95,000"}
                 allowDecimals={true}
               />
-              <p className="text-xs text-gray-400">
+              <p className="text-lg text-gray-700">
                 {isFrench 
                   ? 'Utilisé pour calculer automatiquement la récupération fiscale à partir de juillet'
                   : 'Used to automatically calculate tax clawback from July'
                 }
               </p>
               {editData.revenus_annee_precedente && editData.revenus_annee_precedente > seuilRecuperation && (
-                <div className="text-sm text-orange-300 bg-orange-900/30 p-2 rounded">
+                <div className="text-xl text-orange-600 bg-orange-100 border-2 border-orange-300 p-4 rounded-lg">
                   {isFrench ? 'Montant suggéré pour juillet-décembre : ' : 'Suggested amount for July-December: '}
-                  <strong>{formatCurrency(suggestClawbackAmount())}</strong>
+                  <strong className="text-2xl">{formatCurrency(suggestClawbackAmount())}</strong>
                 </div>
               )}
             </div>
 
             {/* Période 1 : Janvier à Juin */}
-            <div className="bg-slate-700/50 rounded-lg p-4 space-y-4">
-              <div className="flex items-center gap-3">
-                <Calendar className="w-5 h-5 text-green-400" />
-                <h4 className="text-lg font-semibold text-green-300">
+            <div className="bg-green-50 border-4 border-green-300 rounded-lg p-6 space-y-4">
+              <div className="flex items-center gap-4">
+                <Calendar className="w-8 h-8 text-green-600" />
+                <h4 className="text-2xl font-bold text-green-800">
                   {isFrench ? 'Période 1 : janvier à juin' : 'Period 1: January to June'}
                 </h4>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <Label className="text-gray-200 text-sm">
+                  <Label className="text-gray-900 font-bold text-lg">
                     {isFrench ? 'Du' : 'From'}
                   </Label>
-                  <div className="bg-slate-600 border border-slate-500 rounded-md px-3 py-2 text-white">
+                  <div className="bg-white border-4 border-gray-300 rounded-lg px-4 py-3 text-xl text-gray-900 font-bold">
                     {editData.annee}-01-01
                   </div>
                 </div>
                 <div>
-                  <Label className="text-gray-200 text-sm">
+                  <Label className="text-gray-900 font-bold text-lg">
                     {isFrench ? 'Au' : 'To'}
                   </Label>
-                  <div className="bg-slate-600 border border-slate-500 rounded-md px-3 py-2 text-white">
+                  <div className="bg-white border-4 border-gray-300 rounded-lg px-4 py-3 text-xl text-gray-900 font-bold">
                     {editData.annee}-06-30
                   </div>
                 </div>
                 <div>
-                  <Label className="text-gray-200 text-sm">
+                  <Label className="text-gray-900 font-bold text-lg">
                     {isFrench ? 'Montant mensuel' : 'Monthly Amount'}
                   </Label>
                   <MoneyInput
@@ -208,100 +216,115 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
                       ...prev,
                       periode1: { ...prev.periode1, montant: value }
                     }))}
-                    className="bg-slate-600 border-slate-500 text-white"
+                    className="bg-white border-4 border-gray-300 text-gray-900 text-xl h-16"
                     placeholder={isFrench ? "Ex: 713,34" : "Ex: 713.34"}
                     allowDecimals={true}
                   />
                 </div>
               </div>
               
-              <div className="text-sm text-gray-400">
-                {isFrench ? 'Total période 1 : ' : 'Period 1 total: '}
-                <span className="text-green-400 font-semibold">
+              <div className="text-xl text-gray-900 bg-white border-2 border-gray-300 rounded-lg p-4">
+                <strong>{isFrench ? 'Total période 1 : ' : 'Period 1 total: '}</strong>
+                <span className="text-2xl font-bold text-green-600">
                   {formatCurrency(editData.periode1.montant * 6)}
                 </span>
               </div>
             </div>
 
             {/* Période 2 : Juillet à Décembre */}
-            <div className="bg-slate-700/50 rounded-lg p-4 space-y-4">
-              <div className="flex items-center gap-3">
-                <Calendar className="w-5 h-5 text-orange-400" />
-                <h4 className="text-lg font-semibold text-orange-300">
+            <div className="bg-orange-50 border-4 border-orange-300 rounded-lg p-6 space-y-4">
+              <div className="flex items-center gap-4">
+                <Calendar className="w-8 h-8 text-orange-600" />
+                <h4 className="text-2xl font-bold text-orange-800">
                   {isFrench ? 'Période 2 : juillet à décembre' : 'Period 2: July to December'}
                 </h4>
-                <span className="text-xs bg-orange-600 px-2 py-1 rounded-full text-white">
+                <span className="text-lg bg-orange-600 px-4 py-2 rounded-lg text-white font-bold">
                   {isFrench ? 'Récupération fiscale' : 'Tax clawback'}
                 </span>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
-                  <Label className="text-gray-200 text-sm">
+                  <Label className="text-gray-900 font-bold text-lg">
                     {isFrench ? 'Du' : 'From'}
                   </Label>
-                  <div className="bg-slate-600 border border-slate-500 rounded-md px-3 py-2 text-white">
+                  <div className="bg-white border-4 border-gray-300 rounded-lg px-4 py-3 text-xl text-gray-900 font-bold">
                     {editData.annee}-07-01
                   </div>
                 </div>
                 <div>
-                  <Label className="text-gray-200 text-sm">
+                  <Label className="text-gray-900 font-bold text-lg">
                     {isFrench ? 'Au' : 'To'}
                   </Label>
-                  <div className="bg-slate-600 border border-slate-500 rounded-md px-3 py-2 text-white">
+                  <div className="bg-white border-4 border-gray-300 rounded-lg px-4 py-3 text-xl text-gray-900 font-bold">
                     {editData.annee}-12-31
                   </div>
                 </div>
                 <div>
-                  <Label className="text-gray-200 text-sm">
+                  <Label className="text-gray-900 font-bold text-lg">
                     {isFrench ? 'Montant mensuel' : 'Monthly Amount'}
                   </Label>
-                  <div className="flex gap-2">
+                  {personNumber === 1 ? (
+                    // Personne 1 : même disposition que Personne 2 (pas de bouton)
                     <MoneyInput
                       value={editData.periode2.montant}
                       onChange={(value) => setEditData(prev => ({
                         ...prev,
                         periode2: { ...prev.periode2, montant: value }
                       }))}
-                      className="bg-slate-600 border-slate-500 text-white"
+                      className="bg-white border-4 border-gray-300 text-gray-900 text-xl h-16 w-full"
                       placeholder={isFrench ? "Ex: 500,00" : "Ex: 500.00"}
                       allowDecimals={true}
                     />
-                    {editData.revenus_annee_precedente && editData.revenus_annee_precedente > seuilRecuperation && (
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        onClick={() => setEditData(prev => ({
+                  ) : (
+                    // Personne 2 : disposition avec bouton (comportement actuel)
+                    <div className="flex gap-3">
+                      <MoneyInput
+                        value={editData.periode2.montant}
+                        onChange={(value) => setEditData(prev => ({
                           ...prev,
-                          periode2: { ...prev.periode2, montant: suggestClawbackAmount() }
+                          periode2: { ...prev.periode2, montant: value }
                         }))}
-                        className="border-orange-500 text-orange-300 hover:bg-orange-600"
-                        title={isFrench ? 'Utiliser le montant calculé' : 'Use calculated amount'}
-                      >
-                        <Calculator className="w-4 h-4" />
-                      </Button>
-                    )}
-                  </div>
+                        className="bg-white border-4 border-gray-300 text-gray-900 text-xl h-16"
+                        placeholder={isFrench ? "Ex: 500,00" : "Ex: 500.00"}
+                        allowDecimals={true}
+                      />
+                      {editData.revenus_annee_precedente && editData.revenus_annee_precedente > seuilRecuperation && (
+                        <Button
+                          size="lg"
+                          variant="outline"
+                          onClick={() => setEditData(prev => ({
+                            ...prev,
+                            periode2: { ...prev.periode2, montant: suggestClawbackAmount() }
+                          }))}
+                          className="border-4 border-orange-500 text-orange-600 hover:bg-orange-100 h-16 px-6 text-lg font-bold"
+                          title={isFrench ? 'Utiliser le montant calculé' : 'Use calculated amount'}
+                        >
+                          <Calculator className="w-6 h-6" />
+                        </Button>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
               
-              <div className="text-sm text-gray-400">
-                {isFrench ? 'Total période 2 : ' : 'Period 2 total: '}
-                <span className="text-orange-400 font-semibold">
+              <div className="text-xl text-gray-900 bg-white border-2 border-gray-300 rounded-lg p-4">
+                <strong>{isFrench ? 'Total période 2 : ' : 'Period 2 total: '}</strong>
+                <span className="text-2xl font-bold text-orange-600">
                   {formatCurrency(editData.periode2.montant * 6)}
                 </span>
               </div>
             </div>
 
             {/* Raison de l'ajustement */}
-            <div className="bg-slate-700/50 rounded-lg p-4 space-y-3">
-              <Label className="text-gray-200 font-semibold">
+            <div className="bg-gray-100 border-2 border-gray-300 rounded-lg p-6 space-y-4">
+              <Label className="text-gray-900 font-bold text-xl">
                 {isFrench ? 'Raison de l\'ajustement (optionnel)' : 'Reason for adjustment (optional)'}
               </Label>
               <textarea
                 value={editData.raisonAjustement || ''}
                 onChange={(e) => setEditData(prev => ({ ...prev, raisonAjustement: e.target.value }))}
-                className="w-full bg-slate-600 border-slate-500 text-white rounded-md p-3 min-h-[80px]"
+                className="w-full bg-white border-4 border-gray-300 text-gray-900 placeholder-gray-500 rounded-lg p-4 min-h-[100px] text-lg"
                 placeholder={isFrench 
                   ? 'Ex: Récupération fiscale basée sur les revenus de 2023...'
                   : 'Ex: Tax clawback based on 2023 income...'
@@ -310,32 +333,32 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
             </div>
 
             {/* Résumé */}
-            <div className="bg-gradient-to-r from-purple-900/50 to-pink-900/50 rounded-lg p-4 border border-purple-500/30">
-              <h4 className="text-lg font-semibold text-purple-300 mb-3">
+            <div className="bg-blue-50 border-4 border-blue-300 rounded-lg p-6">
+              <h4 className="text-2xl font-bold text-blue-800 mb-6">
                 {isFrench ? 'Résumé annuel' : 'Annual Summary'}
               </h4>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                <div>
-                  <div className="text-2xl font-bold text-green-400">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                <div className="bg-white border-2 border-gray-300 rounded-lg p-4">
+                  <div className="text-3xl font-bold text-green-600">
                     {formatCurrency(calculateAnnualTotal())}
                   </div>
-                  <div className="text-sm text-gray-300">
+                  <div className="text-lg text-gray-700 font-semibold">
                     {isFrench ? 'Total annuel' : 'Annual total'}
                   </div>
                 </div>
-                <div>
-                  <div className="text-2xl font-bold text-blue-400">
+                <div className="bg-white border-2 border-gray-300 rounded-lg p-4">
+                  <div className="text-3xl font-bold text-blue-600">
                     {formatCurrency(calculateMonthlyAverage())}
                   </div>
-                  <div className="text-sm text-gray-300">
+                  <div className="text-lg text-gray-700 font-semibold">
                     {isFrench ? 'Moyenne mensuelle' : 'Monthly average'}
                   </div>
                 </div>
-                <div>
-                  <div className="text-2xl font-bold text-orange-400">
+                <div className="bg-white border-2 border-gray-300 rounded-lg p-4">
+                  <div className="text-3xl font-bold text-orange-600">
                     {formatCurrency(Math.abs(editData.periode1.montant - editData.periode2.montant))}
                   </div>
-                  <div className="text-sm text-gray-300">
+                  <div className="text-lg text-gray-700 font-semibold">
                     {isFrench ? 'Différence périodes' : 'Period difference'}
                   </div>
                 </div>
@@ -343,18 +366,18 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
             </div>
 
             {/* Boutons d'action */}
-            <div className="flex gap-3">
+            <div className="flex gap-6">
               <Button
                 onClick={handleSave}
-                className="bg-green-600 hover:bg-green-700"
+                className="bg-green-600 hover:bg-green-700 text-white text-xl font-bold h-16 px-8"
               >
-                <CheckCircle className="w-4 h-4 mr-2" />
+                <CheckCircle className="w-6 h-6 mr-3" />
                 {isFrench ? 'Sauvegarder' : 'Save'}
               </Button>
               <Button
                 variant="outline"
                 onClick={handleCancel}
-                className="border-gray-500 text-gray-300"
+                className="border-4 border-gray-500 text-gray-700 text-xl font-bold h-16 px-8"
               >
                 {isFrench ? 'Annuler' : 'Cancel'}
               </Button>
@@ -362,58 +385,58 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
           </div>
         ) : (
           // Mode affichage
-          <div className="space-y-4">
+          <div className="space-y-6">
             {/* Résumé des montants */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Période 1 */}
-              <div className="bg-green-900/30 rounded-lg p-4 border border-green-500/30">
-                <div className="flex items-center gap-2 mb-2">
-                  <Calendar className="w-4 h-4 text-green-400" />
-                  <span className="text-sm text-green-300 font-semibold">
+              <div className="bg-green-50 border-4 border-green-300 rounded-lg p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <Calendar className="w-6 h-6 text-green-600" />
+                  <span className="text-xl text-green-800 font-bold">
                     {isFrench ? 'Jan - Juin' : 'Jan - June'} {data?.annee}
                   </span>
                 </div>
-                <div className="text-2xl font-bold text-green-400">
+                <div className="text-3xl font-bold text-green-600">
                   {formatCurrency(data?.periode1.montant || 0)}
                 </div>
-                <div className="text-sm text-gray-400">
+                <div className="text-lg text-gray-700 font-semibold">
                   {isFrench ? 'par mois' : 'per month'}
                 </div>
               </div>
 
               {/* Période 2 */}
-              <div className="bg-orange-900/30 rounded-lg p-4 border border-orange-500/30">
-                <div className="flex items-center gap-2 mb-2">
-                  <Calendar className="w-4 h-4 text-orange-400" />
-                  <span className="text-sm text-orange-300 font-semibold">
+              <div className="bg-orange-50 border-4 border-orange-300 rounded-lg p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <Calendar className="w-6 h-6 text-orange-600" />
+                  <span className="text-xl text-orange-800 font-bold">
                     {isFrench ? 'Juil - Déc' : 'Jul - Dec'} {data?.annee}
                   </span>
                 </div>
-                <div className="text-2xl font-bold text-orange-400">
+                <div className="text-3xl font-bold text-orange-600">
                   {formatCurrency(data?.periode2.montant || 0)}
                 </div>
-                <div className="text-sm text-gray-400">
+                <div className="text-lg text-gray-700 font-semibold">
                   {isFrench ? 'par mois' : 'per month'}
                 </div>
               </div>
             </div>
 
             {/* Total annuel */}
-            <div className="bg-purple-900/30 rounded-lg p-4 border border-purple-500/30">
+            <div className="bg-blue-50 border-4 border-blue-300 rounded-lg p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="text-lg font-semibold text-purple-300">
+                  <h4 className="text-2xl font-bold text-blue-800">
                     {isFrench ? 'Total annuel' : 'Annual Total'}
                   </h4>
-                  <p className="text-sm text-gray-400">
+                  <p className="text-lg text-gray-700">
                     {isFrench ? 'Sécurité de la vieillesse' : 'Old Age Security'}
                   </p>
                 </div>
                 <div className="text-right">
-                  <div className="text-2xl font-bold text-purple-400">
+                  <div className="text-3xl font-bold text-blue-600">
                     {formatCurrency(calculateAnnualTotal())}
                   </div>
-                  <div className="text-sm text-gray-400">
+                  <div className="text-lg text-gray-700 font-semibold">
                     {isFrench ? 'Moyenne : ' : 'Average: '}{formatCurrency(calculateMonthlyAverage())}/mois
                   </div>
                 </div>
@@ -422,11 +445,11 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
 
             {/* Raison de l'ajustement */}
             {data?.raisonAjustement && (
-              <div className="bg-slate-700/50 rounded-lg p-4">
-                <h5 className="text-sm font-semibold text-gray-300 mb-2">
+              <div className="bg-gray-100 border-2 border-gray-300 rounded-lg p-6">
+                <h5 className="text-xl font-bold text-gray-900 mb-3">
                   {isFrench ? 'Raison de l\'ajustement :' : 'Reason for adjustment:'}
                 </h5>
-                <p className="text-gray-400 text-sm">{data.raisonAjustement}</p>
+                <p className="text-lg text-gray-700">{data.raisonAjustement}</p>
               </div>
             )}
 
@@ -434,18 +457,18 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
             <Button
               onClick={() => setIsEditing(true)}
               variant="outline"
-              className="w-full border-purple-500 text-purple-300 hover:bg-purple-600"
+              className="w-full border-4 border-blue-500 text-blue-700 hover:bg-blue-100 text-xl font-bold h-16"
             >
-              <Edit3 className="w-4 h-4 mr-2" />
+              <Edit3 className="w-6 h-6 mr-3" />
               {isFrench ? 'Modifier les montants' : 'Edit amounts'}
             </Button>
           </div>
         )}
 
         {/* Information sur le montant maximum */}
-        <Alert className="border-blue-400 bg-blue-900/20 text-blue-200">
-          <Info className="h-5 w-5 text-blue-400" />
-          <AlertDescription className="text-sm">
+        <Alert className="border-4 border-blue-500 bg-blue-50">
+          <Info className="h-6 w-6 text-blue-600" />
+          <AlertDescription className="text-lg text-gray-900">
             <strong>{isFrench ? 'Montant maximum SV 2025 :' : 'Maximum OAS 2025:'}</strong> {formatCurrency(montantMaximumSV)}/mois
             <br />
             {isFrench 

@@ -26,21 +26,55 @@ export interface PersonalData {
   sexe2: 'M' | 'F';
   salaire1: number;
   salaire2: number;
-  
+
   // Champs existants étendus
   statutProfessionnel1?: 'actif' | 'retraite';
   statutProfessionnel2?: 'actif' | 'retraite';
   ageRetraiteSouhaite1?: number;
   ageRetraiteSouhaite2?: number;
   depensesRetraite?: number;
-  
+
   // Champs manquants pour compatibilité
   nom1?: string;
   nom2?: string;
   situationFamiliale?: string;
   nombreEnfants?: number;
   province?: string;
+
+  // Champs pour les deux personnes (province, santé, mode de vie)
+  province1?: string;
+  province2?: string;
+  etatSante1?: 'excellent' | 'tresbon' | 'bon' | 'moyen' | 'fragile';
+  etatSante2?: 'excellent' | 'tresbon' | 'bon' | 'moyen' | 'fragile';
+  modeVieActif1?: 'sedentaire' | 'legerementActif' | 'modere' | 'actif' | 'tresActif';
+  modeVieActif2?: 'sedentaire' | 'legerementActif' | 'modere' | 'actif' | 'tresActif';
+
+  // Champs de revenus supplémentaires
+  pensions1?: number;
+  pensions2?: number;
+  autresRevenus1?: number;
+  autresRevenus2?: number;
   
+  // Champs de revenus détaillés
+  assuranceEmploi1?: number;
+  assuranceEmploi2?: number;
+  rentesViageres1?: number;
+  rentesViageres2?: number;
+
+  // Champs de dépenses
+  logement1?: number;
+  transport1?: number;
+  autresDepenses1?: number;
+  epicerie2?: number;
+  servicesPublics2?: number;
+  autresDepenses2?: number;
+
+  // Champs de calculs de retraite
+  epargneActuelle1?: number;
+  epargneActuelle2?: number;
+  cotisationsAnnuelles1?: number;
+  cotisationsAnnuelles2?: number;
+
   // NOUVEAUX: Informations d'emploi détaillées
   secteurActivite1?: string;
   secteurActivite2?: string;
@@ -48,15 +82,29 @@ export interface PersonalData {
   niveauCompetences2?: string;
   regionEconomique?: string;
   tauxChomageRegional?: number;
-  
+
   // NOUVEAUX: Emplois saisonniers
   seasonalJobs1?: SeasonalJob[];
   seasonalJobs2?: SeasonalJob[];
-  
+
   // NOUVEAUX: Revenus unifiés
   unifiedIncome1?: IncomeEntry[];
   unifiedIncome2?: IncomeEntry[];
   
+  // Champs d'investissements
+  soldeREER1?: number;
+  dateREER1?: string;
+  soldeCELI1?: number;
+  dateCELI1?: string;
+  soldeCRI1?: number;
+  dateCRI1?: string;
+  soldeREER2?: number;
+  dateREER2?: string;
+  soldeCELI2?: number;
+  dateCELI2?: string;
+  soldeCRI2?: number;
+  dateCRI2?: string;
+
   // NOUVEAU: Travailleur de la construction
   travailleurConstruction1?: boolean;
   travailleurConstruction2?: boolean;
@@ -99,6 +147,38 @@ export interface RetirementData {
   svRevenus2?: number;
   svAgeDebut1?: number;
   svAgeDebut2?: number;
+  
+  // Champs pour la gestion biannuelle SV
+  svBiannual1?: {
+    annee: number;
+    periode1: {
+      dateDebut: string;
+      dateFin: string;
+      montant: number;
+    };
+    periode2: {
+      dateDebut: string;
+      dateFin: string;
+      montant: number;
+    };
+    raisonAjustement?: string;
+    revenus_annee_precedente?: number;
+  };
+  svBiannual2?: {
+    annee: number;
+    periode1: {
+      dateDebut: string;
+      dateFin: string;
+      montant: number;
+    };
+    periode2: {
+      dateDebut: string;
+      dateFin: string;
+      montant: number;
+    };
+    raisonAjustement?: string;
+    revenus_annee_precedente?: number;
+  };
   
   // Propriétés existantes
   revenusTempsPartiel1?: number;
@@ -330,13 +410,42 @@ export interface IncomeEntry {
   monthlyAmount?: number;
   weeklyAmount?: number;
   
+  // Spécifique au salaire
+  salaryStartDate?: string; // Date de début d'emploi
+  salaryEndDate?: string; // Date de fin d'emploi
+  salaryFirstPaymentDate?: string; // Date du premier versement
+  salaryFrequency?: 'weekly' | 'biweekly' | 'bimonthly' | 'monthly'; // Fréquence de paiement
+  salaryNetAmount?: number; // Montant net par période
+  
+  // Révision salariale
+  salaryRevisionDate?: string; // Date effective de la révision salariale
+  salaryRevisionAmount?: number; // Nouveau montant après révision
+  salaryRevisionFrequency?: 'weekly' | 'biweekly' | 'bimonthly' | 'monthly'; // Nouvelle fréquence (si différente)
+  salaryRevisionDescription?: string; // Description de la révision (promotion, nouveau rôle, etc.)
+  
   // Spécifique à l'assurance emploi
   weeklyGross?: number;
   weeklyNet?: number;
-  startDate?: string;
-  endDate?: string;
+  eiStartDate?: string; // Date de début des prestations
+  eiFirstPaymentDate?: string; // Date du premier versement
+  eiPaymentFrequency?: 'weekly' | 'biweekly'; // Fréquence de versement
+  eiEligibleWeeks?: number; // Nombre de semaines éligibles (15-45)
   weeksUsed?: number;
   maxWeeks?: number;
+  
+  // Révision assurance-emploi
+  eiRevisionDate?: string; // Date effective de la révision
+  eiRevisionAmount?: number; // Nouveau montant après révision
+  eiRevisionDescription?: string; // Description de la révision
+  
+  // Spécifique aux rentes privées (pensions/viagères)
+  pensionAmount?: number; // Montant de la rente
+  pensionFrequency?: 'monthly' | 'quarterly' | 'semi-annual' | 'annual'; // Fréquence de versement
+  pensionStartDate?: string; // Date de début de la rente
+  pensionFirstPaymentDate?: string; // Date du premier versement
+  pensionType?: 'viagere' | 'temporaire' | 'mixte'; // Type de rente
+  survivorBenefit?: 'none' | '50%' | '75%' | '100%'; // Pourcentage versé au survivant
+  isEstatePlanning?: boolean; // Inclure dans la planification successorale
   
   // Calculs "à ce jour"
   toDateAmount?: number;

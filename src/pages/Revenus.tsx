@@ -23,7 +23,8 @@ import {
   Shield,
   AlertTriangle,
   Users,
-  Calculator
+  Calculator,
+  Flag
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
@@ -32,6 +33,8 @@ import AdvancedEIManager from '@/components/ui/AdvancedEIManager';
 import ReturnCalculator from '@/components/ui/ReturnCalculator';
 import RRQInfoCard from '@/components/ui/RRQInfoCard';
 import UnifiedIncomeTable from '@/components/ui/UnifiedIncomeTable';
+import SeniorsFriendlyIncomeTable from '@/components/ui/SeniorsFriendlyIncomeTable';
+import SeniorsFinancialHelp from '@/components/ui/SeniorsFinancialHelp';
 import SeasonalJobsManager from '@/components/ui/SeasonalJobsManager';
 import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 
@@ -47,6 +50,24 @@ const Revenus: React.FC = () => {
   // Hook pour les données de retraite
   const { userData, updateUserData } = useRetirementData();
   
+  // Log pour déboguer le chargement des données
+  useEffect(() => {
+    console.log('🔍 Revenus - Données chargées:', userData);
+    console.log('🔍 Revenus - unifiedIncome1:', (userData.personal as any)?.unifiedIncome1);
+    console.log('🔍 Revenus - unifiedIncome2:', (userData.personal as any)?.unifiedIncome2);
+    
+    // Vérifier localStorage directement
+    const localStorageData = localStorage.getItem('retirement_data');
+    if (localStorageData) {
+      const parsed = JSON.parse(localStorageData);
+      console.log('🔍 Revenus - Données dans localStorage:', parsed);
+      console.log('🔍 Revenus - unifiedIncome1 dans localStorage:', parsed.personal?.unifiedIncome1);
+      console.log('🔍 Revenus - unifiedIncome2 dans localStorage:', parsed.personal?.unifiedIncome2);
+    } else {
+      console.log('❌ Revenus - Aucune donnée dans localStorage');
+    }
+  }, [userData]);
+  
   const [showHelp, setShowHelp] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [showRRQInfo, setShowRRQInfo] = useState(false);
@@ -54,8 +75,19 @@ const Revenus: React.FC = () => {
   // Correction du reflow mobile pour Samsung S23 Ultra
   useMobileReflowFix();
 
+  // Debug pour les données SV
+  useEffect(() => {
+    console.log('🔍 DEBUG SV - userData.retirement:', userData.retirement);
+    console.log('🔍 DEBUG SV - svBiannual1:', userData.retirement?.svBiannual1);
+    console.log('🔍 DEBUG SV - svBiannual2:', userData.retirement?.svBiannual2);
+  }, [userData.retirement]);
+
   const handleChange = (field: string, value: any) => {
     updateUserData('personal', { [field]: value });
+  };
+
+  const handleRetirementChange = (field: string, value: any) => {
+    updateUserData('retirement', { [field]: value });
   };
 
   const handleNotesChange = (field: string, value: string) => {
@@ -67,23 +99,7 @@ const Revenus: React.FC = () => {
     handleChange(`salaire${person}`, value);
   };
 
-  const getProgressPercentage = () => {
-    const personalData = userData.personal;
-    if (!personalData) return 0;
-    
-    const requiredFields = [
-      'statutProfessionnel1', 'salaire1'
-    ];
-    
-    const filledFields = requiredFields.filter(field => {
-      const value = personalData[field as keyof typeof personalData];
-      return value !== null && value !== undefined && value !== '' && value !== 0;
-    }).length;
-    
-    return Math.round((filledFields / requiredFields.length) * 100);
-  };
 
-  const progress = getProgressPercentage();
 
   // Types de revenus disponibles avec métadonnées
   const typesRevenu = [
@@ -224,34 +240,7 @@ const Revenus: React.FC = () => {
           </p>
         </div>
 
-        {/* Barre de progression simple */}
-        <Card className="bg-white border border-gray-300 mb-8">
-          <CardContent className="py-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
-                <Star className="w-6 h-6 text-gray-600" />
-                <span className="text-lg font-semibold text-gray-800">
-                  {isFrench ? 'Progression des revenus' : 'Income progress'}
-                </span>
-              </div>
-              <span className="text-2xl font-bold text-gray-800">
-                {progress} %
-              </span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-3">
-              <div 
-                className="bg-gray-600 h-3 rounded-full transition-all duration-500"
-                style={{ width: `${progress}%` }}
-              ></div>
-            </div>
-            <p className="text-sm text-gray-600 mt-2 text-center">
-              {isFrench 
-                ? `Excellent ! Vous avez complété ${progress} % de vos informations de revenus.`
-                : `Great! You have completed ${progress} % of your income information.`
-              }
-            </p>
-          </CardContent>
-        </Card>
+
 
         {/* Message d'aide */}
         {showHelp && (
@@ -366,24 +355,50 @@ const Revenus: React.FC = () => {
           );
         })()}
 
-        {/* Section Tableau unifié des revenus */}
+        {/* Section Tableau unifié des revenus - Version Senior-Friendly */}
         <div className="space-y-8 mb-12">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-green-300 mb-4 flex items-center justify-center gap-3">
-              <Calculator className="w-8 h-8 text-green-400" />
-              {isFrench ? 'Tableau unifié des revenus' : 'Unified Income Table'}
+                    <div className="text-center">
+            <h2 className="text-4xl font-bold text-green-600 mb-6 flex items-center justify-center gap-4">
+              <Calculator className="w-10 h-10 text-green-500" />
+              {isFrench ? 'Mes revenus avec calculs automatiques' : 'My Income with Automatic Calculations'}
             </h2>
-            <p className="text-green-200 text-lg">
-              {isFrench 
-                ? 'Gérez tous vos types de revenus avec calculs automatiques "à ce jour" pour l\'assurance emploi'
-                : 'Manage all your income types with automatic "to date" calculations for employment insurance'
+            <p className="text-green-700 text-xl max-w-4xl mx-auto leading-relaxed">
+              {isFrench
+                ? 'Ajoutez tous vos types de revenus (salaire, pensions, assurance emploi, etc.) et nous calculons automatiquement vos totaux annuels et mensuels. Simple et clair !'
+                : 'Add all your income types (salary, pensions, employment insurance, etc.) and we automatically calculate your annual and monthly totals. Simple and clear!'
               }
             </p>
+            
+            {/* Bouton de débogage temporaire */}
+            <div className="mt-4">
+              <Button 
+                onClick={() => {
+                  console.log('🔧 Forcer rechargement des données...');
+                  const localStorageData = localStorage.getItem('retirement_data');
+                  if (localStorageData) {
+                    const parsed = JSON.parse(localStorageData);
+                    console.log('🔧 Données dans localStorage:', parsed);
+                    // Forcer la mise à jour
+                    window.dispatchEvent(new CustomEvent('retirementDataImported', { 
+                      detail: { data: parsed } 
+                    }));
+                  }
+                }}
+                variant="outline"
+                size="sm"
+                className="text-xs"
+              >
+                🔧 Debug: Recharger données
+              </Button>
+            </div>
           </div>
 
+          {/* Aide contextuelle pour les termes financiers */}
+          <SeniorsFinancialHelp isFrench={isFrench} />
+
           <div className="grid grid-cols-1 gap-8">
-            {/* Personne 1 - Tableau des revenus */}
-            <UnifiedIncomeTable
+            {/* Personne 1 - Tableau des revenus - Version Senior-Friendly */}
+            <SeniorsFriendlyIncomeTable
               personNumber={1}
               personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
               data={(userData.personal as any)?.unifiedIncome1 || []}
@@ -393,8 +408,8 @@ const Revenus: React.FC = () => {
               isFrench={isFrench}
             />
 
-            {/* Personne 2 - Tableau des revenus */}
-            <UnifiedIncomeTable
+            {/* Personne 2 - Tableau des revenus - Version Senior-Friendly */}
+            <SeniorsFriendlyIncomeTable
               personNumber={2}
               personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
               data={(userData.personal as any)?.unifiedIncome2 || []}
@@ -499,15 +514,14 @@ const Revenus: React.FC = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
+                      <Label className="text-gray-200 font-semibold">
                         {isFrench ? 'Date du solde' : 'Balance Date'}
                       </Label>
                       <DateInput
                         value={userData.personal?.dateREER1 || ''}
                         onChange={(value) => handleChange('dateREER1', value)}
                         className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
-                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
                       />
                     </div>
                   </div>
@@ -533,15 +547,14 @@ const Revenus: React.FC = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
+                      <Label className="text-gray-200 font-semibold">
                         {isFrench ? 'Date du solde' : 'Balance Date'}
                       </Label>
                       <DateInput
                         value={userData.personal?.dateCELI1 || ''}
                         onChange={(value) => handleChange('dateCELI1', value)}
                         className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
-                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
                       />
                     </div>
                   </div>
@@ -567,15 +580,14 @@ const Revenus: React.FC = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
+                      <Label className="text-gray-200 font-semibold">
                         {isFrench ? 'Date du solde' : 'Balance Date'}
                       </Label>
                       <DateInput
                         value={userData.personal?.dateCRI1 || ''}
                         onChange={(value) => handleChange('dateCRI1', value)}
                         className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-orange-400 focus:ring-orange-400"
-                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
                       />
                     </div>
                   </div>
@@ -604,15 +616,14 @@ const Revenus: React.FC = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
+                      <Label className="text-gray-200 font-semibold">
                         {isFrench ? 'Date d\'évaluation' : 'Valuation Date'}
                       </Label>
                       <DateInput
                         value={userData.personal?.dateCrypto1 || ''}
                         onChange={(value) => handleChange('dateCrypto1', value)}
                         className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-purple-400 focus:ring-purple-400"
-                        placeholder={isFrench ? 'YYYY-MM-DD' : 'YYYY-MM-DD'}
+                        placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
                       />
                     </div>
                   </div>
@@ -668,8 +679,7 @@ const Revenus: React.FC = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
+                      <Label className="text-gray-200 font-semibold">
                         {isFrench ? 'Date du solde' : 'Balance Date'}
                       </Label>
                       <DateInput
@@ -702,8 +712,7 @@ const Revenus: React.FC = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
+                      <Label className="text-gray-200 font-semibold">
                         {isFrench ? 'Date du solde' : 'Balance Date'}
                       </Label>
                       <DateInput
@@ -736,8 +745,7 @@ const Revenus: React.FC = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
+                      <Label className="text-gray-200 font-semibold">
                         {isFrench ? 'Date du solde' : 'Balance Date'}
                       </Label>
                       <DateInput
@@ -773,8 +781,7 @@ const Revenus: React.FC = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                        <Calendar className="w-4 h-4" />
+                      <Label className="text-gray-200 font-semibold">
                         {isFrench ? 'Date d\'évaluation' : 'Valuation Date'}
                       </Label>
                       <DateInput
@@ -891,6 +898,228 @@ const Revenus: React.FC = () => {
                     <li>{isFrench ? 'Gains en capital imposables' : 'Taxable capital gains'}</li>
                     <li>{isFrench ? 'Diversification limitée recommandée' : 'Limited diversification recommended'}</li>
                   </ul>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Section RRQ/CPP */}
+        <div className="space-y-8 mb-8">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-blue-300 mb-4 flex items-center justify-center gap-3">
+              <Flag className="w-8 h-8 text-blue-400" />
+              {isFrench ? 'RRQ/CPP - Régime de rentes du Québec' : 'QPP/CPP - Quebec Pension Plan'}
+            </h2>
+            <p className="text-lg text-gray-400">
+              {isFrench 
+                ? 'Saisissez vos montants RRQ/CPP pour Personne 1 et Personne 2'
+                : 'Enter your QPP/CPP amounts for Person 1 and Person 2'
+              }
+            </p>
+          </div>
+
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Personne 1 - RRQ/CPP */}
+            <Card className="bg-white border border-gray-300">
+              <CardHeader className="border-b border-gray-300">
+                <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+                    1
+                  </div>
+                  {userData.personal?.prenom1 
+                    ? `${isFrench ? 'RRQ/CPP' : 'QPP/CPP'} - ${userData.personal.prenom1}`
+                    : (isFrench ? 'RRQ/CPP - Personne 1' : 'QPP/CPP - Person 1')
+                  }
+                </CardTitle>
+                <CardDescription className="text-gray-600">
+                  {userData.personal?.prenom1 || (isFrench ? 'Première personne' : 'First person')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-6 space-y-6">
+                {/* Âge actuel */}
+                <div className="space-y-2">
+                  <Label className="text-gray-700 font-semibold text-lg">
+                    {isFrench ? 'Âge actuel' : 'Current Age'}
+                  </Label>
+                  <Input
+                    type="number"
+                    value={userData.retirement?.rrqAgeActuel1 || ''}
+                    onChange={(e) => handleRetirementChange('rrqAgeActuel1', parseInt(e.target.value) || 0)}
+                    className="bg-white border-2 border-gray-300 text-gray-900 text-xl h-12"
+                    placeholder={isFrench ? "Ex: 58" : "Ex: 58"}
+                  />
+                </div>
+
+                {/* Prestation actuelle */}
+                <div className="space-y-2">
+                  <Label className="text-gray-700 font-semibold text-lg">
+                    {isFrench ? 'Prestation RRQ actuelle' : 'Current QPP Benefit'}
+                  </Label>
+                  <MoneyInput
+                    value={userData.retirement?.rrqMontantActuel1 || 0}
+                    onChange={(value) => handleRetirementChange('rrqMontantActuel1', value)}
+                    className="bg-white border-2 border-gray-300 text-gray-900 text-xl h-12"
+                    placeholder={isFrench ? "Ex: 1 200" : "Ex: 1,200"}
+                    allowDecimals={true}
+                  />
+                  <p className="text-sm text-gray-600">
+                    {isFrench 
+                      ? 'Montant mensuel exact fourni par RRQ (consultez "Mon Dossier")'
+                      : 'Exact monthly amount provided by QPP (check "My File")'
+                    }
+                  </p>
+                </div>
+
+                {/* Prestation à 70 ans */}
+                <div className="space-y-2">
+                  <Label className="text-gray-700 font-semibold text-lg">
+                    {isFrench ? 'Prestation RRQ à 70 ans' : 'QPP Benefit at Age 70'}
+                  </Label>
+                  <MoneyInput
+                    value={userData.retirement?.rrqMontant70_1 || 0}
+                    onChange={(value) => handleRetirementChange('rrqMontant70_1', value)}
+                    className="bg-white border-2 border-gray-300 text-gray-900 text-xl h-12"
+                    placeholder={isFrench ? "Ex: 1 500" : "Ex: 1,500"}
+                    allowDecimals={true}
+                  />
+                  <p className="text-sm text-gray-600">
+                    {isFrench 
+                      ? 'Montant mensuel si vous attendez jusqu\'à 70 ans'
+                      : 'Monthly amount if you wait until age 70'
+                    }
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Personne 2 - RRQ/CPP */}
+            <Card className="bg-white border border-gray-300">
+              <CardHeader className="border-b border-gray-300">
+                <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">
+                    2
+                  </div>
+                  {userData.personal?.prenom2 
+                    ? `${isFrench ? 'RRQ/CPP' : 'QPP/CPP'} - ${userData.personal.prenom2}`
+                    : (isFrench ? 'RRQ/CPP - Personne 2' : 'QPP/CPP - Person 2')
+                  }
+                </CardTitle>
+                <CardDescription className="text-gray-600">
+                  {userData.personal?.prenom2 || (isFrench ? 'Deuxième personne (optionnel)' : 'Second person (optional)')}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-6 space-y-6">
+                {/* Âge actuel */}
+                <div className="space-y-2">
+                  <Label className="text-gray-700 font-semibold text-lg">
+                    {isFrench ? 'Âge actuel' : 'Current Age'}
+                  </Label>
+                  <Input
+                    type="number"
+                    value={userData.retirement?.rrqAgeActuel2 || ''}
+                    onChange={(e) => handleRetirementChange('rrqAgeActuel2', parseInt(e.target.value) || 0)}
+                    className="bg-white border-2 border-gray-300 text-gray-900 text-xl h-12"
+                    placeholder={isFrench ? "Ex: 55" : "Ex: 55"}
+                  />
+                </div>
+
+                {/* Prestation actuelle */}
+                <div className="space-y-2">
+                  <Label className="text-gray-700 font-semibold text-lg">
+                    {isFrench ? 'Prestation RRQ actuelle' : 'Current QPP Benefit'}
+                  </Label>
+                  <MoneyInput
+                    value={userData.retirement?.rrqMontantActuel2 || 0}
+                    onChange={(value) => handleRetirementChange('rrqMontantActuel2', value)}
+                    className="bg-white border-2 border-gray-300 text-gray-900 text-xl h-12"
+                    placeholder={isFrench ? "Ex: 1 000" : "Ex: 1,000"}
+                    allowDecimals={true}
+                  />
+                  <p className="text-sm text-gray-600">
+                    {isFrench 
+                      ? 'Montant mensuel exact fourni par RRQ (consultez "Mon Dossier")'
+                      : 'Exact monthly amount provided by QPP (check "My File")'
+                    }
+                  </p>
+                </div>
+
+                {/* Prestation à 70 ans */}
+                <div className="space-y-2">
+                  <Label className="text-gray-700 font-semibold text-lg">
+                    {isFrench ? 'Prestation RRQ à 70 ans' : 'QPP Benefit at Age 70'}
+                  </Label>
+                  <MoneyInput
+                    value={userData.retirement?.rrqMontant70_2 || 0}
+                    onChange={(value) => handleRetirementChange('rrqMontant70_2', value)}
+                    className="bg-white border-2 border-gray-300 text-gray-900 text-xl h-12"
+                    placeholder={isFrench ? "Ex: 1 250" : "Ex: 1,250"}
+                    allowDecimals={true}
+                  />
+                  <p className="text-sm text-gray-600">
+                    {isFrench 
+                      ? 'Montant mensuel si vous attendez jusqu\'à 70 ans'
+                      : 'Monthly amount if you wait until age 70'
+                    }
+                  </p>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Résumé RRQ/CPP */}
+          <Card className="bg-gradient-to-r from-blue-900/50 to-indigo-900/50 border border-blue-500/30">
+            <CardContent className="p-6">
+              <h4 className="text-lg font-bold text-blue-300 mb-4 flex items-center gap-2">
+                <Flag className="w-5 h-5" />
+                {isFrench ? 'Résumé RRQ/CPP' : 'QPP/CPP Summary'}
+              </h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div>
+                  <div className="text-2xl font-bold text-blue-400">
+                    ${(userData.retirement?.rrqMontantActuel1 || 0).toLocaleString()}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    {isFrench ? 'P1 - Actuel' : 'P1 - Current'}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-purple-400">
+                    ${(userData.retirement?.rrqMontant70_1 || 0).toLocaleString()}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    {isFrench ? 'P1 - À 70 ans' : 'P1 - At 70'}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-green-400">
+                    ${(userData.retirement?.rrqMontantActuel2 || 0).toLocaleString()}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    {isFrench ? 'P2 - Actuel' : 'P2 - Current'}
+                  </div>
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-orange-400">
+                    ${(userData.retirement?.rrqMontant70_2 || 0).toLocaleString()}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    {isFrench ? 'P2 - À 70 ans' : 'P2 - At 70'}
+                  </div>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-gray-600">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-blue-400">
+                    ${(
+                      (userData.retirement?.rrqMontantActuel1 || 0) + 
+                      (userData.retirement?.rrqMontantActuel2 || 0)
+                    ).toLocaleString()}
+                  </div>
+                  <div className="text-lg text-gray-300">
+                    {isFrench ? 'Total RRQ/CPP actuel (mensuel)' : 'Total Current QPP/CPP (monthly)'}
+                  </div>
                 </div>
               </div>
             </CardContent>

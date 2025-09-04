@@ -1,6 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
+import IncomeCalculationDebug from '@/components/ui/IncomeCalculationDebug';
+import IncomeTestForm from '@/components/ui/IncomeTestForm';
+import UnifiedIncomeDebug from '@/components/ui/UnifiedIncomeDebug';
+import IncomeCalculationTest from '@/components/ui/IncomeCalculationTest';
+import { calculateIncomeFromPeriods } from '@/utils/incomeCalculationUtils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -20,6 +25,7 @@ import {
   BarChart3,
   ArrowRight,
   CheckCircle,
+  Flag,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
@@ -29,6 +35,11 @@ import OnboardingWizard from '@/features/retirement/components/OnboardingWizard'
 import { CustomBirthDateInput } from '@/features/retirement/components/CustomBirthDateInput';
 import { MortalityDisplayCPM2014 } from '@/components/MortalityDisplayCPM2014';
 import { MORTALITY_CPM2014 } from '@/config/financial-assumptions';
+import LongevityModeSelector from '@/components/ui/LongevityModeSelector';
+import SocioEconomicSection from '@/components/ui/SocioEconomicSection';
+import SynchronizedIncomeDisplay from '@/components/ui/SynchronizedIncomeDisplay';
+import HealthFactorsSection from '@/components/ui/HealthFactorsSection';
+import PersonalizedLongevityAnalysis from '@/components/ui/PersonalizedLongevityAnalysis';
 
 const MaRetraite: React.FC = () => {
   const { language } = useLanguage();
@@ -38,6 +49,72 @@ const MaRetraite: React.FC = () => {
   const { userData, updateUserData } = useRetirementData();
 
   const [showOnboardingWizard, setShowOnboardingWizard] = useState(false);
+
+  // Mode d'analyse de longévité
+  const [longevityMode, setLongevityMode] = useState<'standard' | 'personalized'>('standard');
+
+  // Charger les données depuis localStorage au montage du composant
+  useEffect(() => {
+    const loadImportedData = () => {
+      try {
+        const importedData = localStorage.getItem('retirement_data');
+        if (importedData) {
+          const parsedData = JSON.parse(importedData);
+          console.log('📥 Données trouvées dans localStorage:', parsedData);
+          
+          // Mettre à jour les données si elles existent
+          if (parsedData.personal) {
+            updateUserData('personal', parsedData.personal);
+          }
+          if (parsedData.retirement) {
+            updateUserData('retirement', parsedData.retirement);
+          }
+          if (parsedData.savings) {
+            updateUserData('savings', parsedData.savings);
+          }
+          if (parsedData.cashflow) {
+            updateUserData('cashflow', parsedData.cashflow);
+          }
+        } else {
+          console.log('📭 Aucune donnée trouvée dans localStorage');
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des données:', error);
+      }
+    };
+
+    loadImportedData();
+
+    // Écouter les événements d'importation de données
+    const handleDataImported = (event: CustomEvent) => {
+      try {
+        const importedData = event.detail.data;
+        console.log('📥 Données importées reçues via événement:', importedData);
+        
+        // Mettre à jour les données si elles existent
+        if (importedData.personal) {
+          updateUserData('personal', importedData.personal);
+        }
+        if (importedData.retirement) {
+          updateUserData('retirement', importedData.retirement);
+        }
+        if (importedData.savings) {
+          updateUserData('savings', importedData.savings);
+        }
+        if (importedData.cashflow) {
+          updateUserData('cashflow', importedData.cashflow);
+        }
+      } catch (error) {
+        console.error('Erreur lors du traitement des données importées:', error);
+      }
+    };
+
+    window.addEventListener('retirementDataImported', handleDataImported as EventListener);
+
+    return () => {
+      window.removeEventListener('retirementDataImported', handleDataImported as EventListener);
+    };
+  }, [updateUserData]);
 
   const [revenusData, setRevenusData] = useState({
     salaire: '',
@@ -72,6 +149,52 @@ const MaRetraite: React.FC = () => {
   };
 
   const handleOnboardingSkip = () => setShowOnboardingWizard(false);
+
+  // Fonctions de calcul des revenus depuis unifiedIncome avec périodes réelles
+  const calculatePersonIncome = (personNumber: 1 | 2) => {
+    const incomeData = personNumber === 1 ? 
+      (userData.personal as any)?.unifiedIncome1 || [] : 
+      (userData.personal as any)?.unifiedIncome2 || [];
+    
+    // Utiliser la nouvelle logique de calcul basée sur les périodes
+    const result = calculateIncomeFromPeriods(incomeData);
+    
+    return {
+      totalSalary: result.totalSalary,
+      totalPensions: result.totalPensions,
+      totalOtherIncome: result.totalOtherIncome,
+      totalIncome: result.totalIncome
+    };
+  };
+
+  const calculatePersonSavings = (personNumber: 1 | 2) => {
+    const personal = userData.personal || {};
+    const savings = userData.savings || {};
+    
+    if (personNumber === 1) {
+      return {
+        reer: personal.soldeREER1 || savings.reer1 || 0,
+        celi: personal.soldeCELI1 || savings.celi1 || 0,
+        placements: savings.placements1 || 0,
+        epargne: savings.epargne1 || 0,
+        cri: personal.soldeCRI1 || savings.cri1 || 0
+      };
+    } else {
+      return {
+        reer: personal.soldeREER2 || savings.reer2 || 0,
+        celi: personal.soldeCELI2 || savings.celi2 || 0,
+        placements: savings.placements2 || 0,
+        epargne: savings.epargne2 || 0,
+        cri: personal.soldeCRI2 || savings.cri2 || 0
+      };
+    }
+  };
+
+  // Calculs pour Personne 1 et Personne 2
+  const person1Income = calculatePersonIncome(1);
+  const person2Income = calculatePersonIncome(2);
+  const person1Savings = calculatePersonSavings(1);
+  const person2Savings = calculatePersonSavings(2);
 
   const [depensesData, setDepensesData] = useState({
     logement: '',
@@ -124,6 +247,38 @@ const MaRetraite: React.FC = () => {
     updateUserData('personal', { [field]: value });
   };
 
+  // Fonction pour forcer le rechargement des données
+  const reloadData = () => {
+    try {
+      const importedData = localStorage.getItem('retirement_data');
+      if (importedData) {
+        const parsedData = JSON.parse(importedData);
+        console.log('🔄 Rechargement forcé des données:', parsedData);
+        
+        // Mettre à jour les données si elles existent
+        if (parsedData.personal) {
+          updateUserData('personal', parsedData.personal);
+        }
+        if (parsedData.retirement) {
+          updateUserData('retirement', parsedData.retirement);
+        }
+        if (parsedData.savings) {
+          updateUserData('savings', parsedData.savings);
+        }
+        if (parsedData.cashflow) {
+          updateUserData('cashflow', parsedData.cashflow);
+        }
+        
+        alert('Données rechargées avec succès !');
+      } else {
+        alert('Aucune donnée trouvée dans le stockage local.');
+      }
+    } catch (error) {
+      console.error('Erreur lors du rechargement:', error);
+      alert('Erreur lors du rechargement des données.');
+    }
+  };
+
 
 
 
@@ -147,8 +302,25 @@ const MaRetraite: React.FC = () => {
 
   const computeAgeFromBirthdate = (birthDate?: string): number => {
     if (!birthDate) return 65;
-    const birth = new Date(birthDate);
-    if (isNaN(birth.getTime())) return 65;
+    
+    let birth: Date;
+    
+    // Gérer le format "19560706" (YYYYMMDD)
+    if (/^\d{8}$/.test(birthDate)) {
+      const year = parseInt(birthDate.substring(0, 4));
+      const month = parseInt(birthDate.substring(4, 6)) - 1; // Les mois commencent à 0
+      const day = parseInt(birthDate.substring(6, 8));
+      birth = new Date(year, month, day);
+    } else {
+      // Gérer le format standard "1956-07-06" ou autres
+      birth = new Date(birthDate);
+    }
+    
+    if (isNaN(birth.getTime())) {
+      console.warn('Date de naissance invalide:', birthDate);
+      return 65;
+    }
+    
     const today = new Date();
     let age = today.getFullYear() - birth.getFullYear();
     const monthDiff = today.getMonth() - birth.getMonth();
@@ -169,16 +341,33 @@ const MaRetraite: React.FC = () => {
     const p = (userData.personal || {}) as any;
     const birthField = personNumber === 1 ? 'naissance1' : 'naissance2';
     const birthValue = p[birthField];
-    const hasBirth = !!birthValue && !isNaN(new Date(birthValue).getTime());
+    
+    if (!birthValue) {
+      console.log(`canComputeMortality(${personNumber}): Pas de date de naissance`);
+      return false;
+    }
+    
+    // Vérifier le format "19560706" (YYYYMMDD)
+    let isValidDate = false;
+    if (/^\d{8}$/.test(birthValue)) {
+      const year = parseInt(birthValue.substring(0, 4));
+      const month = parseInt(birthValue.substring(4, 6)) - 1;
+      const day = parseInt(birthValue.substring(6, 8));
+      const testDate = new Date(year, month, day);
+      isValidDate = !isNaN(testDate.getTime());
+    } else {
+      // Vérifier le format standard
+      isValidDate = !isNaN(new Date(birthValue).getTime());
+    }
     
     console.log(`canComputeMortality(${personNumber}):`, {
       birthField,
       birthValue,
-      hasBirth,
+      isValidDate,
       userData: userData.personal
     });
     
-    return hasBirth; // Seulement besoin de la date de naissance pour commencer
+    return isValidDate;
   };
 
   const hasCompleteMortalityData = (personNumber: 1 | 2 = 1): boolean => {
@@ -194,6 +383,7 @@ const MaRetraite: React.FC = () => {
 
   const calculateMortalityForPerson = (personNumber: 1 | 2) => {
     if (!canComputeMortality(personNumber)) {
+      console.log(`calculateMortalityForPerson(${personNumber}): Ne peut pas calculer - date de naissance manquante ou invalide`);
       return {
         lifeExpectancy: 0,
         finalAge: 0,
@@ -207,6 +397,16 @@ const MaRetraite: React.FC = () => {
     const age = computeAgeFromBirthdate(userData.personal?.[birthField]);
     // Utiliser des valeurs par défaut si les champs ne sont pas remplis
     const gender = getGenderForMortality(userData.personal?.[genderField] as any);
+    
+    console.log(`calculateMortalityForPerson(${personNumber}):`, {
+      birthField,
+      birthValue: userData.personal?.[birthField],
+      age,
+      gender,
+      genderField,
+      genderValue: userData.personal?.[genderField]
+    });
+    
     const base = MORTALITY_CPM2014.calculateLifeExpectancy({ age, gender });
 
     let adj = 0;
@@ -296,6 +496,18 @@ const MaRetraite: React.FC = () => {
       <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
 
 
+        {/* Debug Components - Temporaire */}
+        <div className="mb-8 space-y-4">
+          <IncomeCalculationTest isFrench={isFrench} />
+          <UnifiedIncomeDebug userData={userData} isFrench={isFrench} />
+          <IncomeTestForm 
+            userData={userData} 
+            updateUserData={updateUserData} 
+            isFrench={isFrench} 
+          />
+          <IncomeCalculationDebug userData={userData} isFrench={isFrench} />
+        </div>
+
         {/* Sections regroupées sans onglets */}
         <div className="space-y-10">
           {/* Profil */}
@@ -309,12 +521,21 @@ const MaRetraite: React.FC = () => {
                   ? 'Transformez vos informations en planification financière spectaculaire'
                   : 'Transform your information into spectacular financial planning'}
               </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button
                 onClick={() => setShowOnboardingWizard(true)}
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
               >
                 {isFrench ? '🎯 Planificateur de retraite automatisé' : '🎯 Automated Retirement Planner'}
               </Button>
+                <Button
+                  onClick={reloadData}
+                  variant="outline"
+                  className="border-green-500 text-green-600 hover:bg-green-50 font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                >
+                  {isFrench ? '🔄 Recharger les données' : '🔄 Reload Data'}
+                </Button>
+              </div>
             </div>
 
 
@@ -330,6 +551,8 @@ const MaRetraite: React.FC = () => {
                 </AlertDescription>
               </Alert>
             )}
+
+
 
             {/* Formulaire principal du profil */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
@@ -510,8 +733,19 @@ const MaRetraite: React.FC = () => {
             )}
           </div>
 
-          {/* Tableau de bord pour couples */}
+          {/* 1. INFORMATIONS DE BASE - Personne 1 et Personne 2 */}
           <div className="space-y-8">
+            <div className="text-center mb-6">
+              <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                {isFrench ? '👤 Informations de Base' : '👤 Basic Information'}
+              </h2>
+              <p className="text-lg text-gray-600">
+                {isFrench
+                  ? 'Informations personnelles essentielles pour vos calculs de retraite'
+                  : 'Essential personal information for your retirement calculations'}
+              </p>
+            </div>
+            
             {/* Profils personnels - 2 colonnes */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Personne 1 - Profil personnel */}
@@ -528,8 +762,8 @@ const MaRetraite: React.FC = () => {
                       {isFrench ? 'Province de résidence' : 'Province of residence'}
                     </Label>
                   <Select
-                      value={userData.personal?.province1 || ''}
-                      onValueChange={(value) => updateUserData('personal', { province1: value })}
+                      value={userData.personal?.province1 || userData.personal?.province || ''}
+                      onValueChange={(value) => updateUserData('personal', { province1: value, province: value })}
                   >
                       <SelectTrigger className="bg-white border-2 border-gray-300 text-gray-900 h-12 text-lg w-96">
                       <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
@@ -679,199 +913,429 @@ const MaRetraite: React.FC = () => {
               </Card>
             </div>
 
-            {/* Revenus - 2 colonnes */}
+            {/* 2. PENSIONS/PRESTATIONS */}
+            <div className="space-y-8">
+              <div className="text-center mb-6">
+                <h3 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+                  {isFrench ? '🏛️ Pensions/Prestations' : '🏛️ Pensions/Benefits'}
+                </h3>
+                <p className="text-lg text-gray-600">
+                  {isFrench
+                    ? 'Vos pensions publiques et prestations gouvernementales'
+                    : 'Your public pensions and government benefits'}
+                </p>
+              </div>
+
+              {/* Sécurité de la vieillesse */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Personne 1 - Sécurité de la vieillesse */}
+                <Card className="bg-white border-2 border-emerald-200 shadow-lg">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-emerald-800">
+                      <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                      <Shield className="w-6 h-6" />
+                      {isFrench ? 'Sécurité de la vieillesse' : 'Old Age Security'}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-1 gap-4">
+                      <div className="p-4 rounded-lg border bg-emerald-50">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Période 1 (Jan-Juin)' : 'Period 1 (Jan-June)'}
+                        </div>
+                        <div className="text-2xl font-bold text-emerald-600">
+                          ${userData.retirement?.svBiannual1?.periode1?.montant?.toLocaleString() || '0'}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {isFrench ? 'par mois' : 'per month'}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-orange-50">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Période 2 (Juil-Déc)' : 'Period 2 (Jul-Dec)'}
+                        </div>
+                        <div className="text-2xl font-bold text-orange-600">
+                          ${userData.retirement?.svBiannual1?.periode2?.montant?.toLocaleString() || '0'}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {isFrench ? 'par mois' : 'per month'}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <Button 
+                        variant="link" 
+                        className="text-emerald-600 hover:text-emerald-800"
+                        onClick={() => navigate('/revenus')}
+                      >
+                        {isFrench ? 'Modifier sur la page Revenus' : 'Edit on the Income page'}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Personne 2 - Sécurité de la vieillesse */}
+                <Card className="bg-white border-2 border-emerald-200 shadow-lg">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-emerald-800">
+                      <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                      <Shield className="w-6 h-6" />
+                      {isFrench ? 'Sécurité de la vieillesse' : 'Old Age Security'}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-1 gap-4">
+                      <div className="p-4 rounded-lg border bg-emerald-50">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Période 1 (Jan-Juin)' : 'Period 1 (Jan-June)'}
+                        </div>
+                        <div className="text-2xl font-bold text-emerald-600">
+                          ${userData.retirement?.svBiannual2?.periode1?.montant?.toLocaleString() || '0'}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {isFrench ? 'par mois' : 'per month'}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-orange-50">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Période 2 (Juil-Déc)' : 'Period 2 (Jul-Dec)'}
+                        </div>
+                        <div className="text-2xl font-bold text-orange-600">
+                          ${userData.retirement?.svBiannual2?.periode2?.montant?.toLocaleString() || '0'}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {isFrench ? 'par mois' : 'per month'}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <Button 
+                        variant="link" 
+                        className="text-emerald-600 hover:text-emerald-800"
+                        onClick={() => navigate('/revenus')}
+                      >
+                        {isFrench ? 'Modifier sur la page Revenus' : 'Edit on the Income page'}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* RRQ et CPP */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                {/* Personne 1 - RRQ/CPP */}
+                <Card className="bg-white border-2 border-blue-200 shadow-lg">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-blue-800">
+                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                      <Flag className="w-6 h-6" />
+                      {isFrench ? 'RRQ/CPP' : 'QPP/CPP'}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-1 gap-4">
+                      <div className="p-4 rounded-lg border bg-blue-50">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Prestation actuelle' : 'Current benefit'}
+                        </div>
+                        <div className="text-2xl font-bold text-blue-600">
+                          ${userData.retirement?.rrqMontantActuel1?.toLocaleString() || '0'}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {isFrench ? 'par mois' : 'per month'}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-purple-50">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Prestation à 70 ans' : 'Benefit at 70 years'}
+                        </div>
+                        <div className="text-2xl font-bold text-purple-600">
+                          ${userData.retirement?.rrqMontant70_1?.toLocaleString() || '0'}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {isFrench ? 'par mois' : 'per month'}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <Button 
+                        variant="link" 
+                        className="text-blue-600 hover:text-blue-800"
+                        onClick={() => navigate('/rrq-cpp-analysis')}
+                      >
+                        {isFrench ? 'Compléter dans RRQ/CPP' : 'Complete in QPP/CPP'}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Personne 2 - RRQ/CPP */}
+                <Card className="bg-white border-2 border-blue-200 shadow-lg">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-3 text-blue-800">
+                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                      <Flag className="w-6 h-6" />
+                      {isFrench ? 'RRQ/CPP' : 'QPP/CPP'}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="grid grid-cols-1 gap-4">
+                      <div className="p-4 rounded-lg border bg-blue-50">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Prestation actuelle' : 'Current benefit'}
+                        </div>
+                        <div className="text-2xl font-bold text-blue-600">
+                          ${userData.retirement?.rrqMontantActuel2?.toLocaleString() || '0'}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {isFrench ? 'par mois' : 'per month'}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-purple-50">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Prestation à 70 ans' : 'Benefit at 70 years'}
+                        </div>
+                        <div className="text-2xl font-bold text-purple-600">
+                          ${userData.retirement?.rrqMontant70_2?.toLocaleString() || '0'}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {isFrench ? 'par mois' : 'per month'}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <Button 
+                        variant="link" 
+                        className="text-blue-600 hover:text-blue-800"
+                        onClick={() => navigate('/rrq-cpp-analysis')}
+                      >
+                        {isFrench ? 'Compléter dans RRQ/CPP' : 'Complete in QPP/CPP'}
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+
+            {/* 3. TABLEAUX DE BORD */}
+            <div className="space-y-8">
+              {/* Revenus et actifs - 2 colonnes */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Personne 1 - Revenus */}
-              <Card className="bg-white border-2 border-blue-200 shadow-lg">
+                {/* Personne 1 - Revenus et actifs */}
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200 shadow-lg">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-blue-800">
                     <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                    {isFrench ? 'Revenus - Personne 1' : 'Income - Person 1'}
+                      <Building className="w-6 h-6" />
+                      {isFrench ? 'Mes revenus et actifs' : 'My income and assets'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Salaire annuel' : 'Annual salary'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.salaire1 || ''}
-                      onChange={(e) => handleProfileChange('salaire1', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 75000' : 'Ex: 75000'}
-                    />
+                    <div className="grid grid-cols-1 gap-4">
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Salaires (annuel)' : 'Salaries (annual)'}
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Pensions/RRQ' : 'Pensions/CPP'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.pensions1 || ''}
-                      onChange={(e) => handleProfileChange('pensions1', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 12000' : 'Ex: 12000'}
-                    />
+                        <div className="text-2xl font-bold text-blue-600">
+                          ${person1Income.totalSalary.toLocaleString()}
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Autres revenus' : 'Other income'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.autresRevenus1 || ''}
-                      onChange={(e) => handleProfileChange('autresRevenus1', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 5000' : 'Ex: 5000'}
-                    />
-                  </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Pensions (annuel)' : 'Pensions (annual)'}
+                        </div>
+                        <div className="text-2xl font-bold text-green-600">
+                          ${person1Income.totalPensions.toLocaleString()}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Autres revenus (annuel)' : 'Other income (annual)'}
+                        </div>
+                        <div className="text-2xl font-bold text-purple-600">
+                          ${person1Income.totalOtherIncome.toLocaleString()}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Épargne REER' : 'RRSP savings'}
+                        </div>
+                        <div className="text-2xl font-bold text-orange-600">
+                          ${person1Savings.reer.toLocaleString()}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Épargne CELI' : 'TFSA savings'}
+                        </div>
+                        <div className="text-2xl font-bold text-cyan-600">
+                          ${person1Savings.celi.toLocaleString()}
+                        </div>
+                      </div>
+                    </div>
+                                        <div className="text-right">
+                      <Button 
+                        variant="link" 
+                        className="text-blue-600 hover:text-blue-800"
+                        onClick={() => navigate('/revenus')}
+                      >
+                        {isFrench ? 'Modifier sur la page Revenus' : 'Edit on the Income page'}
+                      </Button>
+                    </div>
                 </CardContent>
               </Card>
 
-              {/* Personne 2 - Revenus */}
-              <Card className="bg-white border-2 border-green-200 shadow-lg">
+                {/* Personne 2 - Revenus et actifs */}
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-green-200 shadow-lg">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-green-800">
                     <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                    {isFrench ? 'Revenus - Personne 2' : 'Income - Person 2'}
+                      <Building className="w-6 h-6" />
+                      {isFrench ? 'Mes revenus et actifs' : 'My income and assets'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Salaire annuel' : 'Annual salary'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.salaire2 || ''}
-                      onChange={(e) => handleProfileChange('salaire2', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-green-600 focus:ring-2 focus:ring-green-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 65000' : 'Ex: 65000'}
-                    />
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Pensions/RRQ' : 'Pensions/CPP'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.pensions2 || ''}
-                      onChange={(e) => handleProfileChange('pensions2', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-green-600 focus:ring-2 focus:ring-green-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 10000' : 'Ex: 10000'}
-                    />
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Autres revenus' : 'Other income'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.autresRevenus2 || ''}
-                      onChange={(e) => handleProfileChange('autresRevenus2', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-green-600 focus:ring-2 focus:ring-green-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 3000' : 'Ex: 3000'}
-                    />
-                  </div>
+                    <div className="grid grid-cols-1 gap-4">
+                                            <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Salaires (annuel)' : 'Salaries (annual)'}
+                        </div>
+                        <div className="text-2xl font-bold text-blue-600">
+                          ${person2Income.totalSalary.toLocaleString()}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Pensions (annuel)' : 'Pensions (annual)'}
+                        </div>
+                        <div className="text-2xl font-bold text-green-600">
+                          ${person2Income.totalPensions.toLocaleString()}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Autres revenus (annuel)' : 'Other income (annual)'}
+                        </div>
+                        <div className="text-2xl font-bold text-purple-600">
+                          ${person2Income.totalOtherIncome.toLocaleString()}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Épargne REER' : 'RRSP savings'}
+                        </div>
+                        <div className="text-2xl font-bold text-orange-600">
+                          ${person2Savings.reer.toLocaleString()}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Épargne CELI' : 'TFSA savings'}
+                        </div>
+                        <div className="text-2xl font-bold text-cyan-600">
+                          ${person2Savings.celi.toLocaleString()}
+                        </div>
+                      </div>
+                    </div>
+                                        <div className="text-right">
+                      <Button 
+                        variant="link" 
+                        className="text-green-600 hover:text-green-800"
+                        onClick={() => navigate('/revenus')}
+                      >
+                        {isFrench ? 'Modifier sur la page Revenus' : 'Edit on the Income page'}
+                      </Button>
+                    </div>
                 </CardContent>
               </Card>
             </div>
 
-            {/* Dépenses - 2 colonnes */}
+              {/* Dépenses et budget - 2 colonnes */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Personne 1 - Dépenses */}
-              <Card className="bg-white border-2 border-blue-200 shadow-lg">
+                {/* Personne 1 - Dépenses et budget */}
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200 shadow-lg">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-blue-800">
                     <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                    {isFrench ? 'Dépenses - Personne 1' : 'Expenses - Person 1'}
+                      <CreditCard className="w-6 h-6" />
+                      {isFrench ? 'Mes dépenses et budget' : 'My expenses and budget'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Logement/Hypothèque' : 'Housing/Mortgage'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.logement1 || ''}
-                      onChange={(e) => handleProfileChange('logement1', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 1500' : 'Ex: 1500'}
-                    />
+                    <div className="grid grid-cols-1 gap-4">
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Dépenses mensuelles' : 'Monthly expenses'}
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Transport' : 'Transportation'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.transport1 || ''}
-                      onChange={(e) => handleProfileChange('transport1', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 400' : 'Ex: 400'}
-                    />
+                        <div className="text-2xl font-bold text-green-600">
+                          ${(userData.personal?.depensesMensuelles || 0).toLocaleString()}
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Autres dépenses' : 'Other expenses'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.autresDepenses1 || ''}
-                      onChange={(e) => handleProfileChange('autresDepenses1', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 300' : 'Ex: 300'}
-                    />
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Revenus mensuels estimés' : 'Estimated monthly income'}
+                        </div>
+                        <div className="text-2xl font-bold text-blue-600">
+                          ${(person1Income.totalIncome / 12).toLocaleString()}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Flux de trésorerie (mois)' : 'Cash flow (month)'}
+                        </div>
+                        <div className="text-2xl font-bold text-green-600">
+                          ${((person1Income.totalIncome / 12) - (userData.personal?.depensesMensuelles || 0)).toLocaleString()}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <Button variant="link" className="text-blue-600 hover:text-blue-800">
+                        {isFrench ? 'Modifier sur la page Dépenses' : 'Edit on the Expenses page'}
+                      </Button>
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Personne 2 - Dépenses */}
-              <Card className="bg-white border-2 border-green-200 shadow-lg">
+                {/* Personne 2 - Dépenses et budget */}
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-green-200 shadow-lg">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-green-800">
                     <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                    {isFrench ? 'Dépenses - Personne 2' : 'Expenses - Person 2'}
+                      <CreditCard className="w-6 h-6" />
+                      {isFrench ? 'Mes dépenses et budget' : 'My expenses and budget'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Épicerie/Alimentation' : 'Groceries/Food'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.epicerie2 || ''}
-                      onChange={(e) => handleProfileChange('epicerie2', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-green-600 focus:ring-2 focus:ring-green-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 600' : 'Ex: 600'}
-                    />
+                    <div className="grid grid-cols-1 gap-4">
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Dépenses mensuelles' : 'Monthly expenses'}
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Services publics' : 'Utilities'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.servicesPublics2 || ''}
-                      onChange={(e) => handleProfileChange('servicesPublics2', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-green-600 focus:ring-2 focus:ring-green-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 200' : 'Ex: 200'}
-                    />
+                        <div className="text-2xl font-bold text-green-600">
+                          ${((userData.personal?.epicerie1 || 0) + (userData.personal?.epicerie2 || 0)).toLocaleString()}
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Autres dépenses' : 'Other expenses'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.autresDepenses2 || ''}
-                      onChange={(e) => handleProfileChange('autresDepenses2', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-green-600 focus:ring-2 focus:ring-green-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 250' : 'Ex: 250'}
-                    />
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Revenus mensuels estimés' : 'Estimated monthly income'}
+                        </div>
+                        <div className="text-2xl font-bold text-blue-600">
+                          ${(person2Income.totalIncome / 12).toLocaleString()}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Flux de trésorerie (mois)' : 'Cash flow (month)'}
+                        </div>
+                        <div className="text-2xl font-bold text-green-600">
+                          ${((person2Income.totalIncome / 12) - ((userData.personal?.epicerie1 || 0) + (userData.personal?.epicerie2 || 0))).toLocaleString()}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <Button variant="link" className="text-green-600 hover:text-green-800">
+                        {isFrench ? 'Modifier sur la page Dépenses' : 'Edit on the Expenses page'}
+                      </Button>
                   </div>
                 </CardContent>
               </Card>
@@ -879,205 +1343,389 @@ const MaRetraite: React.FC = () => {
 
             {/* Calculs de retraite - 2 colonnes */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Personne 1 - Calculs */}
-              <Card className="bg-white border-2 border-blue-200 shadow-lg">
+                {/* Personne 1 - Calculs de retraite */}
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200 shadow-lg">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-blue-800">
                     <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                    {isFrench ? 'Calculs de Retraite - Personne 1' : 'Retirement Calculations - Person 1'}
+                      <BarChart3 className="w-6 h-6" />
+                      {isFrench ? 'Mes calculs de retraite' : 'My retirement calculations'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
+                    <div className="grid grid-cols-1 gap-4">
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
                       {isFrench ? 'Âge de retraite souhaité' : 'Desired retirement age'}
-                    </Label>
-                    <Input
-                      type="number"
-                      value={userData.personal?.ageRetraiteSouhaite1 || ''}
-                      onChange={(e) => handleProfileChange('ageRetraiteSouhaite1', parseInt(e.target.value) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 65' : 'Ex: 65'}
-                    />
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Épargne actuelle' : 'Current savings'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.epargneActuelle1 || ''}
-                      onChange={(e) => handleProfileChange('epargneActuelle1', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 50000' : 'Ex: 50000'}
-                    />
+                        <div className="text-2xl font-bold text-purple-600">
+                          {userData.personal?.ageRetraiteSouhaite1 || 65} {isFrench ? 'ans' : 'years'}
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Cotisations annuelles' : 'Annual contributions'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.cotisationsAnnuelles1 || ''}
-                      onChange={(e) => handleProfileChange('cotisationsAnnuelles1', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 5000' : 'Ex: 5000'}
-                    />
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Années avant la retraite (approx.)' : 'Years until retirement (approx.)'}
+                        </div>
+                        <div className="text-2xl font-bold text-blue-600">
+                          {Math.max(0, (userData.personal?.ageRetraiteSouhaite1 || 65) - computeAgeFromBirthdate(userData.personal?.naissance1))} {isFrench ? 'ans' : 'years'}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Espérance de vie (CPM2014)' : 'Life expectancy (CPM2014)'}
+                        </div>
+                        <div className="text-2xl font-bold text-green-600">
+                          {calculateMortalityForPerson(1).lifeExpectancy} {isFrench ? 'ans' : 'years'}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1">
+                          {isFrench ? 'Âge de planification recommandé:' : 'Recommended planning age:'} {calculateMortalityForPerson(1).finalAge}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <Button variant="link" className="text-blue-600 hover:text-blue-800">
+                        {isFrench ? 'Voir les rapports' : 'View reports'}
+                      </Button>
                   </div>
                 </CardContent>
               </Card>
 
-              {/* Personne 2 - Calculs */}
-              <Card className="bg-white border-2 border-green-200 shadow-lg">
+                {/* Personne 2 - Calculs de retraite */}
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-green-200 shadow-lg">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3 text-green-800">
                     <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                    {isFrench ? 'Calculs de Retraite - Personne 2' : 'Retirement Calculations - Person 2'}
+                      <BarChart3 className="w-6 h-6" />
+                      {isFrench ? 'Mes calculs de retraite' : 'My retirement calculations'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
+                    <div className="grid grid-cols-1 gap-4">
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
                       {isFrench ? 'Âge de retraite souhaité' : 'Desired retirement age'}
-                    </Label>
-                    <Input
-                      type="number"
-                      value={userData.personal?.ageRetraiteSouhaite2 || ''}
-                      onChange={(e) => handleProfileChange('ageRetraiteSouhaite2', parseInt(e.target.value) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-green-600 focus:ring-2 focus:ring-green-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 63' : 'Ex: 63'}
-                    />
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Épargne actuelle' : 'Current savings'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.epargneActuelle2 || ''}
-                      onChange={(e) => handleProfileChange('epargneActuelle2', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-green-600 focus:ring-2 focus:ring-green-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 35000' : 'Ex: 35000'}
-                    />
+                        <div className="text-2xl font-bold text-purple-600">
+                          {userData.personal?.ageRetraiteSouhaite2 || 65} {isFrench ? 'ans' : 'years'}
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Cotisations annuelles' : 'Annual contributions'}
-                    </Label>
-                    <Input
-                      type="text"
-                      value={userData.personal?.cotisationsAnnuelles2 || ''}
-                      onChange={(e) => handleProfileChange('cotisationsAnnuelles2', parseFloat(e.target.value.replace(/[^\d.]/g, '')) || 0)}
-                      className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-green-600 focus:ring-2 focus:ring-green-200 text-lg h-12 w-48"
-                      placeholder={isFrench ? 'Ex: 4000' : 'Ex: 4000'}
-                    />
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Années avant la retraite (approx.)' : 'Years until retirement (approx.)'}
+                        </div>
+                        <div className="text-2xl font-bold text-blue-600">
+                          {Math.max(0, (userData.personal?.ageRetraiteSouhaite2 || 65) - computeAgeFromBirthdate(userData.personal?.naissance2))} {isFrench ? 'ans' : 'years'}
+                        </div>
+                      </div>
+                      <div className="p-4 rounded-lg border bg-white">
+                        <div className="text-sm font-medium text-gray-600 mb-1">
+                          {isFrench ? 'Espérance de vie (CPM2014)' : 'Life expectancy (CPM2014)'}
+                        </div>
+                        <div className="text-2xl font-bold text-green-600">
+                          {calculateMortalityForPerson(2).lifeExpectancy} {isFrench ? 'ans' : 'years'}
+                        </div>
+                        <div className="text-xs text-gray-500 mt-1">
+                          {isFrench ? 'Âge de planification recommandé:' : 'Recommended planning age:'} {calculateMortalityForPerson(2).finalAge}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <Button variant="link" className="text-green-600 hover:text-green-800">
+                        {isFrench ? 'Voir les rapports' : 'View reports'}
+                      </Button>
                   </div>
                 </CardContent>
               </Card>
+              </div>
             </div>
 
-            {/* Analyse de longévité - 2 colonnes */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Personne 1 - Longévité */}
-              <Card className="bg-white border-2 border-blue-200 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-blue-800">
-                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                    {isFrench ? 'Analyse de Longévité - Personne 1' : 'Longevity Analysis - Person 1'}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {!canComputeMortality(1) && (
-                <Alert className="border-amber-300 bg-amber-50 text-amber-800">
-                  <Info className="h-5 w-5 text-amber-500" />
-                  <AlertDescription>
-                    {isFrench
-                          ? 'Complétez la date de naissance pour afficher l\'analyse.'
-                          : 'Complete date of birth to display the analysis.'}
-                  </AlertDescription>
-                </Alert>
-              )}
+            {/* 3. MODE D'ANALYSE DE LONGÉVITÉ */}
+            <LongevityModeSelector
+              mode={longevityMode}
+              onModeChange={setLongevityMode}
+              isFrench={isFrench}
+            />
 
-              {canComputeMortality(1) && !hasCompleteMortalityData(1) && (
-                <Alert className="border-blue-300 bg-blue-50 text-blue-800">
-                  <Info className="h-5 w-5 text-blue-500" />
-                  <AlertDescription>
+            {/* 4. INFORMATIONS POUR LE MODE STANDARD IPF2025 */}
+            {longevityMode === 'standard' && (
+              <div className="space-y-8">
+                <div className="text-center mb-6">
+                  <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
+                    {isFrench ? '📋 Informations Standard IPF2025' : '📋 Standard IPF2025 Information'}
+                  </h3>
+                  <p className="text-lg text-gray-600">
                     {isFrench
-                          ? 'Analyse basée sur la date de naissance. Complétez le sexe et la province pour une analyse plus précise.'
-                          : 'Analysis based on birth date. Complete gender and province for more precise analysis.'}
-                  </AlertDescription>
-                </Alert>
-              )}
-
+                      ? 'Informations de base pour les calculs de longévité standard'
+                      : 'Basic information for standard longevity calculations'}
+                  </p>
+                </div>
+                
+                {/* Analyse de longévité personnalisée */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <MortalityDisplayCPM2014
                 age={computeAgeFromBirthdate(userData.personal?.naissance1)}
                 gender={getGenderForMortality(userData.personal?.sexe1 as any) || 'male'}
-                showDetails={showMortalityDetails}
-                resultOverride={mortalityOverride}
-              />
-
-              <div className="flex items-center gap-3">
-                <Button
-                  variant="outline"
-                  onClick={() => setShowMortalityDetails(!showMortalityDetails)}
-                  className="border-amber-400 text-amber-700 hover:bg-amber-50"
-                >
-                  {showMortalityDetails ? (isFrench ? 'Masquer les détails' : 'Hide details') : (isFrench ? 'Afficher les détails' : 'Show details')}
-                </Button>
-              </div>
-                </CardContent>
-              </Card>
-
-              {/* Personne 2 - Longévité */}
-              <Card className="bg-white border-2 border-green-200 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-green-800">
-                    <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                    {isFrench ? 'Analyse de Longévité - Personne 2' : 'Longevity Analysis - Person 2'}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {!canComputeMortality(2) && (
-                    <Alert className="border-amber-300 bg-amber-50 text-amber-800">
-                      <Info className="h-5 w-5 text-amber-500" />
-                      <AlertDescription>
-                        {isFrench
-                          ? 'Complétez la date de naissance pour afficher l\'analyse.'
-                          : 'Complete date of birth to display the analysis.'}
-                      </AlertDescription>
-                    </Alert>
-                  )}
-
-                  {canComputeMortality(2) && !hasCompleteMortalityData(2) && (
-                    <Alert className="border-green-300 bg-green-50 text-green-800">
-                      <Info className="h-5 w-5 text-green-500" />
-                      <AlertDescription>
-                        {isFrench
-                          ? 'Analyse basée sur la date de naissance. Complétez le sexe et la province pour une analyse plus précise.'
-                          : 'Analysis based on birth date. Complete gender and province for more precise analysis.'}
-                      </AlertDescription>
-                    </Alert>
-                  )}
-
+                    showDetails={true}
+                  />
                   <MortalityDisplayCPM2014
                     age={computeAgeFromBirthdate(userData.personal?.naissance2)}
                     gender={getGenderForMortality(userData.personal?.sexe2 as any) || 'male'}
-                    showDetails={showMortalityDetails2}
-                    resultOverride={mortalityOverride2}
+                    showDetails={true}
                   />
+              </div>
+              </div>
+            )}
 
-                  <div className="flex items-center gap-3">
-                    <Button
-                      variant="outline"
-                      onClick={() => setShowMortalityDetails2(!showMortalityDetails2)}
-                      className="border-amber-400 text-amber-700 hover:bg-amber-50"
-                    >
-                      {showMortalityDetails2 ? (isFrench ? 'Masquer les détails' : 'Hide details') : (isFrench ? 'Afficher les détails' : 'Show details')}
-                    </Button>
+            {/* 5. FACTEURS DE SANTÉ */}
+            {longevityMode === 'personalized' && (
+              <div className="space-y-8">
+                <div className="text-center mb-6">
+                  <h3 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent">
+                    {isFrench ? '🏥 Facteurs de Santé' : '🏥 Health Factors'}
+                  </h3>
+                  <p className="text-lg text-gray-600">
+                        {isFrench
+                      ? 'Vos facteurs de santé influencent votre espérance de vie'
+                      : 'Your health factors influence your life expectancy'}
+                  </p>
+                </div>
+
+                {/* Health Factors Sections */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <HealthFactorsSection
+                    userData={userData}
+                    updateUserData={updateUserData}
+                    isFrench={isFrench}
+                    personNumber={1}
+                  />
+                  <HealthFactorsSection
+                    userData={userData}
+                    updateUserData={updateUserData}
+                    isFrench={isFrench}
+                    personNumber={2}
+                  />
                   </div>
-                </CardContent>
-              </Card>
             </div>
+            )}
+
+            {/* 6. FACTEURS PERSONNALISÉS (Socio-économiques) */}
+            {longevityMode === 'personalized' && (
+              <div className="space-y-8">
+                <div className="text-center mb-6">
+                  <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
+                    {isFrench ? '📊 Facteurs Personnalisés' : '📊 Personalized Factors'}
+                  </h3>
+                  <p className="text-lg text-gray-600">
+                        {isFrench
+                      ? 'Ces facteurs influencent vos calculs de retraite personnalisés'
+                      : 'These factors influence your personalized retirement calculations'}
+                  </p>
+                </div>
+
+                {/* Revenus Synchronisés */}
+                <div className="mb-8">
+                  <SynchronizedIncomeDisplay
+                    userData={userData}
+                    isFrench={isFrench}
+                    showDetails={true}
+                    className="max-w-4xl mx-auto"
+                  />
+                </div>
+
+                {/* Socio-Economic Sections */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <SocioEconomicSection
+                    userData={userData}
+                    updateUserData={updateUserData}
+                    isFrench={isFrench}
+                    personNumber={1}
+                  />
+                  <SocioEconomicSection
+                    userData={userData}
+                    updateUserData={updateUserData}
+                    isFrench={isFrench}
+                    personNumber={2}
+                  />
+                </div>
+              </div>
+            )}
+
+
+
+
+
+            {/* 7. SOMMAIRE POUR MODE ANALYSE PERSONNALISÉE */}
+            {longevityMode === 'personalized' && (
+              <div className="space-y-8">
+                <div className="text-center mb-6">
+                  <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    {isFrench ? '📊 Analyse Personnalisée Complète' : '📊 Complete Personalized Analysis'}
+                  </h3>
+                  <p className="text-lg text-gray-600">
+                    {isFrench
+                      ? 'Synthèse de vos facteurs de santé et socio-économiques pour une analyse personnalisée'
+                      : 'Summary of your health and socio-economic factors for personalized analysis'}
+                  </p>
+                </div>
+                
+                {/* Sommaire personnalisé avec santé et socio-économique */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  {/* Personne 1 - Analyse personnalisée */}
+                  <Card className="bg-white border-2 border-blue-200 shadow-lg">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-3 text-blue-800">
+                        <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                        <User className="w-6 h-6" />
+                        {isFrench ? 'Analyse Personnalisée' : 'Personalized Analysis'}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {/* Facteurs de santé */}
+                      <div className="p-4 rounded-lg border bg-green-50">
+                        <h4 className="text-lg font-semibold text-green-800 mb-3 flex items-center gap-2">
+                          <Shield className="w-5 h-5" />
+                          {isFrench ? 'Facteurs de Santé' : 'Health Factors'}
+                        </h4>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'État de santé:' : 'Health status:'}</span>
+                            <span className="font-medium">{userData.personal?.etatSante1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Mode de vie actif:' : 'Active lifestyle:'}</span>
+                            <span className="font-medium">{userData.personal?.modeVieActif1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Statut tabagique:' : 'Smoking status:'}</span>
+                            <span className="font-medium">{userData.personal?.statutTabagique1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Facteurs socio-économiques */}
+                      <div className="p-4 rounded-lg border bg-blue-50">
+                        <h4 className="text-lg font-semibold text-blue-800 mb-3 flex items-center gap-2">
+                          <BarChart3 className="w-5 h-5" />
+                          {isFrench ? 'Facteurs Socio-Économiques' : 'Socio-Economic Factors'}
+                        </h4>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Situation familiale:' : 'Family situation:'}</span>
+                            <span className="font-medium">{userData.personal?.situationFamiliale || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Niveau d\'éducation:' : 'Education level:'}</span>
+                            <span className="font-medium">{userData.personal?.niveauCompetences1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Secteur d\'activité:' : 'Activity sector:'}</span>
+                            <span className="font-medium">{userData.personal?.secteurActivite1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Expérience financière:' : 'Financial experience:'}</span>
+                            <span className="font-medium">{userData.personal?.experienceFinanciere1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Tolérance au risque:' : 'Risk tolerance:'}</span>
+                            <span className="font-medium">{userData.personal?.toleranceRisqueInvestissement1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Revenus annuels totaux:' : 'Total annual income:'}</span>
+                            <span className="font-medium text-green-700">
+                              ${((userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0)).toLocaleString()}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Analyse de longévité personnalisée */}
+                      <PersonalizedLongevityAnalysis
+                        userData={userData}
+                        isFrench={isFrench}
+                        personNumber={1}
+                      />
+                    </CardContent>
+                  </Card>
+
+                  {/* Personne 2 - Analyse personnalisée */}
+                  <Card className="bg-white border-2 border-green-200 shadow-lg">
+                    <CardHeader>
+                      <CardTitle className="flex items-center gap-3 text-green-800">
+                        <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                        <User className="w-6 h-6" />
+                        {isFrench ? 'Analyse Personnalisée' : 'Personalized Analysis'}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      {/* Facteurs de santé */}
+                      <div className="p-4 rounded-lg border bg-green-50">
+                        <h4 className="text-lg font-semibold text-green-800 mb-3 flex items-center gap-2">
+                          <Shield className="w-5 h-5" />
+                          {isFrench ? 'Facteurs de Santé' : 'Health Factors'}
+                        </h4>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'État de santé:' : 'Health status:'}</span>
+                            <span className="font-medium">{userData.personal?.etatSante2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Mode de vie actif:' : 'Active lifestyle:'}</span>
+                            <span className="font-medium">{userData.personal?.modeVieActif2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Statut tabagique:' : 'Smoking status:'}</span>
+                            <span className="font-medium">{userData.personal?.statutTabagique2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Facteurs socio-économiques */}
+                      <div className="p-4 rounded-lg border bg-blue-50">
+                        <h4 className="text-lg font-semibold text-blue-800 mb-3 flex items-center gap-2">
+                          <BarChart3 className="w-5 h-5" />
+                          {isFrench ? 'Facteurs Socio-Économiques' : 'Socio-Economic Factors'}
+                        </h4>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Situation familiale:' : 'Family situation:'}</span>
+                            <span className="font-medium">{userData.personal?.situationFamiliale || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Niveau d\'éducation:' : 'Education level:'}</span>
+                            <span className="font-medium">{userData.personal?.niveauCompetences2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Secteur d\'activité:' : 'Activity sector:'}</span>
+                            <span className="font-medium">{userData.personal?.secteurActivite2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Expérience financière:' : 'Financial experience:'}</span>
+                            <span className="font-medium">{userData.personal?.experienceFinanciere2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Tolérance au risque:' : 'Risk tolerance:'}</span>
+                            <span className="font-medium">{userData.personal?.toleranceRisqueInvestissement2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="text-gray-600">{isFrench ? 'Revenus annuels totaux:' : 'Total annual income:'}</span>
+                            <span className="font-medium text-green-700">
+                              ${((userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0)).toLocaleString()}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Analyse de longévité personnalisée */}
+                      <PersonalizedLongevityAnalysis
+                        userData={userData}
+                        isFrench={isFrench}
+                        personNumber={2}
+                      />
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            )}
 
                         {/* Conformité IPF 2025 */}
             <Card className="bg-white border-2 border-amber-200 shadow-lg">
@@ -1128,171 +1776,7 @@ const MaRetraite: React.FC = () => {
           </Card>
           </div>
 
-          {/* Revenus et actifs */}
-          <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200 shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-blue-800">
-                <Building className="w-6 h-6" />
-                {isFrench ? 'Mes revenus et actifs — Tableau de bord' : 'My income and assets — Dashboard'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-lg border bg-white">
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Salaires combinés (annuel)' : 'Combined salaries (annual)'}
-                  </div>
-                  <div className="text-2xl font-bold text-blue-700">
-                    {formatCurrency((userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0), { showCents: false })}
-                  </div>
-                </div>
-                <div className="p-4 rounded-lg border bg-white">
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'RRQ combinée (par mois)' : 'Combined CPP/QPP (per month)'}
-                  </div>
-                  <div className="text-2xl font-bold text-emerald-700">
-                    {formatCurrency((userData.retirement?.rrqMontantActuel1 || 0) + (userData.retirement?.rrqMontantActuel2 || 0), { showCents: false })}
-                  </div>
-                </div>
-                <div className="p-4 rounded-lg border bg-white">
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Pensions privées (annuel)' : 'Private pensions (annual)'}
-                  </div>
-                  <div className="text-2xl font-bold text-purple-700">
-                    {formatCurrency((userData.retirement?.pensionPrivee1 || 0) + (userData.retirement?.pensionPrivee2 || 0), { showCents: false })}
-                  </div>
-                </div>
-                <div className="p-4 rounded-lg border bg-white">
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Épargne REER totale' : 'Total RRSP savings'}
-                  </div>
-                  <div className="text-2xl font-bold text-amber-700">
-                    {formatCurrency((userData.savings?.reer1 || 0) + (userData.savings?.reer2 || 0), { showCents: false })}
-                  </div>
-                </div>
-                <div className="p-4 rounded-lg border bg-white">
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Épargne CELI totale' : 'Total TFSA savings'}
-                  </div>
-                  <div className="text-2xl font-bold text-cyan-700">
-                    {formatCurrency((userData.savings?.celi1 || 0) + (userData.savings?.celi2 || 0), { showCents: false })}
-                  </div>
-                </div>
-              </div>
-              <div className="flex justify-end">
-                <Button variant="outline" onClick={() => handleNavigation('/mes-revenus')}>
-                  {isFrench ? 'Modifier sur la page Revenus' : 'Edit on Revenues page'}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
 
-          {/* Dépenses et budget */}
-          <Card className="bg-white/80 backdrop-blur-sm border-2 border-green-200 shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-green-800">
-                <CreditCard className="w-6 h-6" />
-                {isFrench ? 'Mes dépenses et budget — Tableau de bord' : 'My expenses and budget — Dashboard'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-lg border bg-white">
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Dépenses mensuelles saisies' : 'Entered monthly expenses'}
-                  </div>
-                  <div className="text-2xl font-bold text-green-700">
-                    {formatCurrency(userData.personal?.depensesMensuelles || 0, { showCents: false })}
-                  </div>
-                </div>
-                <div className="p-4 rounded-lg border bg-white">
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Revenus mensuels estimés' : 'Estimated monthly income'}
-                  </div>
-                  <div className="text-2xl font-bold text-blue-700">
-                    {formatCurrency(
-                      Math.round(
-                        (((userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0)) / 12) +
-                        ((userData.retirement?.rrqMontantActuel1 || 0) + (userData.retirement?.rrqMontantActuel2 || 0)) +
-                        (((userData.retirement?.pensionPrivee1 || 0) + (userData.retirement?.pensionPrivee2 || 0)) / 12)
-                      ),
-                      { showCents: false }
-                    )}
-                  </div>
-                </div>
-                <div className="p-4 rounded-lg border bg-white">
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Flux de trésorerie (mois)' : 'Monthly cashflow'}
-                  </div>
-                  <div className={`text-2xl font-bold ${Math.round(
-                        (((userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0)) / 12) +
-                        ((userData.retirement?.rrqMontantActuel1 || 0) + (userData.retirement?.rrqMontantActuel2 || 0)) +
-                        (((userData.retirement?.pensionPrivee1 || 0) + (userData.retirement?.pensionPrivee2 || 0)) / 12)
-                      ) - (userData.personal?.depensesMensuelles || 0) >= 0 ? 'text-emerald-700' : 'text-red-700'}`}>
-                    {formatCurrency(
-                      Math.round(
-                        (((userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0)) / 12) +
-                        ((userData.retirement?.rrqMontantActuel1 || 0) + (userData.retirement?.rrqMontantActuel2 || 0)) +
-                        (((userData.retirement?.pensionPrivee1 || 0) + (userData.retirement?.pensionPrivee2 || 0)) / 12)
-                      ) - (userData.personal?.depensesMensuelles || 0),
-                      { showCents: false }
-                    )}
-                  </div>
-                </div>
-              </div>
-              <div className="flex justify-end">
-                <Button variant="outline" onClick={() => handleNavigation('/depenses')}>
-                  {isFrench ? 'Modifier sur la page Dépenses' : 'Edit on Expenses page'}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Calculs de retraite */}
-          <Card className="bg-white/80 backdrop-blur-sm border-2 border-purple-200 shadow-lg">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-purple-800">
-                <BarChart3 className="w-6 h-6" />
-                {isFrench ? 'Mes calculs de retraite — Tableau de bord' : 'My retirement calculations — Dashboard'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 rounded-lg border bg-white">
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Âge de retraite souhaité' : 'Desired retirement age'}
-                  </div>
-                  <div className="text-2xl font-bold text-purple-700">
-                    {userData.personal?.ageRetraiteSouhaite1 || 65} {isFrench ? 'ans' : 'yrs'}
-                  </div>
-                </div>
-                <div className="p-4 rounded-lg border bg-white">
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Années avant la retraite (approx.)' : 'Years to retirement (approx.)'}
-                  </div>
-                  <div className="text-2xl font-bold text-indigo-700">
-                    {Math.max(0, (userData.personal?.ageRetraiteSouhaite1 || 65) - computeAgeFromBirthdate(userData.personal?.naissance1))} {isFrench ? 'ans' : 'yrs'}
-                  </div>
-                </div>
-                <div className="p-4 rounded-lg border bg-white">
-                  <div className="text-sm text-gray-600">
-                    {isFrench ? 'Espérance de vie (CPM2014)' : 'Life expectancy (CPM2014)'}
-                  </div>
-                  <div className="text-2xl font-bold text-emerald-700">
-                    {(userData.retirement?.esperanceVie1 || 0)} {isFrench ? 'ans' : 'yrs'}
-                  </div>
-                  <div className="text-xs text-gray-500 mt-1">
-                    {isFrench ? 'Âge de planification recommandé' : 'Recommended planning age'}: {mortalityOverride?.planningAge || MORTALITY_CPM2014.getRecommendedPlanningAge(computeAgeFromBirthdate(userData.personal?.naissance1), getGenderForMortality(userData.personal?.sexe1 as any) || 'male')}
-                  </div>
-                </div>
-              </div>
-              <div className="flex justify-end">
-                <Button variant="outline" onClick={() => handleNavigation('/fr/rapports-retraite')}>
-                  {isFrench ? 'Voir les rapports' : 'View reports'}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
 
           {/* Sauvegarde */}
           <div className="text-center">

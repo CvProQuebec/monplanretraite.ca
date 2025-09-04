@@ -23,7 +23,23 @@ const defaultUserData: UserData = {
     statutProfessionnel2: '' as any,
     ageRetraiteSouhaite1: 0,
     ageRetraiteSouhaite2: 0,
-    depensesRetraite: 0  // Maintenant vide
+    depensesRetraite: 0,  // Maintenant vide
+    // Revenus unifiés
+    unifiedIncome1: [],
+    unifiedIncome2: [],
+    // Champs d'investissements
+    soldeREER1: 0,
+    dateREER1: '',
+    soldeCELI1: 0,
+    dateCELI1: '',
+    soldeCRI1: 0,
+    dateCRI1: '',
+    soldeREER2: 0,
+    dateREER2: '',
+    soldeCELI2: 0,
+    dateCELI2: '',
+    soldeCRI2: 0,
+    dateCRI2: ''
   },
   retirement: {
     rrqAgeActuel1: 0,  // Maintenant vide
@@ -44,7 +60,10 @@ const defaultUserData: UserData = {
     svRevenus1: 0,
     svRevenus2: 0,
     svAgeDebut1: 0,  // Maintenant vide
-    svAgeDebut2: 0  // Maintenant vide
+    svAgeDebut2: 0,  // Maintenant vide
+    // Champs pour la gestion biannuelle SV
+    svBiannual1: undefined,
+    svBiannual2: undefined
   },
   savings: {
     reer1: 0,
@@ -87,27 +106,48 @@ const defaultUserData: UserData = {
 // Validation des données
 const validateUserData = (data: any): UserData => {
   try {
-    // Vérifier que toutes les propriétés requises existent
-    const requiredSections = ['personal', 'retirement', 'savings', 'cashflow', 'emergency', 'session'];
-    for (const section of requiredSections) {
-      if (!data[section] || typeof data[section] !== 'object') {
-        throw new Error(`Section ${section} manquante ou invalide`);
+    // Fusionner avec les données par défaut pour s'assurer que toutes les sections existent
+    const mergedData = {
+      ...defaultUserData,
+      ...data,
+      personal: {
+        ...defaultUserData.personal,
+        ...data.personal
+      },
+      retirement: {
+        ...defaultUserData.retirement,
+        ...data.retirement
+      },
+      savings: {
+        ...defaultUserData.savings,
+        ...data.savings
+      },
+      cashflow: {
+        ...defaultUserData.cashflow,
+        ...data.cashflow
+      },
+      emergency: {
+        ...defaultUserData.emergency,
+        ...data.emergency
+      },
+      session: {
+        ...defaultUserData.session,
+        ...data.session
       }
-    }
-
-    // Validation des données personnelles (désactivée temporairement pour les tests)
-// if (!data.personal.prenom1 || typeof data.personal.prenom1 !== 'string') {
-//   throw new Error('Prénom principal requis');
-// }
+    };
 
     // Validation des salaires (doivent être des nombres positifs)
-    if (data.personal.salaire1 < 0 || data.personal.salaire2 < 0) {
-      throw new Error('Les salaires doivent être positifs');
+    if (mergedData.personal.salaire1 < 0 || mergedData.personal.salaire2 < 0) {
+      console.warn('Salaires négatifs détectés, correction automatique');
+      mergedData.personal.salaire1 = Math.max(0, mergedData.personal.salaire1);
+      mergedData.personal.salaire2 = Math.max(0, mergedData.personal.salaire2);
     }
 
-    return data as UserData;
+    console.log('✅ Données validées et fusionnées:', mergedData);
+    return mergedData as UserData;
   } catch (error) {
     console.error('Erreur de validation des données:', error);
+    console.log('🔄 Utilisation des données par défaut');
     return defaultUserData;
   }
 };
@@ -138,9 +178,27 @@ export const useRetirementData = () => {
             setUserData(defaultUserData);
           }
         } else {
-          // Toujours commencer avec des données vides
-          setUserData(defaultUserData);
-          console.log('🆕 Nouvelle session - données vides initialisées');
+          // Vérifier s'il y a des données importées dans localStorage
+          const importedData = localStorage.getItem('retirement_data');
+          if (importedData) {
+            try {
+              const parsedData = JSON.parse(importedData);
+              console.log('📥 Données brutes chargées depuis localStorage:', parsedData);
+              console.log('📊 unifiedIncome1:', parsedData.personal?.unifiedIncome1);
+              console.log('📊 unifiedIncome2:', parsedData.personal?.unifiedIncome2);
+              const validatedData = validateUserData(parsedData);
+              console.log('✅ Données validées:', validatedData);
+              setUserData(validatedData);
+              console.log('📥 Données importées chargées depuis localStorage');
+            } catch (error) {
+              console.warn('⚠️ Données importées corrompues, utilisation des données par défaut');
+              setUserData(defaultUserData);
+            }
+          } else {
+            // Toujours commencer avec des données vides
+            setUserData(defaultUserData);
+            console.log('🆕 Nouvelle session - données vides initialisées');
+          }
         }
       } catch (error) {
         console.error('Erreur lors du chargement des données:', error);
@@ -154,18 +212,47 @@ export const useRetirementData = () => {
     loadData();
   }, []);
 
-  // Sauvegarder automatiquement dans sessionStorage (temporaire)
+  // Sauvegarder automatiquement dans sessionStorage (temporaire) et localStorage
   useEffect(() => {
     if (!isLoading && userData !== defaultUserData) {
       try {
+        // Sauvegarde en session
         sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(userData));
         console.log('💾 Données sauvegardées en session');
+        
+        // Sauvegarde en localStorage pour la persistance
+        localStorage.setItem('retirement_data', JSON.stringify(userData));
+        console.log('💾 Données sauvegardées en localStorage');
       } catch (error) {
-        console.error('Erreur lors de la sauvegarde en session:', error);
-        setError('Impossible de sauvegarder les données en session');
+        console.error('Erreur lors de la sauvegarde:', error);
+        setError('Impossible de sauvegarder les données');
       }
     }
   }, [userData, isLoading]);
+
+  // Écouter les événements d'importation de données
+  useEffect(() => {
+    const handleDataImported = (event: CustomEvent) => {
+      try {
+        const importedData = event.detail.data;
+        console.log('📥 Données importées reçues via événement:', importedData);
+        console.log('📊 unifiedIncome1 importé:', importedData.personal?.unifiedIncome1);
+        console.log('📊 unifiedIncome2 importé:', importedData.personal?.unifiedIncome2);
+        const validatedData = validateUserData(importedData);
+        console.log('✅ Données validées après import:', validatedData);
+        setUserData(validatedData);
+        console.log('📥 Données importées reçues via événement et appliquées');
+      } catch (error) {
+        console.error('Erreur lors du traitement des données importées:', error);
+      }
+    };
+
+    window.addEventListener('retirementDataImported', handleDataImported as EventListener);
+
+    return () => {
+      window.removeEventListener('retirementDataImported', handleDataImported as EventListener);
+    };
+  }, []);
 
   // Nettoyer automatiquement à la fermeture de la session
   useEffect(() => {
@@ -308,8 +395,20 @@ export const useRetirementData = () => {
       try {
         const content = e.target?.result as string;
         const importedData = JSON.parse(content);
-        const validatedData = validateUserData(importedData);
+        
+        // Détecter la structure (comme dans SauvegarderCharger.tsx)
+        const payload = importedData?.data ?? importedData;
+        
+        if (!payload || typeof payload !== 'object') {
+          throw new Error('Invalid content');
+        }
+        
+        const validatedData = validateUserData(payload);
         setUserData(validatedData);
+        
+        // Sauvegarder aussi dans localStorage pour la persistance
+        localStorage.setItem('retirement_data', JSON.stringify(payload));
+        
         setError(null);
         console.log('📥 Données importées avec succès');
       } catch (error) {
