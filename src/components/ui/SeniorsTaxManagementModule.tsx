@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
-import { Calendar, Building, School, RefreshCw, Info, Plus, Trash2, AlertCircle } from 'lucide-react';
+import { Calendar, Building, School, RefreshCw, Info, Plus, Trash2 } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import SeniorsFriendlyInput from '../forms/SeniorsFriendlyInput';
 import SeniorsAmountDisplay from '../display/SeniorsAmountDisplay';
@@ -195,10 +195,6 @@ const SeniorsTaxManagementModule: React.FC<SeniorsTaxManagementModuleProps> = ({
     return totalAmount / 12;
   };
 
-  // Vérifier les dates passées
-  const isDatePassed = (date: string) => {
-    return new Date(date) < new Date();
-  };
 
   return (
     <div className="space-y-8">
@@ -293,16 +289,8 @@ const SeniorsTaxManagementModule: React.FC<SeniorsTaxManagementModuleProps> = ({
                         onChange={(e) => handleMunicipalPaymentChange(payment.id, 'date', e.target.value)}
                         placeholder="2025-03-15"
                         helpText={isFrench ? 'Format: AAAA-MM-JJ (ex: 2025-03-15)' : 'Format: YYYY-MM-DD (ex: 2025-03-15)'}
-                        className={`h-16 text-lg ${isDatePassed(payment.date) ? 'border-red-300 bg-red-50' : ''}`}
+                        className="h-16 text-lg"
                       />
-                      {isDatePassed(payment.date) && payment.date && (
-                        <Alert className="mt-2 border-red-200 bg-red-50">
-                          <AlertCircle className="h-4 w-4 text-red-600" />
-                          <AlertDescription className="text-red-800 text-sm">
-                            {isFrench ? 'Cette date est passée' : 'This date has passed'}
-                          </AlertDescription>
-                        </Alert>
-                      )}
                     </div>
                     <div>
                       <SeniorsFriendlyInput
@@ -412,16 +400,8 @@ const SeniorsTaxManagementModule: React.FC<SeniorsTaxManagementModuleProps> = ({
                         onChange={(e) => handleSchoolPaymentChange(payment.id, 'date', e.target.value)}
                         placeholder="2025-08-01"
                         helpText={isFrench ? 'Format: AAAA-MM-JJ (ex: 2025-08-01)' : 'Format: YYYY-MM-DD (ex: 2025-08-01)'}
-                        className={`h-16 text-lg ${isDatePassed(payment.date) ? 'border-red-300 bg-red-50' : ''}`}
+                        className="h-16 text-lg"
                       />
-                      {isDatePassed(payment.date) && payment.date && (
-                        <Alert className="mt-2 border-red-200 bg-red-50">
-                          <AlertCircle className="h-4 w-4 text-red-600" />
-                          <AlertDescription className="text-red-800 text-sm">
-                            {isFrench ? 'Cette date est passée' : 'This date has passed'}
-                          </AlertDescription>
-                        </Alert>
-                      )}
                     </div>
                     <div>
                       <SeniorsFriendlyInput

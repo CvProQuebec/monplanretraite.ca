@@ -108,7 +108,7 @@ const SeasonalIrregularExpensesModule: React.FC<SeasonalIrregularExpensesProps> 
       : 'Plan your non-recurring expenses for better budget management',
     seasonal: language === 'fr' ? 'Saisonnières' : 'Seasonal',
     irregular: language === 'fr' ? 'Irrégulières' : 'Irregular',
-    governmental: language === 'fr' ? 'Gouvernementales' : 'Governmental',
+    governmental: language === 'fr' ? 'Taxes' : 'Taxes',
     spring: language === 'fr' ? 'Printemps' : 'Spring',
     summer: language === 'fr' ? 'Été' : 'Summer',
     fall: language === 'fr' ? 'Automne' : 'Fall',
@@ -695,7 +695,7 @@ const SeasonalIrregularExpensesModule: React.FC<SeasonalIrregularExpensesProps> 
           </div>
         )}
 
-        {/* Onglet Dépenses Gouvernementales - Standards Seniors Stricts */}
+        {/* Onglet Taxes - Standards Seniors Stricts */}
         {activeTab === 'governmental' && (
           <div className="space-y-6">
             {/* Module de gestion des taxes - Version Seniors */}

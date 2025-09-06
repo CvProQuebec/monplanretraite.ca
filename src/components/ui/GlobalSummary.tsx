@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calculator, DollarSign, TrendingUp, Shield, Flag, Briefcase } from 'lucide-react';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
+import { logCalculation, logWarning, logError } from '@/utils/logger';
 
 interface GlobalSummaryProps {
   userData: any;
@@ -44,55 +45,72 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
     const unifiedIncome2 = userData?.personal?.unifiedIncome2 || [];
     
     // Debug pour voir les données
-    console.log('🔍 GlobalSummary - unifiedIncome1:', unifiedIncome1);
-    console.log('🔍 GlobalSummary - unifiedIncome2:', unifiedIncome2);
-    console.log('🔍 GlobalSummary - Processing Person 1 entries:', unifiedIncome1.length);
-    console.log('🔍 GlobalSummary - Processing Person 2 entries:', unifiedIncome2.length);
+    logCalculation('GlobalSummary', 'Data Analysis', {
+      unifiedIncome1Length: unifiedIncome1.length,
+      unifiedIncome2Length: unifiedIncome2.length,
+      unifiedIncome1: unifiedIncome1,
+      unifiedIncome2: unifiedIncome2
+    });
     
     // Fonction pour calculer le montant "à ce jour" comme dans SeniorsFriendlyIncomeTable
     const calculateToDateAmount = (entry: any) => {
-      console.log('🔍 calculateToDateAmount - Entry:', entry);
-      console.log('🔍 calculateToDateAmount - isActive:', entry.isActive);
+      logCalculation('GlobalSummary', 'calculateToDateAmount - Entry Processing', {
+        entry: entry,
+        isActive: entry.isActive,
+        type: entry.type
+      });
       
       if (!entry.isActive) {
-        console.log('🔍 calculateToDateAmount - Entry not active, returning 0');
+        logWarning('GlobalSummary', 'Entry not active, returning 0', { entryId: entry.id });
         return 0;
       }
       
       const currentDate = new Date();
       const today = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
       
-      console.log('🔍 calculateToDateAmount - Today:', today);
-      console.log('🔍 calculateToDateAmount - Entry type:', entry.type);
+      logCalculation('GlobalSummary', 'calculateToDateAmount - Date Info', {
+        today: today.toISOString().split('T')[0],
+        entryType: entry.type,
+        currentMonth: currentDate.getMonth() + 1,
+        currentYear: currentDate.getFullYear()
+      });
       
       switch (entry.type) {
         case 'salaire':
         case 'emploi-saisonnier':
-          console.log('🔍 calculateToDateAmount - Processing salary/seasonal entry');
-          console.log('🔍 calculateToDateAmount - Entry details:', {
+          logCalculation('GlobalSummary', 'Processing salary/seasonal entry', {
             salaryNetAmount: entry.salaryNetAmount,
             salaryFrequency: entry.salaryFrequency,
             description: entry.description,
             startDate: entry.startDate,
-            endDate: entry.endDate
+            endDate: entry.endDate,
+            salaryStartDate: entry.salaryStartDate,
+            salaryEndDate: entry.salaryEndDate
           });
           
           // Pour les emplois saisonniers, vérifier les dates de début et fin
           if (entry.type === 'emploi-saisonnier' && entry.salaryStartDate && entry.salaryEndDate) {
-            const startDate = new Date(entry.salaryStartDate);
-            const endDate = new Date(entry.salaryEndDate);
+            // Créer des dates locales pour éviter les problèmes de fuseau horaire
+            const startDateParts = entry.salaryStartDate.split('-').map(Number);
+            const endDateParts = entry.salaryEndDate.split('-').map(Number);
+            const startDate = new Date(startDateParts[0], startDateParts[1] - 1, startDateParts[2]);
+            const endDate = new Date(endDateParts[0], endDateParts[1] - 1, endDateParts[2]);
             
-            console.log('🔍 calculateToDateAmount - Seasonal employment dates:', {
-              startDate,
-              endDate,
-              today,
+            logCalculation('GlobalSummary', 'Seasonal employment dates analysis', {
+              startDate: startDate.toISOString().split('T')[0],
+              endDate: endDate.toISOString().split('T')[0],
+              today: today.toISOString().split('T')[0],
               isInPeriod: today >= startDate && today <= endDate,
-              hasStarted: today >= startDate
+              hasStarted: today >= startDate,
+              isPeriodPassed: today > endDate
             });
             
             // Si nous ne sommes pas encore dans la période, retourner 0
             if (today < startDate) {
-              console.log('🔍 calculateToDateAmount - Seasonal employment not started yet');
+              logWarning('GlobalSummary', 'Seasonal employment not started yet', {
+                todayDate: today.toISOString().split('T')[0],
+                startDate: startDate.toISOString().split('T')[0]
+              });
               return 0;
             }
             
@@ -123,10 +141,28 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
               const frequency = entry.salaryFrequency;
               
               if (frequency === 'monthly') {
-                // Pour mensuel, calculer les mois travaillés dans la période
-                const monthsWorked = Math.ceil(daysWorked / 30);
-                const result = netAmount * monthsWorked;
-                console.log('🔍 calculateToDateAmount - Seasonal monthly result:', result);
+                // Pour mensuel, créer des dates locales pour éviter les problèmes de fuseau horaire
+                const localStartDate = new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate());
+                const localEndDate = new Date(effectiveEndDate.getFullYear(), effectiveEndDate.getMonth(), effectiveEndDate.getDate());
+                
+                const startMonth = localStartDate.getMonth();
+                const endMonth = localEndDate.getMonth();
+                const startYear = localStartDate.getFullYear();
+                const endYear = localEndDate.getFullYear();
+                
+                const totalMonths = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+                const result = netAmount * totalMonths;
+                logCalculation('GlobalSummary', 'Seasonal monthly calculation', {
+                  startDate: startDate.toISOString().split('T')[0],
+                  endDate: endDate.toISOString().split('T')[0],
+                  effectiveEndDate: effectiveEndDate.toISOString().split('T')[0],
+                  localStartMonth: localStartDate.getMonth(),
+                  localEndMonth: localEndDate.getMonth(),
+                  totalMonths,
+                  netAmount,
+                  result,
+                  calculationMethod: 'Seasonal employment with corrected timezone handling'
+                });
                 return result;
               } else if (frequency === 'weekly') {
                 const weeksWorked = Math.ceil(daysWorked / 7);
@@ -263,8 +299,127 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
           break;
           
         case 'travail-autonome':
+          // Pour le travail autonome, utiliser le montant annuel projeté
+          return entry.projectedAnnual || 0;
+          
         case 'revenus-location':
-          // Pour ces types, utiliser le montant annuel projeté
+          // Pour les revenus de location, calculer selon la fréquence
+          if (entry.rentalAmount && entry.rentalFrequency) {
+            const currentDate = new Date();
+            
+            // Si on a des dates spécifiques (période saisonnière), les utiliser
+            if (entry.rentalStartDate && entry.rentalEndDate) {
+              try {
+                const startDateParts = entry.rentalStartDate.split('-').map(Number);
+                const endDateParts = entry.rentalEndDate.split('-').map(Number);
+                
+                // Validation des parties de date
+                if (startDateParts.length !== 3 || endDateParts.length !== 3 ||
+                    startDateParts.some(isNaN) || endDateParts.some(isNaN)) {
+                  logError('GlobalSummary', 'Invalid date format for rental income', {
+                    rentalStartDate: entry.rentalStartDate,
+                    rentalEndDate: entry.rentalEndDate
+                  });
+                  return entry.projectedAnnual || 0;
+                }
+                
+                const startDate = new Date(startDateParts[0], startDateParts[1] - 1, startDateParts[2]);
+                const endDate = new Date(endDateParts[0], endDateParts[1] - 1, endDateParts[2]);
+                
+                // Validation que les dates sont valides
+                if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+                  logError('GlobalSummary', 'Invalid date values for rental income', {
+                    startDate: startDate.toString(),
+                    endDate: endDate.toString(),
+                    rentalStartDate: entry.rentalStartDate,
+                    rentalEndDate: entry.rentalEndDate
+                  });
+                  return entry.projectedAnnual || 0;
+                }
+                
+                const today = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+              
+              logCalculation('GlobalSummary', 'Rental income with specific dates', {
+                rentalAmount: entry.rentalAmount,
+                rentalFrequency: entry.rentalFrequency,
+                startDate: startDate.toISOString().split('T')[0],
+                endDate: endDate.toISOString().split('T')[0],
+                today: today.toISOString().split('T')[0]
+              });
+              
+              // Si on n'est pas encore dans la période, retourner 0
+              if (today < startDate) {
+                logWarning('GlobalSummary', 'Rental period not started yet', {
+                  todayDate: today.toISOString().split('T')[0],
+                  startDate: startDate.toISOString().split('T')[0]
+                });
+                return 0;
+              }
+              
+              // Calculer le nombre de périodes dans la plage spécifiée
+              const effectiveEndDate = today > endDate ? endDate : today;
+              const daysDiff = Math.floor((effectiveEndDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+              
+              let periods = 0;
+              switch (entry.rentalFrequency) {
+                case 'weekend':
+                  // Compter les week-ends dans la période
+                  periods = Math.floor(daysDiff / 7) + (daysDiff % 7 >= 3 ? 1 : 0);
+                  // Pour la période du 20-22 juin (3 jours), c'est 1 week-end
+                  if (daysDiff <= 3) periods = 1;
+                  break;
+                case 'weekly':
+                  periods = Math.ceil(daysDiff / 7);
+                  break;
+                case 'monthly':
+                  const startMonth = startDate.getMonth();
+                  const endMonth = effectiveEndDate.getMonth();
+                  const startYear = startDate.getFullYear();
+                  const endYear = effectiveEndDate.getFullYear();
+                  periods = (endYear - startYear) * 12 + (endMonth - startMonth) + 1;
+                  break;
+              }
+              
+              const result = entry.rentalAmount * periods;
+              logCalculation('GlobalSummary', 'Rental income calculated with dates', {
+                daysDiff,
+                periods,
+                rentalAmount: entry.rentalAmount,
+                result,
+                calculationMethod: 'Specific date range'
+              });
+              
+              return result;
+              } catch (error) {
+                logError('GlobalSummary', 'Error calculating rental income with dates', {
+                  error: error.message,
+                  rentalStartDate: entry.rentalStartDate,
+                  rentalEndDate: entry.rentalEndDate,
+                  rentalAmount: entry.rentalAmount
+                });
+                // Fallback au calcul sans dates
+                const monthsElapsed = Math.max(0, currentDate.getMonth() + 1);
+                const fallbackResult = entry.rentalAmount * Math.floor(monthsElapsed * 4.33);
+                return fallbackResult;
+              }
+            } else {
+              // Calcul annuel (comme avant) si pas de dates spécifiées
+              const monthsElapsed = Math.max(0, currentDate.getMonth() + 1);
+              
+              switch (entry.rentalFrequency) {
+                case 'weekend':
+                  const weekendsElapsed = Math.floor(monthsElapsed * 4.33);
+                  return entry.rentalAmount * weekendsElapsed;
+                case 'weekly':
+                  const weeksElapsed = Math.floor(monthsElapsed * 4.33);
+                  return entry.rentalAmount * weeksElapsed;
+                case 'monthly':
+                  return entry.rentalAmount * monthsElapsed;
+                default:
+                  return entry.rentalAmount * monthsElapsed;
+              }
+            }
+          }
           return entry.projectedAnnual || 0;
       }
       
@@ -272,11 +427,19 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
     };
     
     // Calculer les totaux pour Personne 1
-    console.log('🔍 Calcul Personne 1 - Nombre d\'entrées:', unifiedIncome1.length);
+    logCalculation('GlobalSummary', 'Person 1 Income Processing', {
+      numberOfEntries: unifiedIncome1.length,
+      message: 'Starting calculation for Person 1'
+    });
+    
     unifiedIncome1.forEach((entry, index) => {
-      console.log(`🔍 Personne 1 - Entrée ${index}:`, entry);
+      logCalculation('GlobalSummary', `Person 1 Entry ${index}`, entry);
       const toDateAmount = calculateToDateAmount(entry);
-      console.log(`🔍 Personne 1 - Montant calculé pour ${entry.type}:`, toDateAmount);
+      logCalculation('GlobalSummary', `Person 1 Calculated Amount`, {
+        entryType: entry.type,
+        description: entry.description,
+        calculatedAmount: toDateAmount
+      });
       
       switch (entry.type) {
         case 'salaire':
@@ -489,64 +652,70 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
 
     console.log('🔍 GlobalSummary - Total SV final:', totals.securiteVieillesse);
 
-    // Rentes privées - Calculer le montant à ce jour
+    // Rentes privées - Calculer le montant à ce jour (1er janvier à la dernière date de versement)
     const privatePensions1 = userData?.retirement?.privatePensions1 || [];
     const privatePensions2 = userData?.retirement?.privatePensions2 || [];
     
-    // Réinitialiser le total des rentes privées
-    totals.rentesPrivees = 0;
-    
-    // Calculer pour Personne 1
-    if (privatePensions1.length > 0) {
-      const currentMonth = currentDate.getMonth() + 1;
+    // Fonction pour calculer les rentes privées d'une personne
+    const calculatePrivatePensionsTotal = (pensions) => {
+      const currentDate = new Date();
       const currentYear = currentDate.getFullYear();
+      const yearStart = new Date(currentYear, 0, 1); // 1er janvier de l'année courante
       
-      totals.rentesPrivees += privatePensions1.reduce((total, pension) => {
+      return pensions.reduce((total, pension) => {
         if (!pension.isActive) return total;
         
         const startDate = new Date(pension.startDate);
-        const startMonth = startDate.getMonth() + 1;
-        const startYear = startDate.getFullYear();
+        const paymentDay = pension.paymentDay || 1; // Jour de versement (défaut: 1er du mois)
         
-        const monthsElapsed = (currentYear - startYear) * 12 + (currentMonth - startMonth);
-        const monthsCompleted = Math.max(0, monthsElapsed);
+        // Ne pas inclure les pensions qui commencent après aujourd'hui
+        if (startDate > currentDate) return total;
         
-        let monthlyAmount = pension.monthlyAmount;
-        if (pension.frequency === 'quarterly') {
-          monthlyAmount = pension.monthlyAmount / 3;
-        } else if (pension.frequency === 'annually') {
-          monthlyAmount = pension.monthlyAmount / 12;
+        // Date de début du calcul: max entre 1er janvier et date de début de la pension
+        const calculationStart = startDate > yearStart ? startDate : yearStart;
+        
+        // Dernière date de versement potentielle ce mois-ci
+        const currentMonth = currentDate.getMonth();
+        const lastPaymentThisMonth = new Date(currentYear, currentMonth, paymentDay);
+        
+        // Si le jour de versement de ce mois n'est pas encore passé, prendre le mois précédent
+        const lastPaymentDate = currentDate >= lastPaymentThisMonth ? 
+          lastPaymentThisMonth : 
+          new Date(currentYear, currentMonth - 1, paymentDay);
+        
+        // Calculer le nombre de versements du calcul start à la dernière date de versement
+        let paymentsCount = 0;
+        const tempDate = new Date(calculationStart);
+        
+        // Ajuster au premier jour de versement
+        if (tempDate.getDate() <= paymentDay) {
+          tempDate.setDate(paymentDay);
+        } else {
+          tempDate.setMonth(tempDate.getMonth() + 1, paymentDay);
         }
         
-        return total + (monthlyAmount * monthsCompleted);
+        // Compter les versements
+        while (tempDate <= lastPaymentDate) {
+          paymentsCount++;
+          
+          if (pension.frequency === 'monthly') {
+            tempDate.setMonth(tempDate.getMonth() + 1);
+          } else if (pension.frequency === 'quarterly') {
+            tempDate.setMonth(tempDate.getMonth() + 3);
+          } else if (pension.frequency === 'annually') {
+            tempDate.setFullYear(tempDate.getFullYear() + 1);
+          }
+        }
+        
+        return total + (pension.monthlyAmount * paymentsCount);
       }, 0);
-    }
+    };
     
-    // Calculer pour Personne 2
-    if (privatePensions2.length > 0) {
-      const currentMonth = currentDate.getMonth() + 1;
-      const currentYear = currentDate.getFullYear();
-      
-      totals.rentesPrivees += privatePensions2.reduce((total, pension) => {
-        if (!pension.isActive) return total;
-        
-        const startDate = new Date(pension.startDate);
-        const startMonth = startDate.getMonth() + 1;
-        const startYear = startDate.getFullYear();
-        
-        const monthsElapsed = (currentYear - startYear) * 12 + (currentMonth - startMonth);
-        const monthsCompleted = Math.max(0, monthsElapsed);
-        
-        let monthlyAmount = pension.monthlyAmount;
-        if (pension.frequency === 'quarterly') {
-          monthlyAmount = pension.monthlyAmount / 3;
-        } else if (pension.frequency === 'annually') {
-          monthlyAmount = pension.monthlyAmount / 12;
-        }
-        
-        return total + (monthlyAmount * monthsCompleted);
-      }, 0);
-    }
+    // Calculer pour les deux personnes
+    const privatePensions1Total = calculatePrivatePensionsTotal(privatePensions1);
+    const privatePensions2Total = calculatePrivatePensionsTotal(privatePensions2);
+    
+    totals.rentesPrivees = privatePensions1Total + privatePensions2Total;
 
     console.log('🔍 GlobalSummary - Total rentes privées:', totals.rentesPrivees);
     totals.totalPrestations = totals.rrq + totals.securiteVieillesse + totals.rentesPrivees + totals.assuranceEmploi;

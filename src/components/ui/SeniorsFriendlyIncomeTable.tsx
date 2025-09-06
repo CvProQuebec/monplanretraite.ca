@@ -77,6 +77,13 @@ export interface IncomeEntry {
   survivorBenefit?: 'none' | '50%' | '75%' | '100%'; // Pourcentage versé au survivant
   isEstatePlanning?: boolean; // Inclure dans la planification successorale
   
+  // Spécifique aux revenus de location
+  rentalAmount?: number; // Montant par période
+  rentalFrequency?: 'weekend' | 'weekly' | 'monthly'; // Fréquence de location
+  rentalStartDate?: string; // Date de début de la saison (optionnel)
+  rentalEndDate?: string; // Date de fin de la saison (optionnel)
+  rentalType?: 'chalet' | 'airbnb' | 'appartement' | 'autre'; // Type de propriété
+  
   // Calculs "à ce jour"
   toDateAmount?: number;
   projectedAnnual?: number;
@@ -149,6 +156,13 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
     { value: 'quarterly', label: isFrench ? 'Trimestriel' : 'Quarterly' },
     { value: 'semi-annual', label: isFrench ? 'Semi-annuel' : 'Semi-annual' },
     { value: 'annual', label: isFrench ? 'Annuel' : 'Annual' }
+  ];
+  
+  // Options de fréquence pour les revenus de location
+  const rentalFrequencies = [
+    { value: 'weekend', label: isFrench ? 'Week-end (3 jours - ven, sam, dim)' : 'Weekend (3 days - Fri, Sat, Sun)' },
+    { value: 'weekly', label: isFrench ? 'Semaine (7 jours)' : 'Weekly (7 days)' },
+    { value: 'monthly', label: isFrench ? 'Mensuel' : 'Monthly' }
   ];
   
   // Options de type de rente
@@ -280,6 +294,14 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
             }
             if (!updatedEntry.pensionAmount) {
               updatedEntry.pensionAmount = 0;
+            }
+          } else if (updates.type === 'revenus-location') {
+            // Pour les revenus de location, s'assurer que rentalFrequency est définie
+            if (!updatedEntry.rentalFrequency) {
+              updatedEntry.rentalFrequency = 'monthly';
+            }
+            if (!updatedEntry.rentalAmount) {
+              updatedEntry.rentalAmount = 0;
             }
           }
         }
@@ -447,6 +469,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                             (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') ? (entry.salaryNetAmount || 0) :
                             entry.type === 'assurance-emploi' ? (entry.weeklyNet || 0) :
                             entry.type === 'rentes' ? (entry.pensionAmount || 0) :
+                            entry.type === 'revenus-location' ? (entry.rentalAmount || 0) :
                             entry.annualAmount || 0
                           }
                           onChange={(value) => {
@@ -456,6 +479,8 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                               updateIncomeEntry(entry.id, { weeklyNet: value });
                             } else if (entry.type === 'rentes') {
                               updateIncomeEntry(entry.id, { pensionAmount: value });
+                            } else if (entry.type === 'revenus-location') {
+                              updateIncomeEntry(entry.id, { rentalAmount: value });
                             } else {
                               updateIncomeEntry(entry.id, { annualAmount: value });
                             }
@@ -473,6 +498,8 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                               formatCurrency(entry.weeklyNet) :
                               entry.type === 'rentes' && entry.pensionAmount ?
                               formatCurrency(entry.pensionAmount) :
+                              entry.type === 'revenus-location' && entry.rentalAmount ?
+                              formatCurrency(entry.rentalAmount) :
                               entry.annualAmount ? formatCurrency(entry.annualAmount) : '-'
                             }
                           </div>
@@ -495,7 +522,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                               <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
                                 <SelectValue />
                               </SelectTrigger>
-                              <SelectContent className="bg-white border-4 border-gray-300 z-50" position="popper" sideOffset={5}>
+                              <SelectContent className="bg-white border-4 border-gray-300" style={{zIndex: 9999}} position="item-aligned" side="bottom" align="start" avoidCollisions={false} sticky="always">
                                 {salaryFrequencies.map(freq => (
                                   <SelectItem key={freq.value} value={freq.value} className="text-xl py-4">
                                     {freq.label}
@@ -512,7 +539,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                               <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
                                 <SelectValue />
                               </SelectTrigger>
-                              <SelectContent className="bg-white border-4 border-gray-300 z-50" position="popper" sideOffset={5}>
+                              <SelectContent className="bg-white border-4 border-gray-300" style={{zIndex: 9999}} position="item-aligned" side="bottom" align="start" avoidCollisions={false} sticky="always">
                                 {pensionFrequencies.map(freq => (
                                   <SelectItem key={freq.value} value={freq.value} className="text-xl py-4">
                                     {freq.label}
@@ -527,8 +554,38 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                             </div>
                           )}
                           {entry.type === 'revenus-location' && (
-                            <div className="p-4 bg-gray-100 border-4 border-gray-200 rounded-lg">
-                              <span className="text-lg text-gray-600">{isFrench ? 'Mensuel' : 'Monthly'}</span>
+                            <div className="relative w-full">
+                              <select
+                                value={entry.rentalFrequency || 'monthly'}
+                                onChange={(e) => updateIncomeEntry(entry.id, { rentalFrequency: e.target.value as any })}
+                                className="w-full p-4 text-xl border-4 border-gray-300 rounded-lg focus:border-blue-500 bg-white appearance-none cursor-pointer relative z-10"
+                                style={{
+                                  position: 'relative',
+                                  zIndex: 10,
+                                  top: 'auto',
+                                  left: 'auto',
+                                  right: 'auto',
+                                  bottom: 'auto',
+                                  transform: 'none',
+                                  marginTop: 0,
+                                  marginBottom: 0
+                                }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  e.preventDefault();
+                                }}
+                              >
+                                {rentalFrequencies.map(freq => (
+                                  <option key={freq.value} value={freq.value} className="text-xl py-2 bg-white">
+                                    {freq.label}
+                                  </option>
+                                ))}
+                              </select>
+                              <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                                <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                </svg>
+                              </div>
                             </div>
                           )}
                         </div>
@@ -542,7 +599,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                             ) : entry.type === 'rentes' ? (
                               pensionFrequencies.find(f => f.value === entry.pensionFrequency)?.label || '-'
                             ) : entry.type === 'revenus-location' ? (
-                              isFrench ? 'Mensuel' : 'Monthly'
+                              rentalFrequencies.find(f => f.value === entry.rentalFrequency)?.label || (isFrench ? 'Mensuel' : 'Monthly')
                             ) : (
                               isFrench ? 'Annuel' : 'Annual'
                             )}
@@ -566,6 +623,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                               entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryStartDate || '') :
                               entry.type === 'assurance-emploi' ? (entry.eiStartDate || '') :
                               entry.type === 'rentes' ? (entry.pensionStartDate || '') :
+                              entry.type === 'revenus-location' ? (entry.rentalStartDate || '') :
                               ''
                             }
                             onChange={(value) => {
@@ -575,6 +633,8 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                                 updateIncomeEntry(entry.id, { eiStartDate: value });
                               } else if (entry.type === 'rentes') {
                                 updateIncomeEntry(entry.id, { pensionStartDate: value });
+                              } else if (entry.type === 'revenus-location') {
+                                updateIncomeEntry(entry.id, { rentalStartDate: value });
                               }
                             }}
                             placeholder="AAAA-MM-JJ"
@@ -585,6 +645,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                             {entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryStartDate || '-') :
                              entry.type === 'assurance-emploi' ? (entry.eiStartDate || '-') :
                              entry.type === 'rentes' ? (entry.pensionStartDate || '-') :
+                             entry.type === 'revenus-location' ? (entry.rentalStartDate || '-') :
                              '-'
                             }
                           </div>
@@ -600,14 +661,27 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                         </Label>
                         {isEditing ? (
                           <DateInput
-                            value={entry.salaryEndDate || ''}
-                            onChange={(value) => updateIncomeEntry(entry.id, { salaryEndDate: value })}
+                            value={
+                              entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryEndDate || '') :
+                              entry.type === 'revenus-location' ? (entry.rentalEndDate || '') :
+                              ''
+                            }
+                            onChange={(value) => {
+                              if (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') {
+                                updateIncomeEntry(entry.id, { salaryEndDate: value });
+                              } else if (entry.type === 'revenus-location') {
+                                updateIncomeEntry(entry.id, { rentalEndDate: value });
+                              }
+                            }}
                             placeholder="AAAA-MM-JJ"
                             className="h-12 text-lg flex-1"
                           />
                         ) : (
                           <div className="text-lg text-red-900 font-semibold">
-                            {entry.salaryEndDate || '-'}
+                            {entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryEndDate || '-') :
+                             entry.type === 'revenus-location' ? (entry.rentalEndDate || '-') :
+                             '-'
+                            }
                           </div>
                         )}
                       </div>

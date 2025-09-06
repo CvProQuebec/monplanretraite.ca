@@ -381,6 +381,7 @@ export interface PrivatePension {
   startDate: string;
   endDate?: string;
   frequency: 'monthly' | 'quarterly' | 'annually';
+  paymentDay: number; // Jour du mois de versement (1, 10, 15, 30)
   description?: string;
   isActive: boolean;
 }

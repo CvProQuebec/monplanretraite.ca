@@ -41,6 +41,7 @@ const PrivatePensionManager: React.FC<PrivatePensionManagerProps> = React.memo((
     monthlyAmount: 0,
     startDate: new Date().toISOString().split('T')[0],
     frequency: 'monthly',
+    paymentDay: 1,
     description: '',
     isActive: true
   });
@@ -52,32 +53,58 @@ const PrivatePensionManager: React.FC<PrivatePensionManagerProps> = React.memo((
     setPensions(existingPensions);
   }, [userData, personNumber]);
 
-  // Calculer le total des rentes privées
+  // Calculer le total des rentes privées (1er janvier à la dernière date de versement)
   const calculateTotal = () => {
     const currentDate = new Date();
-    const currentMonth = currentDate.getMonth() + 1;
     const currentYear = currentDate.getFullYear();
+    const yearStart = new Date(currentYear, 0, 1); // 1er janvier de l'année courante
     
     return pensions.reduce((total, pension) => {
       if (!pension.isActive) return total;
       
       const startDate = new Date(pension.startDate);
-      const startMonth = startDate.getMonth() + 1;
-      const startYear = startDate.getFullYear();
+      const paymentDay = pension.paymentDay || 1; // Jour de versement (défaut: 1er du mois)
       
-      // Calculer le nombre de mois depuis le début
-      const monthsElapsed = (currentYear - startYear) * 12 + (currentMonth - startMonth);
-      const monthsCompleted = Math.max(0, monthsElapsed);
+      // Ne pas inclure les pensions qui commencent après aujourd'hui
+      if (startDate > currentDate) return total;
       
-      // Calculer le montant selon la fréquence
-      let monthlyAmount = pension.monthlyAmount;
-      if (pension.frequency === 'quarterly') {
-        monthlyAmount = pension.monthlyAmount / 3;
-      } else if (pension.frequency === 'annually') {
-        monthlyAmount = pension.monthlyAmount / 12;
+      // Date de début du calcul: max entre 1er janvier et date de début de la pension
+      const calculationStart = startDate > yearStart ? startDate : yearStart;
+      
+      // Dernière date de versement potentielle ce mois-ci
+      const currentMonth = currentDate.getMonth();
+      const lastPaymentThisMonth = new Date(currentYear, currentMonth, paymentDay);
+      
+      // Si le jour de versement de ce mois n'est pas encore passé, prendre le mois précédent
+      const lastPaymentDate = currentDate >= lastPaymentThisMonth ? 
+        lastPaymentThisMonth : 
+        new Date(currentYear, currentMonth - 1, paymentDay);
+      
+      // Calculer le nombre de versements du calcul start à la dernière date de versement
+      let paymentsCount = 0;
+      const tempDate = new Date(calculationStart);
+      
+      // Ajuster au premier jour de versement
+      if (tempDate.getDate() <= paymentDay) {
+        tempDate.setDate(paymentDay);
+      } else {
+        tempDate.setMonth(tempDate.getMonth() + 1, paymentDay);
       }
       
-      return total + (monthlyAmount * monthsCompleted);
+      // Compter les versements
+      while (tempDate <= lastPaymentDate) {
+        paymentsCount++;
+        
+        if (pension.frequency === 'monthly') {
+          tempDate.setMonth(tempDate.getMonth() + 1);
+        } else if (pension.frequency === 'quarterly') {
+          tempDate.setMonth(tempDate.getMonth() + 3);
+        } else if (pension.frequency === 'annually') {
+          tempDate.setFullYear(tempDate.getFullYear() + 1);
+        }
+      }
+      
+      return total + (pension.monthlyAmount * paymentsCount);
     }, 0);
   };
 
@@ -92,6 +119,7 @@ const PrivatePensionManager: React.FC<PrivatePensionManagerProps> = React.memo((
       monthlyAmount: 0,
       startDate: new Date().toISOString().split('T')[0],
       frequency: 'monthly',
+      paymentDay: 1,
       description: '',
       isActive: true
     });
@@ -202,8 +230,7 @@ const PrivatePensionManager: React.FC<PrivatePensionManagerProps> = React.memo((
                       </span>
                     </div>
                     <p className="text-sm text-gray-600">
-                      {formatCurrency(pension.monthlyAmount)} / {isFrench ? 'mois' : 'month'} 
-                      ({isFrench ? 'Fréquence' : 'Frequency'}: {pension.frequency})
+                      {formatCurrency(pension.monthlyAmount, { showCents: true })} / {isFrench ? 'mois' : 'month'}
                     </p>
                     {pension.description && (
                       <p className="text-xs text-gray-500 mt-1">{pension.description}</p>
@@ -311,6 +338,24 @@ const PrivatePensionManager: React.FC<PrivatePensionManagerProps> = React.memo((
                     <option value="annually">
                       {isFrench ? 'Annuel' : 'Annually'}
                     </option>
+                  </select>
+                </div>
+                
+                <div>
+                  <Label htmlFor="paymentDay">
+                    {isFrench ? 'Jour de versement' : 'Payment Day'}
+                  </Label>
+                  <select
+                    id="paymentDay"
+                    value={formData.paymentDay || 1}
+                    onChange={(e) => setFormData(prev => ({ ...prev, paymentDay: parseInt(e.target.value) }))}
+                    title={isFrench ? 'Jour du mois de versement' : 'Day of month for payment'}
+                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+                  >
+                    <option value={1}>1er</option>
+                    <option value={10}>10</option>
+                    <option value={15}>15</option>
+                    <option value={30}>30</option>
                   </select>
                 </div>
               </div>
