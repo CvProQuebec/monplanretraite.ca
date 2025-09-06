@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { Flag, Calendar, DollarSign, Info } from 'lucide-react';
+import { Flag } from 'lucide-react';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
 
 interface RRQPeriodsInputProps {
@@ -20,7 +19,14 @@ const RRQPeriodsInput: React.FC<RRQPeriodsInputProps> = ({
   onDataChange,
   isFrench
 }) => {
-  const [rrqData, setRrqData] = useState({
+  type Periode = { du: string; au: string; montantMensuel: string };
+  type RRQData = {
+    revenus2024: string;
+    periode1: Periode;
+    periode2: Periode;
+    raisonAjustement: string;
+  };
+  const [rrqData, setRrqData] = useState<RRQData>({
     revenus2024: '',
     periode1: {
       du: '2025-01-01',
@@ -101,27 +107,27 @@ const RRQPeriodsInput: React.FC<RRQPeriodsInputProps> = ({
   };
 
   const handleDataChange = (field: string, value: any) => {
-    const newData = { ...rrqData };
-    
+    const newData: RRQData = { ...rrqData };
+  
     if (field.includes('.')) {
-      const [parent, child] = field.split('.');
-      newData[parent as keyof typeof newData] = {
-        ...newData[parent as keyof typeof newData],
+      const [parent, child] = field.split('.') as ['periode1' | 'periode2', keyof Periode];
+      newData[parent] = {
+        ...newData[parent],
         [child]: value
-      };
+      } as Periode;
     } else {
-      (newData as any)[field] = value;
+      (newData as any)[field as keyof RRQData] = value;
     }
-    
+  
     setRrqData(newData);
-    
+  
     // Sauvegarder dans userData avec la structure correcte
     const fieldName = personNumber === 1 ? 'rrqBiannual1' : 'rrqBiannual2';
-    
+  
     // Calculer le montant mensuel actuel pour la compatibilité
     const montantMensuelActuel = parseFloat(newData.periode1.montantMensuel) || 0;
     const montantActuelField = personNumber === 1 ? 'rrqMontantActuel1' : 'rrqMontantActuel2';
-    
+  
     onDataChange({
       [fieldName]: newData,
       [montantActuelField]: montantMensuelActuel
@@ -147,7 +153,7 @@ const RRQPeriodsInput: React.FC<RRQPeriodsInputProps> = ({
         </p>
       </CardHeader>
       
-      <CardContent className="p-6 space-y-6">
+      <CardContent className="p-6 space-y-6 rrq-periods">
         {/* Année de référence */}
         <div className="text-center mb-6">
           <h3 className="text-lg font-semibold text-gray-800">
@@ -157,29 +163,18 @@ const RRQPeriodsInput: React.FC<RRQPeriodsInputProps> = ({
 
         {/* Revenus de 2024 */}
         <div className="space-y-3">
-          <Label className="text-lg font-semibold text-gray-700">
-            {isFrench ? 'Revenus de 2024 (optionnel)' : '2024 Income (optional)'}
-          </Label>
-          <div className="flex gap-4 items-end">
-            <div className="flex-1">
-              <Input
-                type="text"
-                value={rrqData.revenus2024}
-                onChange={(e) => handleDataChange('revenus2024', e.target.value)}
-                placeholder="123 456,78"
-                className="text-lg p-3 border-2 border-gray-300 rounded-lg"
-              />
-              <p className="text-sm text-gray-500 mt-1">
-                {isFrench ? 'Format: 123 456,78' : 'Format: 123,456.78'}
-              </p>
-            </div>
+          <div className="flex items-center gap-3">
+            <Label className="text-lg font-semibold text-gray-700 min-w-[240px]">
+              {isFrench ? 'Revenus de 2024 (optionnel)' : '2024 Income (optional)'}
+            </Label>
+            <Input
+              type="text"
+              value={rrqData.revenus2024}
+              onChange={(e) => handleDataChange('revenus2024', e.target.value)}
+              placeholder="123 456,78"
+              className="text-lg p-2 border-2 border-gray-300 rounded-lg max-w-[220px]"
+            />
           </div>
-          <p className="text-sm text-gray-600">
-            {isFrench 
-              ? 'Utilisé pour calculer automatiquement la récupération fiscale à partir de juillet'
-              : 'Used to automatically calculate tax recovery from July'
-            }
-          </p>
           {montantSuggere > 0 && (
             <div className="bg-orange-100 border border-orange-300 rounded-lg p-3">
               <p className="text-orange-800 font-semibold">
@@ -193,135 +188,113 @@ const RRQPeriodsInput: React.FC<RRQPeriodsInputProps> = ({
         </div>
 
         {/* Période 1: janvier à juin */}
-        <div className="space-y-4 p-4 bg-gray-50 rounded-lg">
-          <div className="flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-blue-600" />
-            <Label className="text-lg font-semibold text-gray-700">
+        <div className="space-y-3 p-4 bg-gray-50 rounded-lg">
+          <div className="flex items-center gap-3 w-full">
+            <Label className="text-base md:text-lg font-semibold text-gray-700 whitespace-nowrap max-w-[200px] truncate shrink-0">
               {isFrench ? 'Période 1: janvier à juin' : 'Period 1: January to June'}
             </Label>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <Label className="text-sm font-medium text-gray-600">
-                {isFrench ? 'Du' : 'From'}
-              </Label>
-              <Input
-                type="date"
-                value={rrqData.periode1.du}
-                onChange={(e) => handleDataChange('periode1.du', e.target.value)}
-                className="p-2 border-2 border-gray-300 rounded-lg"
-              />
+
+            <div className="flex items-center w-full gap-3 flex-nowrap">
+              <div className="flex items-center gap-2">
+                <Label className="text-xs font-medium text-gray-600 w-10 text-right">
+                  {isFrench ? 'Du' : 'From'}
+                </Label>
+                <Input
+                  type="date"
+                  value={rrqData.periode1.du}
+                  onChange={(e) => handleDataChange('periode1.du', e.target.value)}
+                  className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Label className="text-xs font-medium text-gray-600 w-10 text-right">
+                  {isFrench ? 'Au' : 'To'}
+                </Label>
+                <Input
+                  type="date"
+                  value={rrqData.periode1.au}
+                  onChange={(e) => handleDataChange('periode1.au', e.target.value)}
+                  className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Label className="text-xs md:text-sm font-medium text-gray-600 whitespace-nowrap">
+                  {isFrench ? 'Montant mensuel' : 'Monthly Amount'}
+                </Label>
+                <Input
+                  type="text"
+                  value={rrqData.periode1.montantMensuel}
+                  onChange={(e) => handleDataChange('periode1.montantMensuel', e.target.value)}
+                  placeholder="713,34"
+                  className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-32 text-right"
+                />
+              </div>
+
+              <div className="ml-auto">
+                <p className="text-base md:text-lg font-semibold text-green-600 whitespace-nowrap">
+                  {isFrench ? `Total période 1 : ${formatCurrency(totalPeriode1)}` : `Total period 1: ${formatCurrency(totalPeriode1)}`}
+                </p>
+              </div>
             </div>
-            <div>
-              <Label className="text-sm font-medium text-gray-600">
-                {isFrench ? 'Au' : 'To'}
-              </Label>
-              <Input
-                type="date"
-                value={rrqData.periode1.au}
-                onChange={(e) => handleDataChange('periode1.au', e.target.value)}
-                className="p-2 border-2 border-gray-300 rounded-lg"
-              />
-            </div>
-            <div>
-              <Label className="text-sm font-medium text-gray-600">
-                {isFrench ? 'Montant mensuel' : 'Monthly Amount'}
-              </Label>
-              <Input
-                type="text"
-                value={rrqData.periode1.montantMensuel}
-                onChange={(e) => handleDataChange('periode1.montantMensuel', e.target.value)}
-                placeholder="713,34"
-                className="p-2 border-2 border-gray-300 rounded-lg"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                {isFrench ? 'Format: 123 456,78' : 'Format: 123,456.78'}
-              </p>
-            </div>
-          </div>
-          
-          <div className="text-right">
-            <p className="text-lg font-semibold text-green-600">
-              {isFrench ? `Total période 1 : ${formatCurrency(totalPeriode1)}` : `Total period 1: ${formatCurrency(totalPeriode1)}`}
-            </p>
           </div>
         </div>
 
         {/* Période 2: juillet à décembre */}
-        <div className="space-y-4 p-4 bg-orange-50 rounded-lg border border-orange-200">
-          <div className="flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-orange-600" />
-            <Label className="text-lg font-semibold text-gray-700">
+        <div className="space-y-3 p-4 bg-orange-50 rounded-lg border border-orange-200">
+          <div className="flex items-center gap-3 w-full">
+            <Label className="text-base md:text-lg font-semibold text-gray-700 whitespace-nowrap max-w-[200px] truncate shrink-0">
               {isFrench ? 'Période 2: juillet à décembre' : 'Period 2: July to December'}
             </Label>
-            <span className="bg-orange-500 text-white px-3 py-1 rounded-full text-sm font-medium">
-              {isFrench ? 'Récupération fiscale' : 'Tax Recovery'}
-            </span>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <Label className="text-sm font-medium text-gray-600">
-                {isFrench ? 'Du' : 'From'}
-              </Label>
-              <Input
-                type="date"
-                value={rrqData.periode2.du}
-                onChange={(e) => handleDataChange('periode2.du', e.target.value)}
-                className="p-2 border-2 border-gray-300 rounded-lg"
-              />
+
+            <div className="flex items-center w-full gap-3 flex-nowrap">
+              <div className="flex items-center gap-2">
+                <Label className="text-xs font-medium text-gray-600 w-10 text-right">
+                  {isFrench ? 'Du' : 'From'}
+                </Label>
+                <Input
+                  type="date"
+                  value={rrqData.periode2.du}
+                  onChange={(e) => handleDataChange('periode2.du', e.target.value)}
+                  className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Label className="text-xs font-medium text-gray-600 w-10 text-right">
+                  {isFrench ? 'Au' : 'To'}
+                </Label>
+                <Input
+                  type="date"
+                  value={rrqData.periode2.au}
+                  onChange={(e) => handleDataChange('periode2.au', e.target.value)}
+                  className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                />
+              </div>
+
+              <div className="flex items-center gap-2">
+                <Label className="text-xs md:text-sm font-medium text-gray-600 whitespace-nowrap">
+                  {isFrench ? 'Montant mensuel' : 'Monthly Amount'}
+                </Label>
+                <Input
+                  type="text"
+                  value={rrqData.periode2.montantMensuel}
+                  onChange={(e) => handleDataChange('periode2.montantMensuel', e.target.value)}
+                  placeholder="713,34"
+                  className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-32 text-right"
+                />
+              </div>
+
+              <div className="ml-auto">
+                <p className="text-base md:text-lg font-semibold text-green-600 whitespace-nowrap">
+                  {isFrench ? `Total période 2 : ${formatCurrency(totalPeriode2)}` : `Total period 2: ${formatCurrency(totalPeriode2)}`}
+                </p>
+              </div>
             </div>
-            <div>
-              <Label className="text-sm font-medium text-gray-600">
-                {isFrench ? 'Au' : 'To'}
-              </Label>
-              <Input
-                type="date"
-                value={rrqData.periode2.au}
-                onChange={(e) => handleDataChange('periode2.au', e.target.value)}
-                className="p-2 border-2 border-gray-300 rounded-lg"
-              />
-            </div>
-            <div>
-              <Label className="text-sm font-medium text-gray-600">
-                {isFrench ? 'Montant mensuel' : 'Monthly Amount'}
-              </Label>
-              <Input
-                type="text"
-                value={rrqData.periode2.montantMensuel}
-                onChange={(e) => handleDataChange('periode2.montantMensuel', e.target.value)}
-                placeholder="713,34"
-                className="p-2 border-2 border-gray-300 rounded-lg"
-              />
-              <p className="text-xs text-gray-500 mt-1">
-                {isFrench ? 'Format: 123 456,78' : 'Format: 123,456.78'}
-              </p>
-            </div>
-          </div>
-          
-          <div className="text-right">
-            <p className="text-lg font-semibold text-green-600">
-              {isFrench ? `Total période 2 : ${formatCurrency(totalPeriode2)}` : `Total period 2: ${formatCurrency(totalPeriode2)}`}
-            </p>
           </div>
         </div>
 
-        {/* Raison de l'ajustement */}
-        <div className="space-y-3">
-          <Label className="text-lg font-semibold text-gray-700">
-            {isFrench ? 'Raison de l\'ajustement (optionnel)' : 'Reason for adjustment (optional)'}
-          </Label>
-          <Textarea
-            value={rrqData.raisonAjustement}
-            onChange={(e) => handleDataChange('raisonAjustement', e.target.value)}
-            placeholder={isFrench 
-              ? 'Ex: Récupération fiscale basée sur les revenus de 2023...'
-              : 'Ex: Tax recovery based on 2023 income...'
-            }
-            className="p-3 border-2 border-gray-300 rounded-lg min-h-[80px]"
-          />
-        </div>
 
         {/* Bouton de sauvegarde */}
         <div className="flex justify-end pt-4 border-t border-gray-200">

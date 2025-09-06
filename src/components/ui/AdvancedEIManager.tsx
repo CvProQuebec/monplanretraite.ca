@@ -177,194 +177,120 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
         </CardDescription>
       </CardHeader>
       
-      <CardContent className="p-6 space-y-6">
-        {/* Section Emploi Précédent */}
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-gray-800 flex items-center gap-2">
-            <Users className="w-5 h-5" />
-            {isFrench ? 'Emploi précédent' : 'Previous Employment'}
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-2">
-              <Label className="text-gray-200 font-semibold">
-                {isFrench ? 'Date de début' : 'Start Date'}
-              </Label>
-              <DateInput
-                value={eiData.employmentStartDate}
-                onChange={(value) => handleInputChange('employmentStartDate', value)}
-                className="bg-slate-700 border-slate-600 text-white"
-                placeholder="2024-01-01"
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-gray-200 font-semibold">
-                {isFrench ? 'Date de fin' : 'End Date'}
-              </Label>
-              <DateInput
-                value={eiData.employmentEndDate}
-                onChange={(value) => handleInputChange('employmentEndDate', value)}
-                className="bg-slate-700 border-slate-600 text-white"
-                placeholder="2024-03-30"
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-gray-200 font-semibold">
-                {isFrench ? 'Revenu brut total' : 'Total Gross Income'}
-              </Label>
-              <MoneyInput
-                value={eiData.employmentGrossIncome}
-                onChange={(value) => handleInputChange('employmentGrossIncome', value)}
-                className="bg-slate-700 border-slate-600 text-white"
-                placeholder="45 000"
-                allowDecimals={true}
-              />
-            </div>
-          </div>
-        </div>
+      <CardContent className="p-4 space-y-4 ei-compact">
         
         {/* Section Assurance emploi */}
-        <div className="space-y-4">
+        <div className="space-y-2 p-3 bg-slate-800/10 rounded-lg">
           <h3 className="text-lg font-semibold text-purple-300 flex items-center gap-2">
             <DollarSign className="w-5 h-5" />
             {isFrench ? 'Assurance emploi' : 'Employment Insurance'}
           </h3>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label className="text-gray-200 font-semibold">
+          <div className="space-y-2">
+            {/* Ligne 1: Date de début AE + Montant hebdomadaire brut */}
+            <div className="flex flex-wrap items-center gap-4">
+              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap">
                 {isFrench ? 'Date de début AE' : 'EI Start Date'}
               </Label>
               <DateInput
                 value={eiData.eiStartDate}
                 onChange={(value) => handleInputChange('eiStartDate', value)}
-                className="bg-slate-700 border-slate-600 text-white"
+                className="bg-slate-700 border-slate-600 text-white p-2 w-40"
                 placeholder="2024-04-06"
               />
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-gray-200 font-semibold">
+              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap ml-2">
                 {isFrench ? 'Montant hebdomadaire brut' : 'Weekly Gross Amount'}
               </Label>
               <MoneyInput
                 value={eiData.eiWeeklyGross}
                 onChange={(value) => handleInputChange('eiWeeklyGross', value)}
-                className="bg-slate-700 border-slate-600 text-white"
+                className="bg-slate-700 border-slate-600 text-white p-2 w-40"
                 placeholder="693"
                 allowDecimals={true}
               />
             </div>
-            
-            <div className="space-y-2">
-              <Label className="text-gray-200 font-semibold">
-                {isFrench ? 'Impôt fédéral (hebdo)' : 'Federal Tax (weekly)'}
-              </Label>
-              <MoneyInput
-                value={eiData.eiFederalTax}
-                onChange={(value) => handleInputChange('eiFederalTax', value)}
-                className="bg-slate-700 border-slate-600 text-white"
-                placeholder="21"
-                allowDecimals={true}
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-gray-200 font-semibold">
-                {isFrench ? 'Impôt provincial (hebdo)' : 'Provincial Tax (weekly)'}
-              </Label>
-              <MoneyInput
-                value={eiData.eiProvincialTax}
-                onChange={(value) => handleInputChange('eiProvincialTax', value)}
-                className="bg-slate-700 border-slate-600 text-white"
-                placeholder="37"
-                allowDecimals={true}
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-gray-200 font-semibold">
+
+            {/* Ligne 2: Semaines max + utilisées + Impôt fédéral + provincial */}
+            <div className="flex flex-wrap items-center gap-4">
+              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap">
                 {isFrench ? 'Semaines maximum' : 'Maximum Weeks'}
               </Label>
               <Input
                 type="number"
                 value={eiData.eiMaxWeeks}
                 onChange={(e) => handleInputChange('eiMaxWeeks', Number(e.target.value))}
-                className="bg-slate-700 border-slate-600 text-white"
+                className="bg-slate-700 border-slate-600 text-white p-2 w-28"
                 placeholder="35"
                 min="1"
                 max="50"
               />
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-gray-200 font-semibold">
+              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap ml-2">
                 {isFrench ? 'Semaines utilisées' : 'Weeks Used'}
               </Label>
               <Input
                 type="number"
                 value={eiData.eiWeeksUsed}
                 onChange={(e) => handleInputChange('eiWeeksUsed', Number(e.target.value))}
-                className="bg-slate-700 border-slate-600 text-white"
+                className="bg-slate-700 border-slate-600 text-white p-2 w-28"
                 placeholder="20"
                 min="0"
                 max={eiData.eiMaxWeeks}
               />
+              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap ml-2">
+                {isFrench ? 'Impôt fédéral (hebdo)' : 'Federal Tax (weekly)'}
+              </Label>
+              <MoneyInput
+                value={eiData.eiFederalTax}
+                onChange={(value) => handleInputChange('eiFederalTax', value)}
+                className="bg-slate-700 border-slate-600 text-white p-2 w-24"
+                placeholder="21"
+                allowDecimals={true}
+              />
+              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap ml-2">
+                {isFrench ? 'Impôt provincial (hebdo)' : 'Provincial Tax (weekly)'}
+              </Label>
+              <MoneyInput
+                value={eiData.eiProvincialTax}
+                onChange={(value) => handleInputChange('eiProvincialTax', value)}
+                className="bg-slate-700 border-slate-600 text-white p-2 w-24"
+                placeholder="37"
+                allowDecimals={true}
+              />
             </div>
-          </div>
-        </div>
-        
-        {/* Section Revenus Supplémentaires */}
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-green-300 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5" />
-            {isFrench ? 'Revenus supplémentaires' : 'Additional Income'}
-          </h3>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <Label className="text-gray-200 font-semibold">
-                {isFrench ? 'Revenus hebdomadaires supplémentaires' : 'Additional Weekly Income'}
+
+            {/* Ligne 3: Description revenus supplémentaires */}
+            <div className="text-xs text-gray-400">
+              {isFrench ? 'Revenus supplémentaires, travail à temps partiel, freelance' : 'Additional income, part-time work, freelance'}
+            </div>
+
+            {/* Ligne 4: Revenu hebdo + Semaines de vacances prévues */}
+            <div className="flex flex-wrap items-center gap-4">
+              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap">
+                {isFrench ? 'Revenu hebdomadaire' : 'Weekly Income'}
               </Label>
               <MoneyInput
                 value={eiData.additionalWeeklyIncome}
                 onChange={(value) => handleInputChange('additionalWeeklyIncome', value)}
-                className="bg-slate-700 border-slate-600 text-white"
+                className="bg-slate-700 border-slate-600 text-white p-2 w-32"
                 placeholder="0"
                 allowDecimals={true}
               />
-              <p className="text-xs text-gray-400">
-                {isFrench 
-                  ? 'Travail à temps partiel, freelance, etc.'
-                  : 'Part-time work, freelance, etc.'
-                }
-              </p>
-            </div>
-            
-            <div className="space-y-2">
-              <Label className="text-gray-200 font-semibold">
+              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap ml-2">
                 {isFrench ? 'Semaines de vacances prévues' : 'Planned Vacation Weeks'}
               </Label>
               <Input
                 type="number"
                 value={eiData.plannedVacationWeeks}
                 onChange={(e) => handleInputChange('plannedVacationWeeks', Number(e.target.value))}
-                className="bg-slate-700 border-slate-600 text-white"
+                className="bg-slate-700 border-slate-600 text-white p-2 w-28"
                 placeholder="0"
                 min="0"
                 max="2"
               />
-              <p className="text-xs text-gray-400">
-                {isFrench 
-                  ? 'Maximum 2 semaines, prolonge la période'
-                  : 'Maximum 2 weeks, extends the period'
-                }
-              </p>
             </div>
           </div>
         </div>
+        
         
         {/* Bouton de calcul */}
         <div className="text-center">

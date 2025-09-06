@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Flag, Settings, BarChart3 } from 'lucide-react';
-import RRQPeriodsInput from './RRQPeriodsInput';
+import RRQSimpleForm from './RRQSimpleForm';
 import RRQSummary from './RRQSummary';
 
 interface RRQManagerProps {
   personNumber: 1 | 2;
+  personName: string;
   userData: any;
   onDataChange: (data: any) => void;
   isFrench: boolean;
@@ -14,6 +15,7 @@ interface RRQManagerProps {
 
 const RRQManager: React.FC<RRQManagerProps> = ({
   personNumber,
+  personName,
   userData,
   onDataChange,
   isFrench
@@ -67,8 +69,9 @@ const RRQManager: React.FC<RRQManagerProps> = ({
         {/* Contenu des onglets */}
         <div className="p-0">
           {activeTab === 'input' && (
-            <RRQPeriodsInput
+            <RRQSimpleForm
               personNumber={personNumber}
+              personName={personName}
               userData={userData}
               onDataChange={onDataChange}
               isFrench={isFrench}

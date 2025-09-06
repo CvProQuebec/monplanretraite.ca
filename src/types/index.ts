@@ -10,6 +10,8 @@ export interface UserData {
   retirement: RetirementData;
   savings: SavingsData;
   cashflow: CashflowData;
+  emergency?: EmergencyData;
+  session?: SessionData;
   advancedExpenses?: AdvancedExpensesData;
   employmentStatus?: any; // NOUVEAU
   ccqData?: any; // NOUVEAU - Données CCQ
@@ -454,4 +456,20 @@ export interface IncomeEntry {
   // Métadonnées
   isActive: boolean;
   notes?: string;
+}
+
+// NOUVEAU: Interface pour les données d'urgence
+export interface EmergencyData {
+  contactsUrgence?: string;
+  directivesMedicales?: string;
+  assuranceVie?: number;
+  testament?: string;
+}
+
+// NOUVEAU: Interface pour les données de session
+export interface SessionData {
+  sauvegardeLocale?: boolean;
+  sauvegardeCloud?: boolean;
+  exportDonnees?: boolean;
+  importDonnees?: boolean;
 }

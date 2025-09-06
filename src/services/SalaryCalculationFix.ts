@@ -118,6 +118,7 @@ export class SalaryCalculationFix {
 
       switch (entry.type) {
         case 'salaire':
+        case 'emploi-saisonnier':
           toDateAmount = this.calculateSalaryToDate(entry);
           totals.salaire += toDateAmount;
           console.log(`🔧 TOTALS CALC - Salary added: ${toDateAmount}, total: ${totals.salaire}`);

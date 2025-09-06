@@ -157,6 +157,10 @@ export interface RetirementData {
   // Propriétés existantes
   revenusTempsPartiel1?: number;
   revenusTempsPartiel2?: number;
+  
+  // Rentes privées détaillées
+  privatePensions1?: PrivatePension[];
+  privatePensions2?: PrivatePension[];
 }
 
 export interface SavingsData {
@@ -368,6 +372,17 @@ export interface SeasonalJob {
   isCompleted: boolean;
   jobType: 'summer' | 'winter' | 'spring' | 'fall' | 'custom';
   notes?: string;
+}
+
+export interface PrivatePension {
+  id: string;
+  name: string;
+  monthlyAmount: number;
+  startDate: string;
+  endDate?: string;
+  frequency: 'monthly' | 'quarterly' | 'annually';
+  description?: string;
+  isActive: boolean;
 }
 
 export interface IncomeEntry {

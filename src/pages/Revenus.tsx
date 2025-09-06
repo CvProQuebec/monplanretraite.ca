@@ -31,7 +31,6 @@ import {
 import { useNavigate } from 'react-router-dom';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
 import MoneyInput from '@/components/ui/MoneyInput';
-import AdvancedEIManager from '@/components/ui/AdvancedEIManager';
 import ReturnCalculator from '@/components/ui/ReturnCalculator';
 import RRQInfoCard from '@/components/ui/RRQInfoCard';
 import UnifiedIncomeTable from '@/components/ui/UnifiedIncomeTable';
@@ -279,50 +278,6 @@ const Revenus: React.FC = () => {
           </Alert>
         )}
 
-        {/* Section Assurance emploi avancée */}
-        {((userData.personal?.typeRevenu1 === 'assurance-emploi' && userData.personal?.naissance1) || 
-          (userData.personal?.typeRevenu2 === 'assurance-emploi' && userData.personal?.naissance2)) && (
-          <div className="mb-12">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl font-bold text-indigo-300 mb-4 flex items-center justify-center gap-3">
-                <Calculator className="w-8 h-8 text-indigo-400" />
-                {isFrench ? 'Analyse Avancée - Assurance emploi' : 'Advanced Analysis - Employment Insurance'}
-              </h2>
-              <p className="text-indigo-200 text-lg">
-                {isFrench 
-                  ? 'Calculateur intelligent pour optimiser votre transition vers la retraite'
-                  : 'Smart calculator to optimize your transition to retirement'
-                }
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 gap-8">
-              {userData.personal?.typeRevenu1 === 'assurance-emploi' && userData.personal?.naissance1 && (
-                <AdvancedEIManager
-                  personNumber={1}
-                  personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
-                  birthDate={userData.personal.naissance1}
-                  onDataChange={(data) => {
-                    updateUserData('personal', { advancedEI1: data });
-                  }}
-                  isFrench={isFrench}
-                />
-              )}
-              
-              {userData.personal?.typeRevenu2 === 'assurance-emploi' && userData.personal?.naissance2 && (
-                <AdvancedEIManager
-                  personNumber={2}
-                  personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
-                  birthDate={userData.personal.naissance2}
-                  onDataChange={(data) => {
-                    updateUserData('personal', { advancedEI2: data });
-                  }}
-                  isFrench={isFrench}
-                />
-              )}
-            </div>
-          </div>
-        )}
 
         {/* Section Information RRQ - Affichée quand pertinent */}
         {(() => {
@@ -332,8 +287,8 @@ const Revenus: React.FC = () => {
             userData.personal?.statutProfessionnel1 === 'retraite' ||
             userData.personal?.statutProfessionnel2 === 'retraite' ||
             // Si quelqu'un reçoit de l'assurance emploi (transition vers retraite)
-            userData.personal?.typeRevenu1 === 'assurance-emploi' ||
-            userData.personal?.typeRevenu2 === 'assurance-emploi' ||
+            (userData.personal as any)?.typeRevenu1 === 'assurance-emploi' ||
+            (userData.personal as any)?.typeRevenu2 === 'assurance-emploi' ||
             // Si quelqu'un a plus de 60 ans (approche de la retraite)
             (userData.personal?.naissance1 && new Date().getFullYear() - new Date(userData.personal.naissance1).getFullYear() >= 60) ||
             (userData.personal?.naissance2 && new Date().getFullYear() - new Date(userData.personal.naissance2).getFullYear() >= 60) ||
@@ -410,8 +365,8 @@ const Revenus: React.FC = () => {
             <div className="text-center">
               <p className="text-lg text-gray-600 mb-6">
                 {isFrench
-                  ? 'Gérez vos revenus de travail : salaire, assurance emploi, travail autonome, revenus de location'
-                  : 'Manage your work income: salary, employment insurance, self-employment, rental income'
+                  ? 'Gérez vos revenus de travail : salaire, emploi saisonnier, travail autonome, revenus de location'
+                  : 'Manage your work income: salary, seasonal employment, self-employment, rental income'
                 }
               </p>
           </div>
@@ -435,37 +390,17 @@ const Revenus: React.FC = () => {
               personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
               data={(userData.personal as any)?.unifiedIncome2 || []}
               onDataChange={(data) => {
+                console.log('🚨 PERSONNE 2 - onDataChange appelé avec:', data);
+                console.log('🚨 PERSONNE 2 - Avant updateUserData, userData.unifiedIncome2:', (userData.personal as any)?.unifiedIncome2);
                 updateUserData('personal', { unifiedIncome2: data } as any);
+                console.log('🚨 PERSONNE 2 - Après updateUserData');
               }}
               isFrench={isFrench}
                 userData={userData}
             />
         </div>
 
-            {/* Emploi saisonnier */}
-            <div className="space-y-6">
-              <h3 className="text-2xl font-bold text-amber-800 text-center">
-                {isFrench ? 'Emploi saisonnier (optionnel)' : 'Seasonal Work (optional)'}
-              </h3>
-              
-              <div className="grid grid-cols-1 gap-6">
-                <SeasonalWorkToggle
-              personNumber={1}
-              personName={userData.personal?.prenom1 || (isFrench ? 'Personne 1' : 'Person 1')}
-                  userData={userData}
-                  onDataChange={(data) => updateUserData('personal', data)}
-              isFrench={isFrench}
-            />
 
-                <SeasonalWorkToggle
-              personNumber={2}
-              personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
-                  userData={userData}
-                  onDataChange={(data) => updateUserData('personal', data)}
-              isFrench={isFrench}
-            />
-          </div>
-        </div>
           </div>
         </CollapsibleSection>
 
@@ -481,8 +416,8 @@ const Revenus: React.FC = () => {
                 <div className="text-center">
               <p className="text-lg text-gray-600 mb-6">
               {isFrench 
-                  ? 'Gérez vos prestations gouvernementales : RRQ/CPP, Sécurité de la vieillesse, rentes privées'
-                  : 'Manage your government benefits: QPP/CPP, Old Age Security, private pensions'
+                  ? 'Gérez vos prestations gouvernementales : RRQ/CPP, Sécurité de la vieillesse, Assurance emploi, rentes privées'
+                  : 'Manage your government benefits: QPP/CPP, Old Age Security, Employment Insurance, private pensions'
               }
             </p>
             <div className="bg-yellow-100 border border-yellow-400 rounded-lg p-4 mb-4">

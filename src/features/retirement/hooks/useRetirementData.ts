@@ -89,18 +89,6 @@ const defaultUserData: UserData = {
       transport: 0,
       sante: 0,
       loisirs: 0
-    },
-    emergency: {
-      contactsUrgence: '',
-      directivesMedicales: '',
-      assuranceVie: 0,
-      testament: ''
-    },
-    session: {
-      sauvegardeLocale: false,
-      sauvegardeCloud: false,
-      exportDonnees: false,
-      importDonnees: false
     }
   };
 
@@ -129,14 +117,6 @@ const validateUserData = (data: any): UserData => {
       cashflow: {
         ...defaultUserData.cashflow,
         ...data.cashflow
-      },
-      emergency: {
-        ...defaultUserData.emergency,
-        ...data.emergency
-      },
-      session: {
-        ...defaultUserData.session,
-        ...data.session
       }
     };
 
@@ -169,54 +149,68 @@ export const useRetirementData = () => {
         setIsLoading(true);
         setError(null);
         
-        // Vérifier s'il y a des données de session en cours
-        const sessionData = sessionStorage.getItem(SESSION_STORAGE_KEY);
-        if (sessionData) {
-          try {
-            const parsedData = JSON.parse(sessionData);
-            const validatedData = validateUserData(parsedData);
-            setUserData(validatedData);
-            console.log('📊 Données de session chargées');
-          } catch (error) {
-            console.warn('⚠️ Données de session corrompues, utilisation des données par défaut');
-            setUserData(defaultUserData);
-          }
+        // Préférer des données importées plus complètes que la session si disponibles
+        const sessionRaw = sessionStorage.getItem(SESSION_STORAGE_KEY);
+        const localRaw = localStorage.getItem('retirement_data');
+
+        const safeParse = (raw: any) => {
+          try { return raw ? JSON.parse(raw) : null; } catch { return null; }
+        };
+
+        const hasMeaningfulData = (d: any) => {
+          if (!d || typeof d !== 'object') return false;
+          const p = d.personal || {};
+          const r = d.retirement || {};
+          const hasIncome =
+            (Array.isArray(p.unifiedIncome1) && p.unifiedIncome1.length > 0) ||
+            (Array.isArray(p.unifiedIncome2) && p.unifiedIncome2.length > 0);
+          const hasInvest =
+            (p.soldeREER1 || 0) > 0 || (p.soldeCELI1 || 0) > 0 || (p.soldeCRI1 || 0) > 0 ||
+            (p.soldeREER2 || 0) > 0 || (p.soldeCELI2 || 0) > 0 || (p.soldeCRI2 || 0) > 0;
+          const hasBenefits =
+            (r.rrqMontantActuel1 || 0) > 0 || (r.rrqMontantActuel2 || 0) > 0 ||
+            !!r.svBiannual1 || !!r.svBiannual2;
+          return hasIncome || hasInvest || hasBenefits;
+        };
+
+        const sessionParsed = safeParse(sessionRaw);
+        const localParsed = safeParse(localRaw);
+
+        let chosen: any = null;
+
+        if (hasMeaningfulData(localParsed) && !hasMeaningfulData(sessionParsed)) {
+          chosen = localParsed;
+          console.log('📥 Préférence donnée aux données importées (plus complètes) depuis localStorage');
+          // Synchroniser la session courante avec l'import pour éviter l'écrasement visuel
+          try { sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(localParsed)); } catch {}
+        } else if (hasMeaningfulData(sessionParsed)) {
+          chosen = sessionParsed;
+          console.log('📊 Données de session chargées');
+        } else if (localParsed) {
+          chosen = localParsed;
+          console.log('📥 Données importées chargées depuis localStorage');
         } else {
-          // Vérifier s'il y a des données importées dans localStorage
-          const importedData = localStorage.getItem('retirement_data');
-          if (importedData) {
-            try {
-              const parsedData = JSON.parse(importedData);
-              console.log('📥 Données brutes chargées depuis localStorage:', parsedData);
-              console.log('📊 unifiedIncome1:', parsedData.personal?.unifiedIncome1);
-              console.log('📊 unifiedIncome2:', parsedData.personal?.unifiedIncome2);
-              
-              // Vérifier et effectuer la migration si nécessaire
-              if (DataMigrationService.needsMigration()) {
-                console.log('🔄 Migration des données en cours...');
-                const migrationResult = DataMigrationService.migrateUserData(parsedData);
-                if (migrationResult.success) {
-                  console.log('✅ Migration réussie:', migrationResult.migratedFields);
-                  DataMigrationService.saveMigratedData(parsedData);
-                } else {
-                  console.warn('⚠️ Erreurs lors de la migration:', migrationResult.errors);
-                }
-              }
-              
-              const validatedData = validateUserData(parsedData);
-              console.log('✅ Données validées:', validatedData);
-              setUserData(validatedData);
-              console.log('📥 Données importées chargées depuis localStorage');
-            } catch (error) {
-              console.warn('⚠️ Données importées corrompues, utilisation des données par défaut');
-              setUserData(defaultUserData);
-            }
-          } else {
-            // Toujours commencer avec des données vides
-            setUserData(defaultUserData);
-            console.log('🆕 Nouvelle session - données vides initialisées');
-          }
+          chosen = defaultUserData;
+          console.log('🆕 Nouvelle session - données vides initialisées');
         }
+
+        // Vérifier et effectuer la migration si nécessaire (sur l'objet retenu)
+        try {
+          if (chosen && DataMigrationService.needsMigration()) {
+            console.log('🔄 Migration des données en cours...');
+            const migrationResult = DataMigrationService.migrateUserData(chosen);
+            if (migrationResult.success) {
+              console.log('✅ Migration réussie:', migrationResult.migratedFields);
+              DataMigrationService.saveMigratedData(chosen);
+            } else {
+              console.warn('⚠️ Erreurs lors de la migration:', migrationResult.errors);
+            }
+          }
+        } catch {}
+
+        const validatedData = validateUserData(chosen);
+        console.log('✅ Données validées:', validatedData);
+        setUserData(validatedData);
       } catch (error) {
         console.error('Erreur lors du chargement des données:', error);
         setError('Impossible de charger les données de session');
@@ -503,29 +497,7 @@ export const useRetirementData = () => {
           }).length;
           break;
 
-        case 'emergency':
-          // Champs requis pour les informations d'urgence
-          const emergencyFields = [
-            'contactsUrgence', 'directivesMedicales', 'assuranceVie', 'testament'
-          ];
-          totalFields = emergencyFields.length;
-          completedFields = emergencyFields.filter(field => {
-            const value = sectionData[field];
-            return value !== null && value !== undefined && value !== '' && value !== 0;
-          }).length;
-          break;
 
-        case 'session':
-          // Champs requis pour la gestion des sessions
-          const sessionFields = [
-            'sauvegardeLocale', 'sauvegardeCloud', 'exportDonnees', 'importDonnees'
-          ];
-          totalFields = sessionFields.length;
-          completedFields = sessionFields.filter(field => {
-            const value = sectionData[field];
-            return value !== null && value !== undefined && value !== '' && value !== 0;
-          }).length;
-          break;
 
         default:
           return 0;

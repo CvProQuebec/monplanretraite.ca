@@ -17,6 +17,9 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
       assuranceEmploi: 0,
       travailAutonome: 0,
       revenusLocation: 0,
+      emploisSaisonniers: 0,
+      dividendes: 0,
+      autresRevenus: 0,
       totalRevenus: 0,
       
       // Prestations
@@ -64,14 +67,84 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
       
       switch (entry.type) {
         case 'salaire':
-          console.log('🔍 calculateToDateAmount - Processing salary entry');
+        case 'emploi-saisonnier':
+          console.log('🔍 calculateToDateAmount - Processing salary/seasonal entry');
           console.log('🔍 calculateToDateAmount - Entry details:', {
             salaryNetAmount: entry.salaryNetAmount,
             salaryFrequency: entry.salaryFrequency,
-            description: entry.description
+            description: entry.description,
+            startDate: entry.startDate,
+            endDate: entry.endDate
           });
           
-          // LOGIQUE SIMPLIFIÉE ET EFFICACE
+          // Pour les emplois saisonniers, vérifier les dates de début et fin
+          if (entry.type === 'emploi-saisonnier' && entry.salaryStartDate && entry.salaryEndDate) {
+            const startDate = new Date(entry.salaryStartDate);
+            const endDate = new Date(entry.salaryEndDate);
+            
+            console.log('🔍 calculateToDateAmount - Seasonal employment dates:', {
+              startDate,
+              endDate,
+              today,
+              isInPeriod: today >= startDate && today <= endDate,
+              hasStarted: today >= startDate
+            });
+            
+            // Si nous ne sommes pas encore dans la période, retourner 0
+            if (today < startDate) {
+              console.log('🔍 calculateToDateAmount - Seasonal employment not started yet');
+              return 0;
+            }
+            
+            // Si nous sommes après la fin, calculer pour toute la période
+            const effectiveEndDate = today > endDate ? endDate : today;
+            const daysWorked = Math.max(0, Math.floor((effectiveEndDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1);
+            
+            console.log('🔍 calculateToDateAmount - Seasonal employment period analysis:', {
+              today: today.toISOString().split('T')[0],
+              startDate: startDate.toISOString().split('T')[0],
+              endDate: endDate.toISOString().split('T')[0],
+              effectiveEndDate: effectiveEndDate.toISOString().split('T')[0],
+              daysWorked,
+              isPeriodPassed: today > endDate,
+              isPeriodActive: today >= startDate && today <= endDate
+            });
+            
+            console.log('🔍 calculateToDateAmount - Seasonal employment calculation:', {
+              effectiveEndDate,
+              daysWorked,
+              salaryNetAmount: entry.salaryNetAmount,
+              salaryFrequency: entry.salaryFrequency
+            });
+            
+            // Calculer selon la fréquence pour la période travaillée
+            if (entry.salaryNetAmount && entry.salaryFrequency) {
+              const netAmount = entry.salaryNetAmount;
+              const frequency = entry.salaryFrequency;
+              
+              if (frequency === 'monthly') {
+                // Pour mensuel, calculer les mois travaillés dans la période
+                const monthsWorked = Math.ceil(daysWorked / 30);
+                const result = netAmount * monthsWorked;
+                console.log('🔍 calculateToDateAmount - Seasonal monthly result:', result);
+                return result;
+              } else if (frequency === 'weekly') {
+                const weeksWorked = Math.ceil(daysWorked / 7);
+                const result = netAmount * weeksWorked;
+                console.log('🔍 calculateToDateAmount - Seasonal weekly result:', result);
+                return result;
+              } else {
+                // Pour autres fréquences, utiliser un calcul proportionnel
+                const totalPeriodDays = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24)) + 1;
+                const totalAmount = netAmount * (frequency === 'biweekly' ? Math.ceil(totalPeriodDays / 14) : Math.ceil(totalPeriodDays / 30));
+                const result = (totalAmount * daysWorked) / totalPeriodDays;
+                console.log('🔍 calculateToDateAmount - Seasonal proportional result:', result);
+                return result;
+              }
+            }
+          }
+          
+          // LOGIQUE SIMPLIFIÉE ET EFFICACE pour salaires réguliers
           if (entry.salaryNetAmount && entry.salaryFrequency) {
             const netAmount = entry.salaryNetAmount;
             const frequency = entry.salaryFrequency;
@@ -120,7 +193,7 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
             } else {
               // Autres fréquences - calcul générique
               const yearStart = new Date(currentDate.getFullYear(), 0, 1);
-              const daysElapsed = Math.max(0, Math.floor((today - yearStart) / (1000 * 60 * 60 * 24)));
+              const daysElapsed = Math.max(0, Math.floor((today.getTime() - yearStart.getTime()) / (1000 * 60 * 60 * 24)));
               
               let periodsElapsed = 0;
               switch (frequency) {
@@ -210,6 +283,10 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
           totals.salaire += toDateAmount;
           console.log(`🔍 Personne 1 - Salaire total:`, totals.salaire);
           break;
+        case 'emploi-saisonnier':
+          totals.emploisSaisonniers += toDateAmount;
+          console.log(`🔍 Personne 1 - Emploi saisonnier total:`, totals.emploisSaisonniers);
+          break;
         case 'assurance-emploi':
           // Assurance emploi est maintenant une prestation
           totals.assuranceEmploi += toDateAmount;
@@ -217,9 +294,16 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
           break;
         case 'travail-autonome':
           totals.travailAutonome += toDateAmount;
+          console.log(`🔍 Personne 1 - Travail autonome total:`, totals.travailAutonome);
           break;
         case 'revenus-location':
           totals.revenusLocation += toDateAmount;
+          break;
+        case 'dividendes':
+          totals.dividendes += toDateAmount;
+          break;
+        case 'autres':
+          totals.autresRevenus += toDateAmount;
           break;
         case 'rentes':
           // Distinguer entre RRQ, SV et rentes privées selon la description
@@ -259,6 +343,10 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
           totals.salaire += toDateAmount;
           console.log(`🔍 Personne 2 - Salaire total:`, totals.salaire);
           break;
+        case 'emploi-saisonnier':
+          totals.emploisSaisonniers += toDateAmount;
+          console.log(`🔍 Personne 2 - Emploi saisonnier total:`, totals.emploisSaisonniers);
+          break;
         case 'assurance-emploi':
           // Assurance emploi est maintenant une prestation
           totals.assuranceEmploi += toDateAmount;
@@ -266,9 +354,16 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
           break;
         case 'travail-autonome':
           totals.travailAutonome += toDateAmount;
+          console.log(`🔍 Personne 2 - Travail autonome total:`, totals.travailAutonome);
           break;
         case 'revenus-location':
           totals.revenusLocation += toDateAmount;
+          break;
+        case 'dividendes':
+          totals.dividendes += toDateAmount;
+          break;
+        case 'autres':
+          totals.autresRevenus += toDateAmount;
           break;
         case 'rentes':
           // Distinguer entre RRQ, SV et rentes privées selon la description
@@ -296,7 +391,7 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
       }
     });
 
-    totals.totalRevenus = totals.salaire + totals.travailAutonome + totals.revenusLocation;
+    totals.totalRevenus = totals.salaire + totals.travailAutonome + totals.revenusLocation + totals.emploisSaisonniers + totals.dividendes + totals.autresRevenus;
     
     // Debug pour voir les calculs
     console.log('🔍 GlobalSummary - Calculs revenus:', {
@@ -311,19 +406,149 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
     const monthsElapsed = currentDate.getMonth() + 1;
     const monthsCompleted = Math.max(0, monthsElapsed - 1);
 
-    // RRQ
-    totals.rrq = ((userData?.retirement?.rrqMontantActuel1 || 0) + (userData?.retirement?.rrqMontantActuel2 || 0)) * 12;
+    // RRQ - Calculer le montant à ce jour
+    const rrq1 = userData?.retirement?.rrqMontantActuel1 || 0;
+    const rrq2 = userData?.retirement?.rrqMontantActuel2 || 0;
+    totals.rrq = (rrq1 + rrq2) * monthsCompleted;
 
-    // SV
+    // SV - Calculer le montant à ce jour selon les périodes
     const sv1 = userData?.retirement?.svBiannual1;
     const sv2 = userData?.retirement?.svBiannual2;
-    if (sv1) {
-      totals.securiteVieillesse += ((sv1.periode1?.montant || 0) + (sv1.periode2?.montant || 0)) * 12;
+    
+    // Debug SV
+    console.log('🔍 GlobalSummary - SV1 data:', sv1);
+    console.log('🔍 GlobalSummary - SV2 data:', sv2);
+    
+    // Réinitialiser le total SV avant de calculer
+    totals.securiteVieillesse = 0;
+    
+    if (sv1 && sv1.periode1 && sv1.periode2) {
+      const currentMonth = currentDate.getMonth() + 1; // 1-12
+      const monthsCompleted = Math.max(0, currentMonth - 1);
+      
+      let totalToDate = 0;
+      
+      // Période Jan-Juin (6 mois)
+      const monthsJanJuin = Math.min(6, monthsCompleted);
+      if (monthsJanJuin > 0) {
+        totalToDate += monthsJanJuin * sv1.periode1.montant;
+      }
+      
+      // Période Juil-Déc (6 mois)
+      if (monthsCompleted > 6) {
+        const monthsJuilDec = Math.min(6, monthsCompleted - 6);
+        totalToDate += monthsJuilDec * sv1.periode2.montant;
+      }
+      
+      totals.securiteVieillesse += totalToDate;
     }
-    if (sv2) {
-      totals.securiteVieillesse += ((sv2.periode1?.montant || 0) + (sv2.periode2?.montant || 0)) * 12;
+    
+    if (sv2 && sv2.periode1 && sv2.periode2) {
+      const currentMonth = currentDate.getMonth() + 1; // 1-12
+      const monthsCompleted = Math.max(0, currentMonth - 1);
+      
+      let totalToDate = 0;
+      
+      // Période Jan-Juin (6 mois)
+      const monthsJanJuin = Math.min(6, monthsCompleted);
+      if (monthsJanJuin > 0) {
+        totalToDate += monthsJanJuin * sv2.periode1.montant;
+      }
+      
+      // Période Juil-Déc (6 mois)
+      if (monthsCompleted > 6) {
+        const monthsJuilDec = Math.min(6, monthsCompleted - 6);
+        totalToDate += monthsJuilDec * sv2.periode2.montant;
+      }
+      
+      totals.securiteVieillesse += totalToDate;
+      console.log('🔍 GlobalSummary - SV1 totalToDate:', totalToDate, 'Total SV après Personne 1:', totals.securiteVieillesse);
+    }
+    
+    if (sv2 && sv2.periode1 && sv2.periode2) {
+      const currentMonth = currentDate.getMonth() + 1; // 1-12
+      const monthsCompleted = Math.max(0, currentMonth - 1);
+      
+      let totalToDate = 0;
+      
+      // Période Jan-Juin (6 mois)
+      const monthsJanJuin = Math.min(6, monthsCompleted);
+      if (monthsJanJuin > 0) {
+        totalToDate += monthsJanJuin * sv2.periode1.montant;
+      }
+      
+      // Période Juil-Déc (6 mois)
+      if (monthsCompleted > 6) {
+        const monthsJuilDec = Math.min(6, monthsCompleted - 6);
+        totalToDate += monthsJuilDec * sv2.periode2.montant;
+      }
+      
+      totals.securiteVieillesse += totalToDate;
+      console.log('🔍 GlobalSummary - SV2 totalToDate:', totalToDate, 'Total SV après Personne 2:', totals.securiteVieillesse);
     }
 
+    console.log('🔍 GlobalSummary - Total SV final:', totals.securiteVieillesse);
+
+    // Rentes privées - Calculer le montant à ce jour
+    const privatePensions1 = userData?.retirement?.privatePensions1 || [];
+    const privatePensions2 = userData?.retirement?.privatePensions2 || [];
+    
+    // Réinitialiser le total des rentes privées
+    totals.rentesPrivees = 0;
+    
+    // Calculer pour Personne 1
+    if (privatePensions1.length > 0) {
+      const currentMonth = currentDate.getMonth() + 1;
+      const currentYear = currentDate.getFullYear();
+      
+      totals.rentesPrivees += privatePensions1.reduce((total, pension) => {
+        if (!pension.isActive) return total;
+        
+        const startDate = new Date(pension.startDate);
+        const startMonth = startDate.getMonth() + 1;
+        const startYear = startDate.getFullYear();
+        
+        const monthsElapsed = (currentYear - startYear) * 12 + (currentMonth - startMonth);
+        const monthsCompleted = Math.max(0, monthsElapsed);
+        
+        let monthlyAmount = pension.monthlyAmount;
+        if (pension.frequency === 'quarterly') {
+          monthlyAmount = pension.monthlyAmount / 3;
+        } else if (pension.frequency === 'annually') {
+          monthlyAmount = pension.monthlyAmount / 12;
+        }
+        
+        return total + (monthlyAmount * monthsCompleted);
+      }, 0);
+    }
+    
+    // Calculer pour Personne 2
+    if (privatePensions2.length > 0) {
+      const currentMonth = currentDate.getMonth() + 1;
+      const currentYear = currentDate.getFullYear();
+      
+      totals.rentesPrivees += privatePensions2.reduce((total, pension) => {
+        if (!pension.isActive) return total;
+        
+        const startDate = new Date(pension.startDate);
+        const startMonth = startDate.getMonth() + 1;
+        const startYear = startDate.getFullYear();
+        
+        const monthsElapsed = (currentYear - startYear) * 12 + (currentMonth - startMonth);
+        const monthsCompleted = Math.max(0, monthsElapsed);
+        
+        let monthlyAmount = pension.monthlyAmount;
+        if (pension.frequency === 'quarterly') {
+          monthlyAmount = pension.monthlyAmount / 3;
+        } else if (pension.frequency === 'annually') {
+          monthlyAmount = pension.monthlyAmount / 12;
+        }
+        
+        return total + (monthlyAmount * monthsCompleted);
+      }, 0);
+    }
+
+    console.log('🔍 GlobalSummary - Total rentes privées:', totals.rentesPrivees);
     totals.totalPrestations = totals.rrq + totals.securiteVieillesse + totals.rentesPrivees + totals.assuranceEmploi;
 
     // Investissements
@@ -371,6 +596,21 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
                 <span className="text-white">{isFrench ? 'Revenus location:' : 'Rental Income:'}</span>
                 <span className="font-bold text-green-300">{formatCurrency(totals.revenusLocation)}</span>
               </div>
+              
+              {/* Nouveaux champs demandés */}
+              <div className="flex justify-between">
+                <span className="text-white">{isFrench ? 'Emplois saisonniers' : 'Seasonal Employment'}</span>
+                <span className="font-bold text-yellow-300">{formatCurrency(totals.emploisSaisonniers)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white">{isFrench ? 'Dividendes' : 'Dividends'}</span>
+                <span className="font-bold text-cyan-300">{formatCurrency(totals.dividendes)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-white">{isFrench ? 'Autres revenus' : 'Other Income'}</span>
+                <span className="font-bold text-pink-300">{formatCurrency(totals.autresRevenus)}</span>
+              </div>
+              
               <div className="border-t border-blue-300 pt-2 mt-4">
                 <div className="flex justify-between text-lg">
                   <span className="text-white font-bold">{isFrench ? 'Total revenus:' : 'Total Income:'}</span>

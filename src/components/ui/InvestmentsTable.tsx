@@ -87,172 +87,156 @@ const InvestmentsTable: React.FC<InvestmentsTableProps> = ({
       </CardHeader>
 
       {!isCollapsed && (
-        <CardContent className="p-6 space-y-6">
+        <CardContent className="p-4 space-y-4 investments-compact">
           {/* REER */}
-          <div className="bg-white p-6 rounded-lg border-2 border-blue-200">
-            <h3 className="text-xl font-bold text-blue-800 mb-4 flex items-center gap-2">
-              <BarChart3 className="w-6 h-6" />
+          <div className="bg-white p-3 rounded-lg border-2 border-blue-200">
+            <h3 className="text-lg font-bold text-blue-800 mb-2 flex items-center gap-2">
+              <BarChart3 className="w-5 h-5" />
               {isFrench ? 'REER (Régime enregistré d\'épargne-retraite)' : 'RRSP (Registered Retirement Savings Plan)'}
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-lg font-semibold text-gray-700 mb-2">
-                  {isFrench ? 'Solde REER' : 'RRSP Balance'}
-                </label>
-                <MoneyInput
-                  value={totals.reer}
-                  onChange={(value) => {
-                    const field = personNumber === 1 ? 'soldeREER1' : 'soldeREER2';
-                    onDataChange({ [field]: value });
-                  }}
-                  className="w-full p-3 border-2 border-gray-300 rounded-lg text-lg"
-                  placeholder={isFrench ? "Ex: 150 000" : "Ex: 150,000"}
-                  allowDecimals={true}
-                />
-              </div>
-              <div>
-                <label className="block text-lg font-semibold text-gray-700 mb-2">
-                  {isFrench ? 'Date du solde' : 'Balance Date'}
-                </label>
-                <DateInput
-                  value={personNumber === 1 
-                    ? userData?.personal?.dateREER1 || ''
-                    : userData?.personal?.dateREER2 || ''
-                  }
-                  onChange={(value) => {
-                    const field = personNumber === 1 ? 'dateREER1' : 'dateREER2';
-                    onDataChange({ [field]: value });
-                  }}
-                  className="w-full p-3 border-2 border-gray-300 rounded-lg text-lg"
-                  placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
-                />
-              </div>
+            <div className="flex items-center flex-wrap gap-x-4 gap-y-2">
+              <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                {isFrench ? 'Solde REER' : 'RRSP Balance'}
+              </label>
+              <MoneyInput
+                value={totals.reer}
+                onChange={(value) => {
+                  const field = personNumber === 1 ? 'soldeREER1' : 'soldeREER2';
+                  onDataChange({ [field]: value });
+                }}
+                className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                placeholder={isFrench ? 'Ex: 150 000' : 'Ex: 150,000'}
+                allowDecimals={true}
+              />
+              <label className="text-sm font-medium text-gray-700 whitespace-nowrap ml-2">
+                {isFrench ? 'Date du solde' : 'Balance Date'}
+              </label>
+              <DateInput
+                value={personNumber === 1 
+                  ? userData?.personal?.dateREER1 || ''
+                  : userData?.personal?.dateREER2 || ''
+                }
+                onChange={(value) => {
+                  const field = personNumber === 1 ? 'dateREER1' : 'dateREER2';
+                  onDataChange({ [field]: value });
+                }}
+                className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
+              />
             </div>
           </div>
 
           {/* CELI */}
-          <div className="bg-white p-6 rounded-lg border-2 border-green-200">
-            <h3 className="text-xl font-bold text-green-800 mb-4 flex items-center gap-2">
-              <TrendingUp className="w-6 h-6" />
+          <div className="bg-white p-3 rounded-lg border-2 border-green-200">
+            <h3 className="text-lg font-bold text-green-800 mb-2 flex items-center gap-2">
+              <TrendingUp className="w-5 h-5" />
               {isFrench ? 'CELI (Compte d\'épargne libre d\'impôt)' : 'TFSA (Tax-Free Savings Account)'}
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-lg font-semibold text-gray-700 mb-2">
-                  {isFrench ? 'Solde CELI' : 'TFSA Balance'}
-                </label>
-                <MoneyInput
-                  value={totals.celi}
-                  onChange={(value) => {
-                    const field = personNumber === 1 ? 'soldeCELI1' : 'soldeCELI2';
-                    onDataChange({ [field]: value });
-                  }}
-                  className="w-full p-3 border-2 border-gray-300 rounded-lg text-lg"
-                  placeholder={isFrench ? "Ex: 75 000" : "Ex: 75,000"}
-                  allowDecimals={true}
-                />
-              </div>
-              <div>
-                <label className="block text-lg font-semibold text-gray-700 mb-2">
-                  {isFrench ? 'Date du solde' : 'Balance Date'}
-                </label>
-                <DateInput
-                  value={personNumber === 1 
-                    ? userData?.personal?.dateCELI1 || ''
-                    : userData?.personal?.dateCELI2 || ''
-                  }
-                  onChange={(value) => {
-                    const field = personNumber === 1 ? 'dateCELI1' : 'dateCELI2';
-                    onDataChange({ [field]: value });
-                  }}
-                  className="w-full p-3 border-2 border-gray-300 rounded-lg text-lg"
-                  placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
-                />
-              </div>
+            <div className="flex items-center flex-wrap gap-x-4 gap-y-2">
+              <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                {isFrench ? 'Solde CELI' : 'TFSA Balance'}
+              </label>
+              <MoneyInput
+                value={totals.celi}
+                onChange={(value) => {
+                  const field = personNumber === 1 ? 'soldeCELI1' : 'soldeCELI2';
+                  onDataChange({ [field]: value });
+                }}
+                className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                placeholder={isFrench ? 'Ex: 75 000' : 'Ex: 75,000'}
+                allowDecimals={true}
+              />
+              <label className="text-sm font-medium text-gray-700 whitespace-nowrap ml-2">
+                {isFrench ? 'Date du solde' : 'Balance Date'}
+              </label>
+              <DateInput
+                value={personNumber === 1 
+                  ? userData?.personal?.dateCELI1 || ''
+                  : userData?.personal?.dateCELI2 || ''
+                }
+                onChange={(value) => {
+                  const field = personNumber === 1 ? 'dateCELI1' : 'dateCELI2';
+                  onDataChange({ [field]: value });
+                }}
+                className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
+              />
             </div>
           </div>
 
           {/* CRI */}
-          <div className="bg-white p-6 rounded-lg border-2 border-yellow-200">
-            <h3 className="text-xl font-bold text-yellow-800 mb-4 flex items-center gap-2">
-              <DollarSign className="w-6 h-6" />
+          <div className="bg-white p-3 rounded-lg border-2 border-yellow-200">
+            <h3 className="text-lg font-bold text-yellow-800 mb-2 flex items-center gap-2">
+              <DollarSign className="w-5 h-5" />
               {isFrench ? 'CRI (Compte de retraite immobilisé)' : 'LIRA (Locked-in Retirement Account)'}
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-lg font-semibold text-gray-700 mb-2">
-                  {isFrench ? 'Solde CRI' : 'LIRA Balance'}
-                </label>
-                <MoneyInput
-                  value={totals.cri}
-                  onChange={(value) => {
-                    const field = personNumber === 1 ? 'soldeCRI1' : 'soldeCRI2';
-                    onDataChange({ [field]: value });
-                  }}
-                  className="w-full p-3 border-2 border-gray-300 rounded-lg text-lg"
-                  placeholder={isFrench ? "Ex: 200 000" : "Ex: 200,000"}
-                  allowDecimals={true}
-                />
-              </div>
-              <div>
-                <label className="block text-lg font-semibold text-gray-700 mb-2">
-                  {isFrench ? 'Date du solde' : 'Balance Date'}
-                </label>
-                <DateInput
-                  value={personNumber === 1 
-                    ? userData?.personal?.dateCRI1 || ''
-                    : userData?.personal?.dateCRI2 || ''
-                  }
-                  onChange={(value) => {
-                    const field = personNumber === 1 ? 'dateCRI1' : 'dateCRI2';
-                    onDataChange({ [field]: value });
-                  }}
-                  className="w-full p-3 border-2 border-gray-300 rounded-lg text-lg"
-                  placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
-                />
-              </div>
+            <div className="flex items-center flex-wrap gap-x-4 gap-y-2">
+              <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                {isFrench ? 'Solde CRI' : 'LIRA Balance'}
+              </label>
+              <MoneyInput
+                value={totals.cri}
+                onChange={(value) => {
+                  const field = personNumber === 1 ? 'soldeCRI1' : 'soldeCRI2';
+                  onDataChange({ [field]: value });
+                }}
+                className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                placeholder={isFrench ? 'Ex: 200 000' : 'Ex: 200,000'}
+                allowDecimals={true}
+              />
+              <label className="text-sm font-medium text-gray-700 whitespace-nowrap ml-2">
+                {isFrench ? 'Date du solde' : 'Balance Date'}
+              </label>
+              <DateInput
+                value={personNumber === 1 
+                  ? userData?.personal?.dateCRI1 || ''
+                  : userData?.personal?.dateCRI2 || ''
+                }
+                onChange={(value) => {
+                  const field = personNumber === 1 ? 'dateCRI1' : 'dateCRI2';
+                  onDataChange({ [field]: value });
+                }}
+                className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
+              />
             </div>
           </div>
 
           {/* Crypto-monnaie */}
-          <div className="bg-white p-6 rounded-lg border-2 border-purple-200">
-            <h3 className="text-xl font-bold text-purple-800 mb-4 flex items-center gap-2">
-              <span className="text-2xl">₿</span>
+          <div className="bg-white p-3 rounded-lg border-2 border-purple-200">
+            <h3 className="text-lg font-bold text-purple-800 mb-2 flex items-center gap-2">
+              <span className="text-xl">₿</span>
               {isFrench ? 'Crypto-monnaie' : 'Cryptocurrency'}
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-lg font-semibold text-gray-700 mb-2">
-                  {isFrench ? 'Valeur totale crypto' : 'Total Crypto Value'}
-                </label>
-                <MoneyInput
-                  value={totals.crypto}
-                  onChange={(value) => {
-                    const field = personNumber === 1 ? 'soldeCrypto1' : 'soldeCrypto2';
-                    onDataChange({ [field]: value });
-                  }}
-                  className="w-full p-3 border-2 border-gray-300 rounded-lg text-lg"
-                  placeholder={isFrench ? "Ex: 25 000" : "Ex: 25,000"}
-                  allowDecimals={true}
-                />
-              </div>
-              <div>
-                <label className="block text-lg font-semibold text-gray-700 mb-2">
-                  {isFrench ? 'Date d\'évaluation' : 'Valuation Date'}
-                </label>
-                <DateInput
-                  value={personNumber === 1 
-                    ? userData?.personal?.dateCrypto1 || ''
-                    : userData?.personal?.dateCrypto2 || ''
-                  }
-                  onChange={(value) => {
-                    const field = personNumber === 1 ? 'dateCrypto1' : 'dateCrypto2';
-                    onDataChange({ [field]: value });
-                  }}
-                  className="w-full p-3 border-2 border-gray-300 rounded-lg text-lg"
-                  placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
-                />
-              </div>
+            <div className="flex items-center flex-wrap gap-x-4 gap-y-2">
+              <label className="text-sm font-medium text-gray-700 whitespace-nowrap">
+                {isFrench ? 'Valeur totale crypto' : 'Total Crypto Value'}
+              </label>
+              <MoneyInput
+                value={totals.crypto}
+                onChange={(value) => {
+                  const field = personNumber === 1 ? 'soldeCrypto1' : 'soldeCrypto2';
+                  onDataChange({ [field]: value });
+                }}
+                className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                placeholder={isFrench ? 'Ex: 25 000' : 'Ex: 25,000'}
+                allowDecimals={true}
+              />
+              <label className="text-sm font-medium text-gray-700 whitespace-nowrap ml-2">
+                {isFrench ? 'Date d\'évaluation' : 'Valuation Date'}
+              </label>
+              <DateInput
+                value={personNumber === 1 
+                  ? userData?.personal?.dateCrypto1 || ''
+                  : userData?.personal?.dateCrypto2 || ''
+                }
+                onChange={(value) => {
+                  const field = personNumber === 1 ? 'dateCrypto1' : 'dateCrypto2';
+                  onDataChange({ [field]: value });
+                }}
+                className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                placeholder={isFrench ? 'AAAA-MM-JJ' : 'YYYY-MM-DD'}
+              />
             </div>
           </div>
 

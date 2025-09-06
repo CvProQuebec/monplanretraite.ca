@@ -95,8 +95,67 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
   isFrench,
   userData
 }) => {
-  
-  const [incomeEntries, setIncomeEntries] = useState<IncomeEntry[]>(data);
+
+  // Fonction utilitaire pour normaliser les entrées de revenus
+  const normalizeIncomeEntry = (entry: any): IncomeEntry => {
+    const normalized: IncomeEntry = {
+      ...entry,
+      // Assurer que les champs obligatoires existent
+      id: entry.id || `income-${Date.now()}`,
+      type: entry.type || 'salaire',
+      description: entry.description || '',
+      isActive: entry.isActive !== undefined ? entry.isActive : true,
+      annualAmount: entry.annualAmount || 0,
+    };
+
+    // Calculer projectedAnnual si manquant mais que les données de base existent
+    if (!normalized.projectedAnnual && normalized.salaryNetAmount && normalized.salaryNetAmount > 0) {
+      const frequency = normalized.salaryFrequency || 'monthly'; // Défaut mensuel
+      const multiplier = {
+        'weekly': 52,
+        'biweekly': 26,
+        'bimonthly': 24,
+        'monthly': 12
+      }[frequency] || 12;
+
+      normalized.projectedAnnual = normalized.salaryNetAmount * multiplier;
+    }
+
+    // Pour autres types de revenus, assurer projectedAnnual
+    if (!normalized.projectedAnnual) {
+      switch (normalized.type) {
+        case 'rentes':
+          if (normalized.pensionAmount && normalized.pensionFrequency) {
+            const multiplier = {
+              'monthly': 12,
+              'quarterly': 4,
+              'semi-annual': 2,
+              'annual': 1
+            }[normalized.pensionFrequency] || 12;
+            normalized.projectedAnnual = normalized.pensionAmount * multiplier;
+          } else {
+            normalized.projectedAnnual = (normalized.monthlyAmount || 0) * 12;
+          }
+          break;
+        case 'revenus-location':
+          normalized.projectedAnnual = (normalized.monthlyAmount || 0) * 12;
+          break;
+        case 'dividendes':
+        case 'travail-autonome':
+        case 'autres':
+          normalized.projectedAnnual = normalized.annualAmount || 0;
+          break;
+        default:
+          normalized.projectedAnnual = 0;
+      }
+    }
+
+    return normalized;
+  };
+
+  const [incomeEntries, setIncomeEntries] = useState<IncomeEntry[]>(
+    data ? data.map(normalizeIncomeEntry) : []
+  );
   const [editingId, setEditingId] = useState<string | null>(null);
   
   // Types de revenus avec leurs caractéristiques
@@ -154,22 +213,20 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
   
   // Calcul du montant "à ce jour" pour l'assurance emploi
   const calculateEIToDate = (entry: IncomeEntry): number => {
-    if (entry.type !== 'assurance-emploi' || !entry.startDate || !entry.weeklyNet) {
+    if (entry.type !== 'assurance-emploi' || !entry.eiStartDate || !entry.weeklyNet) {
       return 0;
     }
-    
-    const startDate = new Date(entry.startDate);
+
+    const startDate = new Date(entry.eiStartDate);
     const currentDate = new Date();
-    const endDate = entry.endDate ? new Date(entry.endDate) : currentDate;
-    
+
     // Calculer le nombre de semaines écoulées
-    const actualEndDate = endDate < currentDate ? endDate : currentDate;
-    const diffTime = actualEndDate.getTime() - startDate.getTime();
+    const diffTime = currentDate.getTime() - startDate.getTime();
     const weeksElapsed = Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7)));
-    
+
     // Limiter par les semaines utilisées si spécifié
     const effectiveWeeks = entry.weeksUsed ? Math.min(weeksElapsed, entry.weeksUsed) : weeksElapsed;
-    
+
     return effectiveWeeks * entry.weeklyNet;
   };
   
@@ -177,38 +234,62 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
   const calculateProjectedAnnual = (entry: IncomeEntry): number => {
     switch (entry.type) {
       case 'salaire':
-        return entry.annualAmount || 0;
-      
+        // Priorité 1: Utiliser annualAmount si disponible
+        if (entry.annualAmount && entry.annualAmount > 0) {
+          return entry.annualAmount;
+        }
+
+        // Priorité 2: Calculer à partir du salaire net et de la fréquence
+        if (entry.salaryNetAmount && entry.salaryNetAmount > 0) {
+          const frequency = entry.salaryFrequency || 'monthly';
+          const multiplier = {
+            'weekly': 52,
+            'biweekly': 26,
+            'bimonthly': 24,
+            'monthly': 12
+          }[frequency] || 12;
+
+          return entry.salaryNetAmount * multiplier;
+        }
+        return 0;
+
       case 'rentes':
+        if (entry.pensionAmount && entry.pensionFrequency) {
+          const multiplier = {
+            'monthly': 12,
+            'quarterly': 4,
+            'semi-annual': 2,
+            'annual': 1
+          }[entry.pensionFrequency] || 12;
+          return entry.pensionAmount * multiplier;
+        }
         return (entry.monthlyAmount || 0) * 12;
-      
+
       case 'assurance-emploi':
-        if (!entry.weeklyNet || !entry.startDate) return 0;
-        
-        const startDate = new Date(entry.startDate);
+        if (!entry.weeklyNet || !entry.eiStartDate) return 0;
+
+        const startDate = new Date(entry.eiStartDate);
         const currentYear = new Date().getFullYear();
         const yearStart = new Date(currentYear, 0, 1);
         const yearEnd = new Date(currentYear, 11, 31);
-        
+
         // Calculer les semaines dans l'année
         const effectiveStart = startDate > yearStart ? startDate : yearStart;
-        const effectiveEnd = entry.endDate ? 
-          (new Date(entry.endDate) < yearEnd ? new Date(entry.endDate) : yearEnd) : 
-          yearEnd;
-        
+        const effectiveEnd = yearEnd; // Pas de endDate pour l'assurance emploi
+
         const weeksInYear = Math.max(0, Math.floor((effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60 * 24 * 7)));
-        const maxWeeksInYear = entry.maxWeeks ? Math.min(weeksInYear, entry.maxWeeks) : weeksInYear;
-        
+        const maxWeeksInYear = entry.eiEligibleWeeks ? Math.min(weeksInYear, entry.eiEligibleWeeks) : weeksInYear;
+
         return maxWeeksInYear * entry.weeklyNet;
-      
+
       case 'dividendes':
       case 'travail-autonome':
       case 'autres':
         return entry.annualAmount || 0;
-      
+
       case 'revenus-location':
         return (entry.monthlyAmount || 0) * 12;
-      
+
       default:
         return 0;
     }
@@ -221,10 +302,19 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
       toDateAmount: entry.type === 'assurance-emploi' ? calculateEIToDate(entry) : undefined,
       projectedAnnual: calculateProjectedAnnual(entry)
     }));
-    
+
     setIncomeEntries(updatedEntries);
     onDataChange(updatedEntries);
   }, [incomeEntries.length]); // Recalculer quand les entrées changent
+
+  // Logs de débogage - à retirer après correction
+  useEffect(() => {
+    console.log('🔍 Données de revenus pour la personne', personNumber, ':', {
+      entries: incomeEntries,
+      totals: getTotalsByIncomeType(),
+      rawData: data
+    });
+  }, [incomeEntries]);
   
   const addIncomeEntry = () => {
     const newEntry: IncomeEntry = {
@@ -719,8 +809,8 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
                           />
                           <div className="flex gap-1">
                             <DateInput
-                              value={entry.startDate || ''}
-                              onChange={(value) => updateIncomeEntry(entry.id, { startDate: value })}
+                              value={entry.eiStartDate || ''}
+                              onChange={(value) => updateIncomeEntry(entry.id, { eiStartDate: value })}
                               className="bg-slate-600 border-slate-500 text-white text-xs"
                               placeholder={isFrench ? 'Début' : 'Start'}
                             />
@@ -907,7 +997,7 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
           </Alert>
         )}
         
-        {incomeEntries.some(e => e.type === 'assurance-emploi' && e.isActive && !e.startDate) && (
+        {incomeEntries.some(e => e.type === 'assurance-emploi' && e.isActive && !e.eiStartDate) && (
           <Alert className="border-yellow-400 bg-yellow-900/20 text-yellow-200">
             <AlertTriangle className="h-4 w-4" />
             <AlertDescription>

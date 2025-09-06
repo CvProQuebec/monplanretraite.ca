@@ -19,3 +19,46 @@ body {
 .retirement-bg {
   background-color: var(--secondary-color);
 }
+
+/* RRQ periods: hide native calendar icons and slightly emphasize values */
+.rrq-periods input[type="date"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  font-weight: 600; /* slightly bolder values */
+}
+
+.rrq-periods input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.rrq-periods input[type="date"]::-webkit-inner-spin-button,
+.rrq-periods input[type="date"]::-webkit-clear-button {
+  display: none;
+}
+
+/* Also slightly emphasize the amount field */
+.rrq-periods input[type="text"] {
+  font-weight: 600;
+}
+
+/* Investments (compact) */
+.investments-compact input {
+  font-weight: 600; /* emphasize values */
+}
+
+/* Hide native calendar icon where applicable */
+.investments-compact input[type="date"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+
+.investments-compact input[type="date"]::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.investments-compact input[type="date"]::-webkit-inner-spin-button,
+.investments-compact input[type="date"]::-webkit-clear-button {
+  display: none;
+}

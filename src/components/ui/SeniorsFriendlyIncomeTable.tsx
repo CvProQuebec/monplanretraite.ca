@@ -31,7 +31,7 @@ import { SalaryCalculationFix } from '@/services/SalaryCalculationFix';
 
 export interface IncomeEntry {
   id: string;
-  type: 'salaire' | 'rentes' | 'assurance-emploi' | 'dividendes' | 'revenus-location' | 'travail-autonome' | 'autres';
+  type: 'salaire' | 'emploi-saisonnier' | 'rentes' | 'assurance-emploi' | 'dividendes' | 'revenus-location' | 'travail-autonome' | 'autres';
   description: string;
   
   // Montants selon la fréquence
@@ -178,6 +178,15 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
       icon: '💼'
     },
     { 
+      value: 'emploi-saisonnier', 
+      label: isFrench ? 'Emploi saisonnier' : 'Seasonal Employment',
+      description: isFrench ? 'Salaire pour emploi saisonnier avec dates de début/fin' : 'Seasonal job salary with start/end dates',
+      frequency: 'annual',
+      showToDate: false,
+      color: 'bg-amber-600',
+      icon: '🌦️'
+    },
+    { 
       value: 'rentes', 
       label: isFrench ? 'Pensions/Rentes' : 'Pensions/Annuities',
       description: isFrench ? 'Vos pensions de retraite ou rentes mensuelles' : 'Your retirement pensions or monthly annuities',
@@ -233,223 +242,15 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
     }
   ];
   
-  // Calcul du montant "à ce jour" pour l'assurance emploi
-  const calculateEIToDate = (entry: IncomeEntry): number => {
-    if (entry.type !== 'assurance-emploi' || !entry.eiStartDate || !entry.weeklyNet) {
-      return 0;
-    }
-    
-    const startDate = new Date(entry.eiStartDate);
-    const currentDate = new Date();
-    const endDate = entry.eiEligibleWeeks ? 
-      new Date(startDate.getTime() + (entry.eiEligibleWeeks * 7 * 24 * 60 * 60 * 1000)) : 
-      currentDate;
-    
-    // Calculer le nombre de semaines écoulées
-    const actualEndDate = endDate < currentDate ? endDate : currentDate;
-    const diffTime = actualEndDate.getTime() - startDate.getTime();
-    const weeksElapsed = Math.max(0, Math.floor(diffTime / (1000 * 60 * 60 * 24 * 7)));
-    
-    // Limiter par les semaines éligibles si spécifié
-    const effectiveWeeks = entry.eiEligibleWeeks ? Math.min(weeksElapsed, entry.eiEligibleWeeks) : weeksElapsed;
-    
-    // Calculer le montant total en tenant compte de la révision (si applicable)
-    let totalAmount = 0;
-    
-    if (entry.eiRevisionDate && entry.eiRevisionAmount) {
-      const revisionDate = new Date(entry.eiRevisionDate);
-      
-      // Période avant révision
-      const weeksBeforeRevision = Math.max(0, Math.floor((revisionDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 7)));
-      const effectiveWeeksBeforeRevision = Math.min(weeksBeforeRevision, effectiveWeeks);
-      totalAmount += effectiveWeeksBeforeRevision * entry.weeklyNet;
-      
-      // Période après révision
-      const weeksAfterRevision = Math.max(0, effectiveWeeks - effectiveWeeksBeforeRevision);
-      totalAmount += weeksAfterRevision * entry.eiRevisionAmount;
-    } else {
-      // Pas de révision - calcul normal
-      totalAmount = effectiveWeeks * entry.weeklyNet;
-    }
-    
-    return totalAmount;
-  };
-  
-  // Calcul du montant annuel projeté
-  const calculateProjectedAnnual = (entry: IncomeEntry): number => {
-    switch (entry.type) {
-      case 'salaire':
-        if (entry.salaryNetAmount && entry.salaryFrequency) {
-          // Calculer le nombre de paiements dans l'année en tenant compte des dates
-          const currentYear = new Date().getFullYear();
-          const yearStart = new Date(currentYear, 0, 1);
-          const yearEnd = new Date(currentYear, 11, 31);
-          
-          // Déterminer la période effective
-          let effectiveStart = yearStart;
-          let effectiveEnd = yearEnd;
-          
-          if (entry.salaryStartDate) {
-            const startDate = new Date(entry.salaryStartDate);
-            if (startDate > yearStart) {
-              effectiveStart = startDate;
-            }
-          }
-          
-          if (entry.salaryEndDate) {
-            const endDate = new Date(entry.salaryEndDate);
-            if (endDate < yearEnd) {
-              effectiveEnd = endDate;
-            }
-          }
-          
-          // Calculer le montant total en tenant compte de la révision salariale
-          let totalAmount = 0;
-          
-          // Période avant révision (si applicable)
-          if (entry.salaryRevisionDate) {
-            const revisionDate = new Date(entry.salaryRevisionDate);
-            const preRevisionEnd = revisionDate > effectiveStart ? revisionDate : effectiveEnd;
-            
-            const daysBeforeRevision = Math.max(0, Math.floor((preRevisionEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60 * 24)));
-            let paymentsBeforeRevision = 0;
-            
-            switch (entry.salaryFrequency) {
-              case 'weekly':
-                paymentsBeforeRevision = Math.floor(daysBeforeRevision / 7);
-                break;
-              case 'biweekly':
-                paymentsBeforeRevision = Math.floor(daysBeforeRevision / 14);
-                break;
-              case 'bimonthly':
-                paymentsBeforeRevision = Math.floor(daysBeforeRevision / 15);
-                break;
-              case 'monthly':
-                paymentsBeforeRevision = Math.floor(daysBeforeRevision / 30);
-                break;
-            }
-            
-            totalAmount += entry.salaryNetAmount * paymentsBeforeRevision;
-            
-            // Période après révision
-            if (revisionDate < effectiveEnd && entry.salaryRevisionAmount) {
-              const daysAfterRevision = Math.max(0, Math.floor((effectiveEnd.getTime() - revisionDate.getTime()) / (1000 * 60 * 60 * 24)));
-              const revisionFrequency = entry.salaryRevisionFrequency || entry.salaryFrequency;
-              let paymentsAfterRevision = 0;
-              
-              switch (revisionFrequency) {
-                case 'weekly':
-                  paymentsAfterRevision = Math.floor(daysAfterRevision / 7);
-                  break;
-                case 'biweekly':
-                  paymentsAfterRevision = Math.floor(daysAfterRevision / 14);
-                  break;
-                case 'bimonthly':
-                  paymentsAfterRevision = Math.floor(daysAfterRevision / 15);
-                  break;
-                case 'monthly':
-                  paymentsAfterRevision = Math.floor(daysAfterRevision / 30);
-                  break;
-              }
-              
-              totalAmount += entry.salaryRevisionAmount * paymentsAfterRevision;
-            }
-          } else {
-            // Pas de révision - calcul normal
-            const daysInPeriod = Math.max(0, Math.floor((effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60 * 24)));
-            let paymentsInPeriod = 0;
-            
-            switch (entry.salaryFrequency) {
-              case 'weekly':
-                paymentsInPeriod = Math.floor(daysInPeriod / 7);
-                break;
-              case 'biweekly':
-                paymentsInPeriod = Math.floor(daysInPeriod / 14);
-                break;
-              case 'bimonthly':
-                paymentsInPeriod = Math.floor(daysInPeriod / 15);
-                break;
-              case 'monthly':
-                paymentsInPeriod = Math.floor(daysInPeriod / 30);
-                break;
-            }
-            
-            totalAmount = entry.salaryNetAmount * paymentsInPeriod;
-          }
-          
-          return Math.max(0, totalAmount);
-        }
-        return entry.annualAmount || 0;
-      
-      case 'rentes':
-        if (entry.pensionAmount && entry.pensionFrequency) {
-          switch (entry.pensionFrequency) {
-            case 'monthly':
-              return entry.pensionAmount * 12;
-            case 'quarterly':
-              return entry.pensionAmount * 4;
-            case 'semi-annual':
-              return entry.pensionAmount * 2;
-            case 'annual':
-              return entry.pensionAmount;
-            default:
-              return 0;
-          }
-        }
-        return (entry.monthlyAmount || 0) * 12;
-      
-      case 'assurance-emploi':
-        if (!entry.weeklyNet || !entry.eiStartDate) return 0;
-        
-        const startDate = new Date(entry.eiStartDate);
-        const currentYear = new Date().getFullYear();
-        const yearStart = new Date(currentYear, 0, 1);
-        const yearEnd = new Date(currentYear, 11, 31);
-        
-        // Calculer les semaines dans l'année
-        const effectiveStart = startDate > yearStart ? startDate : yearStart;
-        const effectiveEnd = entry.eiEligibleWeeks ? 
-          (new Date(effectiveStart.getTime() + (entry.eiEligibleWeeks * 7 * 24 * 60 * 60 * 1000)) < yearEnd ? 
-            new Date(effectiveStart.getTime() + (entry.eiEligibleWeeks * 7 * 24 * 60 * 60 * 1000)) : yearEnd) : 
-          yearEnd;
-        
-        const weeksInYear = Math.max(0, Math.floor((effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60 * 24 * 7)));
-        const maxWeeksInYear = entry.eiEligibleWeeks ? Math.min(weeksInYear, entry.eiEligibleWeeks) : weeksInYear;
-        
-        return maxWeeksInYear * entry.weeklyNet;
-      
-      case 'dividendes':
-      case 'travail-autonome':
-      case 'autres':
-        return entry.annualAmount || 0;
-      
-      case 'revenus-location':
-        return (entry.monthlyAmount || 0) * 12;
-      
-      default:
-        return 0;
-    }
-  };
-  
-  // Mise à jour des calculs automatiques
-  useEffect(() => {
-    const updatedEntries = incomeEntries.map(entry => ({
-      ...entry,
-      toDateAmount: entry.type === 'assurance-emploi' ? calculateEIToDate(entry) : undefined,
-      projectedAnnual: calculateProjectedAnnual(entry)
-    }));
-    
-    setIncomeEntries(updatedEntries);
-    onDataChange(updatedEntries);
-  }, [incomeEntries.length]); // Recalculer quand les entrées changent
-  
   const addIncomeEntry = () => {
     const newEntry: IncomeEntry = {
       id: `income-${Date.now()}`,
       type: 'salaire',
       description: '',
       isActive: true,
-      annualAmount: 0
+      annualAmount: 0,
+      salaryFrequency: 'monthly', // Valeur par défaut pour la fréquence
+      salaryNetAmount: 0 // Valeur par défaut pour le montant
     };
     
     const updated = [...incomeEntries, newEntry];
@@ -458,44 +259,39 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
   };
   
   const updateIncomeEntry = useCallback((id: string, updates: Partial<IncomeEntry>) => {
-    // Debug spécifique pour Personne 2
-    if (personNumber === 2) {
-      console.log(`🚨 UPDATE PERSONNE 2 - ID: ${id}, Updates:`, updates);
-      console.log(`🚨 UPDATE PERSONNE 2 - Avant update:`, incomeEntries.find(e => e.id === id));
-    }
-    
-    const updated = incomeEntries.map(entry => 
-      entry.id === id ? { 
-        ...entry, 
-        ...updates,
-        toDateAmount: entry.type === 'assurance-emploi' ? calculateEIToDate({ ...entry, ...updates }) : undefined,
-        projectedAnnual: calculateProjectedAnnual({ ...entry, ...updates })
-      } : entry
-    );
-    
-    // Log de débogage pour vérifier que les nouveaux champs sont inclus
-    if (updates.salaryRevisionDate || updates.salaryRevisionAmount || updates.salaryRevisionDescription) {
-      console.log('🔄 Révision salariale mise à jour:', {
-        id,
-        updates,
-        entry: updated.find(e => e.id === id)
-      });
-    }
-    
-    // Debug spécifique pour Personne 2
-    if (personNumber === 2) {
-      console.log(`🚨 UPDATE PERSONNE 2 - Après update:`, updated.find(e => e.id === id));
-    }
-    
+    const updated = incomeEntries.map(entry => {
+      if (entry.id === id) {
+        const updatedEntry = { ...entry, ...updates };
+        
+        // Si on change le type de revenu, s'assurer que les valeurs par défaut sont définies
+        if (updates.type && updates.type !== entry.type) {
+          if (updates.type === 'salaire' || updates.type === 'emploi-saisonnier') {
+            // Pour salaire et emploi saisonnier, s'assurer que salaryFrequency est définie
+            if (!updatedEntry.salaryFrequency) {
+              updatedEntry.salaryFrequency = 'monthly';
+            }
+            if (!updatedEntry.salaryNetAmount) {
+              updatedEntry.salaryNetAmount = 0;
+            }
+          } else if (updates.type === 'rentes') {
+            // Pour les rentes, s'assurer que pensionFrequency est définie
+            if (!updatedEntry.pensionFrequency) {
+              updatedEntry.pensionFrequency = 'monthly';
+            }
+            if (!updatedEntry.pensionAmount) {
+              updatedEntry.pensionAmount = 0;
+            }
+          }
+        }
+        
+        return updatedEntry;
+      }
+      return entry;
+    });
+
     setIncomeEntries(updated);
-    
-    // Debug spécifique pour Personne 2
-    if (personNumber === 2) {
-      console.log(`🚨 ON DATA CHANGE PERSONNE 2 - Appel de onDataChange avec:`, updated);
-    }
-    
     onDataChange(updated);
-    
+
     // Sauvegarde critique immédiate
     const updatedUserData = {
       ...userData,
@@ -505,10 +301,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
       }
     };
     CriticalDataFix.saveCriticalData(updatedUserData);
-    
-    // Afficher une confirmation de sauvegarde
-    console.log('✅ Modification sauvegardée et sauvegarde critique effectuée:', updates);
-  }, [incomeEntries, onDataChange, personNumber]);
+  }, [incomeEntries, onDataChange, personNumber, userData]);
   
   const removeIncomeEntry = (id: string) => {
     if (window.confirm(isFrench ? 'Êtes-vous sûr de vouloir supprimer ce revenu ?' : 'Are you sure you want to delete this income?')) {
@@ -522,70 +315,6 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
     return incomeTypes.find(t => t.value === type) || incomeTypes[0];
   };
   
-  // Calcul du budget mensuel basé sur la fréquence de paiement
-  const calculateMonthlyBudget = (entry: IncomeEntry): number => {
-    if (entry.type === 'salaire' && entry.salaryNetAmount && entry.salaryFrequency) {
-      // Vérifier si le salaire est encore actif selon les dates
-      const currentDate = new Date();
-      if (entry.salaryEndDate) {
-        const endDate = new Date(entry.salaryEndDate);
-        if (currentDate > endDate) {
-          return 0; // Le salaire a pris fin
-        }
-      }
-      
-      if (entry.salaryStartDate) {
-        const startDate = new Date(entry.salaryStartDate);
-        if (currentDate < startDate) {
-          return 0; // Le salaire n'a pas encore commencé
-        }
-      }
-      
-      // Le montant saisi est le montant total pour la période de fréquence
-      switch (entry.salaryFrequency) {
-        case 'weekly':
-          return (entry.salaryNetAmount * 52) / 12; // Montant hebdomadaire × 52 semaines ÷ 12 mois
-        case 'biweekly':
-          return (entry.salaryNetAmount * 26) / 12; // Montant bi-hebdomadaire × 26 paiements ÷ 12 mois
-        case 'bimonthly':
-          return entry.salaryNetAmount * 2; // Montant bi-mensuel × 2 paiements par mois
-        case 'monthly':
-          return entry.salaryNetAmount; // Montant mensuel
-        default:
-          return 0;
-      }
-    }
-    
-    if (entry.type === 'assurance-emploi' && entry.weeklyNet && entry.eiPaymentFrequency) {
-      // Le montant saisi est le montant total pour la période de fréquence
-      switch (entry.eiPaymentFrequency) {
-        case 'weekly':
-          return (entry.weeklyNet * 52) / 12; // Montant hebdomadaire × 52 semaines ÷ 12 mois
-        case 'biweekly':
-          return (entry.weeklyNet * 26) / 12; // Montant bi-hebdomadaire × 26 paiements ÷ 12 mois
-        default:
-          return 0;
-      }
-    }
-    
-    if (entry.type === 'rentes' && entry.pensionAmount && entry.pensionFrequency) {
-      switch (entry.pensionFrequency) {
-        case 'monthly':
-          return entry.pensionAmount;
-        case 'quarterly':
-          return entry.pensionAmount / 3; // Trimestriel = 1/3 du montant mensuel
-        case 'semi-annual':
-          return entry.pensionAmount / 6; // Semi-annuel = 1/6 du montant mensuel
-        case 'annual':
-          return entry.pensionAmount / 12; // Annuel = 1/12 du montant mensuel
-        default:
-          return 0;
-      }
-    }
-    
-    return 0;
-  };
-  
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('fr-CA', {
       style: 'currency',
@@ -594,215 +323,6 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
       maximumFractionDigits: 0
     }).format(amount);
   };
-  
-  const getTotalsByFrequency = () => {
-    const totals = {
-      annual: 0,
-      monthly: 0,
-      weekly: 0,
-      toDate: 0,
-      projected: 0
-    };
-    
-    incomeEntries.forEach(entry => {
-      if (!entry.isActive) return;
-      
-      // Calculer le montant annuel basé sur le type et les champs spécifiques
-      let annualAmount = 0;
-      let monthlyAmount = 0;
-      let weeklyAmount = 0;
-      
-      switch (entry.type) {
-        case 'salaire':
-          if (entry.salaryNetAmount && entry.salaryFrequency) {
-            // Utiliser la même logique que calculateProjectedAnnual
-            const currentYear = new Date().getFullYear();
-            const yearStart = new Date(currentYear, 0, 1);
-            const yearEnd = new Date(currentYear, 11, 31);
-            
-            let effectiveStart = yearStart;
-            let effectiveEnd = yearEnd;
-            
-            if (entry.salaryStartDate) {
-              const startDate = new Date(entry.salaryStartDate);
-              if (startDate > yearStart) {
-                effectiveStart = startDate;
-              }
-            }
-            
-            if (entry.salaryEndDate) {
-              const endDate = new Date(entry.salaryEndDate);
-              if (endDate < yearEnd) {
-                effectiveEnd = endDate;
-              }
-            }
-            
-            const daysInPeriod = Math.max(0, Math.floor((effectiveEnd.getTime() - effectiveStart.getTime()) / (1000 * 60 * 60 * 24)));
-            
-            // Le montant saisi est le montant total pour la période de fréquence
-            let paymentsInPeriod = 0;
-            switch (entry.salaryFrequency) {
-              case 'weekly':
-                paymentsInPeriod = Math.floor(daysInPeriod / 7);
-                weeklyAmount = entry.salaryNetAmount; // Montant hebdomadaire
-                break;
-              case 'biweekly':
-                paymentsInPeriod = Math.floor(daysInPeriod / 14);
-                break;
-              case 'bimonthly':
-                paymentsInPeriod = Math.floor(daysInPeriod / 15);
-                break;
-              case 'monthly':
-                paymentsInPeriod = Math.floor(daysInPeriod / 30);
-                break;
-            }
-            
-            annualAmount = Math.max(0, entry.salaryNetAmount * paymentsInPeriod);
-            monthlyAmount = annualAmount / 12;
-          } else {
-            annualAmount = entry.annualAmount || 0;
-            monthlyAmount = annualAmount / 12;
-          }
-          break;
-          
-        case 'rentes':
-          if (entry.pensionAmount && entry.pensionFrequency) {
-            switch (entry.pensionFrequency) {
-              case 'monthly':
-                annualAmount = entry.pensionAmount * 12;
-                monthlyAmount = entry.pensionAmount;
-                break;
-              case 'quarterly':
-                annualAmount = entry.pensionAmount * 4;
-                monthlyAmount = entry.pensionAmount / 3;
-                break;
-              case 'semi-annual':
-                annualAmount = entry.pensionAmount * 2;
-                monthlyAmount = entry.pensionAmount / 6;
-                break;
-              case 'annual':
-                annualAmount = entry.pensionAmount;
-                monthlyAmount = entry.pensionAmount / 12;
-                break;
-            }
-          } else {
-            annualAmount = (entry.monthlyAmount || 0) * 12;
-            monthlyAmount = entry.monthlyAmount || 0;
-          }
-          break;
-          
-        case 'assurance-emploi':
-          if (entry.weeklyNet && entry.eiPaymentFrequency) {
-            // Le montant saisi est le montant total pour la période de fréquence
-            switch (entry.eiPaymentFrequency) {
-              case 'weekly':
-                annualAmount = entry.weeklyNet * 52; // Montant hebdomadaire × 52 semaines
-                weeklyAmount = entry.weeklyNet; // Montant hebdomadaire
-                monthlyAmount = annualAmount / 12;
-                break;
-              case 'biweekly':
-                annualAmount = entry.weeklyNet * 26; // Montant bi-hebdomadaire × 26 paiements
-                monthlyAmount = annualAmount / 12;
-                break;
-            }
-          } else if (entry.weeklyNet) {
-            // Fallback pour compatibilité
-            annualAmount = entry.weeklyNet * 52;
-            weeklyAmount = entry.weeklyNet;
-            monthlyAmount = annualAmount / 12;
-          }
-          break;
-          
-        case 'dividendes':
-        case 'travail-autonome':
-        case 'autres':
-          annualAmount = entry.annualAmount || 0;
-          monthlyAmount = annualAmount / 12;
-          break;
-          
-        case 'revenus-location':
-          annualAmount = (entry.monthlyAmount || 0) * 12;
-          monthlyAmount = entry.monthlyAmount || 0;
-          break;
-      }
-      
-      // Ajouter aux totaux
-      totals.annual += annualAmount;
-      totals.monthly += monthlyAmount;
-      totals.weekly += weeklyAmount;
-      
-      if (entry.toDateAmount) {
-        totals.toDate += entry.toDateAmount;
-      }
-      
-      totals.projected += entry.projectedAnnual || 0;
-    });
-    
-    return totals;
-  };
-
-  // Nouvelle fonction pour calculer les totaux par type de revenu
-  const getTotalsByIncomeType = () => {
-    console.log('🚨 CRITICAL CALC - Starting calculation for Person', personNumber);
-    console.log('🚨 CRITICAL CALC - Income entries:', incomeEntries);
-    
-    // Utiliser le service de calcul simplifié
-    const totals = SalaryCalculationFix.calculateIncomeTotals(incomeEntries);
-    
-    // Ajouter les montants automatiques RRQ/SV depuis userData
-    if (userData?.retirement) {
-      const currentDate = new Date();
-      const monthsElapsed = currentDate.getMonth() + 1;
-      
-      // RRQ - utiliser les montants réels depuis userData
-      if (userData.retirement.rrqMontantActuel1 && personNumber === 1) {
-        const monthsCompleted = Math.max(0, monthsElapsed - 1);
-        const rrqAmount = userData.retirement.rrqMontantActuel1 * monthsCompleted;
-        totals.rrq += rrqAmount;
-        console.log('🚨 CRITICAL CALC - RRQ Person 1 added:', rrqAmount);
-      }
-      if (userData.retirement.rrqMontantActuel2 && personNumber === 2) {
-        const monthsCompleted = Math.max(0, monthsElapsed - 1);
-        const rrqAmount = userData.retirement.rrqMontantActuel2 * monthsCompleted;
-        totals.rrq += rrqAmount;
-        console.log('🚨 CRITICAL CALC - RRQ Person 2 added:', rrqAmount);
-      }
-      
-      // SV - utiliser la structure svBiannual
-      if (userData.retirement.svBiannual1 && personNumber === 1) {
-        const svBiannual = userData.retirement.svBiannual1;
-        const periode1Amount = svBiannual.periode1?.montant || 0;
-        const periode2Amount = svBiannual.periode2?.montant || 0;
-        const totalMonthly = periode1Amount + periode2Amount;
-        const monthsCompleted = Math.max(0, monthsElapsed - 1);
-        const svAmount = totalMonthly * monthsCompleted;
-        totals.securiteVieillesse += svAmount;
-        console.log('🚨 CRITICAL CALC - SV Person 1 added:', svAmount);
-      }
-      if (userData.retirement.svBiannual2 && personNumber === 2) {
-        const svBiannual = userData.retirement.svBiannual2;
-        const periode1Amount = svBiannual.periode1?.montant || 0;
-        const periode2Amount = svBiannual.periode2?.montant || 0;
-        const totalMonthly = periode1Amount + periode2Amount;
-        const monthsCompleted = Math.max(0, monthsElapsed - 1);
-        const svAmount = totalMonthly * monthsCompleted;
-        totals.securiteVieillesse += svAmount;
-        console.log('🚨 CRITICAL CALC - SV Person 2 added:', svAmount);
-      }
-    }
-    
-    console.log('🚨 CRITICAL CALC - Final totals:', totals);
-    return totals;
-  };
-  
-  const totals = getTotalsByFrequency();
-  const incomeTypeTotals = getTotalsByIncomeType();
-  
-  // Log de débogage pour les totaux
-  useEffect(() => {
-    console.log(`🔍 SeniorsFriendlyIncomeTable Personne ${personNumber} - Totaux calculés:`, totals);
-    console.log(`🔍 SeniorsFriendlyIncomeTable Personne ${personNumber} - Entrées actives:`, incomeEntries.filter(e => e.isActive));
-  }, [totals, incomeEntries, personNumber]);
   
   return (
     <>
@@ -846,20 +366,20 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
           <div className="grid grid-cols-8 gap-4 text-xl font-bold text-blue-800 border-b-4 border-blue-200 pb-4">
             <div className="col-span-2">{isFrench ? 'Type de revenu' : 'Income Type'}</div>
             <div className="col-span-2">{isFrench ? 'Description' : 'Description'}</div>
-            <div className="col-span-2">{isFrench ? 'Montant et fréquence' : 'Amount & Frequency'}</div>
-            <div className="col-span-2">{isFrench ? 'Statut et Actions' : 'Status & Actions'}</div>
+            <div className="col-span-2">{isFrench ? 'Montant' : 'Amount'}</div>
+            <div className="col-span-2">{isFrench ? 'fréquence' : 'frequency'}</div>
           </div>
           
           {/* Lignes de revenus - Version Senior */}
           <div className="space-y-3">
-            {incomeEntries.map((entry) => {
+            {incomeEntries.filter(e => e.type !== 'assurance-emploi').map((entry) => {
               const typeInfo = getIncomeTypeInfo(entry.type);
               const isEditing = editingId === entry.id;
               
               return (
                 <div key={entry.id} className={`p-6 rounded-xl border-4 ${entry.isActive ? 'border-green-400 bg-green-50' : 'border-gray-300 bg-gray-50 opacity-60'} shadow-lg relative overflow-visible`}>
                   
-                  {/* Ligne principale - Type et Description */}
+                  {/* Ligne principale - Type, Description, Montant, Fréquence */}
                   <div className="grid grid-cols-8 gap-6 mb-6">
                     {/* Type de revenu */}
                     <div className="col-span-2">
@@ -881,7 +401,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                           className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl w-full px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                           title={isFrench ? 'Sélectionner le type de revenu' : 'Select income type'}
                         >
-                          {incomeTypes.map(type => (
+                          {(incomeTypes.filter(type => type.value !== 'assurance-emploi' && type.value !== 'rentes' && type.value !== 'autres')).map(type => (
                             <option key={type.value} value={type.value}>
                               {type.icon} {type.label}
                             </option>
@@ -916,34 +436,58 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                       )}
                     </div>
                     
-                    {/* Montant et fréquence */}
+                    {/* Montant */}
                     <div className="col-span-2">
                       <Label className="text-lg font-bold text-gray-700 mb-3 block">
-                        {isFrench ? 'Montant et fréquence' : 'Amount & Frequency'}
+                        {isFrench ? 'Montant' : 'Amount'}
+                      </Label>
+                      {isEditing ? (
+                        <MoneyInput
+                          value={
+                            (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') ? (entry.salaryNetAmount || 0) :
+                            entry.type === 'assurance-emploi' ? (entry.weeklyNet || 0) :
+                            entry.type === 'rentes' ? (entry.pensionAmount || 0) :
+                            entry.annualAmount || 0
+                          }
+                          onChange={(value) => {
+                            if (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') {
+                              updateIncomeEntry(entry.id, { salaryNetAmount: value });
+                            } else if (entry.type === 'assurance-emploi') {
+                              updateIncomeEntry(entry.id, { weeklyNet: value });
+                            } else if (entry.type === 'rentes') {
+                              updateIncomeEntry(entry.id, { pensionAmount: value });
+                            } else {
+                              updateIncomeEntry(entry.id, { annualAmount: value });
+                            }
+                          }}
+                          className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl"
+                          placeholder="0"
+                          allowDecimals={true}
+                        />
+                      ) : (
+                        <div className="p-4 bg-white border-4 border-gray-200 rounded-lg">
+                          <div className="text-xl text-gray-800 font-bold">
+                            {(entry.type === 'salaire' || entry.type === 'emploi-saisonnier') && entry.salaryNetAmount ? 
+                              formatCurrency(entry.salaryNetAmount) :
+                              entry.type === 'assurance-emploi' && entry.weeklyNet ?
+                              formatCurrency(entry.weeklyNet) :
+                              entry.type === 'rentes' && entry.pensionAmount ?
+                              formatCurrency(entry.pensionAmount) :
+                              entry.annualAmount ? formatCurrency(entry.annualAmount) : '-'
+                            }
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                    
+                    {/* Fréquence */}
+                    <div className="col-span-2">
+                      <Label className="text-lg font-bold text-gray-700 mb-3 block">
+                        {isFrench ? 'fréquence' : 'frequency'}
                       </Label>
                       {isEditing ? (
                         <div className="space-y-3">
-                          <MoneyInput
-                            value={
-                              entry.type === 'salaire' ? (entry.salaryNetAmount || 0) :
-                              entry.type === 'assurance-emploi' ? (entry.weeklyNet || 0) :
-                              entry.type === 'rentes' ? (entry.pensionAmount || 0) :
-                              0
-                            }
-                            onChange={(value) => {
-                              if (entry.type === 'salaire') {
-                                updateIncomeEntry(entry.id, { salaryNetAmount: value });
-                              } else if (entry.type === 'assurance-emploi') {
-                                updateIncomeEntry(entry.id, { weeklyNet: value });
-                              } else if (entry.type === 'rentes') {
-                                updateIncomeEntry(entry.id, { pensionAmount: value });
-                              }
-                            }}
-                            className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl"
-                            placeholder="0"
-                            allowDecimals={true}
-                          />
-                          {entry.type === 'salaire' && (
+                          {(entry.type === 'salaire' || entry.type === 'emploi-saisonnier') && (
                             <Select
                               value={entry.salaryFrequency || 'monthly'}
                               onValueChange={(value) => updateIncomeEntry(entry.id, { salaryFrequency: value as any })}
@@ -951,7 +495,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                               <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
                                 <SelectValue />
                               </SelectTrigger>
-                              <SelectContent className="bg-white border-4 border-gray-300 z-[99999]" position="popper" sideOffset={5} align="start" avoidCollisions={true} onCloseAutoFocus={(e) => e.preventDefault()}>
+                              <SelectContent className="bg-white border-4 border-gray-300 z-50" position="popper" sideOffset={5}>
                                 {salaryFrequencies.map(freq => (
                                   <SelectItem key={freq.value} value={freq.value} className="text-xl py-4">
                                     {freq.label}
@@ -961,203 +505,121 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                             </Select>
                           )}
                           {entry.type === 'rentes' && (
-                            <div className="space-y-4">
-                              <div>
-                                <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                                  {isFrench ? 'Fréquence de versement' : 'Payment Frequency'}
-                                </Label>
-                                <Select
-                                  value={entry.pensionFrequency || 'monthly'}
-                                  onValueChange={(value) => updateIncomeEntry(entry.id, { pensionFrequency: value as any })}
-                                >
-                                  <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
-                                    <SelectValue />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-white border-4 border-gray-300 z-[99999]" position="popper" sideOffset={5} align="start" avoidCollisions={true} onCloseAutoFocus={(e) => e.preventDefault()}>
-                                    {pensionFrequencies.map(freq => (
-                                      <SelectItem key={freq.value} value={freq.value} className="text-xl py-4">
-                                        {freq.label}
-                                      </SelectItem>
-                                    ))}
-                                  </SelectContent>
-                                </Select>
-                              </div>
-                              
-                              <div>
-                                <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                                  {isFrench ? 'Date de versement' : 'Payment Date'}
-                                </Label>
-                                <Select
-                                  value={entry.pensionPaymentDate || '1st-of-month'}
-                                  onValueChange={(value) => updateIncomeEntry(entry.id, { pensionPaymentDate: value as any })}
-                                >
-                                  <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
-                                    <SelectValue />
-                                  </SelectTrigger>
-                                  <SelectContent className="bg-white border-4 border-gray-300 z-[99999]">
-                                    <SelectItem value="1st-of-month" className="text-xl py-4">
-                                      {isFrench ? '1er du mois' : '1st of month'}
-                                    </SelectItem>
-                                    <SelectItem value="10th-of-month" className="text-xl py-4">
-                                      {isFrench ? '10 du mois' : '10th of month'}
-                                    </SelectItem>
-                                    <SelectItem value="last-business-day" className="text-xl py-4">
-                                      {isFrench ? 'Dernier jour ouvrable du mois' : 'Last business day of month'}
-                                    </SelectItem>
-                                  </SelectContent>
-                                </Select>
-                              </div>
+                            <Select
+                              value={entry.pensionFrequency || 'monthly'}
+                              onValueChange={(value) => updateIncomeEntry(entry.id, { pensionFrequency: value as any })}
+                            >
+                              <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent className="bg-white border-4 border-gray-300 z-50" position="popper" sideOffset={5}>
+                                {pensionFrequencies.map(freq => (
+                                  <SelectItem key={freq.value} value={freq.value} className="text-xl py-4">
+                                    {freq.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          )}
+                          {(entry.type === 'dividendes' || entry.type === 'travail-autonome' || entry.type === 'autres') && (
+                            <div className="p-4 bg-gray-100 border-4 border-gray-200 rounded-lg">
+                              <span className="text-lg text-gray-600">{isFrench ? 'Annuel' : 'Annual'}</span>
                             </div>
                           )}
-                          
-                          {/* Interface spécialisée pour travailleur autonome */}
-                          {entry.type === 'travail-autonome' && (
-                            <div className="space-y-4">
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                  <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                                    {isFrench ? 'Type de contrat' : 'Contract Type'}
-                                  </Label>
-                                  <Select
-                                    value={entry.contractType || 'lump-sum'}
-                                    onValueChange={(value) => updateIncomeEntry(entry.id, { contractType: value as any })}
-                                  >
-                                    <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
-                                      <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-white border-4 border-gray-300 z-[99999]">
-                                      <SelectItem value="lump-sum" className="text-xl py-4">
-                                        {isFrench ? 'Montant forfaitaire (facturé à la fin)' : 'Lump sum (billed at end)'}
-                                      </SelectItem>
-                                      <SelectItem value="recurring" className="text-xl py-4">
-                                        {isFrench ? 'Paiements récurrents' : 'Recurring payments'}
-                                      </SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                                
-                                <div>
-                                  <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                                    {isFrench ? 'Durée du contrat' : 'Contract Duration'}
-                                  </Label>
-                                  <Select
-                                    value={entry.contractDuration || '1-month'}
-                                    onValueChange={(value) => updateIncomeEntry(entry.id, { contractDuration: value as any })}
-                                  >
-                                    <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
-                                      <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-white border-4 border-gray-300 z-[99999]">
-                                      <SelectItem value="15-days" className="text-xl py-4">
-                                        {isFrench ? '15 jours' : '15 days'}
-                                      </SelectItem>
-                                      <SelectItem value="1-month" className="text-xl py-4">
-                                        {isFrench ? '1 mois' : '1 month'}
-                                      </SelectItem>
-                                      <SelectItem value="3-months" className="text-xl py-4">
-                                        {isFrench ? '3 mois' : '3 months'}
-                                      </SelectItem>
-                                      <SelectItem value="6-months" className="text-xl py-4">
-                                        {isFrench ? '6 mois' : '6 months'}
-                                      </SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                              </div>
-                              
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                  <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                                    {isFrench ? 'Date de début' : 'Start Date'}
-                                  </Label>
-                                  <DateInput
-                                    value={entry.contractStartDate || ''}
-                                    onChange={(value) => updateIncomeEntry(entry.id, { contractStartDate: value })}
-                                    className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl"
-                                  />
-                                </div>
-                                
-                                <div>
-                                  <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                                    {isFrench ? 'Date de fin' : 'End Date'}
-                                  </Label>
-                                  <DateInput
-                                    value={entry.contractEndDate || ''}
-                                    onChange={(value) => updateIncomeEntry(entry.id, { contractEndDate: value })}
-                                    className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl"
-                                  />
-                                </div>
-                              </div>
-                              
-                              {entry.contractType === 'recurring' && (
-                                <div>
-                                  <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                                    {isFrench ? 'Fréquence de paiement' : 'Payment Frequency'}
-                                  </Label>
-                                  <Select
-                                    value={entry.paymentFrequency || 'monthly'}
-                                    onValueChange={(value) => updateIncomeEntry(entry.id, { paymentFrequency: value as any })}
-                                  >
-                                    <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
-                                      <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-white border-4 border-gray-300 z-[99999]">
-                                      <SelectItem value="weekly" className="text-xl py-4">
-                                        {isFrench ? 'Hebdomadaire' : 'Weekly'}
-                                      </SelectItem>
-                                      <SelectItem value="biweekly" className="text-xl py-4">
-                                        {isFrench ? 'Bi-hebdomadaire' : 'Bi-weekly'}
-                                      </SelectItem>
-                                      <SelectItem value="bimonthly" className="text-xl py-4">
-                                        {isFrench ? 'Bimensuel' : 'Bimonthly'}
-                                      </SelectItem>
-                                      <SelectItem value="monthly" className="text-xl py-4">
-                                        {isFrench ? 'Mensuel' : 'Monthly'}
-                                      </SelectItem>
-                                    </SelectContent>
-                                  </Select>
-                                </div>
-                              )}
+                          {entry.type === 'revenus-location' && (
+                            <div className="p-4 bg-gray-100 border-4 border-gray-200 rounded-lg">
+                              <span className="text-lg text-gray-600">{isFrench ? 'Mensuel' : 'Monthly'}</span>
                             </div>
                           )}
                         </div>
                       ) : (
-                        <div className="p-4 bg-white border-4 border-gray-200 rounded-lg space-y-2">
-                          <div className="text-xl text-gray-800 font-bold">
-                            {entry.type === 'salaire' && entry.salaryNetAmount ? 
-                              formatCurrency(entry.salaryNetAmount) :
-                              entry.type === 'assurance-emploi' && entry.weeklyNet ?
-                              formatCurrency(entry.weeklyNet) :
-                              entry.type === 'rentes' && entry.pensionAmount ?
-                              formatCurrency(entry.pensionAmount) : '-'
-                            }
-                          </div>
+                        <div className="p-4 bg-white border-4 border-gray-200 rounded-lg">
                           <div className="text-lg text-gray-600">
-                            {entry.type === 'salaire' ? (
+                            {(entry.type === 'salaire' || entry.type === 'emploi-saisonnier') ? (
                               salaryFrequencies.find(f => f.value === entry.salaryFrequency)?.label || '-'
                             ) : entry.type === 'assurance-emploi' ? (
                               eiPaymentFrequencies.find(f => f.value === entry.eiPaymentFrequency)?.label || (isFrench ? 'Hebdomadaire' : 'Weekly')
                             ) : entry.type === 'rentes' ? (
                               pensionFrequencies.find(f => f.value === entry.pensionFrequency)?.label || '-'
+                            ) : entry.type === 'revenus-location' ? (
+                              isFrench ? 'Mensuel' : 'Monthly'
                             ) : (
-                              '-'
+                              isFrench ? 'Annuel' : 'Annual'
                             )}
                           </div>
                         </div>
                       )}
                     </div>
+                  </div>
+                  
+                  {/* Ligne secondaire - Dates et Statut/Actions */}
+                  <div className="grid grid-cols-8 gap-6 mb-6">
+                    {/* Date de début */}
+                    <div className="col-span-2">
+                      <div className="flex items-center gap-3">
+                        <Label className="text-lg font-bold text-gray-700">
+                          {isFrench ? 'Date de début' : 'Start Date'}
+                        </Label>
+                        {isEditing ? (
+                          <DateInput
+                            value={
+                              entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryStartDate || '') :
+                              entry.type === 'assurance-emploi' ? (entry.eiStartDate || '') :
+                              entry.type === 'rentes' ? (entry.pensionStartDate || '') :
+                              ''
+                            }
+                            onChange={(value) => {
+                              if (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') {
+                                updateIncomeEntry(entry.id, { salaryStartDate: value });
+                              } else if (entry.type === 'assurance-emploi') {
+                                updateIncomeEntry(entry.id, { eiStartDate: value });
+                              } else if (entry.type === 'rentes') {
+                                updateIncomeEntry(entry.id, { pensionStartDate: value });
+                              }
+                            }}
+                            placeholder="AAAA-MM-JJ"
+                            className="h-12 text-lg flex-1"
+                          />
+                        ) : (
+                          <div className="text-lg text-blue-900 font-semibold">
+                            {entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryStartDate || '-') :
+                             entry.type === 'assurance-emploi' ? (entry.eiStartDate || '-') :
+                             entry.type === 'rentes' ? (entry.pensionStartDate || '-') :
+                             '-'
+                            }
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    
+                    {/* Date de fin */}
+                    <div className="col-span-2">
+                      <div className="flex items-center gap-3">
+                        <Label className="text-lg font-bold text-gray-700">
+                          {isFrench ? 'Date de fin' : 'End Date'}
+                        </Label>
+                        {isEditing ? (
+                          <DateInput
+                            value={entry.salaryEndDate || ''}
+                            onChange={(value) => updateIncomeEntry(entry.id, { salaryEndDate: value })}
+                            placeholder="AAAA-MM-JJ"
+                            className="h-12 text-lg flex-1"
+                          />
+                        ) : (
+                          <div className="text-lg text-red-900 font-semibold">
+                            {entry.salaryEndDate || '-'}
+                          </div>
+                        )}
+                      </div>
+                    </div>
                     
                     {/* Statut et Actions */}
-                    <div className="col-span-2 flex flex-col items-center">
-                      <Label className="text-lg font-bold text-gray-700 mb-3 block">
-                        {isFrench ? 'Statut et Actions' : 'Status & Actions'}
-                      </Label>
+                    <div className="col-span-4 flex items-center justify-end">
                       <div className="flex gap-3 items-center">
                         {/* Statut / Validation */}
                         {isEditing ? (
                           <button
                             onClick={() => {
-                              updateIncomeEntry(entry.id, { lastModified: new Date().toISOString() });
                               setEditingId(null);
                               // Afficher une confirmation visuelle
                               alert(isFrench ? '✅ Modifications sauvegardées !' : '✅ Changes saved!');
@@ -1198,469 +660,6 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                         </div>
                       </div>
                     </div>
-                    
-                    {/* Détails des rentes (affichage condensé sur une ligne) */}
-                    {!isEditing && entry.type === 'rentes' && (
-                      <div className="col-span-8 border-t-4 border-gray-200 pt-4">
-                        <div className="grid grid-cols-4 gap-4">
-                          <div className="p-3 bg-blue-50 rounded-lg">
-                            <div className="text-sm font-bold text-blue-800 mb-1">
-                              {isFrench ? 'Type de rente' : 'Pension Type'}
-                            </div>
-                            <div className="text-lg text-blue-900">
-                              {pensionTypes.find(t => t.value === entry.pensionType)?.label || '-'}
-                            </div>
-                          </div>
-                          <div className="p-3 bg-green-50 rounded-lg">
-                            <div className="text-sm font-bold text-green-800 mb-1">
-                              {isFrench ? 'Prestation au survivant' : 'Survivor Benefit'}
-                            </div>
-                            <div className="text-lg text-green-900">
-                              {survivorBenefits.find(b => b.value === entry.survivorBenefit)?.label || '-'}
-                            </div>
-                          </div>
-                          {entry.pensionStartDate && (
-                            <div className="p-3 bg-purple-50 rounded-lg">
-                              <div className="text-sm font-bold text-purple-800 mb-1">
-                                {isFrench ? 'Date de début' : 'Start Date'}
-                              </div>
-                              <div className="text-lg text-purple-900">
-                                {entry.pensionStartDate}
-                              </div>
-                            </div>
-                          )}
-                          {entry.isEstatePlanning && (
-                            <div className="p-3 bg-orange-50 rounded-lg">
-                              <div className="text-sm font-bold text-orange-800 mb-1">
-                                {isFrench ? 'Planification successorale' : 'Estate Planning'}
-                              </div>
-                              <div className="text-lg text-orange-900">
-                                {isFrench ? 'Incluse' : 'Included'}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* Détails des salaires (affichage condensé sur une ligne) */}
-                    {!isEditing && entry.type === 'salaire' && (
-                      <div className="col-span-8 border-t-4 border-gray-200 pt-4">
-                        <div className="grid grid-cols-4 gap-4">
-                          {entry.salaryStartDate && (
-                            <div className="p-3 bg-blue-50 rounded-lg">
-                              <div className="text-sm font-bold text-blue-800 mb-1">
-                                {isFrench ? 'Date de début' : 'Start Date'}
-                              </div>
-                              <div className="text-lg text-blue-900">
-                                {entry.salaryStartDate}
-                              </div>
-                            </div>
-                          )}
-                          {entry.salaryEndDate && (
-                            <div className="p-3 bg-red-50 rounded-lg">
-                              <div className="text-sm font-bold text-red-800 mb-1">
-                                {isFrench ? 'Date de fin' : 'End Date'}
-                              </div>
-                              <div className="text-lg text-red-900">
-                                {entry.salaryEndDate}
-                              </div>
-                            </div>
-                          )}
-                          {entry.salaryRevisionDate && entry.salaryRevisionAmount && (
-                            <div className="p-3 bg-green-50 rounded-lg">
-                              <div className="text-sm font-bold text-green-800 mb-1">
-                                {isFrench ? 'Révision salariale' : 'Salary Revision'}
-                              </div>
-                              <div className="text-lg text-green-900">
-                                {formatCurrency(entry.salaryRevisionAmount)} à partir du {entry.salaryRevisionDate}
-                              </div>
-                            </div>
-                          )}
-                          {entry.salaryRevisionDescription && (
-                            <div className="p-3 bg-purple-50 rounded-lg">
-                              <div className="text-sm font-bold text-purple-800 mb-1">
-                                {isFrench ? 'Description' : 'Description'}
-                              </div>
-                              <div className="text-lg text-purple-900">
-                                {entry.salaryRevisionDescription}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                    
-                    {/* Détails de l'assurance-emploi (affichage condensé sur une ligne) */}
-                    {!isEditing && entry.type === 'assurance-emploi' && (
-                      <div className="col-span-8 border-t-4 border-gray-200 pt-4">
-                        <div className="grid grid-cols-4 gap-4">
-                          {entry.eiStartDate && (
-                            <div className="p-3 bg-blue-50 rounded-lg">
-                              <div className="text-sm font-bold text-blue-800 mb-1">
-                                {isFrench ? 'Date de début' : 'Start Date'}
-                              </div>
-                              <div className="text-lg text-blue-900">
-                                {entry.eiStartDate}
-                              </div>
-                            </div>
-                          )}
-                          {entry.eiEligibleWeeks && (
-                            <div className="p-3 bg-orange-50 rounded-lg">
-                              <div className="text-sm font-bold text-orange-800 mb-1">
-                                {isFrench ? 'Semaines éligibles' : 'Eligible Weeks'}
-                              </div>
-                              <div className="text-lg text-orange-900">
-                                {entry.eiEligibleWeeks} semaines
-                              </div>
-                            </div>
-                          )}
-                          {entry.eiRevisionDate && entry.eiRevisionAmount && (
-                            <div className="p-3 bg-green-50 rounded-lg">
-                              <div className="text-sm font-bold text-green-800 mb-1">
-                                {isFrench ? 'Révision AE' : 'EI Revision'}
-                              </div>
-                              <div className="text-lg text-green-900">
-                                {formatCurrency(entry.eiRevisionAmount)} à partir du {entry.eiRevisionDate}
-                              </div>
-                            </div>
-                          )}
-                          {entry.eiRevisionDescription && (
-                            <div className="p-3 bg-purple-50 rounded-lg">
-                              <div className="text-sm font-bold text-purple-800 mb-1">
-                                {isFrench ? 'Description' : 'Description'}
-                              </div>
-                              <div className="text-lg text-purple-900">
-                                {entry.eiRevisionDescription}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-
-                  </div>
-                  
-                  {/* Section spécifique aux rentes privées */}
-                  {isEditing && entry.type === 'rentes' && (
-                    <div className="border-t-4 border-gray-200 pt-6">
-                      <Label className="text-xl font-bold text-gray-700 mb-4 block">
-                        {isFrench ? 'Détails de la rente privée' : 'Private Pension Details'}
-                      </Label>
-                      <div className="grid grid-cols-2 gap-6">
-                        {/* Type de rente */}
-                        <div>
-                          <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                            {isFrench ? 'Type de rente' : 'Pension Type'}
-                          </Label>
-                          <Select
-                            value={entry.pensionType || 'viagere'}
-                            onValueChange={(value) => updateIncomeEntry(entry.id, { pensionType: value as any })}
-                          >
-                            <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-white border-4 border-gray-300 z-[99999]" position="popper" sideOffset={5} align="start" avoidCollisions={true} onCloseAutoFocus={(e) => e.preventDefault()}>
-                              {pensionTypes.map(type => (
-                                <SelectItem key={type.value} value={type.value} className="text-xl py-4">
-                                  {type.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        
-                        {/* Prestation au survivant */}
-                        <div>
-                          <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                            {isFrench ? 'Prestation au survivant' : 'Survivor Benefit'}
-                          </Label>
-                          <Select
-                            value={entry.survivorBenefit || 'none'}
-                            onValueChange={(value) => updateIncomeEntry(entry.id, { survivorBenefit: value as any })}
-                          >
-                            <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-white border-4 border-gray-300 z-[99999]" position="popper" sideOffset={5} align="start" avoidCollisions={true} onCloseAutoFocus={(e) => e.preventDefault()}>
-                              {survivorBenefits.map(benefit => (
-                                <SelectItem key={benefit.value} value={benefit.value} className="text-xl py-4">
-                                  {benefit.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
-                      
-                      {/* Dates importantes pour les rentes */}
-                      <div className="grid grid-cols-2 gap-6 mt-6">
-                        <div>
-                          <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                            {isFrench ? 'Date de début de la rente' : 'Pension start date'}
-                          </Label>
-                          <DateInput
-                            value={entry.pensionStartDate || ''}
-                            onChange={(value) => updateIncomeEntry(entry.id, { pensionStartDate: value })}
-                            placeholder="AAAA-MM-JJ"
-                            className="h-16 text-xl"
-                          />
-                        </div>
-                        
-                        <div>
-                          <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                            {isFrench ? 'Date du premier versement' : 'First payment date'}
-                          </Label>
-                          <DateInput
-                            value={entry.pensionFirstPaymentDate || ''}
-                            onChange={(value) => updateIncomeEntry(entry.id, { pensionFirstPaymentDate: value })}
-                            placeholder="AAAA-MM-JJ"
-                            className="h-16 text-xl"
-                          />
-                        </div>
-                      </div>
-                      
-                      {/* Planification successorale */}
-                      <div className="mt-6">
-                        <div className="flex items-center gap-3">
-                          <input
-                            type="checkbox"
-                            id={`estate-planning-${entry.id}`}
-                            checked={entry.isEstatePlanning || false}
-                            onChange={(e) => updateIncomeEntry(entry.id, { isEstatePlanning: e.target.checked })}
-                            className="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
-                            title={isFrench ? 'Inclure dans la planification successorale' : 'Include in estate planning'}
-                          />
-                          <Label htmlFor={`estate-planning-${entry.id}`} className="text-lg font-bold text-gray-700">
-                            {isFrench ? 'Inclure dans la planification successorale' : 'Include in estate planning'}
-                          </Label>
-                        </div>
-                        <p className="text-sm text-gray-600 mt-2">
-                          {isFrench 
-                            ? 'Cochez cette case si cette rente doit être considérée dans votre planification successorale'
-                            : 'Check this box if this pension should be considered in your estate planning'
-                          }
-                        </p>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Section des dates - Plus d'espace */}
-                  {isEditing && (entry.type === 'salaire' || entry.type === 'assurance-emploi') && (
-                    <div className="border-t-4 border-gray-200 pt-6">
-                      <Label className="text-xl font-bold text-gray-700 mb-4 block">
-                        {isFrench ? 'Dates importantes' : 'Important Dates'}
-                      </Label>
-                      {entry.type === 'salaire' ? (
-                        <div className="grid grid-cols-3 gap-6">
-                          <div>
-                            <Label className="text-lg font-bold text-gray-600 mb-2 block">{isFrench ? 'Date de début d\'emploi' : 'Employment start date'}</Label>
-                            <DateInput
-                              value={entry.salaryStartDate || ''}
-                              onChange={(value) => updateIncomeEntry(entry.id, { salaryStartDate: value })}
-                              placeholder="AAAA-MM-JJ"
-                              className="h-16 text-xl"
-                            />
-                          </div>
-                          <div>
-                            <Label className="text-lg font-bold text-gray-600 mb-2 block">{isFrench ? 'Date de fin d\'emploi' : 'Employment end date'}</Label>
-                            <DateInput
-                              value={entry.salaryEndDate || ''}
-                              onChange={(value) => updateIncomeEntry(entry.id, { salaryEndDate: value })}
-                              placeholder="AAAA-MM-JJ"
-                              className="h-16 text-xl"
-                            />
-                          </div>
-                          <div>
-                            <Label className="text-lg font-bold text-gray-600 mb-2 block">{isFrench ? 'Date du premier versement' : 'First payment date'}</Label>
-                            <DateInput
-                              value={entry.salaryFirstPaymentDate || ''}
-                              onChange={(value) => updateIncomeEntry(entry.id, { salaryFirstPaymentDate: value })}
-                              placeholder="AAAA-MM-JJ"
-                              className="h-16 text-xl"
-                            />
-                          </div>
-                        </div>
-                      ) : entry.type === 'assurance-emploi' ? (
-                        <div className="grid grid-cols-2 gap-6">
-                          <div>
-                            <Label className="text-lg font-bold text-gray-600 mb-2 block">{isFrench ? 'Date de début des prestations' : 'Benefits start date'}</Label>
-                            <DateInput
-                              value={entry.eiStartDate || ''}
-                              onChange={(value) => updateIncomeEntry(entry.id, { eiStartDate: value })}
-                              placeholder="AAAA-MM-JJ"
-                              className="h-16 text-xl"
-                            />
-                          </div>
-                          <div>
-                            <Label className="text-lg font-bold text-gray-600 mb-2 block">{isFrench ? 'Date du premier versement' : 'First payment date'}</Label>
-                            <DateInput
-                              value={entry.eiFirstPaymentDate || ''}
-                              onChange={(value) => updateIncomeEntry(entry.id, { eiFirstPaymentDate: value })}
-                              placeholder="AAAA-MM-JJ"
-                              className="h-16 text-xl"
-                            />
-                          </div>
-                          <div>
-                            <Label className="text-lg font-bold text-gray-600 mb-2 block">{isFrench ? 'Fréquence de versement' : 'Payment frequency'}</Label>
-                            <Select
-                              value={entry.eiPaymentFrequency || 'weekly'}
-                              onValueChange={(value) => updateIncomeEntry(entry.id, { eiPaymentFrequency: value as any })}
-                            >
-                              <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent className="bg-white border-4 border-gray-300 z-[99999]" position="popper" sideOffset={5} align="start" avoidCollisions={true} onCloseAutoFocus={(e) => e.preventDefault()}>
-                                {eiPaymentFrequencies.map(freq => (
-                                  <SelectItem key={freq.value} value={freq.value} className="text-xl py-4">
-                                    {freq.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <div>
-                            <Label className="text-lg font-bold text-gray-600 mb-2 block">{isFrench ? 'Nombre de semaines éligibles' : 'Number of eligible weeks'}</Label>
-                            <Input
-                              type="number"
-                              value={entry.eiEligibleWeeks || ''}
-                              onChange={(e) => updateIncomeEntry(entry.id, { eiEligibleWeeks: Number(e.target.value) })}
-                              className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl"
-                              placeholder="15-45"
-                              min="15"
-                              max="45"
-                            />
-                          </div>
-                        </div>
-                      ) : null}
-                    </div>
-                  )}
-                  
-                  {/* Section révision assurance-emploi */}
-                  {isEditing && entry.type === 'assurance-emploi' && (
-                    <div className="border-t-4 border-gray-200 pt-6">
-                      <Label className="text-xl font-bold text-gray-700 mb-4 block">
-                        {isFrench ? 'Révision assurance-emploi (optionnel)' : 'EI Revision (optional)'}
-                      </Label>
-                      <div className="grid grid-cols-2 gap-6">
-                        <div>
-                          <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                            {isFrench ? 'Date effective de la révision' : 'Effective revision date'}
-                          </Label>
-                          <DateInput
-                            value={entry.eiRevisionDate || ''}
-                            onChange={(value) => updateIncomeEntry(entry.id, { eiRevisionDate: value })}
-                            placeholder="AAAA-MM-JJ"
-                            className="h-16 text-xl"
-                          />
-                        </div>
-                        <div>
-                          <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                            {isFrench ? 'Nouveau montant hebdomadaire' : 'New weekly amount'}
-                          </Label>
-                          <MoneyInput
-                            value={entry.eiRevisionAmount || 0}
-                            onChange={(value) => updateIncomeEntry(entry.id, { eiRevisionAmount: value })}
-                            className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl"
-                            placeholder="0"
-                            allowDecimals={true}
-                          />
-                        </div>
-                        <div className="col-span-2">
-                          <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                            {isFrench ? 'Description de la révision' : 'Revision description'}
-                          </Label>
-                          <Input
-                            value={entry.eiRevisionDescription || ''}
-                            onChange={(e) => updateIncomeEntry(entry.id, { eiRevisionDescription: e.target.value })}
-                            className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl"
-                            placeholder={isFrench ? 'Ex: Ajustement du taux, révision annuelle...' : 'Ex: Rate adjustment, annual review...'}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Section révision salariale */}
-                  {isEditing && entry.type === 'salaire' && (
-                    <div className="border-t-4 border-gray-200 pt-6">
-                      <Label className="text-xl font-bold text-gray-700 mb-4 block">
-                        {isFrench ? 'Révision salariale (optionnel)' : 'Salary Revision (optional)'}
-                      </Label>
-                      <div className="grid grid-cols-2 gap-6">
-                        <div>
-                          <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                            {isFrench ? 'Date effective de la révision' : 'Effective revision date'}
-                          </Label>
-                          <DateInput
-                            value={entry.salaryRevisionDate || ''}
-                            onChange={(value) => updateIncomeEntry(entry.id, { salaryRevisionDate: value })}
-                            placeholder="AAAA-MM-JJ"
-                            className="h-16 text-xl"
-                          />
-                        </div>
-                        <div>
-                          <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                            {isFrench ? 'Nouveau montant' : 'New amount'}
-                          </Label>
-                          <MoneyInput
-                            value={entry.salaryRevisionAmount || 0}
-                            onChange={(value) => updateIncomeEntry(entry.id, { salaryRevisionAmount: value })}
-                            className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl"
-                            placeholder="0"
-                            allowDecimals={true}
-                          />
-                        </div>
-                        <div>
-                          <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                            {isFrench ? 'Nouvelle fréquence (si différente)' : 'New frequency (if different)'}
-                          </Label>
-                          <Select
-                            value={entry.salaryRevisionFrequency || entry.salaryFrequency || 'monthly'}
-                            onValueChange={(value) => updateIncomeEntry(entry.id, { salaryRevisionFrequency: value as any })}
-                          >
-                            <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-white border-4 border-gray-300 z-[99999]" position="popper" sideOffset={5} align="start" avoidCollisions={true} onCloseAutoFocus={(e) => e.preventDefault()}>
-                              {salaryFrequencies.map(freq => (
-                                <SelectItem key={freq.value} value={freq.value} className="text-xl py-4">
-                                  {freq.label}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                        <div>
-                          <Label className="text-lg font-bold text-gray-600 mb-2 block">
-                            {isFrench ? 'Description de la révision' : 'Revision description'}
-                          </Label>
-                          <Input
-                            value={entry.salaryRevisionDescription || ''}
-                            onChange={(e) => updateIncomeEntry(entry.id, { salaryRevisionDescription: e.target.value })}
-                            className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl"
-                            placeholder={isFrench ? 'Ex: Promotion, nouveau rôle, augmentation...' : 'Ex: Promotion, new role, raise...'}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                  
-                  {/* Budget mensuel calculé - Plus visible */}
-                  <div className="border-t-4 border-gray-200 pt-6 mt-6">
-                    <div className="bg-green-100 border-4 border-green-300 rounded-xl p-6">
-                      <div className="text-center">
-                        <Label className="text-xl font-bold text-green-800 mb-2 block">
-                          {isFrench ? 'Budget mensuel calculé' : 'Calculated Monthly Budget'}
-                        </Label>
-                        <div className="text-3xl font-bold text-green-600">
-                          {calculateMonthlyBudget(entry) > 0 ? 
-                            formatCurrency(calculateMonthlyBudget(entry)) : 
-                            isFrench ? 'Complétez les champs ci-dessus' : 'Complete the fields above'
-                          }
-                        </div>
-                      </div>
-                    </div>
                   </div>
                 </div>
               );
@@ -1678,124 +677,9 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
               {isFrench ? 'Ajouter un revenu' : 'Add Income'}
             </Button>
           </div>
-          
-          {/* Résumé des totaux - Version Senior */}
-          <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-4 border-blue-200 shadow-xl">
-            <CardContent className="p-6">
-              <h4 className="text-2xl font-bold text-blue-800 mb-4 flex items-center gap-3">
-                <Calculator className="w-6 h-6" />
-                {isFrench ? 'Résumé des revenus' : 'Income Summary'}
-              </h4>
-              
-              {/* Revenus de travail */}
-              <div className="mb-6">
-                <h5 className="text-lg font-bold text-gray-700 mb-4">
-                  {isFrench ? 'Revenus de travail' : 'Work Income'}
-                </h5>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                  <div>
-                    <div className="text-3xl font-bold text-blue-600">
-                      {formatCurrency(incomeTypeTotals.salaire)}
-                    </div>
-                    <div className="text-lg text-gray-700">
-                      {isFrench ? 'Salaire à ce jour' : 'Salary to date'}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <div className="text-3xl font-bold text-orange-600">
-                      {formatCurrency(incomeTypeTotals.assuranceEmploi)}
-                    </div>
-                    <div className="text-lg text-gray-700">
-                      {isFrench ? 'Assurance emploi à ce jour' : 'EI to date'}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <div className="text-3xl font-bold text-purple-600">
-                      {formatCurrency(incomeTypeTotals.travailAutonome)}
-                    </div>
-                    <div className="text-lg text-gray-700">
-                      {isFrench ? 'Travail autonome à ce jour' : 'Self-employment to date'}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Prestations */}
-              <div className="mb-6">
-                <h5 className="text-lg font-bold text-gray-700 mb-4">
-                  {isFrench ? 'Prestations' : 'Benefits'}
-                </h5>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                  <div>
-                    <div className="text-3xl font-bold text-purple-600">
-                      {formatCurrency(incomeTypeTotals.rrq)}
-                    </div>
-                    <div className="text-lg text-gray-700">
-                      {isFrench ? 'RRQ à ce jour' : 'CPP to date'}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <div className="text-3xl font-bold text-cyan-600">
-                      {formatCurrency(incomeTypeTotals.securiteVieillesse)}
-                    </div>
-                    <div className="text-lg text-gray-700">
-                      {isFrench ? 'Sécurité vieillesse à ce jour' : 'OAS to date'}
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <div className="text-3xl font-bold text-yellow-600">
-                      {formatCurrency(incomeTypeTotals.rentesPrivees)}
-                    </div>
-                    <div className="text-lg text-gray-700">
-                      {isFrench ? 'Rentes privées à ce jour' : 'Private pensions to date'}
-                    </div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Totaux */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                <div>
-                  <div className="text-3xl font-bold text-green-600">
-                    {formatCurrency(incomeTypeTotals.mensuelMoyen)}
-                  </div>
-                  <div className="text-lg text-gray-700">
-                    {isFrench ? 'Mensuel moyen' : 'Average Monthly'}
-                  </div>
-                </div>
-                
-                <div>
-                  <div className="text-3xl font-bold text-emerald-600">
-                    {formatCurrency(incomeTypeTotals.totalAnnuelProjete)}
-                  </div>
-                  <div className="text-lg text-gray-700">
-                    {isFrench ? 'Total annuel projeté' : 'Projected Annual Total'}
-                  </div>
-                </div>
-                
-                <div>
-                  <div className="text-3xl font-bold text-pink-600">
-                    {incomeEntries.filter(e => e.isActive).length}
-                  </div>
-                  <div className="text-lg text-gray-700">
-                    {isFrench ? 'Sources actives' : 'Active Sources'}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
         </CardContent>
       </Card>
       </TooltipProvider>
-      <CalculationDebugger 
-        incomeEntries={incomeEntries}
-        userData={userData}
-        personNumber={personNumber}
-      />
     </>
   );
 };
