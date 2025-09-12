@@ -48,8 +48,8 @@ const economyTips: EconomyTip[] = [
   // HABITATION (15 trucs)
   {
     id: 1,
-    title: "Réduire la température de 1°C",
-    description: "Baisser le thermostat de 1°C peut réduire votre facture de chauffage de 5-7%. Utilisez des couvertures supplémentaires.",
+    title: "Réduire la température de 1 °C",
+    description: "Baisser le thermostat de 1 °C peut réduire votre facture de chauffage de 5-7 %. Utilisez des couvertures supplémentaires.",
     category: "habitation",
     difficulty: "facile",
     potentialSavings: "100-200$/an",
@@ -78,13 +78,13 @@ const economyTips: EconomyTip[] = [
   },
   {
     id: 4,
-    title: "Utiliser des ampoules LED",
-    description: "Remplacez toutes vos ampoules par des LED. Durent 25x plus longtemps et consomment 75% moins d'énergie.",
+    title: "Utiliser des ampoules DEL",
+    description: "Remplacez toutes vos ampoules par des DEL. Durent 25 fois plus longtemps et consomment 75 % moins d'énergie.",
     category: "habitation",
     difficulty: "facile",
     potentialSavings: "75-125$/an",
     timeToImplement: "30 minutes",
-    tags: ["électricité", "éclairage", "LED"]
+    tags: ["électricité", "éclairage", "DEL"]
   },
   {
     id: 5,
@@ -412,7 +412,7 @@ export const EconomyTipsGuide: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center text-xl text-green-900">
             <TrendingDown className="h-6 w-6 mr-2" />
-            99 Trucs pour Économiser Sans Trop Se Priver
+            99 trucs pour économiser sans trop se priver
           </CardTitle>
           <CardDescription className="text-green-700">
             Guide pratique basé sur l'expertise Retraite101 pour optimiser vos dépenses dans tous les domaines de la vie.

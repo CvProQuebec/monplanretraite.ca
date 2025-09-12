@@ -160,7 +160,7 @@ export const CoastFIRECalculator: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center text-xl text-blue-900">
             <TrendingUp className="h-6 w-6 mr-2" />
-            Calculateur CoastFIRE
+            Calculateur de liberté financière
           </CardTitle>
           <p className="text-blue-700">
             Découvrez à quel âge vous pourrez arrêter d'épargner et laisser vos placements croître jusqu'à la retraite.
@@ -272,7 +272,7 @@ export const CoastFIRECalculator: React.FC = () => {
           <CardHeader>
             <CardTitle className="flex items-center">
               <Target className="h-5 w-5 mr-2" />
-              Vos résultats CoastFIRE
+              Vos résultats de liberté financière
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -298,7 +298,7 @@ export const CoastFIRECalculator: React.FC = () => {
                       </Badge>
                     </div>
                     <p className="text-sm font-medium text-green-800 mb-2">
-                      Vous avez atteint CoastFIRE !
+                      Vous avez atteint la liberté financière !
                     </p>
                     <p className="text-xs text-green-700">
                       Vos épargnes actuelles croîtront naturellement pour atteindre votre objectif de retraite.
@@ -308,7 +308,7 @@ export const CoastFIRECalculator: React.FC = () => {
                 ) : (
                   <div className="p-4 bg-orange-50 rounded-lg border border-orange-200">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm font-medium">Âge CoastFIRE estimé :</span>
+                      <span className="text-sm font-medium">Âge de liberté financière estimé :</span>
                       <span className="font-bold text-orange-600">
                         {results.coastFIREAge} ans
                       </span>
@@ -320,7 +320,7 @@ export const CoastFIRECalculator: React.FC = () => {
                       </span>
                     </div>
                     <p className="text-xs text-orange-700">
-                      En épargnant ce montant pendant 1 an, vous atteindrez CoastFIRE.
+                      En épargnant ce montant pendant 1 an, vous atteindrez la liberté financière.
                     </p>
                   </div>
                 )}
@@ -345,9 +345,9 @@ export const CoastFIRECalculator: React.FC = () => {
           <Info className="h-4 w-4" />
           <AlertDescription>
             <div className="space-y-3">
-              <h4 className="font-semibold">Qu'est-ce que CoastFIRE ?</h4>
+              <h4 className="font-semibold">Qu'est-ce que la liberté financière précoce ?</h4>
               <p className="text-sm">
-                CoastFIRE (Coast Financial Independence Retire Early) est le point où vous avez suffisamment d'épargnes 
+                La liberté financière précoce est le point où vous avez suffisamment d'épargnes 
                 pour que, même sans contributions supplémentaires, vos placements croissent naturellement jusqu'à 
                 atteindre votre objectif de retraite.
               </p>
@@ -360,7 +360,7 @@ export const CoastFIRECalculator: React.FC = () => {
                 <li>Offre plus de flexibilité dans vos choix de carrière</li>
               </ul>
               
-              <h4 className="font-semibold">Avantages du CoastFIRE :</h4>
+              <h4 className="font-semibold">Avantages de la liberté financière précoce :</h4>
               <ul className="text-sm space-y-1 list-disc list-inside">
                 <li>Réduction du stress financier</li>
                 <li>Liberté de changer de carrière ou réduire ses heures</li>

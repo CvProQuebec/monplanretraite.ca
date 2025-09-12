@@ -562,7 +562,7 @@ const Budget: React.FC = () => {
             <TabsTrigger value="overview" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Vue d\'ensemble' : 'Overview'}</TabsTrigger>
             <TabsTrigger value="expenses" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Dépenses' : 'Expenses'}</TabsTrigger>
             <TabsTrigger value="calendar" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Calendrier' : 'Calendar'}</TabsTrigger>
-            <TabsTrigger value="coastfire" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'CoastFIRE' : 'CoastFIRE'}</TabsTrigger>
+            <TabsTrigger value="coastfire" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Liberté financière' : 'CoastFIRE'}</TabsTrigger>
             <TabsTrigger value="tips" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? '99 Trucs' : '99 Tips'}</TabsTrigger>
             <TabsTrigger value="learning" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Apprentissage' : 'Learning'}</TabsTrigger>
             <TabsTrigger value="settings" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Paramètres' : 'Settings'}</TabsTrigger>

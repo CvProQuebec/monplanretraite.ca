@@ -6,9 +6,9 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Badge } from '@/components/ui/badge';
 import {
   DollarSign,
   Star,
@@ -16,12 +16,18 @@ import {
   Shield,
   Save,
   User,
-  Building,
+  Building2,
   CreditCard,
   BarChart3,
   ArrowRight,
   CheckCircle,
-  Flag,
+  AlertTriangle,
+  TrendingUp,
+  Briefcase,
+  Landmark,
+  PiggyBank,
+  Heart,
+  Users,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
@@ -38,103 +44,152 @@ import HealthFactorsSection from '@/components/ui/HealthFactorsSection';
 import PersonalizedLongevityAnalysis from '@/components/ui/PersonalizedLongevityAnalysis';
 import ValidationAlert from '@/components/ui/ValidationAlert';
 
-/* CSS pour disposition horizontale des formulaires */
-const inlineFormStyles = `
-.senior-form-row {
+// CSS pour seniors 55-90 ans - Layout condensé et lisible
+const seniorOptimizedStyles = `
+.senior-layout {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #1a365d;
+}
+
+.senior-compact-card {
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.senior-form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  align-items: center;
   margin-bottom: 16px;
-  min-height: 48px;
+}
+
+.senior-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .senior-form-label {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
-  color: #1a365d;
-  text-align: left;
+  color: #2d3748;
 }
 
 .senior-form-input {
-  font-size: 18px;
-  min-height: 48px;
+  font-size: 16px;
+  min-height: 44px;
   padding: 12px 16px;
   border: 2px solid #e2e8f0;
   border-radius: 8px;
   background: white;
+  transition: border-color 0.2s;
 }
 
 .senior-form-input:focus {
+  outline: none;
   border-color: #4c6ef5;
   box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.1);
-  outline: none;
 }
 
-@media (max-width: 768px) {
-  .senior-form-row {
-    grid-template-columns: 1fr;
-    gap: 8px;
-  }
-  
-  .senior-form-label {
-    text-align: left;
-  }
-}
-
-/* Styles pour les sommaires horizontaux */
 .senior-summary-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 12px 16px;
   margin-bottom: 8px;
-  min-height: 48px;
+  background: #f8fafc;
   border-radius: 8px;
-  background: white;
-  border: 1px solid #e2e8f0;
+  border-left: 4px solid #e2e8f0;
 }
 
 .senior-summary-label {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   color: #4a5568;
-  flex: 1;
 }
 
 .senior-summary-value {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   text-align: right;
 }
 
-.senior-summary-unit {
+.senior-financial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.senior-analysis-results {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 20px 0;
+}
+
+.senior-couple-analysis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.senior-metric-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.senior-metric-value {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.senior-metric-label {
   font-size: 14px;
-  font-weight: 400;
-  color: #718096;
-  margin-left: 8px;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  .senior-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .senior-financial-grid {
+    grid-template-columns: 1fr;
+  }
 }
 `;
 
 const MaRetraite: React.FC = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
+  const isFrench = language === 'fr';
+  const { userData, updateUserData } = useRetirementData();
 
-  // Fonction de formatage monétaire québécoise
-  const formatCurrencyQuebec = (amount: number): string => {
-    if (amount === 0) return '0 $';
-    
-    return new Intl.NumberFormat('fr-CA', {
-      style: 'decimal',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }).format(amount) + ' $';
-  };
+  // États locaux
+  const [showOnboardingWizard, setShowOnboardingWizard] = useState(false);
+  const [longevityMode, setLongevityMode] = useState<'standard' | 'personalized'>('standard');
+  const [isSaving, setIsSaving] = useState(false);
+  const [licenseBlocked, setLicenseBlocked] = useState(false);
+  const [licenseMessage, setLicenseMessage] = useState('');
 
-  // Injecter les styles CSS pour les formulaires horizontaux
-  React.useEffect(() => {
+  // Injection des styles CSS seniors
+  useEffect(() => {
     const style = document.createElement('style');
-    style.textContent = inlineFormStyles;
+    style.textContent = seniorOptimizedStyles;
     document.head.appendChild(style);
     return () => {
       if (document.head.contains(style)) {
@@ -142,200 +197,55 @@ const MaRetraite: React.FC = () => {
       }
     };
   }, []);
-  const isFrench = language === 'fr';
 
-  const { userData, updateUserData } = useRetirementData();
+  // Fonction de formatage monétaire québécoise
+  const formatCurrencyQuebec = (amount: number): string => {
+    if (amount === 0) return '0 $';
+    return new Intl.NumberFormat('fr-CA', {
+      style: 'decimal',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(Math.round(amount)) + ' $';
+  };
 
-  const [showOnboardingWizard, setShowOnboardingWizard] = useState(false);
-
-  // Mode d'analyse de longévité
-  const [longevityMode, setLongevityMode] = useState<'standard' | 'personalized'>('standard');
-
-  // Charger les données depuis localStorage au montage du composant
+  // Chargement des données depuis localStorage
   useEffect(() => {
     const loadImportedData = () => {
       try {
         const importedData = localStorage.getItem('retirement_data');
         if (importedData) {
           const parsedData = JSON.parse(importedData);
-          console.log('📥 Données trouvées dans localStorage:', parsedData);
-          
-          // Mettre à jour les données si elles existent
-          if (parsedData.personal) {
-            updateUserData('personal', parsedData.personal);
-          }
-          if (parsedData.retirement) {
-            updateUserData('retirement', parsedData.retirement);
-          }
-          if (parsedData.savings) {
-            updateUserData('savings', parsedData.savings);
-          }
-          if (parsedData.cashflow) {
-            updateUserData('cashflow', parsedData.cashflow);
-          }
-        } else {
-          console.log('📭 Aucune donnée trouvée dans localStorage');
+          if (parsedData.personal) updateUserData('personal', parsedData.personal);
+          if (parsedData.retirement) updateUserData('retirement', parsedData.retirement);
+          if (parsedData.savings) updateUserData('savings', parsedData.savings);
+          if (parsedData.cashflow) updateUserData('cashflow', parsedData.cashflow);
         }
       } catch (error) {
         console.error('Erreur lors du chargement des données:', error);
       }
     };
-
     loadImportedData();
 
-    // Écouter les événements d'importation de données
     const handleDataImported = (event: CustomEvent) => {
       try {
         const importedData = event.detail.data;
-        console.log('📥 Données importées reçues via événement:', importedData);
-        
-        // Mettre à jour les données si elles existent
-        if (importedData.personal) {
-          updateUserData('personal', importedData.personal);
-        }
-        if (importedData.retirement) {
-          updateUserData('retirement', importedData.retirement);
-        }
-        if (importedData.savings) {
-          updateUserData('savings', importedData.savings);
-        }
-        if (importedData.cashflow) {
-          updateUserData('cashflow', importedData.cashflow);
-        }
+        if (importedData.personal) updateUserData('personal', importedData.personal);
+        if (importedData.retirement) updateUserData('retirement', importedData.retirement);
+        if (importedData.savings) updateUserData('savings', importedData.savings);
+        if (importedData.cashflow) updateUserData('cashflow', importedData.cashflow);
       } catch (error) {
         console.error('Erreur lors du traitement des données importées:', error);
       }
     };
 
     window.addEventListener('retirementDataImported', handleDataImported as EventListener);
-
     return () => {
       window.removeEventListener('retirementDataImported', handleDataImported as EventListener);
     };
   }, [updateUserData]);
 
-  const [revenusData, setRevenusData] = useState({
-    salaire: '',
-    pensions: '',
-    epargne: '',
-    immobilier: '',
-    autres: '',
-  });
-
-  useEffect(() => {
-    if (userData.personal?.salaire1) {
-      setRevenusData((prev) => ({
-        ...prev,
-        salaire: userData.personal.salaire1.toString(),
-      }));
-    }
-  }, [userData.personal?.salaire1]);
-
-  const handleRevenusChange = (field: string, value: string) => {
-    setRevenusData((prev) => ({ ...prev, [field]: value }));
-    if (field === 'salaire') {
-      const numericValue = parseFloat(value.replace(/[^\d.]/g, '')) || 0;
-      updateUserData('personal', { salaire1: numericValue });
-    }
-  };
-
-  const handleOnboardingComplete = (data: any) => {
-    setShowOnboardingWizard(false);
-    if (data?.personal) {
-      updateUserData('personal', data.personal);
-    }
-  };
-
-  const handleOnboardingSkip = () => setShowOnboardingWizard(false);
-
-  // Fonctions de calcul des revenus depuis unifiedIncome avec périodes réelles
-  const calculatePersonIncome = (personNumber: 1 | 2) => {
-    const incomeData = personNumber === 1 ? 
-      (userData.personal as any)?.unifiedIncome1 || [] : 
-      (userData.personal as any)?.unifiedIncome2 || [];
-    
-    // Utiliser la nouvelle logique de calcul basée sur les périodes
-    const result = calculateIncomeFromPeriods(incomeData);
-    
-    return {
-      totalSalary: result.totalSalary,
-      totalPensions: result.totalPensions,
-      totalOtherIncome: result.totalOtherIncome,
-      totalIncome: result.totalIncome
-    };
-  };
-
-  const calculatePersonSavings = (personNumber: 1 | 2) => {
-    const personal = (userData.personal as any) || {};
-    const savings = userData.savings || {};
-
-    if (personNumber === 1) {
-      return {
-        reer: personal.soldeREER1 || savings.reer1 || 0,
-        celi: personal.soldeCELI1 || savings.celi1 || 0,
-        placements: savings.placements1 || 0,
-        epargne: savings.epargne1 || 0,
-        cri: personal.soldeCRI1 || savings.cri1 || 0
-      };
-    } else {
-      return {
-        reer: personal.soldeREER2 || savings.reer2 || 0,
-        celi: personal.soldeCELI2 || savings.celi2 || 0,
-        placements: savings.placements2 || 0,
-        epargne: savings.epargne2 || 0,
-        cri: personal.soldeCRI2 || savings.cri2 || 0
-      };
-    }
-  };
-
-  // Calculs pour Personne 1 et Personne 2
-  const person1Income = calculatePersonIncome(1);
-  const person2Income = calculatePersonIncome(2);
-  const person1Savings = calculatePersonSavings(1);
-  const person2Savings = calculatePersonSavings(2);
-
-  const [depensesData, setDepensesData] = useState({
-    logement: '',
-    alimentation: '',
-    transport: '',
-    sante: '',
-    loisirs: '',
-    autres: '',
-  });
-
-  const [calculsData, setCalculsData] = useState({
-    ageRetraite: '',
-    revenusMensuels: '',
-    depensesMensuelles: '',
-    epargneNecessaire: '',
-  });
-
-  const [showHelp, setShowHelp] = useState(false);
-  const [isSaving, setIsSaving] = useState(false);
-  const [licenseBlocked, setLicenseBlocked] = useState(false);
-  const [licenseMessage, setLicenseMessage] = useState('');
-  const [showMortalityDetails, setShowMortalityDetails] = useState(false);
-  const [showMortalityDetails2, setShowMortalityDetails2] = useState(false);
-
-  const handleDepensesChange = (field: string, value: string) => {
-    setDepensesData((prev) => ({ ...prev, [field]: value }));
-  };
-
-  const handleCalculsChange = (field: string, value: string) => {
-    setCalculsData((prev) => ({ ...prev, [field]: value }));
-  };
-
+  // Gestionnaire de changements de profil avec validation de licence
   const handleProfileChange = (field: string, value: any) => {
-    console.log('handleProfileChange called:', { field, value, currentData: userData.personal });
-    
-    // TEMPORAIRE: Désactivation du blocage de licence pour 1 mois
-    // const newData = { ...userData, personal: { ...userData.personal, [field]: value } };
-    // const licenseCheck = LicenseManager.checkLicense(newData as any);
-    // if (!licenseCheck.isValid) {
-    //   setLicenseBlocked(true);
-    //   setLicenseMessage(licenseCheck.reason || 'Modification bloquée');
-    //   return;
-    // }
     setLicenseBlocked(false);
     setLicenseMessage('');
     updateUserData('personal', { [field]: value });
@@ -345,79 +255,99 @@ const MaRetraite: React.FC = () => {
     updateUserData('personal', { [field]: value });
   };
 
-  // Fonction pour forcer le rechargement des données
-  const reloadData = () => {
-    try {
-      const importedData = localStorage.getItem('retirement_data');
-      if (importedData) {
-        const parsedData = JSON.parse(importedData);
-        console.log('🔄 Rechargement forcé des données:', parsedData);
-        
-        // Mettre à jour les données si elles existent
-        if (parsedData.personal) {
-          updateUserData('personal', parsedData.personal);
+  // Calculs financiers harmonisés avec le résumé familial
+  const calculateFamilyFinancials = () => {
+    // Revenus de travail (Person 1 + Person 2)
+    const salaire1 = userData.personal?.salaire1 || 0;
+    const salaire2 = userData.personal?.salaire2 || 0;
+    const travailAutonome1 = userData.personal?.travailAutonome1 || 0;
+    const travailAutonome2 = userData.personal?.travailAutonome2 || 0;
+    const autresRevenus1 = userData.personal?.autresRevenus1 || 0;
+    const autresRevenus2 = userData.personal?.autresRevenus2 || 0;
+
+    const totalRevenusTravail = salaire1 + salaire2 + travailAutonome1 + travailAutonome2 + autresRevenus1 + autresRevenus2;
+
+    // Prestations (RRQ, SV, AE, etc.)
+    const rrq1 = userData.retirement?.rrqMontantActuel1 || 0;
+    const rrq2 = userData.retirement?.rrqMontantActuel2 || 0;
+    const sv1 = (userData.retirement?.svBiannual1?.periode1?.montant || 0) * 12 + 
+                (userData.retirement?.svBiannual1?.periode2?.montant || 0) * 12;
+    const sv2 = (userData.retirement?.svBiannual2?.periode1?.montant || 0) * 12 + 
+                (userData.retirement?.svBiannual2?.periode2?.montant || 0) * 12;
+    const ae1 = userData.retirement?.assuranceEmploi1 || 0;
+    const ae2 = userData.retirement?.assuranceEmploi2 || 0;
+
+    const totalPrestations = (rrq1 + rrq2 + sv1 + sv2) * 12 + ae1 + ae2;
+
+    // Investissements (REER, CELI, CRI, etc.)
+    const reer1 = userData.personal?.soldeREER1 || userData.savings?.reer1 || 0;
+    const reer2 = userData.personal?.soldeREER2 || userData.savings?.reer2 || 0;
+    const celi1 = userData.personal?.soldeCELI1 || userData.savings?.celi1 || 0;
+    const celi2 = userData.personal?.soldeCELI2 || userData.savings?.celi2 || 0;
+    const cri1 = userData.personal?.soldeCRI1 || userData.savings?.cri1 || 0;
+    const cri2 = userData.personal?.soldeCRI2 || userData.savings?.cri2 || 0;
+    const placements1 = userData.savings?.placements1 || 0;
+    const placements2 = userData.savings?.placements2 || 0;
+
+    const totalInvestissements = reer1 + reer2 + celi1 + celi2 + cri1 + cri2 + placements1 + placements2;
+
+    return {
+      revenusTravail: {
+        total: totalRevenusTravail,
+        person1: salaire1 + travailAutonome1 + autresRevenus1,
+        person2: salaire2 + travailAutonome2 + autresRevenus2,
+        details: {
+          salaires: salaire1 + salaire2,
+          travailAutonome: travailAutonome1 + travailAutonome2,
+          autresRevenus: autresRevenus1 + autresRevenus2
         }
-        if (parsedData.retirement) {
-          updateUserData('retirement', parsedData.retirement);
+      },
+      prestations: {
+        total: totalPrestations,
+        person1: (rrq1 + sv1) * 12 + ae1,
+        person2: (rrq2 + sv2) * 12 + ae2,
+        details: {
+          rrqCpp: (rrq1 + rrq2) * 12,
+          securiteVieillesse: (sv1 + sv2) * 12,
+          assuranceEmploi: ae1 + ae2
         }
-        if (parsedData.savings) {
-          updateUserData('savings', parsedData.savings);
+      },
+      investissements: {
+        total: totalInvestissements,
+        person1: reer1 + celi1 + cri1 + placements1,
+        person2: reer2 + celi2 + cri2 + placements2,
+        details: {
+          reer: reer1 + reer2,
+          celi: celi1 + celi2,
+          cri: cri1 + cri2,
+          autres: placements1 + placements2
         }
-        if (parsedData.cashflow) {
-          updateUserData('cashflow', parsedData.cashflow);
-        }
-        
-        alert('Données rechargées avec succès !');
-      } else {
-        alert('Aucune donnée trouvée dans le stockage local.');
-      }
-    } catch (error) {
-      console.error('Erreur lors du rechargement:', error);
-      alert('Erreur lors du rechargement des données.');
-    }
+      },
+      grandTotal: totalRevenusTravail + totalPrestations
+    };
   };
 
+  const familyFinancials = useMemo(() => calculateFamilyFinancials(), [
+    userData.personal,
+    userData.retirement,
+    userData.savings
+  ]);
 
-
-
-
-  const handleNavigation = (path: string) => navigate(path);
-
-  const getRevenusProgress = () => {
-    const filledFields = Object.values(revenusData).filter((value) => value.trim() !== '').length;
-    return Math.round((filledFields / Object.keys(revenusData).length) * 100);
-  };
-
-  const getDepensesProgress = () => {
-    const filledFields = Object.values(depensesData).filter((value) => value.trim() !== '').length;
-    return Math.round((filledFields / Object.keys(depensesData).length) * 100);
-  };
-
-  const getCalculsProgress = () => {
-    const filledFields = Object.values(calculsData).filter((value) => value.trim() !== '').length;
-    return Math.round((filledFields / Object.keys(calculsData).length) * 100);
-  };
-
+  // Calculs d'âge et de mortalité corrigés
   const computeAgeFromBirthdate = (birthDate?: string): number => {
     if (!birthDate) return 65;
     
     let birth: Date;
-    
-    // Gérer le format "19560706" (YYYYMMDD)
     if (/^\d{8}$/.test(birthDate)) {
       const year = parseInt(birthDate.substring(0, 4));
-      const month = parseInt(birthDate.substring(4, 6)) - 1; // Les mois commencent à 0
+      const month = parseInt(birthDate.substring(4, 6)) - 1;
       const day = parseInt(birthDate.substring(6, 8));
       birth = new Date(year, month, day);
     } else {
-      // Gérer le format standard "1956-07-06" ou autres
       birth = new Date(birthDate);
     }
     
-    if (isNaN(birth.getTime())) {
-      console.warn('Date de naissance invalide:', birthDate);
-      return 65;
-    }
+    if (isNaN(birth.getTime())) return 65;
     
     const today = new Date();
     let age = today.getFullYear() - birth.getFullYear();
@@ -431,1531 +361,833 @@ const MaRetraite: React.FC = () => {
   const getGenderForMortality = (sexe?: string): 'male' | 'female' => {
     if (!sexe) return 'male';
     const val = String(sexe).toLowerCase();
-    if (val === 'f' || val === 'femme' || val === 'female') return 'female';
-    return 'male';
+    return (val === 'f' || val === 'femme' || val === 'female') ? 'female' : 'male';
   };
 
-  const canComputeMortality = (personNumber: 1 | 2 = 1): boolean => {
-    const p = (userData.personal || {}) as any;
-    const birthField = personNumber === 1 ? 'naissance1' : 'naissance2';
-    const birthValue = p[birthField];
-    
-    if (!birthValue) {
-      console.log(`canComputeMortality(${personNumber}): Pas de date de naissance`);
-      return false;
-    }
-    
-    // Vérifier le format "19560706" (YYYYMMDD)
-    let isValidDate = false;
-    if (/^\d{8}$/.test(birthValue)) {
-      const year = parseInt(birthValue.substring(0, 4));
-      const month = parseInt(birthValue.substring(4, 6)) - 1;
-      const day = parseInt(birthValue.substring(6, 8));
-      const testDate = new Date(year, month, day);
-      isValidDate = !isNaN(testDate.getTime());
-    } else {
-      // Vérifier le format standard
-      isValidDate = !isNaN(new Date(birthValue).getTime());
-    }
-    
-    console.log(`canComputeMortality(${personNumber}):`, {
-      birthField,
-      birthValue,
-      isValidDate,
-      userData: userData.personal
-    });
-    
-    return isValidDate;
-  };
-
-  const hasCompleteMortalityData = (personNumber: 1 | 2 = 1): boolean => {
-    const p = (userData.personal || {}) as any;
-    const birthField = personNumber === 1 ? 'naissance1' : 'naissance2';
-    const genderField = personNumber === 1 ? 'sexe1' : 'sexe2';
-    const provinceField = personNumber === 1 ? 'province1' : 'province2';
-    const hasBirth = !!p[birthField] && !isNaN(new Date(p[birthField]).getTime());
-    const hasGender = !!p[genderField];
-    const hasProvince = !!p[provinceField] && String(p[provinceField]).trim() !== '';
-    return hasBirth && hasGender && hasProvince;
-  };
-
+  // Calculs de mortalité pour chaque personne
   const calculateMortalityForPerson = (personNumber: 1 | 2) => {
-    if (!canComputeMortality(personNumber)) {
-      console.log(`calculateMortalityForPerson(${personNumber}): Ne peut pas calculer - date de naissance manquante ou invalide`);
-      return {
-        lifeExpectancy: 0,
-        finalAge: 0,
-        planningAge: 0,
-        source: isFrench ? 'Date de naissance requise' : 'Birth date required',
-      };
-    }
-
     const birthField = personNumber === 1 ? 'naissance1' : 'naissance2';
     const genderField = personNumber === 1 ? 'sexe1' : 'sexe2';
+    const healthField = personNumber === 1 ? 'etatSante1' : 'etatSante2';
+    const lifestyleField = personNumber === 1 ? 'modeVieActif1' : 'modeVieActif2';
+
     const age = computeAgeFromBirthdate(userData.personal?.[birthField]);
-    // Utiliser des valeurs par défaut si les champs ne sont pas remplis
-    const gender = getGenderForMortality(userData.personal?.[genderField] as any);
-    
-    console.log(`calculateMortalityForPerson(${personNumber}):`, {
-      birthField,
-      birthValue: userData.personal?.[birthField],
-      age,
-      gender,
-      genderField,
-      genderValue: userData.personal?.[genderField]
-    });
+    const gender = getGenderForMortality(userData.personal?.[genderField]);
     
     const base = MORTALITY_CPM2014.calculateLifeExpectancy({ age, gender });
 
-    let adj = 0;
-    const etatField = personNumber === 1 ? 'etatSante1' : 'etatSante2';
-    const modeField = personNumber === 1 ? 'modeVieActif1' : 'modeVieActif2';
-    
-    const etat = userData.personal?.[etatField] as
-      | 'excellent'
-      | 'tresbon'
-      | 'bon'
-      | 'moyen'
-      | 'fragile'
-      | undefined;
-    if (etat === 'excellent') adj += 2;
-    else if (etat === 'tresbon') adj += 1;
-    else if (etat === 'bon') adj += 0.5;
-    else if (etat === 'moyen') adj += 0;
-    else if (etat === 'fragile') adj -= 1.5;
-    // Valeur par défaut si non spécifié
-    else adj += 0.5;
+    // Ajustements basés sur les facteurs de santé
+    let adjustment = 0;
+    const healthStatus = userData.personal?.[healthField];
+    const lifestyle = userData.personal?.[lifestyleField];
 
-    const mode = userData.personal?.[modeField] as
-      | 'sedentaire'
-      | 'legerementActif'
-      | 'modere'
-      | 'actif'
-      | 'tresActif'
-      | undefined;
-    if (mode === 'sedentaire') adj -= 0.5;
-    else if (mode === 'legerementActif') adj += 0;
-    else if (mode === 'modere') adj += 0.5;
-    else if (mode === 'actif') adj += 0.8;
-    else if (mode === 'tresActif') adj += 1;
-    // Valeur par défaut si non spécifié
-    else adj += 0.5;
+    // Ajustements santé
+    if (healthStatus === 'excellent') adjustment += 2;
+    else if (healthStatus === 'tresbon') adjustment += 1;
+    else if (healthStatus === 'bon') adjustment += 0.5;
+    else if (healthStatus === 'moyen') adjustment += 0;
+    else if (healthStatus === 'fragile') adjustment -= 1.5;
+    else adjustment += 0.5; // Défaut
 
-    if (adj > 2) adj = 2;
-    if (adj < -2) adj = -2;
+    // Ajustements style de vie
+    if (lifestyle === 'sedentaire') adjustment -= 0.5;
+    else if (lifestyle === 'legerementActif') adjustment += 0;
+    else if (lifestyle === 'modere') adjustment += 0.5;
+    else if (lifestyle === 'actif') adjustment += 0.8;
+    else if (lifestyle === 'tresActif') adjustment += 1;
+    else adjustment += 0.5; // Défaut
 
-    const lifeExp = Math.max(0, Number((base.lifeExpectancy + adj).toFixed(1)));
-    const finalAge = Math.round(age + lifeExp);
-    const planningAge = Math.min(100, Math.round(base.recommendedPlanningAge + adj));
+    // Limites d'ajustement
+    adjustment = Math.max(-2, Math.min(2, adjustment));
 
-    const isComplete = hasCompleteMortalityData(personNumber);
-    const source = isComplete 
-      ? (base.source || 'CPM2014') + (adj !== 0 ? ' + ajustements (profil)' : '')
-      : (base.source || 'CPM2014') + ' (valeurs par défaut utilisées)';
+    const lifeExpectancy = Math.max(0, Number((base.lifeExpectancy + adjustment).toFixed(1)));
+    const finalAge = Math.round(age + lifeExpectancy);
+    const planningAge = Math.min(100, Math.round(base.recommendedPlanningAge + adjustment));
 
     return {
-      lifeExpectancy: lifeExp,
+      currentAge: age,
+      lifeExpectancy,
       finalAge,
       planningAge,
-      source: source,
+      adjustment,
+      source: base.source + (adjustment !== 0 ? ' + ajustements personnels' : ''),
     };
   };
 
-  const mortalityOverride = useMemo(() => calculateMortalityForPerson(1), [
+  const person1Mortality = useMemo(() => calculateMortalityForPerson(1), [
     userData.personal?.naissance1,
     userData.personal?.sexe1,
-    userData.personal?.province1,
     userData.personal?.etatSante1,
     userData.personal?.modeVieActif1,
-    isFrench,
   ]);
 
-  const mortalityOverride2 = useMemo(() => calculateMortalityForPerson(2), [
+  const person2Mortality = useMemo(() => calculateMortalityForPerson(2), [
     userData.personal?.naissance2,
     userData.personal?.sexe2,
-    userData.personal?.province2,
     userData.personal?.etatSante2,
     userData.personal?.modeVieActif2,
-    isFrench,
   ]);
 
-  useEffect(() => {
-    const value = mortalityOverride.lifeExpectancy || 0;
-    updateUserData('retirement', { esperanceVie1: value });
-  }, [mortalityOverride.lifeExpectancy]);
+  // Calcul d'analyse comparative du couple CORRIGÉ
+  const calculateCoupleAnalysis = () => {
+    if (!userData.personal?.naissance1 || !userData.personal?.naissance2) {
+      return null;
+    }
 
-  useEffect(() => {
-    const value = mortalityOverride2.lifeExpectancy || 0;
-    updateUserData('retirement', { esperanceVie2: value });
-  }, [mortalityOverride2.lifeExpectancy]);
+    const finalAge1 = person1Mortality.finalAge;
+    const finalAge2 = person2Mortality.finalAge;
+    
+    return {
+      ecartAge: Math.abs(finalAge1 - finalAge2),
+      // CORRECTION CRITIQUE: Prendre le maximum, pas la somme
+      dernierSurvivant: Math.max(finalAge1, finalAge2),
+      planificationJusqua: Math.max(finalAge1, finalAge2) + 5,
+      premierDeces: Math.min(finalAge1, finalAge2),
+      anneesVeuvage: Math.abs(finalAge1 - finalAge2)
+    };
+  };
+
+  const coupleAnalysis = useMemo(() => calculateCoupleAnalysis(), [
+    person1Mortality.finalAge,
+    person2Mortality.finalAge
+  ]);
+
+  // Validation des champs requis
+  const validatePersonData = (personNumber: 1 | 2) => {
+    const prefix = personNumber === 1 ? '1' : '2';
+    const required = [`naissance${prefix}`, `sexe${prefix}`];
+    return required.every(field => userData.personal?.[field]);
+  };
+
+  const person1Valid = validatePersonData(1);
+  const person2Valid = validatePersonData(2);
+  const hasPerson2Data = userData.personal?.prenom2 || userData.personal?.naissance2;
+
+  // Gestionnaires d'événements
+  const handleOnboardingComplete = (data: any) => {
+    setShowOnboardingWizard(false);
+    if (data?.personal) {
+      updateUserData('personal', data.personal);
+    }
+  };
+
+  const handleOnboardingSkip = () => setShowOnboardingWizard(false);
+
+  const reloadData = () => {
+    try {
+      const importedData = localStorage.getItem('retirement_data');
+      if (importedData) {
+        const parsedData = JSON.parse(importedData);
+        if (parsedData.personal) updateUserData('personal', parsedData.personal);
+        if (parsedData.retirement) updateUserData('retirement', parsedData.retirement);
+        if (parsedData.savings) updateUserData('savings', parsedData.savings);
+        if (parsedData.cashflow) updateUserData('cashflow', parsedData.cashflow);
+        alert('Données rechargées avec succès !');
+      } else {
+        alert('Aucune donnée trouvée dans le stockage local.');
+      }
+    } catch (error) {
+      console.error('Erreur lors du rechargement:', error);
+      alert('Erreur lors du rechargement des données.');
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 sm:px-6 py-8 sm:py-12">
-        {/* Sections regroupées sans onglets */}
-        <div className="space-y-10">
-          {/* Profil */}
-          <div className="space-y-6">
-            <div className="text-center mb-8">
-              <h2 className="text-4xl font-bold bg-gradient-to-r from-yellow-400 via-orange-400 to-red-500 bg-clip-text text-transparent mb-4">
-                {isFrench ? '🚀 Mon Profil' : '🚀 My Profile'}
-              </h2>
-              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-6">
-                {isFrench
-                  ? 'Transformez vos informations en planification financière spectaculaire'
-                  : 'Transform your information into spectacular financial planning'}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button
-                onClick={() => setShowOnboardingWizard(true)}
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 text-lg"
-              >
-                {isFrench ? '🎯 Planificateur de retraite automatisé' : '🎯 Automated Retirement Planner'}
-              </Button>
-                <Button
-                  onClick={reloadData}
-                  variant="outline"
-                  className="border-green-500 text-green-600 hover:bg-green-50 font-semibold py-4 px-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
-                >
-                  {isFrench ? '🔄 Recharger les données' : '🔄 Reload Data'}
-                </Button>
-              </div>
-            </div>
-
-
-
-            {showHelp && (
-              <Alert className="border-yellow-400 bg-yellow-50 text-yellow-800">
-                <Info className="h-5 w-5 text-yellow-400" />
-                <AlertDescription className="text-lg">
-                  <strong>{isFrench ? 'Conseils :' : 'Tips:'}</strong>{' '}
-                  {isFrench
-                  ? "Entrez vos noms complets (prénoms composés, noms de famille) pour une personnalisation optimale de vos rapports. Si vous êtes seul(e), laissez la section « Personne 2 » vide. Les montants en dollars n\'incluent pas les centimes pour simplifier la saisie."
-                    : 'Enter your full names for better personalization. If single, leave "Person 2" empty. Dollar amounts do not include cents.'}
-                </AlertDescription>
-              </Alert>
-            )}
-
-
-
-            {/* Formulaire principal du profil */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
-              {/* Personne 1 */}
-              <Card className="bg-white border-2 border-gray-300 shadow-lg">
-                <CardHeader className="border-b-2 border-gray-200 bg-gray-50">
-                  <CardTitle className="text-2xl font-bold text-gray-900 flex items-center gap-3">
-                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                    {isFrench ? 'Personne 1' : 'Person 1'}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <div className="space-y-4">
-                    {/* Nom complet */}
-                    <div className="senior-form-row">
-                      <Label className="senior-form-label">
-                        {isFrench ? 'Nom complet' : 'Full Name'}
-                      </Label>
-                      <Input
-                        type="text"
-                        value={userData.personal?.prenom1 || ''}
-                        onChange={(e) => handleNameChange('prenom1', e.target.value)}
-                        className="senior-form-input"
-                        placeholder={isFrench ? 'Ex: Jean Philippe…' : 'Ex: John Smith…'}
-                      />
-                    </div>
-
-                    {/* Date de naissance */}
-                    <div className="senior-form-row">
-                      <Label className="senior-form-label">
-                        {isFrench ? 'Date de naissance' : 'Date of Birth'}
-                      </Label>
-                      <CustomBirthDateInput
-                        id="naissance1"
-                        label=""
-                        value={userData.personal?.naissance1 || ''}
-                        onChange={(date) => handleProfileChange('naissance1', date)}
-                        className="senior-form-input"
-                      />
-                    </div>
-
-                    {/* Sexe */}
-                    <div className="senior-form-row">
-                      <Label className="senior-form-label">
-                        {isFrench ? 'Sexe' : 'Gender'}
-                      </Label>
-                      <Select
-                        value={userData.personal?.sexe1 || 'homme'}
-                        onValueChange={(value) => handleProfileChange('sexe1', value)}
-                      >
-                        <SelectTrigger className="senior-form-input">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-white border-2 border-gray-300">
-                          <SelectItem value="homme" className="text-lg py-3">{isFrench ? 'Homme' : 'Male'}</SelectItem>
-                          <SelectItem value="femme" className="text-lg py-3">{isFrench ? 'Femme' : 'Female'}</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Statut professionnel */}
-                    <div className="senior-form-row">
-                      <Label className="senior-form-label">
-                        {isFrench ? 'Statut professionnel' : 'Professional Status'}
-                      </Label>
-                      <Select
-                        value={userData.personal?.statutProfessionnel1 || 'actif'}
-                        onValueChange={(value) => handleProfileChange('statutProfessionnel1', value)}
-                      >
-                        <SelectTrigger className="senior-form-input">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-white border-2 border-gray-300">
-                          <SelectItem value="actif" className="text-lg py-3">{isFrench ? 'Actif' : 'Active'}</SelectItem>
-                          <SelectItem value="retraite" className="text-lg py-3">{isFrench ? 'Retraité' : 'Retired'}</SelectItem>
-                          <SelectItem value="inactif" className="text-lg py-3">{isFrench ? 'Inactif' : 'Inactive'}</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Personne 2 */}
-              <Card className="bg-white border-2 border-gray-300 shadow-lg">
-                <CardHeader className="border-b-2 border-gray-200 bg-gray-50">
-                  <CardTitle className="text-2xl font-bold text-gray-900 flex items-center gap-3">
-                    <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                    {isFrench ? 'Personne 2' : 'Person 2'}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <div className="space-y-4">
-                    {/* Nom complet */}
-                    <div className="senior-form-row">
-                      <Label className="senior-form-label">
-                        {isFrench ? 'Nom complet (optionnel)' : 'Full Name (optional)'}
-                      </Label>
-                      <Input
-                        type="text"
-                        value={userData.personal?.prenom2 || ''}
-                        onChange={(e) => handleNameChange('prenom2', e.target.value)}
-                        className="senior-form-input"
-                        placeholder={isFrench ? 'Ex: Marie…' : 'Ex: Mary…'}
-                      />
-                    </div>
-
-                    {/* Date de naissance */}
-                    <div className="senior-form-row">
-                      <Label className="senior-form-label">
-                        {isFrench ? 'Date de naissance' : 'Date of Birth'}
-                      </Label>
-                      <CustomBirthDateInput
-                        id="naissance2"
-                        label=""
-                        value={userData.personal?.naissance2 || ''}
-                        onChange={(date) => handleProfileChange('naissance2', date)}
-                        className="senior-form-input"
-                      />
-                    </div>
-
-                    {/* Sexe */}
-                    <div className="senior-form-row">
-                      <Label className="senior-form-label">
-                        {isFrench ? 'Sexe' : 'Gender'}
-                      </Label>
-                      <Select
-                        value={userData.personal?.sexe2 || 'femme'}
-                        onValueChange={(value) => handleProfileChange('sexe2', value)}
-                      >
-                        <SelectTrigger className="senior-form-input">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-white border-2 border-gray-300">
-                          <SelectItem value="homme" className="text-lg py-3">{isFrench ? 'Homme' : 'Male'}</SelectItem>
-                          <SelectItem value="femme" className="text-lg py-3">{isFrench ? 'Femme' : 'Female'}</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    {/* Statut professionnel */}
-                    <div className="senior-form-row">
-                      <Label className="senior-form-label">
-                        {isFrench ? 'Statut professionnel' : 'Professional Status'}
-                      </Label>
-                      <Select
-                        value={userData.personal?.statutProfessionnel2 || 'actif'}
-                        onValueChange={(value) => handleProfileChange('statutProfessionnel2', value)}
-                      >
-                        <SelectTrigger className="senior-form-input">
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent className="bg-white border-2 border-gray-300">
-                          <SelectItem value="actif" className="text-lg py-3">{isFrench ? 'Actif' : 'Active'}</SelectItem>
-                          <SelectItem value="retraite" className="text-lg py-3">{isFrench ? 'Retraité' : 'Retired'}</SelectItem>
-                          <SelectItem value="inactif" className="text-lg py-3">{isFrench ? 'Inactif' : 'Inactive'}</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {licenseBlocked && (
-              <Alert className="border-red-400 bg-red-50 text-red-800">
-                <Shield className="h-5 w-5 text-red-400" />
-                <AlertDescription className="text-lg">
-                  <strong>{isFrench ? '🚫 Modification bloquée' : '🚫 Modification blocked'}</strong>
-                  <br />
-                  {licenseMessage}
-                </AlertDescription>
-              </Alert>
-            )}
+    <div className="min-h-screen bg-gray-50 senior-layout">
+      <div className="container mx-auto px-4 sm:px-6 py-8">
+        
+        {/* En-tête principal */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-4 flex items-center justify-center gap-3">
+            <User className="w-10 h-10 text-blue-600" />
+            {isFrench ? 'Mon Profil de Retraite' : 'My Retirement Profile'}
+          </h1>
+          <p className="text-xl text-gray-600 mb-6">
+            {isFrench
+              ? 'Planification financière personnalisée pour votre retraite'
+              : 'Personalized financial planning for your retirement'}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button
+              onClick={() => setShowOnboardingWizard(true)}
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6"
+            >
+              {isFrench ? 'Assistant de planification automatisé' : 'Automated Planning Assistant'}
+            </Button>
+            <Button
+              onClick={reloadData}
+              variant="outline"
+              className="border-green-500 text-green-600 hover:bg-green-50 font-semibold py-3 px-6"
+            >
+              {isFrench ? 'Recharger les données' : 'Reload Data'}
+            </Button>
           </div>
+        </div>
 
-          {/* 1. INFORMATIONS DE BASE - Personne 1 et Personne 2 */}
-          <div className="space-y-8">
-            <div className="text-center mb-6">
-              <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                {isFrench ? '👤 Informations de Base' : '👤 Basic Information'}
-              </h2>
-              <p className="text-lg text-gray-600">
-                {isFrench
-                  ? 'Informations personnelles essentielles pour vos calculs de retraite'
-                  : 'Essential personal information for your retirement calculations'}
-              </p>
-            </div>
-            
-            {/* Profils personnels - 2 colonnes */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              {/* Personne 1 - Profil personnel */}
-              <Card className="bg-white border-2 border-blue-200 shadow-lg">
-            <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-blue-800">
-                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                    {isFrench ? 'Profil Personnel - Personne 1' : 'Personal Profile - Person 1'}
-              </CardTitle>
-            </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Province de résidence' : 'Province of residence'}
+        {/* Validation des données requises */}
+        {(!person1Valid || (hasPerson2Data && !person2Valid)) && (
+          <Alert className="mb-6 border-red-200 bg-red-50">
+            <AlertTriangle className="h-5 w-5" />
+            <AlertDescription className="text-base">
+              <strong>{isFrench ? 'Champs requis manquants' : 'Required fields missing'}</strong>
+              <br />
+              {isFrench ? 'Veuillez compléter les champs suivants pour obtenir une analyse de longévité :' : 'Please complete the following fields to get longevity analysis:'}
+              <ul className="mt-2 list-disc list-inside">
+                {!person1Valid && (
+                  <li>
+                    {isFrench ? 'Personne 1: ' : 'Person 1: '}
+                    {!userData.personal?.naissance1 && (isFrench ? 'Date de naissance ' : 'Birth date ')}
+                    {!userData.personal?.sexe1 && (isFrench ? 'Sexe ' : 'Gender ')}
+                  </li>
+                )}
+                {hasPerson2Data && !person2Valid && (
+                  <li>
+                    {isFrench ? 'Personne 2: ' : 'Person 2: '}
+                    {!userData.personal?.naissance2 && (isFrench ? 'Date de naissance ' : 'Birth date ')}
+                    {!userData.personal?.sexe2 && (isFrench ? 'Sexe ' : 'Gender ')}
+                  </li>
+                )}
+              </ul>
+            </AlertDescription>
+          </Alert>
+        )}
+
+        <div className="space-y-8">
+          {/* Section 1: Profils personnels */}
+          <div className="senior-financial-grid">
+            {/* Personne 1 */}
+            <Card className="senior-compact-card border-blue-200">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-3 text-blue-800">
+                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
+                  {isFrench ? 'Personne 1' : 'Person 1'}
+                  {person1Valid ? (
+                    <CheckCircle className="w-5 h-5 text-green-500" />
+                  ) : (
+                    <AlertTriangle className="w-5 h-5 text-red-500" />
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="senior-form-grid">
+                  <div className="senior-form-field">
+                    <Label className="senior-form-label">
+                      {isFrench ? 'Nom complet' : 'Full Name'}
                     </Label>
-                  <Select
+                    <Input
+                      value={userData.personal?.prenom1 || ''}
+                      onChange={(e) => handleNameChange('prenom1', e.target.value)}
+                      className="senior-form-input"
+                      placeholder={isFrench ? 'Ex: Jean Philippe...' : 'Ex: John Smith...'}
+                    />
+                  </div>
+
+                  <div className="senior-form-field">
+                    <Label className="senior-form-label">
+                      {isFrench ? 'Date de naissance' : 'Birth Date'}
+                    </Label>
+                    <CustomBirthDateInput
+                      id="naissance1"
+                      label=""
+                      value={userData.personal?.naissance1 || ''}
+                      onChange={(date) => handleProfileChange('naissance1', date)}
+                      className="senior-form-input"
+                    />
+                  </div>
+
+                  <div className="senior-form-field">
+                    <Label className="senior-form-label">
+                      {isFrench ? 'Sexe' : 'Gender'}
+                    </Label>
+                    <Select
+                      value={userData.personal?.sexe1 || ''}
+                      onValueChange={(value) => handleProfileChange('sexe1', value)}
+                    >
+                      <SelectTrigger className="senior-form-input">
+                        <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="homme">{isFrench ? 'Homme' : 'Male'}</SelectItem>
+                        <SelectItem value="femme">{isFrench ? 'Femme' : 'Female'}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="senior-form-field">
+                    <Label className="senior-form-label">
+                      {isFrench ? 'Province' : 'Province'}
+                    </Label>
+                    <Select
                       value={userData.personal?.province1 || userData.personal?.province || ''}
                       onValueChange={(value) => updateUserData('personal', { province1: value, province: value })}
-                  >
-                      <SelectTrigger className="bg-white border-2 border-gray-300 text-gray-900 h-12 text-lg w-96">
-                      <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
-                    </SelectTrigger>
-                      <SelectContent className="bg-white border-2 border-gray-300">
-                        <SelectItem value="QC" className="text-lg py-3">Québec</SelectItem>
-                        <SelectItem value="ON" className="text-lg py-3">Ontario</SelectItem>
-                        <SelectItem value="BC" className="text-lg py-3">Colombie-Britannique</SelectItem>
-                        <SelectItem value="AB" className="text-lg py-3">Alberta</SelectItem>
-                        <SelectItem value="MB" className="text-lg py-3">Manitoba</SelectItem>
-                        <SelectItem value="SK" className="text-lg py-3">Saskatchewan</SelectItem>
-                        <SelectItem value="NS" className="text-lg py-3">Nouvelle-Écosse</SelectItem>
-                        <SelectItem value="NB" className="text-lg py-3">Nouveau-Brunswick</SelectItem>
-                        <SelectItem value="PE" className="text-lg py-3">Île-du-Prince-Édouard</SelectItem>
-                        <SelectItem value="NL" className="text-lg py-3">Terre-Neuve-et-Labrador</SelectItem>
-                        <SelectItem value="YT" className="text-lg py-3">Yukon</SelectItem>
-                        <SelectItem value="NT" className="text-lg py-3">Territoires du Nord-Ouest</SelectItem>
-                        <SelectItem value="NU" className="text-lg py-3">Nunavut</SelectItem>
-                    </SelectContent>
-                  </Select>
+                    >
+                      <SelectTrigger className="senior-form-input">
+                        <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="QC">Québec</SelectItem>
+                        <SelectItem value="ON">Ontario</SelectItem>
+                        <SelectItem value="BC">Colombie-Britannique</SelectItem>
+                        <SelectItem value="AB">Alberta</SelectItem>
+                        <SelectItem value="MB">Manitoba</SelectItem>
+                        <SelectItem value="SK">Saskatchewan</SelectItem>
+                        <SelectItem value="NS">Nouvelle-Écosse</SelectItem>
+                        <SelectItem value="NB">Nouveau-Brunswick</SelectItem>
+                        <SelectItem value="PE">Île-du-Prince-Édouard</SelectItem>
+                        <SelectItem value="NL">Terre-Neuve-et-Labrador</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'État de santé général' : 'General health'}
+                {/* Facteurs de santé pour Personne 1 */}
+                <div className="mt-4 space-y-3">
+                  <h4 className="flex items-center gap-2 text-green-700 font-semibold">
+                    <Heart className="w-4 h-4" />
+                    {isFrench ? 'Facteurs de santé' : 'Health Factors'}
+                  </h4>
+                  <div className="senior-form-grid">
+                    <div className="senior-form-field">
+                      <Label className="senior-form-label text-sm">
+                        {isFrench ? 'État de santé' : 'Health Status'}
+                      </Label>
+                      <Select
+                        value={userData.personal?.etatSante1 || ''}
+                        onValueChange={(value) => updateUserData('personal', { etatSante1: value })}
+                      >
+                        <SelectTrigger className="senior-form-input h-10">
+                          <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="excellent">{isFrench ? 'Excellent' : 'Excellent'}</SelectItem>
+                          <SelectItem value="tresbon">{isFrench ? 'Très bon' : 'Very good'}</SelectItem>
+                          <SelectItem value="bon">{isFrench ? 'Bon' : 'Good'}</SelectItem>
+                          <SelectItem value="moyen">{isFrench ? 'Moyen' : 'Average'}</SelectItem>
+                          <SelectItem value="fragile">{isFrench ? 'Fragile' : 'Poor'}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    <div className="senior-form-field">
+                      <Label className="senior-form-label text-sm">
+                        {isFrench ? 'Mode de vie' : 'Lifestyle'}
+                      </Label>
+                      <Select
+                        value={userData.personal?.modeVieActif1 || ''}
+                        onValueChange={(value) => updateUserData('personal', { modeVieActif1: value })}
+                      >
+                        <SelectTrigger className="senior-form-input h-10">
+                          <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="sedentaire">{isFrench ? 'Sédentaire' : 'Sedentary'}</SelectItem>
+                          <SelectItem value="legerementActif">{isFrench ? 'Légèrement actif' : 'Lightly active'}</SelectItem>
+                          <SelectItem value="modere">{isFrench ? 'Modérément actif' : 'Moderately active'}</SelectItem>
+                          <SelectItem value="actif">{isFrench ? 'Actif' : 'Active'}</SelectItem>
+                          <SelectItem value="tresActif">{isFrench ? 'Très actif' : 'Very active'}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Résultats de longévité Personne 1 */}
+                {person1Valid && (
+                  <div className="mt-4 bg-blue-50 rounded-lg p-4">
+                    <h5 className="flex items-center gap-2 text-blue-700 font-semibold mb-3">
+                      <Star className="w-4 h-4" />
+                      {isFrench ? 'Analyse de longévité' : 'Longevity Analysis'}
+                    </h5>
+                    <div className="grid grid-cols-3 gap-4 text-center">
+                      <div>
+                        <div className="text-xl font-bold text-blue-600">
+                          {person1Mortality.lifeExpectancy} {isFrench ? 'ans' : 'years'}
+                        </div>
+                        <div className="text-xs text-gray-600">{isFrench ? 'Espérance de vie' : 'Life expectancy'}</div>
+                      </div>
+                      <div>
+                        <div className="text-xl font-bold text-purple-600">
+                          {person1Mortality.finalAge} {isFrench ? 'ans' : 'years'}
+                        </div>
+                        <div className="text-xs text-gray-600">{isFrench ? 'Âge final estimé' : 'Estimated final age'}</div>
+                      </div>
+                      <div>
+                        <div className={`text-xl font-bold ${person1Mortality.adjustment >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          {person1Mortality.adjustment >= 0 ? '+' : ''}{person1Mortality.adjustment.toFixed(1)}
+                        </div>
+                        <div className="text-xs text-gray-600">{isFrench ? 'Ajustement' : 'Adjustment'}</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+
+            {/* Personne 2 */}
+            <Card className="senior-compact-card border-green-200">
+              <CardHeader className="pb-4">
+                <CardTitle className="flex items-center gap-3 text-green-800">
+                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
+                  {isFrench ? 'Personne 2 (optionnel)' : 'Person 2 (optional)'}
+                  {hasPerson2Data && (
+                    person2Valid ? (
+                      <CheckCircle className="w-5 h-5 text-green-500" />
+                    ) : (
+                      <AlertTriangle className="w-5 h-5 text-red-500" />
+                    )
+                  )}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="senior-form-grid">
+                  <div className="senior-form-field">
+                    <Label className="senior-form-label">
+                      {isFrench ? 'Nom complet' : 'Full Name'}
                     </Label>
-                  <Select
-                      value={userData.personal?.etatSante1 || ''}
-                      onValueChange={(value) => updateUserData('personal', { etatSante1: value })}
-                  >
-                      <SelectTrigger className="bg-white border-2 border-gray-300 text-gray-900 h-12 text-lg w-80">
-                      <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
-                    </SelectTrigger>
-                      <SelectContent className="bg-white border-2 border-gray-300">
-                        <SelectItem value="excellent" className="text-lg py-3">{isFrench ? 'Excellent' : 'Excellent'}</SelectItem>
-                        <SelectItem value="tresbon" className="text-lg py-3">{isFrench ? 'Très bon' : 'Very good'}</SelectItem>
-                        <SelectItem value="bon" className="text-lg py-3">{isFrench ? 'Bon' : 'Good'}</SelectItem>
-                        <SelectItem value="moyen" className="text-lg py-3">{isFrench ? 'Moyen' : 'Average'}</SelectItem>
-                        <SelectItem value="fragile" className="text-lg py-3">{isFrench ? 'Fragile' : 'Poor'}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+                    <Input
+                      value={userData.personal?.prenom2 || ''}
+                      onChange={(e) => handleNameChange('prenom2', e.target.value)}
+                      className="senior-form-input"
+                      placeholder={isFrench ? 'Ex: Marie...' : 'Ex: Mary...'}
+                    />
+                  </div>
 
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Mode de vie' : 'Lifestyle'}
+                  <div className="senior-form-field">
+                    <Label className="senior-form-label">
+                      {isFrench ? 'Date de naissance' : 'Birth Date'}
                     </Label>
-                  <Select
-                      value={userData.personal?.modeVieActif1 || ''}
-                      onValueChange={(value) => updateUserData('personal', { modeVieActif1: value })}
-                  >
-                      <SelectTrigger className="bg-white border-2 border-gray-300 text-gray-900 h-12 text-lg w-80">
-                      <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
-                    </SelectTrigger>
-                      <SelectContent className="bg-white border-2 border-gray-300">
-                        <SelectItem value="sedentaire" className="text-lg py-3">{isFrench ? 'Sédentaire' : 'Sedentary'}</SelectItem>
-                        <SelectItem value="legerementActif" className="text-lg py-3">{isFrench ? 'Légèrement actif' : 'Lightly active'}</SelectItem>
-                        <SelectItem value="modere" className="text-lg py-3">{isFrench ? 'Modérément actif' : 'Moderately active'}</SelectItem>
-                        <SelectItem value="actif" className="text-lg py-3">{isFrench ? 'Actif' : 'Active'}</SelectItem>
-                        <SelectItem value="tresActif" className="text-lg py-3">{isFrench ? 'Très actif' : 'Very active'}</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                </CardContent>
-              </Card>
+                    <CustomBirthDateInput
+                      id="naissance2"
+                      label=""
+                      value={userData.personal?.naissance2 || ''}
+                      onChange={(date) => handleProfileChange('naissance2', date)}
+                      className="senior-form-input"
+                    />
+                  </div>
 
-              {/* Personne 2 - Profil personnel */}
-              <Card className="bg-white border-2 border-green-200 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-green-800">
-                    <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                    {isFrench ? 'Profil Personnel - Personne 2' : 'Personal Profile - Person 2'}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Province de résidence' : 'Province of residence'}
+                  <div className="senior-form-field">
+                    <Label className="senior-form-label">
+                      {isFrench ? 'Sexe' : 'Gender'}
+                    </Label>
+                    <Select
+                      value={userData.personal?.sexe2 || ''}
+                      onValueChange={(value) => handleProfileChange('sexe2', value)}
+                    >
+                      <SelectTrigger className="senior-form-input">
+                        <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="homme">{isFrench ? 'Homme' : 'Male'}</SelectItem>
+                        <SelectItem value="femme">{isFrench ? 'Femme' : 'Female'}</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="senior-form-field">
+                    <Label className="senior-form-label">
+                      {isFrench ? 'Province' : 'Province'}
                     </Label>
                     <Select
                       value={userData.personal?.province2 || ''}
                       onValueChange={(value) => updateUserData('personal', { province2: value })}
                     >
-                      <SelectTrigger className="bg-white border-2 border-gray-300 text-gray-900 h-12 text-lg w-96">
+                      <SelectTrigger className="senior-form-input">
                         <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
                       </SelectTrigger>
-                      <SelectContent className="bg-white border-2 border-gray-300">
-                        <SelectItem value="QC" className="text-lg py-3">Québec</SelectItem>
-                        <SelectItem value="ON" className="text-lg py-3">Ontario</SelectItem>
-                        <SelectItem value="BC" className="text-lg py-3">Colombie-Britannique</SelectItem>
-                        <SelectItem value="AB" className="text-lg py-3">Alberta</SelectItem>
-                        <SelectItem value="MB" className="text-lg py-3">Manitoba</SelectItem>
-                        <SelectItem value="SK" className="text-lg py-3">Saskatchewan</SelectItem>
-                        <SelectItem value="NS" className="text-lg py-3">Nouvelle-Écosse</SelectItem>
-                        <SelectItem value="NB" className="text-lg py-3">Nouveau-Brunswick</SelectItem>
-                        <SelectItem value="PE" className="text-lg py-3">Île-du-Prince-Édouard</SelectItem>
-                        <SelectItem value="NL" className="text-lg py-3">Terre-Neuve-et-Labrador</SelectItem>
-                        <SelectItem value="YT" className="text-lg py-3">Yukon</SelectItem>
-                        <SelectItem value="NT" className="text-lg py-3">Territoires du Nord-Ouest</SelectItem>
-                        <SelectItem value="NU" className="text-lg py-3">Nunavut</SelectItem>
-                      </SelectContent>
-                    </Select>
-              </div>
-
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'État de santé général' : 'General health'}
-                    </Label>
-                    <Select
-                      value={userData.personal?.etatSante2 || ''}
-                      onValueChange={(value) => updateUserData('personal', { etatSante2: value })}
-                    >
-                      <SelectTrigger className="bg-white border-2 border-gray-300 text-gray-900 h-12 text-lg w-80">
-                        <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white border-2 border-gray-300">
-                        <SelectItem value="excellent" className="text-lg py-3">{isFrench ? 'Excellent' : 'Excellent'}</SelectItem>
-                        <SelectItem value="tresbon" className="text-lg py-3">{isFrench ? 'Très bon' : 'Very good'}</SelectItem>
-                        <SelectItem value="bon" className="text-lg py-3">{isFrench ? 'Bon' : 'Good'}</SelectItem>
-                        <SelectItem value="moyen" className="text-lg py-3">{isFrench ? 'Moyen' : 'Average'}</SelectItem>
-                        <SelectItem value="fragile" className="text-lg py-3">{isFrench ? 'Fragile' : 'Poor'}</SelectItem>
+                      <SelectContent>
+                        <SelectItem value="QC">Québec</SelectItem>
+                        <SelectItem value="ON">Ontario</SelectItem>
+                        <SelectItem value="BC">Colombie-Britannique</SelectItem>
+                        <SelectItem value="AB">Alberta</SelectItem>
+                        <SelectItem value="MB">Manitoba</SelectItem>
+                        <SelectItem value="SK">Saskatchewan</SelectItem>
+                        <SelectItem value="NS">Nouvelle-Écosse</SelectItem>
+                        <SelectItem value="NB">Nouveau-Brunswick</SelectItem>
+                        <SelectItem value="PE">Île-du-Prince-Édouard</SelectItem>
+                        <SelectItem value="NL">Terre-Neuve-et-Labrador</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
+                </div>
 
-                  <div className="flex items-center gap-4">
-                    <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
-                      {isFrench ? 'Mode de vie' : 'Lifestyle'}
-                    </Label>
-                    <Select
-                      value={userData.personal?.modeVieActif2 || ''}
-                      onValueChange={(value) => updateUserData('personal', { modeVieActif2: value })}
-                    >
-                      <SelectTrigger className="bg-white border-2 border-gray-300 text-gray-900 h-12 text-lg w-80">
-                        <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
-                      </SelectTrigger>
-                      <SelectContent className="bg-white border-2 border-gray-300">
-                        <SelectItem value="sedentaire" className="text-lg py-3">{isFrench ? 'Sédentaire' : 'Sedentary'}</SelectItem>
-                        <SelectItem value="legerementActif" className="text-lg py-3">{isFrench ? 'Légèrement actif' : 'Lightly active'}</SelectItem>
-                        <SelectItem value="modere" className="text-lg py-3">{isFrench ? 'Modérément actif' : 'Moderately active'}</SelectItem>
-                        <SelectItem value="actif" className="text-lg py-3">{isFrench ? 'Actif' : 'Active'}</SelectItem>
-                        <SelectItem value="tresActif" className="text-lg py-3">{isFrench ? 'Très actif' : 'Very active'}</SelectItem>
-                      </SelectContent>
-                    </Select>
+                {/* Facteurs de santé pour Personne 2 */}
+                {hasPerson2Data && (
+                  <div className="mt-4 space-y-3">
+                    <h4 className="flex items-center gap-2 text-green-700 font-semibold">
+                      <Heart className="w-4 h-4" />
+                      {isFrench ? 'Facteurs de santé' : 'Health Factors'}
+                    </h4>
+                    <div className="senior-form-grid">
+                      <div className="senior-form-field">
+                        <Label className="senior-form-label text-sm">
+                          {isFrench ? 'État de santé' : 'Health Status'}
+                        </Label>
+                        <Select
+                          value={userData.personal?.etatSante2 || ''}
+                          onValueChange={(value) => updateUserData('personal', { etatSante2: value })}
+                        >
+                          <SelectTrigger className="senior-form-input h-10">
+                            <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="excellent">{isFrench ? 'Excellent' : 'Excellent'}</SelectItem>
+                            <SelectItem value="tresbon">{isFrench ? 'Très bon' : 'Very good'}</SelectItem>
+                            <SelectItem value="bon">{isFrench ? 'Bon' : 'Good'}</SelectItem>
+                            <SelectItem value="moyen">{isFrench ? 'Moyen' : 'Average'}</SelectItem>
+                            <SelectItem value="fragile">{isFrench ? 'Fragile' : 'Poor'}</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      <div className="senior-form-field">
+                        <Label className="senior-form-label text-sm">
+                          {isFrench ? 'Mode de vie' : 'Lifestyle'}
+                        </Label>
+                        <Select
+                          value={userData.personal?.modeVieActif2 || ''}
+                          onValueChange={(value) => updateUserData('personal', { modeVieActif2: value })}
+                        >
+                          <SelectTrigger className="senior-form-input h-10">
+                            <SelectValue placeholder={isFrench ? 'Sélectionner' : 'Select'} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="sedentaire">{isFrench ? 'Sédentaire' : 'Sedentary'}</SelectItem>
+                            <SelectItem value="legerementActif">{isFrench ? 'Légèrement actif' : 'Lightly active'}</SelectItem>
+                            <SelectItem value="modere">{isFrench ? 'Modérément actif' : 'Moderately active'}</SelectItem>
+                            <SelectItem value="actif">{isFrench ? 'Actif' : 'Active'}</SelectItem>
+                            <SelectItem value="tresActif">{isFrench ? 'Très actif' : 'Very active'}</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
+                )}
 
-            {/* 2. PENSIONS/PRESTATIONS */}
-            <div className="space-y-8">
-              <div className="text-center mb-6">
-                <h3 className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
-                  {isFrench ? '🏛️ Pensions/Prestations' : '🏛️ Pensions/Benefits'}
-                </h3>
-                <p className="text-lg text-gray-600">
-                  {isFrench
-                    ? 'Vos pensions publiques et prestations gouvernementales'
-                    : 'Your public pensions and government benefits'}
-                </p>
+                {/* Résultats de longévité Personne 2 */}
+                {person2Valid && hasPerson2Data && (
+                  <div className="mt-4 bg-green-50 rounded-lg p-4">
+                    <h5 className="flex items-center gap-2 text-green-700 font-semibold mb-3">
+                      <Star className="w-4 h-4" />
+                      {isFrench ? 'Analyse de longévité' : 'Longevity Analysis'}
+                    </h5>
+                    <div className="grid grid-cols-3 gap-4 text-center">
+                      <div>
+                        <div className="text-xl font-bold text-green-600">
+                          {person2Mortality.lifeExpectancy} {isFrench ? 'ans' : 'years'}
+                        </div>
+                        <div className="text-xs text-gray-600">{isFrench ? 'Espérance de vie' : 'Life expectancy'}</div>
+                      </div>
+                      <div>
+                        <div className="text-xl font-bold text-purple-600">
+                          {person2Mortality.finalAge} {isFrench ? 'ans' : 'years'}
+                        </div>
+                        <div className="text-xs text-gray-600">{isFrench ? 'Âge final estimé' : 'Estimated final age'}</div>
+                      </div>
+                      <div>
+                        <div className={`text-xl font-bold ${person2Mortality.adjustment >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                          {person2Mortality.adjustment >= 0 ? '+' : ''}{person2Mortality.adjustment.toFixed(1)}
+                        </div>
+                        <div className="text-xs text-gray-600">{isFrench ? 'Ajustement' : 'Adjustment'}</div>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Section 2: Analyse comparative du couple (CORRIGÉE) */}
+          {person1Valid && person2Valid && hasPerson2Data && coupleAnalysis && (
+            <div className="senior-analysis-results">
+              <div className="flex items-center gap-3 mb-4">
+                <TrendingUp className="w-6 h-6" />
+                <h2 className="text-2xl font-bold">
+                  {isFrench ? 'Analyse Comparative du Couple' : 'Couple Comparative Analysis'}
+                </h2>
               </div>
-
-              {/* Sécurité de la vieillesse */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Personne 1 - Sécurité de la vieillesse */}
-                <Card className="bg-white border-2 border-emerald-200 shadow-lg">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-emerald-800">
-                      <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                      <Shield className="w-6 h-6" />
-                      {isFrench ? 'Sécurité de la vieillesse' : 'Old Age Security'}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="senior-summary-row" style={{ background: '#ecfdf5' }}>
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Période 1 (Jan-Juin)' : 'Period 1 (Jan-June)'}
-                        </div>
-                        <div className="senior-summary-value text-emerald-600">
-                          {formatCurrencyQuebec(userData.retirement?.svBiannual1?.periode1?.montant || 0)}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'par mois' : 'per month'}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="senior-summary-row" style={{ background: '#fff7ed' }}>
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Période 2 (Juil-Déc)' : 'Period 2 (Jul-Dec)'}
-                        </div>
-                        <div className="senior-summary-value text-orange-600">
-                          {formatCurrencyQuebec(userData.retirement?.svBiannual1?.periode2?.montant || 0)}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'par mois' : 'per month'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <Button 
-                        variant="link" 
-                        className="text-emerald-600 hover:text-emerald-800"
-                        onClick={() => navigate('/revenus')}
-                      >
-                        {isFrench ? 'Modifier sur la page Revenus' : 'Edit on the Income page'}
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Personne 2 - Sécurité de la vieillesse */}
-                <Card className="bg-white border-2 border-emerald-200 shadow-lg">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-emerald-800">
-                      <div className="w-8 h-8 bg-emerald-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                      <Shield className="w-6 h-6" />
-                      {isFrench ? 'Sécurité de la vieillesse' : 'Old Age Security'}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="senior-summary-row" style={{ background: '#ecfdf5' }}>
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Période 1 (Jan-Juin)' : 'Period 1 (Jan-June)'}
-                        </div>
-                        <div className="senior-summary-value text-emerald-600">
-                          {formatCurrencyQuebec(userData.retirement?.svBiannual2?.periode1?.montant || 0)}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'par mois' : 'per month'}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="senior-summary-row" style={{ background: '#fff7ed' }}>
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Période 2 (Juil-Déc)' : 'Period 2 (Jul-Dec)'}
-                        </div>
-                        <div className="senior-summary-value text-orange-600">
-                          {formatCurrencyQuebec(userData.retirement?.svBiannual2?.periode2?.montant || 0)}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'par mois' : 'per month'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <Button 
-                        variant="link" 
-                        className="text-emerald-600 hover:text-emerald-800"
-                        onClick={() => navigate('/revenus')}
-                      >
-                        {isFrench ? 'Modifier sur la page Revenus' : 'Edit on the Income page'}
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-
-              {/* RRQ et CPP */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Personne 1 - RRQ/CPP */}
-                <Card className="bg-white border-2 border-blue-200 shadow-lg">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-blue-800">
-                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                      <Flag className="w-6 h-6" />
-                      {isFrench ? 'RRQ/CPP' : 'QPP/CPP'}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="senior-summary-row" style={{ background: '#eff6ff' }}>
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Prestation actuelle' : 'Current benefit'}
-                        </div>
-                        <div className="senior-summary-value text-blue-600">
-                          {formatCurrencyQuebec(userData.retirement?.rrqMontantActuel1 || 0)}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'par mois' : 'per month'}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="senior-summary-row" style={{ background: '#faf5ff' }}>
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Prestation à 70 ans' : 'Benefit at 70 years'}
-                        </div>
-                        <div className="senior-summary-value text-purple-600">
-                          {formatCurrencyQuebec(userData.retirement?.rrqMontant70_1 || 0)}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'par mois' : 'per month'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <Button 
-                        variant="link" 
-                        className="text-blue-600 hover:text-blue-800"
-                        onClick={() => navigate('/rrq-cpp-analysis')}
-                      >
-                        {isFrench ? 'Compléter dans RRQ/CPP' : 'Complete in QPP/CPP'}
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Personne 2 - RRQ/CPP */}
-                <Card className="bg-white border-2 border-blue-200 shadow-lg">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-blue-800">
-                      <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                      <Flag className="w-6 h-6" />
-                      {isFrench ? 'RRQ/CPP' : 'QPP/CPP'}
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="senior-summary-row" style={{ background: '#eff6ff' }}>
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Prestation actuelle' : 'Current benefit'}
-                        </div>
-                        <div className="senior-summary-value text-blue-600">
-                          {formatCurrencyQuebec(userData.retirement?.rrqMontantActuel2 || 0)}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'par mois' : 'per month'}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="senior-summary-row" style={{ background: '#faf5ff' }}>
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Prestation à 70 ans' : 'Benefit at 70 years'}
-                        </div>
-                        <div className="senior-summary-value text-purple-600">
-                          {formatCurrencyQuebec(userData.retirement?.rrqMontant70_2 || 0)}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'par mois' : 'per month'}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <Button 
-                        variant="link" 
-                        className="text-blue-600 hover:text-blue-800"
-                        onClick={() => navigate('/rrq-cpp-analysis')}
-                      >
-                        {isFrench ? 'Compléter dans RRQ/CPP' : 'Complete in QPP/CPP'}
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-
-            {/* 3. TABLEAUX DE BORD */}
-            <div className="space-y-8">
-              {/* Revenus et actifs - 2 colonnes */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Personne 1 - Revenus et actifs */}
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-blue-800">
-                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                      <Building className="w-6 h-6" />
-                      {isFrench ? 'Mes revenus et actifs' : 'My income and assets'}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Salaires (annuel)' : 'Salaries (annual)'}
-                        </div>
-                        <div className="senior-summary-value text-blue-600">
-                          {formatCurrencyQuebec(person1Income.totalSalary)}
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Pensions (annuel)' : 'Pensions (annual)'}
-                        </div>
-                        <div className="senior-summary-value text-green-600">
-                          {formatCurrencyQuebec(person1Income.totalPensions)}
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Autres revenus (annuel)' : 'Other income (annual)'}
-                        </div>
-                        <div className="senior-summary-value text-purple-600">
-                          {formatCurrencyQuebec(person1Income.totalOtherIncome)}
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Épargne REER' : 'RRSP savings'}
-                        </div>
-                        <div className="senior-summary-value text-orange-600">
-                          {formatCurrencyQuebec(person1Savings.reer)}
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Épargne CELI' : 'TFSA savings'}
-                        </div>
-                        <div className="senior-summary-value text-cyan-600">
-                          {formatCurrencyQuebec(person1Savings.celi)}
-                        </div>
-                      </div>
-                    </div>
-                                        <div className="text-right">
-                      <Button 
-                        variant="link" 
-                        className="text-blue-600 hover:text-blue-800"
-                        onClick={() => navigate('/revenus')}
-                      >
-                        {isFrench ? 'Modifier sur la page Revenus' : 'Edit on the Income page'}
-                      </Button>
-                    </div>
-                </CardContent>
-              </Card>
-
-                {/* Personne 2 - Revenus et actifs */}
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-green-200 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-green-800">
-                    <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                      <Building className="w-6 h-6" />
-                      {isFrench ? 'Mes revenus et actifs' : 'My income and assets'}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Salaires (annuel)' : 'Salaries (annual)'}
-                        </div>
-                        <div className="senior-summary-value text-blue-600">
-                          {formatCurrencyQuebec(person2Income.totalSalary)}
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Pensions (annuel)' : 'Pensions (annual)'}
-                        </div>
-                        <div className="senior-summary-value text-green-600">
-                          {formatCurrencyQuebec(person2Income.totalPensions)}
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Autres revenus (annuel)' : 'Other income (annual)'}
-                        </div>
-                        <div className="senior-summary-value text-purple-600">
-                          {formatCurrencyQuebec(person2Income.totalOtherIncome)}
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Épargne REER' : 'RRSP savings'}
-                        </div>
-                        <div className="senior-summary-value text-orange-600">
-                          {formatCurrencyQuebec(person2Savings.reer)}
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Épargne CELI' : 'TFSA savings'}
-                        </div>
-                        <div className="senior-summary-value text-cyan-600">
-                          {formatCurrencyQuebec(person2Savings.celi)}
-                        </div>
-                      </div>
-                    </div>
-                                        <div className="text-right">
-                      <Button 
-                        variant="link" 
-                        className="text-green-600 hover:text-green-800"
-                        onClick={() => navigate('/revenus')}
-                      >
-                        {isFrench ? 'Modifier sur la page Revenus' : 'Edit on the Income page'}
-                      </Button>
-                    </div>
-                </CardContent>
-              </Card>
-            </div>
-
-              {/* Dépenses et budget - 2 colonnes */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Personne 1 - Dépenses et budget */}
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-blue-800">
-                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                      <CreditCard className="w-6 h-6" />
-                      {isFrench ? 'Mes dépenses et budget' : 'My expenses and budget'}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Dépenses mensuelles' : 'Monthly expenses'}
-                        </div>
-                        <div className="senior-summary-value text-green-600">
-                          {formatCurrencyQuebec(userData.personal?.depensesMensuelles || 0)}
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Revenus mensuels estimés' : 'Estimated monthly income'}
-                        </div>
-                        <div className="senior-summary-value text-blue-600">
-                          {formatCurrencyQuebec(person1Income.totalIncome / 12)}
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Flux de trésorerie (mois)' : 'Cash flow (month)'}
-                        </div>
-                        <div className="senior-summary-value text-green-600">
-                          {formatCurrencyQuebec((person1Income.totalIncome / 12) - (userData.personal?.depensesMensuelles || 0))}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <Button variant="link" className="text-blue-600 hover:text-blue-800">
-                        {isFrench ? 'Modifier sur la page Dépenses' : 'Edit on the Expenses page'}
-                      </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-                {/* Personne 2 - Dépenses et budget */}
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-green-200 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-green-800">
-                    <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                      <CreditCard className="w-6 h-6" />
-                      {isFrench ? 'Mes dépenses et budget' : 'My expenses and budget'}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Dépenses mensuelles' : 'Monthly expenses'}
-                        </div>
-                        <div className="senior-summary-value text-green-600">
-                          {formatCurrencyQuebec((userData.personal?.epicerie1 || 0) + (userData.personal?.epicerie2 || 0))}
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Revenus mensuels estimés' : 'Estimated monthly income'}
-                        </div>
-                        <div className="senior-summary-value text-blue-600">
-                          {formatCurrencyQuebec(person2Income.totalIncome / 12)}
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Flux de trésorerie (mois)' : 'Cash flow (month)'}
-                        </div>
-                        <div className="senior-summary-value text-green-600">
-                          {formatCurrencyQuebec((person2Income.totalIncome / 12) - ((userData.personal?.epicerie1 || 0) + (userData.personal?.epicerie2 || 0)))}
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <Button variant="link" className="text-green-600 hover:text-green-800">
-                        {isFrench ? 'Modifier sur la page Dépenses' : 'Edit on the Expenses page'}
-                      </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Calculs de retraite - 2 colonnes */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Personne 1 - Calculs de retraite */}
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-blue-800">
-                    <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                      <BarChart3 className="w-6 h-6" />
-                      {isFrench ? 'Mes calculs de retraite' : 'My retirement calculations'}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Âge de retraite souhaité' : 'Desired retirement age'}
-                        </div>
-                        <div className="senior-summary-value text-purple-600">
-                          {userData.personal?.ageRetraiteSouhaite1 || 65}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'ans' : 'years'}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Années avant la retraite (approx.)' : 'Years until retirement (approx.)'}
-                        </div>
-                        <div className="senior-summary-value text-blue-600">
-                          {Math.max(0, (userData.personal?.ageRetraiteSouhaite1 || 65) - computeAgeFromBirthdate(userData.personal?.naissance1))}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'ans' : 'years'}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Espérance de vie (CPM2014)' : 'Life expectancy (CPM2014)'}
-                        </div>
-                        <div className="senior-summary-value text-green-600">
-                          {calculateMortalityForPerson(1).lifeExpectancy}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'ans' : 'years'}
-                          </span>
-                          <div className="text-xs text-gray-500 mt-1">
-                            {isFrench ? 'Âge recommandé:' : 'Recommended age:'} {calculateMortalityForPerson(1).finalAge}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <Button variant="link" className="text-blue-600 hover:text-blue-800">
-                        {isFrench ? 'Voir les rapports' : 'View reports'}
-                      </Button>
-                  </div>
-                </CardContent>
-              </Card>
-
-                {/* Personne 2 - Calculs de retraite */}
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-green-200 shadow-lg">
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-3 text-green-800">
-                    <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                      <BarChart3 className="w-6 h-6" />
-                      {isFrench ? 'Mes calculs de retraite' : 'My retirement calculations'}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Âge de retraite souhaité' : 'Desired retirement age'}
-                        </div>
-                        <div className="senior-summary-value text-purple-600">
-                          {userData.personal?.ageRetraiteSouhaite2 || 65}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'ans' : 'years'}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Années avant la retraite (approx.)' : 'Years until retirement (approx.)'}
-                        </div>
-                        <div className="senior-summary-value text-blue-600">
-                          {Math.max(0, (userData.personal?.ageRetraiteSouhaite2 || 65) - computeAgeFromBirthdate(userData.personal?.naissance2))}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'ans' : 'years'}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="senior-summary-row">
-                        <div className="senior-summary-label">
-                          {isFrench ? 'Espérance de vie (CPM2014)' : 'Life expectancy (CPM2014)'}
-                        </div>
-                        <div className="senior-summary-value text-green-600">
-                          {calculateMortalityForPerson(2).lifeExpectancy}
-                          <span className="senior-summary-unit">
-                            {isFrench ? 'ans' : 'years'}
-                          </span>
-                          <div className="text-xs text-gray-500 mt-1">
-                            {isFrench ? 'Âge recommandé:' : 'Recommended age:'} {calculateMortalityForPerson(2).finalAge}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <Button variant="link" className="text-green-600 hover:text-green-800">
-                        {isFrench ? 'Voir les rapports' : 'View reports'}
-                      </Button>
-                  </div>
-                </CardContent>
-              </Card>
-              </div>
-            </div>
-
-            {/* 3. MODE D'ANALYSE DE LONGÉVITÉ */}
-            <LongevityModeSelector
-              mode={longevityMode}
-              onModeChange={setLongevityMode}
-              isFrench={isFrench}
-            />
-
-            {/* 4. INFORMATIONS POUR LE MODE STANDARD IPF2025 */}
-            {longevityMode === 'standard' && (
-              <div className="space-y-8">
-                <div className="text-center mb-6">
-                  <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
-                    {isFrench ? '📋 Informations Standard IPF2025' : '📋 Standard IPF2025 Information'}
-                  </h3>
-                  <p className="text-lg text-gray-600">
-                    {isFrench
-                      ? 'Informations de base pour les calculs de longévité standard'
-                      : 'Basic information for standard longevity calculations'}
-                  </p>
+              
+              <div className="senior-couple-analysis">
+                <div className="senior-metric-card">
+                  <div className="senior-metric-value">{coupleAnalysis.ecartAge} {isFrench ? 'ans' : 'years'}</div>
+                  <div className="senior-metric-label">{isFrench ? 'Écart d\'âge final' : 'Final age gap'}</div>
                 </div>
                 
-                {/* Analyse de longévité personnalisée */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <MortalityDisplayCPM2014
-                age={computeAgeFromBirthdate(userData.personal?.naissance1)}
-                gender={getGenderForMortality(userData.personal?.sexe1 as any) || 'male'}
-                    showDetails={true}
-                  />
-                  <MortalityDisplayCPM2014
-                    age={computeAgeFromBirthdate(userData.personal?.naissance2)}
-                    gender={getGenderForMortality(userData.personal?.sexe2 as any) || 'male'}
-                    showDetails={true}
-                  />
-              </div>
-              </div>
-            )}
-
-            {/* 5. FACTEURS DE SANTÉ */}
-            {longevityMode === 'personalized' && (
-              <div className="space-y-8">
-                <div className="text-center mb-6">
-                  <h3 className="text-3xl font-bold bg-gradient-to-r from-green-600 to-teal-600 bg-clip-text text-transparent">
-                    {isFrench ? '🏥 Facteurs de Santé' : '🏥 Health Factors'}
-                  </h3>
-                  <p className="text-lg text-gray-600">
-                        {isFrench
-                      ? 'Vos facteurs de santé influencent votre espérance de vie'
-                      : 'Your health factors influence your life expectancy'}
-                  </p>
+                <div className="senior-metric-card">
+                  <div className="senior-metric-value">{coupleAnalysis.dernierSurvivant} {isFrench ? 'ans' : 'years'}</div>
+                  <div className="senior-metric-label">{isFrench ? 'Dernier survivant estimé' : 'Last survivor estimated'}</div>
                 </div>
-
-                {/* Health Factors Sections */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <HealthFactorsSection
-                    userData={userData}
-                    updateUserData={updateUserData}
-                    isFrench={isFrench}
-                    personNumber={1}
-                  />
-                  <HealthFactorsSection
-                    userData={userData}
-                    updateUserData={updateUserData}
-                    isFrench={isFrench}
-                    personNumber={2}
-                  />
-                  </div>
+                
+                <div className="senior-metric-card">
+                  <div className="senior-metric-value">{coupleAnalysis.planificationJusqua} {isFrench ? 'ans' : 'years'}</div>
+                  <div className="senior-metric-label">{isFrench ? 'Planification jusqu\'à' : 'Planning until'}</div>
+                </div>
+                
+                <div className="senior-metric-card">
+                  <div className="senior-metric-value">{coupleAnalysis.anneesVeuvage} {isFrench ? 'ans' : 'years'}</div>
+                  <div className="senior-metric-label">{isFrench ? 'Années de veuvage' : 'Years of widowhood'}</div>
+                </div>
+              </div>
+              
+              <div className="mt-4 text-sm bg-white/10 rounded-lg p-3">
+                <strong>{isFrench ? 'Recommandation :' : 'Recommendation:'}</strong>{' '}
+                {isFrench 
+                  ? `Planifiez vos finances jusqu'à ${coupleAnalysis.planificationJusqua} ans pour couvrir le conjoint survivant avec une marge de sécurité.`
+                  : `Plan your finances until age ${coupleAnalysis.planificationJusqua} to cover the surviving spouse with a safety margin.`}
+              </div>
             </div>
-            )}
+          )}
 
-            {/* 6. FACTEURS PERSONNALISÉS (Socio-économiques) */}
-            {longevityMode === 'personalized' && (
-              <div className="space-y-8">
-                <div className="text-center mb-6">
-                  <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-green-600 bg-clip-text text-transparent">
-                    {isFrench ? '📊 Facteurs Personnalisés' : '📊 Personalized Factors'}
-                  </h3>
-                  <p className="text-lg text-gray-600">
-                        {isFrench
-                      ? 'Ces facteurs influencent vos calculs de retraite personnalisés'
-                      : 'These factors influence your personalized retirement calculations'}
-                  </p>
+          {/* Section 3: Résumé financier familial harmonisé */}
+          <div className="senior-analysis-results">
+            <div className="flex items-center gap-3 mb-4">
+              <Building2 className="w-6 h-6" />
+              <h2 className="text-2xl font-bold">
+                {isFrench ? 'Résumé Familial' : 'Family Summary'}
+              </h2>
+            </div>
+            
+            <div className="senior-financial-grid">
+              {/* 1. REVENUS DE TRAVAIL (premier ordre) */}
+              <div className="senior-metric-card">
+                <div className="flex items-center gap-2 mb-3">
+                  <Briefcase className="w-5 h-5" />
+                  <h3 className="font-semibold">{isFrench ? 'Revenus de travail' : 'Work Income'}</h3>
                 </div>
-
-                {/* Revenus Synchronisés */}
-                <div className="mb-8">
-                  <SynchronizedIncomeDisplay
-                    userData={userData}
-                    isFrench={isFrench}
-                    showDetails={true}
-                    className="max-w-4xl mx-auto"
-                  />
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span>{isFrench ? 'Salaire:' : 'Salary:'}</span>
+                    <span className="font-semibold">{formatCurrencyQuebec(familyFinancials.revenusTravail.details.salaires)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>{isFrench ? 'Travail autonome:' : 'Self-employment:'}</span>
+                    <span className="font-semibold">{formatCurrencyQuebec(familyFinancials.revenusTravail.details.travailAutonome)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>{isFrench ? 'Autres revenus:' : 'Other income:'}</span>
+                    <span className="font-semibold">{formatCurrencyQuebec(familyFinancials.revenusTravail.details.autresRevenus)}</span>
+                  </div>
+                  <div className="flex justify-between border-t border-white/20 pt-2 font-bold">
+                    <span>{isFrench ? 'Total revenus:' : 'Total income:'}</span>
+                    <span className="text-lg">{formatCurrencyQuebec(familyFinancials.revenusTravail.total)}</span>
+                  </div>
                 </div>
+              </div>
 
-                {/* Socio-Economic Sections */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <SocioEconomicSection
-                    userData={userData}
-                    updateUserData={updateUserData}
-                    isFrench={isFrench}
-                    personNumber={1}
-                  />
+              {/* 2. PRESTATIONS (deuxième ordre) */}
+              <div className="senior-metric-card">
+                <div className="flex items-center gap-2 mb-3">
+                  <Landmark className="w-5 h-5" />
+                  <h3 className="font-semibold">{isFrench ? 'Prestations' : 'Benefits'}</h3>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span>RRQ/CPP:</span>
+                    <span className="font-semibold">{formatCurrencyQuebec(familyFinancials.prestations.details.rrqCpp)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>{isFrench ? 'Sécurité vieillesse:' : 'Old Age Security:'}</span>
+                    <span className="font-semibold">{formatCurrencyQuebec(familyFinancials.prestations.details.securiteVieillesse)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>{isFrench ? 'Assurance emploi:' : 'Employment Insurance:'}</span>
+                    <span className="font-semibold">{formatCurrencyQuebec(familyFinancials.prestations.details.assuranceEmploi)}</span>
+                  </div>
+                  <div className="flex justify-between border-t border-white/20 pt-2 font-bold">
+                    <span>{isFrench ? 'Total prestations:' : 'Total benefits:'}</span>
+                    <span className="text-lg">{formatCurrencyQuebec(familyFinancials.prestations.total)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. INVESTISSEMENTS (troisième ordre) */}
+              <div className="senior-metric-card">
+                <div className="flex items-center gap-2 mb-3">
+                  <PiggyBank className="w-5 h-5" />
+                  <h3 className="font-semibold">{isFrench ? 'Investissements' : 'Investments'}</h3>
+                </div>
+                <div className="space-y-2 text-sm">
+                  <div className="flex justify-between">
+                    <span>REER:</span>
+                    <span className="font-semibold">{formatCurrencyQuebec(familyFinancials.investissements.details.reer)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>CELI:</span>
+                    <span className="font-semibold">{formatCurrencyQuebec(familyFinancials.investissements.details.celi)}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>CRI:</span>
+                    <span className="font-semibold">{formatCurrencyQuebec(familyFinancials.investissements.details.cri)}</span>
+                  </div>
+                  <div className="flex justify-between border-t border-white/20 pt-2 font-bold">
+                    <span>{isFrench ? 'Total investissements:' : 'Total investments:'}</span>
+                    <span className="text-lg">{formatCurrencyQuebec(familyFinancials.investissements.total)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Total général */}
+            <div className="text-center mt-6">
+              <div className="senior-metric-value text-3xl">
+                {formatCurrencyQuebec(familyFinancials.grandTotal)}
+              </div>
+              <div className="senior-metric-label text-lg">
+                {isFrench ? 'Total des revenus et prestations annuels' : 'Total annual income and benefits'}
+              </div>
+            </div>
+          </div>
+
+          {/* Section 4: Sélecteur de mode d'analyse */}
+          <LongevityModeSelector
+            mode={longevityMode}
+            onModeChange={setLongevityMode}
+            isFrench={isFrench}
+          />
+
+          {/* Section 5: Analyse détaillée selon le mode */}
+          {longevityMode === 'personalized' && person1Valid && (
+            <div className="space-y-6">
+              <SynchronizedIncomeDisplay
+                userData={userData}
+                isFrench={isFrench}
+                showDetails={true}
+                className="max-w-4xl mx-auto"
+              />
+              
+              <div className="senior-financial-grid">
+                <SocioEconomicSection
+                  userData={userData}
+                  updateUserData={updateUserData}
+                  isFrench={isFrench}
+                  personNumber={1}
+                />
+                {hasPerson2Data && (
                   <SocioEconomicSection
                     userData={userData}
                     updateUserData={updateUserData}
                     isFrench={isFrench}
                     personNumber={2}
                   />
-                </div>
+                )}
               </div>
-            )}
 
-
-
-
-
-            {/* 7. SOMMAIRE POUR MODE ANALYSE PERSONNALISÉE */}
-            {longevityMode === 'personalized' && (
-              <div className="space-y-8">
-                <div className="text-center mb-6">
-                  <h3 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                    {isFrench ? '📊 Analyse Personnalisée Complète' : '📊 Complete Personalized Analysis'}
-                  </h3>
-                  <p className="text-lg text-gray-600">
-                    {isFrench
-                      ? 'Synthèse de vos facteurs de santé et socio-économiques pour une analyse personnalisée'
-                      : 'Summary of your health and socio-economic factors for personalized analysis'}
-                  </p>
-                </div>
-
-                {/* Validation des champs requis */}
-                <div className="mb-6">
-                  <ValidationAlert
+              <div className="senior-financial-grid">
+                <PersonalizedLongevityAnalysis
+                  userData={userData}
+                  isFrench={isFrench}
+                  personNumber={1}
+                />
+                {hasPerson2Data && (
+                  <PersonalizedLongevityAnalysis
                     userData={userData}
                     isFrench={isFrench}
-                    onValidationComplete={(isValid) => {
-                      // Callback pour gérer la validation
-                      console.log('Validation status:', isValid);
-                    }}
+                    personNumber={2}
                   />
-                </div>
-                
-                {/* Sommaire personnalisé avec santé et socio-économique */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  {/* Personne 1 - Analyse personnalisée */}
-                  <Card className="bg-white border-2 border-blue-200 shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-3 text-blue-800">
-                        <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">1</div>
-                        <User className="w-6 h-6" />
-                        {isFrench ? 'Analyse Personnalisée' : 'Personalized Analysis'}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {/* Facteurs de santé */}
-                      <div className="p-4 rounded-lg border bg-green-50">
-                        <h4 className="text-lg font-semibold text-green-800 mb-3 flex items-center gap-2">
-                          <Shield className="w-5 h-5" />
-                          {isFrench ? 'Facteurs de Santé' : 'Health Factors'}
-                        </h4>
-                        <div className="space-y-2 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'État de santé:' : 'Health status:'}</span>
-                            <span className="font-medium">{(userData.personal as any)?.etatSante1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Mode de vie actif:' : 'Active lifestyle:'}</span>
-                            <span className="font-medium">{(userData.personal as any)?.modeVieActif1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Statut tabagique:' : 'Smoking status:'}</span>
-                            <span className="font-medium">{(userData.personal as any)?.statutTabagique1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Facteurs socio-économiques */}
-                      <div className="p-4 rounded-lg border bg-blue-50">
-                        <h4 className="text-lg font-semibold text-blue-800 mb-3 flex items-center gap-2">
-                          <BarChart3 className="w-5 h-5" />
-                          {isFrench ? 'Facteurs Socio-Économiques' : 'Socio-Economic Factors'}
-                        </h4>
-                        <div className="space-y-2 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Situation familiale:' : 'Family situation:'}</span>
-                            <span className="font-medium">{userData.personal?.situationFamiliale || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Niveau d\'éducation:' : 'Education level:'}</span>
-                            <span className="font-medium">{userData.personal?.niveauCompetences1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Secteur d\'activité:' : 'Activity sector:'}</span>
-                            <span className="font-medium">{userData.personal?.secteurActivite1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Expérience financière:' : 'Financial experience:'}</span>
-                            <span className="font-medium">{userData.personal?.experienceFinanciere1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Tolérance au risque:' : 'Risk tolerance:'}</span>
-                            <span className="font-medium">{userData.personal?.toleranceRisqueInvestissement1 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Revenus annuels totaux:' : 'Total annual income:'}</span>
-                            <span className="font-medium text-green-700">
-                              ${((userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0)).toLocaleString()}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Analyse de longévité personnalisée */}
-                      <PersonalizedLongevityAnalysis
-                        userData={userData}
-                        isFrench={isFrench}
-                        personNumber={1}
-                      />
-                    </CardContent>
-                  </Card>
-
-                  {/* Personne 2 - Analyse personnalisée */}
-                  <Card className="bg-white border-2 border-green-200 shadow-lg">
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-3 text-green-800">
-                        <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold">2</div>
-                        <User className="w-6 h-6" />
-                        {isFrench ? 'Analyse Personnalisée' : 'Personalized Analysis'}
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      {/* Facteurs de santé */}
-                      <div className="p-4 rounded-lg border bg-green-50">
-                        <h4 className="text-lg font-semibold text-green-800 mb-3 flex items-center gap-2">
-                          <Shield className="w-5 h-5" />
-                          {isFrench ? 'Facteurs de Santé' : 'Health Factors'}
-                        </h4>
-                        <div className="space-y-2 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'État de santé:' : 'Health status:'}</span>
-                            <span className="font-medium">{(userData.personal as any)?.etatSante2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Mode de vie actif:' : 'Active lifestyle:'}</span>
-                            <span className="font-medium">{(userData.personal as any)?.modeVieActif2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Statut tabagique:' : 'Smoking status:'}</span>
-                            <span className="font-medium">{(userData.personal as any)?.statutTabagique2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Facteurs socio-économiques */}
-                      <div className="p-4 rounded-lg border bg-blue-50">
-                        <h4 className="text-lg font-semibold text-blue-800 mb-3 flex items-center gap-2">
-                          <BarChart3 className="w-5 h-5" />
-                          {isFrench ? 'Facteurs Socio-Économiques' : 'Socio-Economic Factors'}
-                        </h4>
-                        <div className="space-y-2 text-sm">
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Situation familiale:' : 'Family situation:'}</span>
-                            <span className="font-medium">{userData.personal?.situationFamiliale || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Niveau d\'éducation:' : 'Education level:'}</span>
-                            <span className="font-medium">{userData.personal?.niveauCompetences2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Secteur d\'activité:' : 'Activity sector:'}</span>
-                            <span className="font-medium">{userData.personal?.secteurActivite2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Expérience financière:' : 'Financial experience:'}</span>
-                            <span className="font-medium">{userData.personal?.experienceFinanciere2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Tolérance au risque:' : 'Risk tolerance:'}</span>
-                            <span className="font-medium">{userData.personal?.toleranceRisqueInvestissement2 || (isFrench ? 'Non spécifié' : 'Not specified')}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span className="text-gray-600">{isFrench ? 'Revenus annuels totaux:' : 'Total annual income:'}</span>
-                            <span className="font-medium text-green-700">
-                              ${((userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0)).toLocaleString()}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Analyse de longévité personnalisée */}
-                      <PersonalizedLongevityAnalysis
-                        userData={userData}
-                        isFrench={isFrench}
-                        personNumber={2}
-                      />
-                    </CardContent>
-                  </Card>
-                </div>
+                )}
               </div>
-            )}
+            </div>
+          )}
 
-                        {/* Conformité IPF 2025 */}
-            <Card className="bg-white border-2 border-amber-200 shadow-lg">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between">
-                  <span className="text-gray-700 font-medium">{isFrench ? 'Conformité IPF 2025' : 'IPF 2025 compliance'}</span>
-                  <span
-                    className={`px-2 py-1 rounded text-sm ${
-                      MORTALITY_CPM2014.validateCompliance() ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
-                    }`}
-                  >
-                    {MORTALITY_CPM2014.validateCompliance() ? (isFrench ? 'Conforme' : 'Compliant') : (isFrench ? 'Non conforme' : 'Non-compliant')}
+          {/* Section 6: Conformité et méthodologie */}
+          <Card className="border-amber-200 bg-amber-50">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center gap-3">
+                  <Shield className="w-6 h-6 text-blue-600" />
+                  <span className="font-semibold text-lg">
+                    {isFrench ? 'Conformité IPF 2025' : 'IPF 2025 Compliance'}
                   </span>
+                  <Badge className="bg-green-100 text-green-800 border-green-200">
+                    {isFrench ? 'Conforme' : 'Compliant'}
+                  </Badge>
                 </div>
-                <div className="mt-4 text-sm text-gray-700 space-y-2">
-                  <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
-                    <p className="text-blue-800">
-                      <strong>IPF</strong> = {isFrench ? 'Institut de planification financière' : 'Institut de planification financière (IPF)'}
-                    </p>
-                    <p className="text-blue-700 mt-1">
-                      {isFrench 
-                        ? 'L\'organisme qui régit la profession de planificateur financier au Québec. Nos calculs respectent leurs normes de projection 2025.'
-                        : 'The organization that governs the financial planning profession in Quebec. Our calculations comply with their 2025 projection standards.'}
-                    </p>
-                    <a 
-                      href="https://institutpf.org/" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-800 underline mt-2"
-                    >
-                      {isFrench ? 'Visiter le site de l\'IPF' : 'Visit IPF website'}
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
-                  </div>
-                  <div>
-                    <strong>Source:</strong> {MORTALITY_CPM2014.metadata.source}
-                  </div>
-                  <div>
-                    <strong>Table:</strong> {MORTALITY_CPM2014.metadata.table}
-                  </div>
-                  <div>
-                    <strong>Projection:</strong> {MORTALITY_CPM2014.metadata.projection}
+                <div className="text-sm text-gray-600">
+                  Source: CPM2014 - {isFrench ? 'Institut canadien des actuaires' : 'Canadian Institute of Actuaries'}
                 </div>
+              </div>
+              
+              <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
+                <p className="text-blue-800 text-sm">
+                  <strong>IPF</strong> = {isFrench ? 'Institut de planification financière' : 'Institut de planification financière (IPF)'}
+                </p>
+                <p className="text-blue-700 mt-1 text-sm">
+                  {isFrench 
+                    ? 'L\'organisme qui régit la profession de planificateur financier au Québec. Nos calculs respectent leurs normes de projection 2025.'
+                    : 'The organization that governs the financial planning profession in Quebec. Our calculations comply with their 2025 projection standards.'}
+                </p>
+                <Alert className="mt-3 border-yellow-200 bg-yellow-50">
+                  <Info className="h-4 w-4" />
+                  <AlertDescription className="text-sm">
+                    <strong>{isFrench ? 'Avertissement :' : 'Warning:'}</strong>{' '}
+                    {isFrench 
+                      ? 'Ces projections sont basées sur des statistiques populationnelles et ne constituent pas des prédictions individuelles. Utilisation limitée à la planification financière uniquement.'
+                      : 'These projections are based on population statistics and do not constitute individual predictions. Use limited to financial planning only.'}
+                  </AlertDescription>
+                </Alert>
               </div>
             </CardContent>
           </Card>
-          </div>
 
-
-
-          {/* Sauvegarde */}
-          <div className="text-center">
+          {/* Section 7: Actions utilisateur */}
+          <div className="text-center space-y-4">
             <Button
               size="lg"
               disabled={isSaving}
-              className="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-600 hover:from-green-600 hover:via-emerald-600 hover:to-teal-700 text-white font-bold text-2xl py-6 px-12 shadow-2xl transform hover:scale-110 transition-all duration-300 border-4 border-white/20 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="bg-green-600 hover:bg-green-700 text-white font-bold text-xl py-6 px-12 shadow-lg hover:shadow-xl transition-all duration-300"
               onClick={async () => {
                 setIsSaving(true);
                 try {
-                  if (userData.personal?.depensesRetraite && userData.personal.depensesRetraite > 0) {
-                    const depensesMensuelles = Math.round(userData.personal.depensesRetraite / 12);
-                    handleProfileChange('depensesMensuelles', depensesMensuelles);
-                  }
                   const saveResult = await EnhancedSaveManager.saveWithDialog(userData, { includeTimestamp: true });
                   if (saveResult.success) {
-                    alert(
-                      isFrench
-                        ? `✅ Données sauvegardées avec succès dans ${saveResult.filename} !`
-                        : `✅ Data saved successfully to ${saveResult.filename}!`,
-                    );
+                    alert(isFrench
+                      ? `Données sauvegardées avec succès dans ${saveResult.filename} !`
+                      : `Data saved successfully to ${saveResult.filename}!`);
                   } else if (saveResult.blocked) {
-                    alert(isFrench ? `🚫 Sauvegarde bloquée: ${saveResult.reason}` : `🚫 Save blocked: ${saveResult.reason}`);
+                    alert(isFrench ? `Sauvegarde bloquée: ${saveResult.reason}` : `Save blocked: ${saveResult.reason}`);
                   } else {
-                    alert(isFrench ? `❌ Erreur: ${saveResult.error}` : `❌ Error: ${saveResult.error}`);
+                    alert(isFrench ? `Erreur: ${saveResult.error}` : `Error: ${saveResult.error}`);
                   }
                 } catch (error) {
-                  console.error('❌ Erreur lors de la sauvegarde:', error);
-                  alert(isFrench ? '❌ Erreur lors de la sauvegarde' : '❌ Error saving data');
+                  console.error('Erreur lors de la sauvegarde:', error);
+                  alert(isFrench ? 'Erreur lors de la sauvegarde' : 'Error saving data');
                 } finally {
                   setIsSaving(false);
                 }
               }}
             >
-              <Save className="w-8 h-8 mr-4 animate-pulse" />
-              {isSaving ? (isFrench ? '💾 SAUVEGARDE...' : '💾 SAVING...') : isFrench ? '💾 SAUVEGARDER' : '💾 SAVE'}
-              <Shield className="w-8 h-8 ml-4 animate-bounce" />
+              <Save className="w-6 h-6 mr-3" />
+              {isSaving ? (isFrench ? 'SAUVEGARDE...' : 'SAVING...') : (isFrench ? 'SAUVEGARDER' : 'SAVE')}
             </Button>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                className="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-8"
+                onClick={() => navigate('/fr/rapports-retraite')}
+              >
+                {isFrench ? 'Voir mes résultats' : 'View my results'}
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-blue-500 text-blue-600 hover:bg-blue-50 font-semibold py-3 px-8"
+                onClick={() => navigate('/revenus')}
+              >
+                {isFrench ? 'Gérer mes revenus' : 'Manage my income'}
+              </Button>
+            </div>
           </div>
-
-          {/* Navigation */}
-          <Card className="bg-gradient-to-r from-yellow-50 to-orange-50 border-2 border-yellow-200">
-            <CardContent className="py-8 text-center">
-              <div className="flex items-center justify-center gap-3 mb-4">
-                <Star className="w-8 h-8 text-yellow-500" />
-                <h2 className="text-2xl font-bold text-gray-800">{isFrench ? 'Excellent travail!' : 'Excellent work!'}</h2>
-              </div>
-              <p className="text-lg text-gray-700 mb-6">
-                {isFrench
-                  ? 'Vous construisez votre avenir financier étape par étape. Chaque détail compte pour créer un plan qui vous ressemble vraiment.'
-                  : 'You are building your financial future step by step. Every detail counts to create a plan that truly reflects you.'}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white"
-                  onClick={() => handleNavigation('/fr/rapports-retraite')}
-                >
-                  {isFrench ? 'Voir mes résultats' : 'View my results'}
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </div>
 
+      {/* Modal Onboarding */}
       {showOnboardingWizard && (
-        <OnboardingWizard onComplete={handleOnboardingComplete} onSkip={handleOnboardingSkip} isFrench={isFrench} />
+        <OnboardingWizard 
+          onComplete={handleOnboardingComplete} 
+          onSkip={handleOnboardingSkip} 
+          isFrench={isFrench} 
+        />
       )}
     </div>
   );

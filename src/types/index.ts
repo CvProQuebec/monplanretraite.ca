@@ -17,6 +17,10 @@ export interface UserData {
   ccqData?: any; // NOUVEAU - Données CCQ
   ccqResult?: any; // NOUVEAU - Résultats CCQ
   ccqScenarios?: any; // NOUVEAU - Scénarios CCQ
+  seasonalExpenses?: {
+    expenses: SeasonalExpense[];
+    lastUpdated?: string;
+  };
 }
 
 export interface PersonalData {
@@ -472,4 +476,18 @@ export interface SessionData {
   sauvegardeCloud?: boolean;
   exportDonnees?: boolean;
   importDonnees?: boolean;
+}
+
+// NOUVEAU: Interface pour les dépenses saisonnières
+export interface SeasonalExpense {
+  id: string;
+  category: 'automobile' | 'maison' | 'sante' | 'taxes' | 'personnel';
+  name: string;
+  description: string;
+  isActive: boolean;
+  estimatedAmount: number;
+  frequency: 'annually' | 'biannually' | 'every2years' | 'every3years' | 'every5years' | 'asNeeded';
+  isPlanned: boolean;
+  plannedDate?: string;
+  notes?: string;
 }

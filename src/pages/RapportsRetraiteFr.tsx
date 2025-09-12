@@ -38,7 +38,7 @@ const RapportsRetraiteFr: React.FC = () => {
               <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
                 <FileText className="w-6 h-6 text-white" />
               </div>
-              Rapports de Retraite
+              Rapports de retraite
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
               Générez et consultez des rapports détaillés pour optimiser votre planification de retraite
@@ -95,7 +95,7 @@ const RapportsRetraiteFr: React.FC = () => {
         <Card className="mb-12 bg-white/80 backdrop-blur-sm border-0 shadow-xl">
           <CardHeader className="text-center pb-8">
             <CardTitle className="text-3xl font-bold text-gray-900 mb-4">
-              Rapports par Forfait
+              Rapports par forfait
             </CardTitle>
             <CardDescription className="text-lg text-gray-600 max-w-4xl mx-auto">
               Rapports organisés selon votre niveau d'abonnement et destinataire professionnel
@@ -121,7 +121,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-green-500 text-white text-xs">Gratuit</Badge>
                   </div>
-                  <h4 className="font-semibold text-green-900 mb-2">Trousse d'Urgence Familiale</h4>
+                  <h4 className="font-semibold text-green-900 mb-2">Trousse d'urgence familiale</h4>
                   <p className="text-sm text-green-800 mb-4">
                     Document essentiel pour vos proches en cas d'urgence
                   </p>
@@ -156,7 +156,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-green-500 text-white text-xs">Gratuit</Badge>
                   </div>
-                  <h4 className="font-semibold text-green-900 mb-2">Analyse Budget Personnel</h4>
+                  <h4 className="font-semibold text-green-900 mb-2">Analyse budget personnel</h4>
                   <p className="text-sm text-green-800 mb-4">
                     Résumé de vos revenus, dépenses et épargne
                   </p>
@@ -238,7 +238,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-blue-500 text-white text-xs">Professionnel</Badge>
                   </div>
-                  <h4 className="font-semibold text-blue-900 mb-2">Pour Planificateur Financier</h4>
+                  <h4 className="font-semibold text-blue-900 mb-2">Pour planificateur financier</h4>
                   <p className="text-sm text-blue-800 mb-4">
                     Analyse complète avec tous les modules avancés
                   </p>
@@ -273,7 +273,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-blue-500 text-white text-xs">Professionnel</Badge>
                   </div>
-                  <h4 className="font-semibold text-blue-900 mb-2">Pour Comptable</h4>
+                  <h4 className="font-semibold text-blue-900 mb-2">Pour comptable</h4>
                   <p className="text-sm text-blue-800 mb-4">
                     Focus sur optimisation fiscale et stratégies
                   </p>
@@ -308,7 +308,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-blue-500 text-white text-xs">Professionnel</Badge>
                   </div>
-                  <h4 className="font-semibold text-blue-900 mb-2">Pour Banque/Conseiller</h4>
+                  <h4 className="font-semibold text-blue-900 mb-2">Pour banque/conseiller</h4>
                   <p className="text-sm text-blue-800 mb-4">
                     Analyse de solvabilité et capacité d'emprunt
                   </p>
@@ -343,7 +343,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-blue-500 text-white text-xs">Professionnel</Badge>
                   </div>
-                  <h4 className="font-semibold text-blue-900 mb-2">Pour Conjoint/Famille</h4>
+                  <h4 className="font-semibold text-blue-900 mb-2">Pour conjoint/famille</h4>
                   <p className="text-sm text-blue-800 mb-4">
                     Résumé accessible de la planification familiale
                   </p>
@@ -378,7 +378,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-blue-500 text-white text-xs">Professionnel</Badge>
                   </div>
-                  <h4 className="font-semibold text-blue-900 mb-2">RREGOP/SRG Avancé</h4>
+                  <h4 className="font-semibold text-blue-900 mb-2">RREGOP/SRG avancé</h4>
                   <p className="text-sm text-blue-800 mb-4">
                     Analyse complète des régimes gouvernementaux
                   </p>
@@ -413,7 +413,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-blue-500 text-white text-xs">Professionnel</Badge>
                   </div>
-                  <h4 className="font-semibold text-blue-900 mb-2">Analyse de Rendement</h4>
+                  <h4 className="font-semibold text-blue-900 mb-2">Analyse de rendement</h4>
                   <p className="text-sm text-blue-800 mb-4">
                     Performance détaillée des investissements
                   </p>
@@ -460,7 +460,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-purple-600 text-white text-xs">Expert</Badge>
                   </div>
-                  <h4 className="font-semibold text-purple-900 mb-2">Pour Notaire</h4>
+                  <h4 className="font-semibold text-purple-900 mb-2">Pour notaire</h4>
                   <p className="text-sm text-purple-800 mb-4">
                     Planification successorale et transmission
                   </p>
@@ -495,7 +495,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-purple-600 text-white text-xs">Expert</Badge>
                   </div>
-                  <h4 className="font-semibold text-purple-900 mb-2">Pour Avocat</h4>
+                  <h4 className="font-semibold text-purple-900 mb-2">Pour avocat</h4>
                   <p className="text-sm text-purple-800 mb-4">
                     Protection juridique et structures légales
                   </p>
@@ -530,7 +530,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-purple-600 text-white text-xs">Expert</Badge>
                   </div>
-                  <h4 className="font-semibold text-purple-900 mb-2">Monte Carlo Expert</h4>
+                  <h4 className="font-semibold text-purple-900 mb-2">Monte Carlo expert</h4>
                   <p className="text-sm text-purple-800 mb-4">
                     Simulations avancées 1000+ itérations
                   </p>
@@ -565,7 +565,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-purple-600 text-white text-xs">Expert</Badge>
                   </div>
-                  <h4 className="font-semibold text-purple-900 mb-2">Optimisation Immobilière</h4>
+                  <h4 className="font-semibold text-purple-900 mb-2">Optimisation immobilière</h4>
                   <p className="text-sm text-purple-800 mb-4">
                     Stratégies avancées patrimoine immobilier
                   </p>
@@ -600,7 +600,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-purple-600 text-white text-xs">Expert</Badge>
                   </div>
-                  <h4 className="font-semibold text-purple-900 mb-2">Consolidation Avancée</h4>
+                  <h4 className="font-semibold text-purple-900 mb-2">Consolidation avancée</h4>
                   <p className="text-sm text-purple-800 mb-4">
                     Optimisation multi-comptes et institutions
                   </p>
@@ -635,7 +635,7 @@ const RapportsRetraiteFr: React.FC = () => {
                     </div>
                     <Badge className="bg-purple-600 text-white text-xs">Expert</Badge>
                   </div>
-                  <h4 className="font-semibold text-purple-900 mb-2">Psychologie des Dépenses</h4>
+                  <h4 className="font-semibold text-purple-900 mb-2">Psychologie des dépenses</h4>
                   <p className="text-sm text-purple-800 mb-4">
                     Analyse comportementale et recommandations
                   </p>
@@ -813,7 +813,7 @@ const RapportsRetraiteFr: React.FC = () => {
         <Card className="mb-12 bg-gradient-to-r from-green-50 to-blue-50 border-0 shadow-xl">
           <CardHeader className="text-center pb-8">
             <CardTitle className="text-3xl font-bold text-gray-900 mb-4">
-              ✨ Nouveaux Modules Inclus dans les Rapports
+              ✨ Nouveaux modules inclus dans les rapports
             </CardTitle>
             <CardDescription className="text-lg text-gray-600 max-w-4xl mx-auto">
               Tous ces nouveaux outils de calcul sont maintenant intégrés dans les rapports appropriés

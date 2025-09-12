@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CashflowSection } from '@/features/retirement/sections/CashflowSection';
-import SeasonalIrregularExpensesModule from '@/components/ui/SeasonalIrregularExpensesModule';
+import SeasonalExpensesPlannerModule from '@/components/ui/SeasonalExpensesPlannerModule';
 import MonthlyBudgetPlanningModule from '@/components/ui/MonthlyBudgetPlanningModule';
 import { UserData } from '@/features/retirement/types';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
@@ -101,15 +101,7 @@ export const ExpensesPage: React.FC = () => {
       // Sauvegarder automatiquement dans localStorage avec toutes les ventilations
       try {
         localStorage.setItem('retirement_data', JSON.stringify(newData));
-        console.log('Données sauvegardées dans localStorage (incluant ventilations):', newData);
-        console.log('Ventilations sauvegardées:', {
-          logementBreakdown: newData.cashflow?.logementBreakdown,
-          servicesPublicsBreakdown: newData.cashflow?.servicesPublicsBreakdown,
-          assurancesBreakdown: newData.cashflow?.assurancesBreakdown,
-          transportBreakdown: newData.cashflow?.transportBreakdown,
-          santeBreakdown: newData.cashflow?.santeBreakdown,
-          telecomBreakdown: newData.cashflow?.telecomBreakdown
-        });
+        console.log('Données sauvegardées dans localStorage:', newData);
       } catch (error) {
         console.error('Erreur lors de la sauvegarde:', error);
       }
@@ -124,6 +116,8 @@ export const ExpensesPage: React.FC = () => {
       const savedData = localStorage.getItem('retirement_data');
       if (savedData) {
         const data = JSON.parse(savedData);
+        
+        // Code existant pour cashflow INCHANGÉ
         if (data.cashflow) {
           // Charger toutes les données cashflow incluant les ventilations
           setUserData(prevData => ({
@@ -141,6 +135,15 @@ export const ExpensesPage: React.FC = () => {
             }
           }));
           console.log('Données chargées depuis localStorage (incluant ventilations):', data.cashflow);
+        }
+        
+        // AJOUTER seulement cette section :
+        if (data.seasonalExpenses) {
+          setUserData(prevData => ({
+            ...prevData,
+            seasonalExpenses: data.seasonalExpenses
+          }));
+          console.log('Dépenses saisonnières chargées:', data.seasonalExpenses);
         }
       }
     } catch (error) {
@@ -189,9 +192,9 @@ return (
 
         {/* Nouveau volet Dépenses saisonnières et irrégulières */}
         <div className="mt-8 bg-white rounded-xl p-6 border-2 border-gray-300">
-          <SeasonalIrregularExpensesModule
+          <SeasonalExpensesPlannerModule
             data={userData}
-            onUpdate={(updates) => handleUpdate('cashflow', updates)}
+            onUpdate={(updates) => handleUpdate('seasonalExpenses', updates)}
             language={language}
           />
         </div>
