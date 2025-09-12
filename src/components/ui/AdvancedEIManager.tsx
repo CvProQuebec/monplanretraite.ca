@@ -188,74 +188,90 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
           
           <div className="space-y-2">
             {/* Ligne 1: Date de début AE + Montant hebdomadaire brut */}
-            <div className="flex flex-wrap items-center gap-4">
-              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap">
-                {isFrench ? 'Date de début AE' : 'EI Start Date'}
-              </Label>
-              <DateInput
-                value={eiData.eiStartDate}
-                onChange={(value) => handleInputChange('eiStartDate', value)}
-                className="bg-slate-700 border-slate-600 text-white p-2 w-40"
-                placeholder="2024-04-06"
-              />
-              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap ml-2">
-                {isFrench ? 'Montant hebdomadaire brut' : 'Weekly Gross Amount'}
-              </Label>
-              <MoneyInput
-                value={eiData.eiWeeklyGross}
-                onChange={(value) => handleInputChange('eiWeeklyGross', value)}
-                className="bg-slate-700 border-slate-600 text-white p-2 w-40"
-                placeholder="693"
-                allowDecimals={true}
-              />
+            <div className="senior-form-row-double">
+              <div className="senior-form-field">
+                <label className="senior-form-label text-gray-200">
+                  {isFrench ? 'Date de début AE' : 'EI Start Date'}
+                </label>
+                <DateInput
+                  value={eiData.eiStartDate}
+                  onChange={(value) => handleInputChange('eiStartDate', value)}
+                  className="senior-form-input bg-slate-700 border-slate-600 text-white"
+                  placeholder="2024-04-06"
+                />
+              </div>
+              <div className="senior-form-field">
+                <label className="senior-form-label text-gray-200">
+                  {isFrench ? 'Montant hebdomadaire brut' : 'Weekly Gross Amount'}
+                </label>
+                <MoneyInput
+                  value={eiData.eiWeeklyGross}
+                  onChange={(value) => handleInputChange('eiWeeklyGross', value)}
+                  className="senior-form-input bg-slate-700 border-slate-600 text-white"
+                  placeholder="693"
+                  allowDecimals={true}
+                />
+              </div>
             </div>
 
-            {/* Ligne 2: Semaines max + utilisées + Impôt fédéral + provincial */}
-            <div className="flex flex-wrap items-center gap-4">
-              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap">
-                {isFrench ? 'Semaines maximum' : 'Maximum Weeks'}
-              </Label>
-              <Input
-                type="number"
-                value={eiData.eiMaxWeeks}
-                onChange={(e) => handleInputChange('eiMaxWeeks', Number(e.target.value))}
-                className="bg-slate-700 border-slate-600 text-white p-2 w-28"
-                placeholder="35"
-                min="1"
-                max="50"
-              />
-              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap ml-2">
-                {isFrench ? 'Semaines utilisées' : 'Weeks Used'}
-              </Label>
-              <Input
-                type="number"
-                value={eiData.eiWeeksUsed}
-                onChange={(e) => handleInputChange('eiWeeksUsed', Number(e.target.value))}
-                className="bg-slate-700 border-slate-600 text-white p-2 w-28"
-                placeholder="20"
-                min="0"
-                max={eiData.eiMaxWeeks}
-              />
-              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap ml-2">
-                {isFrench ? 'Impôt fédéral (hebdo)' : 'Federal Tax (weekly)'}
-              </Label>
-              <MoneyInput
-                value={eiData.eiFederalTax}
-                onChange={(value) => handleInputChange('eiFederalTax', value)}
-                className="bg-slate-700 border-slate-600 text-white p-2 w-24"
-                placeholder="21"
-                allowDecimals={true}
-              />
-              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap ml-2">
-                {isFrench ? 'Impôt provincial (hebdo)' : 'Provincial Tax (weekly)'}
-              </Label>
-              <MoneyInput
-                value={eiData.eiProvincialTax}
-                onChange={(value) => handleInputChange('eiProvincialTax', value)}
-                className="bg-slate-700 border-slate-600 text-white p-2 w-24"
-                placeholder="37"
-                allowDecimals={true}
-              />
+            {/* Ligne 2: Semaines max + utilisées + Impôt fédéral */}
+            <div className="senior-form-row-triple">
+              <div className="senior-form-field">
+                <label className="senior-form-label text-gray-200">
+                  {isFrench ? 'Semaines maximum' : 'Maximum Weeks'}
+                </label>
+                <Input
+                  type="number"
+                  value={eiData.eiMaxWeeks}
+                  onChange={(e) => handleInputChange('eiMaxWeeks', Number(e.target.value))}
+                  className="senior-form-input bg-slate-700 border-slate-600 text-white"
+                  placeholder="35"
+                  min="1"
+                  max="50"
+                />
+              </div>
+              <div className="senior-form-field">
+                <label className="senior-form-label text-gray-200">
+                  {isFrench ? 'Semaines utilisées' : 'Weeks Used'}
+                </label>
+                <Input
+                  type="number"
+                  value={eiData.eiWeeksUsed}
+                  onChange={(e) => handleInputChange('eiWeeksUsed', Number(e.target.value))}
+                  className="senior-form-input bg-slate-700 border-slate-600 text-white"
+                  placeholder="20"
+                  min="0"
+                  max={eiData.eiMaxWeeks}
+                />
+              </div>
+              <div className="senior-form-field">
+                <label className="senior-form-label text-gray-200">
+                  {isFrench ? 'Impôt fédéral (hebdo)' : 'Federal Tax (weekly)'}
+                </label>
+                <MoneyInput
+                  value={eiData.eiFederalTax}
+                  onChange={(value) => handleInputChange('eiFederalTax', value)}
+                  className="senior-form-input bg-slate-700 border-slate-600 text-white"
+                  placeholder="21"
+                  allowDecimals={true}
+                />
+              </div>
+            </div>
+
+            {/* Ligne 2b: Impôt provincial seul */}
+            <div className="senior-form-row-single">
+              <div className="senior-form-field">
+                <label className="senior-form-label text-gray-200">
+                  {isFrench ? 'Impôt provincial (hebdo)' : 'Provincial Tax (weekly)'}
+                </label>
+                <MoneyInput
+                  value={eiData.eiProvincialTax}
+                  onChange={(value) => handleInputChange('eiProvincialTax', value)}
+                  className="senior-form-input bg-slate-700 border-slate-600 text-white"
+                  placeholder="37"
+                  allowDecimals={true}
+                />
+              </div>
             </div>
 
             {/* Ligne 3: Description revenus supplémentaires */}
@@ -264,29 +280,33 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
             </div>
 
             {/* Ligne 4: Revenu hebdo + Semaines de vacances prévues */}
-            <div className="flex flex-wrap items-center gap-4">
-              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap">
-                {isFrench ? 'Revenu hebdomadaire' : 'Weekly Income'}
-              </Label>
-              <MoneyInput
-                value={eiData.additionalWeeklyIncome}
-                onChange={(value) => handleInputChange('additionalWeeklyIncome', value)}
-                className="bg-slate-700 border-slate-600 text-white p-2 w-32"
-                placeholder="0"
-                allowDecimals={true}
-              />
-              <Label className="text-sm font-medium text-gray-200 whitespace-nowrap ml-2">
-                {isFrench ? 'Semaines de vacances prévues' : 'Planned Vacation Weeks'}
-              </Label>
-              <Input
-                type="number"
-                value={eiData.plannedVacationWeeks}
-                onChange={(e) => handleInputChange('plannedVacationWeeks', Number(e.target.value))}
-                className="bg-slate-700 border-slate-600 text-white p-2 w-28"
-                placeholder="0"
-                min="0"
-                max="2"
-              />
+            <div className="senior-form-row-double">
+              <div className="senior-form-field">
+                <label className="senior-form-label text-gray-200">
+                  {isFrench ? 'Revenu hebdomadaire' : 'Weekly Income'}
+                </label>
+                <MoneyInput
+                  value={eiData.additionalWeeklyIncome}
+                  onChange={(value) => handleInputChange('additionalWeeklyIncome', value)}
+                  className="senior-form-input bg-slate-700 border-slate-600 text-white"
+                  placeholder="0"
+                  allowDecimals={true}
+                />
+              </div>
+              <div className="senior-form-field">
+                <label className="senior-form-label text-gray-200">
+                  {isFrench ? 'Semaines de vacances prévues' : 'Planned Vacation Weeks'}
+                </label>
+                <Input
+                  type="number"
+                  value={eiData.plannedVacationWeeks}
+                  onChange={(e) => handleInputChange('plannedVacationWeeks', Number(e.target.value))}
+                  className="senior-form-input bg-slate-700 border-slate-600 text-white"
+                  placeholder="0"
+                  min="0"
+                  max="2"
+                />
+              </div>
             </div>
           </div>
         </div>

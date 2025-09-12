@@ -154,18 +154,22 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
             </div>
 
             {/* Revenus de l'année précédente */}
-            <div className="bg-gray-100 border-2 border-gray-300 rounded-lg p-6 space-y-4">
-              <Label className="text-gray-900 font-bold text-xl flex items-center gap-3">
-                <Calculator className="w-6 h-6 text-blue-600" />
-                {isFrench ? `Revenus de ${editData.annee - 1} (optionnel)` : `${editData.annee - 1} Income (optional)`}
-              </Label>
-              <MoneyInput
-                value={editData.revenus_annee_precedente || 0}
-                onChange={(value) => setEditData(prev => ({ ...prev, revenus_annee_precedente: value }))}
-                className="bg-white border-4 border-gray-300 text-gray-900 text-xl h-16"
-                placeholder={isFrench ? "Ex: 95 000" : "Ex: 95,000"}
-                allowDecimals={true}
-              />
+            <div className="senior-result-card">
+              <div className="senior-form-row-single">
+                <div className="senior-form-field">
+                  <label className="senior-form-label flex items-center gap-3">
+                    <Calculator className="w-6 h-6 text-blue-600" />
+                    {isFrench ? `Revenus de ${editData.annee - 1} (optionnel)` : `${editData.annee - 1} Income (optional)`}
+                  </label>
+                  <MoneyInput
+                    value={editData.revenus_annee_precedente || 0}
+                    onChange={(value) => setEditData(prev => ({ ...prev, revenus_annee_precedente: value }))}
+                    className="senior-form-input"
+                    placeholder={isFrench ? "Ex: 95 000" : "Ex: 95,000"}
+                    allowDecimals={true}
+                  />
+                </div>
+              </div>
               <p className="text-lg text-gray-700">
                 {isFrench 
                   ? 'Utilisé pour calculer automatiquement la récupération fiscale à partir de juillet'
@@ -189,34 +193,34 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
                 </h4>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <Label className="text-gray-900 font-bold text-lg">
+              <div className="senior-form-row-triple">
+                <div className="senior-form-field">
+                  <label className="senior-form-label">
                     {isFrench ? 'Du' : 'From'}
-                  </Label>
-                  <div className="bg-white border-4 border-gray-300 rounded-lg px-4 py-3 text-xl text-gray-900 font-bold">
+                  </label>
+                  <div className="senior-form-input bg-gray-100 text-gray-900 font-bold">
                     {editData.annee}-01-01
                   </div>
                 </div>
-                <div>
-                  <Label className="text-gray-900 font-bold text-lg">
+                <div className="senior-form-field">
+                  <label className="senior-form-label">
                     {isFrench ? 'Au' : 'To'}
-                  </Label>
-                  <div className="bg-white border-4 border-gray-300 rounded-lg px-4 py-3 text-xl text-gray-900 font-bold">
+                  </label>
+                  <div className="senior-form-input bg-gray-100 text-gray-900 font-bold">
                     {editData.annee}-06-30
                   </div>
                 </div>
-                <div>
-                  <Label className="text-gray-900 font-bold text-lg">
+                <div className="senior-form-field">
+                  <label className="senior-form-label">
                     {isFrench ? 'Montant mensuel' : 'Monthly Amount'}
-                  </Label>
+                  </label>
                   <MoneyInput
                     value={editData.periode1.montant}
                     onChange={(value) => setEditData(prev => ({
                       ...prev,
                       periode1: { ...prev.periode1, montant: value }
                     }))}
-                    className="bg-white border-4 border-gray-300 text-gray-900 text-xl h-16"
+                    className="senior-form-input"
                     placeholder={isFrench ? "Ex: 713,34" : "Ex: 713.34"}
                     allowDecimals={true}
                   />
@@ -243,49 +247,47 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
                 </span>
               </div>
               
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                  <Label className="text-gray-900 font-bold text-lg">
+              <div className="senior-form-row-triple">
+                <div className="senior-form-field">
+                  <label className="senior-form-label">
                     {isFrench ? 'Du' : 'From'}
-                  </Label>
-                  <div className="bg-white border-4 border-gray-300 rounded-lg px-4 py-3 text-xl text-gray-900 font-bold">
+                  </label>
+                  <div className="senior-form-input bg-gray-100 text-gray-900 font-bold">
                     {editData.annee}-07-01
                   </div>
                 </div>
-                <div>
-                  <Label className="text-gray-900 font-bold text-lg">
+                <div className="senior-form-field">
+                  <label className="senior-form-label">
                     {isFrench ? 'Au' : 'To'}
-                  </Label>
-                  <div className="bg-white border-4 border-gray-300 rounded-lg px-4 py-3 text-xl text-gray-900 font-bold">
+                  </label>
+                  <div className="senior-form-input bg-gray-100 text-gray-900 font-bold">
                     {editData.annee}-12-31
                   </div>
                 </div>
-                <div>
-                  <Label className="text-gray-900 font-bold text-lg">
+                <div className="senior-form-field">
+                  <label className="senior-form-label">
                     {isFrench ? 'Montant mensuel' : 'Monthly Amount'}
-                  </Label>
+                  </label>
                   {personNumber === 1 ? (
-                    // Personne 1 : même disposition que Personne 2 (pas de bouton)
                     <MoneyInput
                       value={editData.periode2.montant}
                       onChange={(value) => setEditData(prev => ({
                         ...prev,
                         periode2: { ...prev.periode2, montant: value }
                       }))}
-                      className="bg-white border-4 border-gray-300 text-gray-900 text-xl h-16 w-full"
+                      className="senior-form-input"
                       placeholder={isFrench ? "Ex: 500,00" : "Ex: 500.00"}
                       allowDecimals={true}
                     />
                   ) : (
-                    // Personne 2 : disposition avec bouton (comportement actuel)
-                    <div className="flex gap-3">
+                    <div className="flex gap-2">
                       <MoneyInput
                         value={editData.periode2.montant}
                         onChange={(value) => setEditData(prev => ({
                           ...prev,
                           periode2: { ...prev.periode2, montant: value }
                         }))}
-                        className="bg-white border-4 border-gray-300 text-gray-900 text-xl h-16"
+                        className="senior-form-input flex-1"
                         placeholder={isFrench ? "Ex: 500,00" : "Ex: 500.00"}
                         allowDecimals={true}
                       />
@@ -297,10 +299,10 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
                             ...prev,
                             periode2: { ...prev.periode2, montant: suggestClawbackAmount() }
                           }))}
-                          className="border-4 border-orange-500 text-orange-600 hover:bg-orange-100 h-16 px-6 text-lg font-bold"
+                          className="border-2 border-orange-500 text-orange-600 hover:bg-orange-100 h-12 px-4"
                           title={isFrench ? 'Utiliser le montant calculé' : 'Use calculated amount'}
                         >
-                          <Calculator className="w-6 h-6" />
+                          <Calculator className="w-5 h-5" />
                         </Button>
                       )}
                     </div>

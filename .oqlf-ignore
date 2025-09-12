@@ -1,0 +1,47 @@
+# Ignorer certains fichiers et dossiers
+node_modules/
+dist/
+build/
+*.min.js
+*.bundle.js
+*.min.css
+.git/
+.claude-code/
+*.log
+*.tmp
+*.temp
+
+# Fichiers de configuration technique
+package.json
+package-lock.json
+tsconfig.json
+vite.config.ts
+tailwind.config.ts
+postcss.config.js
+
+# Fichiers générés automatiquement
+CHANGELOG.md
+*.d.ts
+*.map
+
+# Fichiers HTML - les attributs HTML doivent garder les guillemets standards
+*.html
+public/*.html
+index.html
+
+# Fichiers de code - les imports et syntaxe doivent garder les guillemets standards
+*.tsx
+*.ts
+*.jsx
+*.js
+src/
+
+# Ignorer certaines règles pour des sections spécifiques
+# Utilisation : <!-- oqlf-ignore:typography -->
+# Code technique où les règles ne s'appliquent pas
+# <!-- /oqlf-ignore -->
+
+# Exceptions pour le contenu technique
+# Les blocs de code sont automatiquement ignorés
+# Les URLs sont automatiquement ignorées
+# Les termes techniques listés dans oqlf-agent.json sont préservés

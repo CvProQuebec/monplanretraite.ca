@@ -244,9 +244,9 @@ function App() {
                 <h2 className="text-xl font-semibold text-green-900 mb-4">Économies Potentielles:</h2>
                 <ul className="space-y-2 text-green-800">
                   <li>• Crédit d'âge fédéral et provincial</li>
-                  <li>• Crédit pour revenu de pension (2000$ premiers)</li>
+                  <li>• Crédit pour revenu de pension (2 000 $ premiers)</li>
                   <li>• Fractionnement du revenu de pension</li>
-                  <li>• Réduction d'impôt de 1600$+ par année</li>
+                  <li>• Réduction d'impôt de 1 600 $+ par année</li>
                 </ul>
               </div>
             </div>
@@ -284,7 +284,7 @@ function App() {
                   <li>• Réduction des frais de gestion</li>
                   <li>• Simplification administrative</li>
                   <li>• Meilleur suivi de performance</li>
-                  <li>• Économies de 0.5-2% par année</li>
+                  <li>• Économies de 0,5-2 % par année</li>
                 </ul>
               </div>
             </div>

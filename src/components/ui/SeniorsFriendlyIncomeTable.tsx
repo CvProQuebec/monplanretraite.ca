@@ -79,7 +79,7 @@ export interface IncomeEntry {
   
   // Spécifique aux revenus de location
   rentalAmount?: number; // Montant par période
-  rentalFrequency?: 'weekend' | 'weekly' | 'monthly'; // Fréquence de location
+  rentalFrequency?: 'daily' | 'weekend' | 'weekly' | 'monthly'; // Fréquence de location
   rentalStartDate?: string; // Date de début de la saison (optionnel)
   rentalEndDate?: string; // Date de fin de la saison (optionnel)
   rentalType?: 'chalet' | 'airbnb' | 'appartement' | 'autre'; // Type de propriété
@@ -160,6 +160,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
   
   // Options de fréquence pour les revenus de location
   const rentalFrequencies = [
+    { value: 'daily', label: isFrench ? 'Jour' : 'Daily' },
     { value: 'weekend', label: isFrench ? 'Week-end (3 jours - ven, sam, dim)' : 'Weekend (3 days - Fri, Sat, Sun)' },
     { value: 'weekly', label: isFrench ? 'Semaine (7 jours)' : 'Weekly (7 days)' },
     { value: 'monthly', label: isFrench ? 'Mensuel' : 'Monthly' }
@@ -399,29 +400,19 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
               const isEditing = editingId === entry.id;
               
               return (
-                <div key={entry.id} className={`p-6 rounded-xl border-4 ${entry.isActive ? 'border-green-400 bg-green-50' : 'border-gray-300 bg-gray-50 opacity-60'} shadow-lg relative overflow-visible`}>
+                <div key={entry.id} className={`senior-compact-section ${entry.isActive ? 'border-green-400 bg-green-50' : 'border-gray-300 bg-gray-50 opacity-60'} relative overflow-visible`}>
                   
-                  {/* Ligne principale - Type, Description, Montant, Fréquence */}
-                  <div className="grid grid-cols-8 gap-6 mb-6">
-                    {/* Type de revenu */}
-                    <div className="col-span-2">
-                      <Label className="text-lg font-bold text-gray-700 mb-3 block">
-                        {isFrench ? 'Type de revenu' : 'Income Type'}
-                      </Label>
+                  <h3>{typeInfo.icon} {typeInfo.label} - {entry.description || (isFrench ? 'Sans nom' : 'Unnamed')}</h3>
+                  
+                  {/* Ligne 1 : Type + Description */}
+                  <div className="senior-inline-grid-2">
+                    {/* Type de revenu condensé */}
+                    <div className="senior-field-inline">
+                      <label>{isFrench ? 'Type' : 'Type'}</label>
                       {isEditing ? (
                         <select
                           value={entry.type}
-                          onChange={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            updateIncomeEntry(entry.id, { type: e.target.value as any });
-                          }}
-                          onFocus={(e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
-                          }}
-                          className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl w-full px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                          title={isFrench ? 'Sélectionner le type de revenu' : 'Select income type'}
+                          onChange={(e) => updateIncomeEntry(entry.id, { type: e.target.value as any })}
                         >
                           {(incomeTypes.filter(type => type.value !== 'assurance-emploi' && type.value !== 'rentes' && type.value !== 'autres')).map(type => (
                             <option key={type.value} value={type.value}>
@@ -430,39 +421,33 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                           ))}
                         </select>
                       ) : (
-                        <div className="flex items-center gap-3 p-4 bg-white border-4 border-gray-200 rounded-lg">
-                          <span className="text-3xl">{typeInfo.icon}</span>
-                          <span className="text-xl text-gray-800 font-bold">{typeInfo.label}</span>
-                        </div>
+                        <input value={`${typeInfo.icon} ${typeInfo.label}`} readOnly />
                       )}
                     </div>
                     
-                    {/* Description */}
-                    <div className="col-span-2">
-                      <Label className="text-lg font-bold text-gray-700 mb-3 block">
-                        {isFrench ? 'Description' : 'Description'}
-                      </Label>
+                    {/* Description condensée */}
+                    <div className="senior-field-inline">
+                      <label>{isFrench ? 'Description' : 'Description'}</label>
                       {isEditing ? (
-                        <Input
+                        <input
                           value={entry.description}
                           onChange={(e) => updateIncomeEntry(entry.id, { description: e.target.value })}
-                          className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl"
                           placeholder={isFrench ? 'Description...' : 'Description...'}
                         />
                       ) : (
-                        <div className="p-4 bg-white border-4 border-gray-200 rounded-lg">
-                          <span className="text-xl text-gray-800 font-bold">
-                            {entry.description || (isFrench ? 'Sans nom' : 'Unnamed')}
-                          </span>
-                        </div>
+                        <input value={entry.description || (isFrench ? 'Sans nom' : 'Unnamed')} readOnly />
                       )}
                     </div>
+                  </div>
+
+                  {/* Ligne Montant et Fréquence - DISPOSITION HORIZONTALE */}
+                  <div className="flex flex-wrap items-center gap-4 mb-6 p-4 bg-white rounded-lg border border-gray-200">
                     
-                    {/* Montant */}
-                    <div className="col-span-2">
-                      <Label className="text-lg font-bold text-gray-700 mb-3 block">
-                        {isFrench ? 'Montant' : 'Amount'}
-                      </Label>
+                    {/* Montant - étiquette à côté */}
+                    <div className="flex items-center gap-2 min-w-fit">
+                      <label className="text-lg font-semibold text-gray-700 whitespace-nowrap">
+                        {isFrench ? 'Montant:' : 'Amount:'}
+                      </label>
                       {isEditing ? (
                         <MoneyInput
                           value={
@@ -485,13 +470,13 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                               updateIncomeEntry(entry.id, { annualAmount: value });
                             }
                           }}
-                          className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl"
+                          className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-32"
                           placeholder="0"
                           allowDecimals={true}
                         />
                       ) : (
-                        <div className="p-4 bg-white border-4 border-gray-200 rounded-lg">
-                          <div className="text-xl text-gray-800 font-bold">
+                        <div className="p-2 bg-gray-50 border border-gray-300 rounded-lg w-32 flex items-center">
+                          <div className="text-sm text-gray-800 font-semibold">
                             {(entry.type === 'salaire' || entry.type === 'emploi-saisonnier') && entry.salaryNetAmount ? 
                               formatCurrency(entry.salaryNetAmount) :
                               entry.type === 'assurance-emploi' && entry.weeklyNet ?
@@ -507,19 +492,19 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                       )}
                     </div>
                     
-                    {/* Fréquence */}
-                    <div className="col-span-2">
-                      <Label className="text-lg font-bold text-gray-700 mb-3 block">
-                        {isFrench ? 'fréquence' : 'frequency'}
-                      </Label>
+                    {/* Fréquence - étiquette à côté */}
+                    <div className="flex items-center gap-2 min-w-fit">
+                      <label className="text-lg font-semibold text-gray-700 whitespace-nowrap">
+                        {isFrench ? 'Fréquence:' : 'Frequency:'}
+                      </label>
                       {isEditing ? (
-                        <div className="space-y-3">
+                        <div className="flex gap-2">
                           {(entry.type === 'salaire' || entry.type === 'emploi-saisonnier') && (
                             <Select
                               value={entry.salaryFrequency || 'monthly'}
                               onValueChange={(value) => updateIncomeEntry(entry.id, { salaryFrequency: value as any })}
                             >
-                              <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
+                              <SelectTrigger className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-white border-4 border-gray-300" style={{zIndex: 9999}} position="item-aligned" side="bottom" align="start" avoidCollisions={false} sticky="always">
@@ -536,7 +521,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                               value={entry.pensionFrequency || 'monthly'}
                               onValueChange={(value) => updateIncomeEntry(entry.id, { pensionFrequency: value as any })}
                             >
-                              <SelectTrigger className="bg-white border-4 border-gray-300 text-gray-900 h-16 text-xl">
+                              <SelectTrigger className="senior-form-input">
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-white border-4 border-gray-300" style={{zIndex: 9999}} position="item-aligned" side="bottom" align="start" avoidCollisions={false} sticky="always">
@@ -609,129 +594,127 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                     </div>
                   </div>
                   
-                  {/* Ligne secondaire - Dates et Statut/Actions */}
-                  <div className="grid grid-cols-8 gap-6 mb-6">
+                  {/* Troisième ligne - Dates - DISPOSITION SENIOR MULTI-COLONNES */}
+                  <div className="senior-form-row-double mb-6">
                     {/* Date de début */}
-                    <div className="col-span-2">
-                      <div className="flex items-center gap-3">
-                        <Label className="text-lg font-bold text-gray-700">
-                          {isFrench ? 'Date de début' : 'Start Date'}
-                        </Label>
-                        {isEditing ? (
-                          <DateInput
-                            value={
-                              entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryStartDate || '') :
-                              entry.type === 'assurance-emploi' ? (entry.eiStartDate || '') :
-                              entry.type === 'rentes' ? (entry.pensionStartDate || '') :
-                              entry.type === 'revenus-location' ? (entry.rentalStartDate || '') :
-                              ''
+                    <div className="senior-form-field">
+                      <label className="senior-form-label">
+                        {isFrench ? 'Date de début' : 'Start Date'}
+                      </label>
+                      {isEditing ? (
+                        <DateInput
+                          value={
+                            entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryStartDate || '') :
+                            entry.type === 'assurance-emploi' ? (entry.eiStartDate || '') :
+                            entry.type === 'rentes' ? (entry.pensionStartDate || '') :
+                            entry.type === 'revenus-location' ? (entry.rentalStartDate || '') :
+                            ''
+                          }
+                          onChange={(value) => {
+                            if (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') {
+                              updateIncomeEntry(entry.id, { salaryStartDate: value });
+                            } else if (entry.type === 'assurance-emploi') {
+                              updateIncomeEntry(entry.id, { eiStartDate: value });
+                            } else if (entry.type === 'rentes') {
+                              updateIncomeEntry(entry.id, { pensionStartDate: value });
+                            } else if (entry.type === 'revenus-location') {
+                              updateIncomeEntry(entry.id, { rentalStartDate: value });
                             }
-                            onChange={(value) => {
-                              if (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') {
-                                updateIncomeEntry(entry.id, { salaryStartDate: value });
-                              } else if (entry.type === 'assurance-emploi') {
-                                updateIncomeEntry(entry.id, { eiStartDate: value });
-                              } else if (entry.type === 'rentes') {
-                                updateIncomeEntry(entry.id, { pensionStartDate: value });
-                              } else if (entry.type === 'revenus-location') {
-                                updateIncomeEntry(entry.id, { rentalStartDate: value });
-                              }
-                            }}
-                            placeholder="AAAA-MM-JJ"
-                            className="h-12 text-lg flex-1"
-                          />
-                        ) : (
-                          <div className="text-lg text-blue-900 font-semibold">
-                            {entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryStartDate || '-') :
-                             entry.type === 'assurance-emploi' ? (entry.eiStartDate || '-') :
-                             entry.type === 'rentes' ? (entry.pensionStartDate || '-') :
-                             entry.type === 'revenus-location' ? (entry.rentalStartDate || '-') :
-                             '-'
-                            }
-                          </div>
-                        )}
-                      </div>
+                          }}
+                          placeholder="AAAA-MM-JJ"
+                          className="senior-form-input"
+                        />
+                      ) : (
+                        <div className="text-lg text-blue-900 font-semibold">
+                          {entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryStartDate || '-') :
+                           entry.type === 'assurance-emploi' ? (entry.eiStartDate || '-') :
+                           entry.type === 'rentes' ? (entry.pensionStartDate || '-') :
+                           entry.type === 'revenus-location' ? (entry.rentalStartDate || '-') :
+                           '-'
+                          }
+                        </div>
+                      )}
                     </div>
                     
                     {/* Date de fin */}
-                    <div className="col-span-2">
-                      <div className="flex items-center gap-3">
-                        <Label className="text-lg font-bold text-gray-700">
-                          {isFrench ? 'Date de fin' : 'End Date'}
-                        </Label>
-                        {isEditing ? (
-                          <DateInput
-                            value={
-                              entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryEndDate || '') :
-                              entry.type === 'revenus-location' ? (entry.rentalEndDate || '') :
-                              ''
+                    <div className="senior-form-field">
+                      <label className="senior-form-label">
+                        {isFrench ? 'Date de fin' : 'End Date'}
+                      </label>
+                      {isEditing ? (
+                        <DateInput
+                          value={
+                            entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryEndDate || '') :
+                            entry.type === 'revenus-location' ? (entry.rentalEndDate || '') :
+                            ''
+                          }
+                          onChange={(value) => {
+                            if (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') {
+                              updateIncomeEntry(entry.id, { salaryEndDate: value });
+                            } else if (entry.type === 'revenus-location') {
+                              updateIncomeEntry(entry.id, { rentalEndDate: value });
                             }
-                            onChange={(value) => {
-                              if (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') {
-                                updateIncomeEntry(entry.id, { salaryEndDate: value });
-                              } else if (entry.type === 'revenus-location') {
-                                updateIncomeEntry(entry.id, { rentalEndDate: value });
-                              }
-                            }}
-                            placeholder="AAAA-MM-JJ"
-                            className="h-12 text-lg flex-1"
-                          />
-                        ) : (
-                          <div className="text-lg text-red-900 font-semibold">
-                            {entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryEndDate || '-') :
-                             entry.type === 'revenus-location' ? (entry.rentalEndDate || '-') :
-                             '-'
-                            }
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    
-                    {/* Statut et Actions */}
-                    <div className="col-span-4 flex items-center justify-end">
-                      <div className="flex gap-3 items-center">
-                        {/* Statut / Validation */}
-                        {isEditing ? (
-                          <button
-                            onClick={() => {
-                              setEditingId(null);
-                              // Afficher une confirmation visuelle
-                              alert(isFrench ? '✅ Modifications sauvegardées !' : '✅ Changes saved!');
-                            }}
-                            title={isFrench ? 'Valider et sauvegarder les modifications' : 'Validate and save changes'}
-                            className="w-12 h-12 rounded-full flex items-center justify-center text-xl bg-green-500 text-white hover:bg-green-600"
-                          >
-                            <CheckCircle className="w-6 h-6" />
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => updateIncomeEntry(entry.id, { isActive: !entry.isActive })}
-                            title={entry.isActive ? (isFrench ? 'Désactiver ce revenu' : 'Deactivate this income') : (isFrench ? 'Activer ce revenu' : 'Activate this income')}
-                            className={`w-12 h-12 rounded-full flex items-center justify-center text-xl ${
-                              entry.isActive ? 'bg-green-500 text-white' : 'bg-gray-400 text-gray-600'
-                            }`}
-                          >
-                            {entry.isActive ? <CheckCircle className="w-6 h-6" /> : <AlertTriangle className="w-6 h-6" />}
-                          </button>
-                        )}
-                        
-                        {/* Actions */}
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => setEditingId(isEditing ? null : entry.id)}
-                            title={isEditing ? (isFrench ? 'Arrêter l\'édition' : 'Stop editing') : (isFrench ? 'Modifier ce revenu' : 'Edit this income')}
-                            className="w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
-                          >
-                            {isEditing ? <X className="w-6 h-6" /> : <Edit className="w-6 h-6" />}
-                          </button>
-                          <button
-                            onClick={() => removeIncomeEntry(entry.id)}
-                            title={isFrench ? 'Supprimer ce revenu' : 'Delete this income'}
-                            className="w-12 h-12 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
-                          >
-                            <Trash2 className="w-6 h-6" />
-                          </button>
+                          }}
+                          placeholder="AAAA-MM-JJ"
+                          className="senior-form-input"
+                        />
+                      ) : (
+                        <div className="text-lg text-red-900 font-semibold">
+                          {entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryEndDate || '-') :
+                           entry.type === 'revenus-location' ? (entry.rentalEndDate || '-') :
+                           '-'
+                          }
                         </div>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {/* Actions - DISPOSITION SENIOR */}
+                  <div className="flex items-center justify-end gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                    <div className="flex gap-3 items-center">
+                      {/* Statut / Validation */}
+                      {isEditing ? (
+                        <button
+                          onClick={() => {
+                            setEditingId(null);
+                            // Afficher une confirmation visuelle
+                            alert(isFrench ? '✅ Modifications sauvegardées !' : '✅ Changes saved!');
+                          }}
+                          title={isFrench ? 'Valider et sauvegarder les modifications' : 'Validate and save changes'}
+                          className="w-12 h-12 rounded-full flex items-center justify-center text-xl text-white hover:opacity-80 transition-opacity"
+                          style={{backgroundColor: 'var(--senior-success)'}}
+                        >
+                          <CheckCircle className="w-6 h-6" />
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => updateIncomeEntry(entry.id, { isActive: !entry.isActive })}
+                          title={entry.isActive ? (isFrench ? 'Désactiver ce revenu' : 'Deactivate this income') : (isFrench ? 'Activer ce revenu' : 'Activate this income')}
+                          className="w-12 h-12 rounded-full flex items-center justify-center text-xl text-white hover:opacity-80 transition-opacity"
+                          style={{backgroundColor: entry.isActive ? 'var(--senior-success)' : 'var(--senior-text-muted)'}}
+                        >
+                          {entry.isActive ? <CheckCircle className="w-6 h-6" /> : <AlertTriangle className="w-6 h-6" />}
+                        </button>
+                      )}
+                      
+                      {/* Actions */}
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => setEditingId(isEditing ? null : entry.id)}
+                          title={isEditing ? (isFrench ? 'Arrêter l\'édition' : 'Stop editing') : (isFrench ? 'Modifier ce revenu' : 'Edit this income')}
+                          className="w-12 h-12 text-white rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                          style={{backgroundColor: 'var(--senior-primary)'}}
+                        >
+                          {isEditing ? <X className="w-6 h-6" /> : <Edit className="w-6 h-6" />}
+                        </button>
+                        <button
+                          onClick={() => removeIncomeEntry(entry.id)}
+                          title={isFrench ? 'Supprimer ce revenu' : 'Delete this income'}
+                          className="w-12 h-12 text-white rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                          style={{backgroundColor: 'var(--senior-danger)'}}
+                        >
+                          <Trash2 className="w-6 h-6" />
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -740,12 +723,12 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
             })}
           </div>
           
-          {/* Bouton d'ajout - Version Senior */}
           <div className="text-center">
             <Button
               onClick={addIncomeEntry}
               size="lg"
-              className="bg-green-600 hover:bg-green-700 text-white text-xl px-8 py-4 h-16 shadow-lg"
+              className="text-white text-xl px-8 py-4 h-16 shadow-lg hover:opacity-80 transition-opacity"
+              style={{backgroundColor: 'var(--senior-success)'}}
             >
               <Plus className="w-6 h-6 mr-3" />
               {isFrench ? 'Ajouter un revenu' : 'Add Income'}

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run typecheck:*)",
+      "Bash(npm run build:*)",
+      "Bash(git add:*)",
+      "Bash(npm run lint)",
+      "Bash(npm run:*)"
+    ],
+    "defaultMode": "acceptEdits",
+    "additionalDirectories": [
+      "H:\\mnt\\h"
+    ]
+  }
+}

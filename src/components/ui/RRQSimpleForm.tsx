@@ -88,32 +88,32 @@ const RRQSimpleForm: React.FC<RRQSimpleFormProps> = ({
             </h3>
             <p className="text-sm text-gray-600 mb-4">{personName}</p>
             
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div>
-                <Label htmlFor="ageActuel" className="text-sm font-medium text-gray-700">
+            <div className="senior-form-row-triple">
+              <div className="senior-form-field">
+                <label className="senior-form-label">
                   {isFrench ? 'Âge actuel' : 'Current Age'}
-                </Label>
+                </label>
                 <Input
                   id="ageActuel"
                   type="number"
                   value={formData.ageActuel}
                   onChange={(e) => handleInputChange('ageActuel', e.target.value)}
                   placeholder="Ex: 58"
-                  className="mt-1"
+                  className="senior-form-input"
                 />
               </div>
               
-              <div>
-                <Label htmlFor="prestationActuelle" className="text-sm font-medium text-gray-700">
+              <div className="senior-form-field">
+                <label className="senior-form-label">
                   {isFrench ? 'Prestation RRQ actuelle' : 'Current QPP Benefit'}
-                </Label>
+                </label>
                 <Input
                   id="prestationActuelle"
                   type="number"
                   value={formData.prestationActuelle}
                   onChange={(e) => handleInputChange('prestationActuelle', e.target.value)}
                   placeholder="Ex: 1 200"
-                  className="mt-1"
+                  className="senior-form-input"
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   {isFrench 
@@ -123,17 +123,17 @@ const RRQSimpleForm: React.FC<RRQSimpleFormProps> = ({
                 </p>
               </div>
               
-              <div>
-                <Label htmlFor="prestation70" className="text-sm font-medium text-gray-700">
+              <div className="senior-form-field">
+                <label className="senior-form-label">
                   {isFrench ? 'Prestation RRQ à 70 ans' : 'QPP Benefit at 70 years old'}
-                </Label>
+                </label>
                 <Input
                   id="prestation70"
                   type="number"
                   value={formData.prestation70}
                   onChange={(e) => handleInputChange('prestation70', e.target.value)}
                   placeholder="Ex: 1 500"
-                  className="mt-1"
+                  className="senior-form-input"
                 />
                 <p className="text-xs text-gray-500 mt-1">
                   {isFrench 

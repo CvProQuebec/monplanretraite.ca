@@ -38,9 +38,110 @@ import HealthFactorsSection from '@/components/ui/HealthFactorsSection';
 import PersonalizedLongevityAnalysis from '@/components/ui/PersonalizedLongevityAnalysis';
 import ValidationAlert from '@/components/ui/ValidationAlert';
 
+/* CSS pour disposition horizontale des formulaires */
+const inlineFormStyles = `
+.senior-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+  min-height: 48px;
+}
+
+.senior-form-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a365d;
+  text-align: left;
+}
+
+.senior-form-input {
+  font-size: 18px;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+}
+
+.senior-form-input:focus {
+  border-color: #4c6ef5;
+  box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.1);
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .senior-form-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .senior-form-label {
+    text-align: left;
+  }
+}
+
+/* Styles pour les sommaires horizontaux */
+.senior-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  margin-bottom: 8px;
+  min-height: 48px;
+  border-radius: 8px;
+  background: white;
+  border: 1px solid #e2e8f0;
+}
+
+.senior-summary-label {
+  font-size: 18px;
+  font-weight: 500;
+  color: #4a5568;
+  flex: 1;
+}
+
+.senior-summary-value {
+  font-size: 20px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.senior-summary-unit {
+  font-size: 14px;
+  font-weight: 400;
+  color: #718096;
+  margin-left: 8px;
+}
+`;
+
 const MaRetraite: React.FC = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
+
+  // Fonction de formatage monétaire québécoise
+  const formatCurrencyQuebec = (amount: number): string => {
+    if (amount === 0) return '0 $';
+    
+    return new Intl.NumberFormat('fr-CA', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amount) + ' $';
+  };
+
+  // Injecter les styles CSS pour les formulaires horizontaux
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = inlineFormStyles;
+    document.head.appendChild(style);
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, []);
   const isFrench = language === 'fr';
 
   const { userData, updateUserData } = useRetirementData();
@@ -550,45 +651,43 @@ const MaRetraite: React.FC = () => {
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     {/* Nom complet */}
-                    <div className="flex items-center gap-4">
-                      <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
+                    <div className="senior-form-row">
+                      <Label className="senior-form-label">
                         {isFrench ? 'Nom complet' : 'Full Name'}
                       </Label>
                       <Input
                         type="text"
                         value={userData.personal?.prenom1 || ''}
                         onChange={(e) => handleNameChange('prenom1', e.target.value)}
-                        className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 text-lg h-12 w-48"
+                        className="senior-form-input"
                         placeholder={isFrench ? 'Ex: Jean Philippe…' : 'Ex: John Smith…'}
                       />
                     </div>
 
                     {/* Date de naissance */}
-                    <div className="flex items-center gap-4">
-                      <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
+                    <div className="senior-form-row">
+                      <Label className="senior-form-label">
                         {isFrench ? 'Date de naissance' : 'Date of Birth'}
                       </Label>
-                      <div className="flex-1">
                       <CustomBirthDateInput
                         id="naissance1"
-                          label=""
+                        label=""
                         value={userData.personal?.naissance1 || ''}
                         onChange={(date) => handleProfileChange('naissance1', date)}
-                          className="bg-white border-2 border-gray-300 text-gray-900"
+                        className="senior-form-input"
                       />
-                      </div>
                     </div>
 
                     {/* Sexe */}
-                    <div className="flex items-center gap-4">
-                      <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
+                    <div className="senior-form-row">
+                      <Label className="senior-form-label">
                         {isFrench ? 'Sexe' : 'Gender'}
                       </Label>
                       <Select
                         value={userData.personal?.sexe1 || 'homme'}
                         onValueChange={(value) => handleProfileChange('sexe1', value)}
                       >
-                        <SelectTrigger className="bg-white border-2 border-gray-300 text-gray-900 h-12 text-lg w-80">
+                        <SelectTrigger className="senior-form-input">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-white border-2 border-gray-300">
@@ -599,15 +698,15 @@ const MaRetraite: React.FC = () => {
                     </div>
 
                     {/* Statut professionnel */}
-                    <div className="flex items-center gap-4">
-                      <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
+                    <div className="senior-form-row">
+                      <Label className="senior-form-label">
                         {isFrench ? 'Statut professionnel' : 'Professional Status'}
                       </Label>
                       <Select
                         value={userData.personal?.statutProfessionnel1 || 'actif'}
                         onValueChange={(value) => handleProfileChange('statutProfessionnel1', value)}
                       >
-                        <SelectTrigger className="bg-white border-2 border-gray-300 text-gray-900 h-12 text-lg w-80">
+                        <SelectTrigger className="senior-form-input">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-white border-2 border-gray-300">
@@ -632,45 +731,43 @@ const MaRetraite: React.FC = () => {
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     {/* Nom complet */}
-                    <div className="flex items-center gap-4">
-                      <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
+                    <div className="senior-form-row">
+                      <Label className="senior-form-label">
                         {isFrench ? 'Nom complet (optionnel)' : 'Full Name (optional)'}
                       </Label>
                       <Input
                         type="text"
                         value={userData.personal?.prenom2 || ''}
                         onChange={(e) => handleNameChange('prenom2', e.target.value)}
-                        className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 text-lg h-12 w-48"
+                        className="senior-form-input"
                         placeholder={isFrench ? 'Ex: Marie…' : 'Ex: Mary…'}
                       />
                     </div>
 
                     {/* Date de naissance */}
-                    <div className="flex items-center gap-4">
-                      <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
+                    <div className="senior-form-row">
+                      <Label className="senior-form-label">
                         {isFrench ? 'Date de naissance' : 'Date of Birth'}
                       </Label>
-                      <div className="flex-1">
                       <CustomBirthDateInput
                         id="naissance2"
-                          label=""
+                        label=""
                         value={userData.personal?.naissance2 || ''}
                         onChange={(date) => handleProfileChange('naissance2', date)}
-                          className="bg-white border-2 border-gray-300 text-gray-900"
+                        className="senior-form-input"
                       />
-                      </div>
                     </div>
 
                     {/* Sexe */}
-                    <div className="flex items-center gap-4">
-                      <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
+                    <div className="senior-form-row">
+                      <Label className="senior-form-label">
                         {isFrench ? 'Sexe' : 'Gender'}
                       </Label>
                       <Select
                         value={userData.personal?.sexe2 || 'femme'}
                         onValueChange={(value) => handleProfileChange('sexe2', value)}
                       >
-                        <SelectTrigger className="bg-white border-2 border-gray-300 text-gray-900 h-12 text-lg w-80">
+                        <SelectTrigger className="senior-form-input">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-white border-2 border-gray-300">
@@ -681,15 +778,15 @@ const MaRetraite: React.FC = () => {
                     </div>
 
                     {/* Statut professionnel */}
-                    <div className="flex items-center gap-4">
-                      <Label className="text-lg font-semibold text-gray-900 w-72 flex-shrink-0">
+                    <div className="senior-form-row">
+                      <Label className="senior-form-label">
                         {isFrench ? 'Statut professionnel' : 'Professional Status'}
                       </Label>
                       <Select
                         value={userData.personal?.statutProfessionnel2 || 'actif'}
                         onValueChange={(value) => handleProfileChange('statutProfessionnel2', value)}
                       >
-                        <SelectTrigger className="bg-white border-2 border-gray-300 text-gray-900 h-12 text-lg w-80">
+                        <SelectTrigger className="senior-form-input">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent className="bg-white border-2 border-gray-300">
@@ -921,27 +1018,27 @@ const MaRetraite: React.FC = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="p-4 rounded-lg border bg-emerald-50">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                    <div className="space-y-2">
+                      <div className="senior-summary-row" style={{ background: '#ecfdf5' }}>
+                        <div className="senior-summary-label">
                           {isFrench ? 'Période 1 (Jan-Juin)' : 'Period 1 (Jan-June)'}
                         </div>
-                        <div className="text-2xl font-bold text-emerald-600">
-                          ${userData.retirement?.svBiannual1?.periode1?.montant?.toLocaleString() || '0'}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {isFrench ? 'par mois' : 'per month'}
+                        <div className="senior-summary-value text-emerald-600">
+                          {formatCurrencyQuebec(userData.retirement?.svBiannual1?.periode1?.montant || 0)}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'par mois' : 'per month'}
+                          </span>
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-orange-50">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row" style={{ background: '#fff7ed' }}>
+                        <div className="senior-summary-label">
                           {isFrench ? 'Période 2 (Juil-Déc)' : 'Period 2 (Jul-Dec)'}
                         </div>
-                        <div className="text-2xl font-bold text-orange-600">
-                          ${userData.retirement?.svBiannual1?.periode2?.montant?.toLocaleString() || '0'}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {isFrench ? 'par mois' : 'per month'}
+                        <div className="senior-summary-value text-orange-600">
+                          {formatCurrencyQuebec(userData.retirement?.svBiannual1?.periode2?.montant || 0)}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'par mois' : 'per month'}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -967,27 +1064,27 @@ const MaRetraite: React.FC = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="p-4 rounded-lg border bg-emerald-50">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                    <div className="space-y-2">
+                      <div className="senior-summary-row" style={{ background: '#ecfdf5' }}>
+                        <div className="senior-summary-label">
                           {isFrench ? 'Période 1 (Jan-Juin)' : 'Period 1 (Jan-June)'}
                         </div>
-                        <div className="text-2xl font-bold text-emerald-600">
-                          ${userData.retirement?.svBiannual2?.periode1?.montant?.toLocaleString() || '0'}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {isFrench ? 'par mois' : 'per month'}
+                        <div className="senior-summary-value text-emerald-600">
+                          {formatCurrencyQuebec(userData.retirement?.svBiannual2?.periode1?.montant || 0)}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'par mois' : 'per month'}
+                          </span>
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-orange-50">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row" style={{ background: '#fff7ed' }}>
+                        <div className="senior-summary-label">
                           {isFrench ? 'Période 2 (Juil-Déc)' : 'Period 2 (Jul-Dec)'}
                         </div>
-                        <div className="text-2xl font-bold text-orange-600">
-                          ${userData.retirement?.svBiannual2?.periode2?.montant?.toLocaleString() || '0'}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {isFrench ? 'par mois' : 'per month'}
+                        <div className="senior-summary-value text-orange-600">
+                          {formatCurrencyQuebec(userData.retirement?.svBiannual2?.periode2?.montant || 0)}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'par mois' : 'per month'}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -1016,27 +1113,27 @@ const MaRetraite: React.FC = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="p-4 rounded-lg border bg-blue-50">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                    <div className="space-y-2">
+                      <div className="senior-summary-row" style={{ background: '#eff6ff' }}>
+                        <div className="senior-summary-label">
                           {isFrench ? 'Prestation actuelle' : 'Current benefit'}
                         </div>
-                        <div className="text-2xl font-bold text-blue-600">
-                          ${userData.retirement?.rrqMontantActuel1?.toLocaleString() || '0'}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {isFrench ? 'par mois' : 'per month'}
+                        <div className="senior-summary-value text-blue-600">
+                          {formatCurrencyQuebec(userData.retirement?.rrqMontantActuel1 || 0)}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'par mois' : 'per month'}
+                          </span>
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-purple-50">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row" style={{ background: '#faf5ff' }}>
+                        <div className="senior-summary-label">
                           {isFrench ? 'Prestation à 70 ans' : 'Benefit at 70 years'}
                         </div>
-                        <div className="text-2xl font-bold text-purple-600">
-                          ${userData.retirement?.rrqMontant70_1?.toLocaleString() || '0'}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {isFrench ? 'par mois' : 'per month'}
+                        <div className="senior-summary-value text-purple-600">
+                          {formatCurrencyQuebec(userData.retirement?.rrqMontant70_1 || 0)}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'par mois' : 'per month'}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -1062,27 +1159,27 @@ const MaRetraite: React.FC = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="p-4 rounded-lg border bg-blue-50">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                    <div className="space-y-2">
+                      <div className="senior-summary-row" style={{ background: '#eff6ff' }}>
+                        <div className="senior-summary-label">
                           {isFrench ? 'Prestation actuelle' : 'Current benefit'}
                         </div>
-                        <div className="text-2xl font-bold text-blue-600">
-                          ${userData.retirement?.rrqMontantActuel2?.toLocaleString() || '0'}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {isFrench ? 'par mois' : 'per month'}
+                        <div className="senior-summary-value text-blue-600">
+                          {formatCurrencyQuebec(userData.retirement?.rrqMontantActuel2 || 0)}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'par mois' : 'per month'}
+                          </span>
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-purple-50">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row" style={{ background: '#faf5ff' }}>
+                        <div className="senior-summary-label">
                           {isFrench ? 'Prestation à 70 ans' : 'Benefit at 70 years'}
                         </div>
-                        <div className="text-2xl font-bold text-purple-600">
-                          ${userData.retirement?.rrqMontant70_2?.toLocaleString() || '0'}
-                        </div>
-                        <div className="text-xs text-gray-500">
-                          {isFrench ? 'par mois' : 'per month'}
+                        <div className="senior-summary-value text-purple-600">
+                          {formatCurrencyQuebec(userData.retirement?.rrqMontant70_2 || 0)}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'par mois' : 'per month'}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -1114,45 +1211,45 @@ const MaRetraite: React.FC = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                    <div className="space-y-2">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Salaires (annuel)' : 'Salaries (annual)'}
-                  </div>
-                        <div className="text-2xl font-bold text-blue-600">
-                          ${person1Income.totalSalary.toLocaleString()}
-                  </div>
+                        </div>
+                        <div className="senior-summary-value text-blue-600">
+                          {formatCurrencyQuebec(person1Income.totalSalary)}
+                        </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Pensions (annuel)' : 'Pensions (annual)'}
                         </div>
-                        <div className="text-2xl font-bold text-green-600">
-                          ${person1Income.totalPensions.toLocaleString()}
+                        <div className="senior-summary-value text-green-600">
+                          {formatCurrencyQuebec(person1Income.totalPensions)}
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Autres revenus (annuel)' : 'Other income (annual)'}
                         </div>
-                        <div className="text-2xl font-bold text-purple-600">
-                          ${person1Income.totalOtherIncome.toLocaleString()}
+                        <div className="senior-summary-value text-purple-600">
+                          {formatCurrencyQuebec(person1Income.totalOtherIncome)}
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Épargne REER' : 'RRSP savings'}
                         </div>
-                        <div className="text-2xl font-bold text-orange-600">
-                          ${person1Savings.reer.toLocaleString()}
+                        <div className="senior-summary-value text-orange-600">
+                          {formatCurrencyQuebec(person1Savings.reer)}
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Épargne CELI' : 'TFSA savings'}
                         </div>
-                        <div className="text-2xl font-bold text-cyan-600">
-                          ${person1Savings.celi.toLocaleString()}
+                        <div className="senior-summary-value text-cyan-600">
+                          {formatCurrencyQuebec(person1Savings.celi)}
                         </div>
                       </div>
                     </div>
@@ -1178,45 +1275,45 @@ const MaRetraite: React.FC = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                                            <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                    <div className="space-y-2">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Salaires (annuel)' : 'Salaries (annual)'}
                         </div>
-                        <div className="text-2xl font-bold text-blue-600">
-                          ${person2Income.totalSalary.toLocaleString()}
+                        <div className="senior-summary-value text-blue-600">
+                          {formatCurrencyQuebec(person2Income.totalSalary)}
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Pensions (annuel)' : 'Pensions (annual)'}
                         </div>
-                        <div className="text-2xl font-bold text-green-600">
-                          ${person2Income.totalPensions.toLocaleString()}
+                        <div className="senior-summary-value text-green-600">
+                          {formatCurrencyQuebec(person2Income.totalPensions)}
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Autres revenus (annuel)' : 'Other income (annual)'}
                         </div>
-                        <div className="text-2xl font-bold text-purple-600">
-                          ${person2Income.totalOtherIncome.toLocaleString()}
+                        <div className="senior-summary-value text-purple-600">
+                          {formatCurrencyQuebec(person2Income.totalOtherIncome)}
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Épargne REER' : 'RRSP savings'}
                         </div>
-                        <div className="text-2xl font-bold text-orange-600">
-                          ${person2Savings.reer.toLocaleString()}
+                        <div className="senior-summary-value text-orange-600">
+                          {formatCurrencyQuebec(person2Savings.reer)}
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Épargne CELI' : 'TFSA savings'}
                         </div>
-                        <div className="text-2xl font-bold text-cyan-600">
-                          ${person2Savings.celi.toLocaleString()}
+                        <div className="senior-summary-value text-cyan-600">
+                          {formatCurrencyQuebec(person2Savings.celi)}
                         </div>
                       </div>
                     </div>
@@ -1245,29 +1342,29 @@ const MaRetraite: React.FC = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                    <div className="space-y-2">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Dépenses mensuelles' : 'Monthly expenses'}
-                  </div>
-                        <div className="text-2xl font-bold text-green-600">
-                          ${(userData.personal?.depensesMensuelles || 0).toLocaleString()}
-                  </div>
+                        </div>
+                        <div className="senior-summary-value text-green-600">
+                          {formatCurrencyQuebec(userData.personal?.depensesMensuelles || 0)}
+                        </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Revenus mensuels estimés' : 'Estimated monthly income'}
                         </div>
-                        <div className="text-2xl font-bold text-blue-600">
-                          ${(person1Income.totalIncome / 12).toLocaleString()}
+                        <div className="senior-summary-value text-blue-600">
+                          {formatCurrencyQuebec(person1Income.totalIncome / 12)}
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Flux de trésorerie (mois)' : 'Cash flow (month)'}
                         </div>
-                        <div className="text-2xl font-bold text-green-600">
-                          ${((person1Income.totalIncome / 12) - (userData.personal?.depensesMensuelles || 0)).toLocaleString()}
+                        <div className="senior-summary-value text-green-600">
+                          {formatCurrencyQuebec((person1Income.totalIncome / 12) - (userData.personal?.depensesMensuelles || 0))}
                         </div>
                       </div>
                     </div>
@@ -1289,29 +1386,29 @@ const MaRetraite: React.FC = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                    <div className="space-y-2">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Dépenses mensuelles' : 'Monthly expenses'}
-                  </div>
-                        <div className="text-2xl font-bold text-green-600">
-                          ${((userData.personal?.epicerie1 || 0) + (userData.personal?.epicerie2 || 0)).toLocaleString()}
-                  </div>
+                        </div>
+                        <div className="senior-summary-value text-green-600">
+                          {formatCurrencyQuebec((userData.personal?.epicerie1 || 0) + (userData.personal?.epicerie2 || 0))}
+                        </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Revenus mensuels estimés' : 'Estimated monthly income'}
                         </div>
-                        <div className="text-2xl font-bold text-blue-600">
-                          ${(person2Income.totalIncome / 12).toLocaleString()}
+                        <div className="senior-summary-value text-blue-600">
+                          {formatCurrencyQuebec(person2Income.totalIncome / 12)}
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Flux de trésorerie (mois)' : 'Cash flow (month)'}
                         </div>
-                        <div className="text-2xl font-bold text-green-600">
-                          ${((person2Income.totalIncome / 12) - ((userData.personal?.epicerie1 || 0) + (userData.personal?.epicerie2 || 0))).toLocaleString()}
+                        <div className="senior-summary-value text-green-600">
+                          {formatCurrencyQuebec((person2Income.totalIncome / 12) - ((userData.personal?.epicerie1 || 0) + (userData.personal?.epicerie2 || 0)))}
                         </div>
                       </div>
                     </div>
@@ -1336,32 +1433,41 @@ const MaRetraite: React.FC = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
-                      {isFrench ? 'Âge de retraite souhaité' : 'Desired retirement age'}
-                  </div>
-                        <div className="text-2xl font-bold text-purple-600">
-                          {userData.personal?.ageRetraiteSouhaite1 || 65} {isFrench ? 'ans' : 'years'}
-                  </div>
+                    <div className="space-y-2">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
+                          {isFrench ? 'Âge de retraite souhaité' : 'Desired retirement age'}
+                        </div>
+                        <div className="senior-summary-value text-purple-600">
+                          {userData.personal?.ageRetraiteSouhaite1 || 65}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'ans' : 'years'}
+                          </span>
+                        </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Années avant la retraite (approx.)' : 'Years until retirement (approx.)'}
                         </div>
-                        <div className="text-2xl font-bold text-blue-600">
-                          {Math.max(0, (userData.personal?.ageRetraiteSouhaite1 || 65) - computeAgeFromBirthdate(userData.personal?.naissance1))} {isFrench ? 'ans' : 'years'}
+                        <div className="senior-summary-value text-blue-600">
+                          {Math.max(0, (userData.personal?.ageRetraiteSouhaite1 || 65) - computeAgeFromBirthdate(userData.personal?.naissance1))}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'ans' : 'years'}
+                          </span>
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Espérance de vie (CPM2014)' : 'Life expectancy (CPM2014)'}
                         </div>
-                        <div className="text-2xl font-bold text-green-600">
-                          {calculateMortalityForPerson(1).lifeExpectancy} {isFrench ? 'ans' : 'years'}
-                        </div>
-                        <div className="text-xs text-gray-500 mt-1">
-                          {isFrench ? 'Âge de planification recommandé:' : 'Recommended planning age:'} {calculateMortalityForPerson(1).finalAge}
+                        <div className="senior-summary-value text-green-600">
+                          {calculateMortalityForPerson(1).lifeExpectancy}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'ans' : 'years'}
+                          </span>
+                          <div className="text-xs text-gray-500 mt-1">
+                            {isFrench ? 'Âge recommandé:' : 'Recommended age:'} {calculateMortalityForPerson(1).finalAge}
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -1383,32 +1489,41 @@ const MaRetraite: React.FC = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <div className="grid grid-cols-1 gap-4">
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
-                      {isFrench ? 'Âge de retraite souhaité' : 'Desired retirement age'}
-                  </div>
-                        <div className="text-2xl font-bold text-purple-600">
-                          {userData.personal?.ageRetraiteSouhaite2 || 65} {isFrench ? 'ans' : 'years'}
-                  </div>
+                    <div className="space-y-2">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
+                          {isFrench ? 'Âge de retraite souhaité' : 'Desired retirement age'}
+                        </div>
+                        <div className="senior-summary-value text-purple-600">
+                          {userData.personal?.ageRetraiteSouhaite2 || 65}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'ans' : 'years'}
+                          </span>
+                        </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Années avant la retraite (approx.)' : 'Years until retirement (approx.)'}
                         </div>
-                        <div className="text-2xl font-bold text-blue-600">
-                          {Math.max(0, (userData.personal?.ageRetraiteSouhaite2 || 65) - computeAgeFromBirthdate(userData.personal?.naissance2))} {isFrench ? 'ans' : 'years'}
+                        <div className="senior-summary-value text-blue-600">
+                          {Math.max(0, (userData.personal?.ageRetraiteSouhaite2 || 65) - computeAgeFromBirthdate(userData.personal?.naissance2))}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'ans' : 'years'}
+                          </span>
                         </div>
                       </div>
-                      <div className="p-4 rounded-lg border bg-white">
-                        <div className="text-sm font-medium text-gray-600 mb-1">
+                      <div className="senior-summary-row">
+                        <div className="senior-summary-label">
                           {isFrench ? 'Espérance de vie (CPM2014)' : 'Life expectancy (CPM2014)'}
                         </div>
-                        <div className="text-2xl font-bold text-green-600">
-                          {calculateMortalityForPerson(2).lifeExpectancy} {isFrench ? 'ans' : 'years'}
-                        </div>
-                        <div className="text-xs text-gray-500 mt-1">
-                          {isFrench ? 'Âge de planification recommandé:' : 'Recommended planning age:'} {calculateMortalityForPerson(2).finalAge}
+                        <div className="senior-summary-value text-green-600">
+                          {calculateMortalityForPerson(2).lifeExpectancy}
+                          <span className="senior-summary-unit">
+                            {isFrench ? 'ans' : 'years'}
+                          </span>
+                          <div className="text-xs text-gray-500 mt-1">
+                            {isFrench ? 'Âge recommandé:' : 'Recommended age:'} {calculateMortalityForPerson(2).finalAge}
+                          </div>
                         </div>
                       </div>
                     </div>

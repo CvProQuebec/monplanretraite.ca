@@ -21,6 +21,52 @@ import {
   TreePine
 } from 'lucide-react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
+import '../../senior-unified-styles.css';
+
+/* CSS pour disposition horizontale des formulaires */
+const inlineFormStyles = `
+.senior-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+  min-height: 48px;
+}
+
+.senior-form-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a365d;
+  text-align: left;
+}
+
+.senior-form-input {
+  font-size: 18px;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+}
+
+.senior-form-input:focus {
+  border-color: #4c6ef5;
+  box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.1);
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .senior-form-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .senior-form-label {
+    text-align: left;
+  }
+}
+`;
 
 // Données initiales vides pour la confidentialité
 const initialImmobilierData = {
@@ -52,6 +98,29 @@ const initialImmobilierData = {
 
 const ImmobilierPage: React.FC = () => {
   const { language } = useLanguage();
+
+  // Injecter les styles CSS pour les formulaires horizontaux
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = inlineFormStyles;
+    document.head.appendChild(style);
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, []);
+
+  // Fonction de formatage monétaire québécoise
+  const formatCurrencyQuebec = (amount: number): string => {
+    if (amount === 0) return '0 $';
+    
+    return new Intl.NumberFormat('fr-CA', {
+      style: 'decimal',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amount) + ' $';
+  };
   const [activeTab, setActiveTab] = useState('residence');
   const [immobilierData, setImmobilierData] = useState(initialImmobilierData);
 
@@ -140,90 +209,117 @@ const ImmobilierPage: React.FC = () => {
   const chargesTotales = immobilierData.deuxiemeResidence.charges + immobilierData.troisiemePropriete.charges + immobilierData.quatriemePropriete.charges;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
-      {/* Particules de fond */}
+    <div className="senior-layout min-h-screen" style={{ background: 'linear-gradient(135deg, var(--senior-bg-secondary) 0%, var(--senior-bg-accent) 100%)', color: 'var(--senior-text-primary)' }}>
+      {/* Particules de fond avec couleurs douces */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-3 h-3 bg-indigo-400 rounded-full animate-bounce"></div>
-        <div className="absolute top-60 left-1/4 w-2 h-2 bg-purple-400 rounded-full animate-ping"></div>
+        <div className="absolute top-20 left-10 w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--senior-primary-light)' }}></div>
+        <div className="absolute top-40 right-20 w-3 h-3 rounded-full animate-bounce" style={{ backgroundColor: 'var(--senior-secondary)' }}></div>
+        <div className="absolute top-60 left-1/4 w-2 h-2 rounded-full animate-ping" style={{ backgroundColor: 'var(--senior-primary)' }}></div>
       </div>
 
       <div className="container mx-auto px-6 py-8 relative z-10">
         {/* En-tête */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-4 mb-6">
-            <Home className="w-16 h-16 text-blue-400" />
-            <h1 className="text-6xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent drop-shadow-2xl">
+            <Home className="w-16 h-16" style={{ color: 'var(--senior-primary)' }} />
+            <h1 style={{ 
+              fontSize: 'var(--senior-font-3xl)', 
+              fontWeight: '700', 
+              background: 'linear-gradient(135deg, var(--senior-primary) 0%, var(--senior-secondary) 100%)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>
               {currentT.title}
             </h1>
           </div>
-          <p className="text-2xl text-blue-200 max-w-4xl mx-auto leading-relaxed">
+          <p style={{ fontSize: 'var(--senior-font-lg)', color: 'var(--senior-text-secondary)' }} className="max-w-4xl mx-auto leading-relaxed">
             {currentT.subtitle}
           </p>
         </div>
 
         {/* Métriques principales */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+          <Card className="senior-card" style={{ background: 'var(--senior-bg-card)', border: '1px solid var(--senior-border)' }}>
             <CardContent className="p-6 text-center">
-              <Home className="w-12 h-12 text-blue-400 mx-auto mb-4" />
-              <p className="text-2xl font-bold text-blue-200">
-                {patrimoineTotal.toLocaleString()} $
+              <Home className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--senior-primary)' }} />
+              <p style={{ fontSize: 'var(--senior-font-lg)', fontWeight: '700', color: 'var(--senior-text-primary)' }}>
+                {formatCurrencyQuebec(patrimoineTotal)}
               </p>
-              <p className="text-blue-300">{currentT.patrimoineTotal}</p>
+              <p style={{ fontSize: 'var(--senior-font-sm)', color: 'var(--senior-text-secondary)' }}>{currentT.patrimoineTotal}</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+          <Card className="senior-card" style={{ background: 'var(--senior-bg-card)', border: '1px solid var(--senior-border)' }}>
             <CardContent className="p-6 text-center">
-              <DollarSign className="w-12 h-12 text-green-400 mx-auto mb-4" />
-              <p className="text-2xl font-bold text-green-200">
-                {revenusTotaux.toLocaleString()} $
+              <DollarSign className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--senior-success)' }} />
+              <p style={{ fontSize: 'var(--senior-font-lg)', fontWeight: '700', color: 'var(--senior-text-primary)' }}>
+                {formatCurrencyQuebec(revenusTotaux)}
               </p>
-              <p className="text-green-300">{language === 'fr' ? 'Revenus locatifs annuels' : 'Annual rental income'}</p>
+              <p style={{ fontSize: 'var(--senior-font-sm)', color: 'var(--senior-text-secondary)' }}>{language === 'fr' ? 'Revenus locatifs annuels' : 'Annual rental income'}</p>
             </CardContent>
           </Card>
 
-          <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+          <Card className="senior-card" style={{ background: 'var(--senior-bg-card)', border: '1px solid var(--senior-border)' }}>
             <CardContent className="p-6 text-center">
-              <Calculator className="w-12 h-12 text-orange-400 mx-auto mb-4" />
-              <p className="text-2xl font-bold text-orange-200">
-                {chargesTotales.toLocaleString()} $
+              <Calculator className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--senior-warning)' }} />
+              <p style={{ fontSize: 'var(--senior-font-lg)', fontWeight: '700', color: 'var(--senior-text-primary)' }}>
+                {formatCurrencyQuebec(chargesTotales)}
               </p>
-              <p className="text-orange-300">{language === 'fr' ? 'Charges annuelles' : 'Annual expenses'}</p>
+              <p style={{ fontSize: 'var(--senior-font-sm)', color: 'var(--senior-text-secondary)' }}>{language === 'fr' ? 'Charges annuelles' : 'Annual expenses'}</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Navigation par onglets */}
-        <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+        <Card className="senior-card" style={{ background: 'var(--senior-bg-card)', border: '1px solid var(--senior-border)' }}>
           <CardContent className="p-6">
             <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-4 bg-white/20 p-2 rounded-xl h-16 border-2 border-white/30 shadow-lg">
+              <TabsList className="grid w-full grid-cols-4 p-2 rounded-xl h-16 border-2 shadow-lg" style={{ background: 'var(--senior-bg-secondary)', borderColor: 'var(--senior-border)' }}>
                 <TabsTrigger 
                   value="residence" 
-                  className="data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-200 px-6 py-3 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-white/20 data-[state=inactive]:text-white data-[state=inactive]:hover:bg-white/30"
+                  className="px-6 py-3 font-bold rounded-lg transition-all duration-200 min-height-48px"
+                  style={{ 
+                    fontSize: 'var(--senior-font-sm)',
+                    minHeight: '48px'
+                  }}
+                  data-active-style={{
+                    background: 'var(--senior-primary)',
+                    color: 'var(--senior-text-inverse)'
+                  }}
                 >
                   <Home className="w-5 h-5 mr-2" />
                   {currentT.residence}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="deuxieme"
-                  className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-indigo-200 px-6 py-3 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-white/20 data-[state=inactive]:text-white data-[state=inactive]:hover:bg-white/30"
+                  className="px-6 py-3 font-bold rounded-lg transition-all duration-200"
+                  style={{ 
+                    fontSize: 'var(--senior-font-sm)',
+                    minHeight: '48px'
+                  }}
                 >
                   <Building2 className="w-5 h-5 mr-2" />
                   {currentT.deuxiemeResidence}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="troisieme"
-                  className="data-[state=active]:bg-purple-600 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-purple-200 px-6 py-3 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-white/20 data-[state=inactive]:text-white data-[state=inactive]:hover:bg-white/30"
+                  className="px-6 py-3 font-bold rounded-lg transition-all duration-200"
+                  style={{ 
+                    fontSize: 'var(--senior-font-sm)',
+                    minHeight: '48px'
+                  }}
                 >
                   <TrendingUp className="w-5 h-5 mr-2" />
                   {currentT.troisiemePropriete}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="quatrieme"
-                  className="data-[state=active]:bg-emerald-600 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-emerald-200 px-6 py-3 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-white/20 data-[state=inactive]:text-white data-[state=inactive]:hover:bg-white/30"
+                  className="px-6 py-3 font-bold rounded-lg transition-all duration-200"
+                  style={{ 
+                    fontSize: 'var(--senior-font-sm)',
+                    minHeight: '48px'
+                  }}
                 >
                   <Mountain className="w-5 h-5 mr-2" />
                   {currentT.quatriemePropriete}
@@ -232,80 +328,78 @@ const ImmobilierPage: React.FC = () => {
 
               {/* Onglet Résidence principale */}
               <TabsContent value="residence" className="mt-8">
-                <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+                <Card className="senior-card" style={{ background: 'var(--senior-bg-card)', border: '1px solid var(--senior-border)' }}>
                   <CardHeader>
-                    <CardTitle className="text-2xl text-blue-200 flex items-center gap-3">
-                      <Home className="w-8 h-8 text-blue-400" />
+                    <CardTitle className="flex items-center gap-3" style={{ fontSize: 'var(--senior-font-lg)', color: 'var(--senior-text-primary)' }}>
+                      <Home className="w-8 h-8" style={{ color: 'var(--senior-primary)' }} />
                       {currentT.residence}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-blue-200">
+                    <div className="space-y-4">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.valeurActuelle}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.residencePrincipale.valeur}
                           onChange={(e) => handleChange('residencePrincipale', 'valeur', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-blue-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-blue-200">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.soldeHypotheque}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.residencePrincipale.hypotheque}
                           onChange={(e) => handleChange('residencePrincipale', 'hypotheque', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-blue-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-blue-200">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.taxes}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.residencePrincipale.taxes}
                           onChange={(e) => handleChange('residencePrincipale', 'taxes', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-blue-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-blue-200">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.assurances}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.residencePrincipale.assurances}
                           onChange={(e) => handleChange('residencePrincipale', 'assurances', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-blue-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
                     </div>
 
                     {/* Résumé de l'équité */}
-                    <div className="bg-blue-500/20 p-6 rounded-lg border border-blue-400/30">
+                    <div className="p-6 rounded-lg border" style={{ background: 'rgba(76, 110, 245, 0.1)', borderColor: 'var(--senior-primary)' }}>
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-blue-200 mb-2">
-                          {currentT.equite}: {equiteResidence.toLocaleString()} $
+                        <p className="font-bold mb-2" style={{ fontSize: 'var(--senior-font-lg)', color: 'var(--senior-text-primary)' }}>
+                          {currentT.equite}: {formatCurrencyQuebec(equiteResidence)}
                         </p>
                         <Progress 
                           value={immobilierData.residencePrincipale.valeur > 0 ? (equiteResidence / immobilierData.residencePrincipale.valeur) * 100 : 0} 
-                          className="h-3 bg-blue-300/20"
+                          className="h-3"
+                          style={{ backgroundColor: 'var(--senior-bg-secondary)' }}
                         />
-                        <p className="text-blue-300 mt-2">
-                          {immobilierData.residencePrincipale.valeur > 0 ? ((equiteResidence / immobilierData.residencePrincipale.valeur) * 100).toFixed(1) : 0}% d'équité
+                        <p className="mt-2" style={{ fontSize: 'var(--senior-font-sm)', color: 'var(--senior-text-secondary)' }}>
+                          {immobilierData.residencePrincipale.valeur > 0 ? ((equiteResidence / immobilierData.residencePrincipale.valeur) * 100).toFixed(1) : 0} % d'équité
                         </p>
                       </div>
                     </div>
@@ -315,76 +409,73 @@ const ImmobilierPage: React.FC = () => {
 
               {/* Onglet 2e résidence */}
               <TabsContent value="deuxieme" className="mt-8">
-                <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+                <Card className="senior-card" style={{ background: 'var(--senior-bg-card)', border: '1px solid var(--senior-border)' }}>
                   <CardHeader>
-                    <CardTitle className="text-2xl text-indigo-200 flex items-center gap-3">
-                      <Building2 className="w-8 h-8 text-indigo-400" />
+                    <CardTitle className="flex items-center gap-3" style={{ fontSize: 'var(--senior-font-lg)', color: 'var(--senior-text-primary)' }}>
+                      <Building2 className="w-8 h-8" style={{ color: 'var(--senior-secondary)' }} />
                       {currentT.deuxiemeResidence}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-indigo-200">
+                    <div className="space-y-4">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.valeurActuelle}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.deuxiemeResidence.valeur}
                           onChange={(e) => handleChange('deuxiemeResidence', 'valeur', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-indigo-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-indigo-200">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.soldeHypotheque}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.deuxiemeResidence.hypotheque}
                           onChange={(e) => handleChange('deuxiemeResidence', 'hypotheque', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-indigo-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-indigo-200">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.revenus}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.deuxiemeResidence.revenus}
                           onChange={(e) => handleChange('deuxiemeResidence', 'revenus', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-indigo-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-indigo-200">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.charges}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.deuxiemeResidence.charges}
                           onChange={(e) => handleChange('deuxiemeResidence', 'charges', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-indigo-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
                     </div>
 
                     {/* Résumé de l'équité */}
-                    <div className="bg-indigo-500/20 p-6 rounded-lg border border-indigo-400/30">
+                    <div className="p-6 rounded-lg border" style={{ background: 'rgba(151, 117, 250, 0.1)', borderColor: 'var(--senior-secondary)' }}>
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-indigo-200 mb-2">
-                          {currentT.equite}: {equite2e.toLocaleString()} $
+                        <p className="font-bold mb-2" style={{ fontSize: 'var(--senior-font-lg)', color: 'var(--senior-text-primary)' }}>
+                          {currentT.equite}: {formatCurrencyQuebec(equite2e)}
                         </p>
-                        <p className="text-indigo-300">
-                          Revenus nets: {(immobilierData.deuxiemeResidence.revenus - immobilierData.deuxiemeResidence.charges).toLocaleString()} $
+                        <p style={{ fontSize: 'var(--senior-font-sm)', color: 'var(--senior-text-secondary)' }}>
+                          Revenus nets: {formatCurrencyQuebec(immobilierData.deuxiemeResidence.revenus - immobilierData.deuxiemeResidence.charges)}
                         </p>
                       </div>
                     </div>
@@ -394,76 +485,73 @@ const ImmobilierPage: React.FC = () => {
 
               {/* Onglet 3e propriété */}
               <TabsContent value="troisieme" className="mt-8">
-                <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+                <Card className="senior-card" style={{ background: 'var(--senior-bg-card)', border: '1px solid var(--senior-border)' }}>
                   <CardHeader>
-                    <CardTitle className="text-2xl text-purple-200 flex items-center gap-3">
-                      <TrendingUp className="w-8 h-8 text-purple-400" />
+                    <CardTitle className="flex items-center gap-3" style={{ fontSize: 'var(--senior-font-lg)', color: 'var(--senior-text-primary)' }}>
+                      <TrendingUp className="w-8 h-8" style={{ color: 'var(--senior-success)' }} />
                       {currentT.troisiemePropriete}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-purple-200">
+                    <div className="space-y-4">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.valeurActuelle}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.troisiemePropriete.valeur}
                           onChange={(e) => handleChange('troisiemePropriete', 'valeur', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-purple-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-purple-200">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.soldeHypotheque}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.troisiemePropriete.hypotheque}
                           onChange={(e) => handleChange('troisiemePropriete', 'hypotheque', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-purple-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-purple-200">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.revenus}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.troisiemePropriete.revenus}
                           onChange={(e) => handleChange('troisiemePropriete', 'revenus', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-purple-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-purple-200">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.charges}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.troisiemePropriete.charges}
                           onChange={(e) => handleChange('troisiemePropriete', 'charges', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-purple-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
                     </div>
 
                     {/* Résumé de l'équité */}
-                    <div className="bg-purple-500/20 p-6 rounded-lg border border-purple-400/30">
+                    <div className="p-6 rounded-lg border" style={{ background: 'rgba(81, 207, 102, 0.1)', borderColor: 'var(--senior-success)' }}>
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-purple-200 mb-2">
-                          {currentT.equite}: {equite3e.toLocaleString()} $
+                        <p className="font-bold mb-2" style={{ fontSize: 'var(--senior-font-lg)', color: 'var(--senior-text-primary)' }}>
+                          {currentT.equite}: {formatCurrencyQuebec(equite3e)}
                         </p>
-                        <p className="text-purple-300">
-                          Revenus nets: {(immobilierData.troisiemePropriete.revenus - immobilierData.troisiemePropriete.charges).toLocaleString()} $
+                        <p style={{ fontSize: 'var(--senior-font-sm)', color: 'var(--senior-text-secondary)' }}>
+                          Revenus nets: {formatCurrencyQuebec(immobilierData.troisiemePropriete.revenus - immobilierData.troisiemePropriete.charges)}
                         </p>
                       </div>
                     </div>
@@ -473,76 +561,73 @@ const ImmobilierPage: React.FC = () => {
 
               {/* Onglet 4e propriété */}
               <TabsContent value="quatrieme" className="mt-8">
-                <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+                <Card className="senior-card" style={{ background: 'var(--senior-bg-card)', border: '1px solid var(--senior-border)' }}>
                   <CardHeader>
-                    <CardTitle className="text-2xl text-emerald-200 flex items-center gap-3">
-                      <Mountain className="w-8 h-8 text-emerald-400" />
+                    <CardTitle className="flex items-center gap-3" style={{ fontSize: 'var(--senior-font-lg)', color: 'var(--senior-text-primary)' }}>
+                      <Mountain className="w-8 h-8" style={{ color: 'var(--senior-secondary-light)' }} />
                       {currentT.quatriemePropriete}
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-emerald-200">
+                    <div className="space-y-4">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.valeurActuelle}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.quatriemePropriete.valeur}
                           onChange={(e) => handleChange('quatriemePropriete', 'valeur', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-emerald-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-emerald-200">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.soldeHypotheque}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.quatriemePropriete.hypotheque}
                           onChange={(e) => handleChange('quatriemePropriete', 'hypotheque', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-emerald-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
-                    </div>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-emerald-200">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.revenus}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.quatriemePropriete.revenus}
                           onChange={(e) => handleChange('quatriemePropriete', 'revenus', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-emerald-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
-                      <div className="space-y-3">
-                        <Label className="text-lg font-semibold text-emerald-200">
+                      <div className="senior-form-row">
+                        <Label className="senior-form-label">
                           {currentT.charges}
                         </Label>
                         <Input
                           type="number"
                           value={immobilierData.quatriemePropriete.charges}
                           onChange={(e) => handleChange('quatriemePropriete', 'charges', e.target.value)}
-                          className="text-xl p-4 bg-white/20 border-white/30 text-white placeholder-emerald-200"
+                          className="senior-form-input"
                           placeholder="0"
                         />
                       </div>
                     </div>
 
                     {/* Résumé de l'équité */}
-                    <div className="bg-emerald-500/20 p-6 rounded-lg border border-emerald-400/30">
+                    <div className="p-6 rounded-lg border" style={{ background: 'rgba(177, 151, 252, 0.1)', borderColor: 'var(--senior-secondary-light)' }}>
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-emerald-200 mb-2">
-                          {currentT.equite}: {equite4e.toLocaleString()} $
+                        <p className="font-bold mb-2" style={{ fontSize: 'var(--senior-font-lg)', color: 'var(--senior-text-primary)' }}>
+                          {currentT.equite}: {formatCurrencyQuebec(equite4e)}
                         </p>
-                        <p className="text-emerald-300">
-                          Revenus nets: {(immobilierData.quatriemePropriete.revenus - immobilierData.quatriemePropriete.charges).toLocaleString()} $
+                        <p style={{ fontSize: 'var(--senior-font-sm)', color: 'var(--senior-text-secondary)' }}>
+                          Revenus nets: {formatCurrencyQuebec(immobilierData.quatriemePropriete.revenus - immobilierData.quatriemePropriete.charges)}
                         </p>
                       </div>
                     </div>

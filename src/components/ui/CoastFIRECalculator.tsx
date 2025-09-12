@@ -11,6 +11,51 @@ import { Button } from './button';
 import { Badge } from './badge';
 import { Alert, AlertDescription } from './alert';
 
+/* CSS pour disposition horizontale des formulaires */
+const inlineFormStyles = `
+.senior-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 16px;
+  min-height: 48px;
+}
+
+.senior-form-label {
+  font-size: 18px;
+  font-weight: 600;
+  color: #1a365d;
+  text-align: left;
+}
+
+.senior-form-input {
+  font-size: 18px;
+  min-height: 48px;
+  padding: 12px 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: white;
+}
+
+.senior-form-input:focus {
+  border-color: #4c6ef5;
+  box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.1);
+  outline: none;
+}
+
+@media (max-width: 768px) {
+  .senior-form-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .senior-form-label {
+    text-align: left;
+  }
+}
+`;
+
 interface CoastFIREInputs {
   currentAge: number;
   retirementAge: number;
@@ -29,6 +74,18 @@ interface CoastFIREResults {
 }
 
 export const CoastFIRECalculator: React.FC = () => {
+  // Injecter les styles CSS pour les formulaires horizontaux
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = inlineFormStyles;
+    document.head.appendChild(style);
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, []);
+
   const [inputs, setInputs] = useState<CoastFIREInputs>({
     currentAge: 30,
     retirementAge: 65,
@@ -122,8 +179,8 @@ export const CoastFIRECalculator: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div>
-                <label htmlFor="current-savings" className="block text-sm font-medium text-gray-700 mb-1">
+              <div className="senior-form-row">
+                <label htmlFor="current-savings" className="senior-form-label">
                   Épargne actuelle ($)
                 </label>
                 <input
@@ -131,14 +188,14 @@ export const CoastFIRECalculator: React.FC = () => {
                   type="number"
                   value={inputs.currentSavings}
                   onChange={(e) => setInputs({...inputs, currentSavings: parseFloat(e.target.value) || 0})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="senior-form-input"
                   placeholder="Ex: 50000"
                   title="Montant total de votre épargne actuelle"
                 />
               </div>
 
-              <div>
-                <label htmlFor="annual-expenses" className="block text-sm font-medium text-gray-700 mb-1">
+              <div className="senior-form-row">
+                <label htmlFor="annual-expenses" className="senior-form-label">
                   Dépenses annuelles à la retraite ($)
                 </label>
                 <input
@@ -146,14 +203,14 @@ export const CoastFIRECalculator: React.FC = () => {
                   type="number"
                   value={inputs.annualExpenses}
                   onChange={(e) => setInputs({...inputs, annualExpenses: parseFloat(e.target.value) || 0})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="senior-form-input"
                   placeholder="Ex: 40000"
                   title="Montant annuel nécessaire pour vos dépenses à la retraite"
                 />
               </div>
 
-              <div>
-                <label htmlFor="current-age" className="block text-sm font-medium text-gray-700 mb-1">
+              <div className="senior-form-row">
+                <label htmlFor="current-age" className="senior-form-label">
                   Âge actuel
                 </label>
                 <input
@@ -161,14 +218,14 @@ export const CoastFIRECalculator: React.FC = () => {
                   type="number"
                   value={inputs.currentAge}
                   onChange={(e) => setInputs({...inputs, currentAge: parseInt(e.target.value) || 0})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="senior-form-input"
                   placeholder="Ex: 30"
                   title="Votre âge actuel en années"
                 />
               </div>
 
-              <div>
-                <label htmlFor="retirement-age" className="block text-sm font-medium text-gray-700 mb-1">
+              <div className="senior-form-row">
+                <label htmlFor="retirement-age" className="senior-form-label">
                   Âge de retraite souhaité
                 </label>
                 <input
@@ -176,14 +233,14 @@ export const CoastFIRECalculator: React.FC = () => {
                   type="number"
                   value={inputs.retirementAge}
                   onChange={(e) => setInputs({...inputs, retirementAge: parseInt(e.target.value) || 0})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="senior-form-input"
                   placeholder="Ex: 65"
                   title="L'âge auquel vous souhaitez prendre votre retraite"
                 />
               </div>
 
-              <div>
-                <label htmlFor="expected-return" className="block text-sm font-medium text-gray-700 mb-1">
+              <div className="senior-form-row">
+                <label htmlFor="expected-return" className="senior-form-label">
                   Rendement annuel attendu (%)
                 </label>
                 <input
@@ -192,7 +249,7 @@ export const CoastFIRECalculator: React.FC = () => {
                   step="0.1"
                   value={inputs.expectedReturn}
                   onChange={(e) => setInputs({...inputs, expectedReturn: parseFloat(e.target.value) || 0})}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="senior-form-input"
                   placeholder="Ex: 7.0"
                   title="Rendement annuel moyen attendu de vos investissements"
                 />

@@ -1,5 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import '../../senior-unified-styles.css';
+
+/* CSS pour disposition 3 colonnes des dépenses */
+const expenseStyles = `
+.senior-expense-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  min-height: 48px;
+  font-size: 18px;
+}
+
+.senior-expense-category {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.senior-expense-icon {
+  font-size: 16px;
+  min-width: 20px;
+}
+
+.senior-expense-label {
+  font-weight: 500;
+  color: #1a365d;
+}
+
+.senior-expense-amount {
+  font-weight: 600;
+  color: #1a365d;
+  text-align: right;
+  min-width: 80px;
+}
+
+.senior-expense-percentage {
+  font-size: 16px;
+  color: #4a5568;
+  text-align: right;
+  min-width: 60px;
+}
+
+@media (max-width: 768px) {
+  .senior-expense-row {
+    grid-template-columns: 1fr auto auto;
+    gap: 12px;
+    padding: 16px 12px;
+  }
+}
+`;
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
 import { IncomeIntegrationService } from '@/services/IncomeIntegrationService';
@@ -8,9 +59,53 @@ import { checkFeatureAccess, getRequiredPlanForFeature, getContextualUpgradeMess
 import { PromoCodeService } from '@/services/promoCodeService';
 import { usePromoCode } from '@/hooks/usePromoCode';
 import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
 import DateInput from '@/components/ui/DateInput';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from '@/components/ui/badge';
 import MoneyInput from '@/components/ui/MoneyInput';
+import { 
+  Calendar,
+  DollarSign,
+  TrendingUp,
+  TrendingDown,
+  Plus,
+  Trash2,
+  Calculator,
+  AlertTriangle,
+  CheckCircle,
+  Edit3,
+  Home,
+  Zap,
+  Car,
+  ShoppingCart,
+  Utensils,
+  Gamepad2,
+  Heart,
+  PiggyBank,
+  Target,
+  BarChart3,
+  Clock,
+  Save,
+  Eye,
+  EyeOff,
+  ArrowRight
+} from 'lucide-react';
 import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
+import { SmartAlerts } from '@/components/ui/SmartAlerts';
+import { OnboardingWizard } from '@/components/ui/OnboardingWizard';
+import { LearningModule } from '@/components/ui/LearningModule';
+import { CoastFIRECalculator } from '@/components/ui/CoastFIRECalculator';
+import { EconomyTipsGuide } from '@/components/ui/EconomyTipsGuide';
+import { SeasonalWorkerBudget } from '@/components/ui/SeasonalWorkerBudget';
+import { ErrorPreventionService } from '@/services/ErrorPreventionService';
+import { OnboardingService } from '@/services/OnboardingService';
+import { GamificationService } from '@/services/GamificationService';
 
 // Types pour le budget
 interface ExpenseEntry {
@@ -45,6 +140,18 @@ interface BudgetData {
 }
 
 const Budget: React.FC = () => {
+  // Injecter les styles CSS pour les dépenses
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = expenseStyles;
+    document.head.appendChild(style);
+    return () => {
+      if (document.head.contains(style)) {
+        document.head.removeChild(style);
+      }
+    };
+  }, []);
+
   const { language } = useLanguage();
   const { userData, updateUserData } = useRetirementData();
   const { user } = useAuth();
@@ -72,14 +179,14 @@ const Budget: React.FC = () => {
   const [editingExpense, setEditingExpense] = useState<string | null>(null);
   const [showAddExpense, setShowAddExpense] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
-  const [selectedSection, setSelectedSection] = useState<string | null>(null);
 
-  // Catégories de dépenses avec icônes senior
+  // Catégories de dépenses avec icônes et couleurs
   const expenseCategories = [
     {
       value: 'logement',
-      label: 'Logement',
-      icon: '🏠',
+      label: isFrench ? 'Logement' : 'Housing',
+      icon: <Home className="w-4 h-4" />,
+      color: 'bg-blue-500',
       subcategories: [
         'Hypothèque/Loyer', 'Taxes municipales', 'Assurance habitation', 
         'Entretien', 'Réparations', 'Amélioration'
@@ -87,17 +194,19 @@ const Budget: React.FC = () => {
     },
     {
       value: 'services',
-      label: 'Services publics',
-      icon: '⚡',
+      label: isFrench ? 'Services publics' : 'Utilities',
+      icon: <Zap className="w-4 h-4" />,
+      color: 'bg-yellow-500',
       subcategories: [
         'Électricité', 'Gaz naturel', 'Eau', 'Internet', 'Téléphone', 
-        'Câble/Diffusion', 'Déneigement', 'Ordures'
+        'Câble/Streaming', 'Déneigement', 'Ordures'
       ]
     },
     {
       value: 'transport',
-      label: 'Transport',
-      icon: '🚗',
+      label: isFrench ? 'Transport' : 'Transportation',
+      icon: <Car className="w-4 h-4" />,
+      color: 'bg-green-500',
       subcategories: [
         'Paiement auto', 'Essence', 'Assurance auto', 'Entretien', 
         'Réparations', 'Immatriculation', 'Transport public', 'Stationnement'
@@ -105,16 +214,18 @@ const Budget: React.FC = () => {
     },
     {
       value: 'alimentation',
-      label: 'Alimentation',
-      icon: '🍽️',
+      label: isFrench ? 'Alimentation' : 'Food',
+      icon: <Utensils className="w-4 h-4" />,
+      color: 'bg-orange-500',
       subcategories: [
         'Épicerie', 'Restaurants', 'Livraison', 'Café', 'Alcool', 'Suppléments'
       ]
     },
     {
       value: 'sante',
-      label: 'Santé',
-      icon: '❤️',
+      label: isFrench ? 'Santé' : 'Health',
+      icon: <Heart className="w-4 h-4" />,
+      color: 'bg-red-500',
       subcategories: [
         'Assurance santé', 'Médicaments', 'Dentiste', 'Optométriste', 
         'Physiothérapie', 'Gym', 'Massothérapie'
@@ -122,25 +233,28 @@ const Budget: React.FC = () => {
     },
     {
       value: 'loisirs',
-      label: 'Loisirs',
-      icon: '🎯',
+      label: isFrench ? 'Loisirs' : 'Entertainment',
+      icon: <Gamepad2 className="w-4 h-4" />,
+      color: 'bg-purple-500',
       subcategories: [
-        'Sorties', 'Cinéma', 'Concerts', 'Voyages', 'Passe-temps', 
+        'Sorties', 'Cinéma', 'Concerts', 'Voyages', 'Hobbies', 
         'Livres', 'Jeux', 'Abonnements'
       ]
     },
     {
       value: 'epargne',
-      label: 'Épargne',
-      icon: '🐷',
+      label: isFrench ? 'Épargne' : 'Savings',
+      icon: <PiggyBank className="w-4 h-4" />,
+      color: 'bg-indigo-500',
       subcategories: [
         'REER', 'CELI', 'Épargne urgence', 'Placements', 'Objectifs', 'Retraite'
       ]
     },
     {
       value: 'divers',
-      label: 'Divers',
-      icon: '🛒',
+      label: isFrench ? 'Divers' : 'Miscellaneous',
+      icon: <ShoppingCart className="w-4 h-4" />,
+      color: 'bg-gray-500',
       subcategories: [
         'Vêtements', 'Cadeaux', 'Dons', 'Frais bancaires', 'Impôts', 
         'Assurance vie', 'Frais professionnels', 'Autres'
@@ -150,12 +264,12 @@ const Budget: React.FC = () => {
 
   // Fréquences de paiement
   const frequencies = [
-    { value: 'weekly', label: 'Chaque semaine', multiplier: 52 },
-    { value: 'biweekly', label: 'Aux 2 semaines', multiplier: 26 },
-    { value: 'monthly', label: 'Chaque mois', multiplier: 12 },
-    { value: 'quarterly', label: 'Aux 3 mois', multiplier: 4 },
-    { value: 'annually', label: 'Une fois par an', multiplier: 1 },
-    { value: 'seasonal', label: 'Selon la saison', multiplier: 1 }
+    { value: 'weekly', label: isFrench ? 'Hebdomadaire' : 'Weekly', multiplier: 52 },
+    { value: 'biweekly', label: isFrench ? 'Aux 2 semaines' : 'Bi-weekly', multiplier: 26 },
+    { value: 'monthly', label: isFrench ? 'Mensuel' : 'Monthly', multiplier: 12 },
+    { value: 'quarterly', label: isFrench ? 'Trimestriel' : 'Quarterly', multiplier: 4 },
+    { value: 'annually', label: isFrench ? 'Annuel' : 'Annual', multiplier: 1 },
+    { value: 'seasonal', label: isFrench ? 'Saisonnier' : 'Seasonal', multiplier: 1 }
   ];
 
   // Obtenir les revenus depuis le tableau unifié
@@ -259,9 +373,9 @@ const Budget: React.FC = () => {
 
   // Obtenir la couleur selon le montant (positif/négatif)
   const getAmountColor = (amount: number) => {
-    if (amount > 0) return 'senior-text-success';
-    if (amount < 0) return 'senior-text-error';
-    return 'senior-text-secondary';
+    if (amount > 0) return 'text-green-600';
+    if (amount < 0) return 'text-red-600';
+    return 'text-gray-600';
   };
 
   // Sauvegarder les données
@@ -295,47 +409,48 @@ const Budget: React.FC = () => {
   const monthlyExpenses = calculateMonthlyExpenses();
   const netCashFlow = calculateNetCashFlow();
 
-  // Si l'utilisateur n'a pas accès, afficher le message d'amélioration
+  // Si l'utilisateur n'a pas accès, afficher le message d'upgrade
   if (!hasAccess) {
     return (
-      <div className="senior-layout">
-        <div className="senior-card">
-          <div className="senior-card-header">
-            <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-              <span style={{ fontSize: '4rem' }}>🐷</span>
-            </div>
-            <h1 className="senior-card-title">Outil de budget personnel</h1>
-            <p style={{ color: 'var(--senior-text-secondary)', fontSize: '18px', textAlign: 'center', margin: '1rem 0' }}>
-              Cette fonctionnalité est réservée aux plans Professionnel et Expert.
-            </p>
-          </div>
-          
-          <div style={{ 
-            backgroundColor: 'var(--senior-bg-accent)', 
-            padding: '1.5rem', 
-            borderRadius: '8px',
-            border: '2px solid var(--senior-warning)',
-            margin: '2rem 0'
-          }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-              <span style={{ fontSize: '2rem' }}>⚠️</span>
-              <strong style={{ color: 'var(--senior-text-primary)', fontSize: '18px' }}>
-                Accès limité
-              </strong>
-            </div>
-            <p style={{ color: 'var(--senior-text-primary)', fontSize: '18px' }}>
-              {getContextualUpgradeMessage(userPlan, requiredPlan)}
-            </p>
-          </div>
+      <>
+        <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
+          <div className="container mx-auto px-4 py-12">
+            <div className="text-center mb-12">
+              <div className="flex justify-center mb-6">
+                <div className="bg-gradient-to-r from-orange-600 to-red-600 p-4 rounded-full shadow-lg">
+                  <PiggyBank className="h-12 w-12 text-white" />
+                </div>
+              </div>
+              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                {isFrench ? 'Module Budget' : 'Budget Module'}
+              </h1>
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
+                {isFrench 
+                  ? 'Cette fonctionnalité est réservée aux plans Professionnel et Expert.'
+                  : 'This feature is reserved for Professional and Expert plans.'
+                }
+              </p>
+              
+              <Alert className="max-w-2xl mx-auto mb-8 border-orange-200 bg-orange-50">
+                <AlertTriangle className="h-5 w-5 text-orange-600" />
+                <AlertDescription className="text-orange-800">
+                  <strong>
+                    {isFrench ? 'Accès restreint :' : 'Restricted access:'}
+                  </strong> {getContextualUpgradeMessage(userPlan, requiredPlan)}
+                </AlertDescription>
+              </Alert>
 
-          <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-            <button 
-              onClick={() => setShowUpgradeModal(true)}
-              className="senior-btn senior-btn-primary"
-              style={{ fontSize: '18px', padding: '1rem 2rem' }}
-            >
-              Améliorer mon compte maintenant
-            </button>
+              <div className="flex justify-center gap-4">
+                <Button 
+                  onClick={() => setShowUpgradeModal(true)}
+                  size="lg"
+                  className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-8 py-3 text-lg"
+                >
+                  {isFrench ? 'Mettre à niveau maintenant' : 'Upgrade now'}
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -347,583 +462,581 @@ const Budget: React.FC = () => {
           currentPlan={userPlan}
           subscriptionStartDate={user?.subscription?.startDate}
         />
-      </div>
+      </>
     );
   }
 
   return (
-    <div className="senior-layout">
-      {/* En-tête principal */}
-      <div className="senior-card">
-        <div className="senior-card-header" style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>💰</div>
-          <h1 className="senior-card-title" style={{ fontSize: '32px', color: 'var(--senior-primary)' }}>
-            Mon budget personnel
+    <div className="senior-layout min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-gray-900">
+      {/* Particules de fond */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 left-10 w-2 h-2 bg-blue-300 rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-indigo-300 rounded-full animate-bounce"></div>
+        <div className="absolute top-60 left-1/4 w-2 h-2 bg-purple-300 rounded-full animate-ping"></div>
+        <div className="absolute top-80 right-1/3 w-1 h-1 bg-cyan-300 rounded-full animate-pulse"></div>
+      </div>
+
+      <div className="container mx-auto px-6 py-8 relative z-10">
+
+        {/* En-tête spectaculaire */}
+        <div className="text-center mb-12">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent drop-shadow-2xl" style={{fontSize: '3.5rem'}}>
+            💰 {isFrench ? 'Mon budget intelligent' : 'My Smart Budget'}
           </h1>
-          <p style={{ 
-            color: 'var(--senior-text-secondary)', 
-            fontSize: '18px', 
-            maxWidth: '600px', 
-            margin: '1rem auto',
-            lineHeight: '1.6'
-          }}>
-            Gérez vos revenus et dépenses en toute simplicité avec notre outil facile à utiliser
+          <p className="text-xl md:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed" style={{fontSize: '1.375rem'}}>
+            {isFrench 
+              ? 'Gérez vos finances avec précision - revenus, dépenses, et prévisions saisonnières'
+              : 'Manage your finances with precision - income, expenses, and seasonal forecasts'
+            }
           </p>
         </div>
-      </div>
 
-      {/* Résumé financier */}
-      <div className="senior-financial-summary">
-        <h2 className="senior-financial-total" style={{ fontSize: '24px', marginBottom: '2rem', textAlign: 'center' }}>
-          Votre situation financière mensuelle
-        </h2>
-        
-        <div className="senior-financial-grid">
-          <div className="senior-financial-card" style={{ backgroundColor: 'var(--senior-success)' }}>
-            <div className="senior-financial-title" style={{ color: 'white' }}>
-              <span style={{ fontSize: '2rem' }}>💵</span>
-              <span style={{ fontSize: '20px', fontWeight: 'bold' }}>Revenus mensuels</span>
-            </div>
-            <div className="senior-financial-item" style={{ justifyContent: 'center' }}>
-              <strong style={{ fontSize: '28px', color: 'white' }}>
+        {/* Résumé financier */}
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          <Card className="bg-gradient-to-br from-green-100 to-emerald-100 border-2 border-green-200 shadow-lg">
+            <CardContent className="p-6 text-center">
+              <TrendingUp className="w-8 h-8 text-green-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-green-700" style={{fontSize: '1.5rem'}}>
                 {formatCurrency(incomeData.monthlyIncome)}
-              </strong>
-            </div>
-          </div>
+              </div>
+              <div className="text-lg text-green-600" style={{fontSize: '1.125rem'}}>
+                {isFrench ? 'Revenus mensuels' : 'Monthly Income'}
+              </div>
+            </CardContent>
+          </Card>
 
-          <div className="senior-financial-card" style={{ backgroundColor: 'var(--senior-error)' }}>
-            <div className="senior-financial-title" style={{ color: 'white' }}>
-              <span style={{ fontSize: '2rem' }}>💸</span>
-              <span style={{ fontSize: '20px', fontWeight: 'bold' }}>Dépenses mensuelles</span>
-            </div>
-            <div className="senior-financial-item" style={{ justifyContent: 'center' }}>
-              <strong style={{ fontSize: '28px', color: 'white' }}>
+          <Card className="bg-gradient-to-br from-red-100 to-pink-100 border-2 border-red-200 shadow-lg">
+            <CardContent className="p-6 text-center">
+              <TrendingDown className="w-8 h-8 text-red-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-red-700" style={{fontSize: '1.5rem'}}>
                 {formatCurrency(monthlyExpenses)}
-              </strong>
-            </div>
-          </div>
+              </div>
+              <div className="text-lg text-red-600" style={{fontSize: '1.125rem'}}>
+                {isFrench ? 'Dépenses mensuelles' : 'Monthly Expenses'}
+              </div>
+            </CardContent>
+          </Card>
 
-          <div className="senior-financial-card" style={{ 
-            backgroundColor: netCashFlow >= 0 ? 'var(--senior-success)' : 'var(--senior-error)' 
-          }}>
-            <div className="senior-financial-title" style={{ color: 'white' }}>
-              <span style={{ fontSize: '2rem' }}>📊</span>
-              <span style={{ fontSize: '20px', fontWeight: 'bold' }}>Argent restant</span>
-            </div>
-            <div className="senior-financial-item" style={{ justifyContent: 'center' }}>
-              <strong style={{ fontSize: '28px', color: 'white' }}>
+          <Card className="bg-gradient-to-br from-blue-100 to-indigo-100 border-2 border-blue-200 shadow-lg">
+            <CardContent className="p-6 text-center">
+              <Calculator className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+              <div className={`text-2xl font-bold ${getAmountColor(netCashFlow)}`}>
                 {formatCurrency(netCashFlow)}
-              </strong>
-            </div>
-          </div>
+              </div>
+              <div className="text-lg text-blue-600" style={{fontSize: '1.125rem'}}>
+                {isFrench ? 'Flux net mensuel' : 'Net Monthly Flow'}
+              </div>
+            </CardContent>
+          </Card>
 
-          <div className="senior-financial-card" style={{ backgroundColor: 'var(--senior-primary)' }}>
-            <div className="senior-financial-title" style={{ color: 'white' }}>
-              <span style={{ fontSize: '2rem' }}>🏦</span>
-              <span style={{ fontSize: '20px', fontWeight: 'bold' }}>Solde actuel</span>
-            </div>
-            <div className="senior-financial-item" style={{ justifyContent: 'center' }}>
-              <strong style={{ fontSize: '28px', color: 'white' }}>
+          <Card className="bg-gradient-to-br from-purple-100 to-violet-100 border-2 border-purple-200 shadow-lg">
+            <CardContent className="p-6 text-center">
+              <PiggyBank className="w-8 h-8 text-purple-600 mx-auto mb-2" />
+              <div className="text-2xl font-bold text-purple-700" style={{fontSize: '1.5rem'}}>
                 {formatCurrency(budgetData.currentBalance)}
-              </strong>
-            </div>
-          </div>
+              </div>
+              <div className="text-lg text-purple-600" style={{fontSize: '1.125rem'}}>
+                {isFrench ? 'Solde actuel' : 'Current Balance'}
+              </div>
+            </CardContent>
+          </Card>
         </div>
-      </div>
 
-      {/* Alerte budgétaire */}
-      {netCashFlow < 0 && (
-        <div style={{ 
-          backgroundColor: 'var(--senior-bg-accent)', 
-          padding: '1.5rem', 
-          borderRadius: '8px',
-          border: '2px solid var(--senior-error)',
-          margin: '2rem 0'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-            <span style={{ fontSize: '2rem' }}>⚠️</span>
-            <strong style={{ color: 'var(--senior-error)', fontSize: '20px' }}>
-              Attention - Budget en déficit
-            </strong>
-          </div>
-          <p style={{ color: 'var(--senior-text-primary)', fontSize: '18px', lineHeight: '1.6' }}>
-            Vos dépenses dépassent vos revenus de <strong>{formatCurrency(Math.abs(netCashFlow))}</strong> chaque mois. 
-            Il serait sage de réviser vos dépenses ou trouver des revenus supplémentaires.
-          </p>
-        </div>
-      )}
+        {/* Alertes budgétaires */}
+        {netCashFlow < 0 && (
+          <Alert className="border-red-300 bg-red-50 text-red-800 mb-8">
+            <AlertTriangle className="h-5 w-5 text-red-600" />
+            <AlertDescription>
+              <strong>{isFrench ? 'Attention :' : 'Warning:'}</strong> {
+                isFrench 
+                  ? `Votre flux de trésorerie est négatif de ${formatCurrency(Math.abs(netCashFlow))} par mois. Révisez vos dépenses ou augmentez vos revenus.`
+                  : `Your cash flow is negative by ${formatCurrency(Math.abs(netCashFlow))} per month. Review your expenses or increase your income.`
+              }
+            </AlertDescription>
+          </Alert>
+        )}
 
-      {/* Navigation principale */}
-      <nav className="senior-nav">
-        <h2 style={{ fontSize: '24px', textAlign: 'center', margin: '2rem 0', color: 'var(--senior-primary)' }}>
-          Choisissez une section
-        </h2>
-        <div className="senior-nav-grid">
-          <div className="senior-nav-item" onClick={() => setSelectedSection('expenses')} style={{ cursor: 'pointer' }}>
-            <div className="senior-nav-icon">💸</div>
-            <div className="senior-nav-content">
-              <h3 className="senior-nav-title">Mes dépenses</h3>
-              <p className="senior-nav-description">Ajouter et gérer toutes vos dépenses mensuelles</p>
-            </div>
-          </div>
-          
-          <div className="senior-nav-item" onClick={() => setSelectedSection('settings')} style={{ cursor: 'pointer' }}>
-            <div className="senior-nav-icon">⚙️</div>
-            <div className="senior-nav-content">
-              <h3 className="senior-nav-title">Mes informations</h3>
-              <p className="senior-nav-description">Mettre à jour votre solde bancaire et objectifs</p>
-            </div>
-          </div>
+        {/* Onglets principaux */}
+        <Tabs defaultValue="overview" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-7 bg-slate-100 backdrop-blur-sm border border-slate-300" style={{minHeight: '52px'}}>
+            <TabsTrigger value="overview" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Vue d\'ensemble' : 'Overview'}</TabsTrigger>
+            <TabsTrigger value="expenses" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Dépenses' : 'Expenses'}</TabsTrigger>
+            <TabsTrigger value="calendar" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Calendrier' : 'Calendar'}</TabsTrigger>
+            <TabsTrigger value="coastfire" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'CoastFIRE' : 'CoastFIRE'}</TabsTrigger>
+            <TabsTrigger value="tips" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? '99 Trucs' : '99 Tips'}</TabsTrigger>
+            <TabsTrigger value="learning" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Apprentissage' : 'Learning'}</TabsTrigger>
+            <TabsTrigger value="settings" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Paramètres' : 'Settings'}</TabsTrigger>
+          </TabsList>
 
-          <div className="senior-nav-item" onClick={() => setSelectedSection('overview')} style={{ cursor: 'pointer' }}>
-            <div className="senior-nav-icon">📊</div>
-            <div className="senior-nav-content">
-              <h3 className="senior-nav-title">Vue d'ensemble</h3>
-              <p className="senior-nav-description">Voir le résumé de vos finances et prévisions</p>
-            </div>
-          </div>
-        </div>
-      </nav>
+          {/* Vue d'ensemble */}
+          <TabsContent value="overview" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Graphique des catégories */}
+              <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold text-blue-700 flex items-center gap-2" style={{fontSize: '1.25rem'}}>
+                    <BarChart3 className="w-5 h-5" />
+                    {isFrench ? 'Dépenses par catégorie' : 'Expenses by Category'}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {expenseCategories.map(category => {
+                      const categoryExpenses = budgetData.expenses
+                        .filter(e => e.isActive && e.category === category.value)
+                        .reduce((sum, e) => {
+                          const freq = frequencies.find(f => f.value === e.frequency);
+                          if (!freq) return sum;
+                          return sum + (e.frequency === 'seasonal' ? e.amount / 12 : (e.amount * freq.multiplier) / 12);
+                        }, 0);
 
-      {/* État de section sélectionnée */}
-      {!selectedSection && (
-        <div className="senior-card" style={{ textAlign: 'center', margin: '2rem 0' }}>
-          <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>👆</div>
-          <p style={{ fontSize: '20px', color: 'var(--senior-text-secondary)' }}>
-            Cliquez sur une section ci-dessus pour commencer
-          </p>
-        </div>
-      )}
+                      const percentage = monthlyExpenses > 0 ? (categoryExpenses / monthlyExpenses) * 100 : 0;
 
-      {/* Vue d'ensemble */}
-      {selectedSection === 'overview' && (
-        <div className="senior-card">
-          <div className="senior-card-header">
-            <h2 className="senior-card-title">Vue d'ensemble de vos finances</h2>
-            <button 
-              onClick={() => setSelectedSection(null)}
-              className="senior-btn senior-btn-secondary"
-              style={{ fontSize: '16px', padding: '0.5rem 1rem' }}
-            >
-              ← Retour au menu
-            </button>
-          </div>
-          
-          <div style={{ display: 'grid', gap: '2rem', marginBottom: '2rem' }}>
-            {/* Dépenses par catégorie */}
-            <div style={{ backgroundColor: 'var(--senior-bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
-              <h3 style={{ fontSize: '20px', marginBottom: '1rem', color: 'var(--senior-primary)' }}>
-                📊 Vos dépenses par catégorie
-              </h3>
-              <div style={{ display: 'grid', gap: '1rem' }}>
-                {expenseCategories.map(category => {
-                  const categoryExpenses = budgetData.expenses
-                    .filter(e => e.isActive && e.category === category.value)
-                    .reduce((sum, e) => {
-                      const freq = frequencies.find(f => f.value === e.frequency);
-                      if (!freq) return sum;
-                      return sum + (e.frequency === 'seasonal' ? e.amount / 12 : (e.amount * freq.multiplier) / 12);
-                    }, 0);
+                      // Convertir l'icône colorée en emoji selon la catégorie
+                      const getIconByCategory = (categoryValue: string) => {
+                        switch(categoryValue) {
+                          case 'logement': return '🏠';
+                          case 'services': return '⚡';
+                          case 'transport': return '🚗';
+                          case 'alimentation': return '🍽️';
+                          case 'sante': return '❤️';
+                          case 'loisirs': return '🎮';
+                          case 'epargne': return '🐷';
+                          case 'divers': return '🛒';
+                          default: return '💰';
+                        }
+                      };
 
-                  const percentage = monthlyExpenses > 0 ? (categoryExpenses / monthlyExpenses) * 100 : 0;
-
-                  return (
-                    <div key={category.value} style={{ 
-                      display: 'flex', 
-                      justifyContent: 'space-between', 
-                      alignItems: 'center',
-                      padding: '1rem',
-                      backgroundColor: 'var(--senior-bg-card)',
-                      borderRadius: '6px'
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                        <span style={{ fontSize: '1.5rem' }}>{category.icon}</span>
-                        <span style={{ fontSize: '18px', color: 'var(--senior-text-primary)' }}>
-                          {category.label}
-                        </span>
-                      </div>
-                      <div style={{ textAlign: 'right' }}>
-                        <div style={{ fontSize: '18px', fontWeight: 'bold', color: 'var(--senior-text-primary)' }}>
-                          {formatCurrency(categoryExpenses)}
+                      return (
+                        <div key={category.value} className="senior-expense-row">
+                          <div className="senior-expense-category">
+                            <span className="senior-expense-icon">{getIconByCategory(category.value)}</span>
+                            <span className="senior-expense-label">{category.label}</span>
+                          </div>
+                          <div className="senior-expense-amount">
+                            {formatCurrency(categoryExpenses)}
+                          </div>
+                          <div className="senior-expense-percentage">
+                            {percentage.toFixed(1).replace('.', ',')} %
+                          </div>
                         </div>
-                        <div style={{ fontSize: '16px', color: 'var(--senior-text-secondary)' }}>
-                          {percentage.toFixed(1)}%
-                        </div>
-                      </div>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Prévisions */}
+              <Card className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold text-indigo-700 flex items-center gap-2">
+                    <Target className="w-5 h-5" />
+                    {isFrench ? 'Prévisions financières' : 'Financial Forecasts'}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-700">{isFrench ? 'Dans 3 mois' : 'In 3 months'}</span>
+                      <span className={`font-bold ${getAmountColor(budgetData.currentBalance + (netCashFlow * 3))}`}>
+                        {formatCurrency(budgetData.currentBalance + (netCashFlow * 3))}
+                      </span>
                     </div>
-                  );
-                })}
-              </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-700">{isFrench ? 'Dans 6 mois' : 'In 6 months'}</span>
+                      <span className={`font-bold ${getAmountColor(budgetData.currentBalance + (netCashFlow * 6))}`}>
+                        {formatCurrency(budgetData.currentBalance + (netCashFlow * 6))}
+                      </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <span className="text-gray-700">{isFrench ? 'Dans 1 an' : 'In 1 year'}</span>
+                      <span className={`font-bold ${getAmountColor(budgetData.currentBalance + (netCashFlow * 12))}`}>
+                        {formatCurrency(budgetData.currentBalance + (netCashFlow * 12))}
+                      </span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+
+          {/* Gestion des dépenses */}
+          <TabsContent value="expenses" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-blue-700">
+                {isFrench ? 'Gestion des dépenses' : 'Expense Management'}
+              </h2>
+              <Button
+                onClick={addExpense}
+                className="bg-gradient-to-r from-green-400 to-emerald-400 hover:from-green-500 hover:to-emerald-500"
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                {isFrench ? 'Ajouter une dépense' : 'Add Expense'}
+              </Button>
             </div>
 
-            {/* Prévisions */}
-            <div style={{ backgroundColor: 'var(--senior-bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
-              <h3 style={{ fontSize: '20px', marginBottom: '1rem', color: 'var(--senior-primary)' }}>
-                🔮 Prévisions de votre argent
-              </h3>
-              <div style={{ display: 'grid', gap: '1rem' }}>
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
-                  padding: '1rem',
-                  backgroundColor: 'var(--senior-bg-card)',
-                  borderRadius: '6px'
-                }}>
-                  <span style={{ fontSize: '18px', color: 'var(--senior-text-primary)' }}>Dans 3 mois</span>
-                  <strong style={{ fontSize: '20px' }} className={getAmountColor(budgetData.currentBalance + (netCashFlow * 3))}>
-                    {formatCurrency(budgetData.currentBalance + (netCashFlow * 3))}
-                  </strong>
-                </div>
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
-                  padding: '1rem',
-                  backgroundColor: 'var(--senior-bg-card)',
-                  borderRadius: '6px'
-                }}>
-                  <span style={{ fontSize: '18px', color: 'var(--senior-text-primary)' }}>Dans 6 mois</span>
-                  <strong style={{ fontSize: '20px' }} className={getAmountColor(budgetData.currentBalance + (netCashFlow * 6))}>
-                    {formatCurrency(budgetData.currentBalance + (netCashFlow * 6))}
-                  </strong>
-                </div>
-                <div style={{ 
-                  display: 'flex', 
-                  justifyContent: 'space-between', 
-                  alignItems: 'center',
-                  padding: '1rem',
-                  backgroundColor: 'var(--senior-bg-card)',
-                  borderRadius: '6px'
-                }}>
-                  <span style={{ fontSize: '18px', color: 'var(--senior-text-primary)' }}>Dans 1 an</span>
-                  <strong style={{ fontSize: '20px' }} className={getAmountColor(budgetData.currentBalance + (netCashFlow * 12))}>
-                    {formatCurrency(budgetData.currentBalance + (netCashFlow * 12))}
-                  </strong>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Gestion des dépenses */}
-      {selectedSection === 'expenses' && (
-        <div className="senior-card">
-          <div className="senior-card-header">
-            <h2 className="senior-card-title">Gérer vos dépenses mensuelles</h2>
-            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center', flexWrap: 'wrap' }}>
-              <button 
-                onClick={() => setSelectedSection(null)}
-                className="senior-btn senior-btn-secondary"
-                style={{ fontSize: '16px', padding: '0.5rem 1rem' }}
-              >
-                ← Retour au menu
-              </button>
-              <button
-                onClick={addExpense}
-                className="senior-btn senior-btn-primary"
-                style={{ fontSize: '18px', padding: '0.75rem 1.5rem' }}
-              >
-                ➕ Ajouter une dépense
-              </button>
-            </div>
-          </div>
-          
-          {budgetData.expenses.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '3rem 1rem' }}>
-              <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>📝</div>
-              <p style={{ fontSize: '20px', color: 'var(--senior-text-secondary)', marginBottom: '2rem' }}>
-                Vous n'avez pas encore ajouté de dépenses
-              </p>
-              <button
-                onClick={addExpense}
-                className="senior-btn senior-btn-primary"
-                style={{ fontSize: '18px', padding: '1rem 2rem' }}
-              >
-                Ajouter votre première dépense
-              </button>
-            </div>
-          ) : (
-            <div style={{ display: 'grid', gap: '1rem' }}>
+            {/* Liste des dépenses */}
+            <div className="space-y-4">
               {budgetData.expenses.map(expense => {
                 const category = expenseCategories.find(c => c.value === expense.category);
                 const isEditing = editingExpense === expense.id;
 
                 return (
-                  <div key={expense.id} className="senior-card" style={{ padding: '1.5rem' }}>
-                    {isEditing ? (
-                      // Mode édition avec formulaire horizontal
-                      <div style={{ display: 'grid', gap: '1rem' }}>
-                        <h3 style={{ fontSize: '20px', color: 'var(--senior-primary)', marginBottom: '1rem' }}>
-                          ✏️ Modifier cette dépense
-                        </h3>
-                        
-                        <div className="senior-form-field">
-                          <label className="senior-form-label">Type de dépense</label>
-                          <select
-                            value={expense.category}
-                            onChange={(e) => updateExpense(expense.id, { category: e.target.value as any })}
-                            className="senior-form-input"
-                            style={{ fontSize: '18px' }}
-                          >
-                            {expenseCategories.map(cat => (
-                              <option key={cat.value} value={cat.value}>
-                                {cat.icon} {cat.label}
-                              </option>
-                            ))}
-                          </select>
-                          <div className="senior-form-tooltip" title="Choisissez la catégorie qui correspond le mieux à cette dépense">
-                            ?
-                          </div>
+                  <Card key={expense.id} className="bg-gradient-to-r from-slate-50 to-slate-100 border-2 border-slate-200 shadow-lg">
+                    <CardContent className="p-4">
+                      <div className="grid grid-cols-12 gap-4 items-center">
+                        {/* Catégorie */}
+                        <div className="col-span-2">
+                          {isEditing ? (
+                            <Select
+                              value={expense.category}
+                              onValueChange={(value) => updateExpense(expense.id, { category: value as any })}
+                            >
+                              <SelectTrigger className="bg-white border-slate-300 text-gray-900">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent className="bg-white border-slate-300">
+                                {expenseCategories.map(cat => (
+                                  <SelectItem key={cat.value} value={cat.value}>
+                                    <div className="flex items-center gap-2">
+                                      {cat.icon}
+                                      {cat.label}
+                                    </div>
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          ) : (
+                            <div className="flex items-center gap-2">
+                              {category?.icon}
+                              <span className="text-lg text-gray-900">{category?.label}</span>
+                            </div>
+                          )}
                         </div>
 
-                        <div className="senior-form-field">
-                          <label className="senior-form-label">Description</label>
-                          <input
-                            type="text"
-                            value={expense.description}
-                            onChange={(e) => updateExpense(expense.id, { description: e.target.value })}
-                            className="senior-form-input"
-                            placeholder="Ex: Épicerie Metro"
-                            style={{ fontSize: '18px' }}
-                          />
-                          <div className="senior-form-tooltip" title="Donnez un nom simple et clair à cette dépense">
-                            ?
-                          </div>
-                        </div>
-
-                        <div className="senior-form-field">
-                          <label className="senior-form-label">Montant en dollars</label>
-                          <MoneyInput
-                            value={expense.amount}
-                            onChange={(value) => updateExpense(expense.id, { amount: value })}
-                            className="senior-form-input"
-                            placeholder="0"
-                            allowDecimals={true}
-                            style={{ fontSize: '18px' }}
-                          />
-                          <div className="senior-form-tooltip" title="Montant que vous payez à chaque fois">
-                            ?
-                          </div>
-                        </div>
-
-                        <div className="senior-form-field">
-                          <label className="senior-form-label">Fréquence de paiement</label>
-                          <select
-                            value={expense.frequency}
-                            onChange={(e) => updateExpense(expense.id, { frequency: e.target.value as any })}
-                            className="senior-form-input"
-                            style={{ fontSize: '18px' }}
-                          >
-                            {frequencies.map(freq => (
-                              <option key={freq.value} value={freq.value}>
-                                {freq.label}
-                              </option>
-                            ))}
-                          </select>
-                          <div className="senior-form-tooltip" title="À quelle fréquence payez-vous cette dépense?">
-                            ?
-                          </div>
-                        </div>
-
-                        <div style={{ display: 'flex', gap: '1rem', marginTop: '1.5rem' }}>
-                          <button
-                            onClick={() => setEditingExpense(null)}
-                            className="senior-btn senior-btn-primary"
-                            style={{ fontSize: '18px', padding: '0.75rem 1.5rem' }}
-                          >
-                            ✅ Sauvegarder
-                          </button>
-                          <button
-                            onClick={() => setEditingExpense(null)}
-                            className="senior-btn senior-btn-secondary"
-                            style={{ fontSize: '18px', padding: '0.75rem 1.5rem' }}
-                          >
-                            ❌ Annuler
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      // Mode affichage
-                      <div>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <span style={{ fontSize: '2rem' }}>{category?.icon}</span>
+                        {/* Description */}
+                        <div className="col-span-3">
+                          {isEditing ? (
+                            <Input
+                              value={expense.description}
+                              onChange={(e) => updateExpense(expense.id, { description: e.target.value })}
+                              className="bg-white border-slate-300 text-gray-900"
+                              placeholder={isFrench ? 'Description...' : 'Description...'}
+                            />
+                          ) : (
                             <div>
-                              <h3 style={{ fontSize: '20px', color: 'var(--senior-text-primary)', margin: 0 }}>
-                                {expense.description}
-                              </h3>
-                              <p style={{ fontSize: '18px', color: 'var(--senior-text-secondary)', margin: 0 }}>
-                                {category?.label}
-                              </p>
+                              <div className="text-lg font-medium text-gray-900">{expense.description}</div>
+                              <div className="text-base text-gray-600">{expense.subcategory}</div>
                             </div>
-                          </div>
-                          <div style={{ textAlign: 'right' }}>
-                            <div style={{ fontSize: '24px', fontWeight: 'bold', color: 'var(--senior-primary)' }}>
-                              {formatCurrency(expense.amount)}
-                            </div>
-                            <div style={{ fontSize: '18px', color: 'var(--senior-text-secondary)' }}>
-                              {frequencies.find(f => f.value === expense.frequency)?.label}
-                            </div>
-                          </div>
+                          )}
                         </div>
-                        
-                        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
-                          <button
-                            onClick={() => setEditingExpense(expense.id)}
-                            className="senior-btn senior-btn-secondary"
-                            style={{ fontSize: '16px', padding: '0.5rem 1rem' }}
-                          >
-                            ✏️ Modifier
-                          </button>
+
+                        {/* Montant */}
+                        <div className="col-span-2">
+                          {isEditing ? (
+                            <MoneyInput
+                              value={expense.amount}
+                              onChange={(value) => updateExpense(expense.id, { amount: value })}
+                              className="bg-white border-slate-300 text-gray-900"
+                              placeholder="0"
+                              allowDecimals={true}
+                            />
+                          ) : (
+                            <span className="text-lg font-medium text-gray-900">
+                              {formatCurrency(expense.amount)}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Fréquence */}
+                        <div className="col-span-2">
+                          {isEditing ? (
+                            <Select
+                              value={expense.frequency}
+                              onValueChange={(value) => updateExpense(expense.id, { frequency: value as any })}
+                            >
+                              <SelectTrigger className="bg-white border-slate-300 text-gray-900">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent className="bg-white border-slate-300">
+                                {frequencies.map(freq => (
+                                  <SelectItem key={freq.value} value={freq.value}>
+                                    {freq.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          ) : (
+                            <span className="text-lg text-gray-700">
+                              {frequencies.find(f => f.value === expense.frequency)?.label}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Date de paiement */}
+                        <div className="col-span-1">
+                          {isEditing ? (
+                            <Input
+                              type="number"
+                              value={expense.paymentDate || ''}
+                              onChange={(e) => updateExpense(expense.id, { paymentDate: Number(e.target.value) })}
+                              className="bg-white border-slate-300 text-gray-900"
+                              placeholder="1"
+                              min="1"
+                              max="31"
+                            />
+                          ) : (
+                            <span className="text-lg text-gray-700">
+                              {expense.paymentDate || '-'}
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Statut */}
+                        <div className="col-span-1">
                           <button
                             onClick={() => updateExpense(expense.id, { isActive: !expense.isActive })}
-                            className="senior-btn"
-                            style={{ 
-                              fontSize: '16px', 
-                              padding: '0.5rem 1rem',
-                              backgroundColor: expense.isActive ? 'var(--senior-success)' : 'var(--senior-secondary)',
-                              color: 'white'
-                            }}
+                            title={expense.isActive ? (isFrench ? 'Désactiver cette dépense' : 'Deactivate this expense') : (isFrench ? 'Activer cette dépense' : 'Activate this expense')}
+                            className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                              expense.isActive ? 'bg-green-400 text-white' : 'bg-gray-400 text-gray-100'
+                            }`}
                           >
-                            {expense.isActive ? '✅ Actif' : '⏸️ Inactif'}
+                            {expense.isActive ? <CheckCircle className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}
+                          </button>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="col-span-1 flex gap-1">
+                          <button
+                            onClick={() => setEditingExpense(isEditing ? null : expense.id)}
+                            title={isEditing ? (isFrench ? 'Arrêter l\'édition' : 'Stop editing') : (isFrench ? 'Modifier cette dépense' : 'Edit this expense')}
+                            className="p-2 text-blue-600 hover:text-blue-500 hover:bg-blue-50 rounded"
+                          >
+                            <Edit3 className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => removeExpense(expense.id)}
-                            className="senior-btn"
-                            style={{ 
-                              fontSize: '16px', 
-                              padding: '0.5rem 1rem',
-                              backgroundColor: 'var(--senior-error)',
-                              color: 'white'
-                            }}
+                            title={isFrench ? 'Supprimer cette dépense' : 'Delete this expense'}
+                            className="p-2 text-red-600 hover:text-red-500 hover:bg-red-50 rounded"
                           >
-                            🗑️ Supprimer
+                            <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
                       </div>
-                    )}
-                  </div>
+                    </CardContent>
+                  </Card>
                 );
               })}
             </div>
-          )}
-        </div>
-      )}
+          </TabsContent>
 
-      {/* Paramètres */}
-      {selectedSection === 'settings' && (
-        <div className="senior-card">
-          <div className="senior-card-header">
-            <h2 className="senior-card-title">Vos informations bancaires</h2>
-            <button 
-              onClick={() => setSelectedSection(null)}
-              className="senior-btn senior-btn-secondary"
-              style={{ fontSize: '16px', padding: '0.5rem 1rem' }}
-            >
-              ← Retour au menu
-            </button>
-          </div>
-          
-          <div style={{ display: 'grid', gap: '2rem' }}>
-            {/* Solde bancaire */}
-            <div style={{ backgroundColor: 'var(--senior-bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
-              <h3 style={{ fontSize: '20px', marginBottom: '1.5rem', color: 'var(--senior-primary)' }}>
-                🏦 Votre solde bancaire actuel
-              </h3>
-              
-              <div className="senior-form-field">
-                <label className="senior-form-label">Combien avez-vous dans votre compte</label>
-                <MoneyInput
-                  value={budgetData.currentBalance}
-                  onChange={(value) => setBudgetData(prev => ({ ...prev, currentBalance: value }))}
-                  className="senior-form-input"
-                  placeholder="0"
-                  allowDecimals={true}
-                  style={{ fontSize: '18px' }}
-                />
-                <div className="senior-form-tooltip" title="Le montant total d'argent dans votre compte bancaire principal">
-                  ?
-                </div>
-              </div>
-              
-              <div className="senior-form-field">
-                <label className="senior-form-label">À quelle date avez-vous vérifié ce montant</label>
-                <DateInput
-                  value={budgetData.balanceDate}
-                  onChange={(value) => setBudgetData(prev => ({ ...prev, balanceDate: value }))}
-                  className="senior-form-input"
-                  style={{ fontSize: '18px' }}
-                />
-                <div className="senior-form-tooltip" title="La date où vous avez confirmé ce solde bancaire">
-                  ?
-                </div>
+          {/* Calendrier des paiements */}
+          <TabsContent value="calendar" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-2xl font-bold text-blue-700">
+                {isFrench ? 'Calendrier des paiements' : 'Payment Calendar'}
+              </h2>
+              <div className="flex gap-4">
+                <Select value={selectedMonth.toString()} onValueChange={(value) => setSelectedMonth(Number(value))}>
+                  <SelectTrigger className="bg-white border-slate-300 text-gray-900 w-40" style={{fontSize: '1.125rem', minHeight: '48px'}}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border-slate-300">
+                    {Array.from({ length: 12 }, (_, i) => (
+                      <SelectItem key={i} value={i.toString()}>
+                        {new Date(2024, i, 1).toLocaleDateString(isFrench ? 'fr-CA' : 'en-CA', { month: 'long' })}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <Select value={selectedYear.toString()} onValueChange={(value) => setSelectedYear(Number(value))}>
+                  <SelectTrigger className="bg-white border-slate-300 text-gray-900 w-32" style={{fontSize: '1.125rem', minHeight: '48px'}}>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white border-slate-300">
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <SelectItem key={i} value={(new Date().getFullYear() + i).toString()}>
+                        {new Date().getFullYear() + i}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
             </div>
 
-            {/* Objectifs d'épargne */}
-            <div style={{ backgroundColor: 'var(--senior-bg-secondary)', padding: '1.5rem', borderRadius: '8px' }}>
-              <h3 style={{ fontSize: '20px', marginBottom: '1.5rem', color: 'var(--senior-primary)' }}>
-                🎯 Vos objectifs d'épargne
-              </h3>
-              
-              <div className="senior-form-field">
-                <label className="senior-form-label">Combien voulez-vous épargner chaque mois</label>
-                <MoneyInput
-                  value={budgetData.savingsGoal}
-                  onChange={(value) => setBudgetData(prev => ({ ...prev, savingsGoal: value }))}
-                  className="senior-form-input"
-                  placeholder="0"
-                  allowDecimals={true}
-                  style={{ fontSize: '18px' }}
-                />
-                <div className="senior-form-tooltip" title="Le montant que vous aimeriez mettre de côté chaque mois">
-                  ?
+            {/* Calendrier mensuel */}
+            <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-blue-700 flex items-center gap-2">
+                  <Calendar className="w-5 h-5" />
+                  {new Date(selectedYear, selectedMonth, 1).toLocaleDateString(isFrench ? 'fr-CA' : 'en-CA', { 
+                    month: 'long', 
+                    year: 'numeric' 
+                  })}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-7 gap-2 mb-4">
+                  {['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'].map(day => (
+                    <div key={day} className="text-center text-lg font-semibold text-gray-700 p-2">
+                      {day}
+                    </div>
+                  ))}
                 </div>
-              </div>
-              
-              <div className="senior-form-field">
-                <label className="senior-form-label">Objectif pour votre fonds d'urgence</label>
-                <MoneyInput
-                  value={budgetData.emergencyFund}
-                  onChange={(value) => setBudgetData(prev => ({ ...prev, emergencyFund: value }))}
-                  className="senior-form-input"
-                  placeholder="0"
-                  allowDecimals={true}
-                  style={{ fontSize: '18px' }}
-                />
-                <div className="senior-form-tooltip" title="Combien d'argent vous voulez avoir en réserve pour les urgences">
-                  ?
+                
+                <div className="grid grid-cols-7 gap-2">
+                  {Array.from({ length: 35 }, (_, i) => {
+                    const firstDay = new Date(selectedYear, selectedMonth, 1).getDay();
+                    const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
+                    const dayNumber = i - firstDay + 1;
+                    const isValidDay = dayNumber > 0 && dayNumber <= daysInMonth;
+                    
+                    const dayExpenses = budgetData.expenses.filter(expense => 
+                      expense.isActive && expense.paymentDate === dayNumber
+                    );
+                    
+                    return (
+                      <div key={i} className={`p-2 min-h-[80px] border border-slate-300 rounded ${
+                        isValidDay ? 'bg-slate-50' : 'bg-slate-100'
+                      }`}>
+                        {isValidDay && (
+                          <>
+                            <div className="text-lg font-medium text-gray-900 mb-1">{dayNumber}</div>
+                            {dayExpenses.map(expense => (
+                              <div key={expense.id} className="text-sm bg-blue-400 text-white px-1 py-0.5 rounded mb-1 truncate">
+                                {expense.description || expense.subcategory}
+                              </div>
+                            ))}
+                          </>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-      {/* Bouton de sauvegarde global */}
-      <div style={{ textAlign: 'center', margin: '3rem 0' }}>
-        <button
-          onClick={handleSave}
-          disabled={isSaving}
-          className="senior-btn senior-btn-primary"
-          style={{ 
-            fontSize: '20px', 
-            padding: '1rem 2rem',
-            minHeight: '60px',
-            minWidth: '200px'
-          }}
-        >
-          {isSaving ? '💾 Sauvegarde en cours...' : '💾 Sauvegarder mon budget'}
-        </button>
-        <p style={{ 
-          color: 'var(--senior-text-secondary)', 
-          fontSize: '18px', 
-          marginTop: '1rem' 
-        }}>
-          Votre budget sera sauvegardé en sécurité
-        </p>
+          {/* CoastFIRE Calculator */}
+          <TabsContent value="coastfire" className="space-y-6">
+            <CoastFIRECalculator />
+          </TabsContent>
+
+          {/* 99 Trucs pour économiser */}
+          <TabsContent value="tips" className="space-y-6">
+            <EconomyTipsGuide />
+          </TabsContent>
+
+          {/* Module d'apprentissage */}
+          <TabsContent value="learning" className="space-y-6">
+            <LearningModule 
+              moduleId="budget-basics"
+              onComplete={() => {
+                console.log('Module budget-basics complété');
+              }}
+              onClose={() => {
+                console.log('Module fermé');
+              }}
+            />
+          </TabsContent>
+
+          {/* Paramètres */}
+          <TabsContent value="settings" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Solde bancaire */}
+              <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold text-blue-700 flex items-center gap-2">
+                    <PiggyBank className="w-5 h-5" />
+                    {isFrench ? 'Solde bancaire' : 'Bank Balance'}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="senior-form-row">
+                    <Label className="senior-form-label">
+                      {isFrench ? 'Solde actuel' : 'Current Balance'}
+                    </Label>
+                    <MoneyInput
+                      value={budgetData.currentBalance}
+                      onChange={(value) => setBudgetData(prev => ({ ...prev, currentBalance: value }))}
+                      className="senior-form-input"
+                      placeholder="0"
+                      allowDecimals={true}
+                    />
+                  </div>
+                  <div className="senior-form-row">
+                    <Label className="senior-form-label">
+                      {isFrench ? 'Date du solde' : 'Balance Date'}
+                    </Label>
+                    <DateInput
+                      value={budgetData.balanceDate}
+                      onChange={(value) => setBudgetData(prev => ({ ...prev, balanceDate: value }))}
+                      className="senior-form-input"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Objectifs d'épargne */}
+              <Card className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold text-indigo-700 flex items-center gap-2">
+                    <Target className="w-5 h-5" />
+                    {isFrench ? 'Objectifs d\'épargne' : 'Savings Goals'}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="senior-form-row">
+                    <Label className="senior-form-label">
+                      {isFrench ? 'Objectif d\'épargne mensuel' : 'Monthly Savings Goal'}
+                    </Label>
+                    <MoneyInput
+                      value={budgetData.savingsGoal}
+                      onChange={(value) => setBudgetData(prev => ({ ...prev, savingsGoal: value }))}
+                      className="senior-form-input"
+                      placeholder="0"
+                      allowDecimals={true}
+                    />
+                  </div>
+                  <div className="senior-form-row">
+                    <Label className="senior-form-label">
+                      {isFrench ? 'Fonds d\'urgence cible' : 'Emergency Fund Target'}
+                    </Label>
+                    <MoneyInput
+                      value={budgetData.emergencyFund}
+                      onChange={(value) => setBudgetData(prev => ({ ...prev, emergencyFund: value }))}
+                      className="senior-form-input"
+                      placeholder="0"
+                      allowDecimals={true}
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </TabsContent>
+        </Tabs>
+
+        {/* Bouton de sauvegarde */}
+        <div className="text-center mt-12">
+          <Button
+            onClick={handleSave}
+            disabled={isSaving}
+            size="lg"
+            className="bg-gradient-to-r from-green-400 via-emerald-400 to-teal-500 hover:from-green-500 hover:via-emerald-500 hover:to-teal-600 text-white font-bold text-2xl py-6 px-12 shadow-lg transform hover:scale-105 transition-all duration-300 border-2 border-green-200 backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed" style={{fontSize: '1.5rem', minHeight: '64px'}}
+          >
+            <Save className="w-8 h-8 mr-4 animate-pulse" />
+            {isSaving 
+              ? (isFrench ? '💾 SAUVEGARDE...' : '💾 SAVING...')
+              : (isFrench ? '💾 SAUVEGARDER BUDGET' : '💾 SAVE BUDGET')
+            }
+          </Button>
+          <p className="text-gray-700 mt-4 text-lg" style={{fontSize: '1.125rem'}}>
+            {isFrench 
+              ? '✨ Votre budget intelligent est sécurisé!'
+              : '✨ Your smart budget is secure!'
+            }
+          </p>
+        </div>
       </div>
     </div>
   );

@@ -1,0 +1,26 @@
+{
+  "safety_rules": {
+    "preserve_code_quotes": true,
+    "english_text_untouched": true,
+    "french_display_only": true,
+    "exclude_system_files": true
+  },
+  "scope_identifiers": {
+    "french_content": [
+      "{isFrench && \"",
+      "label=\"[français]",
+      "title=\"[français]",
+      "<span>[français]</span>"
+    ]
+  },
+  "forbidden_modifications": [
+    "className=\"",
+    "import \"",
+    "export \"",
+    "const \"",
+    "function \"",
+    "interface \"",
+    "style={{",
+    "\"use strict\""
+  ]
+}
