@@ -525,7 +525,7 @@ GARDEZ CE DOCUMENT EN SÉCURITÉ
     };
     
     // Fonction pour ajouter un titre de section
-    const addSectionTitle = (title: string) => {
+    const addSectionTitle = async (title: string) => {
       yPosition += 5;
       if (yPosition > pageHeight - margins.bottom - 10) {
         doc.addPage();
@@ -612,7 +612,7 @@ GARDEZ CE DOCUMENT EN SÉCURITÉ
     
     let yPos = startY + 30;
     
-    addSectionTitle('INFORMATIONS PERSONNELLES');
+    await addSectionTitle('INFORMATIONS PERSONNELLES');
     addText(`Nom complet : ${data.nom}`);
     addText(`Date de naissance : ${data.dateNaissance}`);
     addText(`NAS : ${data.nas}`);
@@ -621,7 +621,7 @@ GARDEZ CE DOCUMENT EN SÉCURITÉ
     
     addSeparator();
     
-    addSectionTitle('INFORMATIONS MÉDICALES CRITIQUES');
+    await addSectionTitle('INFORMATIONS MÉDICALES CRITIQUES');
     addText(`Allergies : ${data.allergies || 'Aucune connue'}`);
     addText(`Conditions médicales : ${data.conditionsMedicales || 'Aucune'}`);
     addText(`Groupe sanguin : ${data.groupeSanguin || 'Non spécifié'}`);
@@ -635,7 +635,7 @@ GARDEZ CE DOCUMENT EN SÉCURITÉ
     
     addSeparator();
     
-    addSectionTitle('CONTACTS D\'URGENCE');
+    await addSectionTitle('CONTACTS D\'URGENCE');
     if (data.contactsUrgence.length > 0) {
       data.contactsUrgence.forEach(contact => {
         addText(`${contact.nom} (${contact.relation})`, 10, true);
@@ -668,7 +668,7 @@ GARDEZ CE DOCUMENT EN SÉCURITÉ
     
     let yPos = startY + 30;
     
-    addSectionTitle('QUI CONTACTER EN URGENCE');
+    await addSectionTitle('QUI CONTACTER EN URGENCE');
     
     const urgentContacts = data.contactsUrgence.slice(0, 3);
     if (urgentContacts.length > 0) {
@@ -685,7 +685,7 @@ GARDEZ CE DOCUMENT EN SÉCURITÉ
     
     addSeparator();
     
-    addSectionTitle('NOTRE ADRESSE');
+    await addSectionTitle('NOTRE ADRESSE');
     doc.setFontSize(12);
     addText(data.adresse || 'Non spécifiée');
   };
@@ -706,7 +706,7 @@ GARDEZ CE DOCUMENT EN SÉCURITÉ
     doc.setFont('helvetica', 'normal');
     doc.text('DOCUMENT CONFIDENTIEL', doc.internal.pageSize.getWidth() / 2, startY + 7, { align: 'center' });
     
-    addSectionTitle('IDENTIFICATION DU CLIENT');
+    await addSectionTitle('IDENTIFICATION DU CLIENT');
     addText(`Nom complet : ${data.nom}`);
     addText(`Date de naissance : ${data.dateNaissance}`);
     addText(`Numéro d'assurance sociale : ${data.nas}`);
@@ -730,7 +730,7 @@ GARDEZ CE DOCUMENT EN SÉCURITÉ
     doc.text('STRICTEMENT CONFIDENTIEL', doc.internal.pageSize.getWidth() / 2, startY + 7, { align: 'center' });
     doc.setTextColor(0, 0, 0);
     
-    addSectionTitle('IDENTIFICATION');
+    await addSectionTitle('IDENTIFICATION');
     addText(`Nom : ${data.nom}`);
     addText(`Date de naissance : ${data.dateNaissance}`);
     addText(`NAS : ${data.nas}`);
@@ -751,7 +751,7 @@ GARDEZ CE DOCUMENT EN SÉCURITÉ
     doc.setFontSize(10);
     doc.text(`Date : ${new Date().toLocaleDateString('fr-CA')}`, doc.internal.pageSize.getWidth() / 2, startY + 7, { align: 'center' });
     
-    addSectionTitle('PROFIL PERSONNEL');
+    await addSectionTitle('PROFIL PERSONNEL');
     addText(`Nom : ${data.nom}`);
     addText(`Date de naissance : ${data.dateNaissance}`);
     addText(`Adresse : ${data.adresse}`);

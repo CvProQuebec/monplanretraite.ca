@@ -1,0 +1,113 @@
+8:48:35 PM: Netlify Build                                                 
+8:48:35 PM: ────────────────────────────────────────────────────────────────
+8:48:35 PM: ​
+8:48:35 PM: ❯ Version
+8:48:35 PM:   @netlify/build 35.1.6
+8:48:35 PM: ​
+8:48:35 PM: ❯ Flags
+8:48:35 PM:   accountId: 68278deb56b20055692ab60e
+8:48:35 PM:   baseRelDir: true
+8:48:35 PM:   buildId: 68c4bf49bb556e0008a8ae37
+8:48:35 PM:   deployId: 68c4bf49bb556e0008a8ae39
+8:48:35 PM: ​
+8:48:35 PM: ❯ Current directory
+8:48:35 PM:   /opt/build/repo
+8:48:35 PM: ​
+8:48:35 PM: ❯ Config file
+8:48:35 PM:   No config file was defined: using default values.
+8:48:35 PM: ​
+8:48:35 PM: ❯ Context
+8:48:35 PM:   production
+8:48:35 PM: ​
+8:48:35 PM: Build command from Netlify app                                
+8:48:35 PM: ────────────────────────────────────────────────────────────────
+8:48:35 PM: ​
+8:48:35 PM: $ npm run build
+8:48:35 PM: > monplanretraite.ca@1.0.0 build
+8:48:35 PM: > tsc && vite build
+8:48:35 PM: vite v7.1.2 building for production...
+8:48:35 PM: transforming...
+8:48:38 PM: Failed during stage 'building site': Build script returned non-zero exit code: 2 (https://ntl.fyi/exit-code-2)
+8:48:38 PM: ✓ 27 modules transformed.
+8:48:38 PM: ✗ Build failed in 2.59s
+8:48:38 PM: error during build:
+8:48:38 PM: [vite:esbuild] Transform failed with 1 error:
+8:48:38 PM: /opt/build/repo/src/pages/PlanificationUrgence.tsx:532:8: ERROR: "await" can only be used inside an "async" function
+8:48:38 PM: file: /opt/build/repo/src/pages/PlanificationUrgence.tsx:532:8
+8:48:38 PM: 
+8:48:38 PM: "await" can only be used inside an "async" function
+8:48:38 PM: 530 |        if (yPosition > pageHeight - margins.bottom - 10) {
+8:48:38 PM: 531 |          doc.addPage();
+8:48:38 PM: 532 |          await addLogoToPDF(doc, 20, 10, 50, 15);
+8:48:38 PM:     |          ^
+8:48:38 PM: 533 |          yPosition = margins.top;
+8:48:38 PM: 534 |        }
+8:48:38 PM: 
+8:48:38 PM:     at failureErrorWithLog (/opt/build/repo/node_modules/esbuild/lib/main.js:1467:15)
+8:48:38 PM:     at /opt/build/repo/node_modules/esbuild/lib/main.js:736:50
+8:48:38 PM:     at responseCallbacks.<computed> (/opt/build/repo/node_modules/esbuild/lib/main.js:603:9)
+8:48:38 PM:     at handleIncomingPacket (/opt/build/repo/node_modules/esbuild/lib/main.js:658:12)
+8:48:38 PM:     at Socket.readFromStdout (/opt/build/repo/node_modules/esbuild/lib/main.js:581:7)
+8:48:38 PM:     at Socket.emit (node:events:519:28)
+8:48:38 PM:     at addChunk (node:internal/streams/readable:561:12)
+8:48:38 PM:     at readableAddChunkPushByteMode (node:internal/streams/readable:512:3)
+8:48:38 PM:     at Readable.push (node:internal/streams/readable:392:5)
+8:48:38 PM:     at Pipe.onStreamRead (node:internal/stream_base_commons:189:23)
+8:48:38 PM: ​
+8:48:38 PM: "build.command" failed                                        
+8:48:38 PM: ────────────────────────────────────────────────────────────────
+8:48:38 PM: ​
+8:48:38 PM:   Error message
+8:48:38 PM:   Command failed with exit code 1: npm run build (https://ntl.fyi/exit-code-1)
+8:48:38 PM: ​
+8:48:38 PM:   Error location
+8:48:38 PM:   In Build command from Netlify app:
+8:48:38 PM:   npm run build
+8:48:38 PM: ​
+8:48:38 PM:   Resolved config
+8:48:38 PM:   build:
+8:48:38 PM:     command: npm run build
+8:48:38 PM:     commandOrigin: ui
+8:48:38 PM:     environment:
+8:48:38 PM:       - VITE_FIREBASE_API_KEY
+8:48:38 PM:       - VITE_FIREBASE_APP_ID
+8:48:38 PM:       - VITE_FIREBASE_AUTH_DOMAIN
+8:48:38 PM:       - VITE_FIREBASE_MESSAGING_SENDER_ID
+8:48:38 PM:       - VITE_FIREBASE_PROJECT_ID
+8:48:38 PM:       - VITE_FIREBASE_STORAGE_BUCKET
+8:48:38 PM:     publish: /opt/build/repo/dist
+8:48:38 PM:     publishOrigin: ui
+8:48:38 PM:   redirects:
+8:48:38 PM:     - from: /*
+      status: 200
+      to: /index.html
+    - from: /api/*
+      status: 200
+      to: /.netlify/functions/:splat
+    - from: /submit-potentiel
+      status: 200
+      to: /.netlify/functions/submit-potentiel
+    - from: /send-nda
+      status: 200
+      to: /.netlify/functions/send-nda
+    - from: /generate-prospects
+      status: 200
+      to: /.netlify/functions/generate-prospects
+    - from: /admin-auth
+      status: 200
+      to: /.netlify/functions/admin-auth
+    - from: /check-nda-status
+      status: 200
+      to: /.netlify/functions/check-nda-status
+    - from: /validate-env
+      status: 200
+      to: /.netlify/functions/validate-env
+    - from: /telegram-alert
+      status: 200
+      to: /.netlify/functions/telegramAlert
+    - from: /security-email
+      status: 200
+      to: /.netlify/functions/security-email
+8:48:38 PM: Build failed due to a user error: Build script returned non-zero exit code: 2
+8:48:38 PM: Failing build: Failed to build site
+8:48:39 PM: Finished processing build request in 19.153s
