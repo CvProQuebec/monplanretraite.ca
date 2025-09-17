@@ -1147,7 +1147,7 @@ const Budget: React.FC = () => {
           {/* Module d'apprentissage */}
           <TabsContent value="learning" className="space-y-6">
             <LearningModule 
-              moduleId="budget-basics"
+              moduleId="budget-fundamentals"
               onComplete={() => {
                 console.log('Module budget-basics complété');
               }}
