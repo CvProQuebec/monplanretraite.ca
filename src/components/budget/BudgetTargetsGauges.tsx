@@ -69,38 +69,36 @@ const Row: React.FC<{
 
   return (
     <div
-      className="flex items-center justify-between gap-2 p-2 rounded border bg-white"
+      className="grid grid-cols-12 gap-3 p-3 rounded border bg-white items-center"
       style={{ borderLeft: `4px solid ${color}` }}
       aria-label={label}
     >
-      <div className="min-w-[110px] font-medium text-gray-800 truncate">{label}</div>
+      <div className="col-span-3 font-medium text-gray-800 truncate">{label}</div>
 
-      <div className="flex items-center gap-3 text-sm">
-        <div className="flex items-center gap-1">
-          <span className="text-slate-500">{L.target}</span>
-          <Input
-            type="number"
-            min={0}
-            max={100}
-            value={Math.round(targetPct)}
-            onChange={(e) => onTargetChange(clampPct(parseFloat(e.target.value)))}
-            className="w-16 h-8 bg-white border-slate-300 text-gray-900 px-2 py-1"
-          />
-        </div>
+      <div className="col-span-3 flex items-center gap-2 text-sm">
+        <span className="text-slate-500">{L.target}</span>
+        <Input
+          type="number"
+          min={0}
+          max={100}
+          value={Math.round(targetPct)}
+          onChange={(e) => onTargetChange(clampPct(parseFloat(e.target.value)))}
+          className="w-16 h-8 bg-white border-slate-300 text-gray-900 px-2 py-1"
+        />
+      </div>
 
-        <div className="flex items-center gap-1">
-          <span className="text-slate-500">{L.dPct}</span>
-          <span className={`font-semibold ${deltaPct >= 0 ? 'text-amber-700' : 'text-green-700'}`}>
-            {formatPercentLocale(deltaPct, language)}
-          </span>
-        </div>
+      <div className="col-span-3 flex items-center gap-2 text-sm">
+        <span className="text-slate-500">{L.dPct}</span>
+        <span className={`font-semibold ${deltaPct >= 0 ? 'text-amber-700' : 'text-green-700'}`}>
+          {formatPercentLocale(deltaPct, language)}
+        </span>
+      </div>
 
-        <div className="flex items-center gap-1">
-          <span className="text-slate-500">{L.dAmt}</span>
-          <span className={`font-semibold ${deltaAmount >= 0 ? 'text-amber-700' : 'text-green-700'}`}>
-            {formatCurrencyLocale(deltaAmount, language)}
-          </span>
-        </div>
+      <div className="col-span-3 flex items-center justify-end gap-2 text-sm">
+        <span className="text-slate-500">{L.dAmt}</span>
+        <span className={`font-semibold ${deltaAmount >= 0 ? 'text-amber-700' : 'text-green-700'}`}>
+          {formatCurrencyLocale(deltaAmount, language)}
+        </span>
       </div>
     </div>
   );
