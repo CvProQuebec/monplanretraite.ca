@@ -1,5 +1,5 @@
 // src/features/retirement/sections/CashflowSection.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import SeniorsFriendlyInput from '@/components/forms/SeniorsFriendlyInput';
 import { Label } from '@/components/ui/label';
@@ -234,6 +234,18 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
   const { language } = useLanguage();
   const t = translations[language];
   const [activeTab, setActiveTab] = useState('depenses');
+  // Mode compact pour réduire le scroll et faciliter la navigation (seniors)
+  const [compactMode, setCompactMode] = useState(true);
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('cashflow-compact-mode');
+      if (saved != null) setCompactMode(saved === '1');
+    } catch {}
+  }, []);
+  const toggleCompact = (next: boolean) => {
+    setCompactMode(next);
+    try { localStorage.setItem('cashflow-compact-mode', next ? '1' : '0'); } catch {}
+  };
 
   const handleChange = (field: string, value: any) => {
     onUpdate('cashflow', { [field]: value });
@@ -420,10 +432,107 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                  {language === 'fr' ? 'Optimisation' : 'Optimization'}
                </TabsTrigger>
              </TabsList>
+             {/* Barre d'options rapide (mode compact) */}
+             <div className="flex items-center justify-end mt-2">
+               <label className="flex items-center gap-2 text-sm">
+                 <input
+                   type="checkbox"
+                   className="w-4 h-4"
+                   checked={compactMode}
+                   onChange={(e) => toggleCompact(e.target.checked)}
+                   aria-label={language === 'fr' ? 'Mode compact' : 'Compact mode'}
+                 />
+                 {language === 'fr' ? 'Mode compact (réduit le défilement)' : 'Compact mode (reduced scrolling)'}
+               </label>
+             </div>
 
             {/* Onglet Dépenses */}
             <TabsContent value="depenses" className="space-y-6 mt-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Vue compacte: liste dense sur une page, moins de scroll */}
+              {compactMode && (
+                <div className="space-y-3">
+                  {/* Résumé compact */}
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                    <div className="bg-slate-50 border rounded p-2 text-center">
+                      <div className="text-xs text-slate-600">{language === 'fr' ? 'Revenus mensuels' : 'Monthly income'}</div>
+                      <div className="font-semibold text-slate-800">{formatCurrency(revenusMensuels)}</div>
+                    </div>
+                    <div className="bg-slate-50 border rounded p-2 text-center">
+                      <div className="text-xs text-slate-600">{language === 'fr' ? 'Dépenses mensuelles' : 'Monthly expenses'}</div>
+                      <div className="font-semibold text-rose-700">{formatCurrency(totalDepenses)}</div>
+                    </div>
+                    <div className="bg-slate-50 border rounded p-2 text-center">
+                      <div className="text-xs text-slate-600">{language === 'fr' ? 'Surplus/Déficit' : 'Surplus/Deficit'}</div>
+                      <div className={`font-semibold ${surplusDeficit >= 0 ? 'text-emerald-700' : 'text-orange-700'}`}>
+                        {surplusDeficit >= 0 ? '+' : ''}{formatCurrency(surplusDeficit)}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* En-tête colonnes compactes */}
+                  <div className="hidden md:grid grid-cols-12 gap-2 py-2 border-y bg-white sticky top-0 z-10 text-xs text-slate-600">
+                    <div className="col-span-6">{language === 'fr' ? 'Catégorie' : 'Category'}</div>
+                    <div className="col-span-3">{language === 'fr' ? 'Montant' : 'Amount'}</div>
+                    <div className="col-span-3">{language === 'fr' ? 'Ventiler' : 'Breakdown'}</div>
+                  </div>
+
+                  {/* Lignes compactes par catégorie */}
+                  {[
+                    { key: 'logement', label: language === 'fr' ? 'Logement (loyer/hypothèque)' : 'Housing (rent/mortgage)', icon: <Home className="w-4 h-4 text-red-500" />, breakdownKey: 'logementBreakdown', cats: 'logement' },
+                    { key: 'servicesPublics', label: language === 'fr' ? 'Services publics' : 'Utilities', icon: <Zap className="w-4 h-4 text-red-500" />, breakdownKey: 'servicesPublicsBreakdown', cats: 'servicesPublics' },
+                    { key: 'assurances', label: language === 'fr' ? 'Assurances' : 'Insurance', icon: <Shield className="w-4 h-4 text-red-500" />, breakdownKey: 'assurancesBreakdown', cats: 'assurances' },
+                    { key: 'alimentation', label: language === 'fr' ? 'Alimentation' : 'Food', icon: <ShoppingCart className="w-4 h-4 text-red-500" />, breakdownKey: null, cats: null },
+                    { key: 'transport', label: language === 'fr' ? 'Transport' : 'Transport', icon: <Car className="w-4 h-4 text-red-500" />, breakdownKey: 'transportBreakdown', cats: 'transport' },
+                    { key: 'sante', label: language === 'fr' ? 'Santé' : 'Health', icon: <Heart className="w-4 h-4 text-red-500" />, breakdownKey: 'santeBreakdown', cats: 'sante' },
+                    { key: 'telecom', label: language === 'fr' ? 'Télécommunications' : 'Telecommunications', icon: <Phone className="w-4 h-4 text-orange-500" />, breakdownKey: 'telecomBreakdown', cats: 'telecom' },
+                    { key: 'loisirs', label: language === 'fr' ? 'Loisirs' : 'Leisure', icon: <Gamepad2 className="w-4 h-4 text-orange-500" />, breakdownKey: null, cats: null },
+                    { key: 'depensesSaisonnieres', label: language === 'fr' ? 'Dépenses saisonnières' : 'Seasonal expenses', icon: <Calendar className="w-4 h-4 text-orange-500" />, breakdownKey: null, cats: null }
+                  ].map((row) => {
+                    const amount = (data.cashflow as any)[row.key] || 0;
+                    const breakdown = row.breakdownKey ? (data.cashflow as any)[row.breakdownKey] || {} : {};
+                    return (
+                      <div key={row.key} className="grid grid-cols-12 gap-2 items-center p-2 bg-gray-50 rounded border">
+                        <div className="col-span-6 flex items-center gap-2">
+                          <span>{row.icon}</span>
+                          <span className="text-sm text-gray-900">{row.label}</span>
+                        </div>
+                        <div className="col-span-3">
+                          <SeniorsFriendlyInput
+                            type="number"
+                            value={amount || ''}
+                            onChange={(e) => handleChange(row.key, parseFloat((e.target.value || '0').replace(',', '.')) || 0)}
+                            placeholder="0"
+                            className="text-lg font-semibold bg-white text-gray-900 border-2 border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded"
+                          />
+                        </div>
+                        <div className="col-span-3">
+                          {row.breakdownKey && row.cats ? (
+                            <ExpenseBreakdown
+                              title={row.label}
+                              total={amount}
+                              breakdown={breakdown}
+                              onUpdate={(bd, newTotal) => handleBreakdownUpdate(row.key, bd, newTotal)}
+                              categories={
+                                row.cats === 'logement' ? logementCategories :
+                                row.cats === 'servicesPublics' ? servicesPublicsCategories :
+                                row.cats === 'assurances' ? assurancesCategories :
+                                row.cats === 'transport' ? transportCategories :
+                                row.cats === 'sante' ? santeCategories :
+                                row.cats === 'telecom' ? telecomCategories : []
+                              }
+                            />
+                          ) : (
+                            <span className="text-xs text-slate-500">{language === 'fr' ? '—' : '—'}</span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              {/* Vue détaillée existante (masquée en mode compact) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6" style={{ display: compactMode ? 'none' : 'grid' }}>
                 {/* Dépenses essentielles */}
                 <Card className="cashflow-card-enhanced border-l-4 border-l-red-500">
                   <CardHeader>

@@ -85,6 +85,20 @@ export const IncomeDeductionsForm: React.FC<Props> = ({ language, value, onChang
     return netMonthly;
   }, [value.grossIncome, value.deductions, value.grossFrequency]);
 
+  // Figures mensuelles pour résumé compact (brut/déductions) afin de limiter le scroll
+  const monthlyGross = useMemo(() => {
+    const period = value.grossFrequency ?? 'monthly';
+    const factor = freqFactor(period);
+    return (value.grossIncome ?? 0) * factor;
+  }, [value.grossIncome, value.grossFrequency]);
+
+  const monthlyDeductions = useMemo(() => {
+    const period = value.grossFrequency ?? 'monthly';
+    const factor = freqFactor(period);
+    const totalDeductionsPeriod = (value.deductions ?? []).reduce((s, d) => s + (d.amount || 0), 0);
+    return totalDeductionsPeriod * factor;
+  }, [value.deductions, value.grossFrequency]);
+
   const update = (patch: Partial<BudgetSettings>) => {
     const next: BudgetSettings = {
       ...value,
@@ -144,6 +158,21 @@ export const IncomeDeductionsForm: React.FC<Props> = ({ language, value, onChang
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
+        {/* Résumé compact (seniors: réduire le scroll et donner les totaux clés en haut) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-2">
+          <div className="bg-slate-50 border rounded p-2 text-center">
+            <div className="text-xs text-slate-600">{isFr ? 'Brut mensuel' : 'Monthly gross'}</div>
+            <div className="font-semibold text-slate-800">{formatCurrencyLocale(monthlyGross, language)}</div>
+          </div>
+          <div className="bg-slate-50 border rounded p-2 text-center">
+            <div className="text-xs text-slate-600">{isFr ? 'Déductions mensuelles' : 'Monthly deductions'}</div>
+            <div className="font-semibold text-rose-700">{formatCurrencyLocale(monthlyDeductions, language)}</div>
+          </div>
+          <div className="bg-slate-50 border rounded p-2 text-center">
+            <div className="text-xs text-slate-600">{t('net', language)}</div>
+            <div className="font-semibold text-green-700">{formatCurrencyLocale(net, language)}</div>
+          </div>
+        </div>
         {/* Méthode */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
           <div className="bg-white border rounded-md p-3">
@@ -204,7 +233,15 @@ export const IncomeDeductionsForm: React.FC<Props> = ({ language, value, onChang
         </div>
 
         {/* Déductions */}
-        <div className="space-y-3">
+          {/* En-tête compact pour colonnes (seniors: repères visuels, moins de scroll) */}
+          <div className="hidden md:grid grid-cols-12 gap-2 py-2 border-y bg-white sticky top-0 z-10 text-xs text-slate-600">
+            <div className="col-span-4">{t('type', language)}</div>
+            <div className="col-span-4">{isFr ? 'libellé' : 'label'}</div>
+            <div className="col-span-2">{t('amount', language)}</div>
+            <div className="col-span-2">{isFr ? 'actions' : 'actions'}</div>
+          </div>
+
+          <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label className="text-base">{t('deductions', language)}</Label>
             <Button type="button" onClick={addDeduction} className="bg-blue-600 hover:bg-blue-700">
@@ -224,9 +261,9 @@ export const IncomeDeductionsForm: React.FC<Props> = ({ language, value, onChang
               </div>
             )}
             {deductions.map((d, idx) => (
-              <div key={idx} className="grid grid-cols-12 gap-3 items-end p-3 bg-gray-50 rounded-lg border">
-                <div className="col-span-5">
-                  <Label>{t('type', language)}</Label>
+              <div key={idx} className="grid grid-cols-12 gap-2 items-center p-2 bg-gray-50 rounded border">
+                <div className="col-span-4">
+                  <Label className="sr-only">{t('type', language)}</Label>
                   <Select
                     value={d.type}
                     onValueChange={(v) => updateDeduction(idx, { type: v as DeductionItem['type'] })}
@@ -243,8 +280,8 @@ export const IncomeDeductionsForm: React.FC<Props> = ({ language, value, onChang
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="col-span-5">
-                  <Label>{isFr ? 'libellé (optionnel)' : 'label (optional)'}</Label>
+                <div className="col-span-4">
+                  <Label className="sr-only">{isFr ? 'libellé (optionnel)' : 'label (optional)'}</Label>
                   <Input
                     value={d.label ?? ''}
                     onChange={(e) => updateDeduction(idx, { label: e.target.value })}
@@ -262,7 +299,7 @@ export const IncomeDeductionsForm: React.FC<Props> = ({ language, value, onChang
                     allowDecimals={true}
                   />
                 </div>
-                <div className="col-span-12 flex justify-end">
+                <div className="col-span-2 flex justify-end">
                   <Button type="button" variant="destructive" onClick={() => removeDeduction(idx)}>
                     {t('remove', language)}
                   </Button>
