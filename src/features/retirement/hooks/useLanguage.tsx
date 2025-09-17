@@ -1,12 +1,14 @@
 // src/features/retirement/hooks/useLanguage.tsx
 import React, { useState, useEffect, createContext, useContext } from 'react';
+import { translations } from '../translations';
 
 type Language = 'fr' | 'en';
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: string) => string;
+  t: any; // Objet de traductions complet
+  translate: (key: string) => string; // Fonction de traduction par clé
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -15,8 +17,24 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 const detectLanguage = (): Language => {
   // Vérifier l'URL pour la langue
   const path = window.location.pathname;
-  if (path.includes('/en/')) return 'en';
-  if (path.includes('/fr/')) return 'fr';
+  
+  // Routes spécifiques anglaises
+  if (path === '/emergency-planning' || 
+      path === '/home' || 
+      path === '/my-retirement' || 
+      path === '/my-income' ||
+      path.includes('/en/')) {
+    return 'en';
+  }
+  
+  // Routes spécifiques françaises  
+  if (path === '/planification-urgence' ||
+      path === '/accueil' ||
+      path === '/ma-retraite' ||
+      path === '/mes-revenus' ||
+      path.includes('/fr/')) {
+    return 'fr';
+  }
   
   // Vérifier le localStorage
   const saved = localStorage.getItem('retirement-language');
@@ -46,13 +64,11 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     window.history.replaceState({}, '', newPath);
   };
 
-  // Fonction de traduction simplifiée
-  const t = (key: string): string => {
+  // Fonction de traduction par clé
+  const translate = (key: string): string => {
     try {
-      // Import dynamique des traductions
-      const translations = require('../translations').translations[language];
       const keys = key.split('.');
-      let value: any = translations;
+      let value: any = translations[language];
       
       for (const k of keys) {
         value = value?.[k];
@@ -61,9 +77,12 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
       return value || key;
     } catch (error) {
       console.warn('Erreur de traduction:', error);
-      return key; // Retourner la clé si les traductions ne sont pas disponibles
+      return key;
     }
   };
+
+  // Objet de traductions complet
+  const t = translations[language] || {};
 
   // Écouter les changements d'URL pour détecter les changements de langue
   useEffect(() => {
@@ -74,7 +93,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [language]);
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, translate }}>
       {children}
     </LanguageContext.Provider>
   );

@@ -22,6 +22,7 @@ const routeMapping: { [key: string]: string } = {
   "/fr/retraite-module-phase1": "/en/retirement-module-phase1",
   "/fr/rapports-retraite": "/en/retirement-reports",
   "/fr/sauvegarder-charger": "/en/save-load",
+  "/planification-urgence": "/emergency-planning",
   
   // EN -> FR
   "/en": "/fr",
@@ -35,6 +36,7 @@ const routeMapping: { [key: string]: string } = {
   "/en/retirement-module-phase1": "/fr/retraite-module-phase1",
   "/en/retirement-reports": "/fr/rapports-retraite",
   "/en/save-load": "/fr/sauvegarder-charger",
+  "/emergency-planning": "/planification-urgence",
 };
 
 const LanguageSelector = ({ isEnglish }: LanguageSelectorProps) => {
