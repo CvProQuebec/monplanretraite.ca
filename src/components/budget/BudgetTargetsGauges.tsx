@@ -44,54 +44,62 @@ const Row: React.FC<{
   targetPct: number;
   onTargetChange: (pct: number) => void;
   language: 'fr' | 'en';
-}> = ({ label, color, currentPct, currentAmount, targetPct, onTargetChange, language }) => {
+  netMonthlyIncome: number;
+}> = ({
+  label,
+  color,
+  currentPct,
+  currentAmount,
+  targetPct,
+  onTargetChange,
+  language,
+  netMonthlyIncome
+}) => {
+  // Delta (%) = actuel - cible (positif si on dépasse)
   const deltaPct = currentPct - targetPct;
+
+  // Delta ($) = montant cible - montant actuel (sur revenu net mensuel)
+  const targetAmount = (Math.max(0, targetPct) / 100) * (isFinite(netMonthlyIncome) ? netMonthlyIncome : 0);
+  const deltaAmount = targetAmount - (isFinite(currentAmount) ? currentAmount : 0);
+
+  // Libellés compacts FR/EN
+  const L = language === 'fr'
+    ? { target: 'Cible %', dPct: 'Écart (%)', dAmt: 'Écart ($)' }
+    : { target: 'Target %', dPct: 'Delta (%)', dAmt: 'Delta ($)' };
+
   return (
-    <div className="space-y-2 p-3 rounded-lg border bg-white">
-      <div className="flex items-center justify-between">
-        <div className="font-medium text-gray-800">{label}</div>
-        <div className="text-sm text-gray-600">
-          {t('current', language)}: {formatPercentLocale(currentPct, language)} • {formatCurrencyLocale(currentAmount, language)}
-        </div>
-      </div>
+    <div
+      className="flex items-center justify-between gap-2 p-2 rounded border bg-white"
+      style={{ borderLeft: `4px solid ${color}` }}
+      aria-label={label}
+    >
+      <div className="min-w-[110px] font-medium text-gray-800 truncate">{label}</div>
 
-      {/* Barre de progression */}
-      <div className="w-full bg-gray-100 h-3 rounded-full overflow-hidden">
-        <div
-          className="h-3 rounded-full transition-all"
-          style={{ width: `${Math.max(0, Math.min(100, currentPct))}%`, backgroundColor: color }}
-          role="progressbar"
-          aria-label={label}
-          aria-valuenow={Math.round(isFinite(currentPct) ? currentPct : 0)}
-          aria-valuemin={0}
-          aria-valuemax={100}
-        />
-      </div>
-
-      {/* Cible et écart */}
-      <div className="grid grid-cols-3 gap-3 items-end">
-        <div>
-          <Label className="text-sm text-gray-700">{t('target', language)} (%)</Label>
+      <div className="flex items-center gap-3 text-sm">
+        <div className="flex items-center gap-1">
+          <span className="text-slate-500">{L.target}</span>
           <Input
             type="number"
-            className="bg-white border-slate-300 text-gray-900"
             min={0}
             max={100}
             value={Math.round(targetPct)}
             onChange={(e) => onTargetChange(clampPct(parseFloat(e.target.value)))}
+            className="w-16 h-8 bg-white border-slate-300 text-gray-900 px-2 py-1"
           />
         </div>
-        <div>
-          <Label className="text-sm text-gray-700">{t('delta', language)} (%)</Label>
-          <div className={`mt-2 font-semibold ${deltaPct >= 0 ? 'text-amber-700' : 'text-green-700'}`}>
+
+        <div className="flex items-center gap-1">
+          <span className="text-slate-500">{L.dPct}</span>
+          <span className={`font-semibold ${deltaPct >= 0 ? 'text-amber-700' : 'text-green-700'}`}>
             {formatPercentLocale(deltaPct, language)}
-          </div>
+          </span>
         </div>
-        <div>
-          <Label className="text-sm text-gray-700">{t('delta', language)} ($)</Label>
-          <div className={`mt-2 font-semibold ${deltaPct >= 0 ? 'text-amber-700' : 'text-green-700'}`}>
-            {formatCurrencyLocale((deltaPct / 100) * (isFinite(currentAmount) ? (currentAmount / (currentPct || 1)) * targetPct - currentAmount : 0), language)}
-          </div>
+
+        <div className="flex items-center gap-1">
+          <span className="text-slate-500">{L.dAmt}</span>
+          <span className={`font-semibold ${deltaAmount >= 0 ? 'text-amber-700' : 'text-green-700'}`}>
+            {formatCurrencyLocale(deltaAmount, language)}
+          </span>
         </div>
       </div>
     </div>
@@ -135,6 +143,7 @@ const BudgetTargetsGauges: React.FC<Props> = ({ language, netMonthlyIncome, allo
           targetPct={targets.needsPct}
           onTargetChange={(pct) => onChangeTargets({ ...targets, needsPct: pct })}
           language={language}
+          netMonthlyIncome={netMonthlyIncome}
         />
         <Row
           label={t('wants', language)}
@@ -144,6 +153,7 @@ const BudgetTargetsGauges: React.FC<Props> = ({ language, netMonthlyIncome, allo
           targetPct={targets.wantsPct}
           onTargetChange={(pct) => onChangeTargets({ ...targets, wantsPct: pct })}
           language={language}
+          netMonthlyIncome={netMonthlyIncome}
         />
         <Row
           label={t('savings', language)}
@@ -153,6 +163,7 @@ const BudgetTargetsGauges: React.FC<Props> = ({ language, netMonthlyIncome, allo
           targetPct={targets.savingsDebtPct}
           onTargetChange={(pct) => onChangeTargets({ ...targets, savingsDebtPct: pct })}
           language={language}
+          netMonthlyIncome={netMonthlyIncome}
         />
       </CardContent>
     </Card>
