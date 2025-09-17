@@ -1,6 +1,8 @@
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { UserData } from '@/types';
+import { AllocationTotals } from '@/services/BudgetComputationService';
+import { BudgetTargets, SinkingFund, DebtSnowballState } from '@/types/budget';
 
 export interface PDFReportOptions {
   includeCharts?: boolean;
@@ -403,7 +405,7 @@ export class PDFExportService {
    */
   private static addFooter(doc: jsPDF, language: 'fr' | 'en'): void {
     const isFrench = language === 'fr';
-    const pageCount = doc.getNumberOfPages();
+    const pageCount = (doc as any).getNumberOfPages?.() ?? 1;
 
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
@@ -459,7 +461,7 @@ export class PDFExportService {
     userLifeExpectancy: number,
     isFrench: boolean
   ): Array<{ title: string; content: string[] }> {
-    const personal = userData.personal || {};
+    const personal: any = (userData as any).personal || {};
     const sections = [];
 
     // Health factors
@@ -566,7 +568,7 @@ export class PDFExportService {
   }
 
   private static hasCoupleData(userData: UserData): boolean {
-    const personal = userData.personal || {};
+    const personal: any = (userData as any).personal || {};
     return !!(personal.sexe2 && personal.naissance2);
   }
 
@@ -587,6 +589,200 @@ export class PDFExportService {
       console.error('Error exporting chart as image:', error);
       return '';
     }
+  }
+
+  // ===== Budget Report (Personal Budget) =====
+  static async generateBudgetReport(
+    language: 'fr' | 'en',
+    params: {
+      netMonthlyIncome: number;
+      allocations: AllocationTotals;
+      targets: BudgetTargets;
+      emergencyMonthsTarget?: number;
+      emergencySaved?: number;
+      sinkingFunds?: SinkingFund[];
+      debt?: DebtSnowballState;
+      reportTitle?: string;
+      authorName?: string;
+    }
+  ): Promise<Blob> {
+    const isFrench = language === 'fr';
+    const {
+      netMonthlyIncome,
+      allocations,
+      targets,
+      emergencyMonthsTarget = 0,
+      emergencySaved = 0,
+      sinkingFunds = [],
+      debt,
+      reportTitle,
+      authorName
+    } = params;
+
+    const doc = new jsPDF();
+
+    // Title page (reuse style)
+    let currentY = this.addTitleLikePage(doc, {
+      title: reportTitle || (isFrench ? 'Budget personnel' : 'Personal Budget'),
+      subtitle: isFrench ? 'Résumé financier et objectifs' : 'Financial summary and goals',
+      info: isFrench
+        ? `Revenu net mensuel: ${netMonthlyIncome.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}`
+        : `Net monthly income: ${netMonthlyIncome.toLocaleString('en-CA', { style: 'currency', currency: 'CAD' })}`,
+      author: authorName,
+      language
+    });
+
+    // Page — 50/30/20
+    doc.addPage();
+    currentY = this.MARGIN;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Règle 50/30/20' : '50/30/20 Rule', this.MARGIN, currentY);
+    currentY += 10;
+
+    const lines_503020 = [
+      isFrench ? `Cibles: Besoins ${targets.needsPct} %, Envies ${targets.wantsPct} %, Épargne/Dettes ${targets.savingsDebtPct} %`
+               : `Targets: Needs ${targets.needsPct}%, Wants ${targets.wantsPct}%, Savings/Debt ${targets.savingsDebtPct}%`,
+      isFrench ? `Réalisé: Besoins ${allocations.pctNeeds.toFixed(1)} %, Envies ${allocations.pctWants.toFixed(1)} %, Épargne/Dettes ${allocations.pctSavingsDebt.toFixed(1)} %`
+               : `Actual: Needs ${allocations.pctNeeds.toFixed(1)}%, Wants ${allocations.pctWants.toFixed(1)}%, Savings/Debt ${allocations.pctSavingsDebt.toFixed(1)}%`,
+      isFrench ? `Montants mensuels: Besoins ${allocations.totalNeeds.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}, Envies ${allocations.totalWants.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}, Épargne/Dettes ${allocations.totalSavingsDebt.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}`
+               : `Monthly amounts: Needs ${allocations.totalNeeds.toLocaleString('en-CA', { style: 'currency', currency: 'CAD' })}, Wants ${allocations.totalWants.toLocaleString('en-CA', { style: 'currency', currency: 'CAD' })}, Savings/Debt ${allocations.totalSavingsDebt.toLocaleString('en-CA', { style: 'currency', currency: 'CAD' })}`
+    ];
+    currentY = this.writeBulletPoints(doc, lines_503020, currentY);
+
+    // Page — Emergency Fund
+    doc.addPage();
+    currentY = this.MARGIN;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Fonds d’urgence' : 'Emergency Fund', this.MARGIN, currentY);
+    currentY += 10;
+
+    const monthlyNeeds = Math.max(0, allocations.totalNeeds);
+    const monthsSaved = monthlyNeeds > 0 ? emergencySaved / monthlyNeeds : 0;
+    const efLines = [
+      isFrench
+        ? `Cible: ${emergencyMonthsTarget} mois de besoins essentiels`
+        : `Target: ${emergencyMonthsTarget} months of essential needs`,
+      isFrench
+        ? `Montant épargné: ${emergencySaved.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })} (${monthsSaved.toFixed(1)} mois)`
+        : `Amount saved: ${emergencySaved.toLocaleString('en-CA', { style: 'currency', currency: 'CAD' })} (${monthsSaved.toFixed(1)} months)`,
+      isFrench
+        ? `Besoins essentiels mensuels estimés: ${monthlyNeeds.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}`
+        : `Estimated essential needs (monthly): ${monthlyNeeds.toLocaleString('en-CA', { style: 'currency', currency: 'CAD' })}`
+    ];
+    currentY = this.writeBulletPoints(doc, efLines, currentY);
+
+    // Page — Sinking Funds
+    doc.addPage();
+    currentY = this.MARGIN;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Objectifs planifiés' : 'Planned goals', this.MARGIN, currentY);
+    currentY += 10;
+
+    if (sinkingFunds.length === 0) {
+      doc.setFontSize(12);
+      doc.setTextColor(107, 114, 128);
+      doc.text(isFrench ? 'Aucun objectif enregistré.' : 'No goals recorded.', this.MARGIN, currentY);
+      currentY += 8;
+    } else {
+      doc.setFontSize(12);
+      doc.setTextColor(75, 85, 99);
+      for (const f of sinkingFunds) {
+        const line = isFrench
+          ? `• ${f.name}: cible ${f.goalAmount.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}, échéance ${f.dueDate}, mensualité requise ~ ${Math.max(0, f.monthlyRequired || 0).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}, épargné ${Math.max(0, f.saved || 0).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}`
+          : `• ${f.name}: target ${f.goalAmount.toLocaleString('en-CA', { style: 'currency', currency: 'CAD' })}, due ${f.dueDate}, required monthly ~ ${Math.max(0, f.monthlyRequired || 0).toLocaleString('en-CA', { style: 'currency', currency: 'CAD' })}, saved ${Math.max(0, f.saved || 0).toLocaleString('en-CA', { style: 'currency', currency: 'CAD' })}`;
+        const lines = doc.splitTextToSize(line, this.CONTENT_WIDTH);
+        if (currentY > this.PAGE_HEIGHT - 20) { doc.addPage(); currentY = this.MARGIN; }
+        doc.text(lines, this.MARGIN, currentY);
+        currentY += lines.length * 5 + 3;
+      }
+    }
+
+    // Page — Debts (Snowball)
+    doc.addPage();
+    currentY = this.MARGIN;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Dettes — stratégie “boule de neige”' : 'Debts — snowball strategy', this.MARGIN, currentY);
+    currentY += 10;
+
+    const debtLines: string[] = [];
+    const debtCount = debt?.debts?.length || 0;
+    debtLines.push(
+      isFrench ? `Nombre de dettes: ${debtCount}` : `Debts count: ${debtCount}`
+    );
+    debtLines.push(
+      isFrench
+        ? `Méthode: ${debt?.method === 'rate' ? 'par plus haut taux' : 'par plus petit solde'}`
+        : `Method: ${debt?.method === 'rate' ? 'highest rate' : 'lowest balance'}`
+    );
+    debtLines.push(
+      isFrench
+        ? `Montant additionnel mensuel: ${(debt?.extraPerMonth || 0).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}`
+        : `Extra per month: ${(debt?.extraPerMonth || 0).toLocaleString('en-CA', { style: 'currency', currency: 'CAD' })}`
+    );
+    currentY = this.writeBulletPoints(doc, debtLines, currentY);
+
+    // Footer
+    this.addFooter(doc, language);
+    return doc.output('blob');
+  }
+
+  // Helper: title-like page
+  private static addTitleLikePage(
+    doc: jsPDF,
+    opts: { title: string; subtitle: string; info: string; author?: string; language: 'fr' | 'en' }
+  ): number {
+    const { title, subtitle, info, author, language } = opts;
+    // Background
+    doc.setFillColor(245, 247, 255);
+    doc.rect(0, 0, this.PAGE_WIDTH, this.PAGE_HEIGHT, 'F');
+
+    // Title
+    doc.setFontSize(24);
+    doc.setTextColor(31, 41, 55);
+    doc.text(title, this.PAGE_WIDTH / 2, 80, { align: 'center' });
+
+    // Subtitle
+    doc.setFontSize(14);
+    doc.setTextColor(107, 114, 128);
+    doc.text(subtitle, this.PAGE_WIDTH / 2, 95, { align: 'center' });
+
+    // Info
+    doc.setFontSize(12);
+    doc.setTextColor(55, 65, 81);
+    doc.text(info, this.PAGE_WIDTH / 2, 115, { align: 'center' });
+
+    // Author/date
+    doc.setFontSize(10);
+    doc.setTextColor(107, 114, 128);
+    const dateText = new Date().toLocaleDateString(language === 'fr' ? 'fr-CA' : 'en-CA');
+    doc.text(`${language === 'fr' ? 'Généré le' : 'Generated on'} ${dateText}`, this.PAGE_WIDTH / 2, 135, { align: 'center' });
+    if (author) {
+      doc.text(`${language === 'fr' ? 'Par' : 'By'} ${author}`, this.PAGE_WIDTH / 2, 145, { align: 'center' });
+    }
+
+    return this.MARGIN;
+  }
+
+  // Helper: bullet list
+  private static writeBulletPoints(doc: jsPDF, points: string[], startY: number): number {
+    let y = startY;
+    doc.setFontSize(12);
+    doc.setTextColor(75, 85, 99);
+    for (const p of points) {
+      if (y > this.PAGE_HEIGHT - 20) {
+        doc.addPage();
+        y = this.MARGIN;
+      }
+      const text = `• ${p}`;
+      const lines = doc.splitTextToSize(text, this.CONTENT_WIDTH);
+      doc.text(lines, this.MARGIN, y);
+      y += lines.length * 5 + 3;
+    }
+    return y + 4;
   }
 
   /**

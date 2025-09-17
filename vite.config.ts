@@ -77,6 +77,19 @@ export default defineConfig(({ mode }) => {
               return 'date-lib';
             }
 
+            // PDF/reporting libs (loaded on demand) - split individually to reduce chunk size
+            if (pid.includes('jspdf')) {
+              return 'jspdf';
+            }
+            if (pid.includes('html2canvas')) {
+              return 'html2canvas';
+            }
+
+            // Animation libs (heavy)
+            if (pid.includes('framer-motion')) {
+              return 'motion';
+            }
+
             // Split large areas for better initial load for seniors
             if (pid.includes('/src/services/')) return 'core-services';
             if (pid.includes('/src/components/ui/')) {

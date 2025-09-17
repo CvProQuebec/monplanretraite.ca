@@ -4,6 +4,7 @@ import SeasonalExpensesPlannerModule from '@/components/ui/SeasonalExpensesPlann
 import MonthlyBudgetPlanningModule from '@/components/ui/MonthlyBudgetPlanningModule';
 import { UserData } from '@/features/retirement/types';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
+import { Alert, AlertDescription } from '@/components/ui/alert';
 
 // Données de démonstration
 const demoUserData: UserData = {
@@ -59,6 +60,16 @@ const demoUserData: UserData = {
     transport: 400,
     sante: 200,
     loisirs: 300,
+    includeFlags: {
+      logement: true,
+      servicesPublics: true,
+      assurances: true,
+      telecom: true,
+      alimentation: true,
+      transport: true,
+      sante: true,
+      loisirs: true
+    },
     // Initialiser les ventilations vides
     logementBreakdown: {},
     servicesPublicsBreakdown: {},
@@ -85,7 +96,21 @@ export const ExpensesPage: React.FC = () => {
       : 'Cash flow management: Track your monthly expenses to identify savings opportunities. The 50/30/20 rule recommends 50% for essential needs, 30% for wants, and 20% for savings.',
     expenseBreakdown: isFrench 
       ? 'Ventilation des dépenses : Utilisez le bouton "Ventiler" pour détailler chaque catégorie de dépenses en sous-catégories.'
-      : 'Expense breakdown: Use the "Breakdown" button to detail each expense category into sub-categories.'
+      : 'Expense breakdown: Use the "Breakdown" button to detail each expense category into sub-categories.',
+    syncWithBudgetTitle: isFrench
+      ? 'Synchronisation avec le budget'
+      : 'Budget synchronization',
+    includeInBudget: isFrench
+      ? 'Inclure dans le budget'
+      : 'Include in budget',
+    housing: isFrench ? 'Logement' : 'Housing',
+    utilities: isFrench ? 'Services publics' : 'Utilities',
+    insurance: isFrench ? 'Assurances' : 'Insurance',
+    telecom: isFrench ? 'Télécommunications' : 'Telecom',
+    food: isFrench ? 'Alimentation' : 'Food',
+    transport: isFrench ? 'Transport' : 'Transport',
+    health: isFrench ? 'Santé' : 'Health',
+    leisure: isFrench ? 'Loisirs' : 'Leisure'
   };
 
   const handleUpdate = (section: keyof UserData, updates: any) => {
@@ -110,6 +135,25 @@ export const ExpensesPage: React.FC = () => {
     });
   };
 
+  const defaultIncludeFlags = {
+    logement: true,
+    servicesPublics: true,
+    assurances: true,
+    telecom: true,
+    alimentation: true,
+    transport: true,
+    sante: true,
+    loisirs: true
+  };
+
+  const handleIncludeToggle = (key: keyof typeof defaultIncludeFlags, checked: boolean) => {
+    const nextFlags = {
+      ...(userData.cashflow as any)?.includeFlags || defaultIncludeFlags,
+      [key]: checked
+    };
+    handleUpdate('cashflow', { includeFlags: nextFlags });
+  };
+
   // Charger les données depuis le stockage local incluant les ventilations
   useEffect(() => {
     try {
@@ -125,6 +169,7 @@ export const ExpensesPage: React.FC = () => {
             cashflow: { 
               ...prevData.cashflow, 
               ...data.cashflow,
+              includeFlags: (data.cashflow as any).includeFlags || defaultIncludeFlags,
               // S'assurer que toutes les ventilations sont chargées
               logementBreakdown: data.cashflow.logementBreakdown || {},
               servicesPublicsBreakdown: data.cashflow.servicesPublicsBreakdown || {},
@@ -183,6 +228,51 @@ return (
           </p>
         </div>
 
+        {/* Bonnes pratiques - Dépenses comme source de vérité */}
+        <Alert className="border-blue-200 bg-blue-50 text-blue-800 mb-6">
+          <AlertDescription>
+            {isFrench
+              ? 'Meilleure pratique : saisissez vos dépenses ici. Elles s’afficheront automatiquement dans votre budget. Vous évitez ainsi de les retaper.'
+              : 'Best practice: enter your expenses here. They will automatically appear in your budget. No need to type them twice.'}
+          </AlertDescription>
+        </Alert>
+
+        {/* Synchronisation avec le Budget: choix d'inclusion des catégories principales */}
+        <div className="bg-white rounded-xl p-6 border-2 border-gray-300 mb-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-4">{t.syncWithBudgetTitle}</h2>
+          <p className="text-gray-700 mb-4">
+            {isFrench
+              ? 'Sélectionnez les catégories à inclure dans votre budget. Ces montants seront importés automatiquement.'
+              : 'Select which categories to include in your budget. These amounts will be imported automatically.'}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {([
+              { key: 'logement', label: t.housing },
+              { key: 'servicesPublics', label: t.utilities },
+              { key: 'assurances', label: t.insurance },
+              { key: 'telecom', label: t.telecom },
+              { key: 'alimentation', label: t.food },
+              { key: 'transport', label: t.transport },
+              { key: 'sante', label: t.health },
+              { key: 'loisirs', label: t.leisure }
+            ] as Array<{key: keyof typeof defaultIncludeFlags, label: string}>).map(item => {
+              const flags = (userData.cashflow as any)?.includeFlags || defaultIncludeFlags;
+              const checked = flags[item.key] !== false;
+              return (
+                <label key={item.key} className="flex items-center justify-between bg-gray-50 border rounded-lg p-3">
+                  <span className="text-gray-900">{item.label}</span>
+                  <input
+                    type="checkbox"
+                    className="w-5 h-5"
+                    checked={checked}
+                    onChange={(e) => handleIncludeToggle(item.key, e.target.checked)}
+                    aria-label={`${t.includeInBudget} - ${item.label}`}
+                  />
+                </label>
+              );
+            })}
+          </div>
+        </div>
 
         {/* Composant CashflowSection existant */}
         <CashflowSection 

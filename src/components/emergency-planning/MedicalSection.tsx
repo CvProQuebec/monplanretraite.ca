@@ -15,20 +15,20 @@ const generateId = () => Date.now().toString() + Math.random().toString(36).subs
 const MedicalSection: React.FC<MedicalSectionProps> = ({ data, setData, expandedSections = {}, toggleSection = () => {} }) => {
   const { t } = useLanguage();
   
-  // Liste des spécialités médicales par ordre alphabétique (récupérée du fichier de sauvegarde)
-  const specialites = [
-    "Sélectionner une spécialité",
-    "Autre",
-    "Cardiologie",
-    "Dermatologie", 
-    "Endocrinologie",
-    "Gynécologie",
-    "Neurologie",
-    "Oncologie",
-    "Ophtalmologie",
-    "Orthopédie",
-    "Pneumologie",
-    "Urologie"
+  // Liste des spécialités médicales par ordre alphabétique
+  const getSpecialties = () => [
+    { value: "", label: t.emergencyPlanning.medical.selectSpecialtyOption },
+    { value: "Autre", label: t.emergencyPlanning.medical.other },
+    { value: "Cardiologie", label: t.emergencyPlanning.medical.cardiology },
+    { value: "Dermatologie", label: t.emergencyPlanning.medical.dermatology },
+    { value: "Endocrinologie", label: t.emergencyPlanning.medical.endocrinology },
+    { value: "Gynécologie", label: t.emergencyPlanning.medical.gynecology },
+    { value: "Neurologie", label: t.emergencyPlanning.medical.neurology },
+    { value: "Oncologie", label: t.emergencyPlanning.medical.oncology },
+    { value: "Ophtalmologie", label: t.emergencyPlanning.medical.ophthalmology },
+    { value: "Orthopédie", label: t.emergencyPlanning.medical.orthopedics },
+    { value: "Pneumologie", label: t.emergencyPlanning.medical.pulmonology },
+    { value: "Urologie", label: t.emergencyPlanning.medical.urology }
   ];
 
   const addMedicament = () => {
@@ -65,20 +65,20 @@ const MedicalSection: React.FC<MedicalSectionProps> = ({ data, setData, expanded
     <div className="form-section">
       <h2 style={{fontSize: '24px', marginBottom: '20px', color: '#1f2937', display: 'flex', alignItems: 'center', gap: '12px'}}>
         <Heart size={24} />
-        Informations médicales
+        {t.emergencyPlanning.medical.title}
       </h2>
       
       <div className="form-grid">
         <div className="form-field">
-          <label className="form-label" htmlFor="groupeSanguin">Groupe sanguin</label>
+          <label className="form-label" htmlFor="groupeSanguin">{t.emergencyPlanning.medical.bloodType}</label>
           <select
             id="groupeSanguin"
-            title="Sélectionner votre groupe sanguin"
+            title={t.emergencyPlanning.medical.bloodTypeSelectTitle}
             className="form-input"
             value={data.groupeSanguin}
             onChange={(e) => setData({...data, groupeSanguin: e.target.value})}
           >
-            <option value="">Sélectionner</option>
+            <option value="">{t.emergencyPlanning.medical.bloodTypeSelect}</option>
             <option value="A+">A+</option>
             <option value="A-">A-</option>
             <option value="B+">B+</option>
@@ -90,23 +90,23 @@ const MedicalSection: React.FC<MedicalSectionProps> = ({ data, setData, expanded
           </select>
         </div>
         <div className="form-field" style={{gridColumn: '1 / -1'}}>
-          <label className="form-label">Allergies connues</label>
+          <label className="form-label">{t.emergencyPlanning.medical.knownAllergies}</label>
           <textarea
             className="form-input"
             style={{minHeight: '60px'}}
             value={data.allergies}
             onChange={(e) => setData({...data, allergies: e.target.value})}
-            placeholder="Médicaments, aliments, substances auxquels vous êtes allergique"
+            placeholder={t.emergencyPlanning.medical.allergiesPlaceholder}
           />
         </div>
         <div className="form-field" style={{gridColumn: '1 / -1'}}>
-          <label className="form-label">Conditions médicales actuelles</label>
+          <label className="form-label">{t.emergencyPlanning.medical.currentMedicalConditions}</label>
           <textarea
             className="form-input"
             style={{minHeight: '60px'}}
             value={data.conditionsMedicales}
             onChange={(e) => setData({...data, conditionsMedicales: e.target.value})}
-            placeholder="Maladies chroniques, conditions médicales importantes"
+            placeholder={t.emergencyPlanning.medical.conditionsPlaceholder}
           />
         </div>
       </div>
@@ -120,17 +120,17 @@ const MedicalSection: React.FC<MedicalSectionProps> = ({ data, setData, expanded
           tabIndex={0}
           aria-expanded={!!expandedSections.contactsMedicaux}
           aria-controls="section-contacts-medicaux"
-          title="Ouvrir la section Contacts médicaux"
+          title={t.emergencyPlanning.medical.medicalContactsTitle}
           onClick={() => toggleSection('contactsMedicaux')}
           onKeyDown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleSection('contactsMedicaux')}
         >
           <div className="section-title">
             <Stethoscope size={22} />
-            <span>Contacts médicaux</span>
-            <span className="collapsible-hint">Cliquez pour compléter</span>
+            <span>{t.emergencyPlanning.medical.medicalContacts}</span>
+            <span className="collapsible-hint">{t.emergencyPlanning.medical.medicalContactsHint}</span>
           </div>
           <div className="collapsible-right">
-            <span className="badge-info">À compléter</span>
+            <span className="badge-info">{t.emergencyPlanning.medical.toComplete}</span>
             {expandedSections.contactsMedicaux ? <ChevronDown className="chev" size={24} /> : <ChevronRight className="chev" size={24} />}
           </div>
         </div>
@@ -139,224 +139,224 @@ const MedicalSection: React.FC<MedicalSectionProps> = ({ data, setData, expanded
             <div className="form-grid">
               {/* Médecin de famille */}
               <div className="form-field" style={{gridColumn: '1 / -1'}}>
-                <h3 style={{fontSize: '18px', fontWeight: '600', color: '#1f2937', marginBottom: '16px'}}>Médecin de famille</h3>
+                <h3 style={{fontSize: '18px', fontWeight: '600', color: '#1f2937', marginBottom: '16px'}}>{t.emergencyPlanning.medical.familyDoctor}</h3>
               </div>
               <div className="form-field">
-                <label className="form-label">Nom du médecin</label>
+                <label className="form-label">{t.emergencyPlanning.medical.doctorName}</label>
                 <input
                   type="text"
                   className="form-input"
                   value={data.medecinFamilleNom}
                   onChange={(e) => setData({...data, medecinFamilleNom: e.target.value})}
-                  placeholder="Dr. Dupont"
+                  placeholder={t.emergencyPlanning.medical.doctorNamePlaceholder}
                 />
               </div>
               <div className="form-field" style={{gridColumn: 'span 2'}}>
-                <label className="form-label">Adresse</label>
+                <label className="form-label">{t.emergencyPlanning.medical.address}</label>
                 <input
                   type="text"
                   className="form-input"
                   value={data.medecinFamilleAdresse}
                   onChange={(e) => setData({...data, medecinFamilleAdresse: e.target.value})}
-                  placeholder="123 rue de la Santé, Ville, QC"
+                  placeholder={t.emergencyPlanning.medical.addressPlaceholder}
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Téléphone</label>
+                <label className="form-label">{t.emergencyPlanning.medical.phone}</label>
                 <input
                   type="tel"
                   className="form-input"
                   value={data.medecinFamilleTelephone}
                   onChange={(e) => setData({...data, medecinFamilleTelephone: e.target.value})}
-                  placeholder="(XXX) XXX-XXXX"
+                  placeholder={t.emergencyPlanning.medical.phonePlaceholder}
                 />
               </div>
 
               {/* Spécialiste 1 */}
               <div className="form-field" style={{gridColumn: '1 / -1'}}>
-                <h3 style={{fontSize: '18px', fontWeight: '600', color: '#1f2937', margin: '24px 0 16px 0'}}>Spécialiste 1</h3>
+                <h3 style={{fontSize: '18px', fontWeight: '600', color: '#1f2937', margin: '24px 0 16px 0'}}>{t.emergencyPlanning.medical.specialist} 1</h3>
               </div>
               <div className="form-field">
-                <label className="form-label" htmlFor="specialite1">Spécialité</label>
+                <label className="form-label" htmlFor="specialite1">{t.emergencyPlanning.medical.specialty}</label>
                 <select
                   id="specialite1"
-                  title="Sélectionner une spécialité"
+                  title={t.emergencyPlanning.medical.selectSpecialtyTitle}
                   className="form-input"
                   value={data.specialiste1Specialite}
                   onChange={(e) => setData({...data, specialiste1Specialite: e.target.value})}
                 >
-                  {specialites.map((spec, index) => (
-                    <option key={index} value={index === 0 ? "" : spec}>
-                      {spec}
+                  {getSpecialties().map((spec, index) => (
+                    <option key={index} value={spec.value}>
+                      {spec.label}
                     </option>
                   ))}
                 </select>
               </div>
               <div className="form-field">
-                <label className="form-label">Nom du spécialiste</label>
+                <label className="form-label">{t.emergencyPlanning.medical.specialistName}</label>
                 <input
                   type="text"
                   className="form-input"
                   value={data.specialiste1Nom}
                   onChange={(e) => setData({...data, specialiste1Nom: e.target.value})}
-                  placeholder="Dr. Martin"
+                  placeholder={t.emergencyPlanning.medical.specialistNamePlaceholder}
                 />
               </div>
               <div className="form-field" style={{gridColumn: 'span 2'}}>
-                <label className="form-label">Adresse</label>
+                <label className="form-label">{t.emergencyPlanning.medical.address}</label>
                 <input
                   type="text"
                   className="form-input"
                   value={data.specialiste1Adresse}
                   onChange={(e) => setData({...data, specialiste1Adresse: e.target.value})}
-                  placeholder="456 avenue des Spécialistes, Ville, QC"
+                  placeholder={t.emergencyPlanning.medical.specialistAddressPlaceholder}
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Téléphone</label>
+                <label className="form-label">{t.emergencyPlanning.medical.phone}</label>
                 <input
                   type="tel"
                   className="form-input"
                   value={data.specialiste1Telephone}
                   onChange={(e) => setData({...data, specialiste1Telephone: e.target.value})}
-                  placeholder="(XXX) XXX-XXXX"
+                  placeholder={t.emergencyPlanning.medical.phonePlaceholder}
                 />
               </div>
 
               {/* Spécialiste 2 */}
               <div className="form-field" style={{gridColumn: '1 / -1'}}>
-                <h3 style={{fontSize: '18px', fontWeight: '600', color: '#1f2937', margin: '24px 0 16px 0'}}>Spécialiste 2</h3>
+                <h3 style={{fontSize: '18px', fontWeight: '600', color: '#1f2937', margin: '24px 0 16px 0'}}>{t.emergencyPlanning.medical.specialist} 2</h3>
               </div>
               <div className="form-field">
-                <label className="form-label" htmlFor="specialite2">Spécialité</label>
+                <label className="form-label" htmlFor="specialite2">{t.emergencyPlanning.medical.specialty}</label>
                 <select
                   id="specialite2"
-                  title="Sélectionner une spécialité"
+                  title={t.emergencyPlanning.medical.selectSpecialtyTitle}
                   className="form-input"
                   value={data.specialiste2Specialite}
                   onChange={(e) => setData({...data, specialiste2Specialite: e.target.value})}
                 >
-                  {specialites.map((spec, index) => (
-                    <option key={index} value={index === 0 ? "" : spec}>
-                      {spec}
+                  {getSpecialties().map((spec, index) => (
+                    <option key={index} value={spec.value}>
+                      {spec.label}
                     </option>
                   ))}
                 </select>
               </div>
               <div className="form-field">
-                <label className="form-label">Nom du spécialiste</label>
+                <label className="form-label">{t.emergencyPlanning.medical.specialistName}</label>
                 <input
                   type="text"
                   className="form-input"
                   value={data.specialiste2Nom}
                   onChange={(e) => setData({...data, specialiste2Nom: e.target.value})}
-                  placeholder="Dr. Bernard"
+                  placeholder={t.emergencyPlanning.medical.specialistNamePlaceholder}
                 />
               </div>
               <div className="form-field" style={{gridColumn: 'span 2'}}>
-                <label className="form-label">Adresse</label>
+                <label className="form-label">{t.emergencyPlanning.medical.address}</label>
                 <input
                   type="text"
                   className="form-input"
                   value={data.specialiste2Adresse}
                   onChange={(e) => setData({...data, specialiste2Adresse: e.target.value})}
-                  placeholder="789 boulevard Médical, Ville, QC"
+                  placeholder={t.emergencyPlanning.medical.specialistAddressPlaceholder}
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Téléphone</label>
+                <label className="form-label">{t.emergencyPlanning.medical.phone}</label>
                 <input
                   type="tel"
                   className="form-input"
                   value={data.specialiste2Telephone}
                   onChange={(e) => setData({...data, specialiste2Telephone: e.target.value})}
-                  placeholder="(XXX) XXX-XXXX"
+                  placeholder={t.emergencyPlanning.medical.phonePlaceholder}
                 />
               </div>
 
               {/* Spécialiste 3 */}
               <div className="form-field" style={{gridColumn: '1 / -1'}}>
-                <h3 style={{fontSize: '18px', fontWeight: '600', color: '#1f2937', margin: '24px 0 16px 0'}}>Spécialiste 3</h3>
+                <h3 style={{fontSize: '18px', fontWeight: '600', color: '#1f2937', margin: '24px 0 16px 0'}}>{t.emergencyPlanning.medical.specialist} 3</h3>
               </div>
               <div className="form-field">
-                <label className="form-label" htmlFor="specialite3">Spécialité</label>
+                <label className="form-label" htmlFor="specialite3">{t.emergencyPlanning.medical.specialty}</label>
                 <select
                   id="specialite3"
-                  title="Sélectionner une spécialité"
+                  title={t.emergencyPlanning.medical.selectSpecialtyTitle}
                   className="form-input"
                   value={data.specialiste3Specialite}
                   onChange={(e) => setData({...data, specialiste3Specialite: e.target.value})}
                 >
-                  {specialites.map((spec, index) => (
-                    <option key={index} value={index === 0 ? "" : spec}>
-                      {spec}
+                  {getSpecialties().map((spec, index) => (
+                    <option key={index} value={spec.value}>
+                      {spec.label}
                     </option>
                   ))}
                 </select>
               </div>
               <div className="form-field">
-                <label className="form-label">Nom du spécialiste</label>
+                <label className="form-label">{t.emergencyPlanning.medical.specialistName}</label>
                 <input
                   type="text"
                   className="form-input"
                   value={data.specialiste3Nom}
                   onChange={(e) => setData({...data, specialiste3Nom: e.target.value})}
-                  placeholder="Dr. Dubois"
+                  placeholder={t.emergencyPlanning.medical.specialistNamePlaceholder}
                 />
               </div>
               <div className="form-field" style={{gridColumn: 'span 2'}}>
-                <label className="form-label">Adresse</label>
+                <label className="form-label">{t.emergencyPlanning.medical.address}</label>
                 <input
                   type="text"
                   className="form-input"
                   value={data.specialiste3Adresse}
                   onChange={(e) => setData({...data, specialiste3Adresse: e.target.value})}
-                  placeholder="321 rue des Cliniques, Ville, QC"
+                  placeholder={t.emergencyPlanning.medical.specialistAddressPlaceholder}
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Téléphone</label>
+                <label className="form-label">{t.emergencyPlanning.medical.phone}</label>
                 <input
                   type="tel"
                   className="form-input"
                   value={data.specialiste3Telephone}
                   onChange={(e) => setData({...data, specialiste3Telephone: e.target.value})}
-                  placeholder="(XXX) XXX-XXXX"
+                  placeholder={t.emergencyPlanning.medical.phonePlaceholder}
                 />
               </div>
 
               {/* Dentiste */}
               <div className="form-field" style={{gridColumn: '1 / -1'}}>
-                <h3 style={{fontSize: '18px', fontWeight: '600', color: '#1f2937', margin: '24px 0 16px 0'}}>Dentiste</h3>
+                <h3 style={{fontSize: '18px', fontWeight: '600', color: '#1f2937', margin: '24px 0 16px 0'}}>{t.emergencyPlanning.medical.dentist}</h3>
               </div>
               <div className="form-field">
-                <label className="form-label">Nom du dentiste</label>
+                <label className="form-label">{t.emergencyPlanning.medical.dentistName}</label>
                 <input
                   type="text"
                   className="form-input"
                   value={data.dentisteNom}
                   onChange={(e) => setData({...data, dentisteNom: e.target.value})}
-                  placeholder="Dr. Tremblay"
+                  placeholder={t.emergencyPlanning.medical.dentistNamePlaceholder}
                 />
               </div>
               <div className="form-field" style={{gridColumn: 'span 2'}}>
-                <label className="form-label">Adresse</label>
+                <label className="form-label">{t.emergencyPlanning.medical.address}</label>
                 <input
                   type="text"
                   className="form-input"
                   value={data.dentisteAdresse}
                   onChange={(e) => setData({...data, dentisteAdresse: e.target.value})}
-                  placeholder="159 rue Dentaire, Ville, QC"
+                  placeholder={t.emergencyPlanning.medical.dentistAddressPlaceholder}
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Téléphone</label>
+                <label className="form-label">{t.emergencyPlanning.medical.phone}</label>
                 <input
                   type="tel"
                   className="form-input"
                   value={data.dentisteTelephone}
                   onChange={(e) => setData({...data, dentisteTelephone: e.target.value})}
-                  placeholder="(XXX) XXX-XXXX"
+                  placeholder={t.emergencyPlanning.medical.phonePlaceholder}
                 />
               </div>
             </div>
@@ -366,30 +366,30 @@ const MedicalSection: React.FC<MedicalSectionProps> = ({ data, setData, expanded
 
       {/* Section Pharmacie - déplacée à la fin comme demandé */}
       <div style={{marginTop: '24px'}}>
-        <h3 style={{fontSize: '18px', fontWeight: '600', color: '#1f2937', marginBottom: '16px'}}>Pharmacie</h3>
+        <h3 style={{fontSize: '18px', fontWeight: '600', color: '#1f2937', marginBottom: '16px'}}>{t.emergencyPlanning.medical.pharmacy}</h3>
         <div className="form-grid">
           <div className="form-field">
-            <label className="form-label">Pharmacie habituelle</label>
+            <label className="form-label">{t.emergencyPlanning.medical.usualPharmacy}</label>
             <input
               type="text"
               className="form-input"
               value={data.pharmacieNom}
               onChange={(e) => setData({...data, pharmacieNom: e.target.value})}
-              placeholder="Nom de votre pharmacie"
+              placeholder={t.emergencyPlanning.medical.pharmacyName}
             />
           </div>
           <div className="form-field" style={{gridColumn: 'span 2'}}>
-            <label className="form-label">Adresse pharmacie</label>
+            <label className="form-label">{t.emergencyPlanning.medical.pharmacyAddress}</label>
             <input
               type="text"
               className="form-input"
               value={data.pharmacieAdresse}
               onChange={(e) => setData({...data, pharmacieAdresse: e.target.value})}
-              placeholder="Adresse complète de la pharmacie"
+              placeholder={t.emergencyPlanning.medical.pharmacyAddressPlaceholder}
             />
           </div>
           <div className="form-field">
-            <label className="form-label">Téléphone pharmacie</label>
+            <label className="form-label">{t.emergencyPlanning.medical.pharmacyPhone}</label>
             <input
               type="tel"
               className="form-input"
@@ -405,7 +405,7 @@ const MedicalSection: React.FC<MedicalSectionProps> = ({ data, setData, expanded
       <div style={{marginTop: '32px'}}>
         <h3 style={{fontSize: '20px', fontWeight: '600', color: '#1f2937', display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '16px'}}>
           <Pill size={20} />
-          Médicaments
+          {t.emergencyPlanning.medical.medications}
         </h3>
         
         <button 
@@ -414,26 +414,26 @@ const MedicalSection: React.FC<MedicalSectionProps> = ({ data, setData, expanded
           style={{marginBottom: '16px'}}
         >
           <Plus size={16} />
-          Ajouter un médicament
+          {t.emergencyPlanning.medical.addMedication}
         </button>
 
         {data.medicaments.map((med) => (
           <div key={med.id} className="item-card">
             <div className="item-header">
               <h4 style={{margin: 0, fontSize: '16px', fontWeight: '600'}}>
-                {med.nom || 'Nouveau médicament'}
+                {med.nom || t.emergencyPlanning.medical.newMedication}
               </h4>
               <button
                 className="delete-button"
                 onClick={() => removeMedicament(med.id)}
-                aria-label="Supprimer ce médicament"
+                aria-label={t.emergencyPlanning.medical.deleteMedication}
               >
                 <Trash2 size={16} />
               </button>
             </div>
             <div className="form-grid">
               <div className="form-field">
-                <label className="form-label">Nom du médicament</label>
+                <label className="form-label">{t.emergencyPlanning.medical.medicationName}</label>
                 <input
                   type="text"
                   className="form-input"
@@ -444,11 +444,11 @@ const MedicalSection: React.FC<MedicalSectionProps> = ({ data, setData, expanded
                       m.id === med.id ? {...m, nom: e.target.value} : m
                     )
                   })}
-                  placeholder="Nom du médicament"
+                  placeholder={t.emergencyPlanning.medical.medicationNamePlaceholder}
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Dosage</label>
+                <label className="form-label">{t.emergencyPlanning.medical.dosage}</label>
                 <input
                   type="text"
                   className="form-input"
@@ -459,11 +459,11 @@ const MedicalSection: React.FC<MedicalSectionProps> = ({ data, setData, expanded
                       m.id === med.id ? {...m, dosage: e.target.value} : m
                     )
                   })}
-                  placeholder="Ex: 10mg, 2 comprimés"
+                  placeholder={t.emergencyPlanning.medical.dosagePlaceholder}
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Fréquence</label>
+                <label className="form-label">{t.emergencyPlanning.medical.frequency}</label>
                 <input
                   type="text"
                   className="form-input"
@@ -474,11 +474,11 @@ const MedicalSection: React.FC<MedicalSectionProps> = ({ data, setData, expanded
                       m.id === med.id ? {...m, frequence: e.target.value} : m
                     )
                   })}
-                  placeholder="Ex: 2x par jour, au besoin"
+                  placeholder={t.emergencyPlanning.medical.frequencyPlaceholder}
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Prescripteur</label>
+                <label className="form-label">{t.emergencyPlanning.medical.prescriber}</label>
                 <input
                   type="text"
                   className="form-input"
@@ -489,7 +489,7 @@ const MedicalSection: React.FC<MedicalSectionProps> = ({ data, setData, expanded
                       m.id === med.id ? {...m, prescripteur: e.target.value} : m
                     )
                   })}
-                  placeholder="Nom du médecin prescripteur"
+                  placeholder={t.emergencyPlanning.medical.prescriberPlaceholder}
                 />
               </div>
             </div>

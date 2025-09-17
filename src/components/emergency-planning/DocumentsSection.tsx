@@ -14,29 +14,29 @@ const DocumentsSection: React.FC<DocumentsSectionProps> = ({ data, setData }) =>
   // Documents organisés comme dans l'ancienne version (ordre exact des captures)
   const documentsData = [
     // Ligne 1
-    { id: 'permis', nom: 'Permis de conduire', field: 'permisConduire' },
-    { id: 'passeport', nom: 'Passeport', field: 'passeport' },
-    { id: 'naissance', nom: 'Certificat de naissance', field: 'certificatNaissance' },
+    { id: 'permis', field: 'permisConduire' },
+    { id: 'passeport', field: 'passeport' },
+    { id: 'naissance', field: 'certificatNaissance' },
     
     // Ligne 2
-    { id: 'mariage', nom: 'Certificat de mariage', field: 'certificatMariage' },
-    { id: 'divorce', nom: 'Certificat de divorce', field: 'certificatDivorce' },
-    { id: 'testament', nom: 'Testament', field: 'testament' },
+    { id: 'mariage', field: 'certificatMariage' },
+    { id: 'divorce', field: 'certificatDivorce' },
+    { id: 'testament', field: 'testament' },
     
     // Ligne 3
-    { id: 'mandat', nom: 'Mandat de protection', field: 'mandatProtection' },
-    { id: 'procuration', nom: 'Procuration', field: 'procuration' },
-    { id: 'fiducie', nom: 'Fiducie', field: 'fiducie' },
+    { id: 'mandat', field: 'mandatProtection' },
+    { id: 'procuration', field: 'procuration' },
+    { id: 'fiducie', field: 'fiducie' },
     
     // Ligne 4
-    { id: 'tutelle', nom: 'Tutelle/curatelle', field: 'tutelleCuratelle' },
-    { id: 'releves', nom: 'Relevés bancaires', field: 'relevesBancaires' },
-    { id: 'assuranceVie', nom: 'Polices d\'assurance-vie', field: 'policesAssuranceVie' },
+    { id: 'tutelle', field: 'tutelleCuratelle' },
+    { id: 'releves', field: 'relevesBancaires' },
+    { id: 'assuranceVie', field: 'policesAssuranceVie' },
     
     // Ligne 5
-    { id: 'assuranceAuto', nom: 'Assurance auto', field: 'assuranceAuto' },
-    { id: 'assuranceHabitation', nom: 'Assurance habitation', field: 'assuranceHabitation' },
-    { id: 'assuranceInvalidite', nom: 'Assurance invalidité', field: 'assuranceInvalidite' }
+    { id: 'assuranceAuto', field: 'assuranceAuto' },
+    { id: 'assuranceHabitation', field: 'assuranceHabitation' },
+    { id: 'assuranceInvalidite', field: 'assuranceInvalidite' }
   ];
 
   // Fonction pour obtenir la valeur d'un document (possédé ou non)
@@ -55,7 +55,7 @@ const DocumentsSection: React.FC<DocumentsSectionProps> = ({ data, setData }) =>
   };
 
   // Fonction pour rendre un document avec sa checkbox et son champ d'emplacement
-  const renderDocument = (doc: { id: string, nom: string, field: string }) => {
+  const renderDocument = (doc: { id: string, field: string }) => {
     const possede = getDocumentValue(doc.field, 'possede');
     const emplacement = getDocumentValue(doc.field, 'emplacement');
 
@@ -78,7 +78,7 @@ const DocumentsSection: React.FC<DocumentsSectionProps> = ({ data, setData }) =>
               cursor: 'pointer'
             }}
           />
-          <span>{doc.nom}</span>
+          <span>{t.emergencyPlanning.documents[doc.field]}</span>
         </label>
         
         {possede && (
@@ -87,7 +87,7 @@ const DocumentsSection: React.FC<DocumentsSectionProps> = ({ data, setData }) =>
             className="form-input"
             value={emplacement}
             onChange={(e) => updateDocument(doc.field, 'emplacement', e.target.value)}
-            placeholder="Emplacement du document"
+            placeholder={t.emergencyPlanning.documents.documentLocation}
             style={{
               marginLeft: '26px',
               fontSize: '14px',
@@ -114,7 +114,7 @@ const DocumentsSection: React.FC<DocumentsSectionProps> = ({ data, setData }) =>
       }}>
         <FileText size={20} />
         <h2 style={{margin: 0, fontSize: '18px', fontWeight: '600', color: '#1e40af'}}>
-          Documents importants
+          {t.emergencyPlanning.documents.importantDocuments}
         </h2>
       </div>
 

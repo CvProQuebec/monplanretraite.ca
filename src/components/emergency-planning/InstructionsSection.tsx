@@ -20,9 +20,9 @@ const InstructionsSection: React.FC<InstructionsSectionProps> = ({ data, setData
   };
 
   const formatDate = (dateString: string) => {
-    if (!dateString) return 'Non renseignée';
+    if (!dateString) return t.emergencyPlanning.verification?.noDate || 'Not provided';
     const date = new Date(dateString);
-    return date.toLocaleDateString('fr-CA', {
+    return date.toLocaleDateString('en-CA', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
@@ -173,7 +173,7 @@ const InstructionsSection: React.FC<InstructionsSectionProps> = ({ data, setData
               style={{minHeight: '80px', resize: 'vertical'}}
               value={data.instructionAnimaux || ''}
               onChange={(e) => setData({...data, instructionAnimaux: e.target.value})}
-              placeholder="Instructions pour le soin de vos animaux : noms, habitudes, vétérinaire, nourriture préférée, médicaments, etc."
+              placeholder={t.emergencyPlanning.instructions?.petsPlaceholder || "Instructions for caring for your pets: names, habits, veterinarian, favorite food, medications, etc."}
             />
           </div>
 
@@ -186,7 +186,7 @@ const InstructionsSection: React.FC<InstructionsSectionProps> = ({ data, setData
               style={{minHeight: '80px', resize: 'vertical'}}
               value={data.instructionPlantes || ''}
               onChange={(e) => setData({...data, instructionPlantes: e.target.value})}
-              placeholder="Instructions pour l'entretien de vos plantes, jardin, potager : arrosage, soins spéciaux, périodes importantes, etc."
+              placeholder={t.emergencyPlanning.instructions?.plantsPlaceholder || "Instructions for caring for your plants, garden, vegetable garden: watering, special care, important periods, etc."}
             />
           </div>
 
@@ -199,7 +199,7 @@ const InstructionsSection: React.FC<InstructionsSectionProps> = ({ data, setData
               style={{minHeight: '80px', resize: 'vertical'}}
               value={data.instructionPropriete || ''}
               onChange={(e) => setData({...data, instructionPropriete: e.target.value})}
-              placeholder="Instructions pour l'entretien de votre propriété : systèmes de chauffage/climatisation, alarmes, codes d'accès, contacts de réparation, entretien saisonnier, etc."
+              placeholder={t.emergencyPlanning.instructions?.propertyPlaceholder || "Instructions for maintaining your property: heating/cooling systems, alarms, access codes, repair contacts, seasonal maintenance, etc."}
             />
           </div>
         </div>
@@ -221,7 +221,7 @@ const InstructionsSection: React.FC<InstructionsSectionProps> = ({ data, setData
               style={{minHeight: '80px', resize: 'vertical'}}
               value={data.instructionCoffreFort || ''}
               onChange={(e) => setData({...data, instructionCoffreFort: e.target.value})}
-              placeholder="Emplacements et codes d'accès aux coffres-forts, cachettes secrètes, boîtes de sécurité, etc."
+              placeholder={t.emergencyPlanning.instructions?.safeAccessPlaceholder || "Locations and access codes for safes, secret hiding places, safety deposit boxes, etc."}
             />
           </div>
 
@@ -234,7 +234,7 @@ const InstructionsSection: React.FC<InstructionsSectionProps> = ({ data, setData
               style={{minHeight: '100px', resize: 'vertical'}}
               value={data.instructionAffaires || ''}
               onChange={(e) => setData({...data, instructionAffaires: e.target.value})}
-              placeholder="Instructions concernant vos affaires, projets en cours, engagements professionnels, contrats importants, etc."
+              placeholder={t.emergencyPlanning.instructions?.businessPlaceholder || "Instructions regarding your business, ongoing projects, professional commitments, important contracts, etc."}
             />
           </div>
         </div>
@@ -299,7 +299,7 @@ const InstructionsSection: React.FC<InstructionsSectionProps> = ({ data, setData
                   style={{paddingRight: '40px', fontSize: '18px', minHeight: '48px', padding: '12px 16px'}}
                   value={data.motDePassePrincipal || ''}
                   onChange={(e) => setData({...data, motDePassePrincipal: e.target.value})}
-                  placeholder="Mot de passe maître"
+                  placeholder={t.emergencyPlanning.digital?.masterPassword || "Master password"}
                 />
                 <button
                   type="button"
@@ -355,8 +355,8 @@ const InstructionsSection: React.FC<InstructionsSectionProps> = ({ data, setData
                 <button
                   className="delete-button"
                   onClick={() => removeCompteEnLigne(compte.id)}
-                  aria-label="Supprimer ce compte"
-                  title="Supprimer ce compte"
+                  aria-label={t.emergencyPlanning.digital?.deleteAccount || "Delete this account"}
+                  title={t.emergencyPlanning.digital?.deleteAccount || "Delete this account"}
                   style={{minHeight: '48px', minWidth: '48px'}}
                 >
                   <Trash2 size={16} />
@@ -387,7 +387,7 @@ const InstructionsSection: React.FC<InstructionsSectionProps> = ({ data, setData
                     className="form-input senior-form-input"
                     value={compte.courriel}
                     onChange={(e) => updateCompteEnLigne(compte.id, 'courriel', e.target.value)}
-                    placeholder="exemple@courriel.com"
+                    placeholder="example@email.com"
                     style={{fontSize: '18px', minHeight: '48px', padding: '12px 16px'}}
                   />
                 </div>
@@ -403,7 +403,7 @@ const InstructionsSection: React.FC<InstructionsSectionProps> = ({ data, setData
                       style={{paddingRight: '40px', fontSize: '18px', minHeight: '48px', padding: '12px 16px'}}
                       value={compte.motDePasse}
                       onChange={(e) => updateCompteEnLigne(compte.id, 'motDePasse', e.target.value)}
-                      placeholder="Mot de passe"
+                      placeholder={t.emergencyPlanning.digital?.password || "Password"}
                     />
                   </div>
                 </div>

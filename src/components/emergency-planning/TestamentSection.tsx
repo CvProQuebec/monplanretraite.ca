@@ -15,7 +15,7 @@ const TestamentSection: React.FC<TestamentSectionProps> = ({ data, setData }) =>
     <div className="form-section">
       <h2 style={{fontSize: '24px', marginBottom: '20px', color: '#1f2937', display: 'flex', alignItems: 'center', gap: '12px'}}>
         <FileCheck size={24} />
-        {t.emergencyPlanning.testament?.title || 'Testament et succession'}
+        {t.emergencyPlanning.testament.title}
       </h2>
 
       {/* Possession de testament */}
@@ -29,7 +29,7 @@ const TestamentSection: React.FC<TestamentSectionProps> = ({ data, setData }) =>
               style={{width: '18px', height: '18px'}}
             />
             <span style={{fontSize: '18px', fontWeight: '600', color: '#1f2937'}}>
-              {t.emergencyPlanning.testament?.hasWill || 'Je possède un testament'}
+              {t.emergencyPlanning.testament.hasWill}
             </span>
           </label>
         </div>
@@ -40,34 +40,34 @@ const TestamentSection: React.FC<TestamentSectionProps> = ({ data, setData }) =>
           {/* Informations sur le testament */}
           <div className="item-card" style={{marginBottom: '20px'}}>
             <h3 style={{fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '16px'}}>
-              {t.emergencyPlanning.testament?.willDetails || 'Détails du testament'}
+              {t.emergencyPlanning.testament.willDetails}
             </h3>
             
             <div className="form-grid">
               <div className="form-field">
                 <label className="form-label" style={{fontSize: '18px', fontWeight: '500'}}>
-                  {t.emergencyPlanning.testament?.willLocation || 'Emplacement du testament'}
+                  {t.emergencyPlanning.testament.willLocation}
                 </label>
                 <input
                   type="text"
                   className="form-input senior-form-input"
                   value={data.lieuTestament || ''}
                   onChange={(e) => setData({...data, lieuTestament: e.target.value})}
-                  placeholder="Où se trouve votre testament"
+                  placeholder={t.emergencyPlanning.testament.willLocationPlaceholder}
                   style={{fontSize: '18px', minHeight: '48px', padding: '12px 16px'}}
                 />
               </div>
 
               <div className="form-field">
                 <label className="form-label" style={{fontSize: '18px', fontWeight: '500'}}>
-                  {t.emergencyPlanning.testament?.copyLocation || 'Emplacement de votre copie du testament'}
+                  {t.emergencyPlanning.testament.copyLocation}
                 </label>
                 <input
                   type="text"
                   className="form-input senior-form-input"
                   value={data.emplacementCopieTestament || ''}
                   onChange={(e) => setData({...data, emplacementCopieTestament: e.target.value})}
-                  placeholder="Où se trouve votre copie personnelle"
+                  placeholder={t.emergencyPlanning.testament.copyLocationPlaceholder}
                   style={{fontSize: '18px', minHeight: '48px', padding: '12px 16px'}}
                 />
               </div>
@@ -77,34 +77,34 @@ const TestamentSection: React.FC<TestamentSectionProps> = ({ data, setData }) =>
           {/* Informations sur l'exécuteur testamentaire */}
           <div className="item-card" style={{marginBottom: '20px'}}>
             <h3 style={{fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '16px'}}>
-              {t.emergencyPlanning.testament?.executorInfo || 'Informations de l\'exécuteur testamentaire'}
+              {t.emergencyPlanning.testament.executorInfo}
             </h3>
             
             <div className="form-grid">
               <div className="form-field">
                 <label className="form-label" style={{fontSize: '18px', fontWeight: '500'}}>
-                  {t.emergencyPlanning.testament?.executor || 'Nom de l\'exécuteur testamentaire'}
+                  {t.emergencyPlanning.testament.executor}
                 </label>
                 <input
                   type="text"
                   className="form-input senior-form-input"
                   value={data.executeurTestamentaire || ''}
                   onChange={(e) => setData({...data, executeurTestamentaire: e.target.value})}
-                  placeholder="Nom complet de l'exécuteur"
+                  placeholder={t.emergencyPlanning.testament.executorPlaceholder}
                   style={{fontSize: '18px', minHeight: '48px', padding: '12px 16px'}}
                 />
               </div>
 
               <div className="form-field">
                 <label className="form-label" style={{fontSize: '18px', fontWeight: '500'}}>
-                  {t.emergencyPlanning.testament?.executorPhone || 'Téléphone de l\'exécuteur'}
+                  {t.emergencyPlanning.testament.executorPhone}
                 </label>
                 <input
                   type="tel"
                   className="form-input senior-form-input"
                   value={data.executeurTelephone || ''}
                   onChange={(e) => setData({...data, executeurTelephone: e.target.value})}
-                  placeholder="(XXX) XXX-XXXX"
+                  placeholder={t.emergencyPlanning.testament.phonePlaceholder}
                   style={{fontSize: '18px', minHeight: '48px', padding: '12px 16px'}}
                 />
               </div>
@@ -114,61 +114,61 @@ const TestamentSection: React.FC<TestamentSectionProps> = ({ data, setData }) =>
           {/* Informations sur le notaire */}
           <div className="item-card" style={{marginBottom: '20px'}}>
             <h3 style={{fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '16px'}}>
-              {t.emergencyPlanning.testament?.notaryInfo || 'Informations du notaire'}
+              {t.emergencyPlanning.testament.notaryInfo}
             </h3>
             
             <div className="form-grid">
               <div className="form-field">
                 <label className="form-label" style={{fontSize: '18px', fontWeight: '500'}}>
-                  {t.emergencyPlanning.testament?.notaryName || 'Nom du notaire'}
+                  {t.emergencyPlanning.testament.notaryName}
                 </label>
                 <input
                   type="text"
                   className="form-input senior-form-input"
                   value={data.notaire || ''}
                   onChange={(e) => setData({...data, notaire: e.target.value})}
-                  placeholder="Nom complet du notaire"
+                  placeholder={t.emergencyPlanning.testament.notaryNamePlaceholder}
                   style={{fontSize: '18px', minHeight: '48px', padding: '12px 16px'}}
                 />
               </div>
 
               <div className="form-field">
                 <label className="form-label" style={{fontSize: '18px', fontWeight: '500'}}>
-                  {t.emergencyPlanning.testament?.notaryPhone || 'Téléphone'}
+                  {t.emergencyPlanning.testament.notaryPhone}
                 </label>
                 <input
                   type="tel"
                   className="form-input senior-form-input"
                   value={data.notaireTelephone || ''}
                   onChange={(e) => setData({...data, notaireTelephone: e.target.value})}
-                  placeholder="(XXX) XXX-XXXX"
+                  placeholder={t.emergencyPlanning.testament.phonePlaceholder}
                   style={{fontSize: '18px', minHeight: '48px', padding: '12px 16px'}}
                 />
               </div>
 
               <div className="form-field" style={{gridColumn: '1 / -1'}}>
                 <label className="form-label" style={{fontSize: '18px', fontWeight: '500'}}>
-                  {t.emergencyPlanning.testament?.notaryAddress || 'Adresse du notaire'}
+                  {t.emergencyPlanning.testament.notaryAddress}
                 </label>
                 <textarea
                   className="form-input senior-form-input"
                   style={{minHeight: '60px', resize: 'vertical', fontSize: '18px', padding: '12px 16px'}}
                   value={data.notaireAdresse || ''}
                   onChange={(e) => setData({...data, notaireAdresse: e.target.value})}
-                  placeholder="Adresse complète du bureau du notaire"
+                  placeholder={t.emergencyPlanning.testament.notaryAddressPlaceholder}
                 />
               </div>
 
               <div className="form-field">
                 <label className="form-label" style={{fontSize: '18px', fontWeight: '500'}}>
-                  {t.emergencyPlanning.testament?.minuteNumber || 'Numéro de minute du testament'}
+                  {t.emergencyPlanning.testament.minuteNumber}
                 </label>
                 <input
                   type="text"
                   className="form-input senior-form-input"
                   value={data.numeroMinuteTestament || ''}
                   onChange={(e) => setData({...data, numeroMinuteTestament: e.target.value})}
-                  placeholder="Numéro de référence du testament"
+                  placeholder={t.emergencyPlanning.testament.minuteNumberPlaceholder}
                   style={{fontSize: '18px', minHeight: '48px', padding: '12px 16px'}}
                 />
               </div>
@@ -180,46 +180,46 @@ const TestamentSection: React.FC<TestamentSectionProps> = ({ data, setData }) =>
       {/* Volontés en fin de vie */}
       <div className="item-card" style={{marginBottom: '20px'}}>
         <h3 style={{fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '16px'}}>
-          {t.emergencyPlanning.testament?.endOfLifeWishes || 'Volontés en fin de vie'}
+          {t.emergencyPlanning.testament.endOfLifeWishes}
         </h3>
         
         <div className="form-grid">
           <div className="form-field" style={{gridColumn: '1 / -1'}}>
             <label className="form-label">
-              {t.emergencyPlanning.testament?.livingWill || 'Testament de vie / Directives médicales'}
+              {t.emergencyPlanning.testament.livingWill}
             </label>
             <textarea
               className="form-input"
               style={{minHeight: '100px', resize: 'vertical'}}
               value={data.testamentVie || ''}
               onChange={(e) => setData({...data, testamentVie: e.target.value})}
-              placeholder="Vos volontés concernant les soins médicaux en fin de vie"
+              placeholder={t.emergencyPlanning.testament.livingWillPlaceholder}
             />
           </div>
 
           <div className="form-field" style={{gridColumn: '1 / -1'}}>
             <label className="form-label">
-              {t.emergencyPlanning.testament?.organDonation || 'Don d\'organes'}
+              {t.emergencyPlanning.testament.organDonation}
             </label>
             <textarea
               className="form-input"
               style={{minHeight: '80px', resize: 'vertical'}}
               value={data.donOrganes || ''}
               onChange={(e) => setData({...data, donOrganes: e.target.value})}
-              placeholder="Vos volontés concernant le don d'organes et de tissus"
+              placeholder={t.emergencyPlanning.testament.organDonationPlaceholder}
             />
           </div>
 
           <div className="form-field" style={{gridColumn: '1 / -1'}}>
             <label className="form-label">
-              {t.emergencyPlanning.testament?.funeralWishes || 'Volontés funéraires'}
+              {t.emergencyPlanning.testament.funeralWishes}
             </label>
             <textarea
               className="form-input"
               style={{minHeight: '120px', resize: 'vertical'}}
               value={data.volontesFuneraires || ''}
               onChange={(e) => setData({...data, volontesFuneraires: e.target.value})}
-              placeholder="Vos volontés concernant les funérailles, crémation, inhumation, service religieux, etc."
+              placeholder={t.emergencyPlanning.testament.funeralWishesPlaceholder}
             />
           </div>
         </div>
@@ -228,19 +228,19 @@ const TestamentSection: React.FC<TestamentSectionProps> = ({ data, setData }) =>
       {/* Instructions spéciales supplémentaires */}
       <div className="item-card">
         <h3 style={{fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '16px'}}>
-          {t.emergencyPlanning.testament?.specialInstructions || 'Instructions spéciales'}
+          {t.emergencyPlanning.testament.specialInstructions}
         </h3>
         
         <div className="form-field">
           <label className="form-label">
-            {t.emergencyPlanning.testament?.additionalInstructions || 'Instructions supplémentaires pour vos proches'}
+            {t.emergencyPlanning.testament.additionalInstructions}
           </label>
           <textarea
             className="form-input"
             style={{minHeight: '120px', resize: 'vertical'}}
             value={data.instructionsSpeciales || ''}
             onChange={(e) => setData({...data, instructionsSpeciales: e.target.value})}
-            placeholder="Toute autre instruction importante que vous souhaitez laisser à vos proches (messages personnels, souhaits particuliers, objets à léguer à des personnes spécifiques, etc.)"
+            placeholder={t.emergencyPlanning.testament.additionalInstructionsPlaceholder}
           />
         </div>
       </div>
@@ -254,8 +254,8 @@ const TestamentSection: React.FC<TestamentSectionProps> = ({ data, setData }) =>
         borderLeft: '4px solid #3b82f6'
       }}>
         <p style={{margin: 0, fontSize: '14px', color: '#1e40af'}}>
-          <strong>{t.emergencyPlanning.testament?.importantNote || 'Note importante'} :</strong>{' '}
-          {t.emergencyPlanning.testament?.importantNoteText || 'Il est recommandé de réviser et mettre à jour votre testament régulièrement, surtout après des événements majeurs de la vie (mariage, divorce, naissance, décès, acquisition de biens importants).'}
+          <strong>{t.emergencyPlanning.testament.importantNote} :</strong>{' '}
+          {t.emergencyPlanning.testament.importantNoteText}
         </p>
       </div>
     </div>

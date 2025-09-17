@@ -89,7 +89,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                 </label>
                 <select
                   id={`compteType${index}`}
-                  title="Sélectionner un type de compte"
+                  title={t.emergencyPlanning.finances.accountType}
                   className="form-input"
                   value={c.type}
                   onChange={(e) => {
@@ -98,11 +98,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     setData({ ...data, comptesBancaires: updated });
                   }}
                 >
-                  <option value="">Sélectionner</option>
-                  <option value="Chèque">Chèque</option>
-                  <option value="Épargne">Épargne</option>
-                  <option value="Entreprise">Entreprise</option>
-                  <option value="Autre">Autre</option>
+                  <option value="">{t.emergencyPlanning.finances.accountTypeSelect}</option>
+                  <option value="Chèque">{t.emergencyPlanning.finances.accountTypeChecking}</option>
+                  <option value="Épargne">{t.emergencyPlanning.finances.accountTypeSavings}</option>
+                  <option value="Entreprise">{t.emergencyPlanning.finances.accountTypeBusiness}</option>
+                  <option value="Autre">{t.emergencyPlanning.finances.accountTypeOther}</option>
                 </select>
               </div>
               <div className="form-field">
@@ -131,7 +131,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     updated[index] = { ...(updated[index] || { id: c.id }), ...c, institution: e.target.value };
                     setData({ ...data, comptesBancaires: updated });
                   }}
-                  placeholder="Nom de la banque"
+                  placeholder={t.emergencyPlanning.finances.institution}
                 />
               </div>
               <div className="form-field">
@@ -145,7 +145,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     updated[index] = { ...(updated[index] || { id: c.id }), ...c, adresseSuccursale: e.target.value };
                     setData({ ...data, comptesBancaires: updated });
                   }}
-                  placeholder="Adresse complète"
+                  placeholder={t.emergencyPlanning.finances.branchAddress}
                 />
               </div>
 
@@ -160,7 +160,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     updated[index] = { ...(updated[index] || { id: c.id }), ...c, coTitulaire: e.target.value };
                     setData({ ...data, comptesBancaires: updated });
                   }}
-                  placeholder="Nom complet du co-titulaire"
+                  placeholder={t.emergencyPlanning.finances.coHolder}
                 />
               </div>
             </div>
@@ -177,7 +177,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
           <div key={carte.id || index} className="item-card">
             <div className="form-grid">
               <div className="form-field">
-                <label className="form-label">Émetteur</label>
+                <label className="form-label">{t.emergencyPlanning.finances.cardIssuer}</label>
                 <input
                   type="text"
                   className="form-input"
@@ -187,11 +187,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     updated[index] = { ...(updated[index] || { id: carte.id }), ...carte, emetteur: e.target.value };
                     setData({ ...data, cartesCredit: updated });
                   }}
-                  placeholder="Banque / Émetteur"
+                  placeholder={t.emergencyPlanning.finances.cardIssuer}
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Numéro (4 derniers chiffres)</label>
+                <label className="form-label">{t.emergencyPlanning.finances.cardLastFour}</label>
                 <input
                   type="text"
                   className="form-input"
@@ -249,13 +249,13 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
         {expandedSections.financesEtranger && (
           <div id="section-etranger" className="collapsible-content" aria-labelledby="etrangerHeader">
             <div className="form-field">
-              <label className="form-label">Informations</label>
+              <label className="form-label">{t.emergencyPlanning.finances.informationLabel}</label>
               <textarea
                 className="form-input"
                 style={{minHeight: '80px'}}
                 value={data.comptesEtrangerInfo}
                 onChange={(e) => setData({ ...data, comptesEtrangerInfo: e.target.value })}
-                placeholder="Informations pertinentes sur les comptes détenus à l'étranger"
+                placeholder="Relevant information on foreign accounts held"
               />
             </div>
           </div>
@@ -288,13 +288,13 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
         {expandedSections.financesCrypto && (
           <div id="section-crypto" className="collapsible-content" aria-labelledby="cryptoHeader">
             <div className="form-field">
-              <label className="form-label">Informations</label>
+              <label className="form-label">{t.emergencyPlanning.finances.informationLabel}</label>
               <textarea
                 className="form-input"
                 style={{minHeight: '80px'}}
                 value={data.cryptomonnaiesInfo}
                 onChange={(e) => setData({ ...data, cryptomonnaiesInfo: e.target.value })}
-                placeholder="Plateformes, portefeuilles, accès sécurisé, etc."
+                placeholder="Platforms, wallets, secure access, etc."
               />
             </div>
           </div>
@@ -309,11 +309,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
 
         {/* Prêts personnels */}
         <div className="item-card">
-          <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>Prêts personnels</h4>
+          <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>{t.emergencyPlanning.finances.personalLoans}</h4>
           {prets.map((p, index) => (
             <div key={p.id || index} className="form-grid" style={{marginBottom: '12px'}}>
               <div className="form-field">
-                <label className="form-label">Créancier</label>
+                <label className="form-label">{t.emergencyPlanning.finances.creditor}</label>
                 <input
                   type="text"
                   className="form-input"
@@ -323,11 +323,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     updated[index] = { ...(updated[index] || { id: p.id }), ...p, creancier: e.target.value };
                     setData({ ...data, pretsPersonnels: updated });
                   }}
-                  placeholder="Nom du créancier"
+                  placeholder={t.emergencyPlanning.finances.creditor}
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Montant</label>
+                <label className="form-label">{t.emergencyPlanning.finances.amount}</label>
                 <input
                   type="text"
                   className="form-input"
@@ -341,7 +341,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Échéance</label>
+                <label className="form-label">{t.emergencyPlanning.finances.dueDate}</label>
                 <input
                   type="text"
                   className="form-input"
@@ -351,7 +351,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     updated[index] = { ...(updated[index] || { id: p.id }), ...p, echeance: e.target.value };
                     setData({ ...data, pretsPersonnels: updated });
                   }}
-                  placeholder="AAAA-MM-JJ ou texte"
+                  placeholder="YYYY-MM-DD or text"
                 />
               </div>
             </div>
@@ -360,11 +360,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
 
         {/* Autres dettes (famille, amis) */}
         <div className="item-card" style={{marginTop: '12px'}}>
-          <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>Autres dettes (famille, amis)</h4>
+          <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>{t.emergencyPlanning.finances.otherDebts}</h4>
           {autresDettes.map((d, index) => (
             <div key={d.id || index} className="form-grid" style={{marginBottom: '12px'}}>
               <div className="form-field">
-                <label className="form-label">Nom</label>
+                <label className="form-label">{t.emergencyPlanning.finances.name}</label>
                 <input
                   type="text"
                   className="form-input"
@@ -374,11 +374,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     updated[index] = { ...(updated[index] || { id: d.id }), ...d, nom: e.target.value };
                     setData({ ...data, autresDettes: updated });
                   }}
-                  placeholder="Nom de la personne"
+                  placeholder={t.emergencyPlanning.finances.name}
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Téléphone ou courriel</label>
+                <label className="form-label">{t.emergencyPlanning.finances.phoneOrEmail}</label>
                 <input
                   type="text"
                   className="form-input"
@@ -388,11 +388,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     updated[index] = { ...(updated[index] || { id: d.id }), ...d, contact: e.target.value };
                     setData({ ...data, autresDettes: updated });
                   }}
-                  placeholder="(XXX) XXX-XXXX ou courriel"
+                  placeholder="(XXX) XXX-XXXX or email"
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Montant</label>
+                <label className="form-label">{t.emergencyPlanning.finances.amount}</label>
                 <input
                   type="text"
                   className="form-input"
@@ -406,7 +406,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                 />
               </div>
               <div className="form-field">
-                <label className="form-label">Échéance</label>
+                <label className="form-label">{t.emergencyPlanning.finances.dueDate}</label>
                 <input
                   type="text"
                   className="form-input"
@@ -416,7 +416,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     updated[index] = { ...(updated[index] || { id: d.id }), ...d, echeance: e.target.value };
                     setData({ ...data, autresDettes: updated });
                   }}
-                  placeholder="AAAA-MM-JJ ou texte"
+                  placeholder="YYYY-MM-DD or text"
                 />
               </div>
             </div>
@@ -452,13 +452,13 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
           <div id="section-investissements" className="collapsible-content" aria-labelledby="investHeader">
             {/* Immobilier */}
             <div className="form-field" style={{gridColumn: '1 / -1'}}>
-              <label className="form-label">Investissements immobiliers (parts dans des sociétés) - Informations</label>
+              <label className="form-label">{t.emergencyPlanning.finances.realEstateInvestments}</label>
               <textarea
                 className="form-input"
                 style={{minHeight: '80px'}}
                 value={data.investissementsImmobiliersInfo}
                 onChange={(e) => setData({ ...data, investissementsImmobiliersInfo: e.target.value })}
-                placeholder="Détails sur les parts détenues, sociétés, coordonnées, etc."
+                placeholder="Details on shares held, companies, contact information, etc."
               />
             </div>
 
@@ -468,7 +468,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
               <div key={acc.id || index} className="item-card">
                 <div className="form-grid">
                   <div className="form-field">
-                    <label className="form-label">Institution</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.institution}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -478,11 +478,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, institution: e.target.value };
                         setData({ ...data, reers: updated });
                       }}
-                      placeholder="Institution financière"
+                      placeholder={t.emergencyPlanning.finances.institution}
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Type d'investissement</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.investmentType}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -492,11 +492,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, typeInvestissement: e.target.value };
                         setData({ ...data, reers: updated });
                       }}
-                      placeholder="FNB, fonds, actions, etc."
+                      placeholder="ETF, funds, stocks, etc."
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Numéro de compte</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.accountNumber}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -510,7 +510,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Nom du représentant financier</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.representativeName}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -520,11 +520,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, representantNom: e.target.value };
                         setData({ ...data, reers: updated });
                       }}
-                      placeholder="Nom du représentant"
+                      placeholder={t.emergencyPlanning.finances.representativeName}
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Téléphone / courriel</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.representativeContact}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -534,7 +534,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, representantContact: e.target.value };
                         setData({ ...data, reers: updated });
                       }}
-                      placeholder="(XXX) XXX-XXXX / courriel"
+                      placeholder="(XXX) XXX-XXXX / email"
                     />
                   </div>
                 </div>
@@ -547,7 +547,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
               <div key={acc.id || index} className="item-card">
                 <div className="form-grid">
                   <div className="form-field">
-                    <label className="form-label">Institution</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.institution}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -557,11 +557,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, institution: e.target.value };
                         setData({ ...data, celis: updated });
                       }}
-                      placeholder="Institution financière"
+                      placeholder={t.emergencyPlanning.finances.institution}
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Type d'investissement</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.investmentType}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -571,11 +571,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, typeInvestissement: e.target.value };
                         setData({ ...data, celis: updated });
                       }}
-                      placeholder="FNB, fonds, actions, etc."
+                      placeholder="ETF, funds, stocks, etc."
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Numéro de compte</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.accountNumber}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -589,7 +589,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Nom du représentant financier</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.representativeName}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -599,11 +599,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, representantNom: e.target.value };
                         setData({ ...data, celis: updated });
                       }}
-                      placeholder="Nom du représentant"
+                      placeholder={t.emergencyPlanning.finances.representativeName}
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Téléphone / courriel</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.representativeContact}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -613,7 +613,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, representantContact: e.target.value };
                         setData({ ...data, celis: updated });
                       }}
-                      placeholder="(XXX) XXX-XXXX / courriel"
+                      placeholder="(XXX) XXX-XXXX / email"
                     />
                   </div>
                 </div>
@@ -626,7 +626,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
               <div key={acc.id || index} className="item-card">
                 <div className="form-grid">
                   <div className="form-field">
-                    <label className="form-label">Institution</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.institution}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -636,11 +636,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, institution: e.target.value };
                         setData({ ...data, cris: updated });
                       }}
-                      placeholder="Institution financière"
+                      placeholder={t.emergencyPlanning.finances.institution}
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Type d'investissement</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.investmentType}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -650,11 +650,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, typeInvestissement: e.target.value };
                         setData({ ...data, cris: updated });
                       }}
-                      placeholder="FNB, fonds, actions, etc."
+                      placeholder="ETF, funds, stocks, etc."
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Numéro de compte</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.accountNumber}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -668,7 +668,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Nom du représentant financier</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.representativeName}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -678,11 +678,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, representantNom: e.target.value };
                         setData({ ...data, cris: updated });
                       }}
-                      placeholder="Nom du représentant"
+                      placeholder={t.emergencyPlanning.finances.representativeName}
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Téléphone / courriel</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.representativeContact}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -692,7 +692,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, representantContact: e.target.value };
                         setData({ ...data, cris: updated });
                       }}
-                      placeholder="(XXX) XXX-XXXX / courriel"
+                      placeholder="(XXX) XXX-XXXX / email"
                     />
                   </div>
                 </div>
@@ -705,7 +705,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
               <div key={acc.id || index} className="item-card">
                 <div className="form-grid">
                   <div className="form-field">
-                    <label className="form-label">Institution</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.institution}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -715,11 +715,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, institution: e.target.value };
                         setData({ ...data, ferrs: updated });
                       }}
-                      placeholder="Institution financière"
+                      placeholder={t.emergencyPlanning.finances.institution}
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Type d'investissement</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.investmentType}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -729,11 +729,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, typeInvestissement: e.target.value };
                         setData({ ...data, ferrs: updated });
                       }}
-                      placeholder="FNB, fonds, actions, etc."
+                      placeholder="ETF, funds, stocks, etc."
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Numéro de compte</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.accountNumber}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -747,7 +747,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Nom du représentant financier</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.representativeName}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -757,11 +757,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, representantNom: e.target.value };
                         setData({ ...data, ferrs: updated });
                       }}
-                      placeholder="Nom du représentant"
+                      placeholder={t.emergencyPlanning.finances.representativeName}
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Téléphone / courriel</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.representativeContact}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -771,7 +771,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, representantContact: e.target.value };
                         setData({ ...data, ferrs: updated });
                       }}
-                      placeholder="(XXX) XXX-XXXX / courriel"
+                      placeholder="(XXX) XXX-XXXX / email"
                     />
                   </div>
                 </div>
@@ -779,12 +779,12 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
             ))}
 
             {/* Actions / obligations */}
-            <h4 style={{fontSize: '16px', fontWeight: 700, color: '#1f2937', marginTop: '16px'}}>Actions / obligations</h4>
+            <h4 style={{fontSize: '16px', fontWeight: 700, color: '#1f2937', marginTop: '16px'}}>{t.emergencyPlanning.finances.stocksAndBonds}</h4>
             {brokers.map((b, index) => (
               <div key={b.id || index} className="item-card">
                 <div className="form-grid">
                   <div className="form-field">
-                    <label className="form-label">Courtier</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.broker}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -794,11 +794,11 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: b.id }), ...b, courtier: e.target.value };
                         setData({ ...data, brokerAccounts: updated });
                       }}
-                      placeholder="Nom du courtier"
+                      placeholder={t.emergencyPlanning.finances.broker}
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Numéro de compte</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.accountNumber}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -812,7 +812,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                     />
                   </div>
                   <div className="form-field">
-                    <label className="form-label">Contact</label>
+                    <label className="form-label">{t.emergencyPlanning.finances.contact}</label>
                     <input
                       type="text"
                       className="form-input"
@@ -822,7 +822,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
                         updated[index] = { ...(updated[index] || { id: b.id }), ...b, contact: e.target.value };
                         setData({ ...data, brokerAccounts: updated });
                       }}
-                      placeholder="(XXX) XXX-XXXX / courriel"
+                      placeholder="(XXX) XXX-XXXX / email"
                     />
                   </div>
                 </div>

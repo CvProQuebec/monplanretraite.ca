@@ -260,6 +260,16 @@ const Revenus: React.FC = () => {
               : 'Manage your income sources to optimize your retirement planning'
             }
           </p>
+
+          {/* Lien rapide vers le module Budget (onglet revenus) */}
+          <div className="mt-6">
+            <Button
+              onClick={() => navigate(isFrench ? '/mon-budget?tab=income' : '/my-budget?tab=income')}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3"
+            >
+              {isFrench ? 'Voir dans le budget' : 'View in budget'}
+            </Button>
+          </div>
         </div>
 
 

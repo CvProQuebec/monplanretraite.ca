@@ -21,19 +21,19 @@ const EmploiSection: React.FC<EmploiSectionProps> = ({ data, setData }) => {
       <div className="form-grid">
         {/* 1. Nom de l'employeur (entreprise) */}
         <div className="form-field">
-          <label className="form-label">Nom de l'employeur (entreprise)</label>
+          <label className="form-label">{t.emergencyPlanning.employment.employerName}</label>
           <input
             type="text"
             className="form-input"
             value={data.employeur}
             onChange={(e) => setData({...data, employeur: e.target.value})}
-            placeholder="Nom de l'entreprise"
+            placeholder={t.emergencyPlanning.employment.employerName}
           />
         </div>
 
         {/* 2. Téléphone employeur */}
         <div className="form-field">
-          <label className="form-label">Téléphone employeur</label>
+          <label className="form-label">{t.emergencyPlanning.employment.employerPhone}</label>
           <input
             type="tel"
             className="form-input"
@@ -45,79 +45,79 @@ const EmploiSection: React.FC<EmploiSectionProps> = ({ data, setData }) => {
 
         {/* 3. Adresse du lieu de travail */}
         <div className="form-field" style={{gridColumn: '1 / -1'}}>
-          <label className="form-label">Adresse du lieu de travail</label>
+          <label className="form-label">{t.emergencyPlanning.employment.workAddress}</label>
           <textarea
             className="form-input"
             style={{minHeight: '80px', resize: 'vertical'}}
             value={data.adresseTravail}
             onChange={(e) => setData({...data, adresseTravail: e.target.value})}
-            placeholder="Adresse complète du lieu de travail"
+            placeholder={t.emergencyPlanning.employment.workAddress}
           />
         </div>
 
         {/* 4. Poste occupé */}
         <div className="form-field">
-          <label className="form-label">Poste occupé</label>
+          <label className="form-label">{t.emergencyPlanning.employment.position}</label>
           <input
             type="text"
             className="form-input"
             value={data.poste}
             onChange={(e) => setData({...data, poste: e.target.value})}
-            placeholder="Votre titre de poste"
+            placeholder={t.emergencyPlanning.employment.position}
           />
         </div>
 
         {/* 5. Département/service */}
         <div className="form-field">
-          <label className="form-label">Département/service</label>
+          <label className="form-label">{t.emergencyPlanning.employment.department}</label>
           <input
             type="text"
             className="form-input"
             value={data.departement}
             onChange={(e) => setData({...data, departement: e.target.value})}
-            placeholder="Département ou service"
+            placeholder={t.emergencyPlanning.employment.department}
           />
         </div>
 
         {/* 6. Numéro d'employé */}
         <div className="form-field">
-          <label className="form-label">Numéro d'employé</label>
+          <label className="form-label">{t.emergencyPlanning.employment.employeeNumber}</label>
           <input
             type="text"
             className="form-input"
             value={data.numeroEmploye}
             onChange={(e) => setData({...data, numeroEmploye: e.target.value})}
-            placeholder="Numéro d'employé"
+            placeholder={t.emergencyPlanning.employment.employeeNumber}
           />
         </div>
 
         {/* 7. RH Personne-ressource Nom */}
         <div className="form-field">
-          <label className="form-label">RH Personne-ressource Nom</label>
+          <label className="form-label">{t.emergencyPlanning.employment.hrContactName}</label>
           <input
             type="text"
             className="form-input"
             value={data.rhContactNom}
             onChange={(e) => setData({...data, rhContactNom: e.target.value})}
-            placeholder="Nom du contact aux ressources humaines"
+            placeholder={t.emergencyPlanning.employment.hrContactName}
           />
         </div>
 
         {/* 8. RH Personne-ressource Courriel */}
         <div className="form-field">
-          <label className="form-label">RH Personne-ressource Courriel</label>
+          <label className="form-label">{t.emergencyPlanning.employment.hrContactEmail}</label>
           <input
             type="email"
             className="form-input"
             value={data.rhContactCourriel}
             onChange={(e) => setData({...data, rhContactCourriel: e.target.value})}
-            placeholder="courriel@entreprise.com"
+            placeholder="email@company.com"
           />
         </div>
 
         {/* 9. RH Personne-ressource Téléphone */}
         <div className="form-field">
-          <label className="form-label">RH Personne-ressource Téléphone</label>
+          <label className="form-label">{t.emergencyPlanning.employment.hrContactPhone}</label>
           <input
             type="tel"
             className="form-input"
@@ -129,31 +129,31 @@ const EmploiSection: React.FC<EmploiSectionProps> = ({ data, setData }) => {
 
         {/* 10. Nom du superviseur immédiat */}
         <div className="form-field">
-          <label className="form-label">Nom du superviseur immédiat</label>
+          <label className="form-label">{t.emergencyPlanning.employment.supervisor}</label>
           <input
             type="text"
             className="form-input"
             value={data.superviseur}
             onChange={(e) => setData({...data, superviseur: e.target.value})}
-            placeholder="Nom du superviseur"
+            placeholder={t.emergencyPlanning.employment.supervisor}
           />
         </div>
 
         {/* 11. Courriel du superviseur immédiat */}
         <div className="form-field">
-          <label className="form-label">Courriel du superviseur immédiat</label>
+          <label className="form-label">{t.emergencyPlanning.employment.supervisorEmail}</label>
           <input
             type="email"
             className="form-input"
             value={data.superviseurCourriel}
             onChange={(e) => setData({...data, superviseurCourriel: e.target.value})}
-            placeholder="superviseur@entreprise.com"
+            placeholder="supervisor@company.com"
           />
         </div>
 
         {/* 12. Téléphone du superviseur immédiat */}
         <div className="form-field">
-          <label className="form-label">Téléphone du superviseur immédiat</label>
+          <label className="form-label">{t.emergencyPlanning.employment.supervisorPhone}</label>
           <input
             type="tel"
             className="form-input"
@@ -165,25 +165,25 @@ const EmploiSection: React.FC<EmploiSectionProps> = ({ data, setData }) => {
 
         {/* 13. Avantages sociaux */}
         <div className="form-field" style={{gridColumn: '1 / -1'}}>
-          <label className="form-label">Avantages sociaux</label>
+          <label className="form-label">{t.emergencyPlanning.employment.benefits}</label>
           <textarea
             className="form-input"
             style={{minHeight: '80px', resize: 'vertical'}}
             value={data.avantagesSociaux}
             onChange={(e) => setData({...data, avantagesSociaux: e.target.value})}
-            placeholder="Assurance maladie, dentaire, REER collectif, etc."
+            placeholder="Health insurance, dental, group RRSP, etc."
           />
         </div>
 
         {/* 14. Instructions spécifiques pour l'employeur */}
         <div className="form-field" style={{gridColumn: '1 / -1'}}>
-          <label className="form-label">Instructions spécifiques pour l'employeur</label>
+          <label className="form-label">{t.emergencyPlanning.employment.instructions}</label>
           <textarea
             className="form-input"
             style={{minHeight: '80px', resize: 'vertical'}}
             value={data.instructionsEmployeur}
             onChange={(e) => setData({...data, instructionsEmployeur: e.target.value})}
-            placeholder="Instructions spéciales pour l'employeur en cas d'urgence"
+            placeholder="Special instructions for employer in case of emergency"
           />
         </div>
       </div>

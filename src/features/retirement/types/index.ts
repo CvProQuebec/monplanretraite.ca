@@ -14,6 +14,8 @@ export interface UserData {
   savings: SavingsData;
   cashflow: CashflowData;
   advancedExpenses?: AdvancedExpensesData;
+  /** Données saisonnières (compatibilité UI existante) */
+  seasonalExpenses?: any;
   employmentStatus?: EmploymentStatusData; // NOUVEAU
 }
 
@@ -193,6 +195,8 @@ export interface CashflowData {
   transport: number;
   sante: number;
   loisirs: number;
+  /** Drapeaux d'inclusion dans le budget (synchronisation Budget > Dépenses) */
+  includeFlags?: Record<string, boolean>;
   depensesSaisonnieres?: number;
   
   // Propriétés de ventilation des dépenses

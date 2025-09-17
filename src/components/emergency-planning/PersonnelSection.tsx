@@ -31,7 +31,7 @@ const PersonnelSection: React.FC<PersonnelSectionProps> = ({
             className="form-input"
             value={data.prenom}
             onChange={(e) => setData({...data, prenom: e.target.value})}
-            placeholder="Votre prénom"
+            placeholder={t.emergencyPlanning.personal.firstNamePlaceholder}
           />
         </div>
 
@@ -42,7 +42,7 @@ const PersonnelSection: React.FC<PersonnelSectionProps> = ({
             className="form-input"
             value={data.nom}
             onChange={(e) => setData({...data, nom: e.target.value})}
-            placeholder="Votre nom de famille"
+            placeholder={t.emergencyPlanning.personal.lastNamePlaceholder}
           />
         </div>
 
@@ -63,7 +63,7 @@ const PersonnelSection: React.FC<PersonnelSectionProps> = ({
             className="form-input"
             value={data.telephone}
             onChange={(e) => setData({...data, telephone: e.target.value})}
-            placeholder="(XXX) XXX-XXXX"
+            placeholder={t.emergencyPlanning.personal.phonePlaceholder}
           />
         </div>
 
@@ -74,7 +74,7 @@ const PersonnelSection: React.FC<PersonnelSectionProps> = ({
             className="form-input"
             value={data.courriel}
             onChange={(e) => setData({...data, courriel: e.target.value})}
-            placeholder="votre@courriel.com"
+            placeholder={t.emergencyPlanning.personal.emailPlaceholder}
           />
         </div>
 
@@ -85,7 +85,7 @@ const PersonnelSection: React.FC<PersonnelSectionProps> = ({
             style={{minHeight: '80px', resize: 'vertical'}}
             value={data.adresse}
             onChange={(e) => setData({...data, adresse: e.target.value})}
-            placeholder="Adresse complète avec ville et code postal"
+            placeholder={t.emergencyPlanning.personal.addressPlaceholder}
           />
         </div>
 
@@ -96,7 +96,7 @@ const PersonnelSection: React.FC<PersonnelSectionProps> = ({
             className="form-input"
             value={showPasswords ? data.nas : data.nas.replace(/./g, '*')}
             onChange={(e) => setData({...data, nas: e.target.value})}
-            placeholder="XXX-XXX-XXX"
+            placeholder={t.emergencyPlanning.personal.sinPlaceholder}
           />
         </div>
 
@@ -107,7 +107,7 @@ const PersonnelSection: React.FC<PersonnelSectionProps> = ({
             className="form-input"
             value={showPasswords ? data.assuranceMaladie : data.assuranceMaladie.replace(/./g, '*')}
             onChange={(e) => setData({...data, assuranceMaladie: e.target.value})}
-            placeholder="XXXX XXXX XX"
+            placeholder={t.emergencyPlanning.personal.healthCardPlaceholder}
           />
         </div>
 
@@ -118,7 +118,7 @@ const PersonnelSection: React.FC<PersonnelSectionProps> = ({
             style={{minHeight: '80px', resize: 'vertical'}}
             value={data.allergies}
             onChange={(e) => setData({...data, allergies: e.target.value})}
-            placeholder="Allergies connues ou 'Aucune'"
+            placeholder={t.emergencyPlanning.personal.allergiesPlaceholder}
           />
         </div>
 
@@ -129,7 +129,7 @@ const PersonnelSection: React.FC<PersonnelSectionProps> = ({
             style={{minHeight: '80px', resize: 'vertical'}}
             value={data.conditionsMedicales}
             onChange={(e) => setData({...data, conditionsMedicales: e.target.value})}
-            placeholder="Conditions médicales importantes ou 'Aucune'"
+            placeholder={t.emergencyPlanning.personal.medicalConditionsPlaceholder}
           />
         </div>
 
@@ -140,7 +140,7 @@ const PersonnelSection: React.FC<PersonnelSectionProps> = ({
             className="form-input"
             value={data.contactUrgenceNom}
             onChange={(e) => setData({...data, contactUrgenceNom: e.target.value})}
-            placeholder="Nom du contact d'urgence"
+            placeholder={t.emergencyPlanning.personal.emergencyContactPlaceholder}
           />
         </div>
 
@@ -151,7 +151,7 @@ const PersonnelSection: React.FC<PersonnelSectionProps> = ({
             className="form-input"
             value={data.contactUrgenceTelephone}
             onChange={(e) => setData({...data, contactUrgenceTelephone: e.target.value})}
-            placeholder="(XXX) XXX-XXXX"
+            placeholder={t.emergencyPlanning.personal.phonePlaceholder}
           />
         </div>
       </div>

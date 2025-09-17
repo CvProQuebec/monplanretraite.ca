@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 
 /* CSS pour disposition 3 colonnes des dépenses */
 const expenseStyles = `
@@ -94,7 +94,8 @@ import {
   Save,
   Eye,
   EyeOff,
-  ArrowRight
+  ArrowRight,
+  Download
 } from 'lucide-react';
 import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 import { SmartAlerts } from '@/components/ui/SmartAlerts';
@@ -106,6 +107,18 @@ import { SeasonalWorkerBudget } from '@/components/ui/SeasonalWorkerBudget';
 import { ErrorPreventionService } from '@/services/ErrorPreventionService';
 import { OnboardingService } from '@/services/OnboardingService';
 import { GamificationService } from '@/services/GamificationService';
+import { BudgetComputationService } from '@/services/BudgetComputationService';
+import { formatCurrencyLocale, formatPercentLocale } from '@/utils/localeFormat';
+import { BudgetSettings, BudgetTargets } from '@/types/budget';
+import BudgetLinkService, { BudgetLink } from '@/services/BudgetLinkService';
+import { useSearchParams } from 'react-router-dom';
+
+const IncomeDeductionsForm = lazy(() => import('@/components/budget/IncomeDeductionsForm'));
+const BudgetTargetsGauges = lazy(() => import('@/components/budget/BudgetTargetsGauges'));
+const EmergencyFundCard = lazy(() => import('@/components/budget/EmergencyFundCard'));
+const SinkingFundsManager = lazy(() => import('@/components/budget/SinkingFundsManager'));
+const DebtSnowballWizard = lazy(() => import('@/components/budget/DebtSnowballWizard'));
+const ContextualTipsPanel = lazy(() => import('@/components/budget/ContextualTipsPanel'));
 
 // Types pour le budget
 interface ExpenseEntry {
@@ -179,6 +192,74 @@ const Budget: React.FC = () => {
   const [editingExpense, setEditingExpense] = useState<string | null>(null);
   const [showAddExpense, setShowAddExpense] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+
+  // Nouveau: paramètres revenus/déductions et cibles 50/30/20
+  const [budgetSettings, setBudgetSettings] = useState<BudgetSettings>({
+    netIncomeMethod: 'regular',
+    deductions: [],
+    targets: { needsPct: 50, wantsPct: 30, savingsDebtPct: 20 },
+    lastUpdated: new Date().toISOString()
+  });
+  const [budgetTargets, setBudgetTargets] = useState<BudgetTargets>({ needsPct: 50, wantsPct: 30, savingsDebtPct: 20 });
+  const [budgetLinks, setBudgetLinks] = useState<BudgetLink[]>([]);
+
+  // Importer automatiquement les catégories principales de la page Dépenses (cashflow) dans le Budget
+  const importFromCashflow = () => {
+    const cf = (userData as any)?.cashflow;
+    if (!cf) {
+      console.warn('Aucune donnée "cashflow" trouvée dans userData');
+      return;
+    }
+
+    const include = (cf as any)?.includeFlags || {};
+    const isIncluded = (key: string) => include[key] !== false;
+
+    const newExpenses = [...budgetData.expenses];
+    const newLinks = [...budgetLinks];
+
+    const alreadyLinked = (sourceId: string) =>
+      newLinks.some(l => l.sourceType === 'expense' && l.sourceId === sourceId);
+
+    const addIf = (
+      key: string,
+      category: ExpenseEntry['category'],
+      subcategory: string,
+      description: string
+    ) => {
+      if (!isIncluded(key)) return;
+      const sourceId = `cashflow:${key}`;
+      const amount = Number(cf[key] || 0);
+      if (!amount || amount <= 0) return;
+      if (alreadyLinked(sourceId)) return;
+
+      const id = `expense-${key}-${Date.now()}`;
+      newExpenses.push({
+        id,
+        category,
+        subcategory,
+        description,
+        amount,
+        frequency: 'monthly',
+        paymentDate: 1,
+        isActive: true,
+        isFixed: true
+      });
+      newLinks.push({ budgetItemId: id, sourceType: 'expense', sourceId });
+    };
+
+    // Mappage cashflow -> catégories Budget
+    addIf('logement', 'logement', 'Hypothèque/Loyer', isFrench ? 'Logement' : 'Housing');
+    addIf('servicesPublics', 'services', isFrench ? 'Services publics' : 'Utilities', isFrench ? 'Services publics' : 'Utilities');
+    addIf('assurances', 'divers', isFrench ? 'Assurances' : 'Insurance', isFrench ? 'Assurances' : 'Insurance');
+    addIf('telecom', 'services', isFrench ? 'Télécommunications' : 'Telecommunications', isFrench ? 'Télécommunications' : 'Telecommunications');
+    addIf('alimentation', 'alimentation', isFrench ? 'Épicerie' : 'Groceries', isFrench ? 'Alimentation' : 'Food');
+    addIf('transport', 'transport', isFrench ? 'Transport' : 'Transport', isFrench ? 'Transport' : 'Transport');
+    addIf('sante', 'sante', isFrench ? 'Santé' : 'Health', isFrench ? 'Santé' : 'Health');
+    addIf('loisirs', 'loisirs', isFrench ? 'Loisirs' : 'Leisure', isFrench ? 'Loisirs' : 'Leisure');
+
+    setBudgetData(prev => ({ ...prev, expenses: newExpenses }));
+    setBudgetLinks(newLinks);
+  };
 
   // Catégories de dépenses avec icônes et couleurs
   const expenseCategories = [
@@ -351,6 +432,36 @@ const Budget: React.FC = () => {
         expense.id === id ? { ...expense, ...updates } : expense
       )
     }));
+
+    // Propagation (MVP) vers la source si l'item est lié à une catégorie cashflow
+    const link = budgetLinks.find(l => l.budgetItemId === id && l.sourceType === 'expense' && l.sourceId.startsWith('cashflow:'));
+    if (link) {
+      const key = link.sourceId.replace('cashflow:', '');
+      // Demande simple à l'utilisateur (UX seniors: confirmation explicite)
+      const apply = window.confirm(
+        isFrench
+          ? `Cet élément est lié à la catégorie "${key}" dans la section Dépenses. Appliquer cette modification à la source ?`
+          : `This item is linked to "${key}" category in Expenses. Apply this change to the source?`
+      );
+      if (apply) {
+        // Calculer le montant mensuel en fonction de la fréquence (si fournie dans updates)
+        const targetExpense = budgetData.expenses.find(e => e.id === id);
+        const freqValue = updates.frequency || targetExpense?.frequency || 'monthly';
+        const amountValue = updates.amount ?? targetExpense?.amount ?? 0;
+        const freqDef = frequencies.find(f => f.value === freqValue);
+        const monthly = freqValue === 'seasonal'
+          ? amountValue / 12
+          : ((amountValue || 0) * (freqDef?.multiplier || 12)) / 12;
+
+        // Appliquer à userData.cashflow[key]
+        try {
+          updateUserData('cashflow', { [key]: Math.max(0, Math.round(monthly)) } as any);
+          console.log('🔄 Propagation vers cashflow appliquée:', key, monthly);
+        } catch (e) {
+          console.error('❌ Erreur de propagation vers cashflow:', e);
+        }
+      }
+    }
   };
 
   // Supprimer une dépense
@@ -363,12 +474,7 @@ const Budget: React.FC = () => {
 
   // Formater la devise
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('fr-CA', {
-      style: 'currency',
-      currency: 'CAD',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(amount);
+    return formatCurrencyLocale(amount, isFrench ? 'fr' : 'en');
   };
 
   // Obtenir la couleur selon le montant (positif/négatif)
@@ -382,7 +488,7 @@ const Budget: React.FC = () => {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      updateUserData('personal', { budgetData } as any);
+      updateUserData('personal', { budgetData, budgetSettings, budgetLinks } as any);
       
       const result = await EnhancedSaveManager.saveDirectly(userData, {
         includeTimestamp: true
@@ -398,16 +504,55 @@ const Budget: React.FC = () => {
     }
   };
 
+  const handleExportPDF = async () => {
+    try {
+      const { PDFExportService } = await import('@/services/PDFExportService');
+      const blob = await PDFExportService.generateBudgetReport(isFrench ? 'fr' : 'en', {
+        netMonthlyIncome,
+        allocations,
+        targets: budgetTargets,
+        emergencyMonthsTarget: budgetSettings.emergencyMonthsTarget ?? 0,
+        emergencySaved: budgetData.emergencyFund ?? 0,
+        sinkingFunds: budgetSettings.sinkingFunds ?? [],
+        debt: budgetSettings.debtSnowball,
+        reportTitle: isFrench ? 'Budget personnel' : 'Personal Budget'
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = isFrench ? 'Budget-personnel.pdf' : 'Personal-Budget.pdf';
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error('❌ Export PDF échoué:', e);
+      alert(isFrench ? 'Erreur lors de la génération du PDF' : 'Error generating PDF');
+    }
+  };
+
   // Charger les données au montage
   useEffect(() => {
     const savedBudgetData = (userData.personal as any)?.budgetData;
     if (savedBudgetData) {
       setBudgetData(savedBudgetData);
     }
+    const savedBudgetSettings = (userData.personal as any)?.budgetSettings;
+    if (savedBudgetSettings) {
+      setBudgetSettings(savedBudgetSettings);
+    }
+    const savedLinks = (userData.personal as any)?.budgetLinks;
+    if (savedLinks) {
+      setBudgetLinks(savedLinks);
+    }
   }, [userData]);
 
   const monthlyExpenses = calculateMonthlyExpenses();
   const netCashFlow = calculateNetCashFlow();
+
+  // Nouveau: revenu net mensuel et allocations 50/30/20
+  const netMonthlyIncome = (budgetSettings.netIncome ?? incomeData.monthlyIncome) || 0;
+  const allocations = BudgetComputationService.computeAllocations(budgetData as any, netMonthlyIncome);
+  const [searchParams] = useSearchParams();
+  const initialTab = searchParams.get('tab') ?? 'overview';
 
   // Si l'utilisateur n'a pas accès, afficher le message d'upgrade
   if (!hasAccess) {
@@ -557,19 +702,37 @@ const Budget: React.FC = () => {
         )}
 
         {/* Onglets principaux */}
-        <Tabs defaultValue="overview" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-7 bg-slate-100 backdrop-blur-sm border border-slate-300" style={{minHeight: '52px'}}>
-            <TabsTrigger value="overview" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Vue d\'ensemble' : 'Overview'}</TabsTrigger>
-            <TabsTrigger value="expenses" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Dépenses' : 'Expenses'}</TabsTrigger>
-            <TabsTrigger value="calendar" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Calendrier' : 'Calendar'}</TabsTrigger>
-            <TabsTrigger value="coastfire" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Liberté financière' : 'CoastFIRE'}</TabsTrigger>
-            <TabsTrigger value="tips" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? '99 Trucs' : '99 Tips'}</TabsTrigger>
-            <TabsTrigger value="learning" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Apprentissage' : 'Learning'}</TabsTrigger>
-            <TabsTrigger value="settings" className="text-lg font-medium" style={{fontSize: '1.125rem', minHeight: '48px'}}>{isFrench ? 'Paramètres' : 'Settings'}</TabsTrigger>
+        <Tabs defaultValue={initialTab} className="space-y-6">
+          <TabsList className="w-full flex flex-wrap gap-2 gap-y-2 bg-slate-100 backdrop-blur-sm border border-slate-300 p-2 rounded-md h-auto items-stretch overflow-visible">
+            {/* ordre optimisé pour FR (libellés plus longs) */}
+            <TabsTrigger value="overview" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Vue d\'ensemble' : 'Overview'}</TabsTrigger>
+            <TabsTrigger value="income" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Revenus et déductions' : 'Income and deductions'}</TabsTrigger>
+            <TabsTrigger value="budgetRule" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">50/30/20</TabsTrigger>
+            <TabsTrigger value="emergency" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Fonds d’urgence' : 'Emergency fund'}</TabsTrigger>
+            <TabsTrigger value="sinking" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[220px] sm:max-w-none">{isFrench ? 'Objectifs planifiés' : 'Planned goals'}</TabsTrigger>
+            <TabsTrigger value="debts" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Dettes' : 'Debts'}</TabsTrigger>
+            <TabsTrigger value="expenses" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Dépenses' : 'Expenses'}</TabsTrigger>
+            <TabsTrigger value="calendar" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Calendrier' : 'Calendar'}</TabsTrigger>
+            <TabsTrigger value="coastfire" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Liberté financière' : 'CoastFIRE'}</TabsTrigger>
+            <TabsTrigger value="tips" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? '99 trucs' : '99 tips'}</TabsTrigger>
+            <TabsTrigger value="learning" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Apprentissage' : 'Learning'}</TabsTrigger>
+            <TabsTrigger value="settings" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Paramètres' : 'Settings'}</TabsTrigger>
           </TabsList>
 
           {/* Vue d'ensemble */}
           <TabsContent value="overview" className="space-y-6">
+            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
+              <ContextualTipsPanel
+                language={isFrench ? 'fr' : 'en'}
+                allocations={allocations}
+                targets={budgetTargets}
+                emergencyMonthsTarget={budgetSettings.emergencyMonthsTarget ?? 0}
+                emergencySaved={budgetData.emergencyFund ?? 0}
+                debtState={budgetSettings.debtSnowball}
+                expenses={budgetData.expenses}
+                sinkingFunds={budgetSettings.sinkingFunds ?? []}
+              />
+            </Suspense>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Graphique des catégories */}
               <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 shadow-lg">
@@ -617,7 +780,7 @@ const Budget: React.FC = () => {
                             {formatCurrency(categoryExpenses)}
                           </div>
                           <div className="senior-expense-percentage">
-                            {percentage.toFixed(1).replace('.', ',')} %
+                            {formatPercentLocale(percentage, isFrench ? 'fr' : 'en')}
                           </div>
                         </div>
                       );
@@ -662,17 +825,71 @@ const Budget: React.FC = () => {
 
           {/* Gestion des dépenses */}
           <TabsContent value="expenses" className="space-y-6">
-            <div className="flex justify-between items-center">
+            {(() => {
+              const linkedCount = budgetLinks.filter(l => l.sourceType === 'expense' && l.sourceId.startsWith('cashflow:')).length;
+              if (linkedCount === 0) return null;
+              const applyAll = () => {
+                const changes: any = {};
+                for (const exp of budgetData.expenses) {
+                  const link = budgetLinks.find(l => l.budgetItemId === exp.id && l.sourceType === 'expense' && l.sourceId.startsWith('cashflow:'));
+                  if (!link) continue;
+                  const key = link.sourceId.replace('cashflow:', '');
+                  const freqDef = frequencies.find(f => f.value === exp.frequency);
+                  const monthly = exp.frequency === 'seasonal' ? (exp.amount || 0) / 12 : ((exp.amount || 0) * (freqDef?.multiplier || 12)) / 12;
+                  changes[key] = Math.max(0, Math.round(monthly));
+                }
+                try {
+                  updateUserData('cashflow', changes);
+                } catch (e) {
+                  console.error('❌ Appliquer tout (cashflow) a échoué:', e);
+                }
+              };
+              const dissociateAll = () => {
+                const newLinks = budgetLinks.filter(l => !(l.sourceType === 'expense' && l.sourceId.startsWith('cashflow:')));
+                setBudgetLinks(newLinks);
+                try {
+                  updateUserData('personal', { budgetLinks: newLinks } as any);
+                } catch (e) {
+                  console.error('❌ Dissocier tout a échoué:', e);
+                }
+              };
+              return (
+                <Alert className="border-blue-200 bg-blue-50 text-blue-900">
+                  <AlertDescription className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <span>{isFrench ? `Synchronisation active: ${linkedCount} poste(s) lié(s) aux Dépenses.` : `Active sync: ${linkedCount} linked item(s) with Expenses.`}</span>
+                    <div className="flex gap-2">
+                      <Button onClick={applyAll} className="bg-blue-600 hover:bg-blue-700 text-white">
+                        {isFrench ? 'Appliquer tout' : 'Apply all'}
+                      </Button>
+                      <Button onClick={dissociateAll} variant="outline">
+                        {isFrench ? 'Dissocier tout' : 'Dissociate all'}
+                      </Button>
+                    </div>
+                  </AlertDescription>
+                </Alert>
+              );
+            })()}
+            <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
               <h2 className="text-2xl font-bold text-blue-700">
                 {isFrench ? 'Gestion des dépenses' : 'Expense Management'}
               </h2>
-              <Button
-                onClick={addExpense}
-                className="bg-gradient-to-r from-green-400 to-emerald-400 hover:from-green-500 hover:to-emerald-500"
-              >
-                <Plus className="w-4 h-4 mr-2" />
-                {isFrench ? 'Ajouter une dépense' : 'Add Expense'}
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  onClick={importFromCashflow}
+                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  title={isFrench ? 'Importer vos dépenses mensuelles depuis la section Dépenses' : 'Import your monthly expenses from the Expenses section'}
+                >
+                  <Download className="w-4 h-4 mr-2" />
+                  {isFrench ? 'Importer depuis Dépenses' : 'Import from Expenses'}
+                </Button>
+                <Button
+                  onClick={addExpense}
+                  className="bg-gradient-to-r from-green-400 to-emerald-400 hover:from-green-500 hover:to-emerald-500"
+                >
+                  <Plus className="w-4 h-4 mr-2" />
+                  {isFrench ? 'Ajouter une dépense' : 'Add Expense'}
+                </Button>
+              </div>
             </div>
 
             {/* Liste des dépenses */}
@@ -940,6 +1157,94 @@ const Budget: React.FC = () => {
             />
           </TabsContent>
 
+          {/* Règle 50/30/20 */}
+          <TabsContent value="budgetRule" className="space-y-6">
+            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
+              <BudgetTargetsGauges
+                language={isFrench ? 'fr' : 'en'}
+                netMonthlyIncome={netMonthlyIncome}
+                allocations={allocations}
+                targets={budgetTargets}
+                onChangeTargets={setBudgetTargets}
+              />
+            </Suspense>
+          </TabsContent>
+
+          {/* Fonds d’urgence */}
+          <TabsContent value="emergency" className="space-y-6">
+            <Alert className="border-emerald-200 bg-emerald-50 text-emerald-900">
+              <AlertDescription>
+                {isFrench
+                  ? 'Recommandation: gardez 3 à 12 mois de “besoins essentiels” en réserve. Ajustez la cible et suivez votre progression.'
+                  : 'Recommendation: keep 3 to 12 months of “essential needs” in reserve. Adjust the target and track your progress.'}
+              </AlertDescription>
+            </Alert>
+            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
+              <EmergencyFundCard
+                language={isFrench ? 'fr' : 'en'}
+                monthlyNeeds={allocations.totalNeeds}
+                currentSaved={budgetData.emergencyFund}
+                onSavedChange={(v) => setBudgetData(prev => ({ ...prev, emergencyFund: v }))}
+                monthsTarget={budgetSettings.emergencyMonthsTarget ?? 3}
+                onMonthsTargetChange={(m) => setBudgetSettings(prev => ({ ...prev, emergencyMonthsTarget: m }))}
+              />
+            </Suspense>
+          </TabsContent>
+
+          {/* Objectifs planifiés (sinking funds) */}
+          <TabsContent value="sinking" className="space-y-6">
+            <Alert className="border-indigo-200 bg-indigo-50 text-indigo-900">
+              <AlertDescription>
+                {isFrench
+                  ? 'Planifiez vos projets (ex.: taxes, voyage, réparation). Indiquez une échéance et un montant cible — la mensualité requise est calculée automatiquement.'
+                  : 'Plan your projects (e.g., taxes, travel, repair). Set a due date and a target amount — the required monthly saving is computed automatically.'}
+              </AlertDescription>
+            </Alert>
+            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
+              <SinkingFundsManager
+                language={isFrench ? 'fr' : 'en'}
+                funds={budgetSettings.sinkingFunds ?? []}
+                onChange={(next) => setBudgetSettings(prev => ({ ...prev, sinkingFunds: next }))}
+              />
+            </Suspense>
+          </TabsContent>
+
+          {/* Dettes — Snowball */}
+          <TabsContent value="debts" className="space-y-6">
+            <Alert className="border-purple-200 bg-purple-50 text-purple-900">
+              <AlertDescription>
+                {isFrench
+                  ? 'Stratégie “boule de neige”: payez le minimum partout et concentrez un montant additionnel sur la plus petite (ou la plus coûteuse) en premier. Lorsque soldée, enchaînez avec la suivante.'
+                  : '“Snowball” strategy: pay the minimum on all debts and focus an extra amount on the smallest (or the highest rate) first. When paid off, roll the amount into the next.'}
+              </AlertDescription>
+            </Alert>
+            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
+              <DebtSnowballWizard
+                language={isFrench ? 'fr' : 'en'}
+                state={budgetSettings.debtSnowball ?? { debts: [], extraPerMonth: 0, method: 'balance' }}
+                onChange={(next) => setBudgetSettings(prev => ({ ...prev, debtSnowball: next }))}
+              />
+            </Suspense>
+          </TabsContent>
+
+          {/* Revenus & Déductions */}
+          <TabsContent value="income" className="space-y-6">
+            <Alert className="border-blue-200 bg-blue-50 text-blue-800">
+              <AlertDescription>
+                {isFrench
+                  ? 'Meilleure pratique : saisissez vos revenus dans la section Revenus. Le budget les utilise automatiquement. Cette section vous permet de démarrer rapidement ou d’ajuster au besoin.'
+                  : 'Best practice: enter your income in the Income section. The budget uses it automatically. This section lets you get started quickly or make adjustments if needed.'}
+              </AlertDescription>
+            </Alert>
+            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
+              <IncomeDeductionsForm
+                language={isFrench ? 'fr' : 'en'}
+                value={budgetSettings}
+                onChange={setBudgetSettings}
+              />
+            </Suspense>
+          </TabsContent>
+
           {/* Paramètres */}
           <TabsContent value="settings" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -1029,6 +1334,13 @@ const Budget: React.FC = () => {
               ? (isFrench ? '💾 SAUVEGARDE...' : '💾 SAVING...')
               : (isFrench ? '💾 SAUVEGARDER BUDGET' : '💾 SAVE BUDGET')
             }
+          </Button>
+          <Button
+            onClick={handleExportPDF}
+            size="lg"
+            className="ml-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xl py-6 px-8 border-2 border-blue-200"
+          >
+            {isFrench ? '📄 Exporter PDF' : '📄 Export PDF'}
           </Button>
           <p className="text-gray-700 mt-4 text-lg" style={{fontSize: '1.125rem'}}>
             {isFrench 

@@ -41,52 +41,52 @@ const ContactsSection: React.FC<ContactsSectionProps> = ({ data, setData }) => {
           padding: '8px 12px',
           borderRadius: '4px'
         }}>
-          Contact d'urgence {contactNumber}
+          {t.emergencyPlanning.contacts.emergencyContact} {contactNumber}
         </h3>
 
         <div className="form-grid">
           <div className="form-field">
-            <label className="form-label">Nom du contact</label>
+            <label className="form-label">{t.emergencyPlanning.contacts.contactName}</label>
             <input
               type="text"
               className="form-input"
               value={data[nomField] as string || ''}
               onChange={(e) => updateContact(contactNumber, 'nom', e.target.value)}
-              placeholder="Nom complet du contact"
+              placeholder={t.emergencyPlanning.contacts.contactNamePlaceholder}
             />
           </div>
 
           <div className="form-field">
-            <label className="form-label">Lien/relation</label>
+            <label className="form-label">{t.emergencyPlanning.contacts.relationshipLabel}</label>
             <input
               type="text"
               className="form-input"
               value={data[lienField] as string || ''}
               onChange={(e) => updateContact(contactNumber, 'lienRelation', e.target.value)}
-              placeholder="Ex: Conjoint, Enfant, Frère, Ami..."
+              placeholder={t.emergencyPlanning.contacts.relationshipPlaceholder}
             />
           </div>
 
           <div className="form-field">
-            <label className="form-label">Numéro de téléphone</label>
+            <label className="form-label">{t.emergencyPlanning.contacts.phoneNumber}</label>
             <input
               type="tel"
               className="form-input"
               value={data[telephoneField] as string || ''}
               onChange={(e) => updateContact(contactNumber, 'telephone', e.target.value)}
-              placeholder="(XXX) XXX-XXXX"
+              placeholder={t.emergencyPlanning.contacts.phonePlaceholder}
             />
           </div>
         </div>
 
         <div className="form-field" style={{marginTop: '16px'}}>
-          <label className="form-label">Instructions (à contacter en cas de...)</label>
+          <label className="form-label">{t.emergencyPlanning.contacts.instructionsLabel}</label>
           <textarea
             className="form-input"
             style={{minHeight: '80px', resize: 'vertical'}}
             value={data[instructionsField] as string || ''}
             onChange={(e) => updateContact(contactNumber, 'instructions', e.target.value)}
-            placeholder="Ex: Contacter en cas d'urgence médicale, Contacter pour les questions financières, etc."
+            placeholder={t.emergencyPlanning.contacts.instructionsPlaceholder}
           />
         </div>
       </div>
@@ -97,7 +97,7 @@ const ContactsSection: React.FC<ContactsSectionProps> = ({ data, setData }) => {
     <div className="form-section">
       <h2 style={{fontSize: '24px', marginBottom: '20px', color: '#1f2937', display: 'flex', alignItems: 'center', gap: '12px'}}>
         <Phone size={24} />
-        Contacts d'urgence
+        {t.emergencyPlanning.contacts.emergencyContactsTitle}
       </h2>
       
       {renderEmergencyContact(1)}

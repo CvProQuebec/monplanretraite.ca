@@ -28,69 +28,69 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
 
       {/* Résidence principale */}
       <div className="item-card">
-        <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>Résidence principale</h4>
+        <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>{t.emergencyPlanning.assets.primaryResidence}</h4>
         <div className="form-grid">
           <div className="form-field" style={{gridColumn: '1 / -1'}}>
-            <label className="form-label">Adresse</label>
+            <label className="form-label">{t.emergencyPlanning.assets.address}</label>
             <textarea
               className="form-input"
               style={{minHeight: '60px'}}
               value={data.residencePrincipale.adresse}
               onChange={(e) => setData({...data, residencePrincipale: {...data.residencePrincipale, adresse: e.target.value}})}
-              placeholder="Adresse complète"
+              placeholder={t.emergencyPlanning.assets.addressPlaceholder}
             />
           </div>
           <div className="form-field" style={{gridColumn: 'span 2'}}>
-            <label className="form-label">Titre de propriété (lieu de conservation)</label>
+            <label className="form-label">{t.emergencyPlanning.assets.propertyTitleLocation}</label>
             <input
               type="text"
               className="form-input"
               value={data.residencePrincipale.titreProprieteLieu}
               onChange={(e) => setData({...data, residencePrincipale: {...data.residencePrincipale, titreProprieteLieu: e.target.value}})}
-              placeholder="Lieu où se trouve le titre"
+              placeholder={t.emergencyPlanning.assets.propertyTitlePlaceholder}
             />
           </div>
           <div className="form-field">
-            <label className="form-label">Numéro de lot cadastral</label>
+            <label className="form-label">{t.emergencyPlanning.assets.cadastralLot}</label>
             <input
               type="text"
               className="form-input"
               value={data.residencePrincipale.lotCadastral}
               onChange={(e) => setData({...data, residencePrincipale: {...data.residencePrincipale, lotCadastral: e.target.value}})}
-              placeholder="Numéro de lot"
+              placeholder={t.emergencyPlanning.assets.cadastralLotPlaceholder}
             />
           </div>
           <div className="form-field">
-            <label className="form-label">Hypothèque restante</label>
+            <label className="form-label">{t.emergencyPlanning.assets.remainingMortgage}</label>
             <select
               className="form-input"
-              title="Hypothèque restante"
+              title={t.emergencyPlanning.assets.remainingMortgage}
               value={data.residencePrincipale.hypothequeRestante}
               onChange={(e) => setData({...data, residencePrincipale: {...data.residencePrincipale, hypothequeRestante: e.target.value}})}
             >
-              <option value="">Sélectionner</option>
-              <option value="Oui">Oui</option>
-              <option value="Non">Non</option>
+              <option value="">{t.emergencyPlanning.assets.selectOption}</option>
+              <option value="Oui">{t.emergencyPlanning.assets.yes}</option>
+              <option value="Non">{t.emergencyPlanning.assets.no}</option>
             </select>
           </div>
           <div className="form-field">
-            <label className="form-label">Institution financière</label>
+            <label className="form-label">{t.emergencyPlanning.assets.financialInstitution}</label>
             <input
               type="text"
               className="form-input"
               value={data.residencePrincipale.institutionFinanciere}
               onChange={(e) => setData({...data, residencePrincipale: {...data.residencePrincipale, institutionFinanciere: e.target.value}})}
-              placeholder="Nom de l'institution"
+              placeholder={t.emergencyPlanning.assets.institutionPlaceholder}
             />
           </div>
           <div className="form-field">
-            <label className="form-label">Solde approximatif</label>
+            <label className="form-label">{t.emergencyPlanning.assets.approximateBalance}</label>
             <input
               type="text"
               className="form-input"
               value={data.residencePrincipale.soldeApproximatif}
               onChange={(e) => setData({...data, residencePrincipale: {...data.residencePrincipale, soldeApproximatif: e.target.value}})}
-              placeholder="0,00 $"
+              placeholder={t.emergencyPlanning.assets.amountPlaceholder}
             />
           </div>
         </div>
@@ -98,16 +98,16 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
 
       {/* Résidence secondaire / maison à revenu / chalet */}
       <div className="item-card">
-        <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>Résidence secondaire / maison à revenu / chalet</h4>
+        <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>{t.emergencyPlanning.assets.secondaryResidence}</h4>
         <div className="form-grid">
           <div className="form-field">
-            <label className="form-label">Titre de propriété</label>
+            <label className="form-label">{t.emergencyPlanning.assets.propertyTitle}</label>
             <input
               type="text"
               className="form-input"
               value={data.residenceSecondaire.titrePropriete}
               onChange={(e) => setData({...data, residenceSecondaire: {...data.residenceSecondaire, titrePropriete: e.target.value}})}
-              placeholder="Lieu du titre"
+              placeholder={t.emergencyPlanning.assets.titleLocationPlaceholder}
             />
           </div>
           <div className="form-field" style={{gridColumn: 'span 2'}}>
@@ -121,13 +121,13 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
             />
           </div>
           <div className="form-field" style={{gridColumn: '1 / -1'}}>
-            <label className="form-label">Détails particuliers</label>
+            <label className="form-label">{t.emergencyPlanning.assets.specificDetails}</label>
             <textarea
               className="form-input"
               style={{minHeight: '60px'}}
               value={data.residenceSecondaire.detailsParticuliers}
               onChange={(e) => setData({...data, residenceSecondaire: {...data.residenceSecondaire, detailsParticuliers: e.target.value}})}
-              placeholder="Informations pertinentes"
+              placeholder={t.emergencyPlanning.assets.detailsPlaceholder}
             />
           </div>
           <div className="form-field">
@@ -150,7 +150,7 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
               className="form-input"
               value={data.residenceSecondaire.institutionFinanciere}
               onChange={(e) => setData({...data, residenceSecondaire: {...data.residenceSecondaire, institutionFinanciere: e.target.value}})}
-              placeholder="Nom de l'institution"
+              placeholder={t.emergencyPlanning.assets.institutionPlaceholder}
             />
           </div>
           <div className="form-field">
@@ -168,11 +168,11 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
 
       {/* Autres propriétés */}
       <div className="item-card">
-        <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>Autres propriétés</h4>
+        <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>{t.emergencyPlanning.assets.otherProperties}</h4>
         {autresProps.map((p, index) => (
           <div key={p.id || index} className="form-grid" style={{marginBottom: '12px'}}>
             <div className="form-field">
-              <label className="form-label">Type de propriété</label>
+              <label className="form-label">{t.emergencyPlanning.assets.propertyType}</label>
               <input
                 type="text"
                 className="form-input"
@@ -182,7 +182,7 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
                   updated[index] = { ...(updated[index] || { id: p.id }), ...p, typePropriete: e.target.value };
                   setData({...data, autresProprietes: updated});
                 }}
-                placeholder="Ex: Terrain, Condo, Commerce"
+                placeholder={t.emergencyPlanning.assets.propertyTypePlaceholder}
               />
             </div>
             <div className="form-field" style={{gridColumn: 'span 2'}}>
@@ -196,11 +196,11 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
                   updated[index] = { ...(updated[index] || { id: p.id }), ...p, adresse: e.target.value };
                   setData({...data, autresProprietes: updated});
                 }}
-                placeholder="Adresse complète"
+                placeholder={t.emergencyPlanning.assets.addressPlaceholder}
               />
             </div>
             <div className="form-field" style={{gridColumn: '1 / -1'}}>
-              <label className="form-label">Détails</label>
+              <label className="form-label">{t.emergencyPlanning.assets.details}</label>
               <textarea
                 className="form-input"
                 style={{minHeight: '60px'}}
@@ -210,7 +210,7 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
                   updated[index] = { ...(updated[index] || { id: p.id }), ...p, details: e.target.value };
                   setData({...data, autresProprietes: updated});
                 }}
-                placeholder="Informations pertinentes"
+                placeholder={t.emergencyPlanning.assets.detailsPlaceholder}
               />
             </div>
             <div className="form-field">
@@ -225,9 +225,9 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
                   setData({...data, autresProprietes: updated});
                 }}
               >
-                <option value="">Sélectionner</option>
-                <option value="Oui">Oui</option>
-                <option value="Non">Non</option>
+                <option value="">{t.emergencyPlanning.assets.selectOption}</option>
+                <option value="Oui">{t.emergencyPlanning.assets.yes}</option>
+                <option value="Non">{t.emergencyPlanning.assets.no}</option>
               </select>
             </div>
             <div className="form-field">
@@ -241,7 +241,7 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
                   updated[index] = { ...(updated[index] || { id: p.id }), ...p, institutionFinanciere: e.target.value };
                   setData({...data, autresProprietes: updated});
                 }}
-                placeholder="Nom de l'institution"
+                placeholder={t.emergencyPlanning.assets.institutionPlaceholder}
               />
             </div>
             <div className="form-field">
@@ -264,16 +264,16 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
 
       {/* Biens entreposés - Entrepôt / garde-meuble */}
       <div className="item-card">
-        <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>Biens entreposés (Entrepôt / garde-meuble)</h4>
+        <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>{t.emergencyPlanning.assets.storedGoods}</h4>
         <div className="form-grid">
           <div className="form-field">
-            <label className="form-label">Nom de l'entreprise</label>
+            <label className="form-label">{t.emergencyPlanning.assets.companyName}</label>
             <input
               type="text"
               className="form-input"
               value={data.gardeMeuble.nomEntreprise}
               onChange={(e) => setData({...data, gardeMeuble: {...data.gardeMeuble, nomEntreprise: e.target.value}})}
-              placeholder="Nom de l'entreprise"
+              placeholder={t.emergencyPlanning.assets.companyPlaceholder}
             />
           </div>
           <div className="form-field" style={{gridColumn: 'span 2'}}>
@@ -287,33 +287,33 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
             />
           </div>
           <div className="form-field">
-            <label className="form-label">Numéro du local / unité</label>
+            <label className="form-label">{t.emergencyPlanning.assets.unitNumber}</label>
             <input
               type="text"
               className="form-input"
               value={data.gardeMeuble.numeroLocal}
               onChange={(e) => setData({...data, gardeMeuble: {...data.gardeMeuble, numeroLocal: e.target.value}})}
-              placeholder="Numéro du local"
+              placeholder={t.emergencyPlanning.assets.unitPlaceholder}
             />
           </div>
           <div className="form-field">
-            <label className="form-label">Code d'accès / lieu de la clé</label>
+            <label className="form-label">{t.emergencyPlanning.assets.accessCode}</label>
             <input
               type="text"
               className="form-input"
               value={data.gardeMeuble.codeAccesLieuCle}
               onChange={(e) => setData({...data, gardeMeuble: {...data.gardeMeuble, codeAccesLieuCle: e.target.value}})}
-              placeholder="Code ou endroit de la clé"
+              placeholder={t.emergencyPlanning.assets.accessCodePlaceholder}
             />
           </div>
           <div className="form-field" style={{gridColumn: '1 / -1'}}>
-            <label className="form-label">Liste du contenu principal</label>
+            <label className="form-label">{t.emergencyPlanning.assets.contentList}</label>
             <textarea
               className="form-input"
               style={{minHeight: '80px'}}
               value={data.gardeMeuble.listeContenu}
               onChange={(e) => setData({...data, gardeMeuble: {...data.gardeMeuble, listeContenu: e.target.value}})}
-              placeholder="Liste des biens entreposés"
+              placeholder={t.emergencyPlanning.assets.contentPlaceholder}
             />
           </div>
         </div>
@@ -326,69 +326,69 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
 
       {/* Véhicule principal */}
       <div className="item-card">
-        <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>Véhicule principal</h4>
+        <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>{t.emergencyPlanning.assets.primaryVehicle}</h4>
         <div className="form-grid">
           <div className="form-field">
-            <label className="form-label">Marque / modèle / année</label>
+            <label className="form-label">{t.emergencyPlanning.assets.makeModelYear}</label>
             <input
               type="text"
               className="form-input"
               value={data.vehiculePrincipal.marqueModeleAnnee}
               onChange={(e) => setData({...data, vehiculePrincipal: {...data.vehiculePrincipal, marqueModeleAnnee: e.target.value}})}
-              placeholder="Ex: Toyota RAV4 2020"
+              placeholder={t.emergencyPlanning.assets.vehiclePlaceholder}
             />
           </div>
           <div className="form-field">
-            <label className="form-label">Numéro d'immatriculation</label>
+            <label className="form-label">{t.emergencyPlanning.assets.registrationNumber}</label>
             <input
               type="text"
               className="form-input"
               value={data.vehiculePrincipal.immatriculation}
               onChange={(e) => setData({...data, vehiculePrincipal: {...data.vehiculePrincipal, immatriculation: e.target.value}})}
-              placeholder="Numéro d'immatriculation"
+              placeholder={t.emergencyPlanning.assets.registrationPlaceholder}
             />
           </div>
           <div className="form-field">
-            <label className="form-label">Certificat de propriété (lieu)</label>
+            <label className="form-label">{t.emergencyPlanning.assets.ownershipCertificate}</label>
             <input
               type="text"
               className="form-input"
               value={data.vehiculePrincipal.certificatLieu}
               onChange={(e) => setData({...data, vehiculePrincipal: {...data.vehiculePrincipal, certificatLieu: e.target.value}})}
-              placeholder="Lieu du certificat"
+              placeholder={t.emergencyPlanning.assets.certificatePlaceholder}
             />
           </div>
           <div className="form-field">
-            <label className="form-label">Lieu des clés</label>
+            <label className="form-label">{t.emergencyPlanning.assets.keysLocation}</label>
             <input
               type="text"
               className="form-input"
               value={data.vehiculePrincipal.lieuCles}
               onChange={(e) => setData({...data, vehiculePrincipal: {...data.vehiculePrincipal, lieuCles: e.target.value}})}
-              placeholder="Où sont les clés"
+              placeholder={t.emergencyPlanning.assets.keysPlaceholder}
             />
           </div>
           <div className="form-field">
-            <label className="form-label">Financement restant</label>
+            <label className="form-label">{t.emergencyPlanning.assets.remainingFinancing}</label>
             <select
               className="form-input"
-              title="Financement restant"
+              title={t.emergencyPlanning.assets.remainingFinancing}
               value={data.vehiculePrincipal.financementRestant}
               onChange={(e) => setData({...data, vehiculePrincipal: {...data.vehiculePrincipal, financementRestant: e.target.value}})}
             >
-              <option value="">Sélectionner</option>
-              <option value="Oui">Oui</option>
-              <option value="Non">Non</option>
+              <option value="">{t.emergencyPlanning.assets.selectOption}</option>
+              <option value="Oui">{t.emergencyPlanning.assets.yes}</option>
+              <option value="Non">{t.emergencyPlanning.assets.no}</option>
             </select>
           </div>
           <div className="form-field">
-            <label className="form-label">Institution</label>
+            <label className="form-label">{t.emergencyPlanning.assets.institution}</label>
             <input
               type="text"
               className="form-input"
               value={data.vehiculePrincipal.institution}
               onChange={(e) => setData({...data, vehiculePrincipal: {...data.vehiculePrincipal, institution: e.target.value}})}
-              placeholder="Nom de l'institution"
+              placeholder={t.emergencyPlanning.assets.institutionPlaceholder}
             />
           </div>
         </div>
@@ -396,11 +396,11 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
 
       {/* Autres véhicules (roulotte, bateau, …) */}
       <div className="item-card">
-        <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>Autres véhicules (roulotte, bateau, …)</h4>
+        <h4 style={{margin: 0, marginBottom: '12px', fontSize: '16px', fontWeight: 600}}>{t.emergencyPlanning.assets.otherVehicles}</h4>
         {autresVeh.map((v, index) => (
           <div key={v.id || index} className="form-grid" style={{marginBottom: '12px'}}>
             <div className="form-field">
-              <label className="form-label">Marque / modèle / année</label>
+              <label className="form-label">{t.emergencyPlanning.assets.makeModelYear}</label>
               <input
                 type="text"
                 className="form-input"
@@ -410,11 +410,11 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
                   updated[index] = { ...(updated[index] || { id: v.id }), ...v, marqueModeleAnnee: e.target.value };
                   setData({...data, autresVehicules: updated});
                 }}
-                placeholder="Ex: Yamaha 242X 2019"
+                placeholder={t.emergencyPlanning.assets.otherVehiclePlaceholder}
               />
             </div>
             <div className="form-field">
-              <label className="form-label">Numéro d'immatriculation</label>
+              <label className="form-label">{t.emergencyPlanning.assets.registrationNumber}</label>
               <input
                 type="text"
                 className="form-input"
@@ -424,11 +424,11 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
                   updated[index] = { ...(updated[index] || { id: v.id }), ...v, immatriculation: e.target.value };
                   setData({...data, autresVehicules: updated});
                 }}
-                placeholder="Numéro d'immatriculation"
+                placeholder={t.emergencyPlanning.assets.registrationPlaceholder}
               />
             </div>
             <div className="form-field">
-              <label className="form-label">Certificat de propriété (lieu)</label>
+              <label className="form-label">{t.emergencyPlanning.assets.ownershipCertificate}</label>
               <input
                 type="text"
                 className="form-input"
@@ -438,11 +438,11 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
                   updated[index] = { ...(updated[index] || { id: v.id }), ...v, certificatLieu: e.target.value };
                   setData({...data, autresVehicules: updated});
                 }}
-                placeholder="Lieu du certificat"
+                placeholder={t.emergencyPlanning.assets.certificatePlaceholder}
               />
             </div>
             <div className="form-field">
-              <label className="form-label">Lieu des clés</label>
+              <label className="form-label">{t.emergencyPlanning.assets.keysLocation}</label>
               <input
                 type="text"
                 className="form-input"
@@ -452,14 +452,14 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
                   updated[index] = { ...(updated[index] || { id: v.id }), ...v, lieuCles: e.target.value };
                   setData({...data, autresVehicules: updated});
                 }}
-                placeholder="Où sont les clés"
+                placeholder={t.emergencyPlanning.assets.keysPlaceholder}
               />
             </div>
             <div className="form-field">
-              <label className="form-label">Financement restant</label>
+              <label className="form-label">{t.emergencyPlanning.assets.remainingFinancing}</label>
               <select
                 className="form-input"
-                title="Financement restant"
+                title={t.emergencyPlanning.assets.remainingFinancing}
                 value={v.financementRestant}
                 onChange={(e) => {
                   const updated = [...autresVeh];
@@ -467,13 +467,13 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
                   setData({...data, autresVehicules: updated});
                 }}
               >
-                <option value="">Sélectionner</option>
-                <option value="Oui">Oui</option>
-                <option value="Non">Non</option>
+                <option value="">{t.emergencyPlanning.assets.selectOption}</option>
+                <option value="Oui">{t.emergencyPlanning.assets.yes}</option>
+                <option value="Non">{t.emergencyPlanning.assets.no}</option>
               </select>
             </div>
             <div className="form-field">
-              <label className="form-label">Institution</label>
+              <label className="form-label">{t.emergencyPlanning.assets.institution}</label>
               <input
                 type="text"
                 className="form-input"
@@ -483,7 +483,7 @@ const BiensSection: React.FC<BiensSectionProps> = ({ data, setData }) => {
                   updated[index] = { ...(updated[index] || { id: v.id }), ...v, institution: e.target.value };
                   setData({...data, autresVehicules: updated});
                 }}
-                placeholder="Nom de l'institution"
+                placeholder={t.emergencyPlanning.assets.institutionPlaceholder}
               />
             </div>
           </div>
