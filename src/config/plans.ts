@@ -675,3 +675,38 @@ export const isFeatureEnabled = (
   
   return false;
 };
+
+// ===== Feature catalog for Plan Comparison (Home page) =====
+// Minimal tier required for each marketed feature; labels FR/EN.
+// This catalog is UI-facing; it does not need to map 1:1 to PlanLimits keys.
+export type Tier = 'free' | 'pro' | 'expert';
+
+export interface FeatureCatalogItem {
+  key: string;
+  labelFr: string;
+  labelEn: string;
+  tier: Tier;
+}
+
+export const FEATURE_CATALOG: FeatureCatalogItem[] = [
+  // Free (A → Z)
+  { key: 'budget', labelFr: 'Planification budget et dépenses', labelEn: 'Budget and expense planning', tier: 'free' },
+  { key: 'basic-calcs', labelFr: 'Calculateurs de base (5 outils)', labelEn: 'Basic calculators (5 tools)', tier: 'free' },
+  { key: 'emergency', labelFr: "Module d'urgence professionnel (8 sections)", labelEn: 'Professional emergency module (8 sections)', tier: 'free' },
+  { key: 'rrq-cpp', labelFr: 'Gestion revenus et prestations RRQ/CPP', labelEn: 'Income and RRQ/CPP benefits management', tier: 'free' },
+  { key: 'security', labelFr: 'Sécurité bancaire (chiffrement AES‑256)', labelEn: 'Banking security (AES‑256 encryption)', tier: 'free' },
+
+  // Professional (A → Z)
+  { key: 'adv-calcs', labelFr: 'Calculateurs avancés (IRR, TWR, Monte Carlo)', labelEn: 'Advanced calculators (IRR, TWR, Monte Carlo)', tier: 'pro' },
+  { key: 'ai-assistant', labelFr: 'Assistant IA Personnel (prévention catastrophes)', labelEn: 'Personal AI Assistant (disaster prevention)', tier: 'pro' },
+  { key: 'pro-reports', labelFr: 'Rapports professionnels (PDF) • Simulations illimitées', labelEn: 'Professional reports (PDF) • Unlimited simulations', tier: 'pro' },
+  { key: 'rregop', labelFr: 'Module RREGOP complet', labelEn: 'Complete RREGOP module', tier: 'pro' },
+  { key: 'srg', labelFr: 'Module SRG complet', labelEn: 'Complete GIS module', tier: 'pro' },
+  { key: 'tax-opt', labelFr: 'Optimisation fiscale avancée (REER/CELI)', labelEn: 'Advanced tax optimization (RRSP/TFSA)', tier: 'pro' },
+
+  // Expert (A → Z)
+  { key: 'consultant-reports', labelFr: 'Rapports niveau consultant', labelEn: 'Consultant-level reports', tier: 'expert' },
+  { key: 'estate', labelFr: 'Planification successorale complète', labelEn: 'Complete estate planning', tier: 'expert' },
+  { key: 'mc-1000', labelFr: 'Monte Carlo 1000+ itérations • IA prédictive', labelEn: 'Monte Carlo 1000+ iterations • Predictive AI', tier: 'expert' },
+  { key: 'real-estate', labelFr: 'Optimisation immobilière avancée', labelEn: 'Advanced real estate optimization', tier: 'expert' }
+];

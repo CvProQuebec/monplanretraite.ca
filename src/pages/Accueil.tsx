@@ -30,6 +30,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
 import { ComparisonTeaser } from '@/components/home/ComparisonTeaser';
+import { FEATURE_CATALOG, Tier } from '@/config/plans';
 
 const Accueil: React.FC = () => {
   const { language } = useLanguage();
@@ -93,27 +94,7 @@ const Accueil: React.FC = () => {
   }, []);
 
   // Catalogue des fonctionnalités (palier minimal requis)
-  type Tier = 'free' | 'pro' | 'expert';
-  const featureCatalog: Array<{ key: string; labelFr: string; labelEn: string; tier: Tier }> = [
-    // Gratuit
-    { key: 'emergency', labelFr: "Module d'urgence professionnel (8 sections)", labelEn: 'Professional emergency module (8 sections)', tier: 'free' },
-    { key: 'budget', labelFr: 'Planification budget et dépenses', labelEn: 'Budget and expense planning', tier: 'free' },
-    { key: 'basic-calcs', labelFr: 'Calculateurs de base (5 outils)', labelEn: 'Basic calculators (5 tools)', tier: 'free' },
-    { key: 'rrq-cpp', labelFr: 'Gestion revenus et prestations RRQ/CPP', labelEn: 'Income and RRQ/CPP benefits management', tier: 'free' },
-    { key: 'security', labelFr: 'Sécurité bancaire (chiffrement AES‑256)', labelEn: 'Banking security (AES‑256 encryption)', tier: 'free' },
-    // Pro
-    { key: 'ai-assistant', labelFr: 'Assistant IA Personnel (prévention catastrophes)', labelEn: 'Personal AI Assistant (disaster prevention)', tier: 'pro' },
-    { key: 'adv-calcs', labelFr: 'Calculateurs avancés (IRR, TWR, Monte Carlo)', labelEn: 'Advanced calculators (IRR, TWR, Monte Carlo)', tier: 'pro' },
-    { key: 'rregop', labelFr: 'Module RREGOP complet', labelEn: 'Complete RREGOP module', tier: 'pro' },
-    { key: 'srg', labelFr: 'Module SRG complet', labelEn: 'Complete GIS module', tier: 'pro' },
-    { key: 'tax-opt', labelFr: 'Optimisation fiscale avancée (REER/CELI)', labelEn: 'Advanced tax optimization (RRSP/TFSA)', tier: 'pro' },
-    { key: 'pro-reports', labelFr: 'Rapports professionnels (PDF) • Simulations illimitées', labelEn: 'Professional reports (PDF) • Unlimited simulations', tier: 'pro' },
-    // Expert
-    { key: 'estate', labelFr: 'Planification successorale complète', labelEn: 'Complete estate planning', tier: 'expert' },
-    { key: 'mc-1000', labelFr: 'Monte Carlo 1000+ itérations • IA prédictive', labelEn: 'Monte Carlo 1000+ iterations • Predictive AI', tier: 'expert' },
-    { key: 'real-estate', labelFr: 'Optimisation immobilière avancée', labelEn: 'Advanced real estate optimization', tier: 'expert' },
-    { key: 'consultant-reports', labelFr: 'Rapports niveau consultant', labelEn: 'Consultant-level reports', tier: 'expert' },
-  ];
+  const featureCatalog = FEATURE_CATALOG;
 
   const labelOf = (f: { labelFr: string; labelEn: string }) => (isFrench ? f.labelFr : f.labelEn);
   const sortByLabel = (a: typeof featureCatalog[number], b: typeof featureCatalog[number]) =>
@@ -271,6 +252,22 @@ const Accueil: React.FC = () => {
             </div>
             <div className="text-sm text-gray-600">
               {isFrench ? 'Sans inscription • Données 100 % privées' : 'No signup • 100% private data'}
+            </div>
+
+            {/* Badges de réassurance */}
+            <div className="mt-2 grid grid-cols-1 sm:grid-cols-3 gap-3 w-full max-w-4xl">
+              <div className="flex items-center justify-center gap-2 bg-white/70 border border-gray-200 rounded-lg px-4 py-2">
+                <CheckCircle className="w-4 h-4 text-emerald-600" aria-hidden="true" />
+                <span className="text-sm text-gray-800">{isFrench ? 'Remboursé 14 jours' : '14‑day money‑back'}</span>
+              </div>
+              <div className="flex items-center justify-center gap-2 bg-white/70 border border-gray-200 rounded-lg px-4 py-2">
+                <Shield className="w-4 h-4 text-blue-700" aria-hidden="true" />
+                <span className="text-sm text-gray-800">{isFrench ? 'Données 100 % locales' : '100% local data'}</span>
+              </div>
+              <div className="flex items-center justify-center gap-2 bg-white/70 border border-gray-200 rounded-lg px-4 py-2">
+                <Key className="w-4 h-4 text-purple-700" aria-hidden="true" />
+                <span className="text-sm text-gray-800">{isFrench ? 'Chiffrement AES‑256' : 'AES‑256 encryption'}</span>
+              </div>
             </div>
           </div>
 
