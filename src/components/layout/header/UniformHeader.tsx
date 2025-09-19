@@ -138,7 +138,7 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
         {
           id: 'four-percent-rule',
           label: isEnglish ? '4% Rule Analysis' : 'Analyse Règle 4%',
-          path: '/module-regle-4-pourcent',
+          path: isEnglish ? '/four-percent-rule' : '/regle-4-pourcent',
           planLevel: 'professional'
         },
         {
@@ -200,6 +200,18 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           label: isEnglish ? 'CPP Timing Optimization' : 'Optimisation Timing CPP',
           path: isEnglish ? '/cpp-timing' : '/optimisation-timing-cpp',
           planLevel: 'professional'
+        },
+        {
+          id: 'rrq-quick-compare',
+          label: isEnglish ? 'RRQ/CPP Quick Compare' : 'Comparateur RRQ/CPP',
+          path: '/rrq-quick-compare',
+          planLevel: 'free'
+        },
+        {
+          id: 'rrq-delay-simulator',
+          label: isEnglish ? 'RRQ/CPP Defer by X Months' : 'Report RRQ/CPP de X mois',
+          path: '/rrq-delay-simulator',
+          planLevel: 'free'
         },
         {
           id: 'longevity-planning',

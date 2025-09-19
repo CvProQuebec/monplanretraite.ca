@@ -29,33 +29,33 @@ src/
 interface UserData {
   personal: PersonalData      // Infos personnelles + revenus
   retirement: RetirementData  // Prestations gouvernementales
-  savings: SavingsData       // Épargne et investissements
-  cashflow: CashflowData     // Dépenses et budget
+  savings: SavingsData        // Épargne et investissements
+  cashflow: CashflowData      // Dépenses et budget
 }
 ```
 
 #### PersonalData
-- **Personnes** : Informations pour 2 personnes (couples)
-- **Revenus unifiés** : `unifiedIncome1[]` et `unifiedIncome2[]`
-- **Investissements** : REER, CELI, CRI avec dates
-- **Statuts** : Actif, retraité, sans emploi
+- Personnes : Informations pour 2 personnes (couples)
+- Revenus unifiés : `unifiedIncome1[]` et `unifiedIncome2[]`
+- Investissements : REER, CELI, CRI avec dates
+- Statuts : Actif, retraité, sans emploi
 
 #### RetirementData
-- **RRQ/CPP** : Montants actuels et projections à 70 ans
-- **Sécurité de la vieillesse** : Gestion biannuelle (`svBiannual1/2`)
-- **Pensions privées** : Rentes d'employeurs et viagères
-- **Régimes spécialisés** : RREGOP, CCQ, etc.
+- RRQ/CPP : Montants actuels et projections à 70 ans
+- Sécurité de la vieillesse : Gestion biannuelle (`svBiannual1/2`)
+- Pensions privées : Rentes d'employeurs et viagères
+- Régimes spécialisés : RREGOP, CCQ, etc.
 
 ## 🎛️ Interface Utilisateur - Sommaires
 
 ### Structure des Sommaires
-- **Sommaire individuel** : Calculs par personne (Personne 1, Personne 2)
-- **Sommaire familial** : Agrégation temps réel des deux personnes
+- Sommaire individuel : Calculs par personne (Personne 1, Personne 2)
+- Sommaire familial : Agrégation temps réel des deux personnes
 
 ### Logique d'agrégation
 - Addition automatique des revenus des deux conjoints
 - Synchronisation immédiate lors des modifications
-- Affichage dans GlobalSummary.tsx
+- Affichage dans `GlobalSummary.tsx`
 
 ## 💰 Architecture des revenus (Système unifié)
 
@@ -63,62 +63,63 @@ interface UserData {
 
 ```typescript
 type IncomeType = 
-  | 'salaire'           // Emploi régulier
-  | 'emploi-saisonnier' // Travail saisonnier avec dates
-  | 'rentes'            // Pensions privées/gouvernementales
-  | 'assurance-emploi'  // Prestations AE
-  | 'dividendes'        // Revenus d'investissement
-  | 'revenus-location'  // Propriétés locatives (weekend/semaine/mois)
-  | 'travail-autonome'  // Revenus d'entreprise
-  | 'autres'            // Autres sources
+  | 'salaire'
+  | 'emploi-saisonnier'
+  | 'rentes'
+  | 'assurance-emploi'
+  | 'dividendes'
+  | 'revenus-location'
+  | 'travail-autonome'
+  | 'autres';
 ```
 
 ### Interface IncomeEntry
 Chaque revenu contient des propriétés spécialisées :
 
-**Commune à tous :**
+Commune à tous :
 - `id`, `type`, `description`, `isActive`
 - `annualAmount`, `monthlyAmount`, `toDateAmount`
 
-**Spécifiques par type :**
-- **Salaire** : `salaryNetAmount`, `salaryFrequency`, dates début/fin
-- **Revenus location** : `rentalAmount`, `rentalFrequency` (weekend/weekly/monthly)
-- **Assurance emploi** : `weeklyNet`, `eiEligibleWeeks`
-- **Rentes** : `pensionAmount`, `pensionFrequency`, `survivorBenefit`
+Spécifiques par type :
+- Salaire : `salaryNetAmount`, `salaryFrequency`, dates début/fin
+- Revenus location : `rentalAmount`, `rentalFrequency` (weekend/weekly/monthly)
+- Assurance emploi : `weeklyNet`, `eiEligibleWeeks`
+- Rentes : `pensionAmount`, `pensionFrequency`, `survivorBenefit`
 
 ## 🧮 Composants de calcul principaux
 
 ### 1. GlobalSummary.tsx
-**Rôle** : Agrégation de tous les revenus et calcul des totaux familiaux
-**Logique** :
+Rôle : Agrégation de tous les revenus et calcul des totaux familiaux
+
 ```typescript
 function calculateToDateAmount(entry: IncomeEntry) {
   switch (entry.type) {
     case 'salaire':
     case 'emploi-saisonnier':
-      // Calculs basés sur fréquence et dates d'emploi
-      // Gestion spéciale pour emplois saisonniers
+      // Basé sur la fréquence et les dates
+      break;
     case 'revenus-location':
-      // Calculs weekend (4.33/mois), weekly, monthly
+      // weekend (~4.33/mois), weekly, monthly
+      break;
     case 'rentes':
-      // Projections depuis date de début
+      // Projections mensuelles depuis la date de début
+      break;
   }
 }
 ```
 
 ### 2. SeniorsFriendlyIncomeTable.tsx
-**Rôle** : Interface de saisie adaptée aux seniors
-**Caractéristiques** :
+Rôle : Interface de saisie adaptée aux seniors
 - Grandes polices (text-xl, text-2xl)
 - Contrastes élevés (border-4)
-- Gestion en ligne avec mode édition
+- Édition en ligne
 - Validation en temps réel
 
 ### 3. Services de calcul
-- **CalculationService** : Calculs de base (capital, suffisance)
-- **EnhancedRRQService** : Optimisations RRQ/CPP
-- **MonteCarloService** : Simulations probabilistes
-- **TaxOptimizationService** : Stratégies fiscales 2025
+- CalculationService : Calculs de base (capital, suffisance)
+- EnhancedRRQService : Optimisations RRQ/CPP
+- MonteCarloService : Simulations probabilistes
+- TaxOptimizationService : Stratégies fiscales 2025
 
 ## 🔄 Flux de données
 
@@ -132,10 +133,10 @@ useRetirementData (Hook central)
 ```
 
 ### Flux des revenus
-1. **Saisie** : `SeniorsFriendlyIncomeTable` capture les données
-2. **Stockage** : Mise à jour via `updateUserData`
-3. **Calculs** : `GlobalSummary` agrège et calcule
-4. **Affichage** : Résultats temps réel dans "Résumé familial"
+1. Saisie : `SeniorsFriendlyIncomeTable`
+2. Stockage : `updateUserData`
+3. Calculs : `GlobalSummary` agrège
+4. Affichage : Résultats temps réel dans "Résumé familial"
 
 ## 🎯 Patterns architecturaux
 
@@ -143,221 +144,304 @@ useRetirementData (Hook central)
 ```typescript
 // Interface adaptée
 className="text-xl border-4 border-gray-300 p-4"
-// Grandes polices + contrastes élevés
 
 // Navigation simplifiée
-<AdaptiveHeader /> // 4 blocs principaux
-<SeniorsNavigation /> // Menu visuel avec icônes
+<AdaptiveHeader />   // 4 blocs principaux
+<SeniorsNavigation />
 ```
 
 ### 2. Calculs "à ce jour"
-Logique sophistiquée pour montants accumulés :
-- **Emplois saisonniers** : Calcul exact des mois travaillés
-- **Salaires** : Basé sur fréquence de paie et dates
-- **Prestations** : Projections mensuelles depuis début
-- **Gestion fuseau horaire** : `new Date(year, month-1, day)` pour dates locales
+- Emplois saisonniers : mois travaillés réels
+- Salaires : fréquence de paie + dates
+- Prestations : projections depuis début
+- Fuseaux horaires : `new Date(year, month - 1, day)` (local)
 
 ### 3. Persistance robuste
-- **Triple sauvegarde** : Session + Local + Fichiers
-- **Migration automatique** : Mise à jour des formats
-- **Récupération** : Fallbacks multiples
+- Triple sauvegarde : Session + Local + Fichiers
+- Migration automatique
+- Fallbacks multiples
 
 ## 🌐 Spécificités canadiennes
 
-### Standards IPF 2025
-- **Inflation** : 2,1%
-- **Rendements** : Variables par classe (3,4% à 8,0%)
-- **Mortalité** : Tables CPM2014
-
-### Prestations gouvernementales
-- **RRQ/CPP** : Calculs selon tables officielles
-- **SV/SRG** : Gestion biannuelle et récupération fiscale
-- **AE** : Calculs hebdomadaires avec limites provinciales
+- Standards IPF 2025 (Inflation ~2,1%)
+- Rendements (3,4% à 8,0% selon classes)
+- Mortalité : tables CPM2014
+- RRQ/CPP, SV/SRG : tables officielles
+- AE : hebdomadaire, limites provinciales
 
 ## 🔧 Points techniques importants
 
 ### 🚨 RÈGLE CRITIQUE - FORMATAGE OQLF
-**ATTENTION ABSOLUE** : Lors de l'application des règles OQLF, **NE JAMAIS** remplacer les guillemets droits " par des chevrons « » dans le code JavaScript/TypeScript. Les guillemets droits sont ESSENTIELS pour le fonctionnement du code.
+NE JAMAIS remplacer les guillemets droits " par des chevrons « » dans le code.
 
-**EXEMPLE CORRECT** :
+Exemple correct :
 ```typescript
-// ✅ GARDER LES GUILLEMETS DROITS DANS LE CODE
 const message = "Prix : 119,99 $";
 const className = "senior-btn senior-btn-primary";
 ```
 
-### Gestion des menus déroulants
-**Problème** : Positionnement incorrect avec `position="popper"`
-**Solution** : 
+### Menus déroulants (positionnement)
+Problème : `position="popper"` incorrect
+Solution standardisée :
 ```typescript
 <SelectContent 
-  position="item-aligned" 
-  side="bottom" 
-  avoidCollisions={false}
-  style={{zIndex: 9999}}
->
+  position="item-aligned"
+  side="bottom"
+  avoidCollisions={true}
+  sideOffset={4}
+  style={{ zIndex: 9999 }}
+  className="min-w-full"
+/>
 ```
-// MÉTHODE D'ANCRAGE STANDARDISÉE - À UTILISER PAR DÉFAUT
-<SelectContent 
-  position="item-aligned"     // Ancrage au parent direct
-  side="bottom"              // Ouvre vers le bas
-  avoidCollisions={true}     // Évite les débordements
-  sideOffset={4}            // Espacement de 4px
-  style={{zIndex: 9999}}    // Au-dessus de tout
-  className="min-w-full"    // Largeur minimale du parent
->
 
 ### Dates et fuseaux horaires
-**Problème** : `new Date('2025-05-01')` → UTC, décalage fuseau
-**Solution** : Parsing manuel des dates
+Éviter `new Date('YYYY-MM-DD')` (UTC). Préférer parsing manuel :
 ```typescript
-const [year, month, day] = dateString.split('-').map(Number);
-const localDate = new Date(year, month - 1, day);
+const [y, m, d] = dateString.split('-').map(Number);
+const localDate = new Date(y, m - 1, d);
 ```
 
 ### Types de revenus extensibles
-Nouvelle fréquence de location :
-```typescript
-rentalFrequency: 'weekend' | 'weekly' | 'monthly'
-// weekend = 4.33 week-ends par mois
-// weekly = 4.33 semaines par mois
-```
+`rentalFrequency: 'weekend' | 'weekly' | 'monthly'`  
+weekend ≈ 4.33 / mois ; weekly ≈ 4.33 / mois
 
 ## 📊 Interconnexions clés
 
-### Calculs automatiques
 ```
 Modification dans Table → useRetirementData → GlobalSummary
-                                          → CalculationService  
+                                          → CalculationService
                                           → Sauvegarde auto
 ```
 
-### Services interdépendants
 ```
 RRQ Service ←→ Tax Optimization ←→ Monte Carlo
-     ↓              ↓                   ↓
+     ↓              ↓                    ↓
 Retirement Budget Service ←→ Cashflow Analysis
 ```
 
-## 💡 **Accessibilité Seniors (55-90 ans)**
+## 💡 Accessibilité Seniors (55-90 ans)
 
-### Standards Obligatoires
-- **Police minimum** : 18px pour tout texte
-- **Zones cliquables minimum** : 48px (56px recommandé)
-- **Contraste élevé** : Fond blanc pur pour modals/formulaires
-- **Espacement généreux** : Marges et padding suffisants
-- **Messages bienveillants** : Langage niveau 6e année
+- Police min 18 px
+- Zones cliquables min 48 px (56 px recommandé)
+- Contraste élevé (modals/formulaires fond blanc)
+- Espacements généreux
+- Langage bienveillant (6e année)
 
-### Palette de couleurs seniors
+Palette seniors (variables CSS)
 ```css
-/* Variables CSS autorisées UNIQUEMENT */
---senior-primary: #4c6ef5      /* Bleu doux */
---senior-success: #51cf66      /* Vert doux */
---senior-warning: #ffd43b      /* Jaune doux */
---senior-error: #ff6b6b        /* Rouge doux */
---senior-text-primary: #1a365d /* Texte principal */
---senior-bg-primary: #ffffff   /* Fond blanc pur */
+--senior-primary: #4c6ef5;
+--senior-success: #51cf66;
+--senior-warning: #ffd43b;
+--senior-error: #ff6b6b;
+--senior-text-primary: #1a365d;
+--senior-bg-primary: #ffffff;
 ```
 
-### Composants seniors obligatoires
+Composants seniors obligatoires
 ```css
-.senior-layout {
-  background: var(--senior-bg-primary);
-  font-size: 18px; /* Minimum absolu */
-  line-height: 1.6;
-}
-
-.senior-btn {
-  min-height: 48px; /* Zone cliquable minimum */
-  min-width: 140px;
-  font-size: 18px;
-  font-weight: 600;
-  padding: 12px 24px;
-}
-
-.senior-form-input {
-  font-size: 18px;
-  min-height: 48px;
-  border: 2px solid var(--senior-border);
-}
+.senior-layout { background: var(--senior-bg-primary); font-size: 18px; line-height: 1.6; }
+.senior-btn { min-height: 48px; min-width: 140px; font-size: 18px; font-weight: 600; padding: 12px 24px; }
+.senior-form-input { font-size: 18px; min-height: 48px; border: 2px solid var(--senior-border); }
 ```
 
 ## 📱 Optimisations Performance
 
-### Code Splitting Avancé
-- **Chunks spécialisés** : financial-core, analytics, reports, charts
-- **Limitation à 500kB** avec avertissements Vite
-- **Lazy loading** : Tous les composants lourds
-- **Cache intelligent** : Calculs fréquents mis en cache
+- Code splitting avancé (chunks: financial-core, analytics, reports, charts)
+- Alerte > 500 kB par chunk
+- Lazy loading des composants lourds
+- Cache intelligent
 
-### Configuration manualChunks
+Exemple manualChunks (Vite) :
 ```typescript
 manualChunks(id: string) {
-  // Modules financiers
   if (id.includes('./src/config/financial-assumptions') ||
-      id.includes('./src/config/cpm2014-mortality-table')) {
-    return 'financial-core';
-  }
-  
-  // Services analytiques
+      id.includes('./src/config/cpm2014-mortality-table')) return 'financial-core';
   if (id.includes('./src/features/retirement/services/AnalyticsService') ||
-      id.includes('./src/features/retirement/services/AdvancedMonteCarloService')) {
-    return 'analytics';
-  }
-  
-  // Date libraries (évite les problèmes TDZ)
-  if (id.includes('date-fns') || id.includes('@date-fns') || id.includes('date-fns-jalali')) {
-    return 'date-lib';
-  }
+      id.includes('./src/features/retirement/services/AdvancedMonteCarloService')) return 'analytics';
+  if (id.includes('date-fns')) return 'date-lib';
 }
 ```
 
-### Services d'optimisation
-- **CacheService** : Cache spécialisé par type de calcul
-- **SeniorsOptimizationService** : Préchargement intelligent
-- **AssetOptimization** : Images WebP avec fallback
+Services d'optimisation
+- CacheService : cache par type de calcul
+- SeniorsOptimizationService : préchargement intelligent
+- AssetOptimization : images WebP + fallback
 
 ## ⚠️ Considérations de maintenance
 
-### Fichiers critiques
-- **`src/types/index.ts`** : Définitions TypeScript centrales
-- **`useRetirementData.ts`** : Gestion d'état principale
-- **`GlobalSummary.tsx`** : Logique de calcul des totaux
-- **`CalculationService.ts`** : Moteur de calcul principal
+Fichiers critiques
+- `src/types/index.ts` : types centraux
+- `useRetirementData.ts` : état principal
+- `GlobalSummary.tsx` : totaux
+- `CalculationService.ts` : moteur de calcul
 
-### Tests recommandés
-- **Calculs** : Vérifier précision des montants "à ce jour"
-- **Dates** : Tester avec différents fuseaux horaires
-- **UI** : Validation des menus déroulants et responsive
-- **Persistance** : Tests de sauvegarde/récupération
-- **Performance** : Chunks <500kB, temps de chargement <3s
+Tests recommandés
+- Calculs : précision "à ce jour"
+- Dates : fuseaux horaires
+- UI : menus, responsive
+- Persistance : sauvegarde/récupération
+- Performance : build <3s, chunks <500kB
 
 ## 🔐 Sécurité et Confidentialité
 
-### Règles strictes
-- ❌ **AUCUNE transmission réseau** des données confidentielles
-- ❌ **AUCUN workflow n8n** ou service externe
-- ✅ **Calculs 100% locaux** dans le navigateur
-- ✅ **Chiffrement AES-256-GCM** local uniquement
-- ✅ **Validation** stricte des entrées utilisateur
-
-### Protection de la Dignité Utilisateur
-- **Aucune stigmatisation** basée sur le niveau de revenu
-- **Respect total** de la situation financière personnelle
-- **Confidentialité absolue** des données sensibles
-- **Validation inclusive** des entrées utilisateur
-- **Messages d'erreur bienveillants** et encourageants
+- Aucune transmission réseau des données sensibles
+- Aucun workflow n8n / service externe
+- Calculs 100% locaux
+- Chiffrement AES-256-GCM (local)
+- Validation stricte des entrées
+- Dignité utilisateur (pas de stigmatisation)
 
 ## 🌍 Internationalisation
 
-### Support linguistique
-- **Français** : Langue par défaut (normes OQLF strictes)
-- **Anglais** : Support complet
-- **Hooks** : `useLanguage` pour la détection
-- **Routes** : Préfixes `/fr/` et `/en/`
-- **Composants** : Props `isEnglish` ou `language`
+- Français par défaut (OQLF)
+- Anglais complet
+- Hook `useLanguage`
+- Routes `/fr/` et `/en/`
+- Props `language`/`isEnglish`
 
-### Normes OQLF appliquées
-- **Montants** : "1 234,56 $" avec espaces
-- **Horaires** : "13 h 30" avec espaces
-- **
+---
+
+# 🧭 Module Budget — Architecture (2025-09)
+
+Cette section documente les fonctionnalités livrées du module Budget et leurs impacts d’architecture.
+
+## Composants principaux (Budget)
+- Page : `src/pages/Budget.tsx`
+- UI complémentaires (lazy) : `IncomeDeductionsForm`, `BudgetTargetsGauges`, `EmergencyFundCard`, `SinkingFundsManager`, `DebtSnowballWizard`, `ContextualTipsPanel`
+
+## Fonctionnalités clés
+- Vue annuelle + export CSV (agrégats par catégorie)
+- Valeur nette : actifs/passifs, instantanés (snapshots) datés
+- Rappels (90/60/30 et fin de mois) via NotificationSchedulerService
+- Objectifs SMART + Gamification (points, succès)
+- Synchronisation Dépenses (cashflow) → Budget (import et liens)
+
+## Données persistées (personal)
+- `personal.netWorth: { assets, liabilities }`
+- `personal.netWorthSnapshots: Array<{ date, assets, liabilities, net }>`
+- `personal.smartGoals: Array<{ id, title, measure, target, deadline, relevance }>`
+- `personal.budgetIncomeHistory: Record<'YYYY-MM', number>` (revenu net mensuel historisé)
+- `personal.budgetData`, `personal.budgetSettings`, `personal.budgetLinks` (existants)
+
+Persistance effectuée via `updateUserData` + `EnhancedSaveManager.saveDirectly(userData)`.
+
+## Calculs & allocations (50/30/20)
+- `BudgetComputationService.computeAllocations(budgetData, netMonthlyIncome)`
+- Cibles modifiables (presets 55/25/20, 50/30/20, 45/25/30)
+
+## Notifications (Budget)
+- Service : `src/services/NotificationSchedulerService.ts`
+  - `scheduleSeries({ type, scenarioId, targetDate, options })`
+  - `scheduleRRQ`, `scheduleSV`, `scheduleFERRConversion(userData, scenarioId)`
+  - `scheduleWithdrawalNotice(scenarioId, dateISO)`
+- Intégrations Budget :
+  - Sinking Funds : bouton "Planifier rappels 90/60/30" (leads [90,60,30])
+  - Fin de mois : bouton "Rappels fin de mois" (leads [7,1])
+- Stockage : notifications planifiées en `secureStorage` par `scenarioId` (clé `scenario:${scenarioId}:notifications`)
+
+## Gamification & SMART
+- Service : `src/services/GamificationService.ts`
+  - Points et activités :
+    - Sauvegarde budget → `budget_created` (+20 pts)
+    - Snapshot valeur nette → `savings_updated` (+10 pts)
+    - Objectif SMART créé → `goal_created` (+30 pts)
+  - Succès : `emergency-fund-complete` si mois d’urgence atteints
+- SMART (Paramètres) :
+  - Formulaire S.M.A.R.T (Specific, Measurable, Target (montant), Relevant, Time-bound)
+  - Liste persistée `personal.smartGoals`
+
+## Accessibilité & OQLF (Budget)
+- Form inputs et boutons adaptés (min 18 px / 48 px)
+- Formats monétaires FR : `formatCurrencyOQLF`, EN : `formatCurrencyLocale`
+- Pourcentages FR : espace insécable avant `%` dans le texte affiché (via utilitaires)
+
+## Sécurité & confidentialité
+- Aucune API externe
+- Données chiffrées localement (bibliothèque locale AES/GCM)
+- Notifications stockées en `secureStorage`
+- Journalisation gamification en localStorage (aucune donnée sensible)
+
+---
+
+# 🔔 Notifications — Architecture
+
+- Planification d’échéances clefs : RRQ, SV, FERR (71 ans), préavis retraits (WITHDRAWAL_NOTICE)
+- Stratégie : séries relatives à une date cible (lead days 90/60/30 par défaut)
+- Canaux : `inapp` (email/SMS réservés futures évolutions)
+- Clés de stockage : `scenario:${scenarioId}:notifications` (secureStorage)
+- UI : boutons d’amorçage dans Budget (Sinking Funds, Paramètres/SMART), panneaux dédiés dans pages Notifications si applicable
+
+---
+
+# 🧩 Navigation conseillée (senior-friendly)
+
+1) Profil (âge, statut marital, province, statut : actif/sans emploi/retraité)
+2) Revenus (unifiés) → agrégation automatique du ménage
+3) Investissements/biens (REER, CELI, CRI, rentes, propriétés)
+4) Prestations (RRQ/SV) + âge souhaité
+5) Dépenses (cashflow)
+6) Budget (Vue d’ensemble, 50/30/20, Fonds d’urgence, Objectifs planifiés, Dettes, Calendrier, Valeur nette)
+7) Scénarios (comparaisons et stratégies de retrait)
+8) Notifications (planification 90/60/30, fin de mois, FERR)
+
+CTA contextuels recommandés :
+- Après Revenus/Prestations → "Aller au Budget"
+- Flux net négatif → "Revoir Dépenses" + "Créer un objectif SMART"
+- Avant dates clés (RRQ/SV/FERR) → "Planifier un rappel"
+
+---
+
+# 🔧 Maintenance récente (Septembre 2025)
+
+- Budget : Vue annuelle + CSV, Net Worth (snapshots), Rappels 90/60/30 & fin de mois, SMART + Gamification
+- Données ajoutées (`personal`): `netWorth`, `netWorthSnapshots`, `smartGoals`, `budgetIncomeHistory`
+- Documentation fusionnée : `private-docs/architecture/AGENTS.md` (référence unique, contenu module retraite consolidé)
+
+---
+
+## 🔗 Phase 1 (2025‑09‑19) — Source de vérité Immobilier → Dépenses/Budget
+
+Objectif
+- Éliminer la double saisie des postes logement suivants en imposant une source unique (Immobilier) et des vues liées (Dépenses/Budget):
+  - Hypothèque (mensuel)
+  - Taxes municipales (annuel → mensualisé côté Cashflow)
+  - Assurance habitation (annuel → mensualisé côté Cashflow)
+
+Implémentation
+- Types:
+  - `SavingsData` étendu:
+    - `residencePaiementHypothecaireMensuel?: number`
+    - `residenceTaxesMunicipalesAnnuelles?: number`
+    - `residenceAssuranceHabitationAnnuelle?: number`
+    - Champs optionnels pour propriétés locatives: `locative{1..3}Valeur?`, `locative{1..3}Hypotheque?`
+- Registre de champs:
+  - Nouveau `src/types/fields-registry.ts`
+    - `FIELDS_SOURCE` (résidence*)
+    - `computeLockedHousingMonthly()` pour mensualiser taxes/assurance
+    - `LOCKED_LOGEMENT_KEYS = ['hypotheque','taxesMunicipales','assuranceHabitation']`
+- UI
+  - `RealEstateSection.tsx`: ajout des 3 champs sources avec layout `.mpr-form` (uniformisation “1 ligne = 1 label + 1 champ”) et tooltips conformes.
+  - `CashflowSection.tsx`:
+    - Ventilation “Logement” verrouille les clés `hypotheque`, `taxesMunicipales`, `assuranceHabitation` (lecture seule).
+    - Le total de la ventilation inclut obligatoirement ces valeurs verrouillées.
+    - Le nouveau total renvoyé au parent remplace la valeur de la catégorie `logement`.
+  - `SeniorsFriendlyInput.tsx`: support `disabled`/`readOnly` + correction ARIA (`aria-disabled="true"`).
+- Migration de données:
+  - `DataMigrationService` v1.2.0
+    - Si présent: `cashflow.logementBreakdown.hypotheque` → `savings.residencePaiementHypothecaireMensuel`
+    - `taxesMunicipales` (mensuel) × 12 → `savings.residenceTaxesMunicipalesAnnuelles`
+    - `assuranceHabitation` (mensuel) × 12 → `savings.residenceAssuranceHabitationAnnuelle`
+  - `ExpensesPage.tsx` déclenche la migration au chargement si nécessaire.
+- Accessibilité & OQLF
+  - Aucune modification du formatage d’affichage monétaire (utilitaires existants).
+  - Layout normalisé `.mpr-*` appliqué à la section immobilisée.
+
+Impacts sur Budget
+- Phase 1: aucun changement de contrat côté `BudgetComputationService`; la valeur “Logement” est fiable car recalculée à partir de la ventilation verrouillée.
+- Phase 2 (planifié): brancher directement le calcul Budget sur les champs sources (Immobilier) si nécessaire.
+
+Definition of Done (Phase 1)
+- Aucune double saisie visible pour hypothèque, taxes et assurance habitation.
+- Les champs listés ci‑dessus sont éditables uniquement dans Immobilier, et reflétés automatiquement dans Dépenses.
+- Migration automatique des anciennes clés si présentes (log).
+- Respect des normes UI `.mpr-*` pour les champs ajoutés.

@@ -212,7 +212,7 @@ export const RRQSection: React.FC<RRQSectionProps> = ({ data, onUpdate }) => {
                     <Label className="text-blue-300 flex items-center gap-2">
                       <User className="w-4 h-4" />
                       {isFrench ? 'Âge actuel' : 'Current age'}
-                      <HelpTooltip content={isFrench ? 'Votre âge actuel pour les calculs RRQ' : 'Your current age for QPP calculations'} />
+                      <HelpTooltip title={isFrench ? 'Âge actuel' : 'Current age'} content={isFrench ? 'Votre âge détermine votre horizon et influence les calculs RRQ. Plus vous commencez tôt, plus les intérêts composés travaillent en votre faveur.' : 'Your age sets your time horizon and influences QPP calculations. The earlier you start, the longer compounding can work for you.'}><span></span></HelpTooltip>
                     </Label>
                     <Input
                       type="number"
@@ -227,7 +227,7 @@ export const RRQSection: React.FC<RRQSectionProps> = ({ data, onUpdate }) => {
                     <Label className="text-blue-300 flex items-center gap-2">
                       <DollarSign className="w-4 h-4" />
                       {isFrench ? 'Prestation RRQ actuelle' : 'Current QPP benefit'}
-                      <HelpTooltip content={isFrench ? 'Consultez "Mon Dossier" du RRQ pour obtenir cette information précise' : 'Check "My File" from QPP to get this precise information'} />
+                      <HelpTooltip title={isFrench ? 'Prestation RRQ actuelle' : 'Current QPP benefit'} content={isFrench ? 'Consultez « Mon Dossier » RRQ pour un montant précis. Ce montant sert de base aux comparaisons 60/65/70.' : 'Check “My File” on QPP for a precise amount. This figure is used as the base for 60/65/70 comparisons.'}><span></span></HelpTooltip>
                     </Label>
                     <Input
                       type="number"
@@ -242,7 +242,7 @@ export const RRQSection: React.FC<RRQSectionProps> = ({ data, onUpdate }) => {
                     <Label className="text-blue-300 flex items-center gap-2">
                       <Calendar className="w-4 h-4" />
                       {isFrench ? 'Prestation à 70 ans' : 'Benefit at 70 years'}
-                      <HelpTooltip content={isFrench ? 'Consultez "Mon Dossier" du RRQ pour obtenir cette information précise' : 'Check "My File" from QPP to get this precise information'} />
+                      <HelpTooltip title={isFrench ? 'Optimisation du moment' : 'Timing optimization'} content={isFrench ? 'Vous pouvez commencer dès 60 ans (réduction de 36 %) ou reporter jusqu’à 70 ans (bonification de 42 %). Le choix optimal dépend de votre santé et de vos besoins.' : 'You can start as early as 60 (36% reduction) or defer to 70 (42% increase). The optimal choice depends on your health and needs.'}><span></span></HelpTooltip>
                     </Label>
                     <Input
                       type="number"
@@ -257,7 +257,7 @@ export const RRQSection: React.FC<RRQSectionProps> = ({ data, onUpdate }) => {
                     <Label className="text-blue-300 flex items-center gap-2">
                       <Target className="w-4 h-4" />
                       {isFrench ? 'Espérance de vie' : 'Life expectancy'}
-                      <HelpTooltip content={isFrench ? 'Votre espérance de vie estimée' : 'Your estimated life expectancy'} />
+                      <HelpTooltip title={isFrench ? 'Espérance de vie' : 'Life expectancy'} content={isFrench ? 'Estimation utilisée pour comparer la valeur totale à vie selon l’âge de début (60/65/70).' : 'Estimate used to compare total lifetime value by start age (60/65/70).'}><span></span></HelpTooltip>
                     </Label>
                     <Input
                       type="number"

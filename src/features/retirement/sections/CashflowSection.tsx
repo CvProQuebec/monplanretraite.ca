@@ -36,6 +36,7 @@ import { formatCurrency } from '../utils/formatters';
 import { useLanguage } from '../hooks/useLanguage';
 import { translations } from '../translations/index';
 import '@/styles/cashflow-accessibility.css';
+import { LOCKED_LOGEMENT_KEYS, computeLockedHousingMonthly } from '@/types/fields-registry';
 
 interface CashflowSectionProps {
   data: UserData;
@@ -49,6 +50,8 @@ interface ExpenseBreakdownProps {
   breakdown: Record<string, number>;
   onUpdate: (breakdown: Record<string, number>, newTotal?: number) => void;
   categories: { key: string; label: string; icon: React.ReactNode }[];
+  lockedKeys?: string[]; // clés verrouillées (lecture seule)
+  lockedValues?: Record<string, number>; // valeurs verrouillées (ex. hypotheque/taxes/assurance)
 }
 
 const ExpenseBreakdown: React.FC<ExpenseBreakdownProps> = ({ 
@@ -56,7 +59,9 @@ const ExpenseBreakdown: React.FC<ExpenseBreakdownProps> = ({
   total, 
   breakdown, 
   onUpdate, 
-  categories 
+  categories,
+  lockedKeys,
+  lockedValues
 }) => {
   const { language } = useLanguage();
   const t = translations[language];
@@ -78,13 +83,18 @@ const ExpenseBreakdown: React.FC<ExpenseBreakdownProps> = ({
   }, [breakdown]);
 
   const handleChange = (key: string, value: number) => {
+    // Empêcher l'édition des clés verrouillées (provenant d'Immobilier)
+    if (lockedKeys && lockedKeys.includes(key)) {
+      return;
+    }
     const newBreakdown = { ...localBreakdown, [key]: value };
     setLocalBreakdown(newBreakdown);
   };
 
   const handleSave = () => {
-    // Calculer le nouveau total basé sur la ventilation
-    const newTotal = Object.values(localBreakdown).reduce((sum, value) => sum + (value || 0), 0);
+    // Calculer le nouveau total en incluant les valeurs verrouillées liées à l'immobilier
+    const merged = { ...(localBreakdown || {}), ...(lockedValues || {}) };
+    const newTotal = Object.values(merged).reduce((sum, value) => sum + (value || 0), 0);
     
     // Mettre à jour la ventilation ET utiliser le total calculé comme nouveau total principal
     onUpdate(localBreakdown, newTotal);
@@ -101,7 +111,8 @@ const ExpenseBreakdown: React.FC<ExpenseBreakdownProps> = ({
     setIsOpen(false);
   };
 
-  const calculatedTotal = Object.values(localBreakdown).reduce((sum, value) => sum + (value || 0), 0);
+  const calculatedTotal = Object.values({ ...(localBreakdown || {}), ...(lockedValues || {}) })
+    .reduce((sum, value) => sum + (value || 0), 0);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -196,10 +207,14 @@ const ExpenseBreakdown: React.FC<ExpenseBreakdownProps> = ({
                   </div>
                   <SeniorsFriendlyInput
                     type="number"
-                    value={localBreakdown[category.key] || ''}
+                    value={(lockedValues && lockedValues[category.key] !== undefined)
+                      ? lockedValues[category.key]
+                      : (localBreakdown[category.key] || '')
+                    }
                     onChange={(e) => handleChange(category.key, parseFloat((e.target.value || '0').replace(',', '.')) || 0)}
                     placeholder="0"
                     className="text-xl"
+                    disabled={!!(lockedKeys && lockedKeys.includes(category.key))}
                   />
                 </div>
               ))}
@@ -246,6 +261,8 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
     setCompactMode(next);
     try { localStorage.setItem('cashflow-compact-mode', next ? '1' : '0'); } catch {}
   };
+
+  const lockedHousing = computeLockedHousingMonthly(data.savings);
 
   const handleChange = (field: string, value: any) => {
     onUpdate('cashflow', { [field]: value });
@@ -520,6 +537,8 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                                 row.cats === 'sante' ? santeCategories :
                                 row.cats === 'telecom' ? telecomCategories : []
                               }
+                              lockedKeys={row.cats === 'logement' ? (Array.from(LOCKED_LOGEMENT_KEYS) as unknown as string[]) : undefined}
+                              lockedValues={row.cats === 'logement' ? lockedHousing : undefined}
                             />
                           ) : (
                             <span className="text-xs text-slate-500">{language === 'fr' ? '—' : '—'}</span>
@@ -558,6 +577,8 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                           breakdown={data.cashflow.logementBreakdown || {}}
                           onUpdate={(breakdown, newTotal) => handleBreakdownUpdate('logement', breakdown, newTotal)}
                           categories={logementCategories}
+                          lockedKeys={(Array.from(LOCKED_LOGEMENT_KEYS) as unknown as string[])}
+                          lockedValues={lockedHousing}
                         />
                       </div>
                       <SeniorsFriendlyInput

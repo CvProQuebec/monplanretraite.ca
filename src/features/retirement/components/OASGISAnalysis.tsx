@@ -18,6 +18,8 @@ import {
 } from 'lucide-react';
 import { OASGISService, OASGISCalculation } from '../services/OASGISService';
 import { useLanguage } from '../hooks/useLanguage';
+import { useNavigate } from 'react-router-dom';
+import { HelpTooltip } from './HelpTooltip';
 
 interface OASGISAnalysisProps {
   initialData?: {
@@ -33,6 +35,7 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
   initialData 
 }) => {
   const { language } = useLanguage();
+  const navigate = useNavigate();
   const [analysis, setAnalysis] = useState<OASGISCalculation | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
   const [formData, setFormData] = useState({
@@ -162,8 +165,15 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
                 {t.age}
+                <HelpTooltip
+                  title={language === 'fr' ? 'Âge pour SV/SRG' : 'Age for OAS/GIS'}
+                  content={language === 'fr'
+                    ? 'Utilisé pour déterminer l’admissibilité et les montants. Reporter ou avancer l’âge peut modifier vos prestations.'
+                    : 'Used to determine eligibility and amounts. Deferring or advancing start age may change your benefits.'
+                  }
+                ><span></span></HelpTooltip>
               </label>
               <input
                 type="number"
@@ -176,8 +186,15 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
                 {t.annualIncome} ($)
+                <HelpTooltip
+                  title={language === 'fr' ? 'CELI et SV/SRG' : 'TFSA and OAS/GIS'}
+                  content={language === 'fr'
+                    ? 'Les retraits du CELI ne sont pas imposables et n’affectent pas la SV/SRG. Privilégiez le CELI pour préserver ces prestations.'
+                    : 'TFSA withdrawals are tax-free and do not affect OAS/GIS. Prefer TFSA withdrawals to preserve these benefits.'
+                  }
+                ><span></span></HelpTooltip>
               </label>
               <input
                 type="number"
@@ -190,8 +207,15 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
                 {t.maritalStatus}
+                <HelpTooltip
+                  title={language === 'fr' ? 'Statut marital et SRG' : 'Marital status and GIS'}
+                  content={language === 'fr'
+                    ? 'Le SRG est calculé selon le revenu du ménage. Votre statut influence les seuils d’admissibilité et les montants.'
+                    : 'GIS is based on household income. Your marital status affects eligibility thresholds and amounts.'
+                  }
+                ><span></span></HelpTooltip>
               </label>
               <select
                 value={formData.statutConjoint}
@@ -207,8 +231,15 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
                 {t.spouseIncome} ($)
+                <HelpTooltip
+                  title={language === 'fr' ? 'Revenu familial et SRG' : 'Family income and GIS'}
+                  content={language === 'fr'
+                    ? 'Le SRG est réduit en fonction du revenu familial. Indiquez le revenu du conjoint pour une estimation réaliste.'
+                    : 'GIS is reduced based on family income. Provide spouse income for realistic estimates.'
+                  }
+                ><span></span></HelpTooltip>
               </label>
               <input
                 type="number"
@@ -222,8 +253,15 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 mb-1 flex items-center gap-2">
                 {t.yearsResidence}
+                <HelpTooltip
+                  title={language === 'fr' ? 'Admissibilité SV' : 'OAS eligibility'}
+                  content={language === 'fr'
+                    ? 'Vous devez avoir résidé au moins 10 ans au Canada après 18 ans pour être admissible à la SV. Le montant est proportionnel jusqu’à 40 ans de résidence.'
+                    : 'You must have lived in Canada at least 10 years after age 18 for OAS eligibility. Amount is proportional up to 40 years of residence.'
+                  }
+                ><span></span></HelpTooltip>
               </label>
               <input
                 type="number"
@@ -349,6 +387,16 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
                   <p className="text-sm text-purple-700 mt-1">
                     OAS + GIS combinés
                   </p>
+                  <div className="mt-4">
+                    <Button
+                      onClick={() =>
+                        navigate(`/prestations/apply?oasAge=${formData.age}&redirect=/budget&scenarioId=default`)
+                      }
+                      className="bg-amber-600 hover:bg-amber-700"
+                    >
+                      {language === 'fr' ? 'Appliquer cet âge SV' : 'Apply this OAS age'}
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>

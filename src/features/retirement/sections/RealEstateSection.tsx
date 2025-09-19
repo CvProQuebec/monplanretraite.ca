@@ -153,7 +153,7 @@ export const RealEstateSection: React.FC<RealEstateSectionProps> = ({ data, onUp
                   <Label className="text-emerald-300 flex items-center gap-2">
                     <DollarSign className="w-4 h-4" />
                     {isFrench ? 'Valeur estimée' : 'Estimated value'}
-                    <HelpTooltip content={isFrench ? 'Valeur marchande actuelle de votre résidence' : 'Current market value of your residence'} />
+                    <HelpTooltip title={isFrench ? 'Valeur estimée' : 'Estimated value'} content={isFrench ? 'Valeur marchande actuelle de votre résidence' : 'Current market value of your residence'}><span></span></HelpTooltip>
                   </Label>
                   <Input
                     type="number"
@@ -168,7 +168,7 @@ export const RealEstateSection: React.FC<RealEstateSectionProps> = ({ data, onUp
                   <Label className="text-emerald-300 flex items-center gap-2">
                     <Calculator className="w-4 h-4" />
                     {isFrench ? 'Hypothèque restante' : 'Remaining mortgage'}
-                    <HelpTooltip content={isFrench ? 'Montant encore dû sur votre hypothèque' : 'Amount still owed on your mortgage'} />
+                    <HelpTooltip title={isFrench ? 'Hypothèque restante' : 'Remaining mortgage'} content={isFrench ? 'Montant encore dû sur votre hypothèque' : 'Amount still owed on your mortgage'}><span></span></HelpTooltip>
                   </Label>
                   <Input
                     type="number"
@@ -192,6 +192,44 @@ export const RealEstateSection: React.FC<RealEstateSectionProps> = ({ data, onUp
                   </AlertDescription>
                 </Alert>
               )}
+            {/* Charges annuelles et paiements - source de vérité (uniformisation .mpr-form) */}
+            <div className="mpr-form">
+              <div className="mpr-form-row cols-3">
+                <div className="mpr-field">
+                  <label htmlFor="residence-paiement-hypotheque">{isFrench ? 'Paiement hypothécaire (mensuel)' : 'Mortgage payment (monthly)'}</label>
+                  <input
+                    id="residence-paiement-hypotheque"
+                    type="number"
+                    className="senior-form-input"
+                    value={data.savings?.residencePaiementHypothecaireMensuel || ''}
+                    onChange={(e) => handleChange('residencePaiementHypothecaireMensuel', parseFloat(e.target.value) || 0)}
+                    placeholder={isFrench ? 'Ex : 1 200' : 'Ex: 1200'}
+                  />
+                </div>
+                <div className="mpr-field">
+                  <label htmlFor="residence-taxes-annuelles">{isFrench ? 'Taxes municipales (annuel)' : 'Municipal taxes (annual)'}</label>
+                  <input
+                    id="residence-taxes-annuelles"
+                    type="number"
+                    className="senior-form-input"
+                    value={data.savings?.residenceTaxesMunicipalesAnnuelles || ''}
+                    onChange={(e) => handleChange('residenceTaxesMunicipalesAnnuelles', parseFloat(e.target.value) || 0)}
+                    placeholder={isFrench ? 'Ex : 3 600' : 'Ex: 3600'}
+                  />
+                </div>
+                <div className="mpr-field">
+                  <label htmlFor="residence-assurance-annuelle">{isFrench ? 'Assurance habitation (annuel)' : 'Home insurance (annual)'}</label>
+                  <input
+                    id="residence-assurance-annuelle"
+                    type="number"
+                    className="senior-form-input"
+                    value={data.savings?.residenceAssuranceHabitationAnnuelle || ''}
+                    onChange={(e) => handleChange('residenceAssuranceHabitationAnnuelle', parseFloat(e.target.value) || 0)}
+                    placeholder={isFrench ? 'Ex : 1 200' : 'Ex: 1200'}
+                  />
+                </div>
+              </div>
+            </div>
             </CardContent>
           </Card>
         </div>

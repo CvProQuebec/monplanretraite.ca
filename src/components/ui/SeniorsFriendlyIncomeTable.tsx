@@ -440,14 +440,12 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                     </div>
                   </div>
 
-                  {/* Ligne Montant et Fréquence - DISPOSITION HORIZONTALE */}
-                  <div className="flex flex-wrap items-center gap-4 mb-6 p-4 bg-white rounded-lg border border-gray-200">
+                  {/* Ligne Montant et Fréquence - ligne par ligne */}
+                  <div className="space-y-3 mb-6">
                     
-                    {/* Montant - étiquette à côté */}
-                    <div className="flex items-center gap-2 min-w-fit">
-                      <label className="text-lg font-semibold text-gray-700 whitespace-nowrap">
-                        {isFrench ? 'Montant:' : 'Amount:'}
-                      </label>
+                    {/* Montant - ligne par ligne */}
+                    <div className="senior-field-inline">
+                      <label>{isFrench ? 'Montant' : 'Amount'}</label>
                       {isEditing ? (
                         <MoneyInput
                           value={
@@ -492,11 +490,9 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                       )}
                     </div>
                     
-                    {/* Fréquence - étiquette à côté */}
-                    <div className="flex items-center gap-2 min-w-fit">
-                      <label className="text-lg font-semibold text-gray-700 whitespace-nowrap">
-                        {isFrench ? 'Fréquence:' : 'Frequency:'}
-                      </label>
+                    {/* Fréquence - ligne par ligne */}
+                    <div className="senior-field-inline">
+                      <label>{isFrench ? 'Fréquence' : 'Frequency'}</label>
                       {isEditing ? (
                         <div className="flex gap-2">
                           {(entry.type === 'salaire' || entry.type === 'emploi-saisonnier') && (
@@ -504,7 +500,10 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                               value={entry.salaryFrequency || 'monthly'}
                               onValueChange={(value) => updateIncomeEntry(entry.id, { salaryFrequency: value as any })}
                             >
-                              <SelectTrigger className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40">
+                              <SelectTrigger
+                                className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                                aria-label={isFrench ? 'Fréquence de salaire' : 'Salary frequency'}
+                              >
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-white border-4 border-gray-300" style={{zIndex: 9999}} position="item-aligned" side="bottom" align="start" avoidCollisions={false} sticky="always">
@@ -521,7 +520,10 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                               value={entry.pensionFrequency || 'monthly'}
                               onValueChange={(value) => updateIncomeEntry(entry.id, { pensionFrequency: value as any })}
                             >
-                              <SelectTrigger className="senior-form-input">
+                              <SelectTrigger
+                                className="senior-form-input"
+                                aria-label={isFrench ? 'Fréquence de rente' : 'Pension frequency'}
+                              >
                                 <SelectValue />
                               </SelectTrigger>
                               <SelectContent className="bg-white border-4 border-gray-300" style={{zIndex: 9999}} position="item-aligned" side="bottom" align="start" avoidCollisions={false} sticky="always">
@@ -541,6 +543,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                           {entry.type === 'revenus-location' && (
                             <div className="relative w-full">
                               <select
+                                aria-label={isFrench ? 'Fréquence de location' : 'Rental frequency'}
                                 value={entry.rentalFrequency || 'monthly'}
                                 onChange={(e) => updateIncomeEntry(entry.id, { rentalFrequency: e.target.value as any })}
                                 className="w-full p-4 text-xl border-4 border-gray-300 rounded-lg focus:border-blue-500 bg-white appearance-none cursor-pointer relative z-10"
@@ -594,10 +597,10 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                     </div>
                   </div>
                   
-                  {/* Troisième ligne - Dates - DISPOSITION SENIOR MULTI-COLONNES */}
-                  <div className="senior-form-row-double mb-6">
+                  {/* Troisième ligne - Dates - ligne par ligne multi-colonnes */}
+                  <div className="mpr-form-row cols-2 mb-6">
                     {/* Date de début */}
-                    <div className="senior-form-field">
+                    <div className="senior-field-inline">
                       <label className="senior-form-label">
                         {isFrench ? 'Date de début' : 'Start Date'}
                       </label>
@@ -637,7 +640,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                     </div>
                     
                     {/* Date de fin */}
-                    <div className="senior-form-field">
+                    <div className="senior-field-inline">
                       <label className="senior-form-label">
                         {isFrench ? 'Date de fin' : 'End Date'}
                       </label>

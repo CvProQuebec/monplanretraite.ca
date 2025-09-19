@@ -8,7 +8,7 @@ export interface MigrationResult {
 }
 
 export class DataMigrationService {
-  private static readonly VERSION = '1.1.0';
+  private static readonly VERSION = '1.2.0';
   private static readonly MIGRATION_KEY = 'data_migration_version';
 
   /**
@@ -52,6 +52,35 @@ export class DataMigrationService {
       // Migration 3: S'assurer que les champs de dates sont au bon format
       this.migrateDateFields(userData.personal.unifiedIncome1, result);
       this.migrateDateFields(userData.personal.unifiedIncome2, result);
+
+      // Migration 4: Mapper Cashflow.logementBreakdown → Savings (source de vérité)
+      try {
+        if (!userData.savings) userData.savings = {};
+        const logementBd = (userData.cashflow && userData.cashflow.logementBreakdown) ? userData.cashflow.logementBreakdown : {};
+
+        // Hypothèque (mensuel)
+        if (userData.savings.residencePaiementHypothecaireMensuel == null && typeof logementBd?.hypotheque === 'number') {
+          const v = Number(logementBd.hypotheque) || 0;
+          userData.savings.residencePaiementHypothecaireMensuel = v;
+          result.migratedFields.push('savings.residencePaiementHypothecaireMensuel');
+        }
+
+        // Taxes municipales (annuel) ← breakdown mensuel × 12
+        if (userData.savings.residenceTaxesMunicipalesAnnuelles == null && typeof logementBd?.taxesMunicipales === 'number') {
+          const v = (Number(logementBd.taxesMunicipales) || 0) * 12;
+          userData.savings.residenceTaxesMunicipalesAnnuelles = v;
+          result.migratedFields.push('savings.residenceTaxesMunicipalesAnnuelles');
+        }
+
+        // Assurance habitation (annuel) ← breakdown mensuel × 12
+        if (userData.savings.residenceAssuranceHabitationAnnuelle == null && typeof logementBd?.assuranceHabitation === 'number') {
+          const v = (Number(logementBd.assuranceHabitation) || 0) * 12;
+          userData.savings.residenceAssuranceHabitationAnnuelle = v;
+          result.migratedFields.push('savings.residenceAssuranceHabitationAnnuelle');
+        }
+      } catch (e) {
+        result.errors.push(`Migration logementBreakdown→Savings: ${e}`);
+      }
 
       // Marquer la migration comme terminée
       localStorage.setItem(this.MIGRATION_KEY, this.VERSION);

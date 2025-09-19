@@ -75,10 +75,29 @@ export class BudgetComputationService {
 
     for (const e of budget.expenses || []) {
       const monthly = this.toMonthlyAmount(e);
-      const bucket = DEFAULT_CATEGORY_BUCKET[e.category];
-      if (bucket === 'need') totalNeeds += monthly;
-      else if (bucket === 'want') totalWants += monthly;
-      else totalSavingsDebt += monthly;
+      if (monthly <= 0) continue;
+
+      const defaultBucket = DEFAULT_CATEGORY_BUCKET[e.category];
+
+      // L'épargne/dettes ne se scinde pas : reste dans savings_debt
+      if (defaultBucket === 'savings_debt') {
+        totalSavingsDebt += monthly;
+        continue;
+      }
+
+      // Zones grises: si needSharePct est défini (0..100), ventiler besoin/envie
+      const hasSplit = typeof e.needSharePct === 'number' && !Number.isNaN(e.needSharePct);
+      if (hasSplit) {
+        const pct = Math.max(0, Math.min(100, Number(e.needSharePct)));
+        const needPart = (monthly * pct) / 100;
+        const wantPart = monthly - needPart;
+        totalNeeds += needPart;
+        totalWants += wantPart;
+      } else {
+        // Sinon, bucket par défaut
+        if (defaultBucket === 'need') totalNeeds += monthly;
+        else totalWants += monthly;
+      }
     }
 
     // Hypothèque séparée

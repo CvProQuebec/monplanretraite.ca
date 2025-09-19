@@ -2,16 +2,18 @@
 
 ## 📋 RÉFÉRENCE OBLIGATOIRE
 
-**Avant toute modification du site web**, consulter les **Instructions pour les modifications** dans :
-`H:\monplanretraite.ca\private-docs\architecture\AGENTS.md` (section en haut du fichier)
+Avant toute modification du site web, consulter:
+- H:\monplanretraite.ca\private-docs\architecture\AGENTS.md (instructions générales, architecture consolidée)
+- architecture.md (vue d’ensemble + modules, y compris Budget, Notifications, Gamification/SMART)
+- Cette présente page (règles d’implémentation et checklists)
 
 ## 🚨 RÈGLE CRITIQUE - FORMATAGE OQLF
 
-**ATTENTION ABSOLUE** : Lors de l'application des règles OQLF, **NE JAMAIS** remplacer les guillemets droits " par des chevrons « » dans le code JavaScript/TypeScript. Les guillemets droits sont ESSENTIELS pour le fonctionnement du code.
+ATTENTION ABSOLUE: Lors de l'application des règles OQLF, NE JAMAIS remplacer les guillemets droits " par des chevrons « » dans le code JavaScript/TypeScript. Les guillemets droits sont ESSENTIELS pour le fonctionnement du code.
 
-**HISTORIQUE CRITIQUE** : Ce changement avait causé un crash complet du site et nous avons dû repartir d'une copie de sauvegarde.
+HISTORIQUE CRITIQUE: Cette erreur a causé un crash complet du site par le passé.
 
-**EXEMPLE CORRECT** :
+EXEMPLE CORRECT:
 ```typescript
 // ✅ GARDER LES GUILLEMETS DROITS DANS LE CODE
 const message = "Prix : 119,99 $";
@@ -19,7 +21,7 @@ const className = "senior-btn senior-btn-primary";
 const selectQuery = "SELECT * FROM users WHERE name = \"John\"";
 ```
 
-**EXEMPLE INTERDIT** :
+EXEMPLE INTERDIT:
 ```typescript
 // ❌ NE JAMAIS FAIRE CECI - CASSE LE CODE
 const message = « Prix : 119,99 $ »;
@@ -27,325 +29,271 @@ const className = « senior-btn senior-btn-primary »;
 const selectQuery = « SELECT * FROM users WHERE name = « John » »;
 ```
 
-### Points clés à vérifier :
+## ✅ Checklists obligatoires
 
-1. **Gestion des champs de données**
-   - Récupération des données existantes
-   - Mapping correct des nouveaux champs
-   - Initialisation des valeurs par défaut
-
-2. **Documentation et références**
-   - Mise à jour du fichier AGENTS.md
-   - Référence au roadmap du projet
-   - Documentation des nouvelles fonctionnalités
-
-3. **Checklist de validation**
-   - Tests post-implémentation
-   - Vérification des calculs
-   - Validation de l'interface utilisateur
+Avant de considérer une tâche comme terminée:
+- [ ] Champs nouvellement créés ou renommés intégrés sans perte de données
+- [ ] Mécanisme de sauvegarde/récupération testé (local/session + sauvegarde fichers)
+- [ ] Initialisation des sessions vérifiée (valeurs par défaut, migration si applicable)
+- [ ] Documentation mise à jour: 
+  - [ ] H:\monplanretraite.ca\private-docs\architecture\AGENTS.md
+  - [ ] architecture.md (si architecture impactée)
+  - [ ] CLAUDE.md (si instructions/process changent)
+- [ ] Procédures sauvegardées dans private-docs\roadmap si applicable
+- [ ] Build et type-check OK (npm run build, npm run typecheck)
+- [ ] Normes OQLF (affichage) et Accessibilité seniors (18px/48px) respectées
 
 ## 📚 WORKFLOW DE DOCUMENTATION OBLIGATOIRE
 
-### Avant implémentation
-**Créer** : `app_info/YYYY-MM-DD_desired_app_functionality.md`
-- ✅ Documenter les changements désirés et exigences
-- ✅ Spécifier les restrictions de niveau et logique métier
-- ✅ Définir les critères de succès
+Avant implémentation — Créer: app_info/YYYY-MM-DD_desired_app_functionality.md
+- Exigences, restrictions, critères de succès
 
-### Après implémentation  
-**Créer** : `app_info/YYYY-MM-DD_implementation_update.md`
-- ✅ Lister tous les fichiers créés/modifiés
-- ✅ Documenter les détails d'implémentation technique
-- ✅ Inclure le statut de build et résultats des tests
-- ✅ Noter les problèmes en attente ou issues connues
+Après implémentation — Créer: app_info/YYYY-MM-DD_implementation_update.md
+- Fichiers créés/modifiés
+- Détails techniques
+- Résultats build/tests + problèmes restants
 
-### État actuel
-**Maintenir** : `app_info/YYYY-MM-DD_app_functionality.md`
-- ✅ Garder un instantané à jour de la fonctionnalité actuelle
-- ✅ Organiser par fonctionnalités et niveaux
-- ✅ Inclure les fonctionnalités implémentées ET planifiées
-- ✅ Marquer clairement comme ✅ Complété ou ⏳ En attente
+État actuel — Maintenir: app_info/YYYY-MM-DD_app_functionality.md
+- Instantané des fonctionnalités actuelles et planifiées
+- Marquer ✅ Complété ou ⏳ En attente
 
 ---
 
-## 🏗️ Architecture du Projet
+## 🏗️ Architecture du Projet (rappel)
 
-### Structure des composants principaux
+Principaux artefacts:
+- `src/components/ui/GlobalSummary.tsx` — Résumé familial et calculs globaux
+- `src/components/ui/SeniorsFriendlyIncomeTable.tsx` — Table des revenus P1/P2
+- `src/pages/Revenus.tsx` — Page revenus
+- `src/types/index.ts` — Types centraux
 
-- **`src/components/ui/GlobalSummary.tsx`** - Résumé familial et calculs globaux
-- **`src/components/ui/SeniorsFriendlyIncomeTable.tsx`** - Table des revenus pour Personne 1 et 2
-- **`src/pages/Revenus.tsx`** - Page principale des revenus
-- **`src/types/index.ts`** - Définitions des types TypeScript
+Calculs:
+- `src/utils/incomeCalculationUtils.ts`
+- `src/services/` (moteurs, persistance, notifications, etc.)
 
-### Composants de calcul
-
-- **`src/utils/incomeCalculationUtils.ts`** - Utilitaires de calcul des revenus
-- **`src/services/`** - Services de calcul et de gestion des données
+Consulter architecture.md et private-docs/architecture/AGENTS.md pour les détails étendus par module (Retraite, Budget, Notifications, etc.)
 
 ---
 
 ## 🔧 Bonnes pratiques pour les modifications
 
-### Ajout de nouveaux types de revenus
+### Ajout de nouveaux champs (données)
+1) Définir/étendre les interfaces TypeScript (dans `src/types` appropriés)
+2) Gérer les valeurs par défaut (initialisation de session)
+3) Mettre à jour la persistance (updateUserData + migrations si besoin)
+4) Réaliser la migration de données (mapping anciens noms → nouveaux)
+5) Mettre à jour les composants/services consommateurs
+6) Couvrir la documentation (architecture.md + AGENTS.md)
 
-1. **Mettre à jour l'interface `IncomeEntry`** dans `SeniorsFriendlyIncomeTable.tsx`
-2. **Ajouter les nouvelles options** dans les constantes (ex: `rentalFrequencies`)
-3. **Mettre à jour la logique de calcul** dans `GlobalSummary.tsx`
-4. **Tester** avec différentes valeurs et fréquences
-
-### Correction de bugs de positionnement (menus déroulants)
-
-**Problème récurrent** : Menus s'affichent en haut de page ou à des positions incorrectes.
-
-**Solution standardisée** :
-```typescript
+### Menus déroulants (positionnement)
+Problème récurrent: menus mal ancrés
+Solution standardisée:
+```tsx
 <SelectContent 
-  position="item-aligned"     // Ancrage au parent direct
-  side="bottom"              // Ouvre vers le bas
-  avoidCollisions={false}    // IMPORTANT: évite le déplacement inattendu
-  sideOffset={4}             // Espacement de 4px
-  style={{zIndex: 9999}}     // Au-dessus de tout
-  className="min-w-full"     // Largeur minimale du parent
->
-  ```
-### Gestion des dates - Standard Québec
-// ✅ MÉTHODE RECOMMANDÉE - Fuseau local (EST/EDT Québec)
-const quebecDate = (dateString: string) => {
-  const [year, month, day] = dateString.split('-').map(Number);
-  return new Date(year, month - 1, day); // Crée en fuseau local
-};
+  position="item-aligned"    // Ancrage au parent direct
+  side="bottom" 
+  avoidCollisions={true}
+  sideOffset={4}
+  style={{ zIndex: 9999 }}
+  className="min-w-full"
+/>
+```
 
-// ❌ ÉVITER - Interprété en UTC
-const badDate = new Date('2025-05-01');
+### Gestion des dates (Québec, fuseau local)
+Éviter `new Date('YYYY-MM-DD')` (UTC). Utiliser:
+```ts
+const [y, m, d] = dateString.split('-').map(Number);
+const localDate = new Date(y, m - 1, d); // Fuseau local
+```
 
-## 🧮 Calculs et logique métier
+---
 
-### Emplois saisonniers
+## 🌐 Normes OQLF Québécoises — Affichage
 
+Montants (affichage):
+- ❌ `$1,234.56` — Dollar avant, point décimal
+- ✅ `1 234,56 $` — Espace milliers, virgule décimale, espace avant $
+
+Horaire (affichage):
+- ❌ `13:05` / `1:05 PM` / `13h05`
+- ✅ `13 h 5`, `9 h 30`, `0 h 15`
+
+Ponctuation:
+- ❌ `"Prix:119,99$"`
+- ✅ `"Prix : 119,99 $"`
+
+Terminologie en interface:
+- email → courriel, password → mot de passe, login → connexion, logout → déconnexion, etc.
+
+IMPORTANT: Ces normes s’appliquent au TEXTE AFFICHÉ, pas à la syntaxe de code.
+
+---
+
+## 👵 Accessibilité Seniors (55-90 ans)
+
+Règles absolues:
+- Police min 18px pour tout texte
+- Zones cliquables min 48px (56px recommandé)
+- Contraste élevé (fond blanc pur dans modals/formulaires et zones de saisie)
+- Espacements généreux
+- Messages bienveillants (niveau 6e année)
+- Navigation claire et linéaire (CTA contextuels)
+
+CSS standard:
+```css
+.senior-layout { background: #fff; font-size: 18px; line-height: 1.6; color: #1a365d; }
+.senior-btn { min-height: 48px; min-width: 140px; font-size: 18px; font-weight: 600; padding: 12px 24px; border: 2px solid; }
+.senior-form-input { font-size: 18px; min-height: 48px; padding: 12px 16px; border: 2px solid #e2e8f0; border-radius: 8px; }
+```
+
+---
+
+## 🧭 Navigation inter-modules (recommandée)
+
+Séquence conseillée:
+1) Profil (âge, statut marital, province, statut : actif/sans emploi/retraité)
+2) Revenus (unifiés) → agrégation du ménage
+3) Investissements/biens (REER, CELI, CRI, rentes, propriétés)
+4) Prestations (RRQ/SV) + âge souhaité
+5) Dépenses (cashflow)
+6) Budget (Vue d’ensemble, 50/30/20, Fonds d’urgence, Objectifs planifiés, Dettes, Calendrier, Valeur nette)
+7) Scénarios (comparaisons, ordres de retrait optimaux)
+8) Notifications (planification 90/60/30, fin de mois, FERR)
+
+CTA contextuels:
+- Après Revenus/Prestations → “Aller au Budget”
+- Flux net négatif → “Revoir Dépenses” + “Créer un objectif SMART”
+- Avant dates clés (RRQ/SV/FERR) → “Planifier un rappel”
+
+---
+
+## 💰 Module Budget — Lignes directrices (2025-09)
+
+Références: architecture.md (section Budget) et private-docs/architecture/AGENTS.md
+
+Composants principaux:
+- Page: `src/pages/Budget.tsx`
+- Lazy: `IncomeDeductionsForm`, `BudgetTargetsGauges`, `EmergencyFundCard`, `SinkingFundsManager`, `DebtSnowballWizard`, `ContextualTipsPanel`
+
+Fonctionnalités livrées:
+- Vue annuelle + export CSV (agrégats par catégorie)
+- Valeur nette: actifs/passifs, instantanés (snapshots) datés
+- Rappels: 90/60/30 (objectifs planifiés) + fin de mois (J-7, J-1)
+- Objectifs SMART + Gamification (points, succès)
+- Import Dépenses (cashflow) → Budget (liens & synchronisation basique)
+
+Persistance (personal):
+- `netWorth`, `netWorthSnapshots`, `smartGoals`, `budgetIncomeHistory`
+- `budgetData`, `budgetSettings`, `budgetLinks` (existants)
+
+Allocations 50/30/20:
+- `BudgetComputationService.computeAllocations`
+- Presets: 55/25/20, 50/30/20, 45/25/30
+
+Accessibilité & OQLF:
+- Utiliser les formateurs: `formatCurrencyOQLF`, `formatCurrencyLocale`, pourcentages conformes FR/EN
+
+---
+
+## 🔔 Notifications — Lignes directrices
+
+Service: `src/services/NotificationSchedulerService.ts`
+
+API:
+- `scheduleSeries({ type, scenarioId, targetDate, options })` — planifie une série (leads par défaut [90,60,30])
+- `scheduleRRQ(scenarioId, rrqApplicationDateISO)`
+- `scheduleSV(scenarioId, oasApplicationDateISO)`
+- `scheduleFERRConversion(userData, scenarioId)` — date limite 31 déc de l’année des 71 ans
+- `scheduleWithdrawalNotice(scenarioId, withdrawalDateISO)`
+
+Stockage:
+- `secureStorage` avec clé `scenario:${scenarioId}:notifications`
+
+Bonnes pratiques:
+- Utiliser `scenarioId` provenant de `userData.personal.activeScenarioId` (ou fallback)
+- Toujours valider les dates ISO `YYYY-MM-DD`
+- Canaux: `inapp` (email/sms réservés futures évolutions)
+
+Intégrations Budget:
+- Sinking Funds: bouton “Planifier rappels 90/60/30”
+- Paramètres/SMART: bouton “Rappels fin de mois” (J-7, J-1)
+
+---
+
+## 🏅 Gamification & SMART — Lignes directrices
+
+Service: `src/services/GamificationService.ts`
+
+Points/activités standard:
+- Sauvegarde Budget → `budget_created` (+20 pts)
+- Snapshot Valeur nette → `savings_updated` (+10 pts)
+- Objectif SMART créé → `goal_created` (+30 pts)
+
+Succès:
+- `emergency-fund-complete` si `emergencyFund / totalNeeds >= monthsTarget`
+
+SMART:
+- Champs: `title`, `measure`, `target` (monétaire), `deadline` (date), `relevance`
+- Persistance: `personal.smartGoals`
+
+---
+
+## 🧮 Calculs et logique métier (rappels)
+
+Emplois saisonniers:
 - Calculer le nombre de mois réels entre `startDate` et `endDate`
-- Utiliser `effectiveEndDate` pour les périodes passées
-- Formule : `(endYear - startYear) * 12 + (endMonth - startMonth) + 1`
+- Formule: `(endYear - startYear) * 12 + (endMonth - startMonth) + 1`
 
-### Revenus de location
-
-- **Week-end** : ~4,33 week-ends par mois (52 semaines / 12 mois)
-- **Semaine** : ~4,33 semaines par mois
-- **Mensuel** : montant × mois écoulés
-
----
-
-## 👥 **STANDARDS D'ACCESSIBILITÉ SENIORS (55-90 ANS)**
-
-### Règles Absolues
-- **Police minimum** : 18px pour TOUT texte
-- **Zones cliquables minimum** : 48px (56px recommandé)
-- **Contraste élevé** : Fond blanc pur, texte noir pour lisibilité
-- **Espacement généreux** : Marges et padding suffisants
-- **Messages bienveillants** : Langage niveau 6e année
-
-### CSS Obligatoire
-```css
-/* Composants seniors - Standards minimums */
-.senior-layout {
-  background: #ffffff; /* Fond blanc pur obligatoire */
-  font-size: 18px;     /* Taille minimum absolue */
-  line-height: 1.6;    /* Espacement lignes */
-  color: #1a365d;      /* Contraste élevé */
-}
-
-.senior-btn {
-  min-height: 48px;    /* Zone cliquable minimum */
-  min-width: 140px;    /* Largeur minimum */
-  font-size: 18px;     /* Lisibilité */
-  font-weight: 600;    /* Visibilité */
-  padding: 12px 24px;  /* Espacement interne */
-  border: 2px solid;   /* Bordure visible */
-}
-
-.senior-form-input {
-  font-size: 18px;     /* Lisibilité saisie */
-  min-height: 48px;    /* Zone cliquable */
-  padding: 12px 16px;  /* Espacement interne */
-  border: 2px solid #e2e8f0; /* Bordure visible */
-  border-radius: 8px;  /* Coins arrondis */
-}
-```
-
-### Palette de Couleurs Autorisée
-```css
-/* Variables CSS - UTILISER UNIQUEMENT CELLES-CI */
---senior-primary: #4c6ef5      /* Bleu doux */
---senior-success: #51cf66      /* Vert doux */
---senior-warning: #ffd43b      /* Jaune doux */
---senior-error: #ff6b6b        /* Rouge doux */
---senior-text-primary: #1a365d /* Texte principal */
---senior-bg-primary: #ffffff   /* Fond blanc pur */
---senior-border: #e2e8f0       /* Bordures */
-```
-
----
-
-## 🌐 **NORMES OQLF QUÉBÉCOISES**
-
-### Format des Montants d'Argent
-```typescript
-// ❌ FORMATS INCORRECTS
-"$1,234.56"     // Dollar avant, point décimal
-"1234,56$"      // Pas d'espace avant $
-"Prix:119,99$"  // Pas d'espace avant :
-
-// ✅ FORMATS CORRECTS OQLF (DANS L'AFFICHAGE)
-"1 234,56 $"    // Espace milliers, virgule décimale, espace avant $
-"Prix : 119,99 $" // Espace avant : et avant $
-```
-
-### Format Horaire Québécois
-```typescript
-// ❌ FORMATS INCORRECTS
-"13:05"         // Format avec deux-points
-"1:05 PM"       // Format 12h anglais
-"13h05"         // Pas d'espace
-
-// ✅ FORMATS CORRECTS OQLF
-"13 h 5"        // Espace avant/après h, pas de zéro
-"9 h 30"        // Format lisible
-"0 h 15"        // Minuit et quart
-```
-
-### Terminologie Française Obligatoire
-```typescript
-// Remplacements obligatoires dans l'interface
-email → courriel
-password → mot de passe
-login → connexion
-logout → déconnexion
-submit → soumettre/envoyer
-cancel → annuler
-save → enregistrer
-update → mettre à jour
-delete → supprimer
-```
+Revenus de location:
+- weekend ≈ 4.33 / mois
+- weekly ≈ 4.33 / mois
+- monthly: montant × mois écoulés
 
 ---
 
 ## 🚀 Commandes utiles
 
-### Développement
-- `npm run dev` - Démarrer le serveur de développement
-- `npm run build` - Construire pour la production
-- `npm run lint` - Vérifier le code
-- `npm run typecheck` - Vérifier les types TypeScript
+Développement:
+- `npm run dev` — serveur de développement
+- `npm run build` — build production
+- `npm run lint` — lint
+- `npm run typecheck` — types TS
 
-### Git
-- `git status` - Voir l'état du repository
-- `git diff` - Voir les changements
-- `git add .` - Ajouter tous les fichiers
-- `git commit -m "message"` - Créer un commit
+Git:
+- `git status`, `git diff`, `git add .`, `git commit -m "message"`
 
 ---
 
 ## 📝 Historique des modifications importantes
 
-### Décembre 2025 - Consolidation Documentation
-- **Correction** : Règle critique sur guillemets droits ajoutée
-- **Ajout** : Standards accessibilité seniors consolidés
-- **Correction** : Normes OQLF précisées avec exemples
+Décembre 2025 — Consolidation Documentation
+- Règle guillemets droits (OQLF dans code) re-affirmée
+- Standards accessibilité consolidés
+- Normes OQLF d’affichage précisées
 
-### Septembre 2025 - Accessibilité Seniors
-- **Ajout** : Mode seniors activé globalement
-- **Correction** : Navigation simplifiée 4 sections
-- **Ajout** : Composants SeniorsLoadingSpinner, SeniorsFriendlyInput
+Septembre 2025 — Budget & Notifications
+- Vue annuelle + CSV, Valeur nette (snapshots)
+- Rappels 90/60/30 (objectifs planifiés) + fin de mois
+- SMART + Gamification (points & succès)
+- Docs architecture mises à jour
 
-### Septembre 2025 - Optimisations Performance
-- **Correction** : Code splitting avancé chunks <500kB
-- **Ajout** : Cache intelligent avec timeouts
-- **Amélioration** : Temps de chargement réduits de 60%
+Septembre 2025 — Optimisations Performance
+- Code splitting avancé, cache intelligent
+- Temps de chargement réduits
 
-### Septembre 2025 - Consolidation "Ma Retraite" + CPM2014
-- **Correction** : Bug de calcul emplois saisonniers (fuseau horaire)
-- **Ajout** : Analyse CPM2014 avec champs requis
-- **Intégration** : Synchronisation espérance de vie automatique
+Septembre 2025 — Consolidation "Ma Retraite" + CPM2014
+- Bug fuseau horaires corrigé pour emplois saisonniers
+- Analyse CPM2014 intégrée
 
-### Janvier 2025 - Module Hypothèses de Calcul
-- **Ajout** : Transparence totale normes IPF 2025
-- **Correction** : Interface éducative avec tooltips
-- **Différenciation** : Avantage concurrentiel unique
+Janvier 2025 — Module Hypothèses de Calcul
+- Normes IPF 2025 (inflation/rendements)
+- Interface éducative avec tooltips
 
 ---
 
-## ⚠️ Points d'attention
+## ⚠️ Points d'attention finaux
 
-### Tests à effectuer après modifications
-1. **Calculs** : Vérifier que les montants sont corrects dans le "Résumé familial"
-2. **Interface** : Tester tous les menus déroulants et champs de saisie
-3. **Persistance** : S'assurer que les données se sauvegardent correctement
-4. **Responsive** : Vérifier l'affichage sur mobile/tablette
-5. **Accessibilité** : Valider contraste, tailles de police, zones cliquables
-
-### Fichiers critiques à ne pas casser
-- **Types principaux** : `src/types/index.ts`
-- **Calculs globaux** : `src/components/ui/GlobalSummary.tsx` 
-- **Configuration** : `package.json`, `tsconfig.json`
-- **Styles seniors** : `src/styles/accessibility-seniors.css`
-
-### Vérifications de performance
-- **Build réussi** : `npm run build` sans erreurs
-- **Chunks <500kB** : Vérifier les avertissements Vite
-- **Temps de chargement** : <3s sur connexion lente
-- **Responsive** : Test sur mobile, tablette, desktop
-
----
-
-## 📊 **MODULES MÉTIER PRINCIPAUX**
-
-### Services de Calcul
-- **SRGService** : Calculs Supplément de Revenu Garanti
-- **RREGOPService** : Régime gouvernement et organismes publics
-- **RealEstateOptimizationService** : Optimisation immobilière
-- **PopulationBenchmarkService** : Benchmarks provinciaux longévité
-
-### Composants d'Interface
-- **SeniorsFriendlyIncomeTable** : Saisie revenus adaptée seniors
-- **GlobalSummary** : Agrégation et totaux familiaux
-- **UnifiedReportManager** : Gestion centralisée des rapports
-- **LongevityDashboard** : Analyse de longévité complète
-
-### Types de Données
-```typescript
-interface UserData {
-  personal: PersonalData      // Infos personnelles + revenus
-  retirement: RetirementData  // Prestations gouvernementales
-  savings: SavingsData       // Épargne et investissements
-  cashflow: CashflowData     // Dépenses et budget
-}
-```
-
----
-
-## 🔄 **WORKFLOW DE MODIFICATION RECOMMANDÉ**
-
-### 1. Préparation
-- Lire cette documentation complètement
-- Identifier les fichiers à modifier
-- Vérifier la cohérence avec l'architecture existante
-
-### 2. Développement
-- Respecter les standards d'accessibilité seniors
-- Appliquer les normes OQLF (SANS toucher aux guillemets code)
-- Utiliser les composants et services existants
-- Tester au fur et à mesure
-
-### 3. Validation
-- Tests de compilation et build
-- Vérification accessibilité (18px, 48px, contraste)
-- Test sur différents navigateurs et appareils
-- Validation des calculs et logique métier
-
-### 4. Documentation
-- Mettre à jour AGENTS.md si nécessaire
-- Documenter les nouveaux composants/services
-- Ajouter des commentaires dans le code complexe
-
----
-
-*Ce fichier est maintenu à jour pour faciliter les futures modifications et éviter les erreurs courantes, particulièrement le problème critique des guillemets qui avait causé un crash complet du site.*
+- NE JAMAIS modifier la syntaxe de code pour “franciser” les guillemets — l’OQLF s’applique à l’affichage.
+- Respecter systématiquement les standards seniors (18px/48px).
+- Mettre à jour toutes les références documentaires pertinentes (AGENTS.md, architecture.md, cette page).
+- Tester la persistance et la migration de données pour tout nouveau champ ou renommage.

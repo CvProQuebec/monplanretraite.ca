@@ -7,6 +7,8 @@ export interface ExpenseEntry {
   description: string;
   amount: number;
   frequency: BudgetFrequency;
+  /** Part de besoin (%) pour zones grises (0-100). Si non défini, dérivé de la catégorie par défaut. */
+  needSharePct?: number;
   paymentDate?: number; // Jour du mois (1-31)
   seasonalMonths?: number[]; // Mois pour les dépenses saisonnières
   isActive: boolean;

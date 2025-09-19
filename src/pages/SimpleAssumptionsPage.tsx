@@ -11,10 +11,14 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Info, Shield, CheckCircle, ArrowLeft } from 'lucide-react';
 import { SimpleAssumptionsService } from '@/services/SimpleAssumptionsService';
 import type { SimpleTooltip } from '@/types/assumptions-simple';
+import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
 
 export default function SimpleAssumptionsPage() {
   const assumptions = SimpleAssumptionsService.getAssumptions();
   const tooltips = SimpleAssumptionsService.getTooltips();
+  const { userData, updateUserData } = useRetirementData();
+  const tauxRemplacement = (userData?.personal as any)?.tauxRemplacement ?? 0.75;
+  const inflationUser = (userData?.personal as any)?.inflationPersonnalisee ?? 2.1;
   
   return (
     <div className="min-h-screen bg-white p-4">
@@ -50,6 +54,75 @@ export default function SimpleAssumptionsPage() {
             <CheckCircle className="w-8 h-8 text-green-600" />
           </div>
         </div>
+      </div>
+
+      {/* Paramètres simples (interactifs) */}
+      <div className="max-w-4xl mx-auto mb-6">
+        <Card className="bg-white border-2 border-blue-200 shadow-md">
+          <CardHeader className="p-6">
+            <h2 className="text-2xl font-bold text-gray-900">Vos paramètres simples</h2>
+          </CardHeader>
+          <CardContent className="p-6 space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Taux de remplacement */}
+              <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <label htmlFor="slider-remplacement" className="text-lg font-semibold text-blue-900">
+                    Taux de remplacement (%)
+                  </label>
+                  <div className="text-xl font-bold text-blue-700">
+                    {Math.round(((typeof tauxRemplacement === 'number' ? (tauxRemplacement > 1 ? tauxRemplacement / 100 : tauxRemplacement) : 0.75) * 100) * 10) / 10} %
+                  </div>
+                </div>
+                <input
+                  id="slider-remplacement"
+                  type="range"
+                  min={60}
+                  max={90}
+                  step={1}
+                  value={Math.round(((typeof tauxRemplacement === 'number' ? (tauxRemplacement > 1 ? tauxRemplacement / 100 : tauxRemplacement) : 0.75) * 100))}
+                  onChange={(e) => {
+                    const pct = Number(e.target.value);
+                    updateUserData('personal', { tauxRemplacement: pct / 100 });
+                  }}
+                  className="w-full"
+                />
+                <p className="text-sm text-blue-800 mt-2">
+                  Ajustez entre 60 % et 90 % selon votre style de vie. Par défaut: 75 %.
+                </p>
+              </div>
+
+              {/* Inflation personnalisée */}
+              <div className="bg-amber-50 border-2 border-amber-200 rounded-lg p-4">
+                <div className="flex items-center justify-between mb-3">
+                  <label htmlFor="input-inflation" className="text-lg font-semibold text-amber-900">
+                    Inflation utilisée (%)
+                  </label>
+                  <div className="text-xl font-bold text-amber-700">
+                    {Number(inflationUser).toFixed(1)} %
+                  </div>
+                </div>
+                <input
+                  id="input-inflation"
+                  type="number"
+                  step={0.1}
+                  min={0}
+                  max={10}
+                  value={inflationUser}
+                  onChange={(e) => {
+                    const val = parseFloat(e.target.value);
+                    updateUserData('personal', { inflationPersonnalisee: isNaN(val) ? 2.1 : val });
+                  }}
+                  className="w-full p-2 border rounded-md"
+                  placeholder="2.1"
+                />
+                <p className="text-sm text-amber-800 mt-2">
+                  Norme IPF 2025: 2,1 %. Vous pouvez l’ajuster ici (affecte les projections).
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Tableau principal - Style seniors */}

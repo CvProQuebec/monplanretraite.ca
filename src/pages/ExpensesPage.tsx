@@ -5,6 +5,7 @@ import MonthlyBudgetPlanningModule from '@/components/ui/MonthlyBudgetPlanningMo
 import { UserData } from '@/features/retirement/types';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { DataMigrationService } from '@/services/DataMigrationService';
 
 // Données de démonstration
 const demoUserData: UserData = {
@@ -127,6 +128,8 @@ export const ExpensesPage: React.FC = () => {
       try {
         localStorage.setItem('retirement_data', JSON.stringify(newData));
         console.log('Données sauvegardées dans localStorage:', newData);
+        // Notifier l'auto-save du Wizard (Phase 2) si présent
+        try { (window as any).mprNotifyDataChanged?.(); } catch {}
       } catch (error) {
         console.error('Erreur lors de la sauvegarde:', error);
       }
@@ -160,6 +163,21 @@ export const ExpensesPage: React.FC = () => {
       const savedData = localStorage.getItem('retirement_data');
       if (savedData) {
         const data = JSON.parse(savedData);
+        
+        // Migration vers la nouvelle structure (Phase 1 — déduplication Immobilier ↔ Dépenses)
+        try {
+          if (DataMigrationService.needsMigration()) {
+            const res = DataMigrationService.migrateUserData(data);
+            if (res?.success) {
+              DataMigrationService.saveMigratedData(data);
+              console.log('✅ Migration effectuée (Phase 1) :', res.migratedFields);
+            } else {
+              console.warn('⚠️ Migration avec avertissements :', res?.errors);
+            }
+          }
+        } catch (mErr) {
+          console.warn('⚠️ Erreur lors de la migration Phase 1 :', mErr);
+        }
         
         // Code existant pour cashflow INCHANGÉ
         if (data.cashflow) {

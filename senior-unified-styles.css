@@ -508,3 +508,89 @@
     display: none;
   }
 }
+
+/* === MPR Uniform Grid and Senior Inline Field Overrides === */
+:root {
+  --mpr-bg: #ffffff;
+  --mpr-text: #1a365d;
+  --mpr-primary: #4c6ef5;
+  --mpr-border: #e2e8f0;
+  --mpr-muted: #64748b;
+
+  /* Heading theme colors */
+  --mpr-h1: #0f172a;
+  --mpr-h2: #1a365d;
+  --mpr-h3: #1e3a8a;
+  --mpr-h4: #1f2937;
+}
+
+/* Headings theme colors (fallback if utilities not used) */
+h1, .h1 { color: var(--mpr-h1); }
+h2, .h2 { color: var(--mpr-h2); }
+h3, .h3 { color: var(--mpr-h3); }
+h4, .h4 { color: var(--mpr-h4); }
+
+/* Core uniform form grid */
+.mpr-form { display: grid; gap: 16px; }
+
+.mpr-form-row { display: grid; gap: 16px; padding: 12px; background: var(--mpr-bg); border: 1px solid var(--mpr-border); border-radius: 8px; }
+.mpr-form-row.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.mpr-form-row.cols-2 { grid-template-columns: repeat(2, 1fr); }
+.mpr-form-row.cols-1 { grid-template-columns: 1fr; }
+
+.mpr-field { display: grid; grid-template-columns: minmax(160px,200px) 1fr; align-items: center; gap: 8px; min-height: 48px; }
+.mpr-field label { color: var(--mpr-text); font-weight: 600; font-size: 16px; line-height: 1.4; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mpr-field input,
+.mpr-field select,
+.mpr-field textarea { min-height: 48px; padding: 10px 12px; font-size: 18px; border: 2px solid var(--mpr-border); border-radius: 8px; color: var(--mpr-text); background: var(--mpr-bg); }
+.mpr-field input:focus,
+.mpr-field select:focus,
+.mpr-field textarea:focus { outline: none; border-color: var(--mpr-primary); box-shadow: 0 0 0 3px rgba(76,110,245,0.15); }
+
+.mpr-field.span-2 { grid-column: span 2; }
+.mpr-field.span-3 { grid-column: span 3; }
+
+/* Results cards */
+.mpr-result-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.mpr-result-card { background: #f0f9ff; border: 1px solid var(--mpr-primary); border-radius: 8px; padding: 12px; }
+.mpr-result-amount { font-size: 24px; font-weight: 700; color: var(--mpr-primary); }
+.mpr-result-label { font-size: 14px; color: var(--mpr-muted); }
+
+/* Bridge rules to convert existing classes to inline label-left layout without changing markup */
+.senior-layout .senior-field-inline { display: grid; grid-template-columns: minmax(160px,200px) 1fr; align-items: center; gap: 8px; }
+.senior-layout .senior-field-inline label { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.senior-layout .senior-field-inline input,
+.senior-layout .senior-field-inline select,
+.senior-layout .senior-field-inline textarea { min-height: 48px; font-size: 18px; }
+
+/* Make legacy grid containers visually match .mpr-form-row */
+.senior-inline-grid-2,
+.senior-inline-grid-3 {
+  background: var(--mpr-bg);
+  border: 1px solid var(--mpr-border);
+  border-radius: 8px;
+  padding: 12px;
+}
+.senior-inline-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.senior-inline-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+/* Responsive behavior for legacy grid containers */
+@media (max-width: 1279px) {
+  .senior-inline-grid-3 { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 767px) {
+  .senior-inline-grid-2,
+  .senior-inline-grid-3 { grid-template-columns: 1fr; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1279px) {
+  .mpr-form-row.cols-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 767px) {
+  .mpr-form-row.cols-3,
+  .mpr-form-row.cols-2 { grid-template-columns: 1fr; }
+  /* Toujours label à gauche + champ à droite, même en mobile, pour une lecture ligne par ligne */
+  .mpr-field { grid-template-columns: minmax(120px, 45%) 1fr; align-items: center; }
+  .senior-layout .senior-field-inline { grid-template-columns: minmax(120px, 45%) 1fr; align-items: center; }
+}

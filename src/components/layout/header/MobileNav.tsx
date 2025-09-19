@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import MobileNavLink from "./MobileNavLink";
+import { useWizardProgress } from "@/hooks/useWizardProgress";
 
 interface MobileNavProps {
   isEnglish: boolean;
@@ -12,6 +13,7 @@ interface MobileNavProps {
 const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const { badges } = useWizardProgress('default', isEnglish);
 
   // Helper for creating anchor links
   const getAnchorLink = (anchor: string) => {
@@ -67,6 +69,23 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
     }`;
   };
 
+  // Petit indicateur de statut par étape du wizard
+  const renderBadge = (stepId: 'profil' | 'revenus' | 'actifs' | 'prestations' | 'depenses' | 'budget' | 'optimisations' | 'plan' | 'rapports') => {
+    // @ts-ignore index signature permissive
+    const b = badges ? badges[stepId] : null;
+    if (!b) return null;
+    const title = b.complete
+      ? (isEnglish ? 'Complete' : 'Complet')
+      : `${b.missingCount} ${isEnglish ? 'missing' : 'à compléter'}`;
+    return (
+      <span
+        className={`ml-2 inline-block w-2 h-2 rounded-full ${b.complete ? 'bg-green-500' : 'bg-amber-500'}`}
+        title={title}
+        aria-label={title}
+      />
+    );
+  };
+
   return (
     <div className={`md:hidden absolute top-full left-0 w-full animate-fade-in bg-white/95 backdrop-blur-lg shadow-lg border-t border-gray-200 z-50`}>
       <div className="container-custom py-4">
@@ -81,7 +100,7 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
             className={getMobileLinkClasses(isEnglish ? "/my-retirement" : "/ma-retraite")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "My Retirement" : "Ma Retraite"}
+            {isEnglish ? "My Retirement" : "Ma Retraite"} {renderBadge('actifs')}
           </Link>
           
           {/* Revenus / Income */}
@@ -90,7 +109,7 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
             className={getMobileLinkClasses(isEnglish ? "/my-income" : "/mes-revenus")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Income" : "Revenus"}
+            {isEnglish ? "Income" : "Revenus"} {renderBadge('revenus')}
           </Link>
           
           {/* Dépenses / Expenses */}
@@ -99,7 +118,7 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
             className={getMobileLinkClasses(isEnglish ? "/expenses" : "/depenses")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Expenses" : "Dépenses"}
+            {isEnglish ? "Expenses" : "Dépenses"} {renderBadge('depenses')}
           </Link>
           
           {/* Budget */}
@@ -108,7 +127,7 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
             className={getMobileLinkClasses(isEnglish ? "/my-budget" : "/mon-budget")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Budget" : "Budget"}
+            {isEnglish ? "Budget" : "Budget"} {renderBadge('budget')}
           </Link>
           
           {/* Immobilier / Real Estate */}
@@ -126,7 +145,7 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
             className={getMobileLinkClasses("/module-srg")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Government" : "Gouvernement"}
+            {isEnglish ? "Government" : "Gouvernement"} {renderBadge('prestations')}
           </Link>
           
           {/* Section Outils / Tools */}
@@ -268,6 +287,24 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
             >
               {isEnglish ? "CPP Timing Optimization" : "Optimisation Timing CPP"}
             </Link>
+
+            {/* RRQ/CPP Quick Compare */}
+            <Link
+              to="/rrq-quick-compare"
+              className={getMobileLinkClasses("/rrq-quick-compare")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "RRQ/CPP Quick Compare" : "Comparateur RRQ/CPP"}
+            </Link>
+
+            {/* RRQ/CPP Defer by X Months */}
+            <Link
+              to="/rrq-delay-simulator"
+              className={getMobileLinkClasses("/rrq-delay-simulator")}
+              onClick={toggleMenu}
+            >
+              {isEnglish ? "RRQ/CPP Defer by X Months" : "Report RRQ/CPP de X mois"}
+            </Link>
             
             <Link
               to={isEnglish ? "/spending-psychology" : "/psychologie-depenses"}
@@ -286,8 +323,8 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
             </Link>
             
             <Link
-              to={isEnglish ? "/four-percent-rule" : "/regle-quatre-pourcent"}
-              className={getMobileLinkClasses(isEnglish ? "/four-percent-rule" : "/regle-quatre-pourcent")}
+              to={isEnglish ? "/four-percent-rule" : "/regle-4-pourcent"}
+              className={getMobileLinkClasses(isEnglish ? "/four-percent-rule" : "/regle-4-pourcent")}
               onClick={toggleMenu}
             >
               {isEnglish ? "4% Rule" : "Règle des 4 %"}
@@ -357,7 +394,7 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
             className={getMobileLinkClasses(isEnglish ? "/en/retirement-reports" : "/fr/rapports-retraite")}
             onClick={toggleMenu}
           >
-            {isEnglish ? "Reports" : "Rapports"}
+            {isEnglish ? "Reports" : "Rapports"} {renderBadge('rapports')}
           </Link>
           
           {/* Sauvegarder/Charger / Save/Load */}

@@ -9,13 +9,16 @@ import SeniorsLoadingSpinner from './components/SeniorsLoadingSpinner';
 import Accueil from './pages/Accueil';
 import Home from './pages/Home';
 const MaRetraite = React.lazy(() => import('./pages/MaRetraite'));
+const MaRetraiteWithDashboard = React.lazy(() => import('./pages/MaRetraiteWithDashboard'));
 const Revenus = React.lazy(() => import('./pages/Revenus'));
 const PlanificationUrgence = React.lazy(() => import('./pages/PlanificationUrgence'));
 const PlanificationSuccessorale = React.lazy(() => import('./pages/PlanificationSuccessorale'));
 const PlanificationDepenses = React.lazy(() => import('./pages/PlanificationDepenses'));
 const AssistantFinancier = React.lazy(() => import('./pages/AssistantFinancier'));
+const SeniorsGuidedExperience = React.lazy(() => import('./components/SeniorsGuidedExperience'));
 const Budget = React.lazy(() => import('./pages/Budget'));
 const ProfilePage = React.lazy(() => import('./pages/ProfilePage'));
+const ApplyBenefitsAge = React.lazy(() => import('./pages/ApplyBenefitsAge'));
 
 // Module MVP Hypothèses de Calcul
 const SimpleAssumptionsPage = React.lazy(() => import('./pages/SimpleAssumptionsPage'));
@@ -33,6 +36,9 @@ const MonteCarloSimulator = React.lazy(() => import('./features/retirement/compo
 const SensitivityAnalysis = React.lazy(() => import('./features/retirement/components/SensitivityAnalysis').then(module => ({ default: module.SensitivityAnalysis })));
 const ScenarioComparison = React.lazy(() => import('./features/retirement/components/ScenarioComparison').then(module => ({ default: module.ScenarioComparison })));
 const UltimatePlanningDashboard = React.lazy(() => import('./features/retirement/components/UltimatePlanningDashboard').then(module => ({ default: module.UltimatePlanningDashboard })));
+const RRQQuickCompare = React.lazy(() => import('./features/retirement/components/RRQQuickCompare').then(module => ({ default: module.default })));
+const RRQDelaySimulator = React.lazy(() => import('./features/retirement/components/RRQDelaySimulator').then(module => ({ default: module.default })));
+const OASGISAnalysis = React.lazy(() => import('./features/retirement/components/OASGISAnalysis').then(module => ({ default: module.OASGISAnalysisComponent })));
 
 // Pages lourdes avec lazy loading
 const ExpensesPage = React.lazy(() => import('./pages/ExpensesPage'));
@@ -59,13 +65,22 @@ const RapportsRetraiteFr = React.lazy(() => import('./pages/RapportsRetraiteFr')
 const RetirementReportsEn = React.lazy(() => import('./pages/RetirementReportsEn'));
 const Phase2DemoPage = React.lazy(() => import('./pages/Phase2DemoPage'));
 const SauvegarderCharger = React.lazy(() => import('./pages/SauvegarderCharger'));
+const WizardPage = React.lazy(() => import('./pages/WizardPage'));
 
 // NOUVEAUX MODULES PHASE 3
 import { FourPercentRuleModule } from './components/ui/FourPercentRuleModule';
+import FourPercentRuleModuleEn from './components/ui/FourPercentRuleModuleEn';
 import { OptimalAllocationModule } from './components/ui/OptimalAllocationModule';
 import { ExcessLiquidityDetector } from './components/ui/ExcessLiquidityDetector';
 import { InflationProtectionCenter } from './components/ui/InflationProtectionCenter';
 import { BehavioralBiasEducator } from './components/ui/BehavioralBiasEducator';
+const DynamicWithdrawalPlanningModule = React.lazy(() => import('./components/ui/DynamicWithdrawalPlanningModule'));
+const ApplyWithdrawalOrder = React.lazy(() => import('./pages/ApplyWithdrawalOrder'));
+const RetirementWithdrawalComparison = React.lazy(() => import('./features/retirement/components/RetirementWithdrawalComparison').then(module => ({ default: module.RetirementWithdrawalComparison })));
+const ApplyNotification = React.lazy(() => import('./pages/ApplyNotification'));
+const NotificationsPage = React.lazy(() => import('./pages/NotificationsPage'));
+const ScenariosPage = React.lazy(() => import('./pages/ScenariosPage'));
+const ScenarioComparisonPage = React.lazy(() => import('./pages/ScenarioComparisonPage'));
 
 function App() {
   return (
@@ -88,9 +103,9 @@ function App() {
               <Route path="/profil" element={<ProfilePage />} />
               <Route path="/profile" element={<ProfilePage />} />
               
-              {/* Page retraite - "TRAVAILLER AVEC CE QU'ON A" */}
-              <Route path="/ma-retraite" element={<MaRetraite />} />
-              <Route path="/my-retirement" element={<MaRetraite />} />
+              {/* Page retraite - "TRAVAILLER AVEC CE QU'ON A" + teaser du tableau de bord (repliable) */}
+              <Route path="/ma-retraite" element={<MaRetraiteWithDashboard />} />
+              <Route path="/my-retirement" element={<MaRetraiteWithDashboard />} />
               
               {/* Page revenus - "GÉREZ VOS SOURCES DE REVENUS" */}
               <Route path="/mes-revenus" element={<Revenus />} />
@@ -111,6 +126,10 @@ function App() {
               {/* Assistant financier personnel - "ÉVITEZ LES CATASTROPHES FINANCIÈRES" */}
               <Route path="/assistant-financier" element={<AssistantFinancier />} />
               <Route path="/financial-assistant" element={<AssistantFinancier />} />
+              
+              {/* Expérience guidée seniors - Navigation zéro scroll */}
+              <Route path="/guided-experience" element={<SeniorsGuidedExperience />} />
+              <Route path="/experience-guidee" element={<SeniorsGuidedExperience />} />
               
               {/* Module Budget - "GÉREZ VOS FINANCES INTELLIGEMMENT" */}
               <Route path="/budget" element={<Budget />} />
@@ -173,8 +192,29 @@ function App() {
               <Route path="/ccq-module" element={<CCQPage />} />
               
               {/* Module OAS/GIS */}
-              <Route path="/oas-gis-analysis" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-gray-800">Analyse OAS/GIS</h1><p className="text-gray-600 mt-4">Module en développement</p></div>} />
-              <Route path="/analyse-oas-gis" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-gray-800">Analyse OAS/GIS</h1><p className="text-gray-600 mt-4">Module en développement</p></div>} />
+              <Route path="/oas-gis-analysis" element={<OASGISAnalysis />} />
+              <Route path="/analyse-oas-gis" element={<OASGISAnalysis />} />
+              
+              <Route path="/prestations/apply" element={<ApplyBenefitsAge />} />
+              <Route path="/benefits/apply" element={<ApplyBenefitsAge />} />
+              
+              {/* Retraits - Stratégies et application d'ordre */}
+              <Route path="/withdrawal-sequence" element={<DynamicWithdrawalPlanningModule />} />
+              <Route path="/sequence-retrait" element={<DynamicWithdrawalPlanningModule />} />
+              <Route path="/withdrawals/apply" element={<ApplyWithdrawalOrder />} />
+              <Route path="/retraits/apply" element={<ApplyWithdrawalOrder />} />
+              <Route path="/withdrawal-comparison" element={<RetirementWithdrawalComparison />} />
+              <Route path="/comparateur-retraits" element={<RetirementWithdrawalComparison />} />
+
+              {/* Notifications 90/60/30 */}
+              <Route path="/notifications/apply" element={<ApplyNotification />} />
+              <Route path="/notifications" element={<NotificationsPage />} />
+              <Route path="/rappels" element={<NotificationsPage />} />
+
+              {/* Scénarios - gestion et comparaison */}
+              <Route path="/scenarios" element={<ScenariosPage />} />
+              <Route path="/scenario-comparison" element={<ScenarioComparisonPage />} />
+              <Route path="/scenarios-compare" element={<ScenarioComparisonPage />} />
               
               {/* 🏠 NOUVELLES ROUTES - OPTIMISATION IMMOBILIÈRE */}
               
@@ -191,6 +231,9 @@ function App() {
               {/* Simulateur Monte Carlo */}
               <Route path="/simulateur-monte-carlo" element={<MonteCarloSimulator />} />
               <Route path="/monte-carlo-simulator" element={<MonteCarloSimulator />} />
+              {/* RRQ quick compare + defer-by-months simulator */}
+              <Route path="/rrq-quick-compare" element={<RRQQuickCompare />} />
+              <Route path="/rrq-delay-simulator" element={<RRQDelaySimulator />} />
               
               {/* Analyse de Sensibilité */}
               <Route path="/analyse-sensibilite" element={<SensitivityAnalysis />} />
@@ -333,6 +376,35 @@ function App() {
             <FourPercentRuleModule />
           </div>
         } />
+        {/* Routes publiques dédiées Règle du 4 % */}
+        <Route path="/regle-4-pourcent" element={
+          <div className="p-8">
+            <FourPercentRuleModule />
+          </div>
+        } />
+        <Route path="/4-percent-rule" element={
+          <div className="p-8">
+            <FourPercentRuleModuleEn />
+          </div>
+        } />
+        <Route path="/four-percent-rule" element={
+          <div className="p-8">
+            <FourPercentRuleModuleEn />
+          </div>
+        } />
+        {/* Placeholders Phase 2/3 */}
+        <Route path="/education-4-pourcent" element={
+          <div className="p-8 text-center">
+            <h1 className="text-2xl font-bold text-gray-800">Centre d’éducation – Règle du 4 %</h1>
+            <p className="text-gray-600 mt-4">Contenu éducatif à venir.</p>
+          </div>
+        } />
+        <Route path="/simulateur-retraite" element={
+          <div className="p-8 text-center">
+            <h1 className="text-2xl font-bold text-gray-800">Simulateur de retraite</h1>
+            <p className="text-gray-600 mt-4">Module avancé à venir.</p>
+          </div>
+        } />
         
         <Route path="/module-allocation-optimale" element={
           <div className="p-8">
@@ -402,6 +474,10 @@ function App() {
               
               {/* Route Admin */}
               <Route path="/admin" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-gray-800">Admin Panel</h1><p className="text-gray-600 mt-4">Administration panel - Coming soon</p></div>} />
+
+              {/* 🧭 Wizard Phase 2 */}
+              <Route path="/wizard" element={<WizardPage />} />
+              <Route path="/wizard/:stepId" element={<WizardPage />} />
               
               {/* 🔄 REDIRECTIONS INTELLIGENTES */}
               

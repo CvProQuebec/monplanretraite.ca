@@ -108,10 +108,11 @@ import { ErrorPreventionService } from '@/services/ErrorPreventionService';
 import { OnboardingService } from '@/services/OnboardingService';
 import { GamificationService } from '@/services/GamificationService';
 import { BudgetComputationService } from '@/services/BudgetComputationService';
-import { formatCurrencyLocale, formatPercentLocale } from '@/utils/localeFormat';
+import { formatCurrencyLocale, formatPercentLocale, formatCurrencyOQLF, formatPercentOQLF } from '@/utils/localeFormat';
 import { BudgetSettings, BudgetTargets } from '@/types/budget';
 import BudgetLinkService, { BudgetLink } from '@/services/BudgetLinkService';
 import { useSearchParams } from 'react-router-dom';
+import { NotificationSchedulerService } from '@/services/NotificationSchedulerService';
 
 const IncomeDeductionsForm = lazy(() => import('@/components/budget/IncomeDeductionsForm'));
 const BudgetTargetsGauges = lazy(() => import('@/components/budget/BudgetTargetsGauges'));
@@ -128,6 +129,8 @@ interface ExpenseEntry {
   description: string;
   amount: number;
   frequency: 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'annually' | 'seasonal';
+  /** Part de besoin (%) pour zones grises (0-100). Si non défini, dérivé de la catégorie par défaut. */
+  needSharePct?: number;
   paymentDate?: number; // Jour du mois (1-31)
   seasonalMonths?: number[]; // Mois pour les dépenses saisonnières
   isActive: boolean;
@@ -202,6 +205,25 @@ const Budget: React.FC = () => {
   });
   const [budgetTargets, setBudgetTargets] = useState<BudgetTargets>({ needsPct: 50, wantsPct: 30, savingsDebtPct: 20 });
   const [budgetLinks, setBudgetLinks] = useState<BudgetLink[]>([]);
+  const [viewMode, setViewMode] = useState<'monthly' | 'annual'>('monthly');
+
+  // Valeur nette (actifs/passifs) + snapshots mensuels
+  const [netWorth, setNetWorth] = useState<{
+    assets: { cash: number; investments: number; realEstate: number; other: number };
+    liabilities: { mortgage: number; auto: number; credit: number; student: number; other: number };
+  }>({
+    assets: { cash: 0, investments: 0, realEstate: 0, other: 0 },
+    liabilities: { mortgage: 0, auto: 0, credit: 0, student: 0, other: 0 }
+  });
+  const [netWorthSnapshots, setNetWorthSnapshots] = useState<{ date: string; assets: number; liabilities: number; net: number }[]>([]);
+  const [smartGoals, setSmartGoals] = useState<any[]>([]);
+  const [smartDraft, setSmartDraft] = useState<{ title: string; measure: string; target: number; deadline: string; relevance: string }>({
+    title: '',
+    measure: '',
+    target: 0,
+    deadline: '',
+    relevance: ''
+  });
 
   // Importer automatiquement les catégories principales de la page Dépenses (cashflow) dans le Budget
   const importFromCashflow = () => {
@@ -366,6 +388,41 @@ const Budget: React.FC = () => {
 
   const incomeData = getIncomeData();
 
+  // Historique de revenu net mensuel agrégé pour gérer les revenus irréguliers
+  const getBudgetIncomeHistory = (): Record<string, number> => {
+    return ((userData.personal as any)?.budgetIncomeHistory) || {};
+  };
+
+  const computeNetMonthlyIncome = (): number => {
+    const base = (budgetSettings.netIncome ?? incomeData.monthlyIncome) || 0;
+    const method = budgetSettings.netIncomeMethod || 'regular';
+    const history = getBudgetIncomeHistory();
+
+    if (method === 'regular') return base;
+
+    // Extraire les 12 derniers mois si disponibles
+    const keys = Object.keys(history).filter(k => /^\d{4}-\d{2}$/.test(k)).sort(); // tri lexicographique YYYY-MM
+    const last12Keys = keys.slice(-12);
+    const values = (last12Keys.length ? last12Keys : keys)
+      .map(k => Number(history[k]))
+      .filter(v => Number.isFinite(v) && v > 0);
+
+    if (values.length === 0) return base;
+
+    if (method === 'avg12') {
+      const arr = values.slice(-12); // au plus 12 valeurs
+      const avg = arr.reduce((s, v) => s + v, 0) / arr.length;
+      return Math.round(avg);
+    }
+
+    if (method === 'lowestMonth') {
+      const min = Math.min(...values);
+      return Math.round(min);
+    }
+
+    return base;
+  };
+
   // Calculer les dépenses mensuelles
   const calculateMonthlyExpenses = () => {
     let total = 0;
@@ -474,7 +531,8 @@ const Budget: React.FC = () => {
 
   // Formater la devise
   const formatCurrency = (amount: number) => {
-    return formatCurrencyLocale(amount, isFrench ? 'fr' : 'en');
+    // OQLF: en français, utiliser l’espace insécable avant le $
+    return isFrench ? formatCurrencyOQLF(amount, { min: 0, max: 2 }) : formatCurrencyLocale(amount, 'en');
   };
 
   // Obtenir la couleur selon le montant (positif/négatif)
@@ -488,7 +546,27 @@ const Budget: React.FC = () => {
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      updateUserData('personal', { budgetData, budgetSettings, budgetLinks } as any);
+      // Mettre à jour l'historique de revenu net mensuel (YYYY-MM -> montant)
+      try {
+        const now = new Date();
+        const ymKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+        const prevHistory = ((userData.personal as any)?.budgetIncomeHistory) || {};
+        const updatedHistory = { ...prevHistory, [ymKey]: netMonthlyIncome };
+
+        // Mettre à jour/capturer un snapshot de valeur nette pour le mois courant
+        const nwAssets = (netWorth.assets.cash || 0) + (netWorth.assets.investments || 0) + (netWorth.assets.realEstate || 0) + (netWorth.assets.other || 0);
+        const nwLiab = (netWorth.liabilities.mortgage || 0) + (netWorth.liabilities.auto || 0) + (netWorth.liabilities.credit || 0) + (netWorth.liabilities.student || 0) + (netWorth.liabilities.other || 0);
+        const nwNet = nwAssets - nwLiab;
+        const prevSnapshots = ((userData.personal as any)?.netWorthSnapshots || []) as typeof netWorthSnapshots;
+        const others = prevSnapshots.filter(s => s.date.slice(0, 7) !== ymKey);
+        const nextSnapshots = [...others, { date: new Date().toISOString(), assets: nwAssets, liabilities: nwLiab, net: nwNet }]
+          .sort((a, b) => a.date.localeCompare(b.date));
+
+        updateUserData('personal', { budgetData, budgetSettings, budgetLinks, netWorth, netWorthSnapshots: nextSnapshots, budgetIncomeHistory: updatedHistory } as any);
+      } catch {
+        // Fallback si échec: sauvegarde sans historique
+        updateUserData('personal', { budgetData, budgetSettings, budgetLinks, netWorth, netWorthSnapshots } as any);
+      }
       
       const result = await EnhancedSaveManager.saveDirectly(userData, {
         includeTimestamp: true
@@ -496,6 +574,22 @@ const Budget: React.FC = () => {
       
       if (result.success) {
         console.log('💾 Budget sauvegardé avec succès:', result.filename);
+        // Gamification: journaliser et récompenser l'action
+        try {
+          const g = GamificationService.getInstance();
+          g.logActivity('budget_created');
+          g.addPoints(20, isFrench ? 'Budget sauvegardé' : 'Budget saved');
+          // Succès: Fonds d'urgence complété si la cible est atteinte
+          const monthsTarget = budgetSettings.emergencyMonthsTarget ?? 0;
+          if (monthsTarget > 0 && allocations.totalNeeds > 0) {
+            const monthsSaved = (budgetData.emergencyFund || 0) / allocations.totalNeeds;
+            if (monthsSaved >= monthsTarget) {
+              g.updateAchievementProgress('emergency-fund-complete', 1);
+            }
+          }
+        } catch (e) {
+          console.warn('Gamification non appliquée:', e);
+        }
       }
     } catch (error) {
       console.error('❌ Erreur lors de la sauvegarde du budget:', error);
@@ -529,6 +623,138 @@ const Budget: React.FC = () => {
     }
   };
 
+  // Export CSV des agrégats (mensuel/annuel) par catégorie
+  const handleExportCSV = () => {
+    try {
+      const period = viewMode === 'annual' ? (isFrench ? 'Annuel' : 'Annual') : (isFrench ? 'Mensuel' : 'Monthly');
+
+      const rows = expenseCategories.map(category => {
+        const monthly = (budgetData.expenses || [])
+          .filter(e => e.isActive && e.category === (category as any).value)
+          .reduce((sum, e) => {
+            const freq = frequencies.find(f => f.value === e.frequency);
+            if (!freq) return sum;
+            const m = e.frequency === 'seasonal'
+              ? (e.amount || 0) / 12
+              : ((e.amount || 0) * (freq.multiplier)) / 12;
+            return sum + m;
+          }, 0);
+        const amount = viewMode === 'annual' ? monthly * 12 : monthly;
+        return { category: (category as any).label as string, amount };
+      });
+
+      const total = rows.reduce((s, r) => s + r.amount, 0);
+
+      const header = isFrench ? 'Catégorie,Montant,Période' : 'Category,Amount,Period';
+      const lines = [header, ...rows.map(r => {
+        const cat = `"${(r.category || '').replace(/"/g, '""')}"`;
+        // Valeurs numériques en point décimal pour CSV standard
+        return `${cat},${r.amount.toFixed(2)},${period}`;
+      }), `${isFrench ? '"Total"' : '"Total"'},${total.toFixed(2)},${period}`];
+
+      const blob = new Blob([lines.join('\n')], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const date = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = (isFrench ? 'budget_' : 'budget_') + (viewMode === 'annual' ? (isFrench ? 'annuel_' : 'annual_') : (isFrench ? 'mensuel_' : 'monthly_')) + date + '.csv';
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (e) {
+      console.error('❌ Export CSV échoué:', e);
+      alert(isFrench ? 'Erreur lors de l’export CSV' : 'Error during CSV export');
+    }
+  };
+
+  // Rappels budgétaires (90/60/30 pour objectifs + fin de mois)
+  const scheduleAllSinkingReminders = () => {
+    try {
+      const scenarioId = ((userData.personal as any)?.activeScenarioId) || 'budget-default';
+      const funds = budgetSettings.sinkingFunds ?? [];
+      let scheduled = 0;
+      for (const f of funds) {
+        const dueISO = (f as any)?.dueDate?.slice(0, 10);
+        if (!dueISO) continue;
+        try {
+          NotificationSchedulerService.scheduleWithdrawalNotice(scenarioId, dueISO, {
+            leads: [90, 60, 30],
+            channels: ['inapp'],
+            titleOverride: isFrench ? 'Rappel objectif planifié' : 'Planned goal reminder',
+            messageOverride: isFrench ? `Préparez: ${f.name} (échéance ${dueISO})` : `Prepare: ${f.name} (due ${dueISO})`
+          });
+          scheduled++;
+        } catch (err) {
+          console.error('Schedule fund reminder error:', err);
+        }
+      }
+      if (scheduled > 0) {
+        alert(isFrench ? `Rappels programmés pour ${scheduled} objectif(s).` : `Scheduled reminders for ${scheduled} goal(s).`);
+      } else {
+        alert(isFrench ? 'Aucun objectif avec date valide.' : 'No goals with valid dates.');
+      }
+    } catch (e) {
+      console.error('❌ Échec planification rappels objectifs:', e);
+      alert(isFrench ? 'Erreur de planification des rappels' : 'Error scheduling reminders');
+    }
+  };
+
+  const scheduleEndOfMonthReminders = () => {
+    try {
+      const scenarioId = ((userData.personal as any)?.activeScenarioId) || 'budget-default';
+      const today = new Date();
+      const eom = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+      const targetISO = eom.toISOString().slice(0, 10);
+      NotificationSchedulerService.scheduleSeries({
+        type: 'WITHDRAWAL_NOTICE',
+        scenarioId,
+        targetDate: targetISO,
+        options: {
+          leads: [7, 1],
+          channels: ['inapp'],
+          titleOverride: isFrench ? 'Rappel fin de mois (Budget)' : 'Month-end reminder (Budget)',
+          messageOverride: isFrench ? 'Révisez vos dépenses et sauvegardez votre budget.' : 'Review expenses and save your budget.'
+        }
+      });
+      alert(isFrench ? 'Rappels fin de mois programmés (J-7 et J-1).' : 'Month-end reminders scheduled (D-7 and D-1).');
+    } catch (e) {
+      console.error('❌ Échec planification EOM:', e);
+      alert(isFrench ? 'Erreur lors de la planification fin de mois' : 'Error scheduling month-end reminders');
+    }
+  };
+
+  // SMART goals handlers
+  const saveSmartGoal = () => {
+    const draft = smartDraft;
+    if (!draft.title || !draft.deadline) {
+      alert(isFrench ? 'Titre et échéance requis.' : 'Title and deadline are required.');
+      return;
+    }
+    const goal = { id: `sg-${Date.now()}`, ...draft };
+    const next = [...smartGoals, goal];
+    setSmartGoals(next);
+    try {
+      updateUserData('personal', { smartGoals: next } as any);
+    } catch (e) {
+      console.error('❌ Sauvegarde SMART échouée:', e);
+    }
+    try {
+      const g = GamificationService.getInstance();
+      g.logActivity('goal_created', { title: draft.title, deadline: draft.deadline });
+      g.addPoints(30, isFrench ? 'Objectif SMART créé' : 'SMART goal created');
+    } catch {}
+    setSmartDraft({ title: '', measure: '', target: 0, deadline: '', relevance: '' });
+  };
+
+  const removeSmartGoal = (id: string) => {
+    const next = smartGoals.filter((g) => g.id !== id);
+    setSmartGoals(next);
+    try {
+      updateUserData('personal', { smartGoals: next } as any);
+    } catch (e) {
+      console.error('❌ Suppression SMART échouée:', e);
+    }
+  };
+
   // Charger les données au montage
   useEffect(() => {
     const savedBudgetData = (userData.personal as any)?.budgetData;
@@ -543,13 +769,25 @@ const Budget: React.FC = () => {
     if (savedLinks) {
       setBudgetLinks(savedLinks);
     }
+    const savedNW = (userData.personal as any)?.netWorth;
+    if (savedNW) {
+      setNetWorth(savedNW);
+    }
+    const savedNWS = (userData.personal as any)?.netWorthSnapshots;
+    if (savedNWS) {
+      setNetWorthSnapshots(savedNWS);
+    }
+    const savedSG = (userData.personal as any)?.smartGoals;
+    if (savedSG) {
+      setSmartGoals(savedSG);
+    }
   }, [userData]);
 
   const monthlyExpenses = calculateMonthlyExpenses();
   const netCashFlow = calculateNetCashFlow();
 
   // Nouveau: revenu net mensuel et allocations 50/30/20
-  const netMonthlyIncome = (budgetSettings.netIncome ?? incomeData.monthlyIncome) || 0;
+  const netMonthlyIncome = computeNetMonthlyIncome();
   const allocations = BudgetComputationService.computeAllocations(budgetData as any, netMonthlyIncome);
   const [searchParams] = useSearchParams();
   const initialTab = searchParams.get('tab') ?? 'overview';
@@ -716,6 +954,7 @@ const Budget: React.FC = () => {
             <TabsTrigger value="coastfire" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Liberté financière' : 'CoastFIRE'}</TabsTrigger>
             <TabsTrigger value="tips" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? '99 trucs' : '99 tips'}</TabsTrigger>
             <TabsTrigger value="learning" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Apprentissage' : 'Learning'}</TabsTrigger>
+            <TabsTrigger value="networth" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Valeur nette' : 'Net worth'}</TabsTrigger>
             <TabsTrigger value="settings" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Paramètres' : 'Settings'}</TabsTrigger>
           </TabsList>
 
@@ -743,6 +982,25 @@ const Budget: React.FC = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
+                  <div className="flex items-center justify-between gap-3 mb-3">
+                    <div className="text-sm text-slate-600">
+                      {isFrench ? (viewMode === 'annual' ? 'Vue annuelle' : 'Vue mensuelle') : (viewMode === 'annual' ? 'Annual view' : 'Monthly view')}
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Select value={viewMode} onValueChange={(v) => setViewMode((v as 'monthly' | 'annual'))}>
+                        <SelectTrigger className="bg-white border-slate-300 text-gray-900 w-40">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent className="bg-white border-slate-300">
+                          <SelectItem value="monthly">{isFrench ? 'Mensuel' : 'Monthly'}</SelectItem>
+                          <SelectItem value="annual">{isFrench ? 'Annuel' : 'Annual'}</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <Button variant="outline" onClick={handleExportCSV} title={isFrench ? 'Exporter les agrégats en CSV' : 'Export aggregates as CSV'}>
+                        {isFrench ? 'Exporter CSV' : 'Export CSV'}
+                      </Button>
+                    </div>
+                  </div>
                   <div className="space-y-4">
                     {expenseCategories.map(category => {
                       const categoryExpenses = budgetData.expenses
@@ -777,10 +1035,13 @@ const Budget: React.FC = () => {
                             <span className="senior-expense-label">{category.label}</span>
                           </div>
                           <div className="senior-expense-amount">
-                            {formatCurrency(categoryExpenses)}
+                            {formatCurrency(viewMode === 'annual' ? (categoryExpenses * 12) : categoryExpenses)}
                           </div>
                           <div className="senior-expense-percentage">
-                            {formatPercentLocale(percentage, isFrench ? 'fr' : 'en')}
+                            {isFrench
+                              ? formatPercentOQLF(percentage, { min: 0, max: 1 })
+                              : formatPercentLocale(percentage, 'en', { min: 0, max: 1 })
+                            }
                           </div>
                         </div>
                       );
@@ -965,28 +1226,56 @@ const Budget: React.FC = () => {
                           )}
                         </div>
 
-                        {/* Fréquence */}
+                        {/* Fréquence + part de besoin (%) */}
                         <div className="col-span-2">
                           {isEditing ? (
-                            <Select
-                              value={expense.frequency}
-                              onValueChange={(value) => updateExpense(expense.id, { frequency: value as any })}
-                            >
-                              <SelectTrigger className="bg-white border-slate-300 text-gray-900">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent className="bg-white border-slate-300">
-                                {frequencies.map(freq => (
-                                  <SelectItem key={freq.value} value={freq.value}>
-                                    {freq.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
+                            <>
+                              <Select
+                                value={expense.frequency}
+                                onValueChange={(value) => updateExpense(expense.id, { frequency: value as any })}
+                              >
+                                <SelectTrigger className="bg-white border-slate-300 text-gray-900">
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="bg-white border-slate-300">
+                                  {frequencies.map(freq => (
+                                    <SelectItem key={freq.value} value={freq.value}>
+                                      {freq.label}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                              <div className="mt-2 flex items-center gap-2">
+                                <Label className="text-sm text-gray-700">{isFrench ? 'Part de besoin (%)' : 'Need share (%)'}</Label>
+                                <input
+                                  type="range"
+                                  min={0}
+                                  max={100}
+                                  value={typeof expense.needSharePct === 'number' ? expense.needSharePct : 0}
+                                  onChange={(e) => updateExpense(expense.id, { needSharePct: Number(e.target.value) })}
+                                  className="w-32"
+                                  aria-label={isFrench ? 'Part de besoin en pourcentage' : 'Need share percent'}
+                                />
+                                <span className="text-sm text-gray-700">
+                                  {isFrench
+                                    ? formatPercentOQLF((typeof expense.needSharePct === 'number' ? expense.needSharePct : 0), { min: 0, max: 0 })
+                                    : `${typeof expense.needSharePct === 'number' ? expense.needSharePct : 0}%`
+                                  }
+                                </span>
+                              </div>
+                            </>
                           ) : (
-                            <span className="text-lg text-gray-700">
-                              {frequencies.find(f => f.value === expense.frequency)?.label}
-                            </span>
+                            <div className="flex flex-col">
+                              <span className="text-lg text-gray-700">
+                                {frequencies.find(f => f.value === expense.frequency)?.label}
+                              </span>
+                              <span className="text-sm text-gray-500">
+                                {isFrench ? 'Besoin :' : 'Need:'}{' '}
+                                {typeof expense.needSharePct === 'number'
+                                  ? (isFrench ? formatPercentOQLF(expense.needSharePct, { min: 0, max: 0 }) : `${expense.needSharePct}%`)
+                                  : (isFrench ? '—' : '—')}
+                              </span>
+                            </div>
                           )}
                         </div>
 
@@ -1159,6 +1448,17 @@ const Budget: React.FC = () => {
 
           {/* Règle 50/30/20 */}
           <TabsContent value="budgetRule" className="space-y-6">
+            <div className="flex flex-wrap gap-2">
+              <Button variant="outline" onClick={() => setBudgetTargets({ needsPct: 55, wantsPct: 25, savingsDebtPct: 20 })}>
+                {isFrench ? 'Preset: Essentiels 55/25/20' : 'Preset: Essentials 55/25/20'}
+              </Button>
+              <Button variant="outline" onClick={() => setBudgetTargets({ needsPct: 50, wantsPct: 30, savingsDebtPct: 20 })}>
+                {isFrench ? 'Preset: Classique 50/30/20' : 'Preset: Classic 50/30/20'}
+              </Button>
+              <Button variant="outline" onClick={() => setBudgetTargets({ needsPct: 45, wantsPct: 25, savingsDebtPct: 30 })}>
+                {isFrench ? 'Preset: Épargne 45/25/30' : 'Preset: Savings 45/25/30'}
+              </Button>
+            </div>
             <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
               <BudgetTargetsGauges
                 language={isFrench ? 'fr' : 'en'}
@@ -1200,6 +1500,11 @@ const Budget: React.FC = () => {
                   : 'Plan your projects (e.g., taxes, travel, repair). Set a due date and a target amount — the required monthly saving is computed automatically.'}
               </AlertDescription>
             </Alert>
+            <div className="flex justify-end">
+              <Button onClick={scheduleAllSinkingReminders} variant="outline" className="mb-2">
+                {isFrench ? 'Planifier rappels 90/60/30' : 'Schedule 90/60/30 reminders'}
+              </Button>
+            </div>
             <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
               <SinkingFundsManager
                 language={isFrench ? 'fr' : 'en'}
@@ -1243,6 +1548,185 @@ const Budget: React.FC = () => {
                 onChange={setBudgetSettings}
               />
             </Suspense>
+          </TabsContent>
+
+          {/* Valeur nette */}
+          <TabsContent value="networth" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Actifs */}
+              <Card className="bg-gradient-to-br from-emerald-50 to-green-50 border-2 border-emerald-200 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold text-emerald-700 flex items-center gap-2">
+                    {isFrench ? 'Actifs' : 'Assets'}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="senior-form-row">
+                    <Label className="senior-form-label">{isFrench ? 'Encaisse / Banque' : 'Cash / Bank'}</Label>
+                    <MoneyInput
+                      value={netWorth.assets.cash}
+                      onChange={(v) => setNetWorth(prev => ({ ...prev, assets: { ...prev.assets, cash: v } }))}
+                      className="senior-form-input"
+                      allowDecimals
+                    />
+                  </div>
+                  <div className="senior-form-row">
+                    <Label className="senior-form-label">{isFrench ? 'Placements' : 'Investments'}</Label>
+                    <MoneyInput
+                      value={netWorth.assets.investments}
+                      onChange={(v) => setNetWorth(prev => ({ ...prev, assets: { ...prev.assets, investments: v } }))}
+                      className="senior-form-input"
+                      allowDecimals
+                    />
+                  </div>
+                  <div className="senior-form-row">
+                    <Label className="senior-form-label">{isFrench ? 'Immobilier (valeur nette)' : 'Real estate (net value)'}</Label>
+                    <MoneyInput
+                      value={netWorth.assets.realEstate}
+                      onChange={(v) => setNetWorth(prev => ({ ...prev, assets: { ...prev.assets, realEstate: v } }))}
+                      className="senior-form-input"
+                      allowDecimals
+                    />
+                  </div>
+                  <div className="senior-form-row">
+                    <Label className="senior-form-label">{isFrench ? 'Autres' : 'Other'}</Label>
+                    <MoneyInput
+                      value={netWorth.assets.other}
+                      onChange={(v) => setNetWorth(prev => ({ ...prev, assets: { ...prev.assets, other: v } }))}
+                      className="senior-form-input"
+                      allowDecimals
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Passifs */}
+              <Card className="bg-gradient-to-br from-rose-50 to-red-50 border-2 border-rose-200 shadow-lg">
+                <CardHeader>
+                  <CardTitle className="text-xl font-bold text-rose-700 flex items-center gap-2">
+                    {isFrench ? 'Passifs' : 'Liabilities'}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="senior-form-row">
+                    <Label className="senior-form-label">{isFrench ? 'Hypothèque' : 'Mortgage'}</Label>
+                    <MoneyInput
+                      value={netWorth.liabilities.mortgage}
+                      onChange={(v) => setNetWorth(prev => ({ ...prev, liabilities: { ...prev.liabilities, mortgage: v } }))}
+                      className="senior-form-input"
+                      allowDecimals
+                    />
+                  </div>
+                  <div className="senior-form-row">
+                    <Label className="senior-form-label">{isFrench ? 'Auto' : 'Auto'}</Label>
+                    <MoneyInput
+                      value={netWorth.liabilities.auto}
+                      onChange={(v) => setNetWorth(prev => ({ ...prev, liabilities: { ...prev.liabilities, auto: v } }))}
+                      className="senior-form-input"
+                      allowDecimals
+                    />
+                  </div>
+                  <div className="senior-form-row">
+                    <Label className="senior-form-label">{isFrench ? 'Crédit' : 'Credit'}</Label>
+                    <MoneyInput
+                      value={netWorth.liabilities.credit}
+                      onChange={(v) => setNetWorth(prev => ({ ...prev, liabilities: { ...prev.liabilities, credit: v } }))}
+                      className="senior-form-input"
+                      allowDecimals
+                    />
+                  </div>
+                  <div className="senior-form-row">
+                    <Label className="senior-form-label">{isFrench ? 'Études' : 'Student loans'}</Label>
+                    <MoneyInput
+                      value={netWorth.liabilities.student}
+                      onChange={(v) => setNetWorth(prev => ({ ...prev, liabilities: { ...prev.liabilities, student: v } }))}
+                      className="senior-form-input"
+                      allowDecimals
+                    />
+                  </div>
+                  <div className="senior-form-row">
+                    <Label className="senior-form-label">{isFrench ? 'Autres' : 'Other'}</Label>
+                    <MoneyInput
+                      value={netWorth.liabilities.other}
+                      onChange={(v) => setNetWorth(prev => ({ ...prev, liabilities: { ...prev.liabilities, other: v } }))}
+                      className="senior-form-input"
+                      allowDecimals
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            {/* Résumé + snapshots */}
+            <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-blue-700 flex items-center gap-2">
+                  {isFrench ? 'Résumé de la valeur nette' : 'Net worth summary'}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {(() => {
+                  const assetsTotal = (netWorth.assets.cash || 0) + (netWorth.assets.investments || 0) + (netWorth.assets.realEstate || 0) + (netWorth.assets.other || 0);
+                  const liabTotal = (netWorth.liabilities.mortgage || 0) + (netWorth.liabilities.auto || 0) + (netWorth.liabilities.credit || 0) + (netWorth.liabilities.student || 0) + (netWorth.liabilities.other || 0);
+                  const net = assetsTotal - liabTotal;
+                  const captureSnapshot = () => {
+                    const ym = new Date().toISOString().slice(0, 7);
+                    const others = netWorthSnapshots.filter(s => s.date.slice(0, 7) !== ym);
+                    const next = [...others, { date: new Date().toISOString(), assets: assetsTotal, liabilities: liabTotal, net }];
+                    setNetWorthSnapshots(next.sort((a, b) => a.date.localeCompare(b.date)));
+                    try {
+                      const g = GamificationService.getInstance();
+                      g.addPoints(10, isFrench ? 'Instantané de valeur nette' : 'Net worth snapshot');
+                      g.logActivity('savings_updated', { amount: assetsTotal });
+                    } catch {}
+                  };
+                  return (
+                    <>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div className="p-4 border rounded bg-white">
+                          <div className="text-sm text-gray-600">{isFrench ? 'Actifs' : 'Assets'}</div>
+                          <div className="text-2xl font-bold text-emerald-700">{formatCurrency(assetsTotal)}</div>
+                        </div>
+                        <div className="p-4 border rounded bg-white">
+                          <div className="text-sm text-gray-600">{isFrench ? 'Passifs' : 'Liabilities'}</div>
+                          <div className="text-2xl font-bold text-rose-700">{formatCurrency(liabTotal)}</div>
+                        </div>
+                        <div className="p-4 border rounded bg-white">
+                          <div className="text-sm text-gray-600">{isFrench ? 'Valeur nette' : 'Net worth'}</div>
+                          <div className={`text-2xl font-bold ${net >= 0 ? 'text-blue-700' : 'text-red-700'}`}>{formatCurrency(net)}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <Button onClick={captureSnapshot} className="bg-blue-600 hover:bg-blue-700 text-white">
+                          {isFrench ? 'Capturer un instantané' : 'Capture snapshot'}
+                        </Button>
+                        <div className="text-sm text-gray-600">
+                          {isFrench ? 'Instantanés enregistrés' : 'Saved snapshots'}: {netWorthSnapshots.length}
+                        </div>
+                      </div>
+                      <div className="max-h-48 overflow-auto border rounded bg-white">
+                        <div className="grid grid-cols-4 gap-2 p-2 text-sm font-medium text-gray-700">
+                          <div>{isFrench ? 'Date' : 'Date'}</div>
+                          <div>{isFrench ? 'Actifs' : 'Assets'}</div>
+                          <div>{isFrench ? 'Passifs' : 'Liabilities'}</div>
+                          <div>{isFrench ? 'Valeur nette' : 'Net'}</div>
+                        </div>
+                        <div className="divide-y">
+                          {netWorthSnapshots.map(s => (
+                            <div key={s.date} className="grid grid-cols-4 gap-2 p-2 text-sm">
+                              <div className="text-gray-700">{new Date(s.date).toLocaleDateString(isFrench ? 'fr-CA' : 'en-CA')}</div>
+                              <div className="text-emerald-700 font-medium">{formatCurrency(s.assets)}</div>
+                              <div className="text-rose-700 font-medium">{formatCurrency(s.liabilities)}</div>
+                              <div className={`font-bold ${s.net >= 0 ? 'text-blue-700' : 'text-red-700'}`}>{formatCurrency(s.net)}</div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  );
+                })()}
+              </CardContent>
+            </Card>
           </TabsContent>
 
           {/* Paramètres */}
@@ -1318,6 +1802,84 @@ const Budget: React.FC = () => {
                 </CardContent>
               </Card>
             </div>
+
+            {/* SMART goals + Rappels fin de mois */}
+            <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 shadow-lg">
+              <CardHeader>
+                <CardTitle className="text-xl font-bold text-blue-700 flex items-center justify-between gap-2">
+                  <span>{isFrench ? 'Objectifs SMART' : 'SMART Goals'}</span>
+                  <Button variant="outline" onClick={scheduleEndOfMonthReminders}>
+                    {isFrench ? 'Rappels fin de mois' : 'Month-end reminders'}
+                  </Button>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
+                  <Input
+                    placeholder={isFrench ? 'Spécifique (ex.: réduire restos)' : 'Specific (e.g., reduce dining)'}
+                    value={smartDraft.title}
+                    onChange={(e) => setSmartDraft((d) => ({ ...d, title: e.target.value }))}
+                    className="md:col-span-2 bg-white border-slate-300 text-gray-900"
+                  />
+                  <Input
+                    placeholder={isFrench ? 'Mesurable (ex.: -100$/mois)' : 'Measurable (e.g., -$100/mo)'}
+                    value={smartDraft.measure}
+                    onChange={(e) => setSmartDraft((d) => ({ ...d, measure: e.target.value }))}
+                    className="bg-white border-slate-300 text-gray-900"
+                  />
+                  <MoneyInput
+                    value={smartDraft.target}
+                    onChange={(v) => setSmartDraft((d) => ({ ...d, target: v }))}
+                    className="bg-white border-slate-300 text-gray-900"
+                    placeholder="0"
+                    allowDecimals
+                  />
+                  <DateInput
+                    value={smartDraft.deadline}
+                    onChange={(v) => setSmartDraft((d) => ({ ...d, deadline: v }))}
+                    className="bg-white border-slate-300 text-gray-900"
+                  />
+                </div>
+                <Input
+                  placeholder={isFrench ? 'Pertinence (Pourquoi ?)' : 'Relevant (Why?)'}
+                  value={smartDraft.relevance}
+                  onChange={(e) => setSmartDraft((d) => ({ ...d, relevance: e.target.value }))}
+                  className="bg-white border-slate-300 text-gray-900"
+                />
+                <div className="flex justify-end">
+                  <Button onClick={saveSmartGoal} className="bg-blue-600 hover:bg-blue-700 text-white">
+                    {isFrench ? 'Enregistrer l’objectif' : 'Save goal'}
+                  </Button>
+                </div>
+
+                {smartGoals.length > 0 && (
+                  <div className="mt-2 border rounded bg-white">
+                    <div className="grid grid-cols-6 gap-2 p-2 text-sm font-medium text-gray-700">
+                      <div>{isFrench ? 'Objectif' : 'Goal'}</div>
+                      <div>{isFrench ? 'Mesure' : 'Measure'}</div>
+                      <div>{isFrench ? 'Cible' : 'Target'}</div>
+                      <div>{isFrench ? 'Échéance' : 'Deadline'}</div>
+                      <div>{isFrench ? 'Pertinence' : 'Relevant'}</div>
+                      <div></div>
+                    </div>
+                    <div className="divide-y">
+                      {smartGoals.map((g) => (
+                        <div key={g.id} className="grid grid-cols-6 gap-2 p-2 text-sm items-center">
+                          <div className="text-gray-800 truncate">{g.title}</div>
+                          <div className="text-gray-700 truncate">{g.measure}</div>
+                          <div className="text-gray-700">{formatCurrency(Number(g.target) || 0)}</div>
+                          <div className="text-gray-700">{new Date(g.deadline).toLocaleDateString(isFrench ? 'fr-CA' : 'en-CA')}</div>
+                          <div className="text-gray-700 truncate">{g.relevance}</div>
+                          <div className="text-right">
+                            <Button variant="outline" onClick={() => removeSmartGoal(g.id)}>{isFrench ? 'Retirer' : 'Remove'}</Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
           </TabsContent>
         </Tabs>
 

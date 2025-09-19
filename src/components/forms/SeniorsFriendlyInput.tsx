@@ -18,6 +18,8 @@ interface SeniorsInputProps {
   max?: number;
   step?: number;
   className?: string;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 export function SeniorsFriendlyInput({
@@ -35,7 +37,9 @@ export function SeniorsFriendlyInput({
   min,
   max,
   step,
-  className = ''
+  className = '',
+  disabled,
+  readOnly
 }: SeniorsInputProps) {
   const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
   const helpContent = help || helpText;
@@ -71,6 +75,9 @@ export function SeniorsFriendlyInput({
         min={min}
         max={max}
         step={step}
+        disabled={!!disabled}
+        readOnly={!!readOnly}
+        aria-disabled={disabled ? 'true' : undefined}
       />
 
       {helpContent && (

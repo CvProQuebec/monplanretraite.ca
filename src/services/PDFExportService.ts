@@ -22,10 +22,34 @@ export interface PDFSection {
 }
 
 export class PDFExportService {
-  private static readonly PAGE_WIDTH = 210; // A4 width in mm
-  private static readonly PAGE_HEIGHT = 297; // A4 height in mm
+  // US Letter: 8.5" x 11" = 215.9mm x 279.4mm
+  private static readonly PAGE_WIDTH = 215.9; // US Letter width in mm
+  private static readonly PAGE_HEIGHT = 279.4; // US Letter height in mm
   private static readonly MARGIN = 20;
   private static readonly CONTENT_WIDTH = PDFExportService.PAGE_WIDTH - (2 * PDFExportService.MARGIN);
+
+  // Cache du logo en DataURL pour insertion dans le pied de page
+  private static logoDataUrl: string | null = null;
+
+  private static async ensureLogoDataUrl(): Promise<string | null> {
+    if (this.logoDataUrl) return this.logoDataUrl;
+    try {
+      const res = await fetch('/logo-planretraite.png', { cache: 'force-cache' });
+      if (!res.ok) return null;
+      const blob = await res.blob();
+      return await new Promise<string | null>((resolve) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.logoDataUrl = (reader.result as string) || null;
+          resolve(this.logoDataUrl);
+        };
+        reader.onerror = () => resolve(null);
+        reader.readAsDataURL(blob);
+      });
+    } catch {
+      return null;
+    }
+  }
 
   /**
    * Generate comprehensive longevity report PDF
@@ -45,7 +69,7 @@ export class PDFExportService {
       authorName
     } = options;
 
-    const doc = new jsPDF();
+    const doc = new jsPDF({ unit: 'mm', format: 'letter' });
     let currentY = this.MARGIN;
 
     // Title page
@@ -82,7 +106,7 @@ export class PDFExportService {
     }
 
     // Footer
-    this.addFooter(doc, language);
+    await this.addFooterWithLogo(doc, language);
 
     return doc.output('blob');
   }
@@ -619,7 +643,7 @@ export class PDFExportService {
       authorName
     } = params;
 
-    const doc = new jsPDF();
+    const doc = new jsPDF({ unit: 'mm', format: 'letter' });
 
     // Title page (reuse style)
     let currentY = this.addTitleLikePage(doc, {
@@ -726,7 +750,7 @@ export class PDFExportService {
     currentY = this.writeBulletPoints(doc, debtLines, currentY);
 
     // Footer
-    this.addFooter(doc, language);
+    await this.addFooterWithLogo(doc, language);
     return doc.output('blob');
   }
 
@@ -786,14 +810,50 @@ export class PDFExportService {
   }
 
   /**
-   * Generate quick summary PDF
+   * Ajoute le pied de page avec logo et numéro de page (US Letter)
+   */
+  private static async addFooterWithLogo(doc: jsPDF, language: 'fr' | 'en'): Promise<void> {
+    const isFrench = language === 'fr';
+    const pageCount = (doc as any).getNumberOfPages?.() ?? 1;
+    const logo = await this.ensureLogoDataUrl();
+
+    for (let i = 1; i <= pageCount; i++) {
+      doc.setPage(i);
+
+      // Ligne de pied de page
+      doc.setDrawColor(229, 231, 235);
+      doc.line(this.MARGIN, this.PAGE_HEIGHT - 15, this.PAGE_WIDTH - this.MARGIN, this.PAGE_HEIGHT - 15);
+
+      // Logo (si disponible) — en bas gauche
+      if (logo) {
+        try {
+          const logoHeight = 6; // mm
+          const logoWidth = 24; // mm (approx)
+          const x = this.MARGIN;
+          const y = this.PAGE_HEIGHT - 14; // juste au-dessus de la marge inférieure
+          doc.addImage(logo, 'PNG', x, y, logoWidth, logoHeight, undefined, 'FAST');
+        } catch {
+          // ignorer si l'image ne peut pas être ajoutée
+        }
+      }
+
+      // Numéro de page (centré)
+      doc.setFontSize(8);
+      doc.setTextColor(107, 114, 128);
+      const pageText = `${isFrench ? 'Page' : 'Page'} ${i} ${isFrench ? 'de' : 'of'} ${pageCount}`;
+      doc.text(pageText, this.PAGE_WIDTH / 2, this.PAGE_HEIGHT - 8, { align: 'center' });
+    }
+  }
+
+  /**
+   * Helper methods for data generation
    */
   static async generateQuickSummary(
     userData: UserData,
     userLifeExpectancy: number,
     language: 'fr' | 'en' = 'fr'
   ): Promise<Blob> {
-    const doc = new jsPDF();
+    const doc = new jsPDF({ unit: 'mm', format: 'letter' });
 
     // Title
     doc.setFontSize(20);
@@ -813,6 +873,98 @@ export class PDFExportService {
     const dateText = new Date().toLocaleDateString(language === 'fr' ? 'fr-CA' : 'en-CA');
     doc.text(dateText, this.PAGE_WIDTH / 2, 80, { align: 'center' });
 
+    return doc.output('blob');
+  }
+
+  static async generateScenarioComparisonReport(
+    language: 'fr' | 'en',
+    comparison: {
+      scenarios: Array<{ id: string; name: string; description?: string; icon?: string; color?: string }>;
+      metrics: Array<{ label: string; type: 'currency' | 'percentage' | 'years' | 'number'; values: Array<{ scenarioId: string; value: number }> }>;
+      recommendations?: string[];
+    },
+    options?: { reportTitle?: string; authorName?: string }
+  ): Promise<Blob> {
+    const isFrench = language === 'fr';
+    const doc = new jsPDF({ unit: 'mm', format: 'letter' });
+
+    // Titre
+    const title = options?.reportTitle || (isFrench ? 'Comparaison de Scénarios' : 'Scenario Comparison');
+    doc.setFontSize(22);
+    doc.setTextColor(31, 41, 55);
+    doc.text(title, this.PAGE_WIDTH / 2, 26, { align: 'center' });
+
+    // Scénarios inclus
+    doc.setFontSize(12);
+    doc.setTextColor(75, 85, 99);
+    let y = 40;
+    doc.text(isFrench ? 'Scénarios inclus:' : 'Included scenarios:', this.MARGIN, y);
+    y += 8;
+    comparison.scenarios.forEach((s) => {
+      const line = `• ${s.name}${s.description ? ' — ' + s.description : ''}`;
+      const lines = doc.splitTextToSize(line, this.CONTENT_WIDTH);
+      doc.text(lines, this.MARGIN, y);
+      y += lines.length * 5 + 2;
+    });
+
+    // Métriques clés
+    y += 6;
+    doc.setFontSize(14);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Métriques clés' : 'Key metrics', this.MARGIN, y);
+    y += 8;
+    doc.setFontSize(11);
+    doc.setTextColor(55, 65, 81);
+
+    comparison.metrics.forEach((m) => {
+      if (y > this.PAGE_HEIGHT - 30) { doc.addPage(); y = this.MARGIN; }
+      const label = m.label + ':';
+      doc.text(label, this.MARGIN, y);
+      y += 6;
+
+      const lineParts = m.values.map(v => {
+        const s = comparison.scenarios.find(sc => sc.id === v.scenarioId);
+        const name = s ? s.name : v.scenarioId;
+        let valStr: string;
+        switch (m.type) {
+          case 'currency':
+            valStr = new Intl.NumberFormat(isFrench ? 'fr-CA' : 'en-CA', { style: 'currency', currency: 'CAD', maximumFractionDigits: 0 }).format(v.value);
+            break;
+          case 'percentage':
+            valStr = `${v.value.toFixed(1)}%`;
+            break;
+          case 'years':
+            valStr = `${v.value}`;
+            break;
+          default:
+            valStr = `${v.value}`;
+        }
+        return `${name}: ${valStr}`;
+      });
+
+      const metricLines = doc.splitTextToSize('• ' + lineParts.join('   |   '), this.CONTENT_WIDTH);
+      doc.text(metricLines, this.MARGIN + 4, y);
+      y += metricLines.length * 5 + 4;
+    });
+
+    // Recommandations
+    if (comparison.recommendations && comparison.recommendations.length) {
+      if (y > this.PAGE_HEIGHT - 40) { doc.addPage(); y = this.MARGIN; }
+      doc.setFontSize(14);
+      doc.setTextColor(31, 41, 55);
+      doc.text(isFrench ? 'Recommandations' : 'Recommendations', this.MARGIN, y);
+      y += 8;
+
+      doc.setFontSize(11);
+      doc.setTextColor(75, 85, 99);
+      comparison.recommendations.forEach((r) => {
+        const lines = doc.splitTextToSize('• ' + r, this.CONTENT_WIDTH);
+        doc.text(lines, this.MARGIN, y);
+        y += lines.length * 5 + 3;
+      });
+    }
+
+    await this.addFooterWithLogo(doc, language);
     return doc.output('blob');
   }
 }

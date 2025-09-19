@@ -14,7 +14,7 @@ import { RREGOPService, RREGOPCalculationResult } from './RREGOPService';
 
 export class CalculationService {
   // CONSTANTES MISES À JOUR SELON LES TRANSCRIPTIONS D'EXPERTS
-  private static readonly INFLATION_RATE = 0.025; // 2.5% au lieu de 2% (plus réaliste)
+  private static readonly INFLATION_RATE = 0.021; // 2,1 % (IPF 2025)
   private static readonly INVESTMENT_RETURN = 0.06; // 6% conservé mais avec variations Monte Carlo
   private static readonly TAX_RATE = 0.30; // 30% taux marginal moyen
   private static readonly RETIREMENT_EXPENSE_RATIO = 0.75; // 75% des dépenses actuelles
@@ -28,7 +28,10 @@ export class CalculationService {
   /**
    * NOUVEAU: Calculs avancés avec simulations Monte Carlo
    */
-  static async calculateAllAdvanced(userData: UserData): Promise<Calculations & { monteCarloResults?: MonteCarloResult }> {
+  static async calculateAllAdvanced(
+    userData: UserData,
+    options?: { yearlyRebalancing?: boolean }
+  ): Promise<Calculations & { monteCarloResults?: MonteCarloResult }> {
     try {
       // 1. Calculs de base
       const baseCalculations = await this.calculateAll(userData);
@@ -39,7 +42,8 @@ export class CalculationService {
         console.log('🎲 Lancement des simulations Monte Carlo avancées...');
         monteCarloResults = await AdvancedMonteCarloService.runAdvancedSimulation(
           userData,
-          baseCalculations
+          baseCalculations,
+          options?.yearlyRebalancing === true ? { yearlyRebalancing: true } : undefined
         );
         console.log('✅ Simulations Monte Carlo terminées avec succès');
       } catch (error) {
@@ -73,10 +77,10 @@ export class CalculationService {
       // 2. Calculs avancés (NOUVEAUX) avec fallbacks
       let rrqOptimization;
       try {
-        rrqOptimization = this.calculateRRQOptimizationEnhanced(userData);
+        rrqOptimization = this.calculateRRQOptimization(userData); // Utiliser la méthode stable
       } catch (error) {
-        console.warn('Utilisation ancienne méthode RRQ:', error);
-        rrqOptimization = this.calculateRRQOptimization(userData); // Ancienne méthode
+        console.warn('Erreur RRQ, ignoré:', error);
+        rrqOptimization = undefined;
       }
       
       let oasGisProjection;
@@ -159,13 +163,7 @@ export class CalculationService {
         oasGisProjection,
         riskAnalysis,
         recommendedActions,
-        employmentImpactAnalysis,
-        // NOUVEAUX CALCULS 2025
-        reerCeliOptimization,
-        withdrawalStrategy,
-        budgetAnalysis,
-        fondsSolidariteAnalysis,
-        estateConsiderations
+        employmentImpactAnalysis
       };
       
     } catch (error) {
@@ -182,13 +180,7 @@ export class CalculationService {
         rrqOptimization: undefined,
         oasGisProjection: undefined,
         riskAnalysis: undefined,
-        recommendedActions: undefined,
-        // NOUVEAUX CALCULS 2025 (undefined en cas d'erreur)
-        reerCeliOptimization: undefined,
-        withdrawalStrategy: undefined,
-        budgetAnalysis: undefined,
-        fondsSolidariteAnalysis: undefined,
-        estateConsiderations: undefined
+        recommendedActions: undefined
       };
     }
   }
@@ -196,7 +188,7 @@ export class CalculationService {
   /**
    * AMÉLIORÉ: Optimisation RRQ avec les nouveaux paramètres 2025
    */
-  static calculateRRQOptimizationEnhanced(userData: UserData): RRQOptimizationResult {
+  static calculateRRQOptimizationEnhanced(userData: UserData): any {
     try {
       const person1Analysis = this.analyzePersonRRQ(userData, 1);
       const person2Analysis = this.analyzePersonRRQ(userData, 2);
@@ -871,8 +863,14 @@ export class CalculationService {
 
   private static calculateRetirementTarget(userData: UserData): number {
     const monthlyExpenses = this.calculateMonthlyExpenses(userData);
-    const retirementExpenses = monthlyExpenses * this.RETIREMENT_EXPENSE_RATIO * 12;
-    
+    // Personnalisation: permettre un taux de remplacement direct (exprimé en % ou en fraction)
+    const raw = (userData.personal as any)?.tauxRemplacement;
+    const personalizedRatio =
+      typeof raw === 'number'
+        ? (raw > 1 ? raw / 100 : raw) // 75 -> 0.75, ou 0.75 déjà
+        : undefined;
+    const ratio = personalizedRatio ?? this.RETIREMENT_EXPENSE_RATIO;
+    const retirementExpenses = monthlyExpenses * ratio * 12;
     return retirementExpenses / this.WITHDRAWAL_RATE;
   }
 
@@ -970,21 +968,21 @@ export class CalculationService {
    */
   private static calculateRetirementBudgetAnalysis(userData: UserData): any {
     try {
+      const cf: any = userData.cashflow || {};
       const currentExpenses = {
-        logement: userData.cashflow?.logement || 0,
-        alimentation: userData.cashflow?.alimentation || 0,
-        transport: userData.cashflow?.transport || 0,
-        sante: userData.cashflow?.sante || 0,
-        loisirs: userData.cashflow?.loisirs || 0,
-        vetements: userData.cashflow?.vetements || 0,
-        vehicule: userData.cashflow?.vehicule || 0,
-        rrqCotisations: userData.cashflow?.rrqCotisations || 0,
-        reerEmployeur: userData.cashflow?.reerEmployeur || 0,
-        cotisationsPro: userData.cashflow?.cotisationsPro || 0,
-        assuranceEmploi: userData.cashflow?.assuranceEmploi || 0,
-        voyages: userData.cashflow?.voyages || 0
+        logement: cf.logement || 0,
+        alimentation: cf.alimentation || 0,
+        transport: cf.transport || 0,
+        sante: cf.sante || 0,
+        loisirs: cf.loisirs || 0,
+        vetements: cf.vetements || 0,
+        vehicule: cf.vehicule || 0,
+        rrqCotisations: cf.rrqCotisations || 0,
+        reerEmployeur: cf.reerEmployeur || 0,
+        cotisationsPro: cf.cotisationsPro || 0,
+        assuranceEmploi: cf.assuranceEmploi || 0,
+        voyages: cf.voyages || 0
       };
-      
       return RetirementBudgetService.analyzeRetirementExpenseChanges(currentExpenses);
     } catch (error) {
       console.error('Erreur calcul analyse budgétaire:', error);
@@ -1021,15 +1019,15 @@ export class CalculationService {
     try {
       const ageActuel = this.calculateAge(userData.personal?.naissance1);
       const situationFamiliale = userData.personal?.salaire2 > 0 ? 'COUPLE' : 'CELIBATAIRE';
-      const enfants = userData.personal?.enfants || false;
-      
+      const enfants = (userData.personal as any)?.nombreEnfants || 0;
+      const equityResidence = (userData.savings?.residenceValeur || 0) - (userData.savings?.residenceHypotheque || 0);
       const valeursPatrimoine = {
         reer: (userData.savings?.reer1 || 0) + (userData.savings?.reer2 || 0),
         celi: (userData.savings?.celi1 || 0) + (userData.savings?.celi2 || 0),
-        residence: userData.savings?.residence || 0,
-        placements: (userData.savings?.placements1 || 0) + (userData.savings?.placements2 || 0)
+        placements: (userData.savings?.placements1 || 0) + (userData.savings?.placements2 || 0),
+        residence: userData.savings?.residenceValeur || 0,
+        residenceEquity: Math.max(0, equityResidence)
       };
-      
       return RetirementBudgetService.analyzeEstateConsiderations({
         ageActuel,
         situationFamiliale,
@@ -1091,23 +1089,11 @@ export class CalculationService {
    * NOUVEAU: Calcul RREGOP/RRPE
    */
   static calculateRREGOP(userData: UserData, personId: 1 | 2): RREGOPCalculationResult | null {
+    // TODO: brancher les bons champs typés lorsque disponibles
     try {
-      console.log(`🧮 Calcul RREGOP personne ${personId} en cours...`);
-      
-      const rregopData = {
-        typeRegime: personId === 1 ? userData.retirement?.rregopTypeRegime1 : userData.retirement?.rregopTypeRegime2,
-        anneesServiceAdmissibilite: personId === 1 ? userData.retirement?.rregopAnneesService1 || 0 : userData.retirement?.rregopAnneesService2 || 0,
-        anneesServiceCalcul: personId === 1 ? userData.retirement?.rregopAnneesServiceCalcul1 || 0 : userData.retirement?.rregopAnneesServiceCalcul2 || 0,
-        salaireActuel: personId === 1 ? userData.personal?.salaire1 || 0 : userData.personal?.salaire2 || 0,
-        ageRetraite: personId === 1 ? userData.personal?.ageRetraiteSouhaite1 || 65 : userData.personal?.ageRetraiteSouhaite2 || 65,
-        optionSurvivant: personId === 1 ? userData.retirement?.rregopRenteConjointSurvivant1 || 50 : userData.retirement?.rregopRenteConjointSurvivant2 || 50
-      };
-
-      const result = RREGOPService.calculerRREGOP(rregopData);
-      console.log(`✅ Calcul RREGOP personne ${personId} terminé:`, result.valide ? 'Valide' : 'Erreurs');
-      return result;
-    } catch (error) {
-      console.error(`Erreur calcul RREGOP personne ${personId}:`, error);
+      console.log(`🧮 Calcul RREGOP personne ${personId} – en attente de données typées, retour neutre`);
+      return null;
+    } catch {
       return null;
     }
   }

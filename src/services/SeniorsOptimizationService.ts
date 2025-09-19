@@ -27,7 +27,9 @@ export class SeniorsOptimizationService {
    */
   static async preloadModule(modulePath: string): Promise<void> {
     try {
-      await import(modulePath);
+      // Vite limitation: dynamic import variables need an ignore hint or a static map.
+      // Suppress analysis and allow runtime resolution for our preloader:
+      await import(/* @vite-ignore */ modulePath);
     } catch (error) {
       console.warn(`Failed to preload module: ${modulePath}`, error);
     }

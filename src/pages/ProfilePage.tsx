@@ -32,6 +32,7 @@ import { OnboardingService } from '../features/retirement/services/OnboardingSer
 import SRGService from '../features/retirement/services/SRGService';
 import { UserData } from '../features/retirement/types';
 import { useRetirementData } from '../features/retirement/hooks/useRetirementData';
+import { HelpTooltip } from '../features/retirement/components/HelpTooltip';
 
 export default function ProfilePage() {
   const { userData, updateUserData, importData, exportData } = useRetirementData();
@@ -372,8 +373,8 @@ export default function ProfilePage() {
                     <span>Prénom:</span>
                     <span className="font-semibold">{userData.personal?.prenom1}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Âge:</span>
+                  <div className="flex justify-between items-center">
+<span className="flex items-center gap-2">Âge <HelpTooltip title={isFrench ? 'Âge actuel' : 'Current age'} content={isFrench ? 'Votre âge détermine votre horizon de placement et le temps disponible pour faire fructifier votre épargne. Plus vous commencez tôt, plus les intérêts composés travaillent en votre faveur !' : 'Your age sets your investing time horizon. The earlier you start, the longer compounding can work for you.'}><span></span></HelpTooltip></span>
                     <span className="font-semibold">
                       {userData.personal?.naissance1 ? 
                         new Date().getFullYear() - new Date(userData.personal.naissance1).getFullYear() : 
@@ -381,17 +382,109 @@ export default function ProfilePage() {
                       } ans
                     </span>
                   </div>
+                  <div className="flex justify-between items-center mt-2">
+                    <span className="text-sm text-gray-600">Corriger la date de naissance</span>
+                    <input
+                      type="date"
+                      className="p-2 border rounded-md text-sm"
+                      value={userData.personal?.naissance1 || ''}
+                      onChange={(e) => updateUserData('personal', { naissance1: e.target.value })}
+                      aria-label="Date de naissance (corriger)"
+                    />
+                  </div>
                   <div className="flex justify-between">
-                    <span>Salaire:</span>
+<span className="flex items-center gap-2">Revenu brut annuel <HelpTooltip title={isFrench ? 'Revenu annuel brut' : 'Annual gross income'} content={isFrench ? 'Ce montant sert de base à vos calculs et à votre capacité d’épargne. La cible de remplacement à la retraite est souvent ~70 %, mais elle varie selon votre situation.' : 'This amount underpins your calculations and saving capacity. A common retirement income target is ~70% of pre-retirement income, but it varies by situation.'}><span></span></HelpTooltip></span>
                     <span className="font-semibold">
                       {userData.personal?.salaire1?.toLocaleString()} $
                     </span>
                   </div>
+                  <div className="flex justify-between text-sm text-gray-700">
+                    <span>Net mensuel estimé (après impôts):</span>
+                    <span className="font-semibold">
+                      {(() => {
+                        const brut = userData.personal?.salaire1 || 0;
+                        const rate = brut > 100000 ? 0.45 : brut > 50000 ? 0.35 : brut > 25000 ? 0.25 : 0.15;
+                        const netAnnuel = brut * (1 - rate * 0.70);
+                        return Math.round(netAnnuel / 12).toLocaleString() + ' $';
+                      })()}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-xs text-gray-600">
+                    <span>Taux marginal estimé:</span>
+                    <span className="font-semibold">
+                      {(() => {
+                        const brut = userData.personal?.salaire1 || 0;
+                        const rate = brut > 100000 ? 45 : brut > 50000 ? 35 : brut > 25000 ? 25 : 15;
+                        return rate.toFixed(0) + ' %';
+                      })()}
+                    </span>
+                  </div>
                   <div className="flex justify-between">
-                    <span>Objectif retraite:</span>
+<span className="flex items-center gap-2">Objectif retraite <HelpTooltip title={isFrench ? 'Âge de retraite souhaité' : 'Desired retirement age'} content={isFrench ? 'Chaque année de travail supplémentaire peut améliorer sensiblement votre sécurité financière. Par exemple, 60 ans vs 65 ans demandent des stratégies d’épargne très différentes.' : 'Each extra working year can materially improve retirement security. Retiring at 60 vs 65 often requires very different saving strategies.'}><span></span></HelpTooltip></span>
                     <span className="font-semibold">
                       {userData.personal?.ageRetraiteSouhaite1} ans
                     </span>
+                  </div>
+                  {/* Arbre de décision rapide – tester 62/65/67/70/72 */}
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {[62,65,67,70,72].map((age) => (
+                      <Button
+                        key={age}
+                        variant="outline"
+                        size="sm"
+                        onClick={() => updateUserData('personal', { ageRetraiteSouhaite1: age })}
+                      >
+                        Tester {age} ans
+                      </Button>
+                    ))}
+                  </div>
+                  {/* Situation familiale et résidence */}
+                  <div className="mt-4 grid grid-cols-1 gap-2">
+                    <div className="flex justify-between items-center">
+<label htmlFor="statut-marital" className="text-sm text-gray-600 flex items-center gap-2">Statut marital <HelpTooltip title={isFrench ? 'Situation familiale' : 'Family situation'} content={isFrench ? 'Votre statut familial influence vos besoins et vos stratégies fiscales (ex.: fractionnement du revenu, planification successorale).' : 'Family status influences needs and tax strategies (e.g., income splitting, estate planning).'}><span></span></HelpTooltip></label>
+                      <select
+                        id="statut-marital"
+                        className="p-2 border rounded-md text-sm"
+                        title="Statut marital"
+                        value={(userData.personal as any)?.statutMarital || ''}
+                        onChange={(e) => updateUserData('personal', { statutMarital: e.target.value })}
+                      >
+                        <option value="">Non spécifié</option>
+                        <option value="celibataire">Célibataire</option>
+                        <option value="conjoint">Conjoint</option>
+                        <option value="marie">Marié</option>
+                        <option value="separe">Séparé</option>
+                        <option value="divorce">Divorcé</option>
+                        <option value="veuf">Veuf</option>
+                      </select>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <label htmlFor="nombre-enfants" className="text-sm text-gray-600">Nombre d'enfants</label>
+                      <input
+                        id="nombre-enfants"
+                        type="number"
+                        min={0}
+                        className="p-2 border rounded-md text-sm w-28 text-right"
+                        value={userData.personal?.nombreEnfants ?? 0}
+                        onChange={(e) => updateUserData('personal', { nombreEnfants: Math.max(0, Number(e.target.value)) })}
+                        aria-label="Nombre d'enfants"
+                        title="Nombre d'enfants"
+                      />
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <label htmlFor="annees-residence-canada" className="text-sm text-gray-600 flex items-center gap-2">Années de résidence au Canada <HelpTooltip title={isFrench ? 'Admissibilité SV' : 'OAS eligibility'} content={isFrench ? 'Vous devez avoir résidé au moins 10 ans au Canada après 18 ans pour être admissible à la Sécurité de la vieillesse. Le montant dépend du total des années de résidence.' : 'At least 10 years of Canadian residence after age 18 is required for OAS eligibility. The amount depends on total residence years.'}><span></span></HelpTooltip></label>
+                      <input
+                        id="annees-residence-canada"
+                        type="number"
+                        min={0}
+                        max={80}
+                        className="p-2 border rounded-md text-sm w-28 text-right"
+                        value={(userData.personal as any)?.anneesResidenceCanada1 ?? ''}
+                        onChange={(e) => updateUserData('personal', { anneesResidenceCanada1: Math.max(0, Number(e.target.value)) })}
+                        aria-label="Années de résidence au Canada"
+                        title="Années de résidence au Canada"
+                      />
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -562,7 +655,7 @@ export default function ProfilePage() {
 
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Province de résidence</label>
+                      <label className="text-sm font-medium flex items-center gap-2">Province de résidence <HelpTooltip title={isFrench ? 'RRQ vs RPC' : 'QPP vs CPP'} content={isFrench ? 'Au Québec, vous cotisez au RRQ; ailleurs au Canada, au RPC. Ces régimes sont similaires mais comportent des particularités qui affectent vos prestations.' : 'In Quebec you contribute to QPP; elsewhere to CPP. They are similar but have differences that affect your future benefits.'}><span></span></HelpTooltip></label>
                       <select
                         className="w-full p-2 border rounded-md"
                         aria-label="Province de résidence"
@@ -769,7 +862,7 @@ export default function ProfilePage() {
 
                   <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Hypothèse d'inflation personnalisée (%)</label>
+                      <label className="text-sm font-medium flex items-center gap-2">Hypothèse d'inflation personnalisée (%) <HelpTooltip title={isFrench ? 'Taux d’inflation' : 'Inflation rate'} content={isFrench ? 'Pourquoi 3 % ? C’est proche de la moyenne historique canadienne. L’inflation érode le pouvoir d’achat : 1 $ aujourd’hui ≈ 2,43 $ dans 30 ans à 3 %.' : 'Why 3%? It’s close to Canada’s historical average. Inflation erodes purchasing power: $1 today ≈ $2.43 in 30 years at 3%.'}><span></span></HelpTooltip></label>
                       <input
                         type="number"
                         step="0.1"
@@ -785,7 +878,7 @@ export default function ProfilePage() {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Rendement attendu personnalisé (%)</label>
+                      <label className="text-sm font-medium flex items-center gap-2">Rendement attendu personnalisé (%) <HelpTooltip title={isFrench ? 'Rendements attendus' : 'Expected returns'} content={isFrench ? 'Réalisme requis : en moyenne à long terme ~7 % pour les actions et ~4 % pour les obligations (déjà ajustés de l’inflation). Évitez les hypothèses trop optimistes.' : 'Be realistic: long-run averages are roughly ~7% for equities and ~4% for bonds (inflation-adjusted). Avoid overly optimistic assumptions.'}><span></span></HelpTooltip></label>
                       <input
                         type="number"
                         step="0.1"
@@ -911,7 +1004,7 @@ export default function ProfilePage() {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-medium">Dettes totales ($)</label>
+                      <label className="text-sm font-medium flex items-center gap-2">Dettes totales ($) <HelpTooltip title={isFrench ? 'Dettes (hypothèque, autres)' : 'Debts (mortgage, other)'} content={isFrench ? 'L’objectif est généralement d’être libre de dettes à la retraite. Une hypothèque payée représente une dépense en moins dans votre budget de retraite.' : 'The goal is generally to be debt-free at retirement. A paid-off mortgage means one less expense in your retirement budget.'}><span></span></HelpTooltip></label>
                       <input
                         type="number"
                         min="0"
@@ -955,6 +1048,107 @@ export default function ProfilePage() {
                         }}
                       />
                     </div>
+
+                    {/* Dates de mise à jour REER/CELI (unité CAD par défaut) */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Dernière mise à jour REER (date)</label>
+                      <input
+                        type="date"
+                        className="w-full p-2 border rounded-md"
+                        value={(userData.savings as any)?.dateREER1 || ''}
+                        onChange={(e) => updateUserData('savings', { dateREER1: e.target.value })}
+                        aria-label="Dernière mise à jour REER"
+                        title="Dernière mise à jour REER"
+                        placeholder="AAAA-MM-JJ"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium">Dernière mise à jour CELI (date)</label>
+                      <input
+                        type="date"
+                        className="w-full p-2 border rounded-md"
+                        value={(userData.savings as any)?.dateCELI1 || ''}
+                        onChange={(e) => updateUserData('savings', { dateCELI1: e.target.value })}
+                        aria-label="Dernière mise à jour CELI"
+                        title="Dernière mise à jour CELI"
+                        placeholder="AAAA-MM-JJ"
+                      />
+                    </div>
+
+                    {/* Régime d’employeur DB/PD ou CD */}
+                    <div className="space-y-2">
+                      <label htmlFor="regime-employeur" className="text-sm font-medium flex items-center gap-2">Régime d’employeur <HelpTooltip title={isFrench ? 'Argent gratuit ?' : 'Free money?'} content={isFrench ? 'Si votre employeur égalise vos cotisations, c’est souvent la priorité #1 — rendement “garanti” de 100 % sur vos contributions.' : 'If your employer matches your contributions, that’s often priority #1 — a “guaranteed” 100% return on your contributions.'}><span></span></HelpTooltip></label>
+                      <select
+                        id="regime-employeur"
+                        className="w-full p-2 border rounded-md"
+                        title="Régime d’employeur"
+                        value={(userData.retirement as any)?.pensionType1 || ''}
+                        onChange={(e) => updateUserData('retirement', { pensionType1: e.target.value })}
+                      >
+                        <option value="">Aucun / Non spécifié</option>
+                        <option value="PD">Prestation déterminée (PD/DB)</option>
+                        <option value="CD">Cotisations déterminées (CD/DC)</option>
+                      </select>
+                    </div>
+
+                    {/* Placements non-enregistrés – ventilation simple */}
+                    <div className="space-y-2">
+                      <label className="text-sm font-medium flex items-center gap-2">Placements hors REER/CELI – ventilation ($) <HelpTooltip title={isFrench ? 'Épargnes non enregistrées' : 'Non-registered savings'} content={isFrench ? 'Plus flexibles, mais imposés annuellement. Idéaux pour les objectifs à moyen terme et après maximisation des comptes enregistrés.' : 'More flexible but taxed annually. Ideal for medium-term goals and once registered accounts are maximized.'}><span></span></HelpTooltip></label>
+                      <div className="grid grid-cols-3 gap-2">
+                        <input
+                          type="number"
+                          min="0"
+                          className="p-2 border rounded-md"
+                          placeholder="Actions ($)"
+                          value={(userData.savings as any)?.placementsActions1 || ''}
+                          onChange={(e) => updateUserData('savings', { placementsActions1: parseFloat(e.target.value) || 0 })}
+                        />
+                        <input
+                          type="number"
+                          min="0"
+                          className="p-2 border rounded-md"
+                          placeholder="Obligations ($)"
+                          value={(userData.savings as any)?.placementsObligations1 || ''}
+                          onChange={(e) => updateUserData('savings', { placementsObligations1: parseFloat(e.target.value) || 0 })}
+                        />
+                        <input
+                          type="number"
+                          min="0"
+                          className="p-2 border rounded-md"
+                          placeholder="Liquidités ($)"
+                          value={(userData.savings as any)?.placementsLiquidites1 || ''}
+                          onChange={(e) => updateUserData('savings', { placementsLiquidites1: parseFloat(e.target.value) || 0 })}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Ratios et objectifs de remboursement */}
+                  <div className="mt-4 p-4 bg-gray-50 border rounded-lg">
+                    {(() => {
+                      const revenus = (userData.personal?.salaire1 || 0) + (userData.personal?.salaire2 || 0);
+                      const dettes = userData.savings?.dettesTotales || 0;
+                      const dti = revenus > 0 ? (dettes / revenus) * 100 : 0;
+                      const cible = 30; // objectif 30 %
+                      const surplus = Math.max(0, dti - cible);
+                      return (
+                        <div className="text-sm text-gray-700">
+                          <div className="flex justify-between">
+                            <span>Ratio dettes/revenus (DTI) :</span>
+                            <span className="font-semibold">{dti.toFixed(1)} %</span>
+                          </div>
+                          {dti > cible ? (
+                            <div className="mt-1 text-amber-700">
+                              Au-dessus de la cible de {cible} %. Suggestion: augmenter le remboursement mensuel jusqu’à revenir sous {cible} %.
+                            </div>
+                          ) : (
+                            <div className="mt-1 text-green-700">
+                              Dans la cible (≤ {cible} %).
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
 

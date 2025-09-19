@@ -178,6 +178,21 @@ export interface SavingsData {
   cri2: number;
   residenceValeur: number;
   residenceHypotheque: number;
+  /** Paiement hypothécaire mensuel (source de vérité pour Cashflow/logement.hypotheque) */
+  residencePaiementHypothecaireMensuel?: number;
+  /** Taxes municipales annuelles (source de vérité → mensualisée dans Cashflow/logement.taxesMunicipales) */
+  residenceTaxesMunicipalesAnnuelles?: number;
+  /** Assurance habitation annuelle (source de vérité → mensualisée dans Cashflow/logement.assuranceHabitation) */
+  residenceAssuranceHabitationAnnuelle?: number;
+
+  /** Valeur estimée des propriétés locatives (optionnel) */
+  locative1Valeur?: number;
+  locative2Valeur?: number;
+  locative3Valeur?: number;
+  /** Hypothèques restantes des propriétés locatives (optionnel) */
+  locative1Hypotheque?: number;
+  locative2Hypotheque?: number;
+  locative3Hypotheque?: number;
 
   // Champs optionnels additionnels pour UI
   fondsUrgence?: number;

@@ -230,14 +230,15 @@ const BenefitsTable: React.FC<BenefitsTableProps> = ({
                 isFrench={isFrench}
               />
 
-              <div>
-                <label className="block text-lg font-semibold text-gray-700 mb-2">
+              <div className="senior-field-inline">
+                <label className="senior-form-label">
                   {isFrench ? 'Montant à ce jour' : 'Amount to Date'}
                 </label>
                 <div className="p-3 bg-gray-100 border-2 border-gray-300 rounded-lg text-lg font-bold text-indigo-600">
                   {formatCurrency(totals.assuranceEmploi)}
                 </div>
-                <p className="text-sm text-gray-600 mt-1">
+              </div>
+              <p className="text-sm text-gray-600 mt-1">
                   {isFrench
                     ? 'Calculé automatiquement à partir de la date de début et du taux hebdomadaire'
                     : 'Automatically calculated from start date and weekly rate'
@@ -245,7 +246,6 @@ const BenefitsTable: React.FC<BenefitsTableProps> = ({
                 </p>
               </div>
             </div>
-          </div>
 
           {/* Section Rentes privées */}
           <PrivatePensionManager
