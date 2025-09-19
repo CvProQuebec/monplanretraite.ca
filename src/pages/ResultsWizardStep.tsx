@@ -132,6 +132,135 @@ const ResultsWizardStep: React.FC = () => {
     }
   };
 
+  const handleExportBanker = async () => {
+    setExporting(true);
+    try {
+      const clientName = `${userData?.personal?.prenom1 || ''} ${userData?.personal?.nom1 || ''}`.trim() || (isFrench ? 'Client' : 'Client');
+      const orderLabels = suggestedOrder.map(orderLabel);
+      const blob = await PDFExportService.generateBankerReport(isFrench ? 'fr' : 'en', {
+        clientName,
+        scenarioName: isFrench ? 'Scénario personnel' : 'Personal scenario',
+        netMonthlyNeed: monthlyNetNeed || 0,
+        withdrawalOrder: orderLabels,
+        monthsCoveredOp: undefined, // à préciser ultérieurement via buckets
+        yearsCoveredShort: undefined, // à préciser via buckets
+        assumptions: [
+          isFrench ? 'Calculs locaux approximatifs (aucun conseil)' : 'Local approximate calculations (no advice)',
+          isFrench ? 'Aucune transmission réseau; données 100% locales' : 'No network transmission; 100% local data'
+        ],
+        notes: [
+          isFrench ? 'Ordre de retraits ajustable selon la situation fiscale' : 'Withdrawal order adjustable per tax situation'
+        ],
+        authorName: isFrench ? 'MonPlanRetraite.ca' : 'MonPlanRetraite.ca'
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = isFrench ? 'Banquier_Synthese.pdf' : 'Banker_Summary.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setLastSavedAt(new Date());
+      console.log('[Phase3] PDF Banquier exporté.');
+    } catch (e) {
+      console.warn('Erreur export PDF Banquier:', e);
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  const handleExportPlanner = async () => {
+    setExporting(true);
+    try {
+      const clientName = `${userData?.personal?.prenom1 || ''} ${userData?.personal?.nom1 || ''}`.trim() || (isFrench ? 'Client' : 'Client');
+      const recs = isFrench
+        ? [
+            "Réviser l'ordre de retraits selon votre tranche marginale",
+            'Maintenir un coussin de 3–6 mois de dépenses essentielles',
+            'Planifier les rappels 90/60/30 pour retraits importants'
+          ]
+        : [
+            'Review withdrawal order vs your marginal tax bracket',
+            'Maintain a 3–6 months essential-needs buffer',
+            'Schedule 90/60/30 reminders for major withdrawals'
+          ];
+      const comparisons = [
+        { label: isFrench ? 'Atteinte objectifs à 1 an' : '1-year goal attainment', value: isFrench ? 'En cours' : 'In progress' },
+        { label: isFrench ? 'Flux net mensuel' : 'Net monthly flow', value: (monthlyNetNeed || 0).toString() }
+      ];
+      const actionPlan = isFrench
+        ? [
+            'Appliquer un ordre de retraits et le revoir trimestriellement',
+            'Activer les rappels fin de mois pour synchroniser le budget',
+            'Exporter un rapport pour vos rendez-vous'
+          ]
+        : [
+            'Apply a withdrawal order and review quarterly',
+            'Enable month-end reminders to sync budget',
+            'Export a report for your appointments'
+          ];
+      const blob = await PDFExportService.generatePlannerReport(isFrench ? 'fr' : 'en', {
+        clientName,
+        scenarioName: isFrench ? 'Synthèse planificateur' : 'Planner summary',
+        recommendations: recs,
+        comparisons,
+        actionPlan,
+        authorName: isFrench ? 'MonPlanRetraite.ca' : 'MonPlanRetraite.ca'
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = isFrench ? 'Planificateur_Synthese.pdf' : 'Planner_Summary.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setLastSavedAt(new Date());
+      console.log('[Phase3] PDF Planificateur exporté.');
+    } catch (e) {
+      console.warn('Erreur export PDF Planificateur:', e);
+    } finally {
+      setExporting(false);
+    }
+  };
+
+  const handleExportNotary = async () => {
+    setExporting(true);
+    try {
+      const clientName = `${userData?.personal?.prenom1 || ''} ${userData?.personal?.nom1 || ''}`.trim() || (isFrench ? 'Client' : 'Client');
+      const estateNotes = isFrench
+        ? ['Préparer une liste des comptes et bénéficiaires', 'Vérifier la présence d’un mandat de protection', 'Classer les documents importants']
+        : ['Prepare a list of accounts and beneficiaries', 'Verify the presence of a protection mandate', 'Organize important documents'];
+      const beneficiaries = [];
+      const checklist = isFrench
+        ? ['Testament', 'Procurations/Mandats', 'Liste actifs/passifs', 'Coordonnées des proches']
+        : ['Will', 'Powers of attorney', 'Assets/liabilities list', 'Contacts of relatives'];
+      const blob = await PDFExportService.generateNotaryReport(isFrench ? 'fr' : 'en', {
+        clientName,
+        scenarioName: isFrench ? 'Dossier notaire' : 'Notary dossier',
+        estateNotes,
+        beneficiaries,
+        documentChecklist: checklist,
+        authorName: isFrench ? 'MonPlanRetraite.ca' : 'MonPlanRetraite.ca'
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = isFrench ? 'Notaire_Dossier.pdf' : 'Notary_Dossier.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setLastSavedAt(new Date());
+      console.log('[Phase3] PDF Notaire exporté.');
+    } catch (e) {
+      console.warn('Erreur export PDF Notaire:', e);
+    } finally {
+      setExporting(false);
+    }
+  };
+
   const schedule = useMemo(() => {
     const order = suggestedOrder;
     if (!order.length || monthlyNetNeed <= 0) return null;
@@ -287,17 +416,41 @@ const ResultsWizardStep: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="text-gray-700 text-sm">
             {isFrench
-              ? 'Téléchargez un résumé PDF. Les rapports professionnels (banquier / planificateur / notaire) seront disponibles dans la prochaine itération.'
-              : 'Download a summary PDF. Professional reports (banker / planner / notary) will be available in the next iteration.'}
+              ? 'Téléchargez un résumé ou un rapport professionnel (banquier / planificateur / notaire).'
+              : 'Download a summary or a professional report (banker / planner / notary).'}
           </div>
-          <div className="flex items-end">
+          <div className="flex items-end gap-2 flex-wrap">
             <button
-              className="button-primary px-6 py-3 w-full"
+              className="button-primary px-4 py-3"
               onClick={handleExportPDF}
               disabled={exporting}
-              aria-label={isFrench ? 'Exporter PDF' : 'Export PDF'}
+              aria-label={isFrench ? 'Exporter résumé PDF' : 'Export summary PDF'}
             >
-              {exporting ? (isFrench ? 'Export...' : 'Export...') : (isFrench ? 'Exporter PDF' : 'Export PDF')}
+              {isFrench ? 'Résumé' : 'Summary'}
+            </button>
+            <button
+              className="button-secondary px-4 py-3"
+              onClick={handleExportBanker}
+              disabled={exporting}
+              aria-label={isFrench ? 'Exporter rapport Banquier' : 'Export Banker report'}
+            >
+              {isFrench ? 'Banquier' : 'Banker'}
+            </button>
+            <button
+              className="button-secondary px-4 py-3"
+              onClick={handleExportPlanner}
+              disabled={exporting}
+              aria-label={isFrench ? 'Exporter rapport Planificateur' : 'Export Planner report'}
+            >
+              {isFrench ? 'Planificateur' : 'Planner'}
+            </button>
+            <button
+              className="button-secondary px-4 py-3"
+              onClick={handleExportNotary}
+              disabled={exporting}
+              aria-label={isFrench ? 'Exporter rapport Notaire' : 'Export Notary report'}
+            >
+              {isFrench ? 'Notaire' : 'Notary'}
             </button>
           </div>
         </div>

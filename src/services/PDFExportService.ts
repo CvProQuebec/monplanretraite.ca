@@ -967,4 +967,254 @@ export class PDFExportService {
     await this.addFooterWithLogo(doc, language);
     return doc.output('blob');
   }
+
+  /**
+   * Rapports professionnels — Phase 3 Sprint 2
+   * Modèles prêts à imprimer (US Letter). Données locales uniquement.
+   * Remarque: ces rapports sont des synthèses pédagogiques (aucun conseil).
+   */
+  static async generateBankerReport(
+    language: 'fr' | 'en',
+    plan: {
+      clientName?: string;
+      scenarioName?: string;
+      netMonthlyNeed?: number;
+      withdrawalOrder?: string[]; // labels déjà humainement lisibles
+      monthsCoveredOp?: number;
+      yearsCoveredShort?: number;
+      assumptions?: string[]; // lignes d'hypothèses
+      notes?: string[];
+      authorName?: string;
+    } = {}
+  ): Promise<Blob> {
+    const isFrench = language === 'fr';
+    const doc = new jsPDF({ unit: 'mm', format: 'letter' });
+
+    // Page de garde
+    this.addTitleLikePage(doc, {
+      title: isFrench ? 'Résumé bancaire — Retraite' : 'Banker summary — Retirement',
+      subtitle: isFrench ? (plan.scenarioName || 'Scénario personnel') : (plan.scenarioName || 'Personal scenario'),
+      info: `${isFrench ? 'Client' : 'Client'}: ${plan.clientName || (isFrench ? 'Non précisé' : 'Unspecified')}`,
+      author: plan.authorName,
+      language
+    });
+
+    // Page — Besoin net / Ordre retraits
+    doc.addPage();
+    let y = this.MARGIN;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Synthèse financière' : 'Financial summary', this.MARGIN, y);
+    y += 12;
+
+    const lines1: string[] = [];
+    const needStr = (plan.netMonthlyNeed || 0).toLocaleString(isFrench ? 'fr-CA' : 'en-CA', { style: 'currency', currency: 'CAD' });
+    lines1.push(isFrench ? `Besoin net mensuel à couvrir: ${needStr}` : `Net monthly need to cover: ${needStr}`);
+    if (plan.withdrawalOrder && plan.withdrawalOrder.length) {
+      lines1.push(
+        (isFrench ? 'Ordre de retraits recommandé: ' : 'Recommended withdrawal order: ')
+        + plan.withdrawalOrder.join(' → ')
+      );
+    }
+    if (typeof plan.monthsCoveredOp === 'number') {
+      lines1.push(
+        isFrench ? `Coussin opérationnel: ${plan.monthsCoveredOp} mois de dépenses essentielles` :
+                   `Operational buffer: ${plan.monthsCoveredOp} months of essential needs`
+      );
+    }
+    if (typeof plan.yearsCoveredShort === 'number') {
+      lines1.push(
+        isFrench ? `Horizon court terme couvert: ${plan.yearsCoveredShort} an(s)` :
+                   `Short-term horizon covered: ${plan.yearsCoveredShort} year(s)`
+      );
+    }
+
+    y = this.writeBulletPoints(doc, lines1, y);
+
+    // Page — Hypothèses & notes
+    doc.addPage();
+    y = this.MARGIN;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Hypothèses' : 'Assumptions', this.MARGIN, y);
+    y += 10;
+    if (plan.assumptions && plan.assumptions.length) {
+      y = this.writeBulletPoints(doc, plan.assumptions, y);
+    } else {
+      doc.setFontSize(12);
+      doc.setTextColor(107, 114, 128);
+      doc.text(isFrench ? 'Aucune hypothèse détaillée fournie.' : 'No detailed assumptions provided.', this.MARGIN, y);
+      y += 8;
+    }
+
+    y += 6;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Notes' : 'Notes', this.MARGIN, y);
+    y += 10;
+    if (plan.notes && plan.notes.length) {
+      this.writeBulletPoints(doc, plan.notes, y);
+    } else {
+      doc.setFontSize(12);
+      doc.setTextColor(107, 114, 128);
+      doc.text(isFrench ? '—' : '—', this.MARGIN, y);
+    }
+
+    await this.addFooterWithLogo(doc, language);
+    return doc.output('blob');
+  }
+
+  static async generatePlannerReport(
+    language: 'fr' | 'en',
+    plan: {
+      clientName?: string;
+      scenarioName?: string;
+      recommendations?: string[];
+      comparisons?: Array<{ label: string; value: string }>;
+      actionPlan?: string[];
+      authorName?: string;
+    } = {}
+  ): Promise<Blob> {
+    const isFrench = language === 'fr';
+    const doc = new jsPDF({ unit: 'mm', format: 'letter' });
+
+    // Garde
+    this.addTitleLikePage(doc, {
+      title: isFrench ? 'Planificateur financier — Synthèse' : 'Financial planner — Summary',
+      subtitle: plan.scenarioName || (isFrench ? 'Scénario personnel' : 'Personal scenario'),
+      info: `${isFrench ? 'Client' : 'Client'}: ${plan.clientName || (isFrench ? 'Non précisé' : 'Unspecified')}`,
+      author: plan.authorName,
+      language
+    });
+
+    // Recommandations
+    doc.addPage();
+    let y = this.MARGIN;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Recommandations' : 'Recommendations', this.MARGIN, y);
+    y += 10;
+    if (plan.recommendations && plan.recommendations.length) {
+      y = this.writeBulletPoints(doc, plan.recommendations, y);
+    } else {
+      doc.setFontSize(12);
+      doc.setTextColor(107, 114, 128);
+      doc.text(isFrench ? 'Aucune recommandation fournie.' : 'No recommendations provided.', this.MARGIN, y);
+      y += 8;
+    }
+
+    // Comparaisons clés
+    doc.addPage();
+    y = this.MARGIN;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Comparaisons clés' : 'Key comparisons', this.MARGIN, y);
+    y += 10;
+    doc.setFontSize(12);
+    doc.setTextColor(75, 85, 99);
+    if (plan.comparisons && plan.comparisons.length) {
+      for (const c of plan.comparisons) {
+        const line = `• ${c.label}: ${c.value}`;
+        const lines = doc.splitTextToSize(line, this.CONTENT_WIDTH);
+        doc.text(lines, this.MARGIN, y);
+        y += lines.length * 5 + 3;
+        if (y > this.PAGE_HEIGHT - 20) { doc.addPage(); y = this.MARGIN; }
+      }
+    } else {
+      doc.text(isFrench ? '—' : '—', this.MARGIN, y);
+      y += 6;
+    }
+
+    // Plan d'action
+    doc.addPage();
+    y = this.MARGIN;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? "Plan d'action" : 'Action plan', this.MARGIN, y);
+    y += 10;
+    if (plan.actionPlan && plan.actionPlan.length) {
+      this.writeBulletPoints(doc, plan.actionPlan, y);
+    } else {
+      doc.setFontSize(12);
+      doc.setTextColor(107, 114, 128);
+      doc.text(isFrench ? '—' : '—', this.MARGIN, y);
+    }
+
+    await this.addFooterWithLogo(doc, language);
+    return doc.output('blob');
+  }
+
+  static async generateNotaryReport(
+    language: 'fr' | 'en',
+    plan: {
+      clientName?: string;
+      scenarioName?: string;
+      estateNotes?: string[];
+      beneficiaries?: string[];
+      documentChecklist?: string[];
+      authorName?: string;
+    } = {}
+  ): Promise<Blob> {
+    const isFrench = language === 'fr';
+    const doc = new jsPDF({ unit: 'mm', format: 'letter' });
+
+    // Garde
+    this.addTitleLikePage(doc, {
+      title: isFrench ? 'Dossier notaire — Synthèse' : 'Notary dossier — Summary',
+      subtitle: plan.scenarioName || (isFrench ? 'Patrimoine et dispositions' : 'Estate and dispositions'),
+      info: `${isFrench ? 'Client' : 'Client'}: ${plan.clientName || (isFrench ? 'Non précisé' : 'Unspecified')}`,
+      author: plan.authorName,
+      language
+    });
+
+    // Notes successorales
+    doc.addPage();
+    let y = this.MARGIN;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Notes successorales' : 'Estate notes', this.MARGIN, y);
+    y += 10;
+    if (plan.estateNotes && plan.estateNotes.length) {
+      y = this.writeBulletPoints(doc, plan.estateNotes, y);
+    } else {
+      doc.setFontSize(12);
+      doc.setTextColor(107, 114, 128);
+      doc.text(isFrench ? '—' : '—', this.MARGIN, y);
+      y += 6;
+    }
+
+    // Bénéficiaires
+    doc.addPage();
+    y = this.MARGIN;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Bénéficiaires' : 'Beneficiaries', this.MARGIN, y);
+    y += 10;
+    if (plan.beneficiaries && plan.beneficiaries.length) {
+      y = this.writeBulletPoints(doc, plan.beneficiaries, y);
+    } else {
+      doc.setFontSize(12);
+      doc.setTextColor(107, 114, 128);
+      doc.text(isFrench ? '—' : '—', this.MARGIN, y);
+      y += 6;
+    }
+
+    // Liste de documents
+    doc.addPage();
+    y = this.MARGIN;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Liste de documents' : 'Document checklist', this.MARGIN, y);
+    y += 10;
+    if (plan.documentChecklist && plan.documentChecklist.length) {
+      this.writeBulletPoints(doc, plan.documentChecklist, y);
+    } else {
+      doc.setFontSize(12);
+      doc.setTextColor(107, 114, 128);
+      doc.text(isFrench ? '—' : '—', this.MARGIN, y);
+    }
+
+    await this.addFooterWithLogo(doc, language);
+    return doc.output('blob');
+  }
 }
