@@ -272,7 +272,7 @@ const Accueil: React.FC = () => {
           </div>
 
           {/* SECTION 2: Service Gratuit - VERSION OPTIMISÉE (60% plus court) */}
-          <Card className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-2xl mb-16 border-0 overflow-hidden relative">
+          <Card className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-2xl mb-16 border-0 overflow-hidden relative hidden">
             <CardContent className="p-8 relative z-10">
               <div className="text-center mb-8">
                 <div className="inline-block bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full text-sm font-bold mb-4">
@@ -326,7 +326,7 @@ const Accueil: React.FC = () => {
           </Card>
 
           {/* SECTION 3: Ce qui nous rend différents - FUSIONNÉE ET OPTIMISÉE */}
-          <Card className="bg-white/90 backdrop-blur-sm border-2 border-blue-200 shadow-xl mb-16">
+          <Card className="bg-white/90 backdrop-blur-sm border-2 border-blue-200 shadow-xl mb-16 hidden">
             <CardHeader className="text-center pb-6">
               <CardTitle className="text-3xl font-bold text-blue-900 mb-4">
                 {isFrench ? 'Ce qui nous rend différents' : 'What makes us different'}
@@ -655,6 +655,146 @@ const Accueil: React.FC = () => {
               </CardContent>
             </Card>
           )}
+
+          {/* SECTION: Ce qui nous rend différents — déplacé après comparaison */}
+          <Card className="bg-white/90 backdrop-blur-sm border-2 border-blue-200 shadow-xl mb-16">
+            <CardHeader className="text-center pb-6">
+              <CardTitle className="text-3xl font-bold text-blue-900 mb-4">
+                {isFrench ? 'Ce qui nous rend différents' : 'What makes us different'}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <CheckCircle className="w-8 h-8 text-green-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {isFrench ? 'Seule solution gratuite' : 'Only free solution'}
+                  </h3>
+                  <p className="text-gray-700">
+                    {isFrench
+                      ? 'Module d\'urgence professionnel offert gratuitement - une première au Québec'
+                      : 'Professional emergency module offered for free - a first in Quebec'
+                    }
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Sparkles className="w-8 h-8 text-blue-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {isFrench ? 'Assistant IA exclusif' : 'Exclusive AI Assistant'}
+                  </h3>
+                  <p className="text-gray-700">
+                    {isFrench
+                      ? 'Le premier assistant qui évite les catastrophes financières avant qu\'elles arrivent'
+                      : 'The first assistant that prevents financial disasters before they happen'
+                    }
+                  </p>
+                </div>
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Shield className="w-8 h-8 text-purple-600" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">
+                    {isFrench ? 'Sécurité maximale' : 'Maximum security'}
+                  </h3>
+                  <p className="text-gray-700">
+                    {isFrench
+                      ? 'Vos données restent sur votre appareil. Aucune transmission réseau.'
+                      : 'Your data stays on your device. No network transmission.'
+                    }
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* SECTION: Service Gratuit — déplacé après “Différences” */}
+          <Card className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-2xl mb-16 border-0 overflow-hidden relative">
+            <CardContent className="p-8 relative z-10">
+              <div className="text-center mb-8">
+                <div className="inline-block bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full text-sm font-bold mb-4">
+                  🎁 {isFrench ? 'SERVICE GRATUIT' : 'FREE SERVICE'}
+                </div>
+                <h2 className="text-4xl font-bold mb-4">
+                  {isFrench ? 'Trousse de protection familiale' : 'Family Protection Kit'}
+                </h2>
+                <p className="text-xl text-emerald-100 max-w-3xl mx-auto mb-8">
+                  {isFrench
+                    ? 'Complétez l\'information, imprimez et partagez avec les membres de votre famille ou votre personne de confiance.'
+                    : 'Complete the information, print and share with family members or your trusted person.'
+                  }
+                </p>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                <div className="text-center">
+                  <Phone className="w-12 h-12 text-white mx-auto mb-2" />
+                  <h3 className="font-semibold">{isFrench ? 'Contacts d\'urgence' : 'Emergency contacts'}</h3>
+                </div>
+                <div className="text-center">
+                  <Heart className="w-12 h-12 text-white mx-auto mb-2" />
+                  <h3 className="font-semibold">{isFrench ? 'Infos médicales' : 'Medical info'}</h3>
+                </div>
+                <div className="text-center">
+                  <FileText className="w-12 h-12 text-white mx-auto mb-2" />
+                  <h3 className="font-semibold">{isFrench ? 'Documents légaux' : 'Legal documents'}</h3>
+                </div>
+                <div className="text-center">
+                  <Users className="w-12 h-12 text-white mx-auto mb-2" />
+                  <h3 className="font-semibold">{isFrench ? 'Responsabilités' : 'Responsibilities'}</h3>
+                </div>
+              </div>
+              <div className="text-center">
+                <Button
+                  onClick={() => handleNavigation('/planification-urgence')}
+                  size="lg"
+                  className="bg-white text-emerald-600 hover:bg-gray-100 font-bold px-12 py-4 text-xl rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                >
+                  {isFrench ? '🎯 Créer ma trousse GRATUITE' : '🎯 Create my FREE Kit'}
+                  <ArrowRight className="ml-3 w-6 h-6" />
+                </Button>
+                <p className="text-emerald-200 text-sm mt-4">
+                  {isFrench ? '✨ Aucune inscription requise • Données 100 % privées' : '✨ No registration required • 100% private data'}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* SECTION: FAQ / CTA final */}
+          <Card className="bg-white border-2 border-gray-200 shadow-xl mb-20">
+            <CardHeader className="text-center pb-4">
+              <CardTitle className="text-3xl font-bold text-gray-900">
+                {isFrench ? 'Questions fréquentes' : 'Frequently asked questions'}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="max-w-4xl mx-auto">
+              <div className="space-y-4 text-gray-800">
+                <details className="border rounded-lg p-3">
+                  <summary className="font-semibold cursor-pointer">{isFrench ? 'Dois‑je créer un compte?' : 'Do I need an account?'}</summary>
+                  <p className="mt-2 text-sm">{isFrench ? 'Non. Vous pouvez commencer sans inscription. Vos données restent sur votre appareil.' : 'No. You can start without signing up. Your data stays on your device.'}</p>
+                </details>
+                <details className="border rounded-lg p-3">
+                  <summary className="font-semibold cursor-pointer">{isFrench ? 'Mes données sont‑elles sécurisées?' : 'Are my data secure?'}</summary>
+                  <p className="mt-2 text-sm">{isFrench ? 'Oui, elles sont chiffrées localement (AES‑256) et ne quittent pas votre appareil.' : 'Yes, encrypted locally (AES‑256) and never leave your device.'}</p>
+                </details>
+                <details className="border rounded-lg p-3">
+                  <summary className="font-semibold cursor-pointer">{isFrench ? 'Puis‑je obtenir un remboursement?' : 'Can I get a refund?'}</summary>
+                  <p className="mt-2 text-sm">{isFrench ? 'Oui, garantie de remboursement 14 jours sur les plans payants.' : 'Yes, 14‑day money‑back guarantee on paid plans.'}</p>
+                </details>
+              </div>
+              <div className="text-center mt-8">
+                <Button
+                  onClick={() => navigate('/wizard/profil')}
+                  className="bg-blue-700 hover:bg-blue-800 text-white font-bold px-8 py-3 rounded-xl shadow-lg"
+                  aria-label={isFrench ? 'Assistant de planification Retraite' : 'Retirement planning assistant'}
+                >
+                  {isFrench ? '🎯 Assistant de planification Retraite' : '🎯 Retirement Planning Assistant'}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
  
