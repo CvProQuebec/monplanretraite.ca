@@ -26,6 +26,8 @@ const ResultsWizardStep: React.FC = () => {
   const [targetWithdrawalDate, setTargetWithdrawalDate] = useState<string>('');
   const [suggestedOrder, setSuggestedOrder] = useState<WithdrawalSource[]>([]);
   const [exporting, setExporting] = useState(false);
+  const [monthsCoveredOp, setMonthsCoveredOp] = useState<number | null>(null);
+  const [yearsCoveredShort, setYearsCoveredShort] = useState<number | null>(null);
 
   // Charger userData depuis localStorage
   useEffect(() => {
@@ -48,6 +50,25 @@ const ResultsWizardStep: React.FC = () => {
         // Si dépenses > revenus, besoin net positif (à couvrir par retraits)
         const need = Math.max(0, totalDepenses - revenusMensuels);
         setMonthlyNetNeed(Number(need.toFixed(0)));
+
+        // Buckets (approximations pédagogiques)
+        const depensesEssentielles = (data?.cashflow?.logement || 0) +
+          (data?.cashflow?.servicesPublics || 0) +
+          (data?.cashflow?.assurances || 0) +
+          (data?.cashflow?.alimentation || 0) +
+          (data?.cashflow?.transport || 0) +
+          (data?.cashflow?.sante || 0);
+
+        const emergencyFunds = Math.max(0, (data?.savings?.epargne1 || 0) + (data?.savings?.epargne2 || 0));
+        const opMonths = depensesEssentielles > 0 ? emergencyFunds / depensesEssentielles : 0;
+        setMonthsCoveredOp(Number(opMonths.toFixed(1)));
+
+        const shortTermFunds = Math.max(0,
+          (data?.savings?.placements1 || 0) + (data?.savings?.placements2 || 0) + (data?.savings?.celi1 || 0) + (data?.savings?.celi2 || 0)
+        );
+        const yearlyNeeds = totalDepenses * 12;
+        const shortYears = yearlyNeeds > 0 ? shortTermFunds / yearlyNeeds : 0;
+        setYearsCoveredShort(Number(shortYears.toFixed(1)));
       }
     } catch {
       // silencieux
@@ -142,8 +163,8 @@ const ResultsWizardStep: React.FC = () => {
         scenarioName: isFrench ? 'Scénario personnel' : 'Personal scenario',
         netMonthlyNeed: monthlyNetNeed || 0,
         withdrawalOrder: orderLabels,
-        monthsCoveredOp: undefined, // à préciser ultérieurement via buckets
-        yearsCoveredShort: undefined, // à préciser via buckets
+        monthsCoveredOp: monthsCoveredOp ?? undefined,
+        yearsCoveredShort: yearsCoveredShort ?? undefined,
         assumptions: [
           isFrench ? 'Calculs locaux approximatifs (aucun conseil)' : 'Local approximate calculations (no advice)',
           isFrench ? 'Aucune transmission réseau; données 100% locales' : 'No network transmission; 100% local data'
@@ -359,6 +380,38 @@ const ResultsWizardStep: React.FC = () => {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Buckets (Coussin & Court terme) */}
+      <div className="mt-4 bg-emerald-50 border border-emerald-300 rounded-lg p-4">
+        <div className="flex items-center gap-2 mb-2 text-emerald-900">
+          <Wallet className="w-5 h-5" />
+          <span className="font-semibold">{isFrench ? 'Coussin & Buckets' : 'Buffer & Buckets'}</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="bg-white rounded border border-emerald-200 p-3">
+            <div className="text-sm text-emerald-800">
+              {isFrench ? 'Coussin opérationnel (mois de besoins essentiels)' : 'Operational buffer (months of essential needs)'}
+            </div>
+            <div className="text-2xl font-bold text-emerald-900">
+              {monthsCoveredOp != null ? monthsCoveredOp : '—'} {isFrench ? 'mois' : 'months'}
+            </div>
+            <div className="text-xs text-emerald-700">
+              {isFrench ? 'Cible: 3–6 mois' : 'Target: 3–6 months'}
+            </div>
+          </div>
+          <div className="bg-white rounded border border-emerald-200 p-3">
+            <div className="text-sm text-emerald-800">
+              {isFrench ? 'Horizon court terme couvert' : 'Short-term horizon covered'}
+            </div>
+            <div className="text-2xl font-bold text-emerald-900">
+              {yearsCoveredShort != null ? yearsCoveredShort : '—'} {isFrench ? 'an(s)' : 'year(s)'}
+            </div>
+            <div className="text-xs text-emerald-700">
+              {isFrench ? 'Cible indicative: 1–3 ans' : 'Indicative target: 1–3 years'}
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Rappels */}
