@@ -445,3 +445,43 @@ Definition of Done (Phase 1)
 - Les champs listés ci‑dessus sont éditables uniquement dans Immobilier, et reflétés automatiquement dans Dépenses.
 - Migration automatique des anciennes clés si présentes (log).
 - Respect des normes UI `.mpr-*` pour les champs ajoutés.
+
+## 🚀 Phases 3 et 4 — Résumé d’implémentation (2025‑09)
+
+### Phase 3 — Wizard Résultats, Rapports PDF Pro, Rappels
+- Étape “Résultats & Plan d’action” du Wizard:
+  - Ordre de retraits recommandé (heuristiques locales) + application via WizardService
+  - Aperçu horaire simplifié (12 mois)
+  - Rappels 90/60/30 jours + fin de mois (NotificationSchedulerService), stockage local chiffré
+  - Export PDF: Résumé + Rapports professionnels (Banquier, Planificateur, Notaire)
+- Services:
+  - TaxOptimizationService: ordre de retraits et horaire simplifié
+  - NotificationSchedulerService: séries de rappels (RRQ/SV/FERR/Retrait/Fin de mois)
+  - PDFExportService: nouveaux presets generateBankerReport/PlannerReport/NotaryReport
+- Routage:
+  - `/wizard/plan` → ResultsWizardStep
+- Données:
+  - 100 % local (secureStorage AES‑GCM + fallback localStorage), aucune transmission réseau
+
+### Phase 4 — Buckets & Résilience
+- Calculs et affichage dans l’étape Résultats:
+  - Coussin opérationnel: mois de besoins essentiels couverts (à partir de l’épargne liquide)
+  - Horizon court terme: années couvertes par les fonds court terme (placements non enregistrés + CELI) sur base dépenses annuelles
+- Rapports:
+  - Rapport Banquier enrichi: intègre monthsCoveredOp et yearsCoveredShort
+- Accessibilité/OQLF:
+  - Libellés FR/EN, formats conformes (1 234,56 $, 4,5 %, “13 h 5”), tailles et contrastes seniors
+
+### Fichiers principaux impactés
+- `src/pages/ResultsWizardStep.tsx` (nouvelle étape, UI et CTAs)
+- `src/services/TaxOptimizationService.ts` (ordre de retraits + horaire)
+- `src/services/NotificationSchedulerService.ts` (rappels locaux)
+- `src/services/PDFExportService.ts` (rapports pro PDF)
+- `src/pages/WizardPage.tsx` (routage ‘plan’)
+
+### Definition of Done (Phases 3‑4)
+- Ordre de retraits appliquable + aperçu horaire
+- Rappels 90/60/30 + fin de mois visibles dans Notifications
+- Exports PDF: Résumé + Banquier/Planificateur/Notaire
+- Buckets affichés (mois/an) et utilisés par le rapport Banquier
+- OQLF/Accessibilité respectés; build/type‑check OK

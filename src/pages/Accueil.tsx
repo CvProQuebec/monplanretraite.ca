@@ -38,6 +38,7 @@ const Accueil: React.FC = () => {
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
   const [targetPlan, setTargetPlan] = useState<'professional' | 'expert'>('professional');
   const [showOnboardingWizard, setShowOnboardingWizard] = useState(false);
+  const [showComparison, setShowComparison] = useState(false);
   
   // Système de code de test temporaire
   const [testCode, setTestCode] = useState('');
@@ -90,6 +91,42 @@ const Accueil: React.FC = () => {
       setIsTestModeActive(true);
     }
   }, []);
+
+  // Catalogue des fonctionnalités (palier minimal requis)
+  type Tier = 'free' | 'pro' | 'expert';
+  const featureCatalog: Array<{ key: string; labelFr: string; labelEn: string; tier: Tier }> = [
+    // Gratuit
+    { key: 'emergency', labelFr: "Module d'urgence professionnel (8 sections)", labelEn: 'Professional emergency module (8 sections)', tier: 'free' },
+    { key: 'budget', labelFr: 'Planification budget et dépenses', labelEn: 'Budget and expense planning', tier: 'free' },
+    { key: 'basic-calcs', labelFr: 'Calculateurs de base (5 outils)', labelEn: 'Basic calculators (5 tools)', tier: 'free' },
+    { key: 'rrq-cpp', labelFr: 'Gestion revenus et prestations RRQ/CPP', labelEn: 'Income and RRQ/CPP benefits management', tier: 'free' },
+    { key: 'security', labelFr: 'Sécurité bancaire (chiffrement AES‑256)', labelEn: 'Banking security (AES‑256 encryption)', tier: 'free' },
+    // Pro
+    { key: 'ai-assistant', labelFr: 'Assistant IA Personnel (prévention catastrophes)', labelEn: 'Personal AI Assistant (disaster prevention)', tier: 'pro' },
+    { key: 'adv-calcs', labelFr: 'Calculateurs avancés (IRR, TWR, Monte Carlo)', labelEn: 'Advanced calculators (IRR, TWR, Monte Carlo)', tier: 'pro' },
+    { key: 'rregop', labelFr: 'Module RREGOP complet', labelEn: 'Complete RREGOP module', tier: 'pro' },
+    { key: 'srg', labelFr: 'Module SRG complet', labelEn: 'Complete GIS module', tier: 'pro' },
+    { key: 'tax-opt', labelFr: 'Optimisation fiscale avancée (REER/CELI)', labelEn: 'Advanced tax optimization (RRSP/TFSA)', tier: 'pro' },
+    { key: 'pro-reports', labelFr: 'Rapports professionnels (PDF) • Simulations illimitées', labelEn: 'Professional reports (PDF) • Unlimited simulations', tier: 'pro' },
+    // Expert
+    { key: 'estate', labelFr: 'Planification successorale complète', labelEn: 'Complete estate planning', tier: 'expert' },
+    { key: 'mc-1000', labelFr: 'Monte Carlo 1000+ itérations • IA prédictive', labelEn: 'Monte Carlo 1000+ iterations • Predictive AI', tier: 'expert' },
+    { key: 'real-estate', labelFr: 'Optimisation immobilière avancée', labelEn: 'Advanced real estate optimization', tier: 'expert' },
+    { key: 'consultant-reports', labelFr: 'Rapports niveau consultant', labelEn: 'Consultant-level reports', tier: 'expert' },
+  ];
+
+  const labelOf = (f: { labelFr: string; labelEn: string }) => (isFrench ? f.labelFr : f.labelEn);
+  const sortByLabel = (a: typeof featureCatalog[number], b: typeof featureCatalog[number]) =>
+    labelOf(a).localeCompare(labelOf(b), isFrench ? 'fr-CA' : 'en-CA');
+
+  const freeList = featureCatalog.filter(f => f.tier === 'free').sort(sortByLabel);
+  const proOnlyList = featureCatalog.filter(f => f.tier === 'pro').sort(sortByLabel);
+  const expertOnlyList = featureCatalog.filter(f => f.tier === 'expert').sort(sortByLabel);
+
+  const included = (tier: Tier, plan: Tier) => {
+    const order = { free: 0, pro: 1, expert: 2 } as const;
+    return order[plan] >= order[tier];
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -210,6 +247,30 @@ const Accueil: React.FC = () => {
                   ) : '⚠️ One bad retirement decision can cost tens of thousands of dollars. Our tools help you make the right decisions from the start.'}
                 </p>
               </div>
+            </div>
+          </div>
+
+          {/* CTA principale — Assistant guidé */}
+          <div className="flex flex-col items-center gap-4 mb-10">
+            <div className="flex flex-wrap justify-center gap-3">
+              <Button
+                onClick={() => navigate('/wizard/profil')}
+                className="bg-blue-700 hover:bg-blue-800 text-white font-bold px-8 py-3 rounded-xl shadow-lg"
+                aria-label={isFrench ? "Commencer l'assistant guidé" : "Start guided wizard"}
+              >
+                {isFrench ? "🎯 Commencer l'assistant guidé" : '🎯 Start the guided wizard'}
+              </Button>
+              <Button
+                onClick={() => document.getElementById('plans-compare')?.scrollIntoView({ behavior: 'smooth' })}
+                variant="outline"
+                className="border-2 border-blue-700 text-blue-800 hover:bg-blue-50 font-semibold px-6 py-3 rounded-xl"
+                aria-label={isFrench ? 'Voir les fonctionnalités' : 'See features'}
+              >
+                {isFrench ? 'Voir les fonctionnalités' : 'See features'}
+              </Button>
+            </div>
+            <div className="text-sm text-gray-600">
+              {isFrench ? 'Sans inscription • Données 100 % privées' : 'No signup • 100% private data'}
             </div>
           </div>
 
@@ -514,6 +575,18 @@ const Accueil: React.FC = () => {
                 </Card>
               </div>
 
+              <div className="flex justify-center mt-6">
+                <Button
+                  onClick={() => {
+                    setShowComparison((v) => !v);
+                    setTimeout(() => document.getElementById('plans-compare')?.scrollIntoView({ behavior: 'smooth' }), 60);
+                  }}
+                  className="bg-white text-blue-800 hover:bg-gray-100 font-bold px-8 py-3 rounded-xl shadow-md"
+                >
+                  {isFrench ? (showComparison ? 'Masquer la comparaison' : 'Comparer les plans') : (showComparison ? 'Hide comparison' : 'Compare plans')}
+                </Button>
+              </div>
+
               <div className="text-center mt-8">
                 <p className="text-blue-200 text-sm">
                   {isFrench ? '✨ Garantie 14 jours remboursé sur tous les plans payants' : '✨ 14-day money-back guarantee on all paid plans'}
@@ -523,9 +596,71 @@ const Accueil: React.FC = () => {
           </div>
 
 
+          {/* SECTION 5: Tableau de comparaison détaillée */}
+          {showComparison && (
+            <Card id="plans-compare" className="bg-white border-2 border-gray-200 shadow-xl mb-16">
+              <CardHeader className="text-center pb-4">
+                <CardTitle className="text-3xl font-bold text-gray-900">
+                  {isFrench ? 'Comparaison détaillée des fonctionnalités' : 'Detailed plan comparison'}
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="overflow-x-auto">
+                <table className="min-w-full border-collapse">
+                  <thead>
+                    <tr className="bg-gray-50">
+                      <th className="text-left p-3 text-gray-700 border-b border-gray-200 w-2/3">{isFrench ? 'Fonctionnalité' : 'Feature'}</th>
+                      <th className="text-center p-3 text-gray-700 border-b border-gray-200">Free</th>
+                      <th className="text-center p-3 text-gray-700 border-b border-gray-200">{isFrench ? 'Pro' : 'Pro'}</th>
+                      <th className="text-center p-3 text-gray-700 border-b border-gray-200">{isFrench ? 'Expert' : 'Expert'}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {/* Groupe: Inclus Gratuit (A→Z) */}
+                    <tr><td colSpan={4} className="bg-emerald-50 text-emerald-900 font-semibold p-2">{isFrench ? 'Plan Gratuit' : 'Free plan'}</td></tr>
+                    {freeList.map((f) => (
+                      <tr key={f.key} className="hover:bg-gray-50">
+                        <td className="p-3 border-b border-gray-100 text-gray-900">{labelOf(f)}</td>
+                        <td className="p-3 border-b border-gray-100 text-center">{included(f.tier, 'free') ? '✔' : '—'}</td>
+                        <td className="p-3 border-b border-gray-100 text-center">{included(f.tier, 'pro') ? '✔' : '—'}</td>
+                        <td className="p-3 border-b border-gray-100 text-center">{included(f.tier, 'expert') ? '✔' : '—'}</td>
+                      </tr>
+                    ))}
+                    {/* Groupe: Inclus Pro (A→Z) */}
+                    <tr><td colSpan={4} className="bg-blue-50 text-blue-900 font-semibold p-2">{isFrench ? 'Plan Professionnel' : 'Professional plan'}</td></tr>
+                    {proOnlyList.map((f) => (
+                      <tr key={f.key} className="hover:bg-gray-50">
+                        <td className="p-3 border-b border-gray-100 text-gray-900">{labelOf(f)}</td>
+                        <td className="p-3 border-b border-gray-100 text-center">—</td>
+                        <td className="p-3 border-b border-gray-100 text-center">✔</td>
+                        <td className="p-3 border-b border-gray-100 text-center">✔</td>
+                      </tr>
+                    ))}
+                    {/* Groupe: Inclus Expert (A→Z) */}
+                    <tr><td colSpan={4} className="bg-purple-50 text-purple-900 font-semibold p-2">{isFrench ? 'Plan Expert' : 'Expert plan'}</td></tr>
+                    {expertOnlyList.map((f) => (
+                      <tr key={f.key} className="hover:bg-gray-50">
+                        <td className="p-3 border-b border-gray-100 text-gray-900">{labelOf(f)}</td>
+                        <td className="p-3 border-b border-gray-100 text-center">—</td>
+                        <td className="p-3 border-b border-gray-100 text-center">—</td>
+                        <td className="p-3 border-b border-gray-100 text-center">✔</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div className="text-center mt-6">
+                  <Button
+                    onClick={() => setShowComparison(false)}
+                    className="bg-gray-100 text-gray-700 hover:bg-gray-200 font-semibold px-6 py-2 rounded-lg"
+                  >
+                    {isFrench ? 'Fermer la comparaison' : 'Close comparison'}
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
+          )}
         </div>
       </div>
-
+ 
       {/* Modals */}
       <AdvancedUpgradeModal
         isOpen={isUpgradeModalOpen}

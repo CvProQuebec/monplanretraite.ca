@@ -281,6 +281,9 @@ Septembre 2025 — Optimisations Performance
 - Code splitting avancé, cache intelligent
 - Temps de chargement réduits
 
+Septembre 2025 — Phases 3–4 (Wizard Résultats, Rapports PDF pro, Rappels, Buckets)
+- Étape Résultats du Wizard (/wizard/plan), TaxOptimizationService (ordre retraits + horaire), NotificationSchedulerService (90/60/30, fin de mois, FERR), PDFExportService (Banquier/Planificateur/Notaire), Buckets (coussin opérationnel en mois, horizon court terme en années)
+
 Septembre 2025 — Consolidation "Ma Retraite" + CPM2014
 - Bug fuseau horaires corrigé pour emplois saisonniers
 - Analyse CPM2014 intégrée
