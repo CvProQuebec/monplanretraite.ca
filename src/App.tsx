@@ -50,6 +50,13 @@ const RRQCPPAnalysis = React.lazy(() => import('./pages/RRQCPPAnalysis'));
 const ImmobilierPage = React.lazy(() => import('./pages/ImmobilierPage'));
 const CCQPage = React.lazy(() => import('./pages/CCQPage'));
 const ComparisonPage = React.lazy(() => import('./pages/ComparisonPage'));
+const EstatePlanning = React.lazy(() => import('./pages/EstatePlanning'));
+const FinancialAssistantEn = React.lazy(() => import('./pages/FinancialAssistant'));
+const RealEstatePageEn = React.lazy(() => import('./pages/RealEstatePage'));
+const SpendingPlanningEn = React.lazy(() => import('./pages/SpendingPlanning'));
+const IncomePageEn = React.lazy(() => import('./pages/IncomePage'));
+const SaveLoadEn = React.lazy(() => import('./pages/SaveLoad'));
+const HomeOptimized = React.lazy(() => import('./pages/HomeOptimized'));
 
 // Composants de test et validation - Lazy loading
 const FinalValidation = React.lazy(() => import('./components/FinalValidation'));
@@ -114,7 +121,7 @@ function App() {
               
               {/* Page revenus - "GÉREZ VOS SOURCES DE REVENUS" */}
               <Route path="/mes-revenus" element={<Revenus />} />
-              <Route path="/my-income" element={<Revenus />} />
+              <Route path="/my-income" element={<IncomePageEn />} />
               
               {/* Page planification d'urgence - "PROTÉGEZ VOS PROCHES" */}
               <Route path="/planification-urgence" element={<PlanificationUrgence />} />
@@ -122,15 +129,15 @@ function App() {
               
               {/* Page planification successorale - "ORGANISEZ VOTRE SUCCESSION" */}
               <Route path="/planification-successorale" element={<PlanificationSuccessorale />} />
-              <Route path="/succession-planning" element={<PlanificationSuccessorale />} />
+              <Route path="/succession-planning" element={<EstatePlanning />} />
               
               {/* Page planification de dépenses - "OPTIMISEZ VOS ACHATS" */}
               <Route path="/planification-depenses" element={<PlanificationDepenses />} />
-              <Route path="/expense-planning" element={<PlanificationDepenses />} />
+              <Route path="/expense-planning" element={<SpendingPlanningEn />} />
               
               {/* Assistant financier personnel - "ÉVITEZ LES CATASTROPHES FINANCIÈRES" */}
               <Route path="/assistant-financier" element={<AssistantFinancier />} />
-              <Route path="/financial-assistant" element={<AssistantFinancier />} />
+              <Route path="/financial-assistant" element={<FinancialAssistantEn />} />
               
               {/* Expérience guidée seniors - Navigation zéro scroll */}
               <Route path="/guided-experience" element={<SeniorsGuidedExperience />} />
@@ -233,7 +240,7 @@ function App() {
               
               {/* Page Immobilier - Gestion complète du patrimoine immobilier */}
               <Route path="/immobilier" element={<ImmobilierPage />} />
-              <Route path="/real-estate" element={<ImmobilierPage />} />
+              <Route path="/real-estate" element={<RealEstatePageEn />} />
               
               {/* 📊 NOUVELLES ROUTES - SIMULATIONS */}
               
@@ -479,7 +486,7 @@ function App() {
               
               {/* Routes Sauvegarder/Charger */}
               <Route path="/fr/sauvegarder-charger" element={<SauvegarderCharger />} />
-              <Route path="/en/save-load" element={<SauvegarderCharger />} />
+              <Route path="/en/save-load" element={<SaveLoadEn />} />
 
               {/* Sauvegardes locales (gestionnaire) */}
               <Route path="/sauvegardes" element={<div className="p-8"><BackupManagerPanel /></div>} />
