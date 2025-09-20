@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
+import { FEATURE_CATALOG, Tier } from '@/config/plans';
 
 const Home: React.FC = () => {
   const { language } = useLanguage();
@@ -34,6 +35,7 @@ const Home: React.FC = () => {
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
   const [targetPlan, setTargetPlan] = useState<'professional' | 'expert'>('professional');
   const [showOnboardingWizard, setShowOnboardingWizard] = useState(false);
+  const [showComparison, setShowComparison] = useState(false);
 
   const handleNavigation = (path: string) => {
     navigate(path);
@@ -52,6 +54,26 @@ const Home: React.FC = () => {
 
   const handleOnboardingSkip = () => {
     setShowOnboardingWizard(false);
+  };
+
+  // Feature catalog (English/FR supported via isFrench)
+  const featureCatalog = FEATURE_CATALOG;
+
+  const labelOf = (f: { labelFr: string; labelEn: string }) =>
+    (isFrench ? f.labelFr : f.labelEn);
+
+  const sortByLabel = (
+    a: typeof featureCatalog[number],
+    b: typeof featureCatalog[number]
+  ) => labelOf(a).localeCompare(labelOf(b), isFrench ? 'fr-CA' : 'en-CA');
+
+  const freeList = featureCatalog.filter((f) => f.tier === 'free').sort(sortByLabel);
+  const proOnlyList = featureCatalog.filter((f) => f.tier === 'pro').sort(sortByLabel);
+  const expertOnlyList = featureCatalog.filter((f) => f.tier === 'expert').sort(sortByLabel);
+
+  const included = (tier: Tier, plan: Tier) => {
+    const order = { free: 0, pro: 1, expert: 2 } as const;
+    return order[plan] >= order[tier];
   };
 
   return (
@@ -412,6 +434,23 @@ const Home: React.FC = () => {
                 </Card>
               </div>
 
+              <div className="flex justify-center mt-6">
+                <Button
+                  onClick={() => {
+                    setShowComparison((v) => !v);
+                    setTimeout(
+                      () => document.getElementById('plans-compare')?.scrollIntoView({ behavior: 'smooth' }),
+                      60
+                    );
+                  }}
+                  className="bg-white text-blue-800 hover:bg-gray-100 font-bold px-8 py-3 rounded-xl shadow-md"
+                >
+                  {isFrench
+                    ? (showComparison ? 'Masquer la comparaison' : 'Comparer les plans')
+                    : (showComparison ? 'Hide comparison' : 'Compare plans')}
+                </Button>
+              </div>
+
               <div className="text-center mt-8">
                 <p className="text-blue-200 text-sm">
                   {isFrench ? '✨ Garantie 14 jours remboursé sur tous les plans payants' : '✨ 14-day money-back guarantee on all paid plans'}
@@ -423,6 +462,111 @@ const Home: React.FC = () => {
 
         </div>
       </div>
+
+      {showComparison && (
+        <Card id="plans-compare" className="bg-white border-2 border-gray-200 shadow-xl mb-16">
+          <CardHeader className="text-center pb-4">
+            <CardTitle className="text-3xl font-bold text-gray-900">
+              {isFrench ? 'Comparaison détaillée des fonctionnalités' : 'Detailed plan comparison'}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="overflow-x-auto">
+            <table className="min-w-full border-collapse">
+              <thead>
+                <tr className="bg-gray-50">
+                  <th className="text-left p-3 text-gray-700 border-b border-gray-200 w-2/3">
+                    {isFrench ? 'Fonctionnalité' : 'Feature'}
+                  </th>
+                  <th className="text-center p-3 text-gray-700 border-b border-gray-200">Free</th>
+                  <th className="text-center p-3 text-gray-700 border-b border-gray-200">{isFrench ? 'Pro' : 'Pro'}</th>
+                  <th className="text-center p-3 text-gray-700 border-b border-gray-200">{isFrench ? 'Expert' : 'Expert'}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {/* Free plan group */}
+                <tr>
+                  <td colSpan={4} className="bg-emerald-50 text-emerald-900 font-semibold p-2">
+                    {isFrench ? 'Plan Gratuit' : 'Free plan'}
+                  </td>
+                </tr>
+                {freeList.map((f) => (
+                  <tr key={f.key} className="hover:bg-gray-50">
+                    <td className="p-3 border-b border-gray-100 text-gray-900">
+                      <div className="font-medium">{labelOf(f)}</div>
+                      {(isFrench ? (f as any).descFr : (f as any).descEn) && (
+                        <div className="text-xs text-gray-600 mt-1">
+                          {isFrench ? (f as any).descFr : (f as any).descEn}
+                        </div>
+                      )}
+                    </td>
+                    <td className="p-3 border-b border-gray-100 text-center">
+                      {included(f.tier, 'free') ? '✔' : '—'}
+                    </td>
+                    <td className="p-3 border-b border-gray-100 text-center">
+                      {included(f.tier, 'pro') ? '✔' : '—'}
+                    </td>
+                    <td className="p-3 border-b border-gray-100 text-center">
+                      {included(f.tier, 'expert') ? '✔' : '—'}
+                    </td>
+                  </tr>
+                ))}
+
+                {/* Professional plan group */}
+                <tr>
+                  <td colSpan={4} className="bg-blue-50 text-blue-900 font-semibold p-2">
+                    {isFrench ? 'Plan Professionnel' : 'Professional plan'}
+                  </td>
+                </tr>
+                {proOnlyList.map((f) => (
+                  <tr key={f.key} className="hover:bg-gray-50">
+                    <td className="p-3 border-b border-gray-100 text-gray-900">
+                      <div className="font-medium">{labelOf(f)}</div>
+                      {(isFrench ? (f as any).descFr : (f as any).descEn) && (
+                        <div className="text-xs text-gray-600 mt-1">
+                          {isFrench ? (f as any).descFr : (f as any).descEn}
+                        </div>
+                      )}
+                    </td>
+                    <td className="p-3 border-b border-gray-100 text-center">—</td>
+                    <td className="p-3 border-b border-gray-100 text-center">✔</td>
+                    <td className="p-3 border-b border-gray-100 text-center">✔</td>
+                  </tr>
+                ))}
+
+                {/* Expert plan group */}
+                <tr>
+                  <td colSpan={4} className="bg-purple-50 text-purple-900 font-semibold p-2">
+                    {isFrench ? 'Plan Expert' : 'Expert plan'}
+                  </td>
+                </tr>
+                {expertOnlyList.map((f) => (
+                  <tr key={f.key} className="hover:bg-gray-50">
+                    <td className="p-3 border-b border-gray-100 text-gray-900">
+                      <div className="font-medium">{labelOf(f)}</div>
+                      {(isFrench ? (f as any).descFr : (f as any).descEn) && (
+                        <div className="text-xs text-gray-600 mt-1">
+                          {isFrench ? (f as any).descFr : (f as any).descEn}
+                        </div>
+                      )}
+                    </td>
+                    <td className="p-3 border-b border-gray-100 text-center">—</td>
+                    <td className="p-3 border-b border-gray-100 text-center">—</td>
+                    <td className="p-3 border-b border-gray-100 text-center">✔</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="text-center mt-6">
+              <Button
+                onClick={() => setShowComparison(false)}
+                className="bg-gray-100 text-gray-700 hover:bg-gray-200 font-semibold px-6 py-2 rounded-lg"
+              >
+                {isFrench ? 'Fermer la comparaison' : 'Close comparison'}
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Modals */}
       <AdvancedUpgradeModal
