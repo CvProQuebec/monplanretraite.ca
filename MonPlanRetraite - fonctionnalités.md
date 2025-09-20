@@ -128,6 +128,7 @@
 - **Guide d'économies** : 99 trucs pour économiser sans se priver
 - **Calculateur de taux d'épargne** : Mesure de l'efficacité d'épargne
 - **Planificateur de projets** : Gestion des objectifs financiers
+- **Planification de longévité financière** : Espérance de vie ajustée, projection 25–35 ans, facteurs de risque et recommandations
 
 ## 🏆 FONCTIONNALITÉS PREMIUM EXCLUSIVES
 - **Simulations Monte Carlo avancées** : Modélisation stochastique complète

@@ -478,6 +478,7 @@ Definition of Done (Phase 1)
   - Horizon court terme: années couvertes par les fonds court terme (placements non enregistrés + CELI) sur base dépenses annuelles
 - Rapports:
   - Rapport Banquier enrichi: intègre monthsCoveredOp et yearsCoveredShort
+  - Wizard/Rapports: bouton “Exporter (optimisation)” (export résumé robuste)
 - Accessibilité/OQLF:
   - Libellés FR/EN, formats conformes (1 234,56 $, 4,5 %, “13 h 5”), tailles et contrastes seniors
 
@@ -517,6 +518,7 @@ Composants techniques
   - Onglet Premium “Lab optimisation fiscale”: Greedy vs RRSP‑only vs DP/Beam, heatmaps (MTR/SV/SRG), réglages avancés (beamWidth, stepSize, poids objectif, ratio CG), progression Worker, arrêt, Mode robuste (scores + explications), Export PDF.
 - Exports PDF
   - TaxOptimizationPDFService: résumé robuste (impôts totaux, scores robustes, explications).
+  - Monte Carlo (worker): src/workers/mcWorker.ts (aperçu 1000+ itérations)
 
 Garanties
 - 100 % local, aucune transmission réseau, exécutions non bloquantes (Worker), accessibilité seniors, FR/EN.

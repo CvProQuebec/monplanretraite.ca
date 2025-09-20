@@ -195,7 +195,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
     const safeWithdrawalRate = (data.monthlyExpenses * 12) / data.totalAssets * 100;
     if (safeWithdrawalRate > 4) {
       recommendations.push('Votre taux de retrait dépasse la règle des 4 % - risque d\'épuisement');
-      riskFactors.push(`Taux de retrait initial de ${safeWithdrawalRate.toFixed(1)}% (>4%)`);
+      riskFactors.push(`Taux de retrait initial de ${safeWithdrawalRate.toFixed(1)} % (>4%)`);
     }
     
     if (data.expectedReturn < data.inflationRate + 2) {
@@ -354,6 +354,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                       id="gender"
                       value={data.gender}
                       onChange={(e) => handleSelectChange('gender', e.target.value)}
+                      title="Sexe"
                       className="w-full p-2 border border-gray-300 rounded-md"
                     >
                       <option value="male">Homme</option>
@@ -367,6 +368,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                       id="healthStatus"
                       value={data.healthStatus}
                       onChange={(e) => handleSelectChange('healthStatus', e.target.value)}
+                      title="État de santé"
                       className="w-full p-2 border border-gray-300 rounded-md"
                     >
                       <option value="excellent">Excellent</option>
@@ -382,6 +384,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                       id="familyLongevity"
                       value={data.familyLongevity}
                       onChange={(e) => handleSelectChange('familyLongevity', e.target.value)}
+                      title="Longévité familiale"
                       className="w-full p-2 border border-gray-300 rounded-md"
                     >
                       <option value="low">Faible (parents décédés avant 75 ans)</option>
@@ -396,6 +399,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                       id="lifestyle"
                       value={data.lifestyle}
                       onChange={(e) => handleSelectChange('lifestyle', e.target.value)}
+                      title="Mode de vie"
                       className="w-full p-2 border border-gray-300 rounded-md"
                     >
                       <option value="sedentary">Sédentaire</option>
@@ -460,6 +464,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                       id="hasSpouse"
                       checked={data.hasSpouse}
                       onChange={(e) => handleInputChange('hasSpouse', e.target.checked)}
+                      title="J'ai un conjoint"
                       className="rounded"
                     />
                     <Label htmlFor="hasSpouse">J'ai un conjoint</Label>
@@ -484,6 +489,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                           id="spouseGender"
                           value={data.spouseGender}
                           onChange={(e) => handleSelectChange('spouseGender', e.target.value)}
+                          title="Sexe du conjoint"
                           className="w-full p-2 border border-gray-300 rounded-md"
                         >
                           <option value="male">Homme</option>
@@ -532,7 +538,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                   
                   <div className="text-center p-4 bg-orange-50 rounded-lg">
                     <div className="text-2xl font-bold text-orange-600">
-                      {projection.probabilityAge90.toFixed(0)}%
+                      {projection.probabilityAge90.toFixed(0)} %
                     </div>
                     <div className="text-sm text-gray-600">Probabilité 90 ans</div>
                   </div>
@@ -588,10 +594,10 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                           <td className="p-2 font-medium">{formatCurrency(year.assetValue)}</td>
                           <td className="p-2">
                             <span className={year.withdrawalRate > 4 ? 'text-red-600 font-bold' : ''}>
-                              {year.withdrawalRate.toFixed(1)}%
+                              {year.withdrawalRate.toFixed(1)} %
                             </span>
                           </td>
-                          <td className="p-2">{year.survivalProbability.toFixed(0)}%</td>
+                          <td className="p-2">{year.survivalProbability.toFixed(0)} %</td>
                         </tr>
                       ))}
                     </tbody>

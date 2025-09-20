@@ -325,6 +325,7 @@ Janvier 2025 — Module Hypothèses de Calcul
 ---
 
 ## ✅ Mises à jour Septembre 2025 — Optimisation fiscale v1→v3, Sauvegarde locale, Portée Immobilier
+Notes doc supplémentaires: Monte Carlo (mcWorker) documenté; Wizard/Rapports — libellé exact « Exporter (optimisation) » référencé.
 
 Livré (100 % local, aucun réseau)
 - Optimisation fiscale v1→v3
