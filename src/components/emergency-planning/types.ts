@@ -239,6 +239,125 @@ export interface DocumentChecklist {
   emplacement: string;
 }
 
+/**
+ * Extensions de schéma (Phase suivante)
+ */
+export interface AssurancesDommages {
+  habitation?: {
+    assureur?: string;
+    numeroPolice?: string;
+    telephone?: string;
+    adresse?: string;
+  };
+  auto?: {
+    assureur?: string;
+    numeroPolice?: string;
+    telephone?: string;
+    adresse?: string;
+  };
+  autres?: Array<{
+    assureur?: string;
+    type?: string;
+    numeroPolice?: string;
+    telephone?: string;
+    adresse?: string;
+  }>;
+}
+
+export interface DeclarationsRevenus {
+  comptableNom?: string;
+  telephone?: string;
+  adresse?: string;
+  emplacementArchives?: string;
+}
+
+export interface ImmeubleRevenus {
+  proprietaires?: string;
+  dateAchat?: string;
+  prixAchat?: string;
+  hypotheque?: string;
+  dateEmprunt?: string;
+  preteurs?: string;
+  valeurActuelle?: string;
+  assurance?: string;
+  revenusAnnuels?: string;
+}
+
+export interface Conseiller {
+  type: 'notaire' | 'avocat' | 'comptable' | 'conseillerFinancier' | 'medecin';
+  nom?: string;
+  telephone?: string;
+  adresse?: string;
+  courriel?: string;
+}
+
+export interface CoffretSurete {
+  institution?: string;
+  numeroCoffret?: string;
+  emplacementsCles?: string;
+  contenu?: string;
+  cotitulaires?: string;
+}
+
+export interface Funerailles {
+  dispositions?: boolean;
+  discretionProches?: boolean;
+  depouille?: 'exposee' | 'inhumee' | 'incineree';
+  autresPrecisions?: string;
+  contratPrealable?: boolean;
+  entrepreneur?: { nom?: string; telephone?: string; adresse?: string };
+  emplacementDocuments?: string;
+}
+
+export interface Fiducie {
+  type?: string;
+  valeur?: string;
+  beneficiaires?: string[];
+  fiduciaires?: string[];
+}
+
+export interface ContratsMatrimoniauxEtatCivil {
+  etatCivil?: 'marie' | 'uniCivilement' | 'uniDeFait' | 'celibataire' | 'separe' | 'divorce' | 'veuf';
+  date?: string;
+  regime?: 'societeAcquets' | 'separationBiens' | 'communauteBiens' | string;
+  emplacement?: string;
+  redigeParConseiller?: boolean;
+}
+
+export interface DivorceInfo {
+  typeSeparation?: 'separeFait' | 'separeLegalement' | 'divorce';
+  date?: string;
+  emplacement?: string;
+}
+
+export interface VeuvageInfo {
+  dateDecesConjoint?: string;
+  certificatDecesEnMains?: boolean;
+  emplacementCertificat?: string;
+}
+
+export interface CertificatsNaissance {
+  vous?: string;
+  enfants?: string[];
+}
+
+export interface NeHorsCanada {
+  certificatCitoyenneteEmplacement?: string;
+  autresRenseignements?: string;
+}
+
+export interface AutreBienPersonnel {
+  type?: string;
+  description?: string;
+  emplacement?: string;
+}
+
+export interface EmplacementDocumentParTitulaire {
+  titulaire: 'vous' | 'conjoint';
+  document: string;
+  emplacement: string;
+}
+
 export interface EmergencyData {
   // Personnel
   nom: string;
@@ -448,6 +567,24 @@ export interface EmergencyData {
   instructionCoffreFort: string;
   instructionAffaires: string;
   messagesPersonnels: string;
+
+  // Extensions — juridiques, fiscaux et inventaire (optionnels)
+  reees?: InvestmentAccount[];
+  assurancesDommages?: AssurancesDommages;
+  declarationsRevenus?: DeclarationsRevenus;
+  immeublesRevenus?: ImmeubleRevenus[];
+  conseillers?: Conseiller[];
+  coffretSurete?: CoffretSurete;
+  funerailles?: Funerailles;
+  fiducies?: Fiducie[];
+  strategiesSuccessorales?: string[];
+  contratsMatrimoniauxEtatCivil?: ContratsMatrimoniauxEtatCivil;
+  divorce?: DivorceInfo;
+  veuvage?: VeuvageInfo;
+  certificatsNaissance?: CertificatsNaissance;
+  neHorsCanada?: NeHorsCanada;
+  autresBiensPersonnels?: AutreBienPersonnel[];
+  emplacementsDocumentsParTitulaire?: EmplacementDocumentParTitulaire[];
 
   // Meta
   dateMAJ: string;

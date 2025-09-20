@@ -63,6 +63,7 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
   const celis = padInv(data.celis, 2, 'celi');
   const cris = padInv(data.cris, 2, 'cri');
   const ferrs = padInv(data.ferrs, 2, 'ferr');
+  const reees = padInv((data as any).reees, 1, 'reee');
 
   const brokers = (data.brokerAccounts && data.brokerAccounts.length
     ? data.brokerAccounts
@@ -830,6 +831,296 @@ const FinancesSection: React.FC<FinancesSectionProps> = ({ data, setData, expand
             ))}
           </div>
         )}
+      </div>
+
+      {/* REEE */}
+      <div className="item-card" style={{ marginTop: '16px' }}>
+        <h4 style={{fontSize: '16px', fontWeight: 700, color: '#1f2937'}}>REEE</h4>
+        {reees.map((acc, index) => (
+          <div key={acc.id || index} className="item-card" style={{ marginTop: '8px' }}>
+            <div className="form-grid">
+              <div className="form-field">
+                <label className="form-label">{t.emergencyPlanning.finances.institution}</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={acc.institution}
+                  onChange={(e) => {
+                    const updated = [...reees];
+                    updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, institution: e.target.value };
+                    setData({ ...data, reees: updated as any });
+                  }}
+                  placeholder={t.emergencyPlanning.finances.institution}
+                />
+              </div>
+              <div className="form-field">
+                <label className="form-label">{t.emergencyPlanning.finances.investmentType}</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={acc.typeInvestissement}
+                  onChange={(e) => {
+                    const updated = [...reees];
+                    updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, typeInvestissement: e.target.value };
+                    setData({ ...data, reees: updated as any });
+                  }}
+                  placeholder="Fonds, placements, etc."
+                />
+              </div>
+              <div className="form-field">
+                <label className="form-label">{t.emergencyPlanning.finances.accountNumber}</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={acc.numeroCompte}
+                  onChange={(e) => {
+                    const updated = [...reees];
+                    updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, numeroCompte: e.target.value };
+                    setData({ ...data, reees: updated as any });
+                  }}
+                  placeholder="XXXXXXXXXX"
+                />
+              </div>
+              <div className="form-field">
+                <label className="form-label">{t.emergencyPlanning.finances.representativeName}</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={acc.representantNom}
+                  onChange={(e) => {
+                    const updated = [...reees];
+                    updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, representantNom: e.target.value };
+                    setData({ ...data, reees: updated as any });
+                  }}
+                  placeholder={t.emergencyPlanning.finances.representativeName}
+                />
+              </div>
+              <div className="form-field">
+                <label className="form-label">{t.emergencyPlanning.finances.representativeContact}</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  value={acc.representantContact}
+                  onChange={(e) => {
+                    const updated = [...reees];
+                    updated[index] = { ...(updated[index] || { id: acc.id }), ...acc, representantContact: e.target.value };
+                    setData({ ...data, reees: updated as any });
+                  }}
+                  placeholder="(XXX) XXX-XXXX / courriel"
+                />
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Assurances de dommages */}
+      <div className="item-card" style={{ marginTop: '16px' }}>
+        <h4 style={{fontSize: '16px', fontWeight: 700, color: '#1f2937'}}>Assurances de dommages</h4>
+        <div className="form-grid">
+          {/* Habitation */}
+          <div className="form-field">
+            <label className="form-label" htmlFor="assHabAssureur">Habitation — Assureur</label>
+            <input
+              id="assHabAssureur"
+              type="text"
+              className="form-input"
+              value={data.assurancesDommages?.habitation?.assureur || ''}
+              onChange={(e) => setData({
+                ...data,
+                assurancesDommages: {
+                  ...(data.assurancesDommages || {}),
+                  habitation: { ...(data.assurancesDommages?.habitation || {}), assureur: e.target.value }
+                }
+              })}
+              placeholder="Assureur"
+            />
+          </div>
+          <div className="form-field">
+            <label className="form-label" htmlFor="assHabPolice">Habitation — No police</label>
+            <input
+              id="assHabPolice"
+              type="text"
+              className="form-input"
+              value={data.assurancesDommages?.habitation?.numeroPolice || ''}
+              onChange={(e) => setData({
+                ...data,
+                assurancesDommages: {
+                  ...(data.assurancesDommages || {}),
+                  habitation: { ...(data.assurancesDommages?.habitation || {}), numeroPolice: e.target.value }
+                }
+              })}
+              placeholder="Numéro de police"
+            />
+          </div>
+          <div className="form-field">
+            <label className="form-label" htmlFor="assHabTel">Habitation — Téléphone</label>
+            <input
+              id="assHabTel"
+              type="text"
+              className="form-input"
+              value={data.assurancesDommages?.habitation?.telephone || ''}
+              onChange={(e) => setData({
+                ...data,
+                assurancesDommages: {
+                  ...(data.assurancesDommages || {}),
+                  habitation: { ...(data.assurancesDommages?.habitation || {}), telephone: e.target.value }
+                }
+              })}
+              placeholder="(XXX) XXX-XXXX"
+            />
+          </div>
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label" htmlFor="assHabAdresse">Habitation — Adresse</label>
+            <textarea
+              id="assHabAdresse"
+              className="form-input"
+              style={{ minHeight: '60px' }}
+              value={data.assurancesDommages?.habitation?.adresse || ''}
+              onChange={(e) => setData({
+                ...data,
+                assurancesDommages: {
+                  ...(data.assurancesDommages || {}),
+                  habitation: { ...(data.assurancesDommages?.habitation || {}), adresse: e.target.value }
+                }
+              })}
+              placeholder="Adresse de l'assureur habitation"
+            />
+          </div>
+
+          {/* Automobile */}
+          <div className="form-field">
+            <label className="form-label" htmlFor="assAutoAssureur">Automobile — Assureur</label>
+            <input
+              id="assAutoAssureur"
+              type="text"
+              className="form-input"
+              value={data.assurancesDommages?.auto?.assureur || ''}
+              onChange={(e) => setData({
+                ...data,
+                assurancesDommages: {
+                  ...(data.assurancesDommages || {}),
+                  auto: { ...(data.assurancesDommages?.auto || {}), assureur: e.target.value }
+                }
+              })}
+              placeholder="Assureur"
+            />
+          </div>
+          <div className="form-field">
+            <label className="form-label" htmlFor="assAutoPolice">Automobile — No police</label>
+            <input
+              id="assAutoPolice"
+              type="text"
+              className="form-input"
+              value={data.assurancesDommages?.auto?.numeroPolice || ''}
+              onChange={(e) => setData({
+                ...data,
+                assurancesDommages: {
+                  ...(data.assurancesDommages || {}),
+                  auto: { ...(data.assurancesDommages?.auto || {}), numeroPolice: e.target.value }
+                }
+              })}
+              placeholder="Numéro de police"
+            />
+          </div>
+          <div className="form-field">
+            <label className="form-label" htmlFor="assAutoTel">Automobile — Téléphone</label>
+            <input
+              id="assAutoTel"
+              type="text"
+              className="form-input"
+              value={data.assurancesDommages?.auto?.telephone || ''}
+              onChange={(e) => setData({
+                ...data,
+                assurancesDommages: {
+                  ...(data.assurancesDommages || {}),
+                  auto: { ...(data.assurancesDommages?.auto || {}), telephone: e.target.value }
+                }
+              })}
+              placeholder="(XXX) XXX-XXXX"
+            />
+          </div>
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label" htmlFor="assAutoAdresse">Automobile — Adresse</label>
+            <textarea
+              id="assAutoAdresse"
+              className="form-input"
+              style={{ minHeight: '60px' }}
+              value={data.assurancesDommages?.auto?.adresse || ''}
+              onChange={(e) => setData({
+                ...data,
+                assurancesDommages: {
+                  ...(data.assurancesDommages || {}),
+                  auto: { ...(data.assurancesDommages?.auto || {}), adresse: e.target.value }
+                }
+              })}
+              placeholder="Adresse de l'assureur automobile"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Déclarations de revenus */}
+      <div className="item-card" style={{ marginTop: '16px' }}>
+        <h4 style={{fontSize: '16px', fontWeight: 700, color: '#1f2937'}}>Déclarations de revenus</h4>
+        <div className="form-grid">
+          <div className="form-field">
+            <label className="form-label" htmlFor="decCompNom">Comptable — Nom</label>
+            <input
+              id="decCompNom"
+              type="text"
+              className="form-input"
+              value={data.declarationsRevenus?.comptableNom || ''}
+              onChange={(e) => setData({
+                ...data,
+                declarationsRevenus: { ...(data.declarationsRevenus || {}), comptableNom: e.target.value }
+              })}
+              placeholder="Nom du comptable"
+            />
+          </div>
+          <div className="form-field">
+            <label className="form-label" htmlFor="decCompTel">Comptable — Téléphone</label>
+            <input
+              id="decCompTel"
+              type="text"
+              className="form-input"
+              value={data.declarationsRevenus?.telephone || ''}
+              onChange={(e) => setData({
+                ...data,
+                declarationsRevenus: { ...(data.declarationsRevenus || {}), telephone: e.target.value }
+              })}
+              placeholder="(XXX) XXX-XXXX"
+            />
+          </div>
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label" htmlFor="decCompAdresse">Adresse</label>
+            <textarea
+              id="decCompAdresse"
+              className="form-input"
+              style={{ minHeight: '60px' }}
+              value={data.declarationsRevenus?.adresse || ''}
+              onChange={(e) => setData({
+                ...data,
+                declarationsRevenus: { ...(data.declarationsRevenus || {}), adresse: e.target.value }
+              })}
+              placeholder="Adresse du cabinet comptable"
+            />
+          </div>
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label" htmlFor="decArchives">Emplacement des archives</label>
+            <input
+              id="decArchives"
+              type="text"
+              className="form-input"
+              value={data.declarationsRevenus?.emplacementArchives || ''}
+              onChange={(e) => setData({
+                ...data,
+                declarationsRevenus: { ...(data.declarationsRevenus || {}), emplacementArchives: e.target.value }
+              })}
+              placeholder="Où se trouvent les déclarations antérieures"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

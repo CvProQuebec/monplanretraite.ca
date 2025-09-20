@@ -264,7 +264,37 @@ Git:
 
 ---
 
+## 📄 Rapports PDF Urgence — Lignes directrices (Phase 3)
+
+Objectif
+- Générer des rapports ciblés 100 % locaux pour:
+  - Personne de confiance (conjoint/enfant/ami) — audience: trusted
+  - Notaire — audience: notary
+  - Planificateur/Conseiller — audience: planner
+  - Liquidateur — audience: liquidator
+
+Sécurité et redaction
+- Par défaut, les identifiants sensibles (NAS, cartes, numéros complets) sont caviardés (ex: •••• 1234).
+- Option explicite d’afficher intégralement (confirmation requise); déconseillé pour du partage non chiffré.
+- Ne pas transmettre les PDF par courriel non chiffré. Préférer un support local sécurisé (clé USB chiffrée).
+
+Implémentation (référence)
+- Service: src/services/PDFEmergencyService.ts
+  - API: generateEmergencyPDF(data, audience, { language, showFullSensitive })
+- UI: src/pages/PlanificationUrgence.tsx (boutons “PDF Conjoint/Enfant”, “PDF Notaire”, “PDF Planificateur”, “PDF Liquidateur”)
+
+Checklist QA
+- [ ] PDF généré sans fuite de numéros complets quand showFullSensitive=false
+- [ ] PDF trusted masque les identifiants sensibles par défaut
+- [ ] Aucune requête réseau pendant la génération (DevTools)
+- [ ] Build OK, boutons présents et fonctionnels
+
 ## 📝 Historique des modifications importantes
+
+Septembre 2025 — Planification d’Urgence (Phase 1–2)
+- Phase 1: stockage local chiffré (secureStorage AES‑GCM), écran de phrase secrète, verrouillage manuel et auto, champs sensibles password+toggle, CSP stricte (public/_headers).
+- Phase 2: export/import chiffrés (.mpru) via WebCrypto AES‑256‑GCM + PBKDF2‑SHA256 (200k), prévisualisation métadonnées à l’import, avertissement et chiffrement local des JSON hérités, 100 % local (aucun réseau).
+- Artefacts: src/lib/fileCrypto.ts, src/pages/PlanificationUrgence.tsx (exportEncrypted/importEncrypted), public/_headers, app_info/2025-09-19_urgence_phase2_deploiement.md.
 
 Décembre 2025 — Consolidation Documentation
 - Règle guillemets droits (OQLF dans code) re-affirmée

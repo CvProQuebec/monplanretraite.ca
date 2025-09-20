@@ -291,6 +291,15 @@ Tests recommandés
 - Validation stricte des entrées
 - Dignité utilisateur (pas de stigmatisation)
 
+### Persistance ultra‑confidentielle — Planification d’Urgence
+
+- Export/Import chiffrés (.mpru) 100 % local via WebCrypto (AES‑256‑GCM + PBKDF2‑SHA‑256 ≥ 200 000 itérations)
+- Stockage local chiffré via secureStorage (AES‑GCM), aucune donnée en clair
+- Écran de déverrouillage avec phrase secrète, verrouillage manuel et automatique après inactivité (5 min)
+- CSP stricte appliquée aux routes d’urgence (voir public/_headers)
+- Prévisualisation à l’import (.mpru) avec métadonnées; avertissement si JSON non chiffré (legacy) puis chiffrement local après import
+- Aucune transmission réseau, aucune intégration externe
+
 ## 🌍 Internationalisation
 
 - Français par défaut (OQLF)
@@ -457,7 +466,7 @@ Definition of Done (Phase 1)
 - Services:
   - TaxOptimizationService: ordre de retraits et horaire simplifié
   - NotificationSchedulerService: séries de rappels (RRQ/SV/FERR/Retrait/Fin de mois)
-  - PDFExportService: nouveaux presets generateBankerReport/PlannerReport/NotaryReport
+  - PDFExportService: nouveaux presets generateBankerReport/PlannerReport/NotaryReport + gabarits urgence (personnes de confiance et professionnels, avec redaction par défaut)
 - Routage:
   - `/wizard/plan` → ResultsWizardStep
 - Données:

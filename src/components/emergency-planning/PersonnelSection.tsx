@@ -90,23 +90,27 @@ const PersonnelSection: React.FC<PersonnelSectionProps> = ({
         </div>
 
         <div className="form-field">
-          <label className="form-label">{t.emergencyPlanning.personal.sin}</label>
+          <label className="form-label" htmlFor="nas">{t.emergencyPlanning.personal.sin}</label>
           <input
-            type="text"
+            id="nas"
+            type={showPasswords ? 'text' : 'password'}
             className="form-input"
-            value={showPasswords ? data.nas : data.nas.replace(/./g, '*')}
-            onChange={(e) => setData({...data, nas: e.target.value})}
+            autoComplete="new-password"
+            value={data.nas}
+            onChange={(e) => setData({ ...data, nas: e.target.value })}
             placeholder={t.emergencyPlanning.personal.sinPlaceholder}
           />
         </div>
 
         <div className="form-field">
-          <label className="form-label">{t.emergencyPlanning.personal.healthCard}</label>
+          <label className="form-label" htmlFor="assuranceMaladie">{t.emergencyPlanning.personal.healthCard}</label>
           <input
-            type="text"
+            id="assuranceMaladie"
+            type={showPasswords ? 'text' : 'password'}
             className="form-input"
-            value={showPasswords ? data.assuranceMaladie : data.assuranceMaladie.replace(/./g, '*')}
-            onChange={(e) => setData({...data, assuranceMaladie: e.target.value})}
+            autoComplete="new-password"
+            value={data.assuranceMaladie}
+            onChange={(e) => setData({ ...data, assuranceMaladie: e.target.value })}
             placeholder={t.emergencyPlanning.personal.healthCardPlaceholder}
           />
         </div>

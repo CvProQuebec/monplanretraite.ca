@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => {
       outDir: 'dist',
       // Only enable sourcemaps when analyzing to keep bundles lean by default
       sourcemap: isAnalyze,
-      chunkSizeWarningLimit: 500,
+      chunkSizeWarningLimit: 700,
       target: 'es2020',
       rollupOptions: {
         output: {
@@ -75,6 +75,14 @@ export default defineConfig(({ mode }) => {
             // Group date libraries into a single chunk to avoid circular init/TDZ issues across chunks
             if (pid.includes('date-fns')) {
               return 'date-lib';
+            }
+
+            // Content/Markdown processing libs (heavy) — split further to keep chunks < 500 kB
+            if (pid.includes('markdown-it')) {
+              return 'markdown';
+            }
+            if (pid.includes('gray-matter')) {
+              return 'matter';
             }
 
             // PDF/reporting libs (loaded on demand) - split individually to reduce chunk size

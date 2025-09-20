@@ -39,25 +39,27 @@ const DocumentsSection: React.FC<DocumentsSectionProps> = ({ data, setData }) =>
     { id: 'assuranceInvalidite', field: 'assuranceInvalidite' }
   ];
 
-  // Fonction pour obtenir la valeur d'un document (possédé ou non)
-  const getDocumentValue = (field: string, type: 'possede' | 'emplacement') => {
-    const possede = `${field}Possede` as keyof EmergencyData;
-    const emplacement = `${field}Emplacement` as keyof EmergencyData;
-    return type === 'possede' ? 
-      (data[possede] as boolean) || false : 
-      (data[emplacement] as string) || '';
+  // Fonctions typées pour récupérer les champs documentaires
+  const getDocumentPossede = (field: string): boolean => {
+    return !!(data as any)[`${field}Possede`];
+  };
+  const getDocumentEmplacement = (field: string): string => {
+    const val = (data as any)[`${field}Emplacement`];
+    return typeof val === 'string' ? val : '';
   };
 
   // Fonction pour mettre à jour un document
   const updateDocument = (field: string, type: 'possede' | 'emplacement', value: boolean | string) => {
-    const fieldName = `${field}${type === 'possede' ? 'Possede' : 'Emplacement'}` as keyof EmergencyData;
-    setData({...data, [fieldName]: value});
+    const fieldName = `${field}${type === 'possede' ? 'Possede' : 'Emplacement'}`;
+    const updated: any = { ...data };
+    updated[fieldName] = value;
+    setData(updated);
   };
 
   // Fonction pour rendre un document avec sa checkbox et son champ d'emplacement
   const renderDocument = (doc: { id: string, field: string }) => {
-    const possede = getDocumentValue(doc.field, 'possede');
-    const emplacement = getDocumentValue(doc.field, 'emplacement');
+    const possede = getDocumentPossede(doc.field);
+    const emplacement = getDocumentEmplacement(doc.field);
 
     return (
       <div key={doc.id} style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
@@ -128,6 +130,212 @@ const DocumentsSection: React.FC<DocumentsSectionProps> = ({ data, setData }) =>
         borderRadius: '8px'
       }}>
         {documentsData.map((doc) => renderDocument(doc))}
+      </div>
+
+      {/* Informations complémentaires — Coffret de sûreté */}
+      <div style={{ marginTop: '24px' }} className="item-card">
+        <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '12px' }}>
+          Coffret de sûreté (le cas échéant)
+        </h3>
+        <div className="form-grid">
+          <div className="form-field">
+            <label className="form-label" htmlFor="coffretInstitution">Institution</label>
+            <input
+              id="coffretInstitution"
+              type="text"
+              className="form-input"
+              title="Institution du coffret"
+              value={data.coffretSurete?.institution || ''}
+              onChange={(e) => setData({
+                ...data,
+                coffretSurete: { ...(data.coffretSurete || {}), institution: e.target.value }
+              })}
+              placeholder="Banque, caisse, etc."
+            />
+          </div>
+          <div className="form-field">
+            <label className="form-label" htmlFor="coffretNumero">Numéro du coffret</label>
+            <input
+              id="coffretNumero"
+              type="text"
+              className="form-input"
+              title="Numéro du coffret de sûreté"
+              value={data.coffretSurete?.numeroCoffret || ''}
+              onChange={(e) => setData({
+                ...data,
+                coffretSurete: { ...(data.coffretSurete || {}), numeroCoffret: e.target.value }
+              })}
+              placeholder="Numéro"
+            />
+          </div>
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label" htmlFor="coffretCles">Emplacement des clés</label>
+            <input
+              id="coffretCles"
+              type="text"
+              className="form-input"
+              title="Emplacement des clés du coffret"
+              value={data.coffretSurete?.emplacementsCles || ''}
+              onChange={(e) => setData({
+                ...data,
+                coffretSurete: { ...(data.coffretSurete || {}), emplacementsCles: e.target.value }
+              })}
+              placeholder="Lieu des clés du coffret"
+            />
+          </div>
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label" htmlFor="coffretContenu">Contenu</label>
+            <textarea
+              id="coffretContenu"
+              className="form-input"
+              style={{ minHeight: '80px' }}
+              title="Contenu du coffret de sûreté"
+              value={data.coffretSurete?.contenu || ''}
+              onChange={(e) => setData({
+                ...data,
+                coffretSurete: { ...(data.coffretSurete || {}), contenu: e.target.value }
+              })}
+              placeholder="Liste sommaire du contenu"
+            />
+          </div>
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label" htmlFor="coffretCoti">Cocotitulaires</label>
+            <input
+              id="coffretCoti"
+              type="text"
+              className="form-input"
+              title="Cocotitulaires du coffret"
+              value={data.coffretSurete?.cotitulaires || ''}
+              onChange={(e) => setData({
+                ...data,
+                coffretSurete: { ...(data.coffretSurete || {}), cotitulaires: e.target.value }
+              })}
+              placeholder="Nom(s) des cocotitulaires"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Arrangements funéraires */}
+      <div style={{ marginTop: '24px' }} className="item-card">
+        <h3 style={{ fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '12px' }}>
+          Arrangements funéraires
+        </h3>
+        <div className="form-grid">
+          <div className="form-field">
+            <label className="form-label" htmlFor="funDispositions">
+              Dispositions indiquées (testament ou document)
+            </label>
+            <input
+              id="funDispositions"
+              type="checkbox"
+              checked={!!data.funerailles?.dispositions}
+              title="Dispositions indiquées"
+              onChange={(e) => setData({
+                ...data,
+                funerailles: { ...(data.funerailles || {}), dispositions: e.target.checked }
+              })}
+              style={{ width: '18px', height: '18px' }}
+            />
+          </div>
+          <div className="form-field">
+            <label className="form-label" htmlFor="funDiscretion">À la discrétion des proches</label>
+            <input
+              id="funDiscretion"
+              type="checkbox"
+              checked={!!data.funerailles?.discretionProches}
+              title="À la discrétion des proches"
+              onChange={(e) => setData({
+                ...data,
+                funerailles: { ...(data.funerailles || {}), discretionProches: e.target.checked }
+              })}
+              style={{ width: '18px', height: '18px' }}
+            />
+          </div>
+          <div className="form-field">
+            <label className="form-label" htmlFor="funDepouille">Dépouille</label>
+            <select
+              id="funDepouille"
+              className="form-input"
+              title="Choisir l'option de dépouille"
+              value={data.funerailles?.depouille || ''}
+              onChange={(e) => setData({
+                ...data,
+                funerailles: { ...(data.funerailles || {}), depouille: e.target.value as any }
+              })}
+            >
+              <option value="">—</option>
+              <option value="exposee">Exposée</option>
+              <option value="inhumee">Inhumée</option>
+              <option value="incineree">Incinérée</option>
+            </select>
+          </div>
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label" htmlFor="funPrecisions">Autres précisions</label>
+            <textarea
+              id="funPrecisions"
+              className="form-input"
+              style={{ minHeight: '80px' }}
+              title="Autres précisions sur les arrangements"
+              value={data.funerailles?.autresPrecisions || ''}
+              onChange={(e) => setData({
+                ...data,
+                funerailles: { ...(data.funerailles || {}), autresPrecisions: e.target.value }
+              })}
+              placeholder="Détails supplémentaires"
+            />
+          </div>
+          <div className="form-field">
+            <label className="form-label" htmlFor="funContrat">Contrat préalable</label>
+            <input
+              id="funContrat"
+              type="checkbox"
+              checked={!!data.funerailles?.contratPrealable}
+              title="Contrat préalable relatif aux funérailles"
+              onChange={(e) => setData({
+                ...data,
+                funerailles: { ...(data.funerailles || {}), contratPrealable: e.target.checked }
+              })}
+              style={{ width: '18px', height: '18px' }}
+            />
+          </div>
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label">Entrepreneur (nom, téléphone, adresse)</label>
+            <input
+              type="text"
+              className="form-input"
+              value={
+                data.funerailles?.entrepreneur
+                  ? `${data.funerailles.entrepreneur.nom || ''} ${data.funerailles.entrepreneur.telephone || ''} ${data.funerailles.entrepreneur.adresse || ''}`.trim()
+                  : ''
+              }
+              onChange={(e) => {
+                // saisie libre; laisser l’utilisateur structurer; champs détaillés pourront être ajoutés plus tard
+                setData({
+                  ...data,
+                  funerailles: {
+                    ...(data.funerailles || {}),
+                    entrepreneur: { nom: e.target.value, telephone: '', adresse: '' }
+                  }
+                });
+              }}
+              placeholder="Nom / téléphone / adresse"
+            />
+          </div>
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label">Emplacement des documents</label>
+            <input
+              type="text"
+              className="form-input"
+              value={data.funerailles?.emplacementDocuments || ''}
+              onChange={(e) => setData({
+                ...data,
+                funerailles: { ...(data.funerailles || {}), emplacementDocuments: e.target.value }
+              })}
+              placeholder="Où se trouvent les documents relatifs aux funérailles"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

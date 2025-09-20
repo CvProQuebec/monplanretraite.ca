@@ -11,6 +11,37 @@ interface VerificationSectionProps {
 const VerificationSection: React.FC<VerificationSectionProps> = ({ data, setData }) => {
   const { t } = useLanguage();
 
+  // Calcul du pourcentage de complétion (champs essentiels)
+  const computeCompletion = () => {
+    const essentials: Array<{ id: string; ok: boolean; label: string }> = [
+      // Personnel
+      { id: 'prenom', ok: !!data.prenom, label: 'Prénom' },
+      { id: 'nom', ok: !!data.nom, label: 'Nom' },
+      { id: 'dateNaissance', ok: !!data.dateNaissance, label: 'Date de naissance' },
+      { id: 'telephone', ok: !!data.telephone, label: 'Téléphone' },
+      { id: 'adresse', ok: !!data.adresse, label: 'Adresse' },
+      // Contact d’urgence
+      { id: 'contactUrgenceNom', ok: !!data.contactUrgenceNom, label: 'Contact d’urgence — Nom' },
+      { id: 'contactUrgenceTelephone', ok: !!data.contactUrgenceTelephone, label: 'Contact d’urgence — Téléphone' },
+      // Médical de base
+      { id: 'medecinFamilleNom', ok: !!data.medecinFamilleNom, label: 'Médecin de famille — Nom' },
+      { id: 'medecinFamilleTelephone', ok: !!data.medecinFamilleTelephone, label: 'Médecin de famille — Téléphone' },
+      // Finances (au moins un compte avec no + institution)
+      { id: 'compteInstitution', ok: (data.comptesBancaires || []).some(c => !!c.institution), label: 'Institution bancaire (au moins une)' },
+      { id: 'compteNumero', ok: (data.comptesBancaires || []).some(c => !!c.numeroCompte), label: 'Numéro de compte (au moins un)' },
+      // Testament (si possédé, il faut l’emplacement)
+      { id: 'testament', ok: !data.possedeTestament || !!data.lieuTestament, label: 'Emplacement du testament (si possédé)' }
+    ];
+
+    const total = essentials.length;
+    const completed = essentials.filter(e => e.ok).length;
+    const percentage = Math.round((completed / Math.max(1, total)) * 100);
+
+    return { essentials, completed, total, percentage };
+  };
+
+  const completion = computeCompletion();
+
   const updateDate = () => {
     const today = new Date().toISOString().split('T')[0];
     setData({...data, dateMAJ: today});
@@ -101,6 +132,38 @@ const VerificationSection: React.FC<VerificationSectionProps> = ({ data, setData
         <CheckCircle size={24} />
         {t.emergencyPlanning.verification?.title || 'Liste de vérification'}
       </h2>
+
+      {/* Progression — Complétion globale des champs essentiels */}
+      <div className="item-card" style={{marginBottom: '20px'}}>
+        <h3 style={{fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '12px'}}>
+          {t.emergencyPlanning.verification?.completionTitle || 'Progression de complétion (champs essentiels)'}
+        </h3>
+        <div aria-label="Progression" style={{width: '100%', background: '#e5e7eb', height: '14px', borderRadius: '999px', overflow: 'hidden'}}>
+          <div
+            style={{
+              width: `${completion.percentage}%`,
+              background: completion.percentage >= 80 ? '#10b981' : completion.percentage >= 50 ? '#f59e0b' : '#ef4444',
+              height: '100%'
+            }}
+          />
+        </div>
+        <div style={{display: 'flex', justifyContent: 'space-between', marginTop: '8px', fontSize: '14px', color: '#374151'}}>
+          <span>{completion.completed} / {completion.total} {t.emergencyPlanning.verification?.fieldsCompleted || 'champs complétés'}</span>
+          <span>{completion.percentage}%</span>
+        </div>
+        <details style={{marginTop: '8px'}}>
+          <summary style={{cursor: 'pointer', fontSize: '14px', color: '#1f2937'}}>
+            {t.emergencyPlanning.verification?.details || 'Détails'}
+          </summary>
+          <ul style={{marginTop: '8px', paddingLeft: '18px', fontSize: '14px'}}>
+            {completion.essentials.map(item => (
+              <li key={item.id} style={{color: item.ok ? '#10b981' : '#ef4444'}}>
+                {item.ok ? '✔' : '✖'} {item.label}
+              </li>
+            ))}
+          </ul>
+        </details>
+      </div>
 
       {/* Informations de mise à jour */}
       <div className="item-card" style={{marginBottom: '20px'}}>

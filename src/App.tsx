@@ -23,9 +23,11 @@ const ApplyBenefitsAge = React.lazy(() => import('./pages/ApplyBenefitsAge'));
 // Module MVP Hypothèses de Calcul
 const SimpleAssumptionsPage = React.lazy(() => import('./pages/SimpleAssumptionsPage'));
 
-// Blog pages
+/* Blog pages */
 const BlogPage = React.lazy(() => import('./pages/BlogPage'));
 const OptimiserTransmissionCeli = React.lazy(() => import('./pages/blog/OptimiserTransmissionCeli'));
+const BlogIndex = React.lazy(() => import('./pages/blog/BlogIndex'));
+const BlogPost = React.lazy(() => import('./pages/blog/BlogPost'));
 
 // NOUVEAUX MODULES INTÉGRÉS - Lazy loading pour performance seniors
 const SRGAnalysisSection = React.lazy(() => import('./features/retirement/components/SRGAnalysisSection').then(module => ({ default: module.SRGAnalysisSection })));
@@ -147,7 +149,11 @@ function App() {
               {/* 📝 NOUVELLES ROUTES - BLOG */}
               
               {/* Page principale du blog */}
-              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog" element={<BlogIndex />} />
+              <Route path="/blog/:slug" element={<BlogPost />} />
+              {/* English blog */}
+              <Route path="/en/blog" element={<BlogIndex language="en" />} />
+              <Route path="/en/blog/:slug" element={<BlogPost language="en" />} />
               
               {/* Catégories du blog */}
               <Route path="/blog/guides" element={<BlogPage />} />

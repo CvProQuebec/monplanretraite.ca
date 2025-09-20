@@ -177,6 +177,201 @@ const TestamentSection: React.FC<TestamentSectionProps> = ({ data, setData }) =>
         </>
       )}
 
+      {/* Fiducies */}
+      <div className="item-card" style={{marginBottom: '20px'}}>
+        <h3 style={{fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '16px'}}>
+          Fiducies (le cas échéant)
+        </h3>
+        <div className="form-grid">
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label">Description générale des fiducies</label>
+            <textarea
+              className="form-input"
+              style={{minHeight: '100px', resize: 'vertical'}}
+              value={(data.fiducies && data.fiducies.length)
+                ? data.fiducies.map(f => `${f.type || ''} • ${f.valeur || ''} • Bénéficiaires: ${(f.beneficiaires || []).join(', ')} • Fiduciaires: ${(f.fiduciaires || []).join(', ')}`).join('\n')
+                : ''}
+              onChange={(e) => {
+                const lines = e.target.value.split('\n').filter(Boolean);
+                const parsed = lines.map((line, idx) => ({ type: line, valeur: '', beneficiaires: [], fiduciaires: [] }));
+                setData({ ...data, fiducies: parsed });
+              }}
+              placeholder="Saisir une ligne par fiducie (type / valeur / bénéficiaires / fiduciaires)"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Stratégies successorales */}
+      <div className="item-card" style={{marginBottom: '20px'}}>
+        <h3 style={{fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '16px'}}>
+          Stratégies successorales (legs, dons planifiés, etc.)
+        </h3>
+        <div className="form-field">
+          <label className="form-label">Liste (une stratégie par ligne)</label>
+          <textarea
+            className="form-input"
+            style={{minHeight: '100px', resize: 'vertical'}}
+            value={(data.strategiesSuccessorales || []).join('\n')}
+            onChange={(e) => setData({ ...data, strategiesSuccessorales: e.target.value.split('\n').filter(Boolean) })}
+            placeholder="Ex.: Legs à un organisme, don planifié CELI, etc."
+          />
+        </div>
+      </div>
+
+      {/* Contrats matrimoniaux / État civil */}
+      <div className="item-card" style={{marginBottom: '20px'}}>
+        <h3 style={{fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '16px'}}>
+          Contrat de mariage / État civil
+        </h3>
+        <div className="form-grid">
+          <div className="form-field">
+            <label className="form-label" htmlFor="etatCivil">État civil</label>
+            <select
+              id="etatCivil"
+              className="form-input"
+              title="État civil"
+              value={data.contratsMatrimoniauxEtatCivil?.etatCivil || ''}
+              onChange={(e) => setData({
+                ...data,
+                contratsMatrimoniauxEtatCivil: { ...(data.contratsMatrimoniauxEtatCivil || {}), etatCivil: e.target.value as any }
+              })}
+            >
+              <option value="">—</option>
+              <option value="marie">Marié</option>
+              <option value="uniCivilement">Uni civilement</option>
+              <option value="uniDeFait">Uni de fait</option>
+              <option value="celibataire">Célibataire</option>
+              <option value="separe">Séparé</option>
+              <option value="divorce">Divorcé</option>
+              <option value="veuf">Veuf</option>
+            </select>
+          </div>
+          <div className="form-field">
+            <label className="form-label">Date</label>
+            <input
+              type="text"
+              className="form-input"
+              value={data.contratsMatrimoniauxEtatCivil?.date || ''}
+              onChange={(e) => setData({
+                ...data,
+                contratsMatrimoniauxEtatCivil: { ...(data.contratsMatrimoniauxEtatCivil || {}), date: e.target.value }
+              })}
+              placeholder="AAAA-MM-JJ"
+            />
+          </div>
+          <div className="form-field">
+            <label className="form-label">Régime matrimonial</label>
+            <input
+              type="text"
+              className="form-input"
+              value={data.contratsMatrimoniauxEtatCivil?.regime || ''}
+              onChange={(e) => setData({
+                ...data,
+                contratsMatrimoniauxEtatCivil: { ...(data.contratsMatrimoniauxEtatCivil || {}), regime: e.target.value }
+              })}
+              placeholder="Société d’acquêts, séparation de biens, etc."
+            />
+          </div>
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label">Emplacement du contrat</label>
+            <input
+              type="text"
+              className="form-input"
+              value={data.contratsMatrimoniauxEtatCivil?.emplacement || ''}
+              onChange={(e) => setData({
+                ...data,
+                contratsMatrimoniauxEtatCivil: { ...(data.contratsMatrimoniauxEtatCivil || {}), emplacement: e.target.value }
+              })}
+              placeholder="Où se trouve le contrat"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Divorce */}
+      <div className="item-card" style={{marginBottom: '20px'}}>
+        <h3 style={{fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '16px'}}>
+          Divorce / Séparation
+        </h3>
+        <div className="form-grid">
+          <div className="form-field">
+            <label className="form-label" htmlFor="divorceType">Type</label>
+            <select
+              id="divorceType"
+              className="form-input"
+              title="Type de séparation"
+              value={data.divorce?.typeSeparation || ''}
+              onChange={(e) => setData({ ...data, divorce: { ...(data.divorce || {}), typeSeparation: e.target.value as any } })}
+            >
+              <option value="">—</option>
+              <option value="separeFait">Séparé de fait</option>
+              <option value="separeLegalement">Séparé légalement</option>
+              <option value="divorce">Divorcé</option>
+            </select>
+          </div>
+          <div className="form-field">
+            <label className="form-label">Date</label>
+            <input
+              type="text"
+              className="form-input"
+              value={data.divorce?.date || ''}
+              onChange={(e) => setData({ ...data, divorce: { ...(data.divorce || {}), date: e.target.value } })}
+              placeholder="AAAA-MM-JJ"
+            />
+          </div>
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label">Emplacement du jugement</label>
+            <input
+              type="text"
+              className="form-input"
+              value={data.divorce?.emplacement || ''}
+              onChange={(e) => setData({ ...data, divorce: { ...(data.divorce || {}), emplacement: e.target.value } })}
+              placeholder="Où se trouve le jugement"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Veuvage */}
+      <div className="item-card" style={{marginBottom: '20px'}}>
+        <h3 style={{fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '16px'}}>
+          Veuvage (si applicable)
+        </h3>
+        <div className="form-grid">
+          <div className="form-field">
+            <label className="form-label">Date du décès du conjoint</label>
+            <input
+              type="text"
+              className="form-input"
+              value={data.veuvage?.dateDecesConjoint || ''}
+              onChange={(e) => setData({ ...data, veuvage: { ...(data.veuvage || {}), dateDecesConjoint: e.target.value } })}
+              placeholder="AAAA-MM-JJ"
+            />
+          </div>
+          <div className="form-field">
+            <label className="form-label" htmlFor="certDeces">Certificat de décès en mains</label>
+            <input
+              id="certDeces"
+              type="checkbox"
+              checked={!!data.veuvage?.certificatDecesEnMains}
+              onChange={(e) => setData({ ...data, veuvage: { ...(data.veuvage || {}), certificatDecesEnMains: e.target.checked } })}
+              style={{ width: '18px', height: '18px' }}
+            />
+          </div>
+          <div className="form-field" style={{gridColumn: '1 / -1'}}>
+            <label className="form-label">Emplacement du certificat</label>
+            <input
+              type="text"
+              className="form-input"
+              value={data.veuvage?.emplacementCertificat || ''}
+              onChange={(e) => setData({ ...data, veuvage: { ...(data.veuvage || {}), emplacementCertificat: e.target.value } })}
+              placeholder="Où se trouve le certificat de décès"
+            />
+          </div>
+        </div>
+      </div>
+
       {/* Volontés en fin de vie */}
       <div className="item-card" style={{marginBottom: '20px'}}>
         <h3 style={{fontSize: '18px', fontWeight: 700, color: '#1f2937', marginBottom: '16px'}}>
