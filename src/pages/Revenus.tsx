@@ -44,6 +44,8 @@ import CollapsibleSection from '@/components/ui/CollapsibleSection';
 import SeasonalWorkToggle from '@/components/ui/SeasonalWorkToggle';
 import RRQManager from '@/components/ui/RRQManager';
 import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
+import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
+import { useSubscriptionLimits } from '@/hooks/useSubscriptionLimits';
 
 // Import des corrections mobile pour Samsung S23 Ultra
 import '@/styles/mobile-reflow-fix.css';
@@ -54,6 +56,9 @@ const Revenus: React.FC = () => {
   const { language } = useLanguage();
   const navigate = useNavigate();
   const isFrench = language === 'fr';
+  const { currentPlan } = useSubscriptionLimits();
+  const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
+  const [targetPlan, setTargetPlan] = useState<'professional' | 'expert'>('professional');
   
   // Hook pour les données de retraite
   const { userData, updateUserData } = useRetirementData();
@@ -571,10 +576,42 @@ const Revenus: React.FC = () => {
               }
             </p>
             
+            {/* Gating d'accès — Aperçu gratuit pour le plan Free */}
+            {currentPlan === 'free' && (
+              <div className="max-w-3xl mx-auto mb-4">
+                <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-amber-900 text-sm">
+                  {isFrench
+                    ? 'Aperçu gratuit — passez à Pro/Expert pour l’étude complète (TWR segmenté, comparaisons multi‑comptes) et le rapport exportable.'
+                    : 'Free preview — upgrade to Pro/Expert for the full study (segmented TWR, multi‑account comparisons) and exportable report.'}
+                  <div className="mt-3">
+                    <Button
+                      variant="outline"
+                      className="border-amber-300 text-amber-900 hover:bg-amber-100"
+                      onClick={() => {
+                        setTargetPlan('professional');
+                        setIsUpgradeModalOpen(true);
+                      }}
+                    >
+                      {isFrench ? 'Voir les plans Pro et Expert' : 'See Pro and Expert plans'}
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Calculette de rendement */}
             <div className="flex justify-center">
               <ReturnCalculator isFrench={isFrench} />
             </div>
+
+            {/* Modal d’upgrade */}
+            <AdvancedUpgradeModal
+              isOpen={isUpgradeModalOpen}
+              onClose={() => setIsUpgradeModalOpen(false)}
+              requiredPlan={targetPlan}
+              featureName="hasAdvancedCalculators"
+              currentPlan={currentPlan}
+            />
           </div>
 
           {/* Informations sur la calculette */}

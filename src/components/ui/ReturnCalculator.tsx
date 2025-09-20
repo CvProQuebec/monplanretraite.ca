@@ -25,6 +25,9 @@ import {
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
 import ConsentDialog from '@/components/ui/ConsentDialog';
+import { PerformanceCalculationService, Cashflow } from '@/services/PerformanceCalculationService';
+import { useSubscriptionLimits } from '@/hooks/useSubscriptionLimits';
+import { PDFExportService } from '@/services/PDFExportService';
 
 interface Contribution {
   id: string;
@@ -64,11 +67,15 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
   const [isOpen, setIsOpen] = useState(false);
   const [isCalculating, setIsCalculating] = useState(false);
   const [showConsentDialog, setShowConsentDialog] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+  const [upgradeHint, setUpgradeHint] = useState(false);
+  const { currentPlan } = useSubscriptionLimits();
 
   // Initialiser les comptes depuis les données utilisateur ou avec des valeurs par défaut
   const [accounts, setAccounts] = useState<AccountData[]>(() => {
-    if (userData.personal?.returnCalculatorAccounts) {
-      return userData.personal.returnCalculatorAccounts;
+    const p = (userData.personal as any);
+    if (p?.returnCalculatorAccounts) {
+      return p.returnCalculatorAccounts as AccountData[];
     }
     return [{
       accountType: 'REER',
@@ -81,7 +88,8 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
   });
 
   const [results, setResults] = useState<ReturnResult[]>(() => {
-    return userData.personal?.returnCalculatorResults || [];
+    const p = (userData.personal as any);
+    return (p?.returnCalculatorResults as ReturnResult[]) || [];
   });
 
   // Sauvegarder les données dans le système de retraite quand elles changent
@@ -94,52 +102,22 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
 
   // Charger les données depuis le système de retraite au montage uniquement
   useEffect(() => {
-    if (userData.personal?.returnCalculatorAccounts && userData.personal.returnCalculatorAccounts.length > 0) {
-      setAccounts(userData.personal.returnCalculatorAccounts);
+    const p = (userData.personal as any);
+    if (p?.returnCalculatorAccounts && p.returnCalculatorAccounts.length > 0) {
+      setAccounts(p.returnCalculatorAccounts as AccountData[]);
     }
-    if (userData.personal?.returnCalculatorResults && userData.personal.returnCalculatorResults.length > 0) {
-      setResults(userData.personal.returnCalculatorResults);
+    if (p?.returnCalculatorResults && p.returnCalculatorResults.length > 0) {
+      setResults(p.returnCalculatorResults as ReturnResult[]);
     }
   }, []); // Seulement au montage
 
-  // Fonction pour calculer l'IRR (Internal Rate of Return)
+  // Fonction pour calculer l'IRR (Internal Rate of Return) via service robuste
   const calculateIRR = (cashFlows: { date: Date; amount: number }[]): number => {
     if (cashFlows.length < 2) return 0;
-
-    // Trier les flux par date
-    const sortedFlows = cashFlows.sort((a, b) => a.date.getTime() - b.date.getTime());
-    
-    // Fonction NPV (Net Present Value)
-    const npv = (rate: number): number => {
-      const startDate = sortedFlows[0].date;
-      return sortedFlows.reduce((sum, flow) => {
-        const daysDiff = (flow.date.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24);
-        const yearsDiff = daysDiff / 365.25;
-        return sum + flow.amount / Math.pow(1 + rate, yearsDiff);
-      }, 0);
-    };
-
-    // Méthode de Newton-Raphson pour trouver l'IRR
-    let rate = 0.1; // Estimation initiale de 10%
-    let iteration = 0;
-    const maxIterations = 100;
-    const tolerance = 1e-6;
-
-    while (iteration < maxIterations) {
-      const npvValue = npv(rate);
-      if (Math.abs(npvValue) < tolerance) break;
-
-      // Calcul de la dérivée (approximation numérique)
-      const delta = 1e-6;
-      const derivative = (npv(rate + delta) - npv(rate - delta)) / (2 * delta);
-      
-      if (Math.abs(derivative) < tolerance) break;
-      
-      rate = rate - npvValue / derivative;
-      iteration++;
-    }
-
-    return rate;
+    const flows: Cashflow[] = [...cashFlows]
+      .sort((a, b) => a.date.getTime() - b.date.getTime())
+      .map(cf => ({ date: cf.date, amount: cf.amount }));
+    return PerformanceCalculationService.xirr(flows, { guess: 0.1 });
   };
 
   // Fonction pour calculer le rendement pondéré dans le temps (TWR)
@@ -192,31 +170,21 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
     return Math.pow(cumulativeReturn, 1 / totalYears) - 1;
   };
 
-  // Fonction pour calculer le rendement pondéré par l'argent (MWR/IRR)
+  // Fonction pour calculer le rendement pondéré par l'argent (MWR/IRR) via service
   const calculateMWR = (account: AccountData): number => {
-    const cashFlows: { date: Date; amount: number }[] = [];
-    
+    const cashFlows: Cashflow[] = [];
     // Solde initial (sortie de fonds)
-    cashFlows.push({
-      date: new Date(account.startDate),
-      amount: -account.startBalance
-    });
-
+    cashFlows.push({ date: new Date(account.startDate), amount: -account.startBalance });
     // Contributions/retraits
-    account.contributions.forEach(contrib => {
+    for (const contrib of account.contributions) {
       cashFlows.push({
         date: new Date(contrib.date),
         amount: contrib.type === 'deposit' ? -contrib.amount : contrib.amount
       });
-    });
-
+    }
     // Solde final (entrée de fonds)
-    cashFlows.push({
-      date: new Date(account.endDate),
-      amount: account.endBalance
-    });
-
-    return calculateIRR(cashFlows);
+    cashFlows.push({ date: new Date(account.endDate), amount: account.endBalance });
+    return PerformanceCalculationService.mwr(cashFlows, { guess: 0.1 });
   };
 
   // Fonction principale de calcul
@@ -282,6 +250,10 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
 
   // Ajouter un compte
   const addAccount = () => {
+    if (currentPlan === 'free' && accounts.length >= 1) {
+      setUpgradeHint(true);
+      return;
+    }
     const newAccount: AccountData = {
       accountType: 'CELI',
       startDate: '2024-01-01',
@@ -343,6 +315,34 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
     }
   };
 
+  // Export PDF (portée composant – utilisé par le bouton Exporter)
+  const handleExportPDF = async () => {
+    try {
+      setIsExporting(true);
+      const blob = await PDFExportService.generatePerformanceReport(isFrench ? 'fr' : 'en', {
+        accounts: results.map(r => ({
+          accountType: r.accountType,
+          totalReturn: r.totalReturn,
+          annualizedReturn: r.annualizedReturn,
+          timeWeightedReturn: r.timeWeightedReturn,
+          moneyWeightedReturn: r.moneyWeightedReturn,
+          netContributions: r.netContributions,
+          capitalGain: r.capitalGain
+        }))
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = isFrench ? 'rapport-performance.pdf' : 'performance-report.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } finally {
+      setIsExporting(false);
+    }
+  };
+
   // Icônes pour les types de comptes
   const getAccountIcon = (type: 'REER' | 'CELI' | 'CRI') => {
     switch (type) {
@@ -401,6 +401,13 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
               </Button>
             </div>
 
+            {currentPlan === 'free' && upgradeHint && (
+              <div className="text-amber-800 bg-amber-50 border border-amber-200 rounded-md px-3 py-2 text-sm mb-2">
+                {isFrench
+                  ? 'Le plan Gratuit permet un seul compte. Passez à Pro/Expert pour comparer plusieurs comptes et exporter en PDF.'
+                  : 'Free plan allows a single account. Upgrade to Pro/Expert to compare multiple accounts and export to PDF.'}
+              </div>
+            )}
             {accounts.map((account, accountIndex) => {
               const AccountIcon = getAccountIcon(account.accountType);
               return (
@@ -616,10 +623,21 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
           {/* Résultats */}
           {results.length > 0 && (
             <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
-                <TrendingUp className="w-6 h-6" />
-                {isFrench ? 'Résultats de l\'analyse' : 'Analysis results'}
-              </h3>
+              <div className="flex items-center justify-between">
+                <h3 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
+                  <TrendingUp className="w-6 h-6" />
+                  {isFrench ? 'Résultats de l\'analyse' : 'Analysis results'}
+                </h3>
+                {currentPlan !== 'free' ? (
+                  <Button onClick={handleExportPDF} variant="outline" size="sm" disabled={isExporting}>
+                    {isExporting ? (isFrench ? 'Export en cours...' : 'Exporting...') : (isFrench ? 'Exporter en PDF' : 'Export PDF')}
+                  </Button>
+                ) : (
+                  <Button variant="outline" size="sm" onClick={() => setUpgradeHint(true)} className="border-amber-300 text-amber-900">
+                    {isFrench ? 'Pro/Expert: Export PDF' : 'Pro/Expert: Export PDF'}
+                  </Button>
+                )}
+              </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
                 {results.map((result, index) => {
@@ -639,7 +657,7 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
                               {isFrench ? 'Rendement total' : 'Total return'}
                             </div>
                             <div className={`text-lg font-bold ${result.totalReturn >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                              {(result.totalReturn * 100).toFixed(2)}%
+                              {(result.totalReturn * 100).toFixed(2)}{' %'}
                             </div>
                           </div>
                           
@@ -648,7 +666,7 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
                               {isFrench ? 'Rendement annualisé' : 'Annualized return'}
                             </div>
                             <div className={`text-lg font-bold ${result.annualizedReturn >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                              {(result.annualizedReturn * 100).toFixed(2)}%
+                              {(result.annualizedReturn * 100).toFixed(2)}{' %'}
                             </div>
                           </div>
 
@@ -657,7 +675,7 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
                               {isFrench ? 'TWR' : 'TWR'}
                             </div>
                             <div className={`font-bold ${result.timeWeightedReturn >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                              {(result.timeWeightedReturn * 100).toFixed(2)}%
+                              {(result.timeWeightedReturn * 100).toFixed(2)}{' %'}
                             </div>
                           </div>
 
@@ -666,7 +684,7 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
                               {isFrench ? 'MWR (IRR)' : 'MWR (IRR)'}
                             </div>
                             <div className={`font-bold ${result.moneyWeightedReturn >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                              {(result.moneyWeightedReturn * 100).toFixed(2)}%
+                              {(result.moneyWeightedReturn * 100).toFixed(2)}{' %'}
                             </div>
                           </div>
 

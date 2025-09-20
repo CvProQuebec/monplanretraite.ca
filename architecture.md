@@ -494,3 +494,68 @@ Definition of Done (Phase 1)
 - Exports PDF: Résumé + Banquier/Planificateur/Notaire
 - Buckets affichés (mois/an) et utilisés par le rapport Banquier
 - OQLF/Accessibilité respectés; build/type‑check OK
+
+---
+
+## 🧠 Optimisation fiscale — v1 → v3 (2025‑09)
+
+Objectif
+- Passer d’heuristiques robustes à un moteur d’optimisation multi‑années explicable, 100% local.
+
+Composants techniques
+- TaxPolicy2025 (QC+Fed) + TaxEngine (calcul annuel précis)
+  - Barèmes 2025 (approx), crédits non remboursables (base, âge, pension), dividendes (gross‑up + crédits), inclusion CG 50 %, récupération SV, proxy SRG.
+- ProjectionEngine (multi‑années)
+  - Soldes (CELI/Non‑enreg./REER/FERR), retraits, CPP/SV, MTR approx, horizon configurable.
+- Optimiseurs
+  - v1 GreedyBaselineOptimizer: Non‑enregistré → REER (bisection net) → CELI, démarrage CPP/SV paramétrable.
+  - v2 DP/Beam Optimizer (+ LocalSearch v2.1): recherche par faisceau (grilles de retraits), score = impôt + pénalités; raffinement local; Web Worker (PROGRESS/CANCEL).
+- v3 RobustnessService (robustification)
+  - Chocs: séquence (‑30 %/‑15 % années 1–2), inflation haute, longévité +5 ans.
+  - Indicateurs: années sous objectif, années avec clawback SV, pics MTR (≥45 %); score robuste + explications “why”.
+- UI — TaxOptimizationLab
+  - Onglet Premium “Lab optimisation fiscale”: Greedy vs RRSP‑only vs DP/Beam, heatmaps (MTR/SV/SRG), réglages avancés (beamWidth, stepSize, poids objectif, ratio CG), progression Worker, arrêt, Mode robuste (scores + explications), Export PDF.
+- Exports PDF
+  - TaxOptimizationPDFService: résumé robuste (impôts totaux, scores robustes, explications).
+
+Garanties
+- 100 % local, aucune transmission réseau, exécutions non bloquantes (Worker), accessibilité seniors, FR/EN.
+
+---
+
+## 🛡️ Sauvegarde locale chiffrée (BackgroundBackupService)
+
+But
+- Assurer que les données restent chez le client, sous son contrôle (USB/disque), avec sauvegardes automatiques sans conserver les données en clair côté site.
+
+Implémentation
+- Service: `src/services/BackgroundBackupService.ts`
+  - File System Access API (Edge/Chrome): liaison fichiers Primary/Secondary (pointeurs conservés en IndexedDB).
+  - Chiffrement AES‑256‑GCM (WebCrypto) via `fileCrypto` (enveloppe JSON).
+  - Auto‑backup périodique (frequencyMin), “vider local après sauvegarde” (retirement_data supprimé; pointeurs/métadonnées conservés).
+  - Propose une restauration au démarrage si aucune donnée locale.
+  - Avertissement “sauvegarde secondaire” recommandé (robustesse seniors).
+- UI
+  - `BackupManagerPanel`: mot de passe de session, lier/délier fichiers, fréquence, clear‑after‑backup, sauvegarde immédiate, restauration, alertes.
+  - `BackupBootstrap`: init + proposition de restauration.
+  - Routes: `/sauvegardes`, `/backups`.
+
+Sécurité & confidentialité
+- 0 upload, 0 cloud; clés en session seulement; données chiffrées à la source; conformité seniors/OQLF.
+
+---
+
+## 🏠 Immobilier — Politique de portée (hors périmètre)
+
+Décisions de périmètre (documentées)
+- Comparaison de propriétés: non poursuivi (trop d’acteurs spécialisés; éviter la redondance).  
+- Calculateur hypothécaire avancé: non poursuivi (écosystème bancaire déjà pourvu; choix de déléguer aux spécialistes).  
+- Analyse de rentabilité immobilière: non poursuivie (champ d’expertise des évaluateurs/analystes dédiés).
+
+Raison d’être
+- Concentrer l’innovation sur la planification de retraite, l’optimisation fiscale, la robustesse et la sécurité/persistance locale.
+- Éviter la duplication des fonctions où le marché est déjà bien servi et préserver de bonnes relations écosystémiques.
+
+Impacts techniques
+- Les modules/rapports existants restent en lecture/optimisation génériques (cashflow, buckets, ordres de retraits), sans comparateur immobilier dédié, ni calculateur hypothèque propriétaire, ni moteur détaillé de rentabilité.
+- La Phase 1 “Source de vérité Immobilier → Dépenses/Budget” reste en vigueur (verrouillage hypothèque/taxes/assurance habitation via Immobilier).

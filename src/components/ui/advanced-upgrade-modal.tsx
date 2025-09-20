@@ -360,7 +360,7 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
                   {isFrench ? '80 % moins cher que la concurrence' : '80% cheaper than competition'}
                 </div>
                 <div className="text-xs text-blue-600">
-                  {isFrench ? 'Économie de 94 % • Équivaut à 2 consultations' : 'Save 94% • Equivalent to 2 consultations'}
+                  {isFrench ? 'Économie de 94 %' : 'Save 94%'}
                 </div>
               </CardHeader>
               <CardContent className="space-y-2">
@@ -402,7 +402,7 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
                     ) : (
                       <>
                         <ArrowRight className="h-4 w-4 mr-2" />
-                        {isFrench ? 'Choisir Professionnel' : 'Choose Professional'}
+                        {isFrench ? 'Générer mon étude (Pro)' : 'Generate my study (Pro)'}
                       </>
                     )}
                   </Button>
@@ -487,7 +487,7 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
                     ) : (
                       <>
                         <Crown className="h-4 w-4 mr-2" />
-                        {isFrench ? 'Choisir Expert' : 'Choose Expert'}
+                        {isFrench ? 'Générer mon étude (Expert)' : 'Generate my study (Expert)'}
                       </>
                     )}
                   </Button>

@@ -7,6 +7,8 @@ import { PDFExportService } from '@/services/PDFExportService';
 import SeniorsLoadingSpinner from '@/components/SeniorsLoadingSpinner';
 import { formatCurrencyOQLF, formatTimeOQLF } from '@/utils/localeFormat';
 import { AlertCircle, Bell, CheckCircle, FileDown, Shuffle, Wallet } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { TaxOptimizationPDFService } from '@/services/tax/TaxOptimizationPDFService';
 
 /**
  * ResultsWizardStep
@@ -26,6 +28,8 @@ const ResultsWizardStep: React.FC = () => {
   const [targetWithdrawalDate, setTargetWithdrawalDate] = useState<string>('');
   const [suggestedOrder, setSuggestedOrder] = useState<WithdrawalSource[]>([]);
   const [exporting, setExporting] = useState(false);
+  const [optCache, setOptCache] = useState<any | null>(null);
+  const navigate = useNavigate();
   const [monthsCoveredOp, setMonthsCoveredOp] = useState<number | null>(null);
   const [yearsCoveredShort, setYearsCoveredShort] = useState<number | null>(null);
 
@@ -69,6 +73,19 @@ const ResultsWizardStep: React.FC = () => {
         const yearlyNeeds = totalDepenses * 12;
         const shortYears = yearlyNeeds > 0 ? shortTermFunds / yearlyNeeds : 0;
         setYearsCoveredShort(Number(shortYears.toFixed(1)));
+      }
+    } catch {
+      // silencieux
+    }
+  }, []);
+
+  // Charger un éventuel plan d'optimisation en cache (écrit par l'étape Optimisations)
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('mpr-last-optimization');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        setOptCache(parsed);
       }
     } catch {
       // silencieux
@@ -282,6 +299,41 @@ const ResultsWizardStep: React.FC = () => {
     }
   };
 
+  const handleExportOptimization = async () => {
+    setExporting(true);
+    try {
+      const raw = localStorage.getItem('mpr-last-optimization');
+      if (!raw) {
+        navigate('/wizard/optimisations');
+        return;
+      }
+      const cache = JSON.parse(raw);
+      const lang = isFrench ? 'fr' : 'en';
+      let clientName: string | undefined = undefined;
+      try {
+        const p = userData?.personal || {};
+        const name = [p?.prenom1, p?.nom1].filter(Boolean).join(' ');
+        clientName = name || undefined;
+      } catch {}
+      const payload = { language: lang, clientName, ...cache };
+      const blob = await TaxOptimizationPDFService.generateSummary(payload);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = isFrench ? 'Optimisation_fiscale_resume.pdf' : 'Tax_Optimization_Summary.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      setLastSavedAt(new Date());
+      console.log('[Phase3] PDF Optimisation exporté.');
+    } catch (e) {
+      console.warn('Erreur export PDF Optimisation:', e);
+    } finally {
+      setExporting(false);
+    }
+  };
+
   const schedule = useMemo(() => {
     const order = suggestedOrder;
     if (!order.length || monthlyNetNeed <= 0) return null;
@@ -357,6 +409,20 @@ const ResultsWizardStep: React.FC = () => {
             </button>
           </div>
         </div>
+
+        {/* CTA vers Optimisations si aucune optimisation disponible */}
+        {!optCache && (
+          <div className="mt-3 bg-yellow-50 border border-yellow-300 rounded-lg p-3 text-sm text-yellow-900 flex items-center justify-between">
+            <span>{isFrench ? 'Aucun plan d’optimisation disponible. Générez-en un dans l’étape « Optimisations ».' : 'No optimization plan available. Generate one in the “Optimizations” step.'}</span>
+            <button
+              className="button-secondary px-3 py-2"
+              onClick={() => navigate('/wizard/optimisations')}
+              aria-label={isFrench ? 'Aller à Optimisations' : 'Go to Optimizations'}
+            >
+              {isFrench ? 'Aller à Optimisations' : 'Go to Optimizations'}
+            </button>
+          </div>
+        )}
 
         {/* Aperçu horaire simple */}
         {schedule && schedule.entries.length > 0 && (
@@ -496,6 +562,15 @@ const ResultsWizardStep: React.FC = () => {
               aria-label={isFrench ? 'Exporter rapport Planificateur' : 'Export Planner report'}
             >
               {isFrench ? 'Planificateur' : 'Planner'}
+            </button>
+            <button
+              className="button-secondary px-4 py-3"
+              onClick={handleExportOptimization}
+              disabled={exporting || !optCache}
+              aria-label={isFrench ? 'Exporter résumé Optimisation' : 'Export Optimization summary'}
+              title={!optCache ? (isFrench ? 'Générez d’abord un plan dans « Optimisations »' : 'Generate a plan first in “Optimizations”') : ''}
+            >
+              {isFrench ? 'Optimisation' : 'Optimization'}
             </button>
             <button
               className="button-secondary px-4 py-3"

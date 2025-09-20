@@ -212,7 +212,7 @@ export const UltimatePlanningDashboard: React.FC = () => {
               <div className="text-sm text-purple-700">Simulations</div>
             </div>
             <div className="text-center">
-              <div className="text-2xl font-bold text-purple-900">{dataCompleteness}%</div>
+              <div className="text-2xl font-bold text-purple-900">{dataCompleteness}{' %'}</div>
               <div className="text-sm text-purple-700">Complétude</div>
             </div>
             <div className="text-center">
@@ -225,7 +225,7 @@ export const UltimatePlanningDashboard: React.FC = () => {
           <div className="mt-6">
             <div className="flex justify-between text-sm text-purple-700 mb-2">
               <span>Progression globale</span>
-              <span>{dataCompleteness}%</span>
+              <span>{dataCompleteness}{' %'}</span>
             </div>
             <Progress value={dataCompleteness} className="h-3 bg-purple-100" />
           </div>
@@ -360,12 +360,12 @@ export const UltimatePlanningDashboard: React.FC = () => {
           <p className="mb-3">
             Le plan Ultimate vous donne accès à des outils avancés de planification successorale, 
             des simulations financières sophistiquées et des rapports de préparation professionnels 
-            pour vos consultations avec des notaires, avocats et conseillers.
+            pour vous aider à préparer vos décisions et vos échanges avec un professionnel de votre choix.
           </p>
           <p>
             <strong>Note importante :</strong> Ce plan ne remplace pas les conseils juridiques 
             professionnels. Il vous aide à vous préparer et à organiser vos informations 
-            pour optimiser vos consultations.
+            pour éclairer vos décisions.
           </p>
         </CardContent>
       </Card>
@@ -408,32 +408,32 @@ function calculateEmergencyDataCompleteness(emergencyData: EmergencyInfoData): n
 
   // Contacts d'urgence
   totalFields += 1;
-  if (emergencyData.emergencyContacts.length > 0) completedFields += 1;
+  if (emergencyData.contactsUrgence.length > 0) completedFields += 1;
 
   // Informations médicales
   totalFields += 1;
-  if (emergencyData.medicalInfo.medications.length > 0) completedFields += 1;
+  if (emergencyData.informationsMedicales.medicamentsActuels.length > 0) completedFields += 1;
 
   // Personnes à charge
   totalFields += 1;
-  if (emergencyData.dependents.length > 0) completedFields += 1;
+  if (emergencyData.personnesCharge.length > 0) completedFields += 1;
 
   // Documents importants
   totalFields += 1;
-  if (emergencyData.importantDocuments.length > 0) completedFields += 1;
+  if (emergencyData.documentsImportants.length > 0) completedFields += 1;
 
   // Propriétés
   totalFields += 1;
-  if (emergencyData.properties.length > 0) completedFields += 1;
+  if (emergencyData.proprietes.length > 0) completedFields += 1;
 
   // Informations financières
   totalFields += 1;
-  if (emergencyData.financialInfo.bankAccounts.length > 0 || 
-      emergencyData.financialInfo.creditCards.length > 0) completedFields += 1;
+  if (emergencyData.informationsFinancieres.comptesBancaires.length > 0 || 
+      emergencyData.informationsFinancieres.cartesCredit.length > 0) completedFields += 1;
 
   // Assurances
   totalFields += 1;
-  if (emergencyData.insurances.length > 0) completedFields += 1;
+  if (emergencyData.assurances.length > 0) completedFields += 1;
 
   return Math.round((completedFields / totalFields) * 100);
 }

@@ -11,7 +11,8 @@ export interface PDFReportOptions {
   includeRecommendations?: boolean;
   language?: 'fr' | 'en';
   reportTitle?: string;
-  authorName?: string;
+      authorName?: string;
+      level?: 'essential' | 'complete';
 }
 
 export interface PDFSection {
@@ -1138,6 +1139,146 @@ export class PDFExportService {
       doc.setFontSize(12);
       doc.setTextColor(107, 114, 128);
       doc.text(isFrench ? '—' : '—', this.MARGIN, y);
+    }
+
+    await this.addFooterWithLogo(doc, language);
+    return doc.output('blob');
+  }
+
+  // Nouveau: Rapport de performance (IRR/TWR/MWR) — prêt à partager
+  static async generatePerformanceReport(
+    language: 'fr' | 'en',
+    data: {
+      accounts: Array<{
+        accountType: 'REER' | 'CELI' | 'CRI';
+        totalReturn: number;          // décimal, ex 0.1234
+        annualizedReturn: number;     // décimal
+        timeWeightedReturn: number;   // décimal (TWR)
+        moneyWeightedReturn: number;  // décimal (MWR/IRR)
+        netContributions: number;     // montant
+        capitalGain: number;          // montant
+      }>;
+      title?: string;
+      authorName?: string;
+      level?: 'essential' | 'complete';
+    }
+  ): Promise<Blob> {
+    const isFrench = language === 'fr';
+    const doc = new jsPDF({ unit: 'mm', format: 'letter' });
+
+    // Page de garde
+    const title = data.title || (isFrench ? 'Rapport de performance — Investissements' : 'Performance Report — Investments');
+    const subtitle = isFrench
+      ? 'IRR (MWR), TWR et métriques clés'
+      : 'IRR (MWR), TWR and key metrics';
+    const info = isFrench
+      ? `Comptes analysés: ${data.accounts.length}`
+      : `Accounts analyzed: ${data.accounts.length}`;
+
+    this.addTitleLikePage(doc, {
+      title,
+      subtitle,
+      info,
+      author: data.authorName,
+      language
+    });
+
+    // Résultats par compte
+    doc.addPage();
+    let y = this.MARGIN;
+    doc.setFontSize(18);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Résultats par compte' : 'Results by account', this.MARGIN, y);
+    y += 10;
+
+    doc.setFontSize(11);
+    doc.setTextColor(55, 65, 81);
+
+    const pct = (v: number) => `${(v * 100).toFixed(2)}%`;
+    const cad = (v: number) =>
+      new Intl.NumberFormat(isFrench ? 'fr-CA' : 'en-CA', { style: 'currency', currency: 'CAD' }).format(v);
+
+    for (const acc of data.accounts) {
+      // Saut de page si nécessaire
+      if (y > this.PAGE_HEIGHT - 40) {
+        doc.addPage();
+        y = this.MARGIN;
+      }
+
+      // En-tête de compte
+      doc.setFontSize(14);
+      doc.setTextColor(31, 41, 55);
+      doc.text(`${acc.accountType}`, this.MARGIN, y);
+      y += 7;
+
+      // Lignes de métriques
+      doc.setFontSize(11);
+      doc.setTextColor(55, 65, 81);
+      const lines = [
+        `${isFrench ? 'Rendement total' : 'Total return'}: ${pct(acc.totalReturn)}`,
+        `${isFrench ? 'Rendement annualisé' : 'Annualized return'}: ${pct(acc.annualizedReturn)}`,
+        `${isFrench ? 'TWR (pondéré dans le temps)' : 'TWR (time-weighted)'}: ${pct(acc.timeWeightedReturn)}`,
+        `${isFrench ? 'MWR (IRR, pondéré par l’argent)' : 'MWR (IRR, money-weighted)'}: ${pct(acc.moneyWeightedReturn)}`,
+        `${isFrench ? 'Contributions nettes' : 'Net contributions'}: ${cad(acc.netContributions)}`,
+        `${isFrench ? 'Gain en capital' : 'Capital gain'}: ${cad(acc.capitalGain)}`
+      ];
+
+      for (const l of lines) {
+        const wrapped = doc.splitTextToSize(`• ${l}`, this.CONTENT_WIDTH);
+        doc.text(wrapped, this.MARGIN, y);
+        y += wrapped.length * 5 + 2;
+      }
+
+      y += 2;
+    }
+
+    // Légende pédagogique
+    if (y > this.PAGE_HEIGHT - 40) { doc.addPage(); y = this.MARGIN; }
+    doc.setFontSize(14);
+    doc.setTextColor(31, 41, 55);
+    doc.text(isFrench ? 'Légende' : 'Legend', this.MARGIN, y);
+    y += 8;
+    doc.setFontSize(11);
+    doc.setTextColor(75, 85, 99);
+    const legend = [
+      isFrench ? 'TWR — performance du gestionnaire (indépendante des flux).' : 'TWR — manager performance (independent of cashflows).',
+      isFrench ? 'MWR (IRR) — performance de l’investisseur (sensible aux flux).' : 'MWR (IRR) — investor performance (sensitive to cashflows).',
+      isFrench ? 'Ce rapport est éducatif et destiné à être partagé avec un spécialiste de votre choix.' : 'This report is educational and intended to be shared with an independent professional of your choice.'
+    ];
+    for (const l of legend) {
+      const wrapped = doc.splitTextToSize(`• ${l}`, this.CONTENT_WIDTH);
+      doc.text(wrapped, this.MARGIN, y);
+      y += wrapped.length * 5 + 2;
+    }
+
+    // Section complète (optionnelle)
+    const level = data.level || 'essential';
+    if (level === 'complete') {
+      doc.addPage();
+      y = this.MARGIN;
+      doc.setFontSize(18);
+      doc.setTextColor(31, 41, 55);
+      doc.text(isFrench ? 'Analyse détaillée' : 'Detailed analysis', this.MARGIN, y);
+      y += 10;
+
+      doc.setFontSize(11);
+      doc.setTextColor(75, 85, 99);
+      const completeNotes = [
+        isFrench
+          ? 'Comparaison avant/après frais (TER) si fournis dans l’interface avancée.'
+          : 'Before/after fees (TER) comparison if provided in the advanced interface.',
+        isFrench
+          ? 'Benchmarks pédagogiques (ex.: 60/40) pour situer la performance.'
+          : 'Educational benchmarks (e.g., 60/40) to contextualize performance.',
+        isFrench
+          ? 'Export généré par MonPlanRetraite.ca — données 100 % locales; logo inclus.'
+          : 'Export generated by MonPlanRetraite.ca — 100% local data; logo included.'
+      ];
+      for (const l of completeNotes) {
+        const wrapped = doc.splitTextToSize(`• ${l}`, this.CONTENT_WIDTH);
+        doc.text(wrapped, this.MARGIN, y);
+        y += wrapped.length * 5 + 2;
+      }
     }
 
     await this.addFooterWithLogo(doc, language);

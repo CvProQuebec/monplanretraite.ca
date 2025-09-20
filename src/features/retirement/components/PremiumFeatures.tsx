@@ -3,9 +3,8 @@
 
 import React, { useState, useEffect } from 'react';
 import {
-  BarChart3, TrendingUp, Calculator, Shield, Zap, FileText,
-  Play, Pause, RotateCcw, Download, Settings, Info, AlertTriangle,
-  CheckCircle, ExternalLink, RefreshCw, Activity, Target
+  BarChart3, TrendingUp, Calculator, Shield,
+  Play, Pause, RotateCcw, Info, CheckCircle
 } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -24,6 +23,10 @@ import { CPPData } from '../types/cpp';
 import { AdvancedCPPService } from '../services/AdvancedCPPService';
 import { useLanguage } from '../hooks/useLanguage';
 import { PlanRestrictedSection } from './PlanRestrictedSection';
+import PortfolioOptimizer from '@/components/ui/PortfolioOptimizer';
+import StressTestModule from '@/components/ui/StressTestModule';
+import PredictiveInsights from '@/components/ui/PredictiveInsights';
+import TaxOptimizationLab from '@/components/ui/TaxOptimizationLab';
 
 interface PremiumFeaturesProps {
   cppData: CPPData;
@@ -36,7 +39,6 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
   const [isMonteCarloRunning, setIsMonteCarloRunning] = useState(false);
   const [isTaxCalculating, setIsTaxCalculating] = useState(false);
   const [isSurvivorCalculating, setIsSurvivorCalculating] = useState(false);
-  const [isAPIChecking, setIsAPIChecking] = useState(false);
 
   // États pour Monte Carlo
   const [monteCarloParams, setMonteCarloParams] = useState({
@@ -45,7 +47,11 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
     confidenceLevel: 0.95,
     inflationRange: { min: 0.01, max: 0.08, mean: 0.025, stdDev: 0.015 },
     investmentReturnRange: { min: 0.03, max: 0.12, mean: 0.07, stdDev: 0.025 },
-    gdpGrowthRange: { min: 0.01, max: 0.05, mean: 0.025, stdDev: 0.01 }
+    interestRateRange: { min: 0.01, max: 0.08, mean: 0.03, stdDev: 0.015 },
+    gdpGrowthRange: { min: 0.01, max: 0.05, mean: 0.025, stdDev: 0.01 },
+    unemploymentRateRange: { min: 0.03, max: 0.12, mean: 0.06, stdDev: 0.02 },
+    lifeExpectancyRange: { min: 75, max: 95, mean: 85, stdDev: 3 },
+    mortalityRateRange: { min: 0.005, max: 0.05, mean: 0.02, stdDev: 0.008 }
   });
   const [monteCarloResults, setMonteCarloResults] = useState<any>(null);
 
@@ -56,7 +62,6 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
   const [survivorResults, setSurvivorResults] = useState<any>(null);
 
   // États pour l'API
-  const [apiStatus, setApiStatus] = useState<any>(null);
 
   const texts = {
     fr: {
@@ -66,7 +71,10 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
         monteCarlo: 'Monte Carlo Avancé',
         taxOptimization: 'Optimisation Fiscale',
         survivorBenefits: 'Prestations Survivant',
-        apiIntegration: 'Intégration API'
+        optimizer: 'Optimiseur de portefeuille',
+        stressTest: 'Stress-test',
+        predictive: 'Analyses prédictives IA',
+        taxLab: 'Lab optimisation fiscale'
       },
       monteCarlo: {
         title: 'Modélisation Monte Carlo Avancée',
@@ -107,17 +115,6 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
         planning: 'Planification',
         documents: 'Documents requis'
       },
-      apiIntegration: {
-        title: 'Intégration API Gouvernementale',
-        description: 'Données en temps réel des services gouvernementaux',
-        checkStatus: 'Vérifier le statut',
-        cppAPI: 'API CPP',
-        rrqAPI: 'API RRQ',
-        craAPI: 'API CRA',
-        dataTypes: 'Types de données',
-        lastUpdate: 'Dernière mise à jour',
-        status: 'Statut'
-      }
     },
     en: {
       title: 'CPP Premium Features',
@@ -126,7 +123,10 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
         monteCarlo: 'Advanced Monte Carlo',
         taxOptimization: 'Tax Optimization',
         survivorBenefits: 'Survivor Benefits',
-        apiIntegration: 'API Integration'
+        optimizer: 'Portfolio Optimizer',
+        stressTest: 'Stress Test',
+        predictive: 'Predictive Analytics (AI)',
+        taxLab: 'Tax Optimization Lab'
       },
       monteCarlo: {
         title: 'Advanced Monte Carlo Modeling',
@@ -167,17 +167,6 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
         planning: 'Planning',
         documents: 'Required documents'
       },
-      apiIntegration: {
-        title: 'Government API Integration',
-        description: 'Real-time data from government services',
-        checkStatus: 'Check status',
-        cppAPI: 'CPP API',
-        rrqAPI: 'RRQ API',
-        craAPI: 'CRA API',
-        dataTypes: 'Data types',
-        lastUpdate: 'Last update',
-        status: 'Status'
-      }
     }
   };
 
@@ -207,7 +196,11 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
       confidenceLevel: 0.95,
       inflationRange: { min: 0.01, max: 0.08, mean: 0.025, stdDev: 0.015 },
       investmentReturnRange: { min: 0.03, max: 0.12, mean: 0.07, stdDev: 0.025 },
-      gdpGrowthRange: { min: 0.01, max: 0.05, mean: 0.025, stdDev: 0.01 }
+      interestRateRange: { min: 0.01, max: 0.08, mean: 0.03, stdDev: 0.015 },
+      gdpGrowthRange: { min: 0.01, max: 0.05, mean: 0.025, stdDev: 0.01 },
+      unemploymentRateRange: { min: 0.03, max: 0.12, mean: 0.06, stdDev: 0.02 },
+      lifeExpectancyRange: { min: 75, max: 95, mean: 85, stdDev: 3 },
+      mortalityRateRange: { min: 0.005, max: 0.05, mean: 0.02, stdDev: 0.008 }
     });
     setMonteCarloResults(null);
   };
@@ -238,28 +231,9 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
     }
   };
 
-  // === INTÉGRATION API ===
-  const checkAPIStatus = async () => {
-    setIsAPIChecking(true);
-    try {
-      // Simulation de vérification API
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      setApiStatus({
-        cpp: 'online',
-        rrq: 'online',
-        cra: 'maintenance',
-        lastCheck: new Date(),
-        errors: []
-      });
-    } catch (error) {
-      console.error('Erreur vérification API:', error);
-    } finally {
-      setIsAPIChecking(false);
-    }
-  };
 
   return (
-    <PlanRestrictedSection sectionId="premium-features" requiredPlan="ultimate" className={className}>
+    <PlanRestrictedSection sectionId="premium-features" requiredPlan="expert">
       <div className="space-y-6">
         <div className="text-center">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
@@ -271,7 +245,7 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
+          <TabsList className="grid w-full grid-cols-7">
             <TabsTrigger value="monte-carlo" className="flex items-center gap-2">
               <BarChart3 className="w-4 h-4" />
               {t.tabs.monteCarlo}
@@ -284,9 +258,21 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
               <Shield className="w-4 h-4" />
               {t.tabs.survivorBenefits}
             </TabsTrigger>
-            <TabsTrigger value="api-integration" className="flex items-center gap-2">
-              <Zap className="w-4 h-4" />
-              {t.tabs.apiIntegration}
+            <TabsTrigger value="optimizer" className="flex items-center gap-2">
+              <TrendingUp className="w-4 h-4" />
+              {t.tabs.optimizer}
+            </TabsTrigger>
+            <TabsTrigger value="stress-test" className="flex items-center gap-2">
+              <BarChart3 className="w-4 h-4" />
+              {t.tabs.stressTest}
+            </TabsTrigger>
+            <TabsTrigger value="predictive" className="flex items-center gap-2">
+              <BarChart3 className="w-4 h-4" />
+              {t.tabs.predictive}
+            </TabsTrigger>
+            <TabsTrigger value="tax-lab" className="flex items-center gap-2">
+              <Calculator className="w-4 h-4" />
+              {t.tabs.taxLab}
             </TabsTrigger>
           </TabsList>
 
@@ -352,9 +338,9 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="0.90">90%</SelectItem>
-                          <SelectItem value="0.95">95%</SelectItem>
-                          <SelectItem value="0.99">99%</SelectItem>
+                          <SelectItem value="0.90">90{' %'}</SelectItem>
+                          <SelectItem value="0.95">95{' %'}</SelectItem>
+                          <SelectItem value="0.99">99{' %'}</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -406,7 +392,7 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                           <div className="text-center">
                             <div className="text-2xl font-bold text-blue-600">
-                              {monteCarloResults.summary.successRate.toFixed(1)}%
+                              {monteCarloResults.summary.successRate.toFixed(1)}{' %'}
                             </div>
                             <div className="text-sm text-gray-600">Taux de succès</div>
                           </div>
@@ -440,7 +426,7 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
                       <CardContent>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                           <div>
-                            <div className="text-sm text-gray-600">VaR 95%</div>
+                            <div className="text-sm text-gray-600">VaR 95 %</div>
                             <div className="text-lg font-semibold">
                               ${monteCarloResults.riskMetrics.valueAtRisk.p95.toFixed(0)}
                             </div>
@@ -454,7 +440,7 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
                           <div>
                             <div className="text-sm text-gray-600">Max Drawdown</div>
                             <div className="text-lg font-semibold">
-                              {(monteCarloResults.riskMetrics.maximumDrawdown * 100).toFixed(1)}%
+                              {(monteCarloResults.riskMetrics.maximumDrawdown * 100).toFixed(1)}{' %'}
                             </div>
                           </div>
                         </div>
@@ -526,7 +512,7 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
                             <div className="flex justify-between">
                               <span>Taux effectif:</span>
                               <span className="font-semibold">
-                                {(taxResults.currentTax.effectiveTaxRate * 100).toFixed(1)}%
+                                {(taxResults.currentTax.effectiveTaxRate * 100).toFixed(1)}{' %'}
                               </span>
                             </div>
                           </div>
@@ -548,7 +534,7 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
                             <div className="flex justify-between">
                               <span>Taux effectif:</span>
                               <span className="font-semibold">
-                                {(taxResults.optimizedTax.effectiveTaxRate * 100).toFixed(1)}%
+                                {(taxResults.optimizedTax.effectiveTaxRate * 100).toFixed(1)}{' %'}
                               </span>
                             </div>
                           </div>
@@ -570,7 +556,7 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
                             Économies annuelles
                           </div>
                           <div className="text-sm text-gray-500 mt-2">
-                            {taxResults.savings.percentage.toFixed(1)}% de réduction
+                            {taxResults.savings.percentage.toFixed(1)}{' %'} de réduction
                           </div>
                         </div>
                       </CardContent>
@@ -698,132 +684,86 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
             </Card>
           </TabsContent>
 
-          {/* === INTÉGRATION API === */}
-          <TabsContent value="api-integration" className="space-y-6">
+          {/* === OPTIMISEUR DE PORTEFEUILLE === */}
+          <TabsContent value="optimizer" className="space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Zap className="w-5 h-5" />
-                  {t.apiIntegration.title}
+                  <TrendingUp className="w-5 h-5" />
+                  {language === 'fr' ? 'Optimiseur de portefeuille (60–75 % actions)' : 'Portfolio Optimizer (60–75% equities)'}
                 </CardTitle>
                 <CardDescription>
-                  {t.apiIntegration.description}
+                  {language === 'fr'
+                    ? 'Aligné avec notre guide: 60–75 % d’actions, coussin de 12–24 mois, rééquilibrage ±5 % et diversification géographique.'
+                    : 'Aligned with our guide: 60–75% equities, 12–24 months cash cushion, ±5% rebalancing and geographic diversification.'}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <Button
-                  onClick={checkAPIStatus}
-                  disabled={isAPIChecking}
-                  className="flex items-center gap-2"
-                >
-                  <RefreshCw className={`w-4 h-4 ${isAPIChecking ? 'animate-spin' : ''}`} />
-                  {isAPIChecking ? 'Vérification...' : t.apiIntegration.checkStatus}
-                </Button>
-
-                {apiStatus && (
-                  <div className="space-y-6">
-                    {/* Statut des APIs */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <Card>
-                        <CardHeader>
-                          <CardTitle className="flex items-center gap-2">
-                            <Activity className="w-4 h-4" />
-                            {t.apiIntegration.cppAPI}
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="flex items-center gap-2">
-                            <div className={`w-3 h-3 rounded-full ${
-                              apiStatus.cpp === 'online' ? 'bg-green-500' :
-                              apiStatus.cpp === 'maintenance' ? 'bg-yellow-500' : 'bg-red-500'
-                            }`} />
-                            <Badge variant={
-                              apiStatus.cpp === 'online' ? 'default' :
-                              apiStatus.cpp === 'maintenance' ? 'secondary' : 'destructive'
-                            }>
-                              {apiStatus.cpp === 'online' ? 'En ligne' :
-                               apiStatus.cpp === 'maintenance' ? 'Maintenance' : 'Hors ligne'}
-                            </Badge>
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      <Card>
-                        <CardHeader>
-                          <CardTitle className="flex items-center gap-2">
-                            <Activity className="w-4 h-4" />
-                            {t.apiIntegration.rrqAPI}
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="flex items-center gap-2">
-                            <div className={`w-3 h-3 rounded-full ${
-                              apiStatus.rrq === 'online' ? 'bg-green-500' :
-                              apiStatus.rrq === 'maintenance' ? 'bg-yellow-500' : 'bg-red-500'
-                            }`} />
-                            <Badge variant={
-                              apiStatus.rrq === 'online' ? 'default' :
-                              apiStatus.rrq === 'maintenance' ? 'secondary' : 'destructive'
-                            }>
-                              {apiStatus.rrq === 'online' ? 'En ligne' :
-                               apiStatus.rrq === 'maintenance' ? 'Maintenance' : 'Hors ligne'}
-                            </Badge>
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      <Card>
-                        <CardHeader>
-                          <CardTitle className="flex items-center gap-2">
-                            <Activity className="w-4 h-4" />
-                            {t.apiIntegration.craAPI}
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                          <div className="flex items-center gap-2">
-                            <div className={`w-3 h-3 rounded-full ${
-                              apiStatus.cra === 'online' ? 'bg-green-500' :
-                              apiStatus.cra === 'maintenance' ? 'bg-yellow-500' : 'bg-red-500'
-                            }`} />
-                            <Badge variant={
-                              apiStatus.cra === 'online' ? 'default' :
-                              apiStatus.cra === 'maintenance' ? 'secondary' : 'destructive'
-                            }>
-                              {apiStatus.cra === 'online' ? 'En ligne' :
-                               apiStatus.cra === 'maintenance' ? 'Maintenance' : 'Hors ligne'}
-                            </Badge>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </div>
-
-                    {/* Dernière vérification */}
-                    <Card>
-                      <CardHeader>
-                        <CardTitle>Informations système</CardTitle>
-                      </CardHeader>
-                      <CardContent>
-                        <div className="space-y-2">
-                          <div className="flex justify-between">
-                            <span>Dernière vérification:</span>
-                            <span className="font-mono">
-                              {apiStatus.lastCheck.toLocaleString()}
-                            </span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Erreurs détectées:</span>
-                            <span className="font-semibold">
-                              {apiStatus.errors.length}
-                            </span>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                )}
+              <CardContent>
+                <PortfolioOptimizer />
               </CardContent>
             </Card>
           </TabsContent>
+
+          {/* === STRESS-TEST === */}
+          <TabsContent value="stress-test" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5" />
+                  {language === 'fr' ? 'Stress-test (séquence, inflation, longévité)' : 'Stress Test (sequence, inflation, longevity)'}
+                </CardTitle>
+                <CardDescription>
+                  {language === 'fr'
+                    ? 'Test dédié: -30 %/-15 % en années 1–2, pic d’inflation et longévité +5 ans. Conseils alignés avec notre article.'
+                    : 'Dedicated test: -30%/-15% in years 1–2, inflation spike and +5 years longevity. Guidance aligned with our article.'}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <StressTestModule />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* === ANALYSES PREDICTIVES IA === */}
+          <TabsContent value="predictive" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5" />
+                  {language === 'fr' ? 'Analyses prédictives (IA locale)' : 'Predictive Analytics (local AI)'}
+                </CardTitle>
+                <CardDescription>
+                  {language === 'fr'
+                    ? 'Score de succès, risques clés et prévision 12 mois — basé sur taux d’épargne, coussin, allocation et volatilité.'
+                    : 'Success score, key risks and 12-month forecast — based on savings rate, cushion, allocation and volatility.'}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <PredictiveInsights />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* === LAB OPTIMISATION FISCALE (v1) === */}
+          <TabsContent value="tax-lab" className="space-y-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Calculator className="w-5 h-5" />
+                  {language === 'fr' ? 'Laboratoire d’optimisation fiscale (v1)' : 'Tax Optimization Lab (v1)'}
+                </CardTitle>
+                <CardDescription>
+                  {language === 'fr'
+                    ? 'Comparez l’optimiseur Greedy (Non-enregistré → REER → CELI, CPP/SV configurables) au plan de référence “REER seulement”. Heatmaps MTR / Récup. SV / SRG et tableau multi‑années.'
+                    : 'Compare the Greedy optimizer (Non-registered → RRSP → TFSA, configurable CPP/OAS) to a “RRSP only” baseline. MTR / OAS clawback / GIS heatmaps and multi‑year table.'}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <TaxOptimizationLab />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
         </Tabs>
       </div>
     </PlanRestrictedSection>

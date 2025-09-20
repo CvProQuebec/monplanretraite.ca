@@ -68,8 +68,8 @@ const AccueilOptimise: React.FC = () => {
             </h1>
             <p className="text-2xl text-gray-700 max-w-4xl mx-auto mb-8">
               {isFrench 
-                ? 'Préparez-vous efficacement avec nos outils professionnels. Gagnez du temps et maximisez la valeur de vos consultations.'
-                : 'Prepare effectively with our professional tools. Save time and maximize the value of your consultations.'
+                ? 'Préparez-vous efficacement avec nos outils professionnels. Gagnez du temps et maximisez la valeur de vos décisions.'
+                : 'Prepare effectively with our professional tools. Save time and maximize the value of your decisions.'
               }
             </p>
             <div className="inline-block bg-red-500 text-white px-6 py-3 rounded-xl font-bold text-lg mb-8">

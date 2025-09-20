@@ -80,12 +80,12 @@ const Home: React.FC = () => {
               {isFrench ? (
                 <>
                   Préparez-vous efficacement avec nos outils professionnels.<br />
-                  Gagnez du temps et maximisez la valeur de vos consultations.
+                  Gagnez du temps et maximisez la valeur de vos décisions.
                 </>
               ) : (
                 <>
                   Prepare effectively with our professional tools.<br />
-                  Save time and maximize the value of your consultations.
+                  Save time and maximize the value of your decisions.
                 </>
               )}
             </p>
@@ -321,7 +321,7 @@ const Home: React.FC = () => {
                           {isFrench ? '💎 VALEUR : 5000 $+ pour 297 $' : '💎 VALUE: $5000+ for $297'}
                         </div>
                         <div className="text-blue-700 text-xs">
-                          {isFrench ? 'Économie de 94 % • Équivaut à 2 consultations' : '94% savings • Equals 2 consultations'}
+                          {isFrench ? 'Économie de 94 %' : 'Save 94%'}
                         </div>
                       </div>
                       <div className="flex items-center gap-2">

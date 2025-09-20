@@ -1,5 +1,6 @@
-// Section wrapper pour les fonctionnalités premium du module CPP
-// Phase 3: Modélisation Monte Carlo, Optimisation fiscale, Planification successorale, API
+/* Section wrapper pour les fonctionnalités premium du module CPP
+   Phase 3: Modélisation Monte Carlo, Optimisation fiscale, Planification successorale
+   Note: Aucune intégration externe ni lien sortant — 100 % local */
 
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,13 +8,14 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
-  Crown, Zap, BarChart3, Calculator, Shield, Activity,
-  TrendingUp, Target, Award, ExternalLink, Info
+  Crown, BarChart3, Calculator, Shield,
+  TrendingUp, Target, Award
 } from 'lucide-react';
 
 import { PremiumFeatures } from '../components/PremiumFeatures';
 import { useLanguage } from '../hooks/useLanguage';
 import { PlanRestrictedSection } from '../components/PlanRestrictedSection';
+import { CPPData } from '../types/cpp';
 
 interface PremiumFeaturesSectionProps {
   className?: string;
@@ -58,16 +60,6 @@ export const PremiumFeaturesSection: React.FC<PremiumFeaturesSectionProps> = ({ 
             'Timeline d\'implémentation'
           ]
         },
-        apiIntegration: {
-          title: 'Intégration API Gouvernementale',
-          description: 'Données en temps réel des services gouvernementaux canadiens',
-          benefits: [
-            'Statut en temps réel des APIs',
-            'Données CPP, RRQ et CRA',
-            'Mise à jour automatique des paramètres',
-            'Surveillance de la santé des services'
-          ]
-        }
       },
       upgradeCTA: {
         title: 'Débloquez toutes les fonctionnalités premium',
@@ -117,16 +109,6 @@ export const PremiumFeaturesSection: React.FC<PremiumFeaturesSectionProps> = ({ 
             'Implementation timeline'
           ]
         },
-        apiIntegration: {
-          title: 'Government API Integration',
-          description: 'Real-time data from Canadian government services',
-          benefits: [
-            'Real-time API status',
-            'CPP, RRQ and CRA data',
-            'Automatic parameter updates',
-            'Service health monitoring'
-          ]
-        }
       },
       upgradeCTA: {
         title: 'Unlock all premium features',
@@ -144,6 +126,46 @@ export const PremiumFeaturesSection: React.FC<PremiumFeaturesSectionProps> = ({ 
   };
 
   const t = texts[language];
+
+  // Données CPP minimales factices (100% local, sans intégrations externes)
+  const demoCppData: CPPData = {
+    personal: {
+      dateNaissance: new Date(1960, 0, 1),
+      dateRetraite: new Date(new Date().getFullYear(), 0, 1),
+      gainsAnnuels: [],
+      anneesCotisation: 0,
+      paysResidence: 'QC',
+      statutConjugal: 'single'
+    },
+    parameters: {
+      ageRetraiteStandard: 65,
+      ageRetraiteMin: 60,
+      ageRetraiteMax: 70,
+      facteurReduction: 0.006,   // -0.6 %/mois avant 65
+      facteurAugmentation: 0.007, // +0.7 %/mois après 65
+      montantMaximum2025: 1433.00,
+      montantMoyen2024: 899.67
+    },
+    calculations: {
+      pensionBase: 0,
+      pensionAjustee: 0,
+      montantMensuel: 0,
+      montantAnnuel: 0,
+      reductionRetraiteAnticipee: 0,
+      augmentationRetraiteReportee: 0
+    },
+    contributions: {
+      annees: [],
+      montants: [],
+      gains: [],
+      totalCotisations: 0
+    },
+    metadata: {
+      dateCalcul: new Date(),
+      version: 'demo',
+      source: 'USER_INPUT'
+    }
+  };
 
   return (
     <PlanRestrictedSection sectionId="premium-features" requiredPlan="expert">
@@ -232,27 +254,6 @@ export const PremiumFeaturesSection: React.FC<PremiumFeaturesSectionProps> = ({ 
             </CardContent>
           </Card>
 
-          <Card className="border-2 border-orange-200 hover:border-orange-300 transition-colors">
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-orange-700">
-                <Activity className="w-5 h-5" />
-                {t.features.apiIntegration.title}
-              </CardTitle>
-              <CardDescription>
-                {t.features.apiIntegration.description}
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-2">
-                {t.features.apiIntegration.benefits.map((benefit, index) => (
-                  <li key={index} className="flex items-start gap-2">
-                    <Zap className="w-4 h-4 text-orange-600 mt-0.5 flex-shrink-0" />
-                    <span className="text-sm">{benefit}</span>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
         </div>
 
         {/* Appel à l'action de mise à niveau */}
@@ -274,52 +275,10 @@ export const PremiumFeaturesSection: React.FC<PremiumFeaturesSectionProps> = ({ 
           </CardContent>
         </Card>
 
-        {/* Liens officiels */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Info className="w-5 h-5" />
-              {t.officialLinks.title}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <a
-                href="https://www.canada.ca/fr/services/prestations/pensionspubliques/rpc.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 p-3 border rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <ExternalLink className="w-4 h-4 text-blue-600" />
-                <span>{t.officialLinks.cpp}</span>
-              </a>
-              
-              <a
-                href="https://www.rrq.gouv.qc.ca/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 p-3 border rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <ExternalLink className="w-4 h-4 text-green-600" />
-                <span>{t.officialLinks.rrq}</span>
-              </a>
-              
-              <a
-                href="https://www.canada.ca/fr/agence-revenu.html"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 p-3 border rounded-lg hover:bg-gray-50 transition-colors"
-              >
-                <ExternalLink className="w-4 h-4 text-red-600" />
-                <span>{t.officialLinks.cra}</span>
-              </a>
-            </div>
-          </CardContent>
-        </Card>
 
         {/* Composant principal des fonctionnalités premium */}
         <div className="mt-12">
-          <PremiumFeatures cppData={{}} />
+          <PremiumFeatures cppData={demoCppData} />
         </div>
       </div>
     </PlanRestrictedSection>

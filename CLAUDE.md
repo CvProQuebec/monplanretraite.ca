@@ -324,6 +324,39 @@ Janvier 2025 — Module Hypothèses de Calcul
 
 ---
 
+## ✅ Mises à jour Septembre 2025 — Optimisation fiscale v1→v3, Sauvegarde locale, Portée Immobilier
+
+Livré (100 % local, aucun réseau)
+- Optimisation fiscale v1→v3
+  - v1: Politique + moteur fiscal (QC+Fed 2025) et projection multi‑années
+    - src/services/tax/TaxPolicy2025.ts, TaxEngine.ts, ProjectionEngine.ts
+  - v2: Optimiseur DP/Beam (+ LocalSearch v2.1), Web Worker, progression/annulation
+    - src/services/tax/optimizers/DPBeamOptimizer.ts, src/workers/dpBeamWorker.ts
+    - Faisceau configurable (beamWidth, stepSize), score = impôts + pénalité d’écart à l’objectif net
+  - v3: Robustesse + PDF
+    - src/services/tax/RobustnessService.ts (chocs: séquence ‑30/‑15, inflation, longévité +5; score robuste + explications)
+    - src/services/tax/TaxOptimizationPDFService.ts (résumé PDF robuste)
+  - UI Lab: src/components/ui/TaxOptimizationLab.tsx
+    - Greedy vs RRSP‑only vs DP/Beam, heatmaps (MTR/SV/SRG), réglages avancés, progression Worker + stop
+    - Mode robuste (scores/explications), export PDF
+
+- Sauvegarde locale chiffrée (sous contrôle utilisateur)
+  - src/services/BackgroundBackupService.ts (File System Access API, AES‑256‑GCM, auto‑backup, clear‑after‑backup, restore)
+  - UI: src/components/backup/BackupManagerPanel.tsx (liaison fichiers, mot de passe session, fréquence) + BackupBootstrap.tsx (init + restore)
+
+- Politique de portée — Immobilier (hors périmètre)
+  - Comparaison de propriétés: non poursuivie (écosystème saturé; éviter redondance)
+  - Calculateur hypothécaire avancé: non poursuivi (spécialistes bancaires)
+  - Analyse de rentabilité immobilière: non poursuivie (évaluateurs/analystes dédiés)
+  - Impact: conserver “Source de vérité Immobilier → Dépenses/Budget (Phase 1)” (verrouillage hypothèque/taxes/assurance habitation) sans ajouter de comparateur/moteur propriétaire
+
+Checklist rapide (fiscalité)
+- [ ] Test Greedy/DP sur 3 profils (SRG/medium/high)
+- [ ] Mode robuste activé → scores/explications cohérents
+- [ ] Export PDF “résumé robuste” OK (0 réseau)
+- [ ] Worker DP: progression/stop OK, UI non bloquée
+- [ ] Sauvegarde locale: backup Now + auto + clear‑after‑backup + restore
+
 ## ⚠️ Points d'attention finaux
 
 - NE JAMAIS modifier la syntaxe de code pour “franciser” les guillemets — l’OQLF s’applique à l’affichage.

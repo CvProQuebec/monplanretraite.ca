@@ -4,6 +4,8 @@ import { LanguageProvider } from './features/retirement/hooks/useLanguage';
 import { AuthProvider } from './hooks/useAuth';
 import Layout from './components/layout/Layout';
 import SeniorsLoadingSpinner from './components/SeniorsLoadingSpinner';
+import BackupBootstrap from './components/backup/BackupBootstrap';
+import BackupManagerPanel from './components/backup/BackupManagerPanel';
 
 // Nouvelles pages principales
 import Accueil from './pages/Accueil';
@@ -90,6 +92,7 @@ function App() {
       <LanguageProvider>
         <Router>
           <Layout>
+            <BackupBootstrap />
             <Suspense fallback={<SeniorsLoadingSpinner />}>
               <Routes>
               {/* 🏠 NOUVELLES ROUTES PRINCIPALES - Navigation restructurée */}
@@ -477,6 +480,10 @@ function App() {
               {/* Routes Sauvegarder/Charger */}
               <Route path="/fr/sauvegarder-charger" element={<SauvegarderCharger />} />
               <Route path="/en/save-load" element={<SauvegarderCharger />} />
+
+              {/* Sauvegardes locales (gestionnaire) */}
+              <Route path="/sauvegardes" element={<div className="p-8"><BackupManagerPanel /></div>} />
+              <Route path="/backups" element={<div className="p-8"><BackupManagerPanel /></div>} />
               
               {/* Route Admin */}
               <Route path="/admin" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-gray-800">Admin Panel</h1><p className="text-gray-600 mt-4">Administration panel - Coming soon</p></div>} />

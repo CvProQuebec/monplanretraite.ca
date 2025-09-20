@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { CashflowSection } from '@/features/retirement/sections/CashflowSection';
 import SeasonalExpensesPlannerModule from '@/components/ui/SeasonalExpensesPlannerModule';
 import MonthlyBudgetPlanningModule from '@/components/ui/MonthlyBudgetPlanningModule';
@@ -6,6 +6,9 @@ import { UserData } from '@/features/retirement/types';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { DataMigrationService } from '@/services/DataMigrationService';
+import OverdraftPreventionService from '@/services/OverdraftPreventionService';
+import PurchaseOptionsComparator from '@/components/ui/PurchaseOptionsComparator';
+import NotificationSchedulerService from '@/services/NotificationSchedulerService';
 
 // Données de démonstration
 const demoUserData: UserData = {
@@ -85,6 +88,28 @@ export const ExpensesPage: React.FC = () => {
   const [userData, setUserData] = useState<UserData>(demoUserData);
   const { language } = useLanguage();
   const isFrench = language === 'fr';
+
+  // Analyse de prévention des découverts (local, heuristiques simples)
+  const overdraft = useMemo(() => OverdraftPreventionService.analyze(userData), [userData]);
+
+  // Planification auto des rappels fin de mois si risque élevé
+  const [monthEndScheduled, setMonthEndScheduled] = useState(false);
+  useEffect(() => {
+    if (overdraft.riskLevel === 'high') {
+      const scenarioId = ((userData.personal as any)?.activeScenarioId) || 'expenses-default';
+      const key = `mpr-monthend-scheduled:${scenarioId}`;
+      try {
+        const done = localStorage.getItem(key);
+        if (!done) {
+          NotificationSchedulerService.scheduleMonthEndSync({ scenarioId, months: 3 });
+          localStorage.setItem(key, '1');
+          setMonthEndScheduled(true);
+        }
+      } catch {
+        // Ignorer erreurs de stockage local
+      }
+    }
+  }, [overdraft.riskLevel]);
 
   // Traductions
   const t = {
@@ -298,6 +323,75 @@ return (
           onUpdate={handleUpdate} 
         />
 
+        {/* Prévention des découverts */}
+        <div className="mt-8 bg-white rounded-xl p-6 border-2 border-red-300">
+          <h2 className="text-2xl font-bold text-red-800 mb-2">
+            {isFrench ? 'Prévention des découverts' : 'Overdraft prevention'}
+          </h2>
+          <p className="text-sm text-gray-700 mb-4">
+            {isFrench
+              ? 'Surveillez votre marge mensuelle et votre fonds d’urgence pour éviter les découverts bancaires.'
+              : 'Monitor your monthly buffer and emergency fund to prevent bank overdrafts.'}
+          </p>
+
+          {monthEndScheduled && (
+            <div className="mb-4 text-sm text-blue-800 bg-blue-50 border border-blue-200 rounded-lg p-3">
+              {isFrench
+                ? 'Rappels fin de mois planifiés pour les 3 prochains mois.'
+                : 'Month-end reminders scheduled for the next 3 months.'}
+            </div>
+          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+            <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm">
+              <div className="text-red-800 font-semibold">{isFrench ? 'Revenu net mensuel' : 'Net monthly income'}</div>
+              <div className="text-red-900 text-lg font-bold">
+                {overdraft.netMonthlyIncome.toLocaleString(isFrench ? 'fr-CA' : 'en-CA', { style: 'currency', currency: 'CAD' })}
+              </div>
+            </div>
+            <div className="bg-orange-50 border border-orange-200 rounded-lg p-3 text-sm">
+              <div className="text-orange-800 font-semibold">{isFrench ? 'Dépenses mensuelles' : 'Monthly expenses'}</div>
+              <div className="text-orange-900 text-lg font-bold">
+                {overdraft.totalMonthlyExpenses.toLocaleString(isFrench ? 'fr-CA' : 'en-CA', { style: 'currency', currency: 'CAD' })}
+              </div>
+            </div>
+            <div className={`${overdraft.monthlyCashflow >= 0 ? 'bg-emerald-50 border-emerald-200' : 'bg-amber-50 border-amber-200'} border rounded-lg p-3 text-sm`}>
+              <div className={`${overdraft.monthlyCashflow >= 0 ? 'text-emerald-800' : 'text-amber-800'} font-semibold`}>
+                {isFrench ? 'Flux de trésorerie mensuel' : 'Monthly cash flow'}
+              </div>
+              <div className={`${overdraft.monthlyCashflow >= 0 ? 'text-emerald-900' : 'text-amber-900'} text-lg font-bold`}>
+                {overdraft.monthlyCashflow.toLocaleString(isFrench ? 'fr-CA' : 'en-CA', { style: 'currency', currency: 'CAD' })}
+              </div>
+            </div>
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm">
+              <div className="text-blue-800 font-semibold">{isFrench ? 'Fonds d’urgence estimé' : 'Estimated emergency fund'}</div>
+              <div className="text-blue-900 text-lg font-bold">
+                {overdraft.emergencySaved.toLocaleString(isFrench ? 'fr-CA' : 'en-CA', { style: 'currency', currency: 'CAD' })}
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            {overdraft.alerts.map((a, i) => {
+              const color =
+                a.severity === 'error' ? { bg: 'bg-red-50', border: 'border-red-300', text: 'text-red-900', title: 'text-red-800' } :
+                a.severity === 'warning' ? { bg: 'bg-amber-50', border: 'border-amber-300', text: 'text-amber-900', title: 'text-amber-800' } :
+                { bg: 'bg-blue-50', border: 'border-blue-300', text: 'text-blue-900', title: 'text-blue-800' };
+              return (
+                <div key={a.id + i} className={`${color.bg} ${color.border} border rounded-lg p-3`}>
+                  <div className={`font-semibold ${color.title}`}>
+                    {a.severity === 'error' ? (isFrench ? 'Critique' : 'Critical')
+                      : a.severity === 'warning' ? (isFrench ? 'Avertissement' : 'Warning')
+                      : (isFrench ? 'Information' : 'Info')}
+                  </div>
+                  <div className={`${color.text} text-sm`}>{a.message}</div>
+                  {a.suggestion && <div className="text-gray-700 text-sm mt-1">{a.suggestion}</div>}
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Nouveau volet Dépenses saisonnières et irrégulières */}
         <div className="mt-8 bg-white rounded-xl p-6 border-2 border-gray-300">
           <SeasonalExpensesPlannerModule
@@ -314,6 +408,11 @@ return (
             onUpdate={(updates) => handleUpdate('cashflow', updates)}
             language={language}
           />
+        </div>
+
+        {/* Comparateur d’options d’achat */}
+        <div className="mt-8 bg-white rounded-xl p-6 border-2 border-gray-300">
+          <PurchaseOptionsComparator />
         </div>
 
         {/* Informations supplémentaires */}

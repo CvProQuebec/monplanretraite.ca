@@ -140,21 +140,39 @@ function getAIPotentialText(score: number, isEnglish: boolean) {
 function getCTAContent(score: number, isEnglish: boolean) {
   if (score >= 80) {
     return {
-      title: isEnglish ? 'Priority consultation - Dedicated expert' : 'Consultation prioritaire - Expert dédié',
-      subtitle: isEnglish ? 'Your profile deserves our immediate attention • Response within 2h guaranteed' : 'Votre profil mérite notre attention immédiate • Réponse sous 2h garantie',
-      buttonText: isEnglish ? 'Get my VIP consultation' : 'Obtenir ma consultation VIP',
+      title: isEnglish
+        ? 'Personalized study — included with Pro and Expert'
+        : 'Étude personnalisée — incluse avec les plans Pro et Expert',
+      subtitle: isEnglish
+        ? 'Generate a complete in‑app analysis and a shareable report in minutes to review with your own specialist'
+        : 'Générez une analyse complète et un rapport partageable en quelques minutes, prêt à présenter à votre spécialiste de votre choix',
+      buttonText: isEnglish
+        ? 'Generate my study (Pro/Expert)'
+        : 'Générer mon étude (Pro/Expert)',
     };
   } else if (score >= 60) {
     return {
-      title: isEnglish ? 'In-depth personalized analysis' : 'Analyse approfondie personnalisée',
-      subtitle: isEnglish ? 'Detailed case study with projected ROI • Response within 8h' : 'Étude de cas détaillée avec ROI projeté • Réponse sous 8h',
-      buttonText: isEnglish ? 'Receive my personalized study' : 'Recevoir mon étude personnalisée',
+      title: isEnglish
+        ? 'Personalized recommendations — included with Pro/Expert'
+        : 'Recommandations personnalisées — incluses avec Pro/Expert',
+      subtitle: isEnglish
+        ? 'Guided exploration of optimized options for your profile, exportable as a report'
+        : 'Exploration guidée des options optimisées selon votre profil, exportable en rapport',
+      buttonText: isEnglish
+        ? 'See Pro and Expert plans'
+        : 'Voir les plans Pro et Expert',
     };
   } else {
     return {
-      title: isEnglish ? 'Free tailored consultation' : 'Consultation gratuite adaptée',
-      subtitle: isEnglish ? 'Custom recommendations for your situation' : 'Recommandations sur mesure pour votre situation',
-      buttonText: isEnglish ? 'Get my recommendations' : 'Obtenir mes recommandations',
+      title: isEnglish
+        ? 'Recommendations preview'
+        : 'Aperçu des recommandations',
+      subtitle: isEnglish
+        ? 'Free preview — upgrade to Pro/Expert for the full personalized study and report'
+        : 'Aperçu gratuit — passez à Pro/Expert pour l’étude complète et le rapport',
+      buttonText: isEnglish
+        ? 'View free preview'
+        : 'Voir un aperçu gratuit',
     };
   }
 }
@@ -274,4 +292,4 @@ const useFormScoring = (formData: FormData, isEnglish: boolean) => {
   };
 };
 
-export default useFormScoring; 
+export default useFormScoring;

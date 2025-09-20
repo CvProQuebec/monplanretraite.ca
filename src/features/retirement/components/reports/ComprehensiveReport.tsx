@@ -2,8 +2,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, Target, Calculator, Shield, AlertTriangle, FileText, BarChart3, PieChart } from 'lucide-react';
-import { useLanguage } from '../../hooks/useLanguage';
-import { useRetirementData } from '../../hooks/useRetirementData';
+import { useLanguage } from '@/hooks/useLanguage';
 
 interface ComprehensiveReportProps {
   includeCharts?: boolean;
@@ -17,7 +16,6 @@ const ComprehensiveReport: React.FC<ComprehensiveReportProps> = ({
   language = 'fr'
 }) => {
   const { isEnglish } = useLanguage();
-  const { data: retirementData } = useRetirementData();
   
   const tr = {
     title: isEnglish ? 'Comprehensive Financial Planning Report' : 'Rapport de planification financière complète',
@@ -85,7 +83,7 @@ const ComprehensiveReport: React.FC<ComprehensiveReportProps> = ({
             <div className="text-sm text-red-700 space-y-2">
               <p><strong>⚠️ {tr.notReplacement}</strong></p>
               <p>{tr.consultProfessional}</p>
-              <p>This tool is for educational purposes only and should be used as a starting point for professional consultation.</p>
+              <p>This tool is for educational purposes only and is intended to inform discussions with an independent professional of your choice.</p>
             </div>
           </CardContent>
         </Card>
@@ -114,7 +112,7 @@ const ComprehensiveReport: React.FC<ComprehensiveReportProps> = ({
               <p className="text-xl font-bold text-purple-900">${mockData.savings.toLocaleString()}</p>
             </div>
             <div className="text-center p-3 bg-orange-50 rounded-lg">
-              <p className="text-sm text-gray-600">{tr.targetAge}</p>
+                <p className="text-sm text-gray-600">{tr.targetRetirement}</p>
               <p className="text-xl font-bold text-orange-900">{mockData.targetAge}</p>
             </div>
           </div>
@@ -165,7 +163,7 @@ const ComprehensiveReport: React.FC<ComprehensiveReportProps> = ({
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 bg-blue-50 rounded-lg">
-                <p className="text-sm text-gray-600">{tr.targetAge}</p>
+                <p className="text-sm text-gray-600">{tr.targetRetirement}</p>
                 <p className="text-xl font-bold text-blue-900">{mockData.targetAge} ans</p>
               </div>
               <div className="p-4 bg-green-50 rounded-lg">
@@ -276,8 +274,8 @@ const ComprehensiveReport: React.FC<ComprehensiveReportProps> = ({
             <div className="flex items-start gap-3">
               <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">1</div>
               <div>
-                <p className="font-medium">Schedule consultation with financial advisor</p>
-                <p className="text-sm text-gray-600">Review this report and discuss personalized strategies</p>
+                <p className="font-medium">Share this report with a financial advisor of your choice</p>
+                <p className="text-sm text-gray-600">Review this report together and discuss personalized strategies</p>
               </div>
             </div>
             <div className="flex items-start gap-3">

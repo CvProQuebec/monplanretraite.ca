@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, Calendar, DollarSign, AlertTriangle, FileText, BarChart3, PieChart, Clock } from 'lucide-react';
 import { useLanguage } from '../../hooks/useLanguage';
-import { useRetirementData } from '../../hooks/useRetirementData';
 
 interface CashflowReportProps {
   includeCharts?: boolean;
@@ -16,8 +15,8 @@ const CashflowReport: React.FC<CashflowReportProps> = ({
   includeLegalWarnings = true,
   language = 'fr'
 }) => {
-  const { isEnglish } = useLanguage();
-  const { data: retirementData } = useRetirementData();
+  const { language: currentLanguage } = useLanguage();
+  const isEnglish = currentLanguage === 'en';
   
   const tr = {
     title: isEnglish ? 'Monthly Cashflow Report' : 'Rapport de flux de trésorerie mensuel',
@@ -101,7 +100,7 @@ const CashflowReport: React.FC<CashflowReportProps> = ({
         </div>
         <p className="text-gray-600 text-lg">{tr.subtitle}</p>
         <p className="text-sm text-gray-500 mt-2">
-          {tr.generatedOn}: {new Date().toLocaleDateString(language === 'fr' ? 'fr-CA' : 'en-US')}
+          {tr.generatedOn}: {new Date().toLocaleDateString(currentLanguage === 'fr' ? 'fr-CA' : 'en-US')}
         </p>
       </div>
 
@@ -118,7 +117,7 @@ const CashflowReport: React.FC<CashflowReportProps> = ({
             <div className="text-sm text-red-700 space-y-2">
               <p><strong>⚠️ {tr.notReplacement}</strong></p>
               <p>{tr.consultProfessional}</p>
-              <p>This tool is for educational purposes only and should be used as a starting point for professional consultation.</p>
+              <p>This tool is for educational purposes only and is intended to inform discussions with an independent professional of your choice.</p>
             </div>
           </CardContent>
         </Card>
@@ -231,7 +230,7 @@ const CashflowReport: React.FC<CashflowReportProps> = ({
                 <span className="font-medium">{category.name}</span>
                 <div className="flex items-center gap-4">
                   <span className="text-red-600">${category.amount.toLocaleString()}</span>
-                  <Badge variant="outline">{category.percentage.toFixed(1)}%</Badge>
+                  <Badge variant="outline">{category.percentage.toFixed(1)}{' %'}</Badge>
                 </div>
               </div>
             ))}
@@ -258,7 +257,7 @@ const CashflowReport: React.FC<CashflowReportProps> = ({
             <div className="p-4 bg-green-50 rounded-lg">
               <h4 className="font-semibold text-green-900 mb-2">📈 Positive Trends</h4>
               <ul className="text-green-700 text-sm space-y-1">
-                <li>• Monthly savings rate: {(mockData.currentMonth.totalBalance / mockData.currentMonth.totalIncome * 100).toFixed(1)}%</li>
+                <li>• Monthly savings rate: {(mockData.currentMonth.totalBalance / mockData.currentMonth.totalIncome * 100).toFixed(1)}{' %'}</li>
                 <li>• Expenses decreased by ${(mockData.currentMonth.totalExpenses - mockData.nextMonth.totalExpenses).toLocaleString()} next month</li>
                 <li>• Consistent weekly income flow</li>
               </ul>
@@ -266,8 +265,8 @@ const CashflowReport: React.FC<CashflowReportProps> = ({
             <div className="p-4 bg-yellow-50 rounded-lg">
               <h4 className="font-semibold text-yellow-900 mb-2">⚠️ Areas to Watch</h4>
               <ul className="text-yellow-700 text-sm space-y-1">
-                <li>• Week 2 expenses were 12% higher than average</li>
-                <li>• Housing costs represent 31.25% of total expenses</li>
+                <li>• Week 2 expenses were 12{' %'} higher than average</li>
+                <li>• Housing costs represent 31.25{' %'} of total expenses</li>
                 <li>• Consider setting up emergency fund</li>
               </ul>
             </div>

@@ -344,7 +344,7 @@ export class GamificationService {
         progress: 0,
         maxProgress: 1,
         requirements: ['Épargne retraite ≥ objectif pour votre âge'],
-        reward: 'Consultation gratuite avec expert'
+        reward: 'Guide de préparation à une rencontre avec un professionnel'
       },
 
       // Succès Dettes
