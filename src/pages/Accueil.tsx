@@ -616,7 +616,14 @@ const Accueil: React.FC = () => {
                     <tr><td colSpan={4} className="bg-emerald-50 text-emerald-900 font-semibold p-2">{isFrench ? 'Plan Gratuit' : 'Free plan'}</td></tr>
                     {freeList.map((f) => (
                       <tr key={f.key} className="hover:bg-gray-50">
-                        <td className="p-3 border-b border-gray-100 text-gray-900">{labelOf(f)}</td>
+                        <td className="p-3 border-b border-gray-100 text-gray-900">
+                          <div className="font-medium">{labelOf(f)}</div>
+                          {(isFrench ? f.descFr : f.descEn) && (
+                            <div className="text-xs text-gray-600 mt-1">
+                              {isFrench ? f.descFr : f.descEn}
+                            </div>
+                          )}
+                        </td>
                         <td className="p-3 border-b border-gray-100 text-center">{included(f.tier, 'free') ? '✔' : '—'}</td>
                         <td className="p-3 border-b border-gray-100 text-center">{included(f.tier, 'pro') ? '✔' : '—'}</td>
                         <td className="p-3 border-b border-gray-100 text-center">{included(f.tier, 'expert') ? '✔' : '—'}</td>
@@ -626,7 +633,14 @@ const Accueil: React.FC = () => {
                     <tr><td colSpan={4} className="bg-blue-50 text-blue-900 font-semibold p-2">{isFrench ? 'Plan Professionnel' : 'Professional plan'}</td></tr>
                     {proOnlyList.map((f) => (
                       <tr key={f.key} className="hover:bg-gray-50">
-                        <td className="p-3 border-b border-gray-100 text-gray-900">{labelOf(f)}</td>
+                        <td className="p-3 border-b border-gray-100 text-gray-900">
+                          <div className="font-medium">{labelOf(f)}</div>
+                          {(isFrench ? f.descFr : f.descEn) && (
+                            <div className="text-xs text-gray-600 mt-1">
+                              {isFrench ? f.descFr : f.descEn}
+                            </div>
+                          )}
+                        </td>
                         <td className="p-3 border-b border-gray-100 text-center">—</td>
                         <td className="p-3 border-b border-gray-100 text-center">✔</td>
                         <td className="p-3 border-b border-gray-100 text-center">✔</td>
@@ -636,7 +650,14 @@ const Accueil: React.FC = () => {
                     <tr><td colSpan={4} className="bg-purple-50 text-purple-900 font-semibold p-2">{isFrench ? 'Plan Expert' : 'Expert plan'}</td></tr>
                     {expertOnlyList.map((f) => (
                       <tr key={f.key} className="hover:bg-gray-50">
-                        <td className="p-3 border-b border-gray-100 text-gray-900">{labelOf(f)}</td>
+                        <td className="p-3 border-b border-gray-100 text-gray-900">
+                          <div className="font-medium">{labelOf(f)}</div>
+                          {(isFrench ? f.descFr : f.descEn) && (
+                            <div className="text-xs text-gray-600 mt-1">
+                              {isFrench ? f.descFr : f.descEn}
+                            </div>
+                          )}
+                        </td>
                         <td className="p-3 border-b border-gray-100 text-center">—</td>
                         <td className="p-3 border-b border-gray-100 text-center">—</td>
                         <td className="p-3 border-b border-gray-100 text-center">✔</td>

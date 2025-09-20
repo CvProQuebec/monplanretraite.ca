@@ -686,43 +686,248 @@ export interface FeatureCatalogItem {
   labelFr: string;
   labelEn: string;
   tier: Tier;
+  descFr?: string; // Courte explication (niveau ~6e année)
+  descEn?: string; // Short explanation (6th-grade level)
 }
 
 export const FEATURE_CATALOG: FeatureCatalogItem[] = [
   // Free (A → Z)
-  { key: 'budget', labelFr: 'Budget et dépenses — suivre votre argent chaque mois', labelEn: 'Budget and expenses — track your money monthly', tier: 'free' },
-  { key: 'basic-calcs', labelFr: 'Calculateurs de base (5 outils) — réponses rapides', labelEn: 'Basic calculators (5 tools) — quick answers', tier: 'free' },
-  { key: 'emergency', labelFr: "Trousse d'urgence (8 sections) — infos essentielles prêtes", labelEn: 'Emergency kit (8 sections) — essentials ready', tier: 'free' },
-  { key: 'rrq-cpp', labelFr: 'Revenus et RRQ/CPP — voir vos montants', labelEn: 'Income and RRQ/CPP — see your amounts', tier: 'free' },
-  { key: 'security', labelFr: 'Sécurité bancaire (AES‑256) — vos données restent ici', labelEn: 'Bank‑level security (AES‑256) — data stays here', tier: 'free' },
+  {
+    key: 'budget',
+    labelFr: 'Budget et dépenses — suivre votre argent chaque mois',
+    labelEn: 'Budget and expenses — track your money monthly',
+    descFr: 'Notez vos revenus et vos dépenses. Voyez où va votre argent chaque mois.',
+    descEn: 'Write down income and expenses. See where your money goes each month.',
+    tier: 'free'
+  },
+  {
+    key: 'basic-calcs',
+    labelFr: 'Calculateurs de base (5 outils) — réponses rapides',
+    labelEn: 'Basic calculators (5 tools) — quick answers',
+    descFr: 'Des petits outils simples pour obtenir vite une estimation.',
+    descEn: 'Small simple tools to get a quick estimate.',
+    tier: 'free'
+  },
+  {
+    key: 'emergency',
+    labelFr: "Trousse d'urgence (8 sections) — infos essentielles prêtes",
+    labelEn: 'Emergency kit (8 sections) — essentials ready',
+    descFr: 'Rassemblez les infos importantes pour votre famille en cas d’urgence.',
+    descEn: 'Gather important info for your family in case of emergency.',
+    tier: 'free'
+  },
+  {
+    key: 'rrq-cpp',
+    labelFr: 'Revenus et RRQ/CPP — voir vos montants',
+    labelEn: 'Income and RRQ/CPP — see your amounts',
+    descFr: 'Entrez vos montants de retraite et voyez l’effet dans votre budget.',
+    descEn: 'Enter retirement amounts and see the impact in your budget.',
+    tier: 'free'
+  },
+  {
+    key: 'security',
+    labelFr: 'Sécurité bancaire (AES‑256) — vos données restent ici',
+    labelEn: 'Bank‑level security (AES‑256) — data stays here',
+    descFr: 'Vos données ne quittent pas votre appareil. Chiffrées comme une banque.',
+    descEn: 'Your data never leaves your device. Encrypted like a bank.',
+    tier: 'free'
+  },
 
   // Professional (A → Z)
-  { key: 'adv-calcs', labelFr: 'IRR, TWR, Monte Carlo (aperçu) — comprendre vos rendements', labelEn: 'IRR, TWR, Monte Carlo (preview) — understand returns', tier: 'pro' },
-  { key: 'ai-assistant', labelFr: 'Assistant IA — évite les grosses erreurs', labelEn: 'AI Assistant — avoids big mistakes', tier: 'pro' },
-  { key: 'tax-opt', labelFr: 'Optimisation fiscale (Greedy + DP/Beam) — ordre de retrait plus intelligent', labelEn: 'Tax optimization (Greedy + DP/Beam) — smarter withdrawal order', tier: 'pro' },
-  { key: 'rrq-cpp-optim', labelFr: 'Optimisation RRQ/CPP — meilleur âge pour demander', labelEn: 'RRQ/CPP optimization — best age to apply', tier: 'pro' },
-  { key: 'oas-gis', labelFr: 'Analyse SV/OAS & SRG — éviter les pénalités', labelEn: 'OAS & GIS analysis — avoid clawbacks', tier: 'pro' },
+  {
+    key: 'adv-calcs',
+    labelFr: 'IRR, TWR, Monte Carlo (aperçu) — comprendre vos rendements',
+    labelEn: 'IRR, TWR, Monte Carlo (preview) — understand returns',
+    descFr: 'Comprenez combien rapporte votre argent et ce que cela veut dire pour vous.',
+    descEn: 'Understand how much your money earns and what it means for you.',
+    tier: 'pro'
+  },
+  {
+    key: 'ai-assistant',
+    labelFr: 'Assistant IA — évite les grosses erreurs',
+    labelEn: 'AI Assistant — avoids big mistakes',
+    descFr: 'Avertit avant une mauvaise décision (impôts, retraits, dates clés).',
+    descEn: 'Warns you before a bad decision (tax, withdrawals, key dates).',
+    tier: 'pro'
+  },
+  {
+    key: 'tax-opt',
+    labelFr: 'Optimisation fiscale (Greedy + DP/Beam) — ordre de retrait plus intelligent',
+    labelEn: 'Tax optimization (Greedy + DP/Beam) — smarter withdrawal order',
+    descFr: 'Choisit l’ordre de retraits pour payer moins d’impôt au fil des ans.',
+    descEn: 'Chooses withdrawal order to pay less tax over the years.',
+    tier: 'pro'
+  },
+  {
+    key: 'rrq-cpp-optim',
+    labelFr: 'Optimisation RRQ/CPP — meilleur âge pour demander',
+    labelEn: 'RRQ/CPP optimization — best age to apply',
+    descFr: 'Aide à choisir l’âge qui vous avantage pour la RRQ/CPP.',
+    descEn: 'Helps you pick the best age to start RRQ/CPP for you.',
+    tier: 'pro'
+  },
+  {
+    key: 'oas-gis',
+    labelFr: 'Analyse SV/OAS & SRG — éviter les pénalités',
+    labelEn: 'OAS & GIS analysis — avoid clawbacks',
+    descFr: 'Évite de perdre des montants à cause des seuils de revenu.',
+    descEn: 'Avoids losing amounts because of income limits.',
+    tier: 'pro'
+  },
   { key: 'rregop', labelFr: 'Module RREGOP complet', labelEn: 'Complete RREGOP module', tier: 'pro' },
   { key: 'srg', labelFr: 'Module SRG complet', labelEn: 'Complete GIS module', tier: 'pro' },
-  { key: 'export-opt', labelFr: 'Export Optimisation (résumé robuste) — PDF clair à partager', labelEn: 'Optimization export (robust summary) — clear PDF to share', tier: 'pro' },
-  { key: 'pro-reports', labelFr: 'Rapports PDF professionnels • Simulations illimitées', labelEn: 'Professional PDF reports • Unlimited simulations', tier: 'pro' },
-  { key: 'backup-auto', labelFr: 'Sauvegarde automatique locale — copie de sécurité', labelEn: 'Automatic local backup — safety copy', tier: 'pro' },
-  { key: 'cash-wedge', labelFr: 'Stratégie de seau (cash wedge) — coussin pour les dépenses', labelEn: 'Cash wedge strategy — cushion for expenses', tier: 'pro' },
-  { key: 'asset-consolidation', labelFr: "Consolidation d'actifs — tout voir en un endroit", labelEn: 'Asset consolidation — see everything in one place', tier: 'pro' },
-  { key: 'tax-edu', labelFr: "Centre d'éducation fiscale — apprendre pas à pas", labelEn: 'Tax education center — learn step by step', tier: 'pro' },
-  { key: 'four-percent', labelFr: 'Règle des 4 % (modernisée) — repères simples', labelEn: '4% rule (modernized) — simple guideposts', tier: 'pro' },
-  { key: 'optimal-allocation', labelFr: "Allocation optimale — répartir l'argent simplement", labelEn: 'Optimal allocation — simple asset mix', tier: 'pro' },
-  { key: 'excess-liquidity', labelFr: 'Détecteur de sur‑liquidités — argent qui dort', labelEn: 'Excess liquidity detector — idle cash finder', tier: 'pro' },
-  { key: 'inflation-protection', labelFr: "Centre anti‑inflation — protéger le pouvoir d'achat", labelEn: 'Inflation protection center — protect purchasing power', tier: 'pro' },
-  { key: 'behavioral-bias', labelFr: 'Biais comportementaux — éviter les pièges courants', labelEn: 'Behavioral biases — avoid common pitfalls', tier: 'pro' },
-  { key: 'longevity', labelFr: 'Planification de longévité — vivre 25–35 ans en retraite', labelEn: 'Longevity planning — plan for 25–35 years retired', tier: 'pro' },
+  {
+    key: 'export-opt',
+    labelFr: 'Export Optimisation (résumé robuste) — PDF clair à partager',
+    labelEn: 'Optimization export (robust summary) — clear PDF to share',
+    descFr: 'Un PDF simple à montrer à votre conseiller ou votre famille.',
+    descEn: 'A clear PDF to show your advisor or family.',
+    tier: 'pro'
+  },
+  {
+    key: 'pro-reports',
+    labelFr: 'Rapports PDF professionnels • Simulations illimitées',
+    labelEn: 'Professional PDF reports • Unlimited simulations',
+    descFr: 'Faites autant d’essais que vous voulez et gardez des rapports propres.',
+    descEn: 'Try as many scenarios as you want and keep clean reports.',
+    tier: 'pro'
+  },
+  {
+    key: 'backup-auto',
+    labelFr: 'Sauvegarde automatique locale — copie de sécurité',
+    labelEn: 'Automatic local backup — safety copy',
+    descFr: 'Sauvegarde votre dossier sur votre clé USB ou disque, sans internet.',
+    descEn: 'Backs up your file on your USB or drive, no internet needed.',
+    tier: 'pro'
+  },
+  {
+    key: 'cash-wedge',
+    labelFr: 'Stratégie de seau (cash wedge) — coussin pour les dépenses',
+    labelEn: 'Cash wedge strategy — cushion for expenses',
+    descFr: 'Mets de côté quelques mois d’argent pour dormir tranquille.',
+    descEn: 'Set aside a few months of money so you can sleep well.',
+    tier: 'pro'
+  },
+  {
+    key: 'asset-consolidation',
+    labelFr: "Consolidation d'actifs — tout voir en un endroit",
+    labelEn: 'Asset consolidation — see everything in one place',
+    descFr: 'Regroupez vos comptes pour avoir une vue simple et complète.',
+    descEn: 'Group your accounts for a simple, complete view.',
+    tier: 'pro'
+  },
+  {
+    key: 'tax-edu',
+    labelFr: "Centre d'éducation fiscale — apprendre pas à pas",
+    labelEn: 'Tax education center — learn step by step',
+    descFr: 'Des explications claires pour comprendre vos impôts à la retraite.',
+    descEn: 'Clear explanations to understand retirement taxes.',
+    tier: 'pro'
+  },
+  {
+    key: 'four-percent',
+    labelFr: 'Règle des 4 % (modernisée) — repères simples',
+    labelEn: '4% rule (modernized) — simple guideposts',
+    descFr: 'Un repère facile pour éviter de retirer trop d’argent trop vite.',
+    descEn: 'A simple guide to avoid taking out money too fast.',
+    tier: 'pro'
+  },
+  {
+    key: 'optimal-allocation',
+    labelFr: "Allocation optimale — répartir l'argent simplement",
+    labelEn: 'Optimal allocation — simple asset mix',
+    descFr: 'Une recette simple pour choisir combien en actions, obligations, etc.',
+    descEn: 'A simple recipe to choose how much in stocks, bonds, etc.',
+    tier: 'pro'
+  },
+  {
+    key: 'excess-liquidity',
+    labelFr: 'Détecteur de sur‑liquidités — argent qui dort',
+    labelEn: 'Excess liquidity detector — idle cash finder',
+    descFr: 'Repère l’argent qui ne travaille pas pour vous.',
+    descEn: 'Finds money that isn’t working for you.',
+    tier: 'pro'
+  },
+  {
+    key: 'inflation-protection',
+    labelFr: "Centre anti‑inflation — protéger le pouvoir d'achat",
+    labelEn: 'Inflation protection center — protect purchasing power',
+    descFr: 'Des idées simples pour garder votre pouvoir d’achat.',
+    descEn: 'Simple ideas to keep your purchasing power.',
+    tier: 'pro'
+  },
+  {
+    key: 'behavioral-bias',
+    labelFr: 'Biais comportementaux — éviter les pièges courants',
+    labelEn: 'Behavioral biases — avoid common pitfalls',
+    descFr: 'Explique les pièges fréquents qui font perdre de l’argent.',
+    descEn: 'Explains common traps that make people lose money.',
+    tier: 'pro'
+  },
+  {
+    key: 'longevity',
+    labelFr: 'Planification de longévité — vivre 25–35 ans en retraite',
+    labelEn: 'Longevity planning — plan for 25–35 years retired',
+    descFr: 'Planifiez sur 25–35 ans pour ne pas manquer d’argent.',
+    descEn: 'Plan for 25–35 years so you don’t run out of money.',
+    tier: 'pro'
+  },
 
   // Expert (A → Z)
-  { key: 'mc-1000', labelFr: 'Monte Carlo 1000+ itérations — voir les probabilités', labelEn: 'Monte Carlo 1000+ iterations — see probabilities', tier: 'expert' },
-  { key: 'stress-tests', labelFr: 'Stress tests (séquence, inflation, longévité) — résister aux chocs', labelEn: 'Stress tests (sequence, inflation, longevity) — withstand shocks', tier: 'expert' },
-  { key: 'predictive-ai', labelFr: 'Analyses prédictives IA — tendances à venir', labelEn: 'Predictive AI analytics — see trends', tier: 'expert' },
-  { key: 'consultant-reports', labelFr: 'Rapports niveau consultant', labelEn: 'Consultant‑level reports', tier: 'expert' },
-  { key: 'estate', labelFr: 'Planification successorale complète', labelEn: 'Complete estate planning', tier: 'expert' },
-  { key: 'real-estate', labelFr: 'Optimisation immobilière avancée', labelEn: 'Advanced real estate optimization', tier: 'expert' },
-  { key: 'ai-consulting', labelFr: 'Conseils IA avancés — suggestions plus poussées', labelEn: 'Advanced AI consulting — deeper suggestions', tier: 'expert' }
+  {
+    key: 'mc-1000',
+    labelFr: 'Monte Carlo 1000+ itérations — voir les probabilités',
+    labelEn: 'Monte Carlo 1000+ iterations — see probabilities',
+    descFr: 'Testez votre plan dans beaucoup de scénarios possibles.',
+    descEn: 'Test your plan in many possible market scenarios.',
+    tier: 'expert'
+  },
+  {
+    key: 'stress-tests',
+    labelFr: 'Stress tests (séquence, inflation, longévité) — résister aux chocs',
+    labelEn: 'Stress tests (sequence, inflation, longevity) — withstand shocks',
+    descFr: 'Vérifie si votre plan tient le coup si la vie bouscule vos finances.',
+    descEn: 'Checks if your plan holds up when life shakes your finances.',
+    tier: 'expert'
+  },
+  {
+    key: 'predictive-ai',
+    labelFr: 'Analyses prédictives IA — tendances à venir',
+    labelEn: 'Predictive AI analytics — see trends',
+    descFr: 'Anticipez les tendances pour décider plus tôt et mieux.',
+    descEn: 'Anticipate trends to decide earlier and better.',
+    tier: 'expert'
+  },
+  {
+    key: 'consultant-reports',
+    labelFr: 'Rapports niveau consultant',
+    labelEn: 'Consultant‑level reports',
+    descFr: 'Des rapports complets comme chez un professionnel.',
+    descEn: 'Full reports like a professional would give.',
+    tier: 'expert'
+  },
+  {
+    key: 'estate',
+    labelFr: 'Planification successorale complète',
+    labelEn: 'Complete estate planning',
+    descFr: 'Préparez votre héritage pour protéger vos proches.',
+    descEn: 'Prepare your legacy to protect your loved ones.',
+    tier: 'expert'
+  },
+  {
+    key: 'real-estate',
+    labelFr: 'Optimisation immobilière avancée',
+    labelEn: 'Advanced real estate optimization',
+    descFr: 'Choix immobiliers plus clairs (garder, vendre, louer).',
+    descEn: 'Clearer real-estate choices (keep, sell, rent).',
+    tier: 'expert'
+  },
+  {
+    key: 'ai-consulting',
+    labelFr: 'Conseils IA avancés — suggestions plus poussées',
+    labelEn: 'Advanced AI consulting — deeper suggestions',
+    descFr: 'Des recommandations plus fines et adaptées à vos choix.',
+    descEn: 'Finer recommendations adapted to your choices.',
+    tier: 'expert'
+  }
 ];
