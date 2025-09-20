@@ -69,12 +69,14 @@
 - **Simulations de stress-test** : Résistance aux crises économiques
 - **Analyse probabiliste** : Calculs de probabilité de succès
 - **Optimisation de portefeuille** : Allocation d'actifs optimale
+- **Optimisation fiscale DP/Beam** : Recherche par faisceau (beam search) pour plans robustes
 
 ## 📊 RAPPORTS ET ANALYSES
 - **Rapports de retraite** : Analyses détaillées et personnalisées
 - **Rapports intelligents** : Génération automatique de rapports
 - **Rapports professionnels** : Format consultant avec métadonnées
 - **Export PDF** : Sauvegarde et partage des analyses
+- **Export Optimisation (résumé robuste)** : Monte Carlo + Stress Test intégrés si disponibles
 - **Tableaux de bord avancés** : Visualisations et métriques
 - **Analyses prédictives** : Prévisions basées sur l'IA
 - **Rapports comparatifs** : Benchmarking et analyses sectorielles

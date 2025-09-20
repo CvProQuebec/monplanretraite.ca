@@ -53,6 +53,27 @@ et ce projet adhère au [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
   - Gestion des valeurs par défaut pour nouveaux types
   - Correction de tous les `SelectContent` pour positionnement stable
 
+## [1.3.0] - 2025-09-20
+
+### ✅ Ajouté
+- Assistant Optimisations (Greedy v1 + DP/Beam v2) avec progression en temps réel (Web Worker)
+- Monte Carlo (aperçu 1000+ itérations) avec probabilité de succès, P5/P50/P95 et drawdown max
+- Stress Test (séquence -30%/-15%, choc inflation +8% x 2, longévité +5 ans) avec scores 0–100
+- Export PDF “Optimisation (résumé robuste)” incluant Monte Carlo et Stress Test lorsque disponibles
+- Gating par forfait (Free/Pro/Expert) dans l’assistant et Prestations (OAS/GIS, SRG, RREGOP)
+
+### 🏗️ Modifié
+- WizardPage: branchement de l’étape “optimisations” et finalisation de l’onglet “rapports” (bouton “Exporter (optimisation)”)
+- ResultsWizardStep: ajout CTA “Aller à Optimisations” si aucun plan; export “Optimisation” si un plan est disponible
+
+### 🔧 Qualité/Perf
+- Calculs lourds déportés en Web Workers (DP/Beam, Monte Carlo)
+- Mise en cache locale mpr-last-optimization (consommée par Plan/Rapports)
+- Accessibilité seniors (labels/titles) et support bilingue FR/EN
+
+### 🔒 Sécurité
+- 100% local (aucune transmission réseau)
+
 ## [En cours de développement]
 
 ### 🚧 Problèmes connus
