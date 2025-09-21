@@ -1,0 +1,832 @@
+{
+  "summary": {
+    "threshold": 0.66,
+    "appliedCount": 15,
+    "skippedCount": 52,
+    "missingSideCount": 0
+  },
+  "applied": [
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "comment-economiser-sur-vos-impots-de-retraite",
+        "file": "comment-economiser-sur-vos-impots-de-retraite.md"
+      },
+      "best": {
+        "enSlug": "saving-taxes-retirement",
+        "score": 0.6666666666666666
+      },
+      "score": 0.6666666666666666,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "comment-eviter-les-fraudes-financieres-apres-65-ans",
+        "file": "comment-eviter-les-fraudes-financieres-apres-65-ans.md"
+      },
+      "best": {
+        "enSlug": "financial-fraud-65",
+        "score": 0.6666666666666666
+      },
+      "score": 0.6666666666666666,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "comment-la-hausse-du-cout-de-la-vie-affecte-votre-retraite",
+        "file": "comment-la-hausse-du-cout-de-la-vie-affecte-votre-retraite.md"
+      },
+      "best": {
+        "enSlug": "cost-of-living-retirement",
+        "score": 0.75
+      },
+      "score": 0.75,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "comment-partager-les-revenus-de-retraite-et-economiser-des-impots",
+        "file": "comment-partager-les-revenus-de-retraite-et-economiser-des-impots.md"
+      },
+      "best": {
+        "enSlug": "saving-taxes-retirement",
+        "score": 0.6666666666666666
+      },
+      "score": 0.6666666666666666,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "demenager-a-la-retraite-les-pour-et-les-contre",
+        "file": "demenager-a-la-retraite-les-pour-et-les-contre.md"
+      },
+      "best": {
+        "enSlug": "moving-retirement",
+        "score": 1
+      },
+      "score": 1,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "l-impot-a-la-retraite-ce-qui-change",
+        "file": "l-impot-a-la-retraite-ce-qui-change.md"
+      },
+      "best": {
+        "enSlug": "retirement-tax-changes",
+        "score": 0.6666666666666666
+      },
+      "score": 0.6666666666666666,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "les-documents-importants-a-garder-pour-sa-retraite",
+        "file": "les-documents-importants-a-garder-pour-sa-retraite.md"
+      },
+      "best": {
+        "enSlug": "important-retirement-documents",
+        "score": 0.6666666666666666
+      },
+      "score": 0.6666666666666666,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "les-soins-de-sante-a-la-retraite-a-quoi-s-attendre",
+        "file": "les-soins-de-sante-a-la-retraite-a-quoi-s-attendre.md"
+      },
+      "best": {
+        "enSlug": "healthcare-retirement",
+        "score": 1
+      },
+      "score": 1,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "planifier-la-retraite-en-couple-eviter-les-surprises",
+        "file": "planifier-la-retraite-en-couple-eviter-les-surprises.md"
+      },
+      "best": {
+        "enSlug": "retirement-timing-couples",
+        "score": 0.6666666666666666
+      },
+      "score": 0.6666666666666666,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "pourquoi-les-femmes-ont-souvent-moins-d-argent-a-la-retraite",
+        "file": "pourquoi-les-femmes-ont-souvent-moins-d-argent-a-la-retraite.md"
+      },
+      "best": {
+        "enSlug": "women-retirement",
+        "score": 1
+      },
+      "score": 1,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "quand-puis-je-prendre-ma-retraite-les-differents-ages-et-ce-que-cela-change-dans-votre-portefeuille",
+        "file": "quand-puis-je-prendre-ma-retraite-les-differents-ages-et-ce-que-cela-change-dans-votre-portefeuille.md"
+      },
+      "best": {
+        "enSlug": "retirement-ages-portfolio",
+        "score": 0.6666666666666666
+      },
+      "score": 0.6666666666666666,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "reer-vs-celi-lequel-choisir-a-55-ans-et-plus",
+        "file": "reer-vs-celi-lequel-choisir-a-55-ans-et-plus.md"
+      },
+      "best": {
+        "enSlug": "rrsp-tfsa-55plus",
+        "score": 0.6666666666666666
+      },
+      "score": 0.6666666666666666,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "retraite-et-separation-proteger-ses-droits",
+        "file": "retraite-et-separation-proteger-ses-droits.md"
+      },
+      "best": {
+        "enSlug": "retirement-separation",
+        "score": 1
+      },
+      "score": 1,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "veuvage-gerer-ses-finances-apres-le-deces-du-conjoint",
+        "file": "veuvage-gerer-ses-finances-apres-le-deces-du-conjoint.md"
+      },
+      "best": {
+        "enSlug": "widowhood-finances",
+        "score": 1
+      },
+      "score": 1,
+      "changed": true
+    },
+    {
+      "from": {
+        "lang": "en",
+        "slug": "tax-return-retirement",
+        "file": "tax-return-retirement.md"
+      },
+      "best": {
+        "frSlug": "l-impot-a-la-retraite-ce-qui-change",
+        "score": 0.6666666666666666
+      },
+      "score": 0.6666666666666666,
+      "changed": true
+    }
+  ],
+  "skipped": [
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "comment-choisir-un-conseiller-financier-de-confiance",
+        "file": "comment-choisir-un-conseiller-financier-de-confiance.md"
+      },
+      "best": {
+        "enSlug": "financial-advisor",
+        "score": 0.5
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "comment-eviter-les-7-pieges-les-plus-courants-de-la-retraite",
+        "file": "comment-eviter-les-7-pieges-les-plus-courants-de-la-retraite.md"
+      },
+      "best": {
+        "enSlug": "debt-retirement",
+        "score": 0.5
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "comment-faire-durer-son-argent-toute-sa-vie",
+        "file": "comment-faire-durer-son-argent-toute-sa-vie.md"
+      },
+      "best": {
+        "enSlug": "cost-of-living-retirement",
+        "score": 0.25
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "comment-proteger-ses-economies-de-l-inflation",
+        "file": "comment-proteger-ses-economies-de-l-inflation.md"
+      },
+      "best": {
+        "enSlug": "protect-savings-inflation",
+        "score": 0.3333333333333333
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "comment-rester-actif-et-en-sante-a-la-retraite",
+        "file": "comment-rester-actif-et-en-sante-a-la-retraite.md"
+      },
+      "best": {
+        "enSlug": "debt-retirement",
+        "score": 0.5
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "conges-de-maternite-et-retraite-comment-rattraper-le-retard",
+        "file": "conges-de-maternite-et-retraite-comment-rattraper-le-retard.md"
+      },
+      "best": {
+        "enSlug": "debt-retirement",
+        "score": 0.5
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "creer-un-budget-realiste-pour-ses-premieres-annees-de-retraite",
+        "file": "creer-un-budget-realiste-pour-ses-premieres-annees-de-retraite.md"
+      },
+      "best": {
+        "enSlug": "debt-retirement",
+        "score": 0.5
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "de-combien-d-argent-ai-je-vraiment-besoin-calculer-ses-besoins-sans-se-casser-la-tete",
+        "file": "de-combien-d-argent-ai-je-vraiment-besoin-calculer-ses-besoins-sans-se-casser-la-tete.md"
+      },
+      "best": {
+        "enSlug": "contribution-limits-2025",
+        "score": 0
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "faut-il-rembourser-ses-dettes-avant-la-retraite",
+        "file": "faut-il-rembourser-ses-dettes-avant-la-retraite.md"
+      },
+      "best": {
+        "enSlug": "debt-retirement",
+        "score": 0.5
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "gerer-l-anxiete-face-a-l-argent-a-la-retraite",
+        "file": "gerer-l-anxiete-face-a-l-argent-a-la-retraite.md"
+      },
+      "best": {
+        "enSlug": "debt-retirement",
+        "score": 0.5
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "l-ordre-intelligent-pour-retirer-son-argent-a-la-retraite",
+        "file": "l-ordre-intelligent-pour-retirer-son-argent-a-la-retraite.md"
+      },
+      "best": {
+        "enSlug": "debt-retirement",
+        "score": 0.5
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "le-fractionnement-de-revenus-explique-simplement",
+        "file": "le-fractionnement-de-revenus-explique-simplement.md"
+      },
+      "best": {
+        "enSlug": "contribution-limits-2025",
+        "score": 0
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "les-calculateurs-en-ligne-lesquels-utiliser-et-comment",
+        "file": "les-calculateurs-en-ligne-lesquels-utiliser-et-comment.md"
+      },
+      "best": {
+        "enSlug": "contribution-limits-2025",
+        "score": 0
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "les-trois-piliers-de-votre-retraite-rrq-rpc-regimes-d-employeur-et-epargne-personnelle-expliques-simplement",
+        "file": "les-trois-piliers-de-votre-retraite-rrq-rpc-regimes-d-employeur-et-epargne-personnelle-expliques-simplement.md"
+      },
+      "best": {
+        "enSlug": "debt-retirement",
+        "score": 0.5
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "nouveaux-plafonds-de-cotisation-ce-que-ca-change-pour-vous",
+        "file": "nouveaux-plafonds-de-cotisation-ce-que-ca-change-pour-vous.md"
+      },
+      "best": {
+        "enSlug": "contribution-limits-2025",
+        "score": 0
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "ou-trouver-de-l-aide-gratuite-pour-planifier-sa-retraite",
+        "file": "ou-trouver-de-l-aide-gratuite-pour-planifier-sa-retraite.md"
+      },
+      "best": {
+        "enSlug": "debt-retirement",
+        "score": 0.5
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "preparer-sa-declaration-de-revenus-de-retraite",
+        "file": "preparer-sa-declaration-de-revenus-de-retraite.md"
+      },
+      "best": {
+        "enSlug": "debt-retirement",
+        "score": 0.5
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "que-faire-quand-un-conjoint-veut-partir-avant-l-autre",
+        "file": "que-faire-quand-un-conjoint-veut-partir-avant-l-autre.md"
+      },
+      "best": {
+        "enSlug": "contribution-limits-2025",
+        "score": 0
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "que-faire-si-vous-avez-travaille-au-quebec-et-dans-une-autre-province",
+        "file": "que-faire-si-vous-avez-travaille-au-quebec-et-dans-une-autre-province.md"
+      },
+      "best": {
+        "enSlug": "work-quebec-other-provinces",
+        "score": 0.25
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "fr",
+        "slug": "rester-chez-soi-ou-aller-en-residence-planifier-les-couts",
+        "file": "rester-chez-soi-ou-aller-en-residence-planifier-les-couts.md"
+      },
+      "best": {
+        "enSlug": "staying-home-residence",
+        "score": 0.3333333333333333
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "contribution-limits-2025",
+        "file": "contribution-limits-2025.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0
+      }
+    },
+    {
+      "reason": "already-linked",
+      "from": {
+        "lang": "en",
+        "slug": "cost-of-living-retirement",
+        "file": "cost-of-living-retirement.md"
+      },
+      "best": {
+        "frSlug": "comment-la-hausse-du-cout-de-la-vie-affecte-votre-retraite",
+        "score": 0.75
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "couple-retirement-planning",
+        "file": "couple-retirement-planning.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0.3333333333333333
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "debt-retirement",
+        "file": "debt-retirement.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0.5
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "financial-advisor",
+        "file": "financial-advisor.md"
+      },
+      "best": {
+        "frSlug": "comment-choisir-un-conseiller-financier-de-confiance",
+        "score": 0.5
+      }
+    },
+    {
+      "reason": "already-linked",
+      "from": {
+        "lang": "en",
+        "slug": "financial-fraud-65",
+        "file": "financial-fraud-65.md"
+      },
+      "best": {
+        "frSlug": "comment-eviter-les-fraudes-financieres-apres-65-ans",
+        "score": 0.6666666666666666
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "free-retirement-help",
+        "file": "free-retirement-help.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0.3333333333333333
+      }
+    },
+    {
+      "reason": "already-linked",
+      "from": {
+        "lang": "en",
+        "slug": "healthcare-retirement",
+        "file": "healthcare-retirement.md"
+      },
+      "best": {
+        "frSlug": "les-soins-de-sante-a-la-retraite-a-quoi-s-attendre",
+        "score": 1
+      }
+    },
+    {
+      "reason": "already-linked",
+      "from": {
+        "lang": "en",
+        "slug": "important-retirement-documents",
+        "file": "important-retirement-documents.md"
+      },
+      "best": {
+        "frSlug": "les-documents-importants-a-garder-pour-sa-retraite",
+        "score": 0.6666666666666666
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "income-sharing-couples",
+        "file": "income-sharing-couples.md"
+      },
+      "best": {
+        "frSlug": "planifier-la-retraite-en-couple-eviter-les-surprises",
+        "score": 0.3333333333333333
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "income-splitting-simple",
+        "file": "income-splitting-simple.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "make-money-last-lifetime",
+        "file": "make-money-last-lifetime.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "managing-retirement-money-anxiety",
+        "file": "managing-retirement-money-anxiety.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0.25
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "maternity-leave-retirement",
+        "file": "maternity-leave-retirement.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0.3333333333333333
+      }
+    },
+    {
+      "reason": "already-linked",
+      "from": {
+        "lang": "en",
+        "slug": "moving-retirement",
+        "file": "moving-retirement.md"
+      },
+      "best": {
+        "frSlug": "demenager-a-la-retraite-les-pour-et-les-contre",
+        "score": 1
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "online-calculators",
+        "file": "online-calculators.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "protect-savings-inflation",
+        "file": "protect-savings-inflation.md"
+      },
+      "best": {
+        "frSlug": "comment-proteger-ses-economies-de-l-inflation",
+        "score": 0.3333333333333333
+      }
+    },
+    {
+      "reason": "already-linked",
+      "from": {
+        "lang": "en",
+        "slug": "retirement-ages-portfolio",
+        "file": "retirement-ages-portfolio.md"
+      },
+      "best": {
+        "frSlug": "quand-puis-je-prendre-ma-retraite-les-differents-ages-et-ce-que-cela-change-dans-votre-portefeuille",
+        "score": 0.6666666666666666
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "retirement-money-needs",
+        "file": "retirement-money-needs.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0.3333333333333333
+      }
+    },
+    {
+      "reason": "already-linked",
+      "from": {
+        "lang": "en",
+        "slug": "retirement-separation",
+        "file": "retirement-separation.md"
+      },
+      "best": {
+        "frSlug": "retraite-et-separation-proteger-ses-droits",
+        "score": 1
+      }
+    },
+    {
+      "reason": "already-linked",
+      "from": {
+        "lang": "en",
+        "slug": "retirement-tax-changes",
+        "file": "retirement-tax-changes.md"
+      },
+      "best": {
+        "frSlug": "l-impot-a-la-retraite-ce-qui-change",
+        "score": 0.6666666666666666
+      }
+    },
+    {
+      "reason": "already-linked",
+      "from": {
+        "lang": "en",
+        "slug": "retirement-timing-couples",
+        "file": "retirement-timing-couples.md"
+      },
+      "best": {
+        "frSlug": "planifier-la-retraite-en-couple-eviter-les-surprises",
+        "score": 0.6666666666666666
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "retirement-traps-avoid",
+        "file": "retirement-traps-avoid.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0.3333333333333333
+      }
+    },
+    {
+      "reason": "already-linked",
+      "from": {
+        "lang": "en",
+        "slug": "rrsp-tfsa-55plus",
+        "file": "rrsp-tfsa-55plus.md"
+      },
+      "best": {
+        "frSlug": "reer-vs-celi-le-guide-decisionnel-complet-pour-maximiser-votre-epargne-retraite",
+        "score": 0.6666666666666666
+      }
+    },
+    {
+      "reason": "already-linked",
+      "from": {
+        "lang": "en",
+        "slug": "saving-taxes-retirement",
+        "file": "saving-taxes-retirement.md"
+      },
+      "best": {
+        "frSlug": "comment-economiser-sur-vos-impots-de-retraite",
+        "score": 0.6666666666666666
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "smart-withdrawal-order",
+        "file": "smart-withdrawal-order.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "staying-active-healthy-retirement",
+        "file": "staying-active-healthy-retirement.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0.25
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "staying-home-residence",
+        "file": "staying-home-residence.md"
+      },
+      "best": {
+        "frSlug": "rester-chez-soi-ou-aller-en-residence-planifier-les-couts",
+        "score": 0.3333333333333333
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "three-pillars-retirement",
+        "file": "three-pillars-retirement.md"
+      },
+      "best": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0.3333333333333333
+      }
+    },
+    {
+      "reason": "already-linked",
+      "from": {
+        "lang": "en",
+        "slug": "widowhood-finances",
+        "file": "widowhood-finances.md"
+      },
+      "best": {
+        "frSlug": "veuvage-gerer-ses-finances-apres-le-deces-du-conjoint",
+        "score": 1
+      }
+    },
+    {
+      "reason": "already-linked",
+      "from": {
+        "lang": "en",
+        "slug": "women-retirement",
+        "file": "women-retirement.md"
+      },
+      "best": {
+        "frSlug": "pourquoi-les-femmes-ont-souvent-moins-d-argent-a-la-retraite",
+        "score": 1
+      }
+    },
+    {
+      "reason": "low-score",
+      "from": {
+        "lang": "en",
+        "slug": "work-quebec-other-provinces",
+        "file": "work-quebec-other-provinces.md"
+      },
+      "best": {
+        "frSlug": "que-faire-si-vous-avez-travaille-au-quebec-et-dans-une-autre-province",
+        "score": 0.25
+      }
+    }
+  ],
+  "missingSide": []
+}

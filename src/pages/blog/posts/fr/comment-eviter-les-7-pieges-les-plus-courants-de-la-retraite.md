@@ -14,6 +14,7 @@ status: published
 readingTime: 4
 oqlfChecked: false
 relatedSlugFr: comment-eviter-les-7-pieges-les-plus-courants-de-la-retraite
+relatedSlugEn: retirement-traps-avoid
 ---
 # Comment éviter les 7 pièges les plus courants de la retraite
 

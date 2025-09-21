@@ -15,6 +15,7 @@ status: published
 readingTime: 8
 oqlfChecked: false
 relatedSlugFr: les-calculateurs-en-ligne-lesquels-utiliser-et-comment
+relatedSlugEn: online-calculators
 ---
 # Les calculateurs en ligne : lesquels utiliser et comment
 

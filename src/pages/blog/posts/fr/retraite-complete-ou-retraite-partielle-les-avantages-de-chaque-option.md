@@ -16,6 +16,7 @@ status: published
 readingTime: 11
 oqlfChecked: false
 relatedSlugFr: retraite-complete-ou-retraite-partielle-les-avantages-de-chaque-option
+relatedSlugEn: full-retirement-or-partial-retirement-the-advantages-of-each-option
 ---
 # Retraite complète ou retraite partielle? - Les avantages de chaque option
 

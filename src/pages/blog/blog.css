@@ -1,0 +1,304 @@
+/* Blog layout improvements per InstructionsBlogue.md */
+
+/* 1) Restructuration de la grille d'articles */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 24px;
+  padding: 32px 16px;
+}
+
+/* Cartes articles redessinées */
+.article-card {
+  background: var(--senior-bg-card, #fff);
+  border-radius: var(--senior-radius-lg, 16px);
+  box-shadow: var(--senior-shadow-md, 0 6px 18px rgba(0,0,0,0.08));
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  display: flex;
+  flex-direction: column;
+  min-height: 280px;
+}
+
+.article-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--senior-shadow-lg, 0 12px 28px rgba(0,0,0,0.12));
+  border-color: var(--senior-primary, #1e40af);
+}
+
+/* 2) Amélioration visuelle des cartes d'articles */
+.article-card-header {
+  position: relative;
+  padding: 20px;
+  background: linear-gradient(135deg, var(--senior-primary, #1e40af) 0%, var(--senior-primary-light, #3b82f6) 100%);
+  color: #fff;
+}
+
+.article-icon {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 12px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.article-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--senior-success, #059669);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.article-title {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 6px 0 4px 0;
+}
+
+.article-meta {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  opacity: 0.95;
+}
+
+.reading-time,
+.difficulty-level {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* 3) Enrichissement du contenu */
+.article-preview {
+  padding: 16px 20px;
+  color: #334155;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.article-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin-top: 10px;
+}
+
+.highlight-point {
+  background: #f1f5f9;
+  color: #0f172a;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* Actions */
+.article-actions {
+  margin-top: auto;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #e5e7eb;
+  background: #fff;
+}
+
+.btn-read-more {
+  background: var(--senior-primary, #1e40af);
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter .2s ease, transform .1s ease;
+}
+
+.btn-read-more:hover {
+  filter: brightness(1.05);
+}
+
+.btn-read-more:active {
+  transform: translateY(1px);
+}
+
+.article-engagement {
+  display: flex;
+  gap: 12px;
+  color: #64748b;
+  font-size: 12px;
+}
+
+/* 4) Navigation et filtrage intelligents */
+.blog-filters {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 8px 4px 0 4px;
+}
+
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  background: #fff;
+  color: #1f2937;
+  border: 2px solid #e5e7eb;
+  border-radius: 999px;
+  padding: 8px 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  border-color: var(--senior-primary, #1e40af);
+  color: var(--senior-primary, #1e40af);
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 5) Section héro engageante */
+.blog-hero {
+  background: linear-gradient(135deg, #eef2ff 0%, #f5f3ff 100%);
+  border: 2px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 28px 20px;
+  margin-bottom: 18px;
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.hero-content h1 {
+  font-size: 34px;
+  line-height: 1.2;
+  margin: 6px 0 6px 0;
+  color: #0f172a;
+  font-weight: 900;
+}
+
+.hero-subtitle {
+  font-size: 18px;
+  color: #334155;
+  margin-bottom: 16px;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 12px;
+  margin: 14px auto 18px auto;
+  max-width: 680px;
+}
+
+.stat-item {
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px;
+}
+
+.stat-number {
+  display: block;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--senior-primary, #1e40af);
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #475569;
+}
+
+.cta-button {
+  background: var(--senior-primary, #1e40af);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* 6) Optimisations seniors-friendly (rappels de style) */
+.article-card,
+.article-preview,
+.article-actions {
+  font-size: 18px; /* minimum lisible */
+}
+
+.btn-read-more,
+.filter-btn,
+.cta-button {
+  min-height: 48px; /* zones cliquables confortables */
+}
+
+/* 7) Gamification (optionnel / décoratif) */
+.progress-tracker {
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 16px;
+  margin: 12px 0 0 0;
+}
+
+.progress-tracker h3 {
+  font-size: 18px;
+  margin: 0 0 8px 0;
+  color: #0f172a;
+}
+
+.progress-steps {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.progress-steps .step {
+  background: #f1f5f9;
+  color: #0f172a;
+  padding: 6px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.progress-steps .step.completed {
+  background: #dcfce7;
+  color: #065f46;
+}
+
+.progress-steps .step.current {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.progress-steps .step.upcoming {
+  background: #fef3c7;
+  color: #92400e;
+}

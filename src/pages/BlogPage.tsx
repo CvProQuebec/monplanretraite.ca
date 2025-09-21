@@ -265,23 +265,6 @@ const BlogPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Newsletter Signup */}
-          <Card className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
-            <CardContent className="p-8 text-center">
-              <h3 className="text-2xl font-bold mb-4">
-                {isFrench ? 'Restez Informé' : 'Stay Informed'}
-              </h3>
-              <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
-                {isFrench 
-                  ? 'Recevez nos derniers articles et conseils directement dans votre boîte de réception'
-                  : 'Receive our latest articles and advice directly in your inbox'
-                }
-              </p>
-              <Button className="bg-white text-blue-600 hover:bg-gray-100 font-semibold px-8 py-3">
-                {isFrench ? 'S\'abonner à la Newsletter' : 'Subscribe to Newsletter'}
-              </Button>
-            </CardContent>
-          </Card>
 
         </div>
       </div>

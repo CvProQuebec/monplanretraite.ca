@@ -47,7 +47,9 @@ function useTagFilter(): string | undefined {
 
 const BlogIndex: React.FC<Props> = ({ language }) => {
   const { language: uiLanguage } = useLanguage();
-  const lang: 'fr' | 'en' = language || (uiLanguage === 'fr' ? 'fr' : 'en');
+  const location = useLocation();
+  const pathLang: 'fr' | 'en' = location.pathname.startsWith('/en/') ? 'en' : 'fr';
+  const lang: 'fr' | 'en' = language || pathLang || (uiLanguage === 'fr' ? 'fr' : 'en');
   const navigate = useNavigate();
   const selectedCategory = useCategoryFilter();
   const selectedTag = useTagFilter();
@@ -68,6 +70,24 @@ const BlogIndex: React.FC<Props> = ({ language }) => {
   const subtitle = lang === 'fr'
     ? 'Guides, conseils et analyses pour optimiser votre planification de retraite'
     : 'Guides, tips and analyses to optimize your retirement planning';
+
+  // Localize category labels for display (keys remain FR for filtering)
+  const categoryLabel = (cat: string) => {
+    if (lang === 'fr') return cat;
+    const map: Record<string, string> = {
+      'Les bases de la retraite': 'Retirement basics',
+      'Comprendre les régimes gouvernementaux': 'Government programs',
+      'Gérer son épargne et ses placements': 'Manage savings and investments',
+      'Planification pour les couples': 'Planning for couples',
+      'Défis spécifiques aux femmes': 'Women-specific challenges',
+      'Aspects pratiques et quotidiens': 'Practical everyday aspects',
+      'Fiscalité simplifiée': 'Simple taxation',
+      'Sujets saisonniers et d’actualité': 'Seasonal and current topics',
+      'Outils et ressources': 'Tools and resources',
+      'Bien-être et qualité de vie': 'Well-being and quality of life',
+    };
+    return map[cat] || cat;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -90,9 +110,9 @@ const BlogIndex: React.FC<Props> = ({ language }) => {
                   key={cat}
                   onClick={() => navigate(to)}
                   className={`px-3 py-1 rounded-full text-sm border ${active ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400'}`}
-                  title={cat}
+                  title={categoryLabel(cat)}
                 >
-                  {cat}
+                  {categoryLabel(cat)}
                 </button>
               );
             })}
@@ -107,7 +127,7 @@ const BlogIndex: React.FC<Props> = ({ language }) => {
                 onClick={() => onOpen(p)}
               >
                 <div className="p-5 flex-1 flex flex-col">
-                  <div className="text-xs text-blue-700 font-semibold mb-2">{p.category}</div>
+                  <div className="text-xs text-blue-700 font-semibold mb-2">{categoryLabel(p.category)}</div>
                   <h2 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{p.title}</h2>
                   <p className="text-sm text-gray-600 mb-4 line-clamp-3">{p.excerpt}</p>
                   {p.keyPoints && p.keyPoints.length > 0 && (

@@ -15,6 +15,7 @@ status: published
 readingTime: 11
 oqlfChecked: false
 relatedSlugFr: conges-de-maternite-et-retraite-comment-rattraper-le-retard
+relatedSlugEn: maternity-leave-retirement
 ---
 # Congés de maternité et retraite : comment rattraper le retard
 

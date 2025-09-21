@@ -9,6 +9,12 @@ export interface PlanFeatures {
   maxProfiles: number;
   maxExpenseProjects: number;
   maxSavedScenarios: number;
+  // Caps avancés (bornage)
+  maxMonteCarloIterations?: number;
+  maxCompareScenarios?: number;
+  // Exports
+  allowCSVExport?: boolean;
+  exportWatermark?: boolean;
   
   // Fonctionnalités de base
   hasAdvancedAnalytics: boolean;

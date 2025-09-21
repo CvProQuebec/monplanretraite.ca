@@ -15,6 +15,7 @@ status: published
 readingTime: 7
 oqlfChecked: false
 relatedSlugFr: retraite-et-separation-proteger-ses-droits
+relatedSlugEn: retirement-separation
 ---
 # Retraite et séparation : protéger ses droits
 

@@ -1,7 +1,7 @@
 ---
 title: >-
-  Quand puis-je prendre ma retraite? - Les différents âges et ce que cela
-  change dans votre portefeuille
+  Quand puis-je prendre ma retraite? - Les différents âges et ce que cela change
+  dans votre portefeuille
 slug: >-
   quand-puis-je-prendre-ma-retraite-les-differents-ages-et-ce-que-cela-change-dans-votre-portefeuille
 date: '2025-09-19'
@@ -19,6 +19,7 @@ readingTime: 5
 oqlfChecked: false
 relatedSlugFr: >-
   quand-puis-je-prendre-ma-retraite-les-differents-ages-et-ce-que-cela-change-dans-votre-portefeuille
+relatedSlugEn: retirement-ages-portfolio
 ---
 # Quand puis-je prendre ma retraite? - Les différents âges et ce que cela change dans votre portefeuille
 

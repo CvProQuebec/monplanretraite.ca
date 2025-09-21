@@ -15,6 +15,7 @@ status: published
 readingTime: 6
 oqlfChecked: false
 relatedSlugFr: les-documents-importants-a-garder-pour-sa-retraite
+relatedSlugEn: important-retirement-documents
 ---
 # Les documents importants à garder pour sa retraite
 

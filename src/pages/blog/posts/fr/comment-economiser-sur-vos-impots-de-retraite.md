@@ -17,6 +17,7 @@ status: published
 readingTime: 10
 oqlfChecked: false
 relatedSlugFr: comment-economiser-sur-vos-impots-de-retraite
+relatedSlugEn: saving-taxes-retirement
 ---
 # Comment économiser sur vos impôts de retraité
 

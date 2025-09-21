@@ -12,6 +12,7 @@ status: published
 readingTime: 5
 oqlfChecked: false
 relatedSlugFr: comment-partager-les-revenus-de-retraite-et-economiser-des-impots
+relatedSlugEn: income-sharing-couples
 ---
 # Comment partager les revenus de retraite et économiser des impôts
 

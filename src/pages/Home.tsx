@@ -67,7 +67,19 @@ const Home: React.FC = () => {
     b: typeof featureCatalog[number]
   ) => labelOf(a).localeCompare(labelOf(b), isFrench ? 'fr-CA' : 'en-CA');
 
-  const freeList = featureCatalog.filter((f) => f.tier === 'free').sort(sortByLabel);
+  // Prioritize certain free features (e.g., Emergency kit first)
+  const freePriority = new Map<string, number>([['emergency', 0]]);
+  const sortFree = (
+    a: typeof featureCatalog[number],
+    b: typeof featureCatalog[number]
+  ) => {
+    const pa = freePriority.has(a.key) ? (freePriority.get(a.key) as number) : 999;
+    const pb = freePriority.has(b.key) ? (freePriority.get(b.key) as number) : 999;
+    if (pa !== pb) return pa - pb;
+    return labelOf(a).localeCompare(labelOf(b), isFrench ? 'fr-CA' : 'en-CA');
+  };
+
+  const freeList = featureCatalog.filter((f) => f.tier === 'free').sort(sortFree);
   const proOnlyList = featureCatalog.filter((f) => f.tier === 'pro').sort(sortByLabel);
   const expertOnlyList = featureCatalog.filter((f) => f.tier === 'expert').sort(sortByLabel);
 

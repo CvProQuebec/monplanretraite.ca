@@ -14,6 +14,7 @@ status: published
 readingTime: 9
 oqlfChecked: false
 relatedSlugFr: le-supplement-de-revenu-garanti-etes-vous-admissible
+relatedSlugEn: gis-eligibility-are-you-eligible
 ---
 # Le Supplément de revenu garanti : êtes-vous admissible?
 

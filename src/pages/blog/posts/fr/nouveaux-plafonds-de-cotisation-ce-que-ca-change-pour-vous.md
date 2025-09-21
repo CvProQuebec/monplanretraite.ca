@@ -16,6 +16,7 @@ status: published
 readingTime: 4
 oqlfChecked: false
 relatedSlugFr: nouveaux-plafonds-de-cotisation-ce-que-ca-change-pour-vous
+relatedSlugEn: contribution-limits-2025
 ---
 # Nouveaux plafonds de cotisation : ce que ça change pour vous
 

@@ -53,9 +53,13 @@ export type BlogPost = {
  */
 const wordsPerMinute = 200;
 
+/**
+ * Text helpers - be resilient to non-string inputs
+ */
 // Remove any spaces placed before ! or ? (OQLF: no space before !?)
-function fixPunctuation(input: string): string {
-  return input.replace(/\s+([!?])/g, '$1');
+function fixPunctuation(input: unknown): string {
+  const s = typeof input === 'string' ? input : (input == null ? '' : String(input));
+  return s.replace(/\s+([!?])/g, '$1');
 }
 
 function estimateReadingTime(markdown: string): number {
@@ -176,15 +180,22 @@ let cacheAllPosts: BlogPost[] | null = null;
 function buildCache(): BlogPost[] {
   const loaded = loadAll();
   const posts: BlogPost[] = loaded.map(({ fm, content, virtualPath, derivedLanguage, filename }) => {
-    const rawTitle = fm.title || deriveTitleFromContent(content, filename);
+    const rawTitle = (fm.title as unknown) || deriveTitleFromContent(content, filename);
     const title = fixPunctuation(rawTitle);
     const slug = fm.slug ? normalizeSlug(fm.slug) : normalizeSlug(title);
     const date = ensureISODate(fm.date);
-    const readingTime = fm.readingTime ?? estimateReadingTime(content);
-    const rawExcerpt = fm.excerpt || deriveExcerpt(content);
+    const readingTime = typeof fm.readingTime === 'number' ? fm.readingTime : estimateReadingTime(content);
+    const rawExcerpt = (fm.excerpt as unknown) || deriveExcerpt(content);
     const excerpt = fixPunctuation(rawExcerpt);
-    const tags = fm.tags ?? standardizeTagsFromTitle(title);
-    const category = fm.category || 'Les bases de la retraite';
+    // Normalize tags: allow string (comma/space separated) or array
+    const normalizedTags: string[] = Array.isArray(fm.tags)
+      ? (fm.tags as unknown[]).map((t) => fixPunctuation(t).toLowerCase()).filter(Boolean)
+      : (typeof (fm as any).tags === 'string'
+          ? (fm as any).tags.split(/[,\s]+/).map((t: string) => t.trim().toLowerCase()).filter(Boolean)
+          : []);
+    const tags = normalizedTags.length > 0 ? normalizedTags : standardizeTagsFromTitle(title);
+    const categoryRaw = typeof fm.category === 'string' ? fm.category : 'Les bases de la retraite';
+    const category = normalizeCategory(categoryRaw);
     const status = (fm.status ?? 'published') as 'draft' | 'published';
 
     const post: BlogPost = {
@@ -203,7 +214,12 @@ function buildCache(): BlogPost[] {
       oqlfChecked: fm.oqlfChecked,
       relatedSlugFr: fm.relatedSlugFr,
       relatedSlugEn: fm.relatedSlugEn,
-      keyPoints: fm.keyPoints ? fm.keyPoints.map(fixPunctuation) : undefined,
+      // keyPoints may be string or array; coerce to string[]
+      keyPoints: Array.isArray(fm.keyPoints)
+        ? (fm.keyPoints as unknown[]).map((kp) => fixPunctuation(kp)).filter(Boolean)
+        : (typeof (fm as any).keyPoints === 'string'
+            ? [fixPunctuation((fm as any).keyPoints)]
+            : undefined),
       featured: (fm as any).featured === true,
       priority: typeof (fm as any).priority === 'number' ? (fm as any).priority : undefined,
       collection: (fm as any).collection as string | undefined,
@@ -213,13 +229,30 @@ function buildCache(): BlogPost[] {
     return post;
   });
 
+  // de-duplicate by language+slug; prefer published, then most recent date
+  const mapByKey = new Map<string, BlogPost>();
+  for (const p of posts) {
+    const key = `${p.language}:${p.slug}`;
+    const existing = mapByKey.get(key);
+    if (!existing) {
+      mapByKey.set(key, p);
+    } else {
+      const pick =
+        (p.status === 'published' && existing.status !== 'published') ? p :
+        (existing.status === 'published' && p.status !== 'published') ? existing :
+        (p.date > existing.date ? p : existing);
+      mapByKey.set(key, pick);
+    }
+  }
+  const deduped = Array.from(mapByKey.values());
+
   // sort desc by date then title
-  posts.sort((a, b) => {
+  deduped.sort((a, b) => {
     if (a.date === b.date) return a.title.localeCompare(b.title);
     return a.date > b.date ? -1 : 1;
   });
 
-  return posts;
+  return deduped;
 }
 
 function deriveTitleFromContent(md: string, filename: string): string {
@@ -242,6 +275,24 @@ function standardizeTagsFromTitle(title: string): string[] {
   if (t.includes('retraite') || t.includes('retirement')) tags.add('retraite');
   if (tags.size === 0) tags.add('retraite');
   return Array.from(tags);
+}
+
+function normalizeCategory(cat: string): string {
+  // Always normalize to FR canonical labels used across the app
+  const mapEnToFr: Record<string, string> = {
+    'Retirement basics': 'Les bases de la retraite',
+    'Government programs': 'Comprendre les régimes gouvernementaux',
+    'Manage savings and investments': 'Gérer son épargne et ses placements',
+    'Planning for couples': 'Planification pour les couples',
+    'Women-specific challenges': 'Défis spécifiques aux femmes',
+    'Practical everyday aspects': 'Aspects pratiques et quotidiens',
+    'Simple taxation': 'Fiscalité simplifiée',
+    'Seasonal and current topics': 'Sujets saisonniers et d’actualité',
+    'Tools and resources': 'Outils et ressources',
+    'Well-being and quality of life': 'Bien-être et qualité de vie',
+  };
+  const c = (cat || '').trim().replace(/^"(.+)"$/, '$1');
+  return mapEnToFr[c] || c;
 }
 
 /**

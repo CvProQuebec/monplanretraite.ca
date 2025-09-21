@@ -15,6 +15,7 @@ status: published
 readingTime: 7
 oqlfChecked: false
 relatedSlugFr: rester-chez-soi-ou-aller-en-residence-planifier-les-couts
+relatedSlugEn: staying-home-residence
 ---
 # Rester chez soi ou aller en résidence : planifier les coûts
 

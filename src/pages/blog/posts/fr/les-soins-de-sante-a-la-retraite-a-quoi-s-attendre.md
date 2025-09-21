@@ -15,6 +15,7 @@ status: published
 readingTime: 6
 oqlfChecked: false
 relatedSlugFr: les-soins-de-sante-a-la-retraite-a-quoi-s-attendre
+relatedSlugEn: healthcare-retirement
 ---
 # Les soins de santé à la retraite : à quoi s'attendre
 

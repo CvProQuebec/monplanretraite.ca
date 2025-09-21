@@ -16,6 +16,7 @@ status: published
 readingTime: 9
 oqlfChecked: false
 relatedSlugFr: pourquoi-les-femmes-ont-souvent-moins-d-argent-a-la-retraite
+relatedSlugEn: women-retirement
 ---
 # Pourquoi les femmes ont souvent moins d'argent à la retraite
 

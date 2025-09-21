@@ -6,262 +6,288 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
     plan: 'free',
     price: '0 $',
     badge: 'Gratuit',
-    description: '🔍 DÉCOUVREZ VOTRE POTENTIEL ! Initiation professionnelle pour développer votre confiance - Parfait pour se familiariser avec MonPlanRetraite.ca',
+    description:
+      '🔍 DÉCOUVREZ VOTRE POTENTIEL ! Inclut la trousse d’urgence complète (sauvegarde + impression) et 5 calculateurs de base — initiation professionnelle pour développer votre confiance. Parfait pour se familiariser avec MonPlanRetraite.ca',
     features: {
-      // Limites numériques - RÉDUITES pour initiation
-      maxSimulations: 2, // 2 simulations pour découvrir le potentiel
+      // Limites numériques (initiation)
+      maxSimulations: 5, // 5 simulations pour découvrir le potentiel
       maxReports: 1, // 1 rapport pour voir la qualité
-      maxProfiles: 1, // Individuel seulement (couple = upgrade)
+      maxProfiles: 1, // Individuel seulement
       maxExpenseProjects: 1, // 1 projet pour tester
       maxSavedScenarios: 1, // 1 scénario sauvegardé
-      
-      // Fonctionnalités de base - GARDÉES pour rassurer
+      // Caps avancés (bornage)
+      maxMonteCarloIterations: 0,
+      maxCompareScenarios: 0,
+      // Exports
+      allowCSVExport: false,
+      exportWatermark: false,
+
+      // Fonctionnalités de base
       hasAdvancedAnalytics: false,
       hasExportPDF: false,
-      hasCashflowManagement: true, // ✅ GARDÉ - Gestion cashflow basique
-      hasExpensePlanning: true, // ✅ GARDÉ - Planification dépenses basique
-      
-      // Fonctionnalités avancées - TOUTES verrouillées
+      hasCashflowManagement: true, // Gestion cashflow basique
+      hasExpensePlanning: true, // Planification dépenses basique
+
+      // Fonctionnalités avancées
       hasMonteCarloSimulations: false,
       hasWithdrawalStrategies: false,
       hasTaxOptimization: false,
-      hasFinancialAssistant: true, // ✅ GRATUIT - Assistant IA (prévention catastrophes)
-      hasBudgetModule: false, // 🔒 PROFESSIONNEL
-      
+      hasFinancialAssistant: true, // Assistant IA (prévention)
+      hasBudgetModule: false,
+
       // NOUVEAUX MODULES PHASE 1 - VERROUILLÉS
-      hasCELISuccessionModule: false, // 🔒 PROFESSIONNEL
-      hasTaxImpactAt65Calculator: false, // 🔒 PROFESSIONNEL
-      hasTenEssentialTipsDashboard: false, // 🔒 PROFESSIONNEL
-      
+      hasCELISuccessionModule: false,
+      hasTaxImpactAt65Calculator: false,
+      hasTenEssentialTipsDashboard: false,
+
       // NOUVEAUX MODULES PHASE 2 - VERROUILLÉS
-      hasAssetConsolidationModule: false, // 🔒 PROFESSIONNEL
-      hasCashWedgeBucketModule: false, // 🔒 PROFESSIONNEL
-      hasTaxEducationCenter: false, // 🔒 PROFESSIONNEL
-      
+      hasAssetConsolidationModule: false,
+      hasCashWedgeBucketModule: false,
+      hasTaxEducationCenter: false,
+
       // NOUVEAUX MODULES PHASE 3 - VERROUILLÉS
-      hasFourPercentRuleModule: false, // 🔒 PROFESSIONNEL
-      hasOptimalAllocationModule: false, // 🔒 PROFESSIONNEL
-      hasExcessLiquidityDetector: false, // 🔒 PROFESSIONNEL
-      hasInflationProtectionCenter: false, // 🔒 PROFESSIONNEL
-      hasBehavioralBiasEducator: false, // 🔒 PROFESSIONNEL
-      
-      // Fonctionnalités premium - DÉPLACÉES vers Professionnel
+      hasFourPercentRuleModule: false,
+      hasOptimalAllocationModule: false,
+      hasExcessLiquidityDetector: false,
+      hasInflationProtectionCenter: false,
+      hasBehavioralBiasEducator: false,
+
+      // Fonctionnalités premium
       hasAIConsulting: false,
       hasSuccessionPlanning: false,
-      hasEmergencyPlanning: false, // 🔒 → PROFESSIONNEL (valeur 500$)
+      hasEmergencyPlanning: true, // Module d'urgence complet (sauvegarde + impression)
       hasRealEstateOptimization: false,
-      
-      // Modules gouvernementaux - DÉPLACÉS vers Professionnel
+
+      // Modules gouvernementaux - VERROUILLÉS
       hasRREGOPModule: false,
       hasSRGModule: false,
       hasRRQCPPOptimization: false,
-      hasOASGISAnalysis: false, // 🔒 → PROFESSIONNEL (valeur 200$)
-      
-      // Calculateurs spécialisés - DÉPLACÉS vers Professionnel
+      hasOASGISAnalysis: false,
+
+      // Calculateurs spécialisés - VERROUILLÉS
       hasAdvancedCalculators: false,
-      hasCoastFIRECalculator: false, // 🔒 → PROFESSIONNEL (valeur 300$)
-      hasMortgageCalculator: false, // 🔒 → PROFESSIONNEL (valeur 200$)
-      hasRetirementProjections: false, // 🔒 → PROFESSIONNEL (valeur 400$)
-      
-      // Rapports et analyses - Basiques
+      hasCoastFIRECalculator: false,
+      hasMortgageCalculator: false,
+      hasRetirementProjections: false,
+
+      // Rapports et analyses
       hasProfessionalReports: false,
       hasComparativeAnalysis: false,
       hasPredictiveAnalytics: false,
       hasStressTestAnalysis: false,
-      
-      // Sécurité et sauvegarde - GARDÉES pour confiance
-      hasSecureStorage: true, // ✅ GARDÉ - Sécurité (argument de vente)
-      hasAutomaticBackup: false, // 🔒 → PROFESSIONNEL (valeur 100$)
-      hasDataEncryption: true, // ✅ GARDÉ - Chiffrement (confiance)
-      
-      // Interface et expérience - GARDÉES pour expérience
-      hasAdvancedInterface: true, // ✅ GARDÉ - Interface moderne
-      hasMultiLanguageSupport: true, // ✅ GARDÉ - Français/Anglais
-      hasMobileOptimization: true, // ✅ GARDÉ - Optimisation mobile
-      hasAccessibilityFeatures: true, // ✅ GARDÉ - Accessibilité seniors
-      
+
+      // Sécurité et sauvegarde
+      hasSecureStorage: true,
+      hasAutomaticBackup: false,
+      hasDataEncryption: true,
+
+      // Interface et expérience
+      hasAdvancedInterface: true,
+      hasMultiLanguageSupport: true,
+      hasMobileOptimization: true,
+      hasAccessibilityFeatures: true,
+
       // Fonctionnalités supprimées
       hasIntegrations: false,
       hasPrioritySupport: false,
-      hasPersonalizedTraining: false
-    }
+      hasPersonalizedTraining: false,
+    },
   },
   professional: {
     plan: 'professional',
     price: '297 $/an',
     priceId: 'price_professional_annual',
     badge: 'Professionnel',
-    description: '💪 OUTILS COMPLETS POUR COUPLES ! Récupère tout ce qui était gratuit + suite professionnelle complète (5 000 $ de valeur) + 11 NOUVEAUX MODULES EXCLUSIFS basés sur l\'expertise d\'Adam Parallel Wealth - Parfait pour planification autonome sérieuse',
+    description:
+      '💪 OUTILS COMPLETS POUR COUPLES ! Tout ce qu’il faut pour planifier sérieusement à la maison: analyses avancées bornées, Monte Carlo (aperçu), PDF résumé. Idéal pour budgéter et comparer des scénarios simples.',
     features: {
-      // Limites numériques - ILLIMITÉES
-      maxSimulations: -1, // ✅ ILLIMITÉ - Testez tous vos scénarios
-      maxReports: -1, // ✅ ILLIMITÉ - Rapports professionnels
+      // Limites numériques (bornées)
+      maxSimulations: 50, // 50 simulations par mois
+      maxReports: 30, // 30 rapports (PDF résumé)
       maxProfiles: 2, // Couple ou individuel
-      maxExpenseProjects: -1, // ✅ ILLIMITÉ - Tous vos projets
-      maxSavedScenarios: -1, // ✅ ILLIMITÉ - Sauvegardez tout
-      
-      // Fonctionnalités de base - TOUTES INCLUSES
-      hasAdvancedAnalytics: true, // ✅ INCLUS - Analyses avancées complètes
-      hasExportPDF: true, // ✅ INCLUS - Rapports PDF professionnels
-      hasCashflowManagement: true, // ✅ INCLUS - Gestion cashflow avancée
-      hasExpensePlanning: true, // ✅ INCLUS - Planification dépenses complète
-      
-      // Fonctionnalités avancées - TOUTES INCLUSES
-      hasMonteCarloSimulations: true, // ✅ INCLUS - Simulations Monte Carlo
-      hasWithdrawalStrategies: true, // ✅ INCLUS - Stratégies de décaissement
-      hasTaxOptimization: true, // ✅ INCLUS - Optimisation fiscale REER/CELI
-      hasFinancialAssistant: true, // ✅ INCLUS - Assistant IA (prévention catastrophes)
-      hasBudgetModule: true, // ✅ INCLUS - Module Budget complet
-      
+      maxExpenseProjects: -1, // Illimité
+      maxSavedScenarios: 20, // 20 scénarios sauvegardés
+      // Caps avancés (bornage)
+      maxMonteCarloIterations: 100,
+      maxCompareScenarios: 3,
+      // Exports
+      allowCSVExport: false,
+      exportWatermark: true, // filigrane pour PDF résumé
+
+      // Fonctionnalités de base
+      hasAdvancedAnalytics: true,
+      hasExportPDF: true, // PDF résumé robuste
+      hasCashflowManagement: true,
+      hasExpensePlanning: true,
+
+      // Fonctionnalités avancées
+      hasMonteCarloSimulations: true, // aperçu (caps 100)
+      hasWithdrawalStrategies: true,
+      hasTaxOptimization: true, // basique
+      hasFinancialAssistant: true, // essentiel
+      hasBudgetModule: true,
+
       // NOUVEAUX MODULES PHASE 1 - INCLUS
-      hasCELISuccessionModule: true, // ✅ INCLUS - Module CELI et succession
-      hasTaxImpactAt65Calculator: true, // ✅ INCLUS - Calculateur impact fiscal 65 ans
-      hasTenEssentialTipsDashboard: true, // ✅ INCLUS - Dashboard 10 conseils essentiels
-      
+      hasCELISuccessionModule: true,
+      hasTaxImpactAt65Calculator: true,
+      hasTenEssentialTipsDashboard: true,
+
       // NOUVEAUX MODULES PHASE 2 - INCLUS
-      hasAssetConsolidationModule: true, // ✅ INCLUS - Module consolidation d'actifs
-      hasCashWedgeBucketModule: true, // ✅ INCLUS - Module stratégie de seau/cash wedge
-      hasTaxEducationCenter: true, // ✅ INCLUS - Centre d'éducation fiscale
-      
+      hasAssetConsolidationModule: true,
+      hasCashWedgeBucketModule: true,
+      hasTaxEducationCenter: true,
+
       // NOUVEAUX MODULES PHASE 3 - INCLUS
-      hasFourPercentRuleModule: true, // ✅ INCLUS - Module règle des 4% modernisée
-      hasOptimalAllocationModule: true, // ✅ INCLUS - Optimisateur allocation retraite
-      hasExcessLiquidityDetector: true, // ✅ INCLUS - Détecteur sur-liquidités
-      hasInflationProtectionCenter: true, // ✅ INCLUS - Centre anti-inflation
-      hasBehavioralBiasEducator: true, // ✅ INCLUS - Éducateur biais comportementaux
-      
-      // Fonctionnalités premium - Sélectionnées
-      hasAIConsulting: false, // 🔒 EXPERT - IA prédictive avancée
-      hasSuccessionPlanning: false, // 🔒 EXPERT - Planification successorale avancée
-      hasEmergencyPlanning: true, // ✅ INCLUS - Module d'urgence complet
-      hasRealEstateOptimization: false, // 🔒 EXPERT - Optimisation immobilière experte
-      
-      // Modules gouvernementaux - TOUS INCLUS
-      hasRREGOPModule: true, // ✅ INCLUS - Module RREGOP complet
-      hasSRGModule: true, // ✅ INCLUS - Module SRG/GIS complet
-      hasRRQCPPOptimization: true, // ✅ INCLUS - Optimisation RRQ/CPP
-      hasOASGISAnalysis: true, // ✅ INCLUS - Analyse OAS/GIS complète
-      
-      // Calculateurs spécialisés - TOUS INCLUS
-      hasAdvancedCalculators: true, // ✅ INCLUS - IRR, TWR, MWR
-      hasCoastFIRECalculator: true, // ✅ INCLUS - Calculateur FIRE complet
-      hasMortgageCalculator: true, // ✅ INCLUS - Calculateur hypothécaire avancé
-      hasRetirementProjections: true, // ✅ INCLUS - Projections complètes
-      
-      // Rapports et analyses - Avancés
-      hasProfessionalReports: true, // ✅ INCLUS - Rapports niveau consultant
-      hasComparativeAnalysis: true, // ✅ INCLUS - Analyses comparatives
-      hasPredictiveAnalytics: false, // 🔒 EXPERT - IA prédictive
-      hasStressTestAnalysis: false, // 🔒 EXPERT - Tests de résistance experts
-      
-      // Sécurité et sauvegarde - MAXIMALES
-      hasSecureStorage: true, // ✅ INCLUS - Stockage sécurisé AES-256
-      hasAutomaticBackup: true, // ✅ INCLUS - Sauvegarde automatique
-      hasDataEncryption: true, // ✅ INCLUS - Chiffrement niveau bancaire
-      
-      // Interface et expérience - COMPLÈTES
-      hasAdvancedInterface: true, // ✅ INCLUS - Interface avancée
-      hasMultiLanguageSupport: true, // ✅ INCLUS - Français/Anglais
-      hasMobileOptimization: true, // ✅ INCLUS - Optimisation mobile
-      hasAccessibilityFeatures: true, // ✅ INCLUS - Accessibilité seniors
-      
+      hasFourPercentRuleModule: true,
+      hasOptimalAllocationModule: true,
+      hasExcessLiquidityDetector: true,
+      hasInflationProtectionCenter: true,
+      hasBehavioralBiasEducator: true,
+
+      // Fonctionnalités premium - sélection
+      hasAIConsulting: false,
+      hasSuccessionPlanning: false,
+      hasEmergencyPlanning: true,
+      hasRealEstateOptimization: false,
+
+      // Modules gouvernementaux - INCLUS
+      hasRREGOPModule: true,
+      hasSRGModule: true,
+      hasRRQCPPOptimization: true,
+      hasOASGISAnalysis: true,
+
+      // Calculateurs spécialisés - INCLUS
+      hasAdvancedCalculators: true,
+      hasCoastFIRECalculator: true,
+      hasMortgageCalculator: true,
+      hasRetirementProjections: true,
+
+      // Rapports et analyses
+      hasProfessionalReports: false, // pas de “niveau consultant” en Pro
+      hasComparativeAnalysis: true,
+      hasPredictiveAnalytics: false,
+      hasStressTestAnalysis: false,
+
+      // Sécurité et sauvegarde
+      hasSecureStorage: true,
+      hasAutomaticBackup: true,
+      hasDataEncryption: true,
+
+      // Interface et expérience
+      hasAdvancedInterface: true,
+      hasMultiLanguageSupport: true,
+      hasMobileOptimization: true,
+      hasAccessibilityFeatures: true,
+
       // Fonctionnalités supprimées
       hasIntegrations: false,
       hasPrioritySupport: false,
-      hasPersonalizedTraining: false
-    }
+      hasPersonalizedTraining: false,
+    },
   },
   expert: {
     plan: 'expert',
     price: '597 $/an',
     priceId: 'price_expert_annual',
     badge: 'Expert',
-    description: '🚀 MAÎTRISEZ L\'AVENIR ! IA prédictive + optimisation maximale (10 000$+ de valeur) + 11 NOUVEAUX MODULES EXCLUSIFS basés sur l\'expertise d\'Adam Parallel Wealth + Analyses comportementales avancées - Pour ceux qui refusent de laisser le hasard décider de leur retraite',
+    description:
+      '🚀 NIVEAU CONSULTANT SANS RENDEZ-VOUS. Simulations illimitées, Monte Carlo 2000 itérations, rapports professionnels, analyses de sensibilité et exports (PDF pro + CSV). Alternative au plan à 3 000 $ (sans conseil personnalisé).',
     features: {
-      // Limites numériques - TOUT ILLIMITÉ
-      maxSimulations: -1, // ✅ ILLIMITÉ - Simulations infinies
-      maxReports: -1, // ✅ ILLIMITÉ - Rapports professionnels illimités
-      maxProfiles: -1, // ✅ ILLIMITÉ - Famille élargie et scénarios multiples
-      maxExpenseProjects: -1, // ✅ ILLIMITÉ - Tous vos projets de vie
-      maxSavedScenarios: -1, // ✅ ILLIMITÉ - Sauvegardez tout
-      
-      // Fonctionnalités de base - MAXIMALES
-      hasAdvancedAnalytics: true, // ✅ INCLUS - Analyses ultra-avancées
-      hasExportPDF: true, // ✅ INCLUS - Rapports PDF niveau consultant
-      hasCashflowManagement: true, // ✅ INCLUS - Gestion cashflow experte
-      hasExpensePlanning: true, // ✅ INCLUS - Planification dépenses maximale
-      
-      // Fonctionnalités avancées - TOUTES MAXIMALES
-      hasMonteCarloSimulations: true, // ✅ INCLUS - Monte Carlo 1000+ itérations
-      hasWithdrawalStrategies: true, // ✅ INCLUS - Stratégies décaissement expertes
-      hasTaxOptimization: true, // ✅ INCLUS - Optimisation fiscale maximale
-      hasFinancialAssistant: true, // ✅ INCLUS - Assistant IA ultra-avancé
-      hasBudgetModule: true, // ✅ INCLUS - Module Budget expert
-      
+      // Limites numériques - ILLIMITÉ
+      maxSimulations: -1,
+      maxReports: -1,
+      maxProfiles: -1,
+      maxExpenseProjects: -1,
+      maxSavedScenarios: -1,
+      // Caps avancés
+      maxMonteCarloIterations: 2000,
+      maxCompareScenarios: 10,
+      // Exports
+      allowCSVExport: true,
+      exportWatermark: false,
+
+      // Fonctionnalités de base
+      hasAdvancedAnalytics: true,
+      hasExportPDF: true, // Rapports niveau consultant
+      hasCashflowManagement: true,
+      hasExpensePlanning: true,
+
+      // Fonctionnalités avancées
+      hasMonteCarloSimulations: true,
+      hasWithdrawalStrategies: true,
+      hasTaxOptimization: true, // avancée
+      hasFinancialAssistant: true, // proactif
+      hasBudgetModule: true,
+
       // NOUVEAUX MODULES PHASE 1 - INCLUS
-      hasCELISuccessionModule: true, // ✅ INCLUS - Module CELI et succession
-      hasTaxImpactAt65Calculator: true, // ✅ INCLUS - Calculateur impact fiscal 65 ans
-      hasTenEssentialTipsDashboard: true, // ✅ INCLUS - Dashboard 10 conseils essentiels
-      
+      hasCELISuccessionModule: true,
+      hasTaxImpactAt65Calculator: true,
+      hasTenEssentialTipsDashboard: true,
+
       // NOUVEAUX MODULES PHASE 2 - INCLUS
-      hasAssetConsolidationModule: true, // ✅ INCLUS - Module consolidation d'actifs
-      hasCashWedgeBucketModule: true, // ✅ INCLUS - Module stratégie de seau/cash wedge
-      hasTaxEducationCenter: true, // ✅ INCLUS - Centre d'éducation fiscale
-      
+      hasAssetConsolidationModule: true,
+      hasCashWedgeBucketModule: true,
+      hasTaxEducationCenter: true,
+
       // NOUVEAUX MODULES PHASE 3 - INCLUS
-      hasFourPercentRuleModule: true, // ✅ INCLUS - Module règle des 4% modernisée
-      hasOptimalAllocationModule: true, // ✅ INCLUS - Optimisateur allocation retraite
-      hasExcessLiquidityDetector: true, // ✅ INCLUS - Détecteur sur-liquidités
-      hasInflationProtectionCenter: true, // ✅ INCLUS - Centre anti-inflation
-      hasBehavioralBiasEducator: true, // ✅ INCLUS - Éducateur biais comportementaux
-      
-      // Fonctionnalités premium - TOUTES INCLUSES
-      hasAIConsulting: true, // ✅ INCLUS - IA prédictive + conseils avancés
-      hasSuccessionPlanning: true, // ✅ INCLUS - Planification successorale complète
-      hasEmergencyPlanning: true, // ✅ INCLUS - Module d'urgence expert
-      hasRealEstateOptimization: true, // ✅ INCLUS - Optimisation immobilière avancée
-      
-      // Modules gouvernementaux - TOUS OPTIMISÉS
-      hasRREGOPModule: true, // ✅ INCLUS - Module RREGOP expert
-      hasSRGModule: true, // ✅ INCLUS - Module SRG/GIS expert
-      hasRRQCPPOptimization: true, // ✅ INCLUS - Optimisation RRQ/CPP maximale
-      hasOASGISAnalysis: true, // ✅ INCLUS - Analyse OAS/GIS experte
-      
-      // Calculateurs spécialisés - TOUS EXPERTS
-      hasAdvancedCalculators: true, // ✅ INCLUS - IRR, TWR, MWR experts
-      hasCoastFIRECalculator: true, // ✅ INCLUS - Calculateur FIRE expert
-      hasMortgageCalculator: true, // ✅ INCLUS - Calculateur hypothécaire expert
-      hasRetirementProjections: true, // ✅ INCLUS - Projections expertes
-      
+      hasFourPercentRuleModule: true,
+      hasOptimalAllocationModule: true,
+      hasExcessLiquidityDetector: true,
+      hasInflationProtectionCenter: true,
+      hasBehavioralBiasEducator: true,
+
+      // Fonctionnalités premium - TOUTES
+      hasAIConsulting: true,
+      hasSuccessionPlanning: true,
+      hasEmergencyPlanning: true,
+      hasRealEstateOptimization: true,
+
+      // Modules gouvernementaux - OPTIMISÉS
+      hasRREGOPModule: true,
+      hasSRGModule: true,
+      hasRRQCPPOptimization: true,
+      hasOASGISAnalysis: true,
+
+      // Calculateurs spécialisés - EXPERT
+      hasAdvancedCalculators: true,
+      hasCoastFIRECalculator: true,
+      hasMortgageCalculator: true,
+      hasRetirementProjections: true,
+
       // Rapports et analyses - NIVEAU CONSULTANT
-      hasProfessionalReports: true, // ✅ INCLUS - Rapports niveau consultant
-      hasComparativeAnalysis: true, // ✅ INCLUS - Analyses comparatives expertes
-      hasPredictiveAnalytics: true, // ✅ INCLUS - IA prédictive complète
-      hasStressTestAnalysis: true, // ✅ INCLUS - Tests de résistance experts
-      
-      // Sécurité et sauvegarde - NIVEAU BANCAIRE
-      hasSecureStorage: true, // ✅ INCLUS - Stockage ultra-sécurisé
-      hasAutomaticBackup: true, // ✅ INCLUS - Sauvegarde automatique avancée
-      hasDataEncryption: true, // ✅ INCLUS - Chiffrement niveau bancaire
-      
-      // Interface et expérience - PREMIUM
-      hasAdvancedInterface: true, // ✅ INCLUS - Interface premium
-      hasMultiLanguageSupport: true, // ✅ INCLUS - Support multilingue complet
-      hasMobileOptimization: true, // ✅ INCLUS - Optimisation mobile premium
-      hasAccessibilityFeatures: true, // ✅ INCLUS - Accessibilité maximale
-      
-      // Fonctionnalités supprimées (pour sécurité/conformité)
-      hasIntegrations: false, // Supprimé pour sécurité
-      hasPrioritySupport: false, // Supprimé (opération solo)
-      hasPersonalizedTraining: false // Supprimé (pas de permis AMF)
-    }
-  }
+      hasProfessionalReports: true,
+      hasComparativeAnalysis: true,
+      hasPredictiveAnalytics: true,
+      hasStressTestAnalysis: true,
+
+      // Sécurité et sauvegarde
+      hasSecureStorage: true,
+      hasAutomaticBackup: true,
+      hasDataEncryption: true,
+
+      // Interface et expérience
+      hasAdvancedInterface: true,
+      hasMultiLanguageSupport: true,
+      hasMobileOptimization: true,
+      hasAccessibilityFeatures: true,
+
+      // Fonctionnalités supprimées
+      hasIntegrations: false,
+      hasPrioritySupport: false,
+      hasPersonalizedTraining: false,
+    },
+  },
 };
 
-// NOUVEAU : Types d'upgrade avec ajustement temporel
-export type UpgradeType = 'immediate' | 'discounted' | 'prorated' | 'time_adjusted' | 'credit_based';
+// Types d'upgrade
+export type UpgradeType =
+  | 'immediate'
+  | 'discounted'
+  | 'prorated'
+  | 'time_adjusted'
+  | 'credit_based';
 
-// NOUVEAU : Chemins d'upgrade avec stratégies intelligentes
+// Chemins d'upgrade (annuel uniquement)
 export const UPGRADE_PATHS: UpgradePath[] = [
   {
     from: 'free',
@@ -269,17 +295,16 @@ export const UPGRADE_PATHS: UpgradePath[] = [
     upgradePrice: '297 $/an',
     priceId: 'price_professional_annual',
     upgradeType: 'immediate',
-    savings: '80% moins cher que la concurrence',
+    savings: 'Économisez par rapport à un plan en cabinet',
     isRecommended: true,
     features: [
-      'Assistant Financier Personnel',
-      'Module Budget',
-      'simulations illimitées',
-      'rapports illimités',
-      'analyses avancées',
-      'simulations Monte Carlo',
-      'export PDF'
-    ]
+      'Assistant Financier Personnel (essentiel)',
+      'Module Budget complet',
+      'PDF résumé (filigrane)',
+      'Analyses avancées (bornées)',
+      'Monte Carlo (aperçu)',
+      '50 simulations/mois',
+    ],
   },
   {
     from: 'free',
@@ -287,134 +312,128 @@ export const UPGRADE_PATHS: UpgradePath[] = [
     upgradePrice: '597 $/an',
     priceId: 'price_expert_annual',
     upgradeType: 'immediate',
-    savings: '60% moins cher que la concurrence',
+    savings: 'Alternative au plan à 3 000 $ (sans conseil personnalisé)',
     features: [
-      'tout inclus',
-      'profils illimités',
-      'conseils IA',
-      'intégrations',
-      'formation personnalisée'
-    ]
+      'Rapports niveau consultant',
+      'Simulations illimitées',
+      'IA prédictive',
+      'Export PDF pro + CSV',
+      'Analyses de sensibilité',
+    ],
   },
   {
     from: 'professional',
     to: 'expert',
-    upgradePrice: '100,00 $/an', // Prix de base - sera ajusté selon le temps
+    upgradePrice: '100,00 $/an', // base indicatif; ajusté selon temps restant
     priceId: 'price_upgrade_pro_to_expert',
-    upgradeType: 'time_adjusted', // Ajustement selon le temps restant
+    upgradeType: 'time_adjusted',
     savings: 'Prix ajusté selon votre temps restant',
     isRecommended: true,
     features: [
-      'profils illimités',
-      'conseils IA',
-      'intégrations',
-      'formation personnalisée'
-    ]
-  }
+      'Rapports niveau consultant',
+      'Simulations illimitées',
+      'IA prédictive',
+      'Export PDF pro + CSV',
+      'Monte Carlo 2000 itérations',
+    ],
+  },
 ];
 
-// NOUVEAU : Fonction pour calculer le prix d'upgrade intelligent
+// Calcul du prix d'upgrade intelligent (annuel → annuel)
 export const calculateSmartUpgradePrice = (
   fromPlan: SubscriptionPlan,
   toPlan: SubscriptionPlan,
   monthsRemaining: number
 ): { price: number; description: string; savings: string; totalPaid: number } => {
   if (fromPlan === 'professional' && toPlan === 'expert') {
-    // Prix mensuels
-    const professionalMonthly = 297 / 12; // ~25$/mois
-    const expertMonthly = 597 / 12;     // ~50$/mois
-    
-    // Différence mensuelle : Expert - Professional = 10$/mois
-    const monthlyDifference = expertMonthly - professionalMonthly;
-    
-    // Prix d'upgrade : différence × mois restants
-    const upgradePrice = monthsRemaining * monthlyDifference;
-    
-    // Total payé par le client
-    const totalPaid = 297 + upgradePrice;
-    
-    // Économies vs achat séparé
-    const savings = 597 - totalPaid;
-    
+    const professionalAnnual = 297;
+    const expertAnnual = 597;
+    const professionalMonthly = professionalAnnual / 12;
+    const expertMonthly = expertAnnual / 12;
+    const monthlyDifference = expertMonthly - professionalMonthly; // ~25$/mois
+    const upgradePrice = Math.max(0, monthsRemaining) * monthlyDifference;
+    const totalPaid = professionalAnnual + upgradePrice;
+    const savings = expertAnnual - totalPaid;
     return {
-      price: upgradePrice,
+      price: Math.round(upgradePrice * 100) / 100,
       description: `Upgrade Expert pour ${monthsRemaining} mois restants`,
       savings: `Économisez ${savings.toFixed(2)} $ vs achat séparé`,
-      totalPaid: totalPaid
+      totalPaid: Math.round(totalPaid * 100) / 100,
     };
   }
-  
-  // Pour les autres upgrades, prix standard
+  // Par défaut
   return {
-    price: 120.00,
+    price: 120.0,
     description: 'Upgrade standard',
     savings: 'Prix fixe',
-    totalPaid: 120.00
+    totalPaid: 120.0,
   };
 };
 
-// NOUVEAU : Fonction pour obtenir le prix d'upgrade selon le temps restant
+// Prix d'upgrade selon temps restant
 export const getUpgradePriceWithTimeAdjustment = (
   fromPlan: SubscriptionPlan,
   toPlan: SubscriptionPlan,
   subscriptionStartDate: Date
-): { price: string; description: string; savings: string; monthsRemaining: number; totalPaid: string } => {
+): {
+  price: string;
+  description: string;
+  savings: string;
+  monthsRemaining: number;
+  totalPaid: string;
+} => {
   const now = new Date();
   const startDate = new Date(subscriptionStartDate);
-  const monthsElapsed = Math.floor((now.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 30.44));
+  const monthsElapsed = Math.floor(
+    (now.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24 * 30.44)
+  );
   const monthsRemaining = Math.max(12 - monthsElapsed, 0);
-  
+
   if (monthsRemaining === 0) {
-    // Abonnement expiré, prix normal
     return {
-      price: '239,99 $/an',
+      price: '597,00 $',
       description: 'Nouvel abonnement Expert',
       savings: 'Prix standard',
       monthsRemaining: 0,
-      totalPaid: '239,99 $'
+      totalPaid: '597,00 $',
     };
   }
-  
+
   const smartPrice = calculateSmartUpgradePrice(fromPlan, toPlan, monthsRemaining);
-  
   return {
     price: `${smartPrice.price.toFixed(2)} $`,
     description: smartPrice.description,
     savings: smartPrice.savings,
-    monthsRemaining: monthsRemaining,
-    totalPaid: `${smartPrice.totalPaid.toFixed(2)} $`
+    monthsRemaining,
+    totalPaid: `${smartPrice.totalPaid.toFixed(2)} $`,
   };
 };
 
-// NOUVEAU : Fonction pour obtenir les upgrades disponibles
+// Upgrades disponibles
 export const getAvailableUpgrades = (currentPlan: SubscriptionPlan): UpgradePath[] => {
-  return UPGRADE_PATHS.filter(path => path.from === currentPlan);
+  return UPGRADE_PATHS.filter((path) => path.from === currentPlan);
 };
 
-// NOUVEAU : Fonction pour obtenir l'upgrade recommandé
-export const getRecommendedUpgrade = (currentPlan: SubscriptionPlan): UpgradePath | null => {
+// Upgrade recommandé
+export const getRecommendedUpgrade = (
+  currentPlan: SubscriptionPlan
+): UpgradePath | null => {
   const upgrades = getAvailableUpgrades(currentPlan);
-  return upgrades.find(upgrade => upgrade.isRecommended) || upgrades[0] || null;
+  return upgrades.find((u) => u.isRecommended) || upgrades[0] || null;
 };
 
-// NOUVEAU : Fonction pour calculer le prix d'upgrade
+// Prix d'upgrade simple (fallback)
 export const calculateUpgradePrice = (
   fromPlan: SubscriptionPlan,
   toPlan: SubscriptionPlan
 ): string => {
-  if (fromPlan === 'free' && toPlan === 'professional') {
-    return '297 $/an';
-  }
-  if (fromPlan === 'free' && toPlan === 'expert') {
-    return '597 $/an';
-  }
-  if (fromPlan === 'professional' && toPlan === 'expert') {
-    return '100,00 $/an'; // Prix de base - sera ajusté selon le temps
-  }
+  if (fromPlan === 'free' && toPlan === 'professional') return '297 $/an';
+  if (fromPlan === 'free' && toPlan === 'expert') return '597 $/an';
+  if (fromPlan === 'professional' && toPlan === 'expert') return '100,00 $/an';
   return PLAN_CONFIG[toPlan].price;
 };
 
-// NOUVEAU : Fonction pour vérifier si un upgrade est possible
+// Upgrade possible ?
 export const canUpgrade = (
   fromPlan: SubscriptionPlan,
   toPlan: SubscriptionPlan
@@ -423,7 +442,7 @@ export const canUpgrade = (
   return planHierarchy[toPlan] > planHierarchy[fromPlan];
 };
 
-// NOUVEAU : Fonction pour obtenir la description de l'upgrade
+// Description d'upgrade
 export const getUpgradeDescription = (upgrade: UpgradePath): string => {
   switch (upgrade.upgradeType) {
     case 'immediate':
@@ -431,9 +450,9 @@ export const getUpgradeDescription = (upgrade: UpgradePath): string => {
     case 'discounted':
       return 'Upgrade avec remise fidélité';
     case 'prorated':
-      return 'Upgrade au prorata (non recommandé)';
+      return 'Upgrade au prorata';
     case 'time_adjusted':
-      return 'Upgrade avec ajustement selon votre temps restant';
+      return 'Upgrade ajusté selon le temps restant';
     case 'credit_based':
       return 'Upgrade avec crédit du temps restant';
     default:
@@ -441,86 +460,78 @@ export const getUpgradeDescription = (upgrade: UpgradePath): string => {
   }
 };
 
-// Fonction utilitaire pour vérifier l'accès aux fonctionnalités
+// Accès à une fonctionnalité ?
 export const checkFeatureAccess = (
   feature: keyof PlanLimits['features'],
   userPlan: SubscriptionPlan
 ): boolean => {
   const plan = PLAN_CONFIG[userPlan];
   const featureValue = plan.features[feature];
-  
-  if (typeof featureValue === 'boolean') {
-    return featureValue;
-  }
-  
-  if (typeof featureValue === 'number') {
-    return featureValue === -1 || featureValue > 0;
-  }
-  
+
+  if (typeof featureValue === 'boolean') return featureValue;
+  if (typeof featureValue === 'number') return featureValue === -1 || featureValue > 0;
   return false;
 };
 
-// Fonction pour obtenir le plan requis pour une fonctionnalité
+// Plan requis pour une fonctionnalité (UI gating)
 export const getRequiredPlanForFeature = (
   feature: keyof PlanLimits['features']
 ): SubscriptionPlan => {
-  // Fonctionnalités du plan Professionnel (ÉTENDUES avec celles déplacées du gratuit)
-  if (feature === 'hasAdvancedAnalytics' ||
-      feature === 'hasMonteCarloSimulations' ||
-      feature === 'hasBudgetModule' ||
-      feature === 'hasExportPDF' ||
-      feature === 'hasWithdrawalStrategies' ||
-      feature === 'hasTaxOptimization' ||
-      feature === 'hasRREGOPModule' ||
-      feature === 'hasSRGModule' ||
-      feature === 'hasRRQCPPOptimization' ||
-      feature === 'hasAdvancedCalculators' ||
-      feature === 'hasProfessionalReports' ||
-      feature === 'hasComparativeAnalysis' ||
-      // NOUVELLES fonctionnalités déplacées du gratuit vers professionnel
-      feature === 'hasEmergencyPlanning' ||      // 🔒 → PROFESSIONNEL (valeur 500$)
-      feature === 'hasOASGISAnalysis' ||         // 🔒 → PROFESSIONNEL (valeur 200$)
-      feature === 'hasCoastFIRECalculator' ||    // 🔒 → PROFESSIONNEL (valeur 300$)
-      feature === 'hasMortgageCalculator' ||     // 🔒 → PROFESSIONNEL (valeur 200$)
-      feature === 'hasRetirementProjections' ||  // 🔒 → PROFESSIONNEL (valeur 400$)
-      feature === 'hasAutomaticBackup') {        // 🔒 → PROFESSIONNEL (valeur 100$)
+  // Professionnel
+  if (
+    feature === 'hasAdvancedAnalytics' ||
+    feature === 'hasMonteCarloSimulations' ||
+    feature === 'hasBudgetModule' ||
+    feature === 'hasExportPDF' ||
+    feature === 'hasWithdrawalStrategies' ||
+    feature === 'hasTaxOptimization' ||
+    feature === 'hasRREGOPModule' ||
+    feature === 'hasSRGModule' ||
+    feature === 'hasRRQCPPOptimization' ||
+    feature === 'hasAdvancedCalculators' ||
+    feature === 'hasComparativeAnalysis' ||
+    feature === 'hasOASGISAnalysis' ||
+    feature === 'hasCoastFIRECalculator' ||
+    feature === 'hasMortgageCalculator' ||
+    feature === 'hasRetirementProjections' ||
+    feature === 'hasAutomaticBackup'
+  ) {
     return 'professional';
   }
-  
-  // Fonctionnalités exclusives au plan Expert (ÉTENDUES)
-  if (feature === 'hasAIConsulting' ||
-      feature === 'hasPredictiveAnalytics' ||
-      feature === 'hasSuccessionPlanning' ||     // 🔒 → EXPERT - Planification successorale avancée
-      feature === 'hasRealEstateOptimization' || // 🔒 → EXPERT - Optimisation immobilière experte
-      feature === 'hasStressTestAnalysis') {     // 🔒 → EXPERT - Tests de résistance experts
+
+  // Expert
+  if (
+    feature === 'hasAIConsulting' ||
+    feature === 'hasPredictiveAnalytics' ||
+    feature === 'hasSuccessionPlanning' ||
+    feature === 'hasRealEstateOptimization' ||
+    feature === 'hasStressTestAnalysis' ||
+    feature === 'hasProfessionalReports'
+  ) {
     return 'expert';
   }
-  
-  // Fonctionnalités supprimées (plus disponibles) - Forcer upgrade vers Expert
-  if (feature === 'hasIntegrations' || 
-      feature === 'hasPersonalizedTraining' || 
-      feature === 'hasPrioritySupport') {
-    return 'expert';
-  }
-  
-  // Fonctionnalités RESTANTES dans le plan gratuit (RÉDUITES)
-  if (feature === 'hasCashflowManagement' ||     // ✅ GARDÉ - Gestion cashflow basique
-      feature === 'hasExpensePlanning' ||        // ✅ GARDÉ - Planification dépenses basique
-      feature === 'hasFinancialAssistant' ||     // ✅ GRATUIT - Assistant IA (prévention catastrophes)
-      feature === 'hasSecureStorage' ||          // ✅ GARDÉ - Sécurité (argument de vente)
-      feature === 'hasDataEncryption' ||         // ✅ GARDÉ - Chiffrement (confiance)
-      feature === 'hasAdvancedInterface' ||      // ✅ GARDÉ - Interface moderne
-      feature === 'hasMultiLanguageSupport' ||   // ✅ GARDÉ - Français/Anglais
-      feature === 'hasMobileOptimization' ||     // ✅ GARDÉ - Optimisation mobile
-      feature === 'hasAccessibilityFeatures') {  // ✅ GARDÉ - Accessibilité seniors
+
+  // Gratuit
+  if (
+    feature === 'hasEmergencyPlanning' ||
+    feature === 'hasCashflowManagement' ||
+    feature === 'hasExpensePlanning' ||
+    feature === 'hasFinancialAssistant' ||
+    feature === 'hasSecureStorage' ||
+    feature === 'hasDataEncryption' ||
+    feature === 'hasAdvancedInterface' ||
+    feature === 'hasMultiLanguageSupport' ||
+    feature === 'hasMobileOptimization' ||
+    feature === 'hasAccessibilityFeatures'
+  ) {
     return 'free';
   }
-  
-  // Par défaut, retourner 'professional' pour les fonctionnalités non spécifiées
+
+  // Par défaut
   return 'professional';
 };
 
-// Fonction pour vérifier les limites numériques
+// Limites numériques (utilisation)
 export const checkNumericLimit = (
   feature: 'maxSimulations' | 'maxReports' | 'maxProfiles',
   userPlan: SubscriptionPlan,
@@ -531,17 +542,17 @@ export const checkNumericLimit = (
   return limit === -1 || currentUsage < limit;
 };
 
-// Messages d'upgrade personnalisés
+// Message d'upgrade
 export const getUpgradeMessage = (
   feature: keyof PlanLimits['features'],
   requiredPlan: SubscriptionPlan
 ): string => {
   const planNames = {
     professional: 'Professional',
-    expert: 'Expert'
-  };
+    expert: 'Expert',
+  } as const;
 
-  const featureNames = {
+  const featureNames: Record<string, string> = {
     maxSimulations: 'simulations illimitées',
     maxReports: 'rapports illimités',
     maxProfiles: 'profils multiples',
@@ -553,13 +564,14 @@ export const getUpgradeMessage = (
     hasExportPDF: 'export PDF',
     hasMonteCarloSimulations: 'simulations Monte Carlo',
     hasFinancialAssistant: 'Assistant Financier Personnel',
-    hasBudgetModule: 'Module Budget'
+    hasBudgetModule: 'Module Budget',
   };
 
-  return `Cette fonctionnalité (${featureNames[feature]}) fait partie du forfait ${planNames[requiredPlan]}. Voulez-vous souscrire au forfait ${planNames[requiredPlan]} ?`;
+  const label = featureNames[feature as string] || feature;
+  return `Cette fonctionnalité (${label}) fait partie du forfait ${planNames[requiredPlan]}. Voulez-vous souscrire au forfait ${planNames[requiredPlan]} ?`;
 };
 
-// NOUVEAU : Messages d'upgrade contextuels
+// Message d'upgrade contextuel
 export const getContextualUpgradeMessage = (
   currentPlan: SubscriptionPlan,
   requiredPlan: SubscriptionPlan
@@ -573,28 +585,28 @@ export const getContextualUpgradeMessage = (
   return `Cette fonctionnalité nécessite le forfait ${PLAN_CONFIG[requiredPlan].badge}`;
 };
 
-// Codes promo
+// Codes promo (annuel)
 export const PROMO_CODES: Record<string, PromoCode> = {
   EARLYBIRD30: {
     code: 'EARLYBIRD30',
     discount: 30,
     description: '30 % de réduction - Lancement',
     validUntil: '2025-12-31',
-    maxUses: 100
+    maxUses: 100,
   },
   SAVINGS40: {
     code: 'SAVINGS40',
     discount: 40,
     description: '40 % de réduction - Économies',
     validUntil: '2025-12-31',
-    maxUses: 50
+    maxUses: 50,
   },
   FOUNDER50: {
     code: 'FOUNDER50',
     discount: 50,
     description: '50 % de réduction - Fondateurs',
     validUntil: '2025-12-31',
-    maxUses: 25
+    maxUses: 25,
   },
   TESTER100: {
     code: 'TESTER100',
@@ -603,82 +615,62 @@ export const PROMO_CODES: Record<string, PromoCode> = {
     validUntil: '2025-12-31',
     maxUses: 999,
     unlimitedFeatures: true,
-    testMode: true
+    testMode: true,
   },
   Calvin2025: {
     code: 'Calvin2025',
     discount: 100,
-    description: '100 % gratuit - Tests Calvin jusqu\'au 31 décembre 2026',
+    description: "100 % gratuit - Tests Calvin jusqu'au 31 décembre 2026",
     validUntil: '2026-12-31',
     maxUses: 9999,
     unlimitedFeatures: true,
-    testMode: true
-  }
+    testMode: true,
+  },
 };
 
-// Fonctions manquantes pour PricingSection.tsx
+// Tarifs avec code promo
 export const calculatePriceWithPromo = (
   originalPrice: number,
   promoCode: string
 ): { finalPrice: number; discount: number; savings: string } => {
   const promo = PROMO_CODES[promoCode.toUpperCase()];
-  
   if (!promo) {
-    return {
-      finalPrice: originalPrice,
-      discount: 0,
-      savings: '0,00 $'
-    };
-  }
-
+    return { finalPrice: originalPrice, discount: 0, savings: '0,00 $' };
+    }
   const discount = (originalPrice * promo.discount) / 100;
   const finalPrice = originalPrice - discount;
-
   return {
     finalPrice: Math.round(finalPrice * 100) / 100,
     discount: promo.discount,
-    savings: `${discount.toFixed(2)} $`
+    savings: `${discount.toFixed(2)} $`,
   };
 };
 
-export const calculateAnnualSavings = (
-  monthlyPrice: number,
-  annualPrice: number
-): string => {
+// Économie annuelle (comparaison mensuel vs annuel — informatif)
+export const calculateAnnualSavings = (monthlyPrice: number, annualPrice: number): string => {
   const monthlyTotal = monthlyPrice * 12;
   const savings = monthlyTotal - annualPrice;
-  const percentage = ((savings / monthlyTotal) * 100);
-  
+  const percentage = (savings / monthlyTotal) * 100;
   return `${percentage.toFixed(0)} %`;
 };
 
-// Export PLANS pour compatibilité (si nécessaire)
+// Export pour compatibilité
 export const PLANS = PLAN_CONFIG;
 
-// Fonction manquante pour FeatureGate.tsx
+// Feature flag utilitaire
 export const isFeatureEnabled = (
   userPlan: SubscriptionPlan,
   feature: keyof PlanLimits['features']
 ): boolean => {
   const plan = PLAN_CONFIG[userPlan];
   if (!plan) return false;
-  
   const featureValue = plan.features[feature];
-  
-  if (typeof featureValue === 'boolean') {
-    return featureValue;
-  }
-  
-  if (typeof featureValue === 'number') {
-    return featureValue === -1 || featureValue > 0;
-  }
-  
+  if (typeof featureValue === 'boolean') return featureValue;
+  if (typeof featureValue === 'number') return featureValue === -1 || featureValue > 0;
   return false;
 };
 
 // ===== Feature catalog for Plan Comparison (Home page) =====
-// Minimal tier required for each marketed feature; labels FR/EN.
-// This catalog is UI-facing; it does not need to map 1:1 to PlanLimits keys.
 export type Tier = 'free' | 'pro' | 'expert';
 
 export interface FeatureCatalogItem {
@@ -686,35 +678,77 @@ export interface FeatureCatalogItem {
   labelFr: string;
   labelEn: string;
   tier: Tier;
-  descFr?: string; // Courte explication (niveau ~6e année)
-  descEn?: string; // Short explanation (6th-grade level)
+  descFr?: string;
+  descEn?: string;
 }
 
+// Liste officielle des 5 calculateurs de base (palier Gratuit)
+export interface BasicCalculatorItem {
+  key: string;
+  labelFr: string;
+  labelEn: string;
+}
+
+export const BASIC_CALCULATORS: BasicCalculatorItem[] = [
+  { key: 'return', labelFr: 'Calculatrice de rendement simple', labelEn: 'Simple return calculator' },
+  { key: 'purchase-compare', labelFr: "Comparateur d'options d'achat", labelEn: 'Purchase options comparator' },
+  { key: 'budget-lite', labelFr: 'Estimateur de budget mensuel (lite)', labelEn: 'Monthly budget estimator (lite)' },
+  { key: 'rrq-cpp-view', labelFr: 'Aperçu RRQ/CPP — montants et impact', labelEn: 'RRQ/CPP preview — amounts and impact' },
+  { key: 'tips-preview', labelFr: 'Conseils essentiels (aperçu)', labelEn: 'Essential tips (preview)' },
+];
+
+// Détail des 8 sections de la trousse d'urgence (marketing/UI)
+export interface EmergencySectionItem {
+  key: string;
+  labelFr: string;
+  labelEn: string;
+}
+
+export const EMERGENCY_SECTIONS: EmergencySectionItem[] = [
+  { key: 'personnel', labelFr: 'Personnes et contacts clés', labelEn: 'People and key contacts' },
+  { key: 'documents', labelFr: 'Documents essentiels', labelEn: 'Essential documents' },
+  { key: 'finances', labelFr: 'Finances et comptes', labelEn: 'Finances and accounts' },
+  { key: 'testament', labelFr: 'Testament et volontés', labelEn: 'Will and directives' },
+  { key: 'sante', labelFr: 'Santé et médicaments', labelEn: 'Health and medications' },
+  { key: 'assurances', labelFr: 'Propriétés et assurances', labelEn: 'Properties and insurance' },
+  { key: 'acces', labelFr: 'Accès et mots de passe', labelEn: 'Access and passwords' },
+  { key: 'verification', labelFr: 'Vérification finale', labelEn: 'Final verification' },
+];
+
+// Catalogue UI (palier minimal requis)
 export const FEATURE_CATALOG: FeatureCatalogItem[] = [
-  // Free (A → Z)
+  // Free
+  {
+    key: 'emergency',
+    labelFr: "Trousse d'urgence (8 sections) — infos essentielles prêtes",
+    labelEn: 'Emergency kit (8 sections) — essentials ready',
+    descFr: '8 sections : Personnes, Documents, Finances, Testament, Santé, Assurances, Accès, Vérification.',
+    descEn: '8 sections: People, Documents, Finances, Will, Health, Insurance, Access, Verification.',
+    tier: 'free',
+  },
   {
     key: 'budget',
     labelFr: 'Budget et dépenses — suivre votre argent chaque mois',
     labelEn: 'Budget and expenses — track your money monthly',
     descFr: 'Notez vos revenus et vos dépenses. Voyez où va votre argent chaque mois.',
     descEn: 'Write down income and expenses. See where your money goes each month.',
-    tier: 'free'
+    tier: 'free',
   },
   {
     key: 'basic-calcs',
     labelFr: 'Calculateurs de base (5 outils) — réponses rapides',
     labelEn: 'Basic calculators (5 tools) — quick answers',
-    descFr: 'Des petits outils simples pour obtenir vite une estimation.',
-    descEn: 'Small simple tools to get a quick estimate.',
-    tier: 'free'
+    descFr: "Rendement simple, Comparateur d’achat, Budget (lite), Aperçu RRQ/CPP, Conseils essentiels (aperçu).",
+    descEn: 'Simple return, Purchase comparator, Budget (lite), RRQ/CPP preview, Essential tips (preview).',
+    tier: 'free',
   },
   {
-    key: 'emergency',
-    labelFr: "Trousse d'urgence (8 sections) — infos essentielles prêtes",
-    labelEn: 'Emergency kit (8 sections) — essentials ready',
-    descFr: 'Rassemblez les infos importantes pour votre famille en cas d’urgence.',
-    descEn: 'Gather important info for your family in case of emergency.',
-    tier: 'free'
+    key: 'blog-44',
+    labelFr: '44+ articles de blog — bien vous préparer',
+    labelEn: '44+ blog articles — get retirement-ready',
+    descFr: 'Accédez gratuitement à notre bibliothèque pour bien vous préparer à la retraite.',
+    descEn: 'Free access to our library to get ready for retirement.',
+    tier: 'free',
   },
   {
     key: 'rrq-cpp',
@@ -722,7 +756,7 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Income and RRQ/CPP — see your amounts',
     descFr: 'Entrez vos montants de retraite et voyez l’effet dans votre budget.',
     descEn: 'Enter retirement amounts and see the impact in your budget.',
-    tier: 'free'
+    tier: 'free',
   },
   {
     key: 'security',
@@ -730,17 +764,17 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Bank‑level security (AES‑256) — data stays here',
     descFr: 'Vos données ne quittent pas votre appareil. Chiffrées comme une banque.',
     descEn: 'Your data never leaves your device. Encrypted like a bank.',
-    tier: 'free'
+    tier: 'free',
   },
 
-  // Professional (A → Z)
+  // Pro
   {
     key: 'adv-calcs',
-    labelFr: 'IRR, TWR, Monte Carlo (aperçu) — comprendre vos rendements',
-    labelEn: 'IRR, TWR, Monte Carlo (preview) — understand returns',
-    descFr: 'Comprenez combien rapporte votre argent et ce que cela veut dire pour vous.',
-    descEn: 'Understand how much your money earns and what it means for you.',
-    tier: 'pro'
+    labelFr: 'Comprendre vos rendements (aperçu Monte Carlo)',
+    labelEn: 'Understand your returns (Monte Carlo preview)',
+    descFr: 'Voyez simplement si votre argent progresse bien, sans jargon.',
+    descEn: 'See simply if your money is doing well, without jargon.',
+    tier: 'pro',
   },
   {
     key: 'ai-assistant',
@@ -748,31 +782,31 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'AI Assistant — avoids big mistakes',
     descFr: 'Avertit avant une mauvaise décision (impôts, retraits, dates clés).',
     descEn: 'Warns you before a bad decision (tax, withdrawals, key dates).',
-    tier: 'pro'
+    tier: 'pro',
   },
   {
     key: 'tax-opt',
-    labelFr: 'Optimisation fiscale (Greedy + DP/Beam) — ordre de retrait plus intelligent',
-    labelEn: 'Tax optimization (Greedy + DP/Beam) — smarter withdrawal order',
-    descFr: 'Choisit l’ordre de retraits pour payer moins d’impôt au fil des ans.',
-    descEn: 'Chooses withdrawal order to pay less tax over the years.',
-    tier: 'pro'
+    labelFr: 'Moins d’impôt: ordre de retraits plus intelligent',
+    labelEn: 'Pay less tax: smarter withdrawal order',
+    descFr: 'Aide à payer moins d’impôt sur plusieurs années, simplement.',
+    descEn: 'Helps pay less tax over the years, in simple terms.',
+    tier: 'pro',
   },
   {
     key: 'rrq-cpp-optim',
-    labelFr: 'Optimisation RRQ/CPP — meilleur âge pour demander',
-    labelEn: 'RRQ/CPP optimization — best age to apply',
-    descFr: 'Aide à choisir l’âge qui vous avantage pour la RRQ/CPP.',
-    descEn: 'Helps you pick the best age to start RRQ/CPP for you.',
-    tier: 'pro'
+    labelFr: 'RRQ/CPP: meilleur moment pour commencer',
+    labelEn: 'RRQ/CPP: best time to start',
+    descFr: 'Vous guide pour choisir le moment qui vous avantage le plus.',
+    descEn: 'Guides you to pick the time that benefits you most.',
+    tier: 'pro',
   },
   {
     key: 'oas-gis',
-    labelFr: 'Analyse SV/OAS & SRG — éviter les pénalités',
-    labelEn: 'OAS & GIS analysis — avoid clawbacks',
-    descFr: 'Évite de perdre des montants à cause des seuils de revenu.',
-    descEn: 'Avoids losing amounts because of income limits.',
-    tier: 'pro'
+    labelFr: 'SV/OAS & SRG: éviter les pertes',
+    labelEn: 'OAS & GIS: avoid losses',
+    descFr: 'Réduit les pertes liées aux seuils de revenu, simplement.',
+    descEn: 'Reduces losses from income thresholds, in simple terms.',
+    tier: 'pro',
   },
   { key: 'rregop', labelFr: 'Module RREGOP complet', labelEn: 'Complete RREGOP module', tier: 'pro' },
   { key: 'srg', labelFr: 'Module SRG complet', labelEn: 'Complete GIS module', tier: 'pro' },
@@ -782,15 +816,7 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Optimization export (robust summary) — clear PDF to share',
     descFr: 'Un PDF simple à montrer à votre conseiller ou votre famille.',
     descEn: 'A clear PDF to show your advisor or family.',
-    tier: 'pro'
-  },
-  {
-    key: 'pro-reports',
-    labelFr: 'Rapports PDF professionnels • Simulations illimitées',
-    labelEn: 'Professional PDF reports • Unlimited simulations',
-    descFr: 'Faites autant d’essais que vous voulez et gardez des rapports propres.',
-    descEn: 'Try as many scenarios as you want and keep clean reports.',
-    tier: 'pro'
+    tier: 'pro',
   },
   {
     key: 'backup-auto',
@@ -798,7 +824,7 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Automatic local backup — safety copy',
     descFr: 'Sauvegarde votre dossier sur votre clé USB ou disque, sans internet.',
     descEn: 'Backs up your file on your USB or drive, no internet needed.',
-    tier: 'pro'
+    tier: 'pro',
   },
   {
     key: 'cash-wedge',
@@ -806,7 +832,7 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Cash wedge strategy — cushion for expenses',
     descFr: 'Mets de côté quelques mois d’argent pour dormir tranquille.',
     descEn: 'Set aside a few months of money so you can sleep well.',
-    tier: 'pro'
+    tier: 'pro',
   },
   {
     key: 'asset-consolidation',
@@ -814,7 +840,7 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Asset consolidation — see everything in one place',
     descFr: 'Regroupez vos comptes pour avoir une vue simple et complète.',
     descEn: 'Group your accounts for a simple, complete view.',
-    tier: 'pro'
+    tier: 'pro',
   },
   {
     key: 'tax-edu',
@@ -822,7 +848,7 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Tax education center — learn step by step',
     descFr: 'Des explications claires pour comprendre vos impôts à la retraite.',
     descEn: 'Clear explanations to understand retirement taxes.',
-    tier: 'pro'
+    tier: 'pro',
   },
   {
     key: 'four-percent',
@@ -830,7 +856,7 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: '4% rule (modernized) — simple guideposts',
     descFr: 'Un repère facile pour éviter de retirer trop d’argent trop vite.',
     descEn: 'A simple guide to avoid taking out money too fast.',
-    tier: 'pro'
+    tier: 'pro',
   },
   {
     key: 'optimal-allocation',
@@ -838,7 +864,7 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Optimal allocation — simple asset mix',
     descFr: 'Une recette simple pour choisir combien en actions, obligations, etc.',
     descEn: 'A simple recipe to choose how much in stocks, bonds, etc.',
-    tier: 'pro'
+    tier: 'pro',
   },
   {
     key: 'excess-liquidity',
@@ -846,7 +872,7 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Excess liquidity detector — idle cash finder',
     descFr: 'Repère l’argent qui ne travaille pas pour vous.',
     descEn: 'Finds money that isn’t working for you.',
-    tier: 'pro'
+    tier: 'pro',
   },
   {
     key: 'inflation-protection',
@@ -854,7 +880,7 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Inflation protection center — protect purchasing power',
     descFr: 'Des idées simples pour garder votre pouvoir d’achat.',
     descEn: 'Simple ideas to keep your purchasing power.',
-    tier: 'pro'
+    tier: 'pro',
   },
   {
     key: 'behavioral-bias',
@@ -862,7 +888,7 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Behavioral biases — avoid common pitfalls',
     descFr: 'Explique les pièges fréquents qui font perdre de l’argent.',
     descEn: 'Explains common traps that make people lose money.',
-    tier: 'pro'
+    tier: 'pro',
   },
   {
     key: 'longevity',
@@ -870,17 +896,17 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Longevity planning — plan for 25–35 years retired',
     descFr: 'Planifiez sur 25–35 ans pour ne pas manquer d’argent.',
     descEn: 'Plan for 25–35 years so you don’t run out of money.',
-    tier: 'pro'
+    tier: 'pro',
   },
 
-  // Expert (A → Z)
+  // Expert
   {
     key: 'mc-1000',
-    labelFr: 'Monte Carlo 1000+ itérations — voir les probabilités',
-    labelEn: 'Monte Carlo 1000+ iterations — see probabilities',
-    descFr: 'Testez votre plan dans beaucoup de scénarios possibles.',
-    descEn: 'Test your plan in many possible market scenarios.',
-    tier: 'expert'
+    labelFr: 'Tester votre plan dans 1000 scénarios',
+    labelEn: 'Test your plan in 1000 scenarios',
+    descFr: 'Vérifie si votre plan tient la route quand la vie bouge.',
+    descEn: 'Checks if your plan holds up when life changes.',
+    tier: 'expert',
   },
   {
     key: 'stress-tests',
@@ -888,23 +914,23 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Stress tests (sequence, inflation, longevity) — withstand shocks',
     descFr: 'Vérifie si votre plan tient le coup si la vie bouscule vos finances.',
     descEn: 'Checks if your plan holds up when life shakes your finances.',
-    tier: 'expert'
+    tier: 'expert',
   },
   {
     key: 'predictive-ai',
-    labelFr: 'Analyses prédictives IA — tendances à venir',
-    labelEn: 'Predictive AI analytics — see trends',
-    descFr: 'Anticipez les tendances pour décider plus tôt et mieux.',
-    descEn: 'Anticipate trends to decide earlier and better.',
-    tier: 'expert'
+    labelFr: 'IA — voir les tendances à venir',
+    labelEn: 'AI — see upcoming trends',
+    descFr: 'Apercevez les tendances possibles pour décider plus simplement.',
+    descEn: 'See possible trends to decide more simply.',
+    tier: 'expert',
   },
   {
     key: 'consultant-reports',
-    labelFr: 'Rapports niveau consultant',
-    labelEn: 'Consultant‑level reports',
-    descFr: 'Des rapports complets comme chez un professionnel.',
-    descEn: 'Full reports like a professional would give.',
-    tier: 'expert'
+    labelFr: 'Rapports prêts à imprimer (niveau consultant)',
+    labelEn: 'Print‑ready reports (consultant level)',
+    descFr: 'Rapports clairs à montrer à un conseiller ou à la famille.',
+    descEn: 'Clear reports to show an advisor or family.',
+    tier: 'expert',
   },
   {
     key: 'estate',
@@ -912,15 +938,15 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Complete estate planning',
     descFr: 'Préparez votre héritage pour protéger vos proches.',
     descEn: 'Prepare your legacy to protect your loved ones.',
-    tier: 'expert'
+    tier: 'expert',
   },
   {
     key: 'real-estate',
     labelFr: 'Optimisation immobilière avancée',
     labelEn: 'Advanced real estate optimization',
     descFr: 'Choix immobiliers plus clairs (garder, vendre, louer).',
-    descEn: 'Clearer real-estate choices (keep, sell, rent).',
-    tier: 'expert'
+    descEn: 'Clearer real‑estate choices (keep, sell, rent).',
+    tier: 'expert',
   },
   {
     key: 'ai-consulting',
@@ -928,6 +954,6 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Advanced AI consulting — deeper suggestions',
     descFr: 'Des recommandations plus fines et adaptées à vos choix.',
     descEn: 'Finer recommendations adapted to your choices.',
-    tier: 'expert'
-  }
+    tier: 'expert',
+  },
 ];

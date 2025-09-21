@@ -15,6 +15,7 @@ status: published
 readingTime: 8
 oqlfChecked: false
 relatedSlugFr: comment-proteger-ses-economies-de-l-inflation
+relatedSlugEn: protect-savings-inflation
 ---
 # Comment protéger ses économies de l'inflation
 

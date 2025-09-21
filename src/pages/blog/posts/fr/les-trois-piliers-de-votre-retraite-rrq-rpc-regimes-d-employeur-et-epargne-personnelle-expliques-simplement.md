@@ -20,6 +20,7 @@ readingTime: 8
 oqlfChecked: false
 relatedSlugFr: >-
   les-trois-piliers-de-votre-retraite-rrq-rpc-regimes-d-employeur-et-epargne-personnelle-expliques-simplement
+relatedSlugEn: three-pillars-retirement
 ---
 # Les trois piliers de votre retraite - RRQ/RPC, régimes d'employeur et épargne personnelle expliqués simplement
 

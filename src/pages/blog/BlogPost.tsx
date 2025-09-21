@@ -3,8 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom';
 import MarkdownIt from 'markdown-it';
 import anchor from 'markdown-it-anchor';
 import toc from 'markdown-it-table-of-contents';
-import { getPostBySlug, getPrevNext } from './utils/content';
+import { getPostBySlug, getPrevNext, getAllPosts } from './utils/content';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
+import ArticleWrapper from '@/components/blog/ArticleWrapper';
+import './blog-templates.css';
 
 type Props = {
   language?: 'fr' | 'en';
@@ -118,6 +120,28 @@ const BlogPost: React.FC<Props> = ({ language }) => {
     );
   }
 
+  // Determine counterpart slug in the other language
+  const counterpartSlug = useMemo(() => {
+    if (!post) return undefined;
+    if (lang === 'fr') {
+      if (post.relatedSlugEn) return post.relatedSlugEn;
+      const enPosts = getAllPosts('en');
+      // Try to find a post that references this FR slug
+      const match = enPosts.find(
+        (p) => p.relatedSlugFr === (post.relatedSlugFr || post.slug) || p.slug === post.relatedSlugEn
+      );
+      return match?.slug;
+    } else {
+      // lang === 'en'
+      if (post.relatedSlugFr) return post.relatedSlugFr;
+      const frPosts = getAllPosts('fr');
+      const match = frPosts.find(
+        (p) => p.relatedSlugEn === (post.relatedSlugEn || post.slug) || p.slug === post.relatedSlugFr
+      );
+      return match?.slug;
+    }
+  }, [post, lang]);
+
   const html = sanitizeHtmlForOQLF(md.render(post.content));
 
   return (
@@ -132,6 +156,23 @@ const BlogPost: React.FC<Props> = ({ language }) => {
               <span>{new Date(post.date + 'T00:00:00').toLocaleDateString(lang === 'fr' ? 'fr-CA' : 'en-CA', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
               <span>·</span>
               <span>{lang === 'fr' ? `${post.readingTime} min de lecture` : `${post.readingTime} min read`}</span>
+              <button
+                type="button"
+                className="ml-auto px-3 py-1 rounded border border-blue-300 text-blue-700 hover:bg-blue-50 disabled:opacity-50"
+                onClick={() => {
+                  if (!counterpartSlug) return;
+                  const base = lang === 'fr' ? '/en/blog/' : '/blog/';
+                  navigate(base + counterpartSlug);
+                }}
+                disabled={!counterpartSlug}
+                title={
+                  counterpartSlug
+                    ? (lang === 'fr' ? 'Lire cet article en anglais' : 'Read this article in French')
+                    : (lang === 'fr' ? 'Version anglaise non disponible' : 'French version not available')
+                }
+              >
+                {lang === 'fr' ? 'Lire en anglais' : 'Read in French'}
+              </button>
             </div>
             {/* Tags */}
             {post.tags?.length ? (
@@ -162,10 +203,12 @@ const BlogPost: React.FC<Props> = ({ language }) => {
           {/* Table of contents marker (optional) */}
           {/* To enable ToC, insert "[toc]" line inside the markdown. */}
 
-          {/* Article content */}
-          <section
-            className="prose prose-lg max-w-none prose-headings:scroll-mt-24"
-            dangerouslySetInnerHTML={{ __html: html }}
+          {/* Article content with seniors-friendly template */}
+          <ArticleWrapper
+            language={lang}
+            title={post.title}
+            content={post.content}
+            readingTime={post.readingTime}
           />
 
           {/* Navigation prev/next */}

@@ -15,6 +15,7 @@ status: published
 readingTime: 9
 oqlfChecked: false
 relatedSlugFr: rrq-et-rpc-quand-les-demander-pour-en-avoir-le-maximum
+relatedSlugEn: qpp-and-cpp-when-to-apply-to-get-the-maximum
 ---
 # RRQ et RPC : quand les demander pour en avoir le maximum
 

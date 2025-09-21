@@ -31,7 +31,6 @@ const OptimiserTransmissionCeli = React.lazy(() => import('./pages/blog/Optimise
 const BlogIndex = React.lazy(() => import('./pages/blog/BlogIndex'));
 const BlogPost = React.lazy(() => import('./pages/blog/BlogPost'));
 const BlogHome = React.lazy(() => import('./pages/blog/BlogHome'));
-const CategoryIndex = React.lazy(() => import('./pages/blog/CategoryIndex'));
 const CategoryPage = React.lazy(() => import('./pages/blog/CategoryPage'));
 const EssentialsPage = React.lazy(() => import('./pages/blog/EssentialsPage'));
 const ToolsPage = React.lazy(() => import('./pages/blog/ToolsPage'));
@@ -171,19 +170,19 @@ function App() {
               <Route path="/en/blog/:slug" element={<BlogPost language="en" />} />
               
               {/* Catégories du blog (nouvelles pages) */}
-              <Route path="/blog/categories" element={<CategoryIndex />} />
+              <Route path="/blog/categories" element={<BlogHome />} />
               <Route path="/blog/categorie/:slug" element={<CategoryPage />} />
-              <Route path="/en/blog/categories" element={<CategoryIndex language="en" />} />
+              <Route path="/en/blog/categories" element={<BlogHome language="en" />} />
               <Route path="/en/blog/category/:slug" element={<CategoryPage language="en" />} />
 
               {/* Compat anciennes routes vers l'index des catégories */}
-              <Route path="/blog/guides" element={<CategoryIndex />} />
-              <Route path="/blog/conseils-experts" element={<CategoryIndex />} />
-              <Route path="/blog/expert-tips" element={<CategoryIndex language="en" />} />
-              <Route path="/blog/etudes-cas" element={<CategoryIndex />} />
-              <Route path="/blog/case-studies" element={<CategoryIndex language="en" />} />
-              <Route path="/blog/actualites-fiscales" element={<CategoryIndex />} />
-              <Route path="/blog/tax-news" element={<CategoryIndex language="en" />} />
+              <Route path="/blog/guides" element={<BlogHome />} />
+              <Route path="/blog/conseils-experts" element={<BlogHome />} />
+              <Route path="/blog/expert-tips" element={<BlogHome language="en" />} />
+              <Route path="/blog/etudes-cas" element={<BlogHome />} />
+              <Route path="/blog/case-studies" element={<BlogHome language="en" />} />
+              <Route path="/blog/actualites-fiscales" element={<BlogHome />} />
+              <Route path="/blog/tax-news" element={<BlogHome language="en" />} />
 
               {/* Essentiels et Outils */}
               <Route path="/blog/essentiels" element={<EssentialsPage />} />

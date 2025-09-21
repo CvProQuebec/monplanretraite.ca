@@ -16,6 +16,7 @@ status: published
 readingTime: 4
 oqlfChecked: false
 relatedSlugFr: l-ordre-intelligent-pour-retirer-son-argent-a-la-retraite
+relatedSlugEn: smart-withdrawal-order
 ---
 # L'ordre intelligent pour retirer son argent à la retraite
 

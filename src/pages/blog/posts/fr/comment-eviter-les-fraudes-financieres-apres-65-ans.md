@@ -15,6 +15,7 @@ status: published
 readingTime: 9
 oqlfChecked: false
 relatedSlugFr: comment-eviter-les-fraudes-financieres-apres-65-ans
+relatedSlugEn: financial-fraud-65
 ---
 # Comment éviter les fraudes financières après 65 ans
 

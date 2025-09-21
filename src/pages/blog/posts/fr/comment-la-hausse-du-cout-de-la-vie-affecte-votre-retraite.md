@@ -14,6 +14,7 @@ language: fr
 status: published
 readingTime: 6
 oqlfChecked: false
+relatedSlugEn: cost-of-living-retirement
 ---
 # Comment la hausse du coût de la vie affecte votre retraite
 

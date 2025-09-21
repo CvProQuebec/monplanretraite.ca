@@ -15,6 +15,7 @@ status: published
 readingTime: 6
 oqlfChecked: false
 relatedSlugFr: demenager-a-la-retraite-les-pour-et-les-contre
+relatedSlugEn: moving-retirement
 ---
 # Déménager à la retraite : les pour et les contre
 

@@ -10,7 +10,7 @@ excerpt: >-
   your retirement.
 tags:
   - retraite
-category: Les bases de la retraite
+category: Retirement basics
 language: en
 status: published
 readingTime: 9

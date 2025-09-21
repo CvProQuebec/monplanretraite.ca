@@ -15,6 +15,7 @@ status: published
 readingTime: 11
 oqlfChecked: false
 relatedSlugFr: planifier-la-retraite-en-couple-eviter-les-surprises
+relatedSlugEn: couple-retirement-planning
 ---
 # Planifier la retraite en couple : éviter les surprises
 

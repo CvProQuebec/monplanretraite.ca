@@ -14,6 +14,7 @@ status: published
 readingTime: 8
 oqlfChecked: false
 relatedSlugFr: le-fractionnement-de-revenus-explique-simplement
+relatedSlugEn: income-splitting-simple
 ---
 # Le fractionnement de revenus expliqué simplement
 

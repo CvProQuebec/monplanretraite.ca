@@ -34,6 +34,7 @@ export const MainTopNav: React.FC<MainTopNavProps> = ({ isEnglish = false }) => 
   const reportsPath = isEnglish ? '/en/retirement-reports' : '/fr/rapports-retraite';
   const homePath = isEnglish ? '/home' : '/accueil';
   const savePath = isEnglish ? '/en/save-load' : '/fr/sauvegarder-charger';
+  const blogPath = isEnglish ? '/en/blog' : '/blog';
 
   return (
     <nav className="w-full">
@@ -129,7 +130,7 @@ export const MainTopNav: React.FC<MainTopNavProps> = ({ isEnglish = false }) => 
         </DropdownMenu>
 
         {/* Blog */}
-        <Link to="/blog" className={linkClasses} aria-label="Blog">
+        <Link to={blogPath} className={linkClasses} aria-label="Blog">
           <BookOpen className="w-4 h-4" />
           <span>Blog</span>
         </Link>

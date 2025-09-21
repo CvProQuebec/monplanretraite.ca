@@ -28,6 +28,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 
   return (
     <div className="seniors-mode high-contrast min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-sans">
+      <style>{`
+        /* Global policy: permanently disable quick navigation popups site-wide */
+        .seniors-fixed-nav,
+        .floating-controls,
+        .floating-nav {
+          display: none !important;
+        }
+        /* Hide spacer that follows seniors-fixed-nav if present */
+        .seniors-fixed-nav + div {
+          display: none !important;
+        }
+      `}</style>
       {/* Header adaptatif - ancienne navigation + 4 blocs seniors uniquement sur accueil */}
       <AdaptiveHeader isEnglish={isEnglish} />
       

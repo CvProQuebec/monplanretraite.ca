@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { getCategoryCounts, slugifyCategory } from './utils/content';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -8,10 +8,30 @@ import { FolderOpen, ArrowLeft } from 'lucide-react';
 
 const CategoryIndex: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
   const { language: uiLanguage } = useLanguage();
-  const lang: 'fr' | 'en' = language || (uiLanguage === 'fr' ? 'fr' : 'en');
+  const location = useLocation();
+  const pathLang: 'fr' | 'en' = location.pathname.startsWith('/en/') ? 'en' : 'fr';
+  const lang: 'fr' | 'en' = language || pathLang || (uiLanguage === 'fr' ? 'fr' : 'en');
   const navigate = useNavigate();
 
   const counts = useMemo(() => getCategoryCounts(lang), [lang]);
+
+  // Localize category labels for display (keys remain FR for filtering/slugs)
+  const categoryLabel = (cat: string) => {
+    if (lang === 'fr') return cat;
+    const map: Record<string, string> = {
+      'Les bases de la retraite': 'Retirement basics',
+      'Comprendre les régimes gouvernementaux': 'Government programs',
+      'Gérer son épargne et ses placements': 'Manage savings and investments',
+      'Planification pour les couples': 'Planning for couples',
+      'Défis spécifiques aux femmes': 'Women-specific challenges',
+      'Aspects pratiques et quotidiens': 'Practical everyday aspects',
+      'Fiscalité simplifiée': 'Simple taxation',
+      'Sujets saisonniers et d’actualité': 'Seasonal and current topics',
+      'Outils et ressources': 'Tools and resources',
+      'Bien-être et qualité de vie': 'Well-being and quality of life',
+    };
+    return map[cat] || cat;
+  };
 
   const t = {
     title: lang === 'fr' ? 'Catégories du blog' : 'Blog categories',
@@ -53,14 +73,14 @@ const CategoryIndex: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
                 key={category}
                 className="cursor-pointer hover:shadow-lg transition-shadow border-2 border-slate-200"
                 onClick={() => openCategory(category)}
-                title={category}
+                title={categoryLabel(category)}
               >
                 <CardHeader className="pb-2">
                   <div className="flex items-center gap-2">
                     <div className="p-2 rounded bg-blue-100 text-blue-700">
                       <FolderOpen className="w-5 h-5" />
                     </div>
-                    <CardTitle className="text-lg text-gray-900">{category}</CardTitle>
+                    <CardTitle className="text-lg text-gray-900">{categoryLabel(category)}</CardTitle>
                   </div>
                 </CardHeader>
                 <CardContent className="pt-0">

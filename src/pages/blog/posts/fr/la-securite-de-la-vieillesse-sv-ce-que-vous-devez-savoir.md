@@ -15,6 +15,7 @@ status: published
 readingTime: 7
 oqlfChecked: false
 relatedSlugFr: la-securite-de-la-vieillesse-sv-ce-que-vous-devez-savoir
+relatedSlugEn: old-age-security-what-you-need-to-know
 ---
 # La Sécurité de la vieillesse (SV) : ce que vous devez savoir
 

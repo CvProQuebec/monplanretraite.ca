@@ -14,6 +14,7 @@ status: published
 readingTime: 7
 oqlfChecked: false
 relatedSlugFr: comment-faire-durer-son-argent-toute-sa-vie
+relatedSlugEn: make-money-last-lifetime
 ---
 # Comment faire durer son argent toute sa vie
 

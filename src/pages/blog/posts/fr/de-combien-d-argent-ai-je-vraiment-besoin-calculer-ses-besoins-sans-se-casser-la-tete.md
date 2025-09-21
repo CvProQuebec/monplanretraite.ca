@@ -6,10 +6,10 @@ slug: >-
   de-combien-d-argent-ai-je-vraiment-besoin-calculer-ses-besoins-sans-se-casser-la-tete
 date: '2025-09-19'
 excerpt: >-
-  « Un million de dollars! » Voilà souvent la première réponse qui nous vient
-  en tête quand on pense au montant nécessaire pour une retraite confortable.
-  Mais cette réponse magique est-elle vraiment adaptée à votre situation?
-  Spoiler : probablement pas.
+  « Un million de dollars! » Voilà souvent la première réponse qui nous vient en
+  tête quand on pense au montant nécessaire pour une retraite confortable. Mais
+  cette réponse magique est-elle vraiment adaptée à votre situation? Spoiler :
+  probablement pas.
 tags:
   - retraite
 category: Les bases de la retraite
@@ -19,6 +19,7 @@ readingTime: 10
 oqlfChecked: false
 relatedSlugFr: >-
   de-combien-d-argent-ai-je-vraiment-besoin-calculer-ses-besoins-sans-se-casser-la-tete
+relatedSlugEn: retirement-money-needs
 ---
 # De combien d'argent ai-je vraiment besoin? - Calculer ses besoins sans se casser la tête
 

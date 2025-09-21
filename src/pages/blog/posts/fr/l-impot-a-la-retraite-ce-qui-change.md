@@ -16,6 +16,7 @@ status: published
 readingTime: 8
 oqlfChecked: false
 relatedSlugFr: l-impot-a-la-retraite-ce-qui-change
+relatedSlugEn: tax-return-retirement
 ---
 # L'impôt à la retraite : ce qui change
 

@@ -14,6 +14,7 @@ status: published
 readingTime: 12
 oqlfChecked: false
 relatedSlugFr: veuvage-gerer-ses-finances-apres-le-deces-du-conjoint
+relatedSlugEn: widowhood-finances
 ---
 # Veuvage : gérer ses finances après le décès du conjoint
 

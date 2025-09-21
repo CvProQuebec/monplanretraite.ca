@@ -15,6 +15,7 @@ status: published
 readingTime: 5
 oqlfChecked: false
 relatedSlugFr: comment-rester-actif-et-en-sante-a-la-retraite
+relatedSlugEn: staying-active-healthy-retirement
 ---
 # Comment rester actif et en santé à la retraite
 

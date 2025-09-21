@@ -3,10 +3,10 @@ title: Gérer l'anxiété face à l'argent à la retraite
 slug: gerer-l-anxiete-face-a-l-argent-a-la-retraite
 date: '2025-09-19'
 excerpt: >-
-  Vous approchez de la retraite et l'argent vous inquiète? Vous n'êtes pas seul
-! Beaucoup de Québécois ressentent du stress quand ils pensent à leurs
-  finances. Mais bonne nouvelle : il y a des moyens simples de se sentir plus
-  tranquille avec son argent.
+  Vous approchez de la retraite et l'argent vous inquiète? Vous n'êtes pas seul!
+  Beaucoup de Québécois ressentent du stress quand ils pensent à leurs finances.
+  Mais bonne nouvelle : il y a des moyens simples de se sentir plus tranquille
+  avec son argent.
 tags:
   - retraite
 category: Bien-être et qualité de vie
@@ -15,6 +15,7 @@ status: published
 readingTime: 9
 oqlfChecked: false
 relatedSlugFr: gerer-l-anxiete-face-a-l-argent-a-la-retraite
+relatedSlugEn: managing-retirement-money-anxiety
 ---
 # Gérer l'anxiété face à l'argent à la retraite
 

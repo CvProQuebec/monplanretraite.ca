@@ -1,0 +1,81 @@
+{
+  "counts": {
+    "Seasonal and current topics": 3,
+    "Planning for couples": 4,
+    "Manage savings and investments": 5,
+    "Government programs": 6,
+    "Practical everyday aspects": 5,
+    "Well-being and quality of life": 3,
+    "Tools and resources": 3,
+    "Retirement basics": 9,
+    "Simple taxation": 3,
+    "Women-specific challenges": 3
+  },
+  "total": 44,
+  "filesByCategory": {
+    "Seasonal and current topics": [
+      "contribution-limits-2025.md",
+      "cost-of-living-retirement.md",
+      "tax-return-retirement.md"
+    ],
+    "Planning for couples": [
+      "couple-retirement-planning.md",
+      "income-sharing-couples.md",
+      "retirement-separation.md",
+      "retirement-timing-couples.md"
+    ],
+    "Manage savings and investments": [
+      "debt-retirement.md",
+      "make-money-last-lifetime.md",
+      "protect-savings-inflation.md",
+      "rrsp-tfsa-55plus.md",
+      "smart-withdrawal-order.md"
+    ],
+    "Government programs": [
+      "delaying-government-pensions-why-it-can-pay-off.md",
+      "gis-eligibility-are-you-eligible.md",
+      "how-to-optimize-your-qpp-cpp-and-old-age-security-benefits-the-complete-strategic-guide.md",
+      "old-age-security-what-you-need-to-know.md",
+      "qpp-and-cpp-when-to-apply-to-get-the-maximum.md",
+      "work-quebec-other-provinces.md"
+    ],
+    "Practical everyday aspects": [
+      "financial-advisor.md",
+      "financial-fraud-65.md",
+      "healthcare-retirement.md",
+      "moving-retirement.md",
+      "staying-home-residence.md"
+    ],
+    "Well-being and quality of life": [
+      "free-or-low-cost-activities-for-retirees.md",
+      "managing-retirement-money-anxiety.md",
+      "staying-active-healthy-retirement.md"
+    ],
+    "Tools and resources": [
+      "free-retirement-help.md",
+      "important-retirement-documents.md",
+      "online-calculators.md"
+    ],
+    "Retirement basics": [
+      "full-retirement-or-partial-retirement-the-advantages-of-each-option.md",
+      "retirement-ages-portfolio.md",
+      "retirement-budget-what-really-changes.md",
+      "retirement-money-needs.md",
+      "retirement-traps-avoid.md",
+      "rrsp-vs-tfsa-the-complete-decision-guide-to-maximize-your-retirement-savings.md",
+      "the-4-pourcent-rule-the-modern-withdrawal-strategy-that-revolutionizes-retirement.md",
+      "three-pillars-retirement.md",
+      "why-keep-60-to-75-pourcent-in-stocks-during-retirement-the-modern-planning-revolution.md"
+    ],
+    "Simple taxation": [
+      "income-splitting-simple.md",
+      "retirement-tax-changes.md",
+      "saving-taxes-retirement.md"
+    ],
+    "Women-specific challenges": [
+      "maternity-leave-retirement.md",
+      "widowhood-finances.md",
+      "women-retirement.md"
+    ]
+  }
+}

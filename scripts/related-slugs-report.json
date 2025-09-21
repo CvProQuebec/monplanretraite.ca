@@ -1,0 +1,490 @@
+{
+  "summary": {
+    "frCount": 45,
+    "enCount": 44,
+    "updatesApplied": 1,
+    "alreadyLinkedCount": 84,
+    "frMissingCount": 3,
+    "enMissingCount": 1
+  },
+  "updates": [
+    {
+      "action": "set-relatedSlugEn",
+      "file": "l-impot-a-la-retraite-ce-qui-change.md",
+      "value": "tax-return-retirement"
+    }
+  ],
+  "alreadyLinked": [
+    {
+      "fr": "budget-retraite-ce-qui-change-vraiment",
+      "en": "retirement-budget-what-really-changes"
+    },
+    {
+      "fr": "comment-choisir-un-conseiller-financier-de-confiance",
+      "en": "financial-advisor"
+    },
+    {
+      "fr": "comment-economiser-sur-vos-impots-de-retraite",
+      "en": "saving-taxes-retirement"
+    },
+    {
+      "fr": "comment-eviter-les-7-pieges-les-plus-courants-de-la-retraite",
+      "en": "retirement-traps-avoid"
+    },
+    {
+      "fr": "comment-eviter-les-fraudes-financieres-apres-65-ans",
+      "en": "financial-fraud-65"
+    },
+    {
+      "fr": "comment-faire-durer-son-argent-toute-sa-vie",
+      "en": "make-money-last-lifetime"
+    },
+    {
+      "fr": "comment-la-hausse-du-cout-de-la-vie-affecte-votre-retraite",
+      "en": "cost-of-living-retirement"
+    },
+    {
+      "fr": "comment-optimiser-vos-prestations-rrq-rpc-et-securite-de-la-vieillesse-le-guide-strategique-complet",
+      "en": "how-to-optimize-your-qpp-cpp-and-old-age-security-benefits-the-complete-strategic-guide"
+    },
+    {
+      "fr": "comment-partager-les-revenus-de-retraite-et-economiser-des-impots",
+      "en": "income-sharing-couples"
+    },
+    {
+      "fr": "comment-proteger-ses-economies-de-l-inflation",
+      "en": "protect-savings-inflation"
+    },
+    {
+      "fr": "comment-rester-actif-et-en-sante-a-la-retraite",
+      "en": "staying-active-healthy-retirement"
+    },
+    {
+      "fr": "conges-de-maternite-et-retraite-comment-rattraper-le-retard",
+      "en": "maternity-leave-retirement"
+    },
+    {
+      "fr": "de-combien-d-argent-ai-je-vraiment-besoin-calculer-ses-besoins-sans-se-casser-la-tete",
+      "en": "retirement-money-needs"
+    },
+    {
+      "fr": "demenager-a-la-retraite-les-pour-et-les-contre",
+      "en": "moving-retirement"
+    },
+    {
+      "fr": "gerer-l-anxiete-face-a-l-argent-a-la-retraite",
+      "en": "managing-retirement-money-anxiety"
+    },
+    {
+      "fr": "l-impot-a-la-retraite-ce-qui-change",
+      "en": "retirement-tax-changes"
+    },
+    {
+      "fr": "l-ordre-intelligent-pour-retirer-son-argent-a-la-retraite",
+      "en": "smart-withdrawal-order"
+    },
+    {
+      "fr": "la-regle-des-4-pourcent-la-strategie-de-retrait-moderne-qui-revolutionne-la-retraite",
+      "en": "the-4-pourcent-rule-the-modern-withdrawal-strategy-that-revolutionizes-retirement"
+    },
+    {
+      "fr": "la-securite-de-la-vieillesse-sv-ce-que-vous-devez-savoir",
+      "en": "old-age-security-what-you-need-to-know"
+    },
+    {
+      "fr": "le-fractionnement-de-revenus-explique-simplement",
+      "en": "income-splitting-simple"
+    },
+    {
+      "fr": "le-supplement-de-revenu-garanti-etes-vous-admissible",
+      "en": "gis-eligibility-are-you-eligible"
+    },
+    {
+      "fr": "les-activites-gratuites-ou-peu-couteuses-pour-les-retraites",
+      "en": "free-or-low-cost-activities-for-retirees"
+    },
+    {
+      "fr": "les-calculateurs-en-ligne-lesquels-utiliser-et-comment",
+      "en": "online-calculators"
+    },
+    {
+      "fr": "les-documents-importants-a-garder-pour-sa-retraite",
+      "en": "important-retirement-documents"
+    },
+    {
+      "fr": "les-soins-de-sante-a-la-retraite-a-quoi-s-attendre",
+      "en": "healthcare-retirement"
+    },
+    {
+      "fr": "les-trois-piliers-de-votre-retraite-rrq-rpc-regimes-d-employeur-et-epargne-personnelle-expliques-simplement",
+      "en": "three-pillars-retirement"
+    },
+    {
+      "fr": "nouveaux-plafonds-de-cotisation-ce-que-ca-change-pour-vous",
+      "en": "contribution-limits-2025"
+    },
+    {
+      "fr": "ou-trouver-de-l-aide-gratuite-pour-planifier-sa-retraite",
+      "en": "free-retirement-help"
+    },
+    {
+      "fr": "planifier-la-retraite-en-couple-eviter-les-surprises",
+      "en": "couple-retirement-planning"
+    },
+    {
+      "fr": "pourquoi-garder-60-a-75-pourcent-d-actions-a-la-retraite-la-revolution-de-la-planification-moderne",
+      "en": "why-keep-60-to-75-pourcent-in-stocks-during-retirement-the-modern-planning-revolution"
+    },
+    {
+      "fr": "pourquoi-les-femmes-ont-souvent-moins-d-argent-a-la-retraite",
+      "en": "women-retirement"
+    },
+    {
+      "fr": "pourquoi-reporter-ses-pensions-gouvernementales-peut-etre-payant",
+      "en": "delaying-government-pensions-why-it-can-pay-off"
+    },
+    {
+      "fr": "quand-puis-je-prendre-ma-retraite-les-differents-ages-et-ce-que-cela-change-dans-votre-portefeuille",
+      "en": "retirement-ages-portfolio"
+    },
+    {
+      "fr": "que-faire-quand-un-conjoint-veut-partir-avant-l-autre",
+      "en": "retirement-timing-couples"
+    },
+    {
+      "fr": "que-faire-si-vous-avez-travaille-au-quebec-et-dans-une-autre-province",
+      "en": "work-quebec-other-provinces"
+    },
+    {
+      "fr": "reer-vs-celi-le-guide-decisionnel-complet-pour-maximiser-votre-epargne-retraite",
+      "en": "rrsp-vs-tfsa-the-complete-decision-guide-to-maximize-your-retirement-savings"
+    },
+    {
+      "fr": "reer-vs-celi-lequel-choisir-a-55-ans-et-plus",
+      "en": "rrsp-tfsa-55plus"
+    },
+    {
+      "fr": "rester-chez-soi-ou-aller-en-residence-planifier-les-couts",
+      "en": "staying-home-residence"
+    },
+    {
+      "fr": "retraite-complete-ou-retraite-partielle-les-avantages-de-chaque-option",
+      "en": "full-retirement-or-partial-retirement-the-advantages-of-each-option"
+    },
+    {
+      "fr": "retraite-et-separation-proteger-ses-droits",
+      "en": "retirement-separation"
+    },
+    {
+      "fr": "rrq-et-rpc-quand-les-demander-pour-en-avoir-le-maximum",
+      "en": "qpp-and-cpp-when-to-apply-to-get-the-maximum"
+    },
+    {
+      "fr": "veuvage-gerer-ses-finances-apres-le-deces-du-conjoint",
+      "en": "widowhood-finances"
+    },
+    {
+      "fr": "nouveaux-plafonds-de-cotisation-ce-que-ca-change-pour-vous",
+      "en": "contribution-limits-2025"
+    },
+    {
+      "fr": "comment-la-hausse-du-cout-de-la-vie-affecte-votre-retraite",
+      "en": "cost-of-living-retirement"
+    },
+    {
+      "fr": "planifier-la-retraite-en-couple-eviter-les-surprises",
+      "en": "couple-retirement-planning"
+    },
+    {
+      "fr": "pourquoi-reporter-ses-pensions-gouvernementales-peut-etre-payant",
+      "en": "delaying-government-pensions-why-it-can-pay-off"
+    },
+    {
+      "fr": "comment-choisir-un-conseiller-financier-de-confiance",
+      "en": "financial-advisor"
+    },
+    {
+      "fr": "comment-eviter-les-fraudes-financieres-apres-65-ans",
+      "en": "financial-fraud-65"
+    },
+    {
+      "fr": "les-activites-gratuites-ou-peu-couteuses-pour-les-retraites",
+      "en": "free-or-low-cost-activities-for-retirees"
+    },
+    {
+      "fr": "ou-trouver-de-l-aide-gratuite-pour-planifier-sa-retraite",
+      "en": "free-retirement-help"
+    },
+    {
+      "fr": "retraite-complete-ou-retraite-partielle-les-avantages-de-chaque-option",
+      "en": "full-retirement-or-partial-retirement-the-advantages-of-each-option"
+    },
+    {
+      "fr": "le-supplement-de-revenu-garanti-etes-vous-admissible",
+      "en": "gis-eligibility-are-you-eligible"
+    },
+    {
+      "fr": "les-soins-de-sante-a-la-retraite-a-quoi-s-attendre",
+      "en": "healthcare-retirement"
+    },
+    {
+      "fr": "comment-optimiser-vos-prestations-rrq-rpc-et-securite-de-la-vieillesse-le-guide-strategique-complet",
+      "en": "how-to-optimize-your-qpp-cpp-and-old-age-security-benefits-the-complete-strategic-guide"
+    },
+    {
+      "fr": "les-documents-importants-a-garder-pour-sa-retraite",
+      "en": "important-retirement-documents"
+    },
+    {
+      "fr": "comment-partager-les-revenus-de-retraite-et-economiser-des-impots",
+      "en": "income-sharing-couples"
+    },
+    {
+      "fr": "le-fractionnement-de-revenus-explique-simplement",
+      "en": "income-splitting-simple"
+    },
+    {
+      "fr": "comment-faire-durer-son-argent-toute-sa-vie",
+      "en": "make-money-last-lifetime"
+    },
+    {
+      "fr": "gerer-l-anxiete-face-a-l-argent-a-la-retraite",
+      "en": "managing-retirement-money-anxiety"
+    },
+    {
+      "fr": "conges-de-maternite-et-retraite-comment-rattraper-le-retard",
+      "en": "maternity-leave-retirement"
+    },
+    {
+      "fr": "demenager-a-la-retraite-les-pour-et-les-contre",
+      "en": "moving-retirement"
+    },
+    {
+      "fr": "la-securite-de-la-vieillesse-sv-ce-que-vous-devez-savoir",
+      "en": "old-age-security-what-you-need-to-know"
+    },
+    {
+      "fr": "les-calculateurs-en-ligne-lesquels-utiliser-et-comment",
+      "en": "online-calculators"
+    },
+    {
+      "fr": "comment-proteger-ses-economies-de-l-inflation",
+      "en": "protect-savings-inflation"
+    },
+    {
+      "fr": "rrq-et-rpc-quand-les-demander-pour-en-avoir-le-maximum",
+      "en": "qpp-and-cpp-when-to-apply-to-get-the-maximum"
+    },
+    {
+      "fr": "quand-puis-je-prendre-ma-retraite-les-differents-ages-et-ce-que-cela-change-dans-votre-portefeuille",
+      "en": "retirement-ages-portfolio"
+    },
+    {
+      "fr": "budget-retraite-ce-qui-change-vraiment",
+      "en": "retirement-budget-what-really-changes"
+    },
+    {
+      "fr": "de-combien-d-argent-ai-je-vraiment-besoin-calculer-ses-besoins-sans-se-casser-la-tete",
+      "en": "retirement-money-needs"
+    },
+    {
+      "fr": "retraite-et-separation-proteger-ses-droits",
+      "en": "retirement-separation"
+    },
+    {
+      "fr": "l-impot-a-la-retraite-ce-qui-change",
+      "en": "retirement-tax-changes"
+    },
+    {
+      "fr": "que-faire-quand-un-conjoint-veut-partir-avant-l-autre",
+      "en": "retirement-timing-couples"
+    },
+    {
+      "fr": "comment-eviter-les-7-pieges-les-plus-courants-de-la-retraite",
+      "en": "retirement-traps-avoid"
+    },
+    {
+      "fr": "reer-vs-celi-lequel-choisir-a-55-ans-et-plus",
+      "en": "rrsp-tfsa-55plus"
+    },
+    {
+      "fr": "reer-vs-celi-le-guide-decisionnel-complet-pour-maximiser-votre-epargne-retraite",
+      "en": "rrsp-vs-tfsa-the-complete-decision-guide-to-maximize-your-retirement-savings"
+    },
+    {
+      "fr": "comment-economiser-sur-vos-impots-de-retraite",
+      "en": "saving-taxes-retirement"
+    },
+    {
+      "fr": "l-ordre-intelligent-pour-retirer-son-argent-a-la-retraite",
+      "en": "smart-withdrawal-order"
+    },
+    {
+      "fr": "comment-rester-actif-et-en-sante-a-la-retraite",
+      "en": "staying-active-healthy-retirement"
+    },
+    {
+      "fr": "rester-chez-soi-ou-aller-en-residence-planifier-les-couts",
+      "en": "staying-home-residence"
+    },
+    {
+      "fr": "la-regle-des-4-pourcent-la-strategie-de-retrait-moderne-qui-revolutionne-la-retraite",
+      "en": "the-4-pourcent-rule-the-modern-withdrawal-strategy-that-revolutionizes-retirement"
+    },
+    {
+      "fr": "les-trois-piliers-de-votre-retraite-rrq-rpc-regimes-d-employeur-et-epargne-personnelle-expliques-simplement",
+      "en": "three-pillars-retirement"
+    },
+    {
+      "fr": "pourquoi-garder-60-a-75-pourcent-d-actions-a-la-retraite-la-revolution-de-la-planification-moderne",
+      "en": "why-keep-60-to-75-pourcent-in-stocks-during-retirement-the-modern-planning-revolution"
+    },
+    {
+      "fr": "veuvage-gerer-ses-finances-apres-le-deces-du-conjoint",
+      "en": "widowhood-finances"
+    },
+    {
+      "fr": "pourquoi-les-femmes-ont-souvent-moins-d-argent-a-la-retraite",
+      "en": "women-retirement"
+    },
+    {
+      "fr": "que-faire-si-vous-avez-travaille-au-quebec-et-dans-une-autre-province",
+      "en": "work-quebec-other-provinces"
+    }
+  ],
+  "missingPairs": [],
+  "suggestions": [
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "creer-un-budget-realiste-pour-ses-premieres-annees-de-retraite",
+        "file": "creer-un-budget-realiste-pour-ses-premieres-annees-de-retraite.md"
+      },
+      "bestCandidate": {
+        "enSlug": "debt-retirement",
+        "score": 0.5
+      },
+      "top5": [
+        {
+          "enSlug": "debt-retirement",
+          "score": 0.5
+        },
+        {
+          "enSlug": "healthcare-retirement",
+          "score": 0.5
+        },
+        {
+          "enSlug": "moving-retirement",
+          "score": 0.5
+        },
+        {
+          "enSlug": "retirement-separation",
+          "score": 0.5
+        },
+        {
+          "enSlug": "women-retirement",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "faut-il-rembourser-ses-dettes-avant-la-retraite",
+        "file": "faut-il-rembourser-ses-dettes-avant-la-retraite.md"
+      },
+      "bestCandidate": {
+        "enSlug": "debt-retirement",
+        "score": 0.5
+      },
+      "top5": [
+        {
+          "enSlug": "debt-retirement",
+          "score": 0.5
+        },
+        {
+          "enSlug": "healthcare-retirement",
+          "score": 0.5
+        },
+        {
+          "enSlug": "moving-retirement",
+          "score": 0.5
+        },
+        {
+          "enSlug": "retirement-separation",
+          "score": 0.5
+        },
+        {
+          "enSlug": "women-retirement",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "from": {
+        "lang": "fr",
+        "slug": "preparer-sa-declaration-de-revenus-de-retraite",
+        "file": "preparer-sa-declaration-de-revenus-de-retraite.md"
+      },
+      "bestCandidate": {
+        "enSlug": "debt-retirement",
+        "score": 0.5
+      },
+      "top5": [
+        {
+          "enSlug": "debt-retirement",
+          "score": 0.5
+        },
+        {
+          "enSlug": "healthcare-retirement",
+          "score": 0.5
+        },
+        {
+          "enSlug": "moving-retirement",
+          "score": 0.5
+        },
+        {
+          "enSlug": "retirement-separation",
+          "score": 0.5
+        },
+        {
+          "enSlug": "women-retirement",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "from": {
+        "lang": "en",
+        "slug": "debt-retirement",
+        "file": "debt-retirement.md"
+      },
+      "bestCandidate": {
+        "frSlug": "budget-retraite-ce-qui-change-vraiment",
+        "score": 0.5
+      },
+      "top5": [
+        {
+          "frSlug": "budget-retraite-ce-qui-change-vraiment",
+          "score": 0.5
+        },
+        {
+          "frSlug": "comment-economiser-sur-vos-impots-de-retraite",
+          "score": 0.5
+        },
+        {
+          "frSlug": "comment-eviter-les-7-pieges-les-plus-courants-de-la-retraite",
+          "score": 0.5
+        },
+        {
+          "frSlug": "comment-la-hausse-du-cout-de-la-vie-affecte-votre-retraite",
+          "score": 0.5
+        },
+        {
+          "frSlug": "comment-partager-les-revenus-de-retraite-et-economiser-des-impots",
+          "score": 0.5
+        }
+      ]
+    }
+  ]
+}

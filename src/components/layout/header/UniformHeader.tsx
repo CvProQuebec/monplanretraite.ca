@@ -286,29 +286,8 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
       id: 'blog',
       label: isEnglish ? 'Blog' : 'Blog',
       icon: FileText,
-      hasSubmenu: true,
-      submenu: [
-        {
-          id: 'blog-guides',
-          label: isEnglish ? '📚 Practical Guides' : '📚 Guides pratiques',
-          path: isEnglish ? '/blog/guides' : '/blog/guides'
-        },
-        {
-          id: 'blog-expert-tips',
-          label: isEnglish ? '💡 Expert Tips' : '💡 Conseils d\'experts',
-          path: isEnglish ? '/blog/expert-tips' : '/blog/conseils-experts'
-        },
-        {
-          id: 'blog-case-studies',
-          label: isEnglish ? '📊 Case Studies' : '📊 Études de cas',
-          path: isEnglish ? '/blog/case-studies' : '/blog/etudes-cas'
-        },
-        {
-          id: 'blog-tax-news',
-          label: isEnglish ? '🔍 Tax News' : '🔍 Actualités fiscales',
-          path: isEnglish ? '/blog/tax-news' : '/blog/actualites-fiscales'
-        }
-      ]
+      path: isEnglish ? '/en/blog' : '/blog',
+      hasSubmenu: false
     },
     {
       id: 'reports',
@@ -379,7 +358,7 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
             <img
               src="/logo-planretraite.png"
               alt="MonPlanRetraite.ca Logo"
-              className="h-6 w-auto"
+              className="h-9 w-auto"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
@@ -394,14 +373,14 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
               <div key={item.id} className="relative submenu-container mr-0">
                 <button
                   onClick={() => handleMenuClick(item)}
-                  className={`flex items-center space-x-0.5 px-0 py-1 rounded-md text-sm font-medium transition-all duration-200 ${
+                  className={`flex items-center space-x-0.5 px-0 py-1 rounded-md text-xs font-medium transition-all duration-200 ${
                     isActivePath(item.path)
                       ? 'bg-blue-100 text-blue-700 shadow-sm'
                       : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
                   }`}
                 >
                                       <item.icon className="w-3 h-3 flex-shrink-0" />
-                    <span className="whitespace-nowrap text-sm">{item.label}</span>
+                    <span className="whitespace-nowrap text-xs">{item.label}</span>
                   {item.hasSubmenu && (
                     <ChevronDown className={`w-3 h-3 flex-shrink-0 transition-transform ${openSubmenu === item.id ? 'rotate-180' : ''}`} />
                   )}

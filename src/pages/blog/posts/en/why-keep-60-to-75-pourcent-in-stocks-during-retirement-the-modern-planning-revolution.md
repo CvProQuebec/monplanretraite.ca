@@ -9,7 +9,7 @@ excerpt: >-
   experts now recommend keeping 60 to 75% in stocks—even at age 70.
 tags:
   - retraite
-category: Les bases de la retraite
+category: Retirement basics
 language: en
 status: published
 readingTime: 8

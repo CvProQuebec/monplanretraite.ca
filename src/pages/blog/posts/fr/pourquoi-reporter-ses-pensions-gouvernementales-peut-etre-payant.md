@@ -16,6 +16,7 @@ status: published
 readingTime: 5
 oqlfChecked: false
 relatedSlugFr: pourquoi-reporter-ses-pensions-gouvernementales-peut-etre-payant
+relatedSlugEn: delaying-government-pensions-why-it-can-pay-off
 ---
 # Pourquoi reporter ses pensions gouvernementales peut être payant
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -31,6 +31,7 @@ import { useNavigate } from 'react-router-dom';
 import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
 import { ComparisonTeaser } from '@/components/home/ComparisonTeaser';
 import { FEATURE_CATALOG, Tier } from '@/config/plans';
+import { getAllPosts } from '@/pages/blog/utils/content';
 
 const Accueil: React.FC = () => {
   const { language } = useLanguage();
@@ -94,13 +95,26 @@ const Accueil: React.FC = () => {
   }, []);
 
   // Catalogue des fonctionnalités (palier minimal requis)
+  const totalBlogCount = useMemo(() => getAllPosts().filter(p => p.status === 'published').length, []);
   const featureCatalog = FEATURE_CATALOG;
 
   const labelOf = (f: { labelFr: string; labelEn: string }) => (isFrench ? f.labelFr : f.labelEn);
   const sortByLabel = (a: typeof featureCatalog[number], b: typeof featureCatalog[number]) =>
     labelOf(a).localeCompare(labelOf(b), isFrench ? 'fr-CA' : 'en-CA');
 
-  const freeList = featureCatalog.filter(f => f.tier === 'free').sort(sortByLabel);
+  // Prioriser certains éléments (ex.: trousse d'urgence en premier)
+  const freePriority = new Map<string, number>([['emergency', 0]]);
+  const sortFree = (
+    a: typeof featureCatalog[number],
+    b: typeof featureCatalog[number]
+  ) => {
+    const pa = freePriority.has(a.key) ? (freePriority.get(a.key) as number) : 999;
+    const pb = freePriority.has(b.key) ? (freePriority.get(b.key) as number) : 999;
+    if (pa !== pb) return pa - pb;
+    return labelOf(a).localeCompare(labelOf(b), isFrench ? 'fr-CA' : 'en-CA');
+  };
+
+  const freeList = featureCatalog.filter(f => f.tier === 'free').sort(sortFree);
   const proOnlyList = featureCatalog.filter(f => f.tier === 'pro').sort(sortByLabel);
   const expertOnlyList = featureCatalog.filter(f => f.tier === 'expert').sort(sortByLabel);
 
@@ -382,8 +396,79 @@ const Accueil: React.FC = () => {
             </CardContent>
           </Card>
 
-          {/* WIDGET TEASER COMPARATEUR */}
-          <ComparisonTeaser className="mb-16" />
+
+{/* SECTION: Visuel Calculateurs — placé avant la trousse */}
+<Card className="hidden bg-white border-2 border-gray-200 shadow-xl mb-16">
+            <CardContent className="p-6 text-center">
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                {isFrench ? 'Calculateurs de base (5 outils) — réponses rapides' : 'Basic calculators (5 tools) — quick answers'}
+              </h2>
+              <p className="text-gray-700 mb-6">
+                {isFrench
+                  ? 'Des petits outils simples pour obtenir vite une estimation.'
+                  : 'Small simple tools to get a quick estimate.'}
+              </p>
+              <img
+                src="/calculateurs.png"
+                alt={isFrench ? 'Aperçu des calculateurs de base' : 'Preview of basic calculators'}
+                className="mx-auto rounded-xl shadow-lg max-w-full h-auto"
+                loading="lazy"
+              />
+            </CardContent>
+          </Card>
+
+          {/* SECTION: Trousse familiale — placé avant les 3 forfaits */}
+          <Card className="bg-white border-2 border-gray-200 shadow-xl mb-16">
+            <CardContent className="p-6 text-center">
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                {isFrench ? 'Trousse de protection familiale — infos essentielles prêtes' : 'Family Protection Kit — essentials ready'}
+              </h2>
+              <p className="text-gray-700 mb-2">
+                {isFrench
+                  ? 'Rassemblez les infos importantes pour votre famille en cas d’urgence.'
+                  : 'Gather important info for your family in case of emergency.'}
+              </p>
+              <div className="text-sm text-gray-700 mb-6">
+                {isFrench
+                  ? 'Inclut 8 sections: Personnes, Documents, Finances, Testament, Santé, Assurances, Accès, Vérification.'
+                  : 'Includes 8 sections: People, Documents, Finances, Will, Health, Insurance, Access, Verification.'}
+              </div>
+              <img
+                src="/familial.png"
+                alt={isFrench ? 'Aperçu de la trousse de protection familiale' : 'Preview of the Family Protection Kit'}
+                className="mx-auto rounded-xl shadow-lg max-w-full h-auto"
+                loading="lazy"
+              />
+            </CardContent>
+          </Card>
+
+          {/* SECTION: Bibliothèque d'articles — compteur dynamique + CTA */}
+          <Card className="bg-white border-2 border-gray-200 shadow-xl mb-16">
+            <CardContent className="p-6 text-center">
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                {isFrench ? `Bibliothèque d’articles — ${totalBlogCount}+ articles` : `Articles Library — ${totalBlogCount}+ articles`}
+              </h2>
+              <p className="text-gray-700 mb-6">
+                {isFrench
+                  ? 'Accédez gratuitement à notre bibliothèque pour bien vous préparer à la retraite.'
+                  : 'Free access to our library to get ready for retirement.'}
+              </p>
+              <img
+                src="/articles.png"
+                alt={isFrench ? 'Aperçu des articles de blog' : 'Preview of blog articles'}
+                className="mx-auto rounded-xl shadow-lg max-w-full h-auto"
+                loading="lazy"
+              />
+              <div className="mt-6">
+                <Button
+                  onClick={() => navigate(isFrench ? '/blog' : '/en/blog')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-xl"
+                >
+                  {isFrench ? '📚 Bibliothèque complète' : '📚 Full Library'}
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* SECTION 4: Comparaison des plans - VERSION SIMPLIFIÉE (70% plus courte) */}
           <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-16 rounded-2xl mb-16">
@@ -434,6 +519,15 @@ const Accueil: React.FC = () => {
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-emerald-500" />
                         <span className="text-xs">{isFrench ? 'Calculateurs de base (5 outils)' : 'Basic calculators (5 tools)'}</span>
+                      </div>
+                      <div className="pl-6 text-[11px] text-gray-600">
+                        <ul className="list-disc list-inside">
+                          <li>{isFrench ? 'Calculatrice de rendement simple' : 'Simple return calculator'}</li>
+                          <li>{isFrench ? "Comparateur d’options d’achat" : 'Purchase options comparator'}</li>
+                          <li>{isFrench ? 'Estimateur de budget mensuel (lite)' : 'Monthly budget estimator (lite)'}</li>
+                          <li>{isFrench ? 'Aperçu RRQ/CPP — montants et impact' : 'RRQ/CPP preview — amounts and impact'}</li>
+                          <li>{isFrench ? 'Conseils essentiels (aperçu)' : 'Essential tips (preview)'}</li>
+                        </ul>
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-emerald-500" />
@@ -486,7 +580,7 @@ const Accueil: React.FC = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-blue-500" />
-                        <span className="text-xs font-medium">{isFrench ? 'Tout du plan Gratuit + 45 fonctionnalités' : 'Everything from Free + 45 features'}</span>
+                        <span className="text-xs font-medium">{isFrench ? 'Tout du plan Gratuit + fonctionnalités avancées (bornées)' : 'Everything from Free + advanced features (capped)'}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <Sparkles className="w-4 h-4 text-yellow-500" />
@@ -494,7 +588,7 @@ const Accueil: React.FC = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-blue-500" />
-                        <span className="text-xs">{isFrench ? 'Calculateurs avancés (IRR, TWR, Monte Carlo)' : 'Advanced calculators (IRR, TWR, Monte Carlo)'}</span>
+                        <span className="text-xs">{isFrench ? 'Calculateurs avancés (IRR, TWR, Monte Carlo – aperçu)' : 'Advanced calculators (IRR, TWR, Monte Carlo – preview)'}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-blue-500" />
@@ -502,11 +596,11 @@ const Accueil: React.FC = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-blue-500" />
-                        <span className="text-xs">{isFrench ? 'Optimisation fiscale avancée (REER/CELI)' : 'Advanced tax optimization (RRSP/TFSA)'}</span>
+                        <span className="text-xs">{isFrench ? 'Optimisation fiscale (de base)' : 'Tax optimization (basic)'}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-blue-500" />
-                        <span className="text-xs">{isFrench ? 'Rapports professionnels • Simulations illimitées' : 'Professional reports • Unlimited simulations'}</span>
+                        <span className="text-xs">{isFrench ? 'PDF résumé (filigrane) • 50 simulations/mois' : 'PDF summary (watermark) • 50 simulations/month'}</span>
                       </div>
                     </div>
                     <Button 
@@ -550,7 +644,7 @@ const Accueil: React.FC = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-purple-500" />
-                        <span className="text-xs">{isFrench ? 'Monte Carlo 1000+ itérations • IA prédictive' : 'Monte Carlo 1000+ iterations • Predictive AI'}</span>
+                        <span className="text-xs">{isFrench ? 'Monte Carlo 2000 itérations • IA prédictive' : 'Monte Carlo 2000 iterations • Predictive AI'}</span>
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-purple-500" />
@@ -558,7 +652,7 @@ const Accueil: React.FC = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         <CheckCircle className="w-4 h-4 text-purple-500" />
-                        <span className="text-xs">{isFrench ? 'Rapports niveau consultant • Export PDF' : 'Consultant-level reports • PDF export'}</span>
+                        <span className="text-xs">{isFrench ? 'Rapports niveau consultant • Export PDF + CSV' : 'Consultant-level reports • PDF + CSV export'}</span>
                       </div>
 
                     </div>
@@ -592,6 +686,7 @@ const Accueil: React.FC = () => {
             </div>
           </div>
 
+          <ComparisonTeaser className="mb-16" />
 
           {/* SECTION 5: Tableau de comparaison détaillée */}
           {showComparison && (
@@ -732,54 +827,23 @@ const Accueil: React.FC = () => {
             </CardContent>
           </Card>
 
-          {/* SECTION: Service Gratuit — déplacé après “Différences” */}
-          <Card className="bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-2xl mb-16 border-0 overflow-hidden relative">
-            <CardContent className="p-8 relative z-10">
-              <div className="text-center mb-8">
-                <div className="inline-block bg-yellow-400 text-yellow-900 px-4 py-2 rounded-full text-sm font-bold mb-4">
-                  🎁 {isFrench ? 'SERVICE GRATUIT' : 'FREE SERVICE'}
-                </div>
-                <h2 className="text-4xl font-bold mb-4">
-                  {isFrench ? 'Trousse de protection familiale' : 'Family Protection Kit'}
-                </h2>
-                <p className="text-xl text-emerald-100 max-w-3xl mx-auto mb-8">
-                  {isFrench
-                    ? 'Complétez l\'information, imprimez et partagez avec les membres de votre famille ou votre personne de confiance.'
-                    : 'Complete the information, print and share with family members or your trusted person.'
-                  }
-                </p>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-                <div className="text-center">
-                  <Phone className="w-12 h-12 text-white mx-auto mb-2" />
-                  <h3 className="font-semibold">{isFrench ? 'Contacts d\'urgence' : 'Emergency contacts'}</h3>
-                </div>
-                <div className="text-center">
-                  <Heart className="w-12 h-12 text-white mx-auto mb-2" />
-                  <h3 className="font-semibold">{isFrench ? 'Infos médicales' : 'Medical info'}</h3>
-                </div>
-                <div className="text-center">
-                  <FileText className="w-12 h-12 text-white mx-auto mb-2" />
-                  <h3 className="font-semibold">{isFrench ? 'Documents légaux' : 'Legal documents'}</h3>
-                </div>
-                <div className="text-center">
-                  <Users className="w-12 h-12 text-white mx-auto mb-2" />
-                  <h3 className="font-semibold">{isFrench ? 'Responsabilités' : 'Responsibilities'}</h3>
-                </div>
-              </div>
-              <div className="text-center">
-                <Button
-                  onClick={() => handleNavigation('/planification-urgence')}
-                  size="lg"
-                  className="bg-white text-emerald-600 hover:bg-gray-100 font-bold px-12 py-4 text-xl rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                >
-                  {isFrench ? '🎯 Créer ma trousse GRATUITE' : '🎯 Create my FREE Kit'}
-                  <ArrowRight className="ml-3 w-6 h-6" />
-                </Button>
-                <p className="text-emerald-200 text-sm mt-4">
-                  {isFrench ? '✨ Aucune inscription requise • Données 100 % privées' : '✨ No registration required • 100% private data'}
-                </p>
-              </div>
+
+
+          {/* SECTION: Disclaimers visibles */}
+          <Card className="bg-white border-2 border-amber-200 shadow-xl mb-16">
+            <CardHeader className="text-center pb-4">
+              <CardTitle className="text-2xl font-bold text-amber-800">
+                {isFrench ? 'Disclaimers importants' : 'Important disclaimers'}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-2 text-sm text-amber-900">
+                <li>• {isFrench ? "Outil éducatif seulement — aucun conseil financier, fiscal, juridique ou d'investissement personnalisé." : 'Educational tool only — no personalized financial, tax, legal, or investment advice.'}</li>
+                <li>• {isFrench ? "Aucune affiliation avec une institution financière. Aucun permis de l'AMF." : 'No affiliation with any financial institution. No AMF licensing.'}</li>
+                <li>• {isFrench ? 'Données 100 % locales — restent sur votre appareil (chiffrement AES‑256).' : 'Data stays 100% local on your device (AES‑256 encryption).'} </li>
+                <li>• {isFrench ? 'Support auto-assisté (FAQ et bulles d’aide). Pas de support téléphonique.' : 'Self‑serve support (FAQ and help tips). No phone support.'}</li>
+                <li>• {isFrench ? "Plans annuels seulement. Promotions saisonnières possibles (-25 % à -40 %)." : 'Annual plans only. Seasonal promotions may apply (-25% to -40%).'}</li>
+              </ul>
             </CardContent>
           </Card>
 
@@ -803,6 +867,50 @@ const Accueil: React.FC = () => {
                 <details className="border rounded-lg p-3">
                   <summary className="font-semibold cursor-pointer">{isFrench ? 'Puis‑je obtenir un remboursement?' : 'Can I get a refund?'}</summary>
                   <p className="mt-2 text-sm">{isFrench ? 'Oui, garantie de remboursement 14 jours sur les plans payants.' : 'Yes, 14‑day money‑back guarantee on paid plans.'}</p>
+                </details>
+                {/* FAQ seniors supplémentaires */}
+                <details className="border rounded-lg p-3">
+                  <summary className="font-semibold cursor-pointer">
+                    {isFrench ? 'Offrez-vous du support téléphonique?' : 'Do you offer phone support?'}
+                  </summary>
+                  <p className="mt-2 text-sm">
+                    {isFrench
+                      ? "Non. Pour éviter les délais et garder le prix bas, nous offrons un support auto‑assisté (FAQ et bulles d’aide). Vous pouvez nous écrire par courriel en cas de bug."
+                      : 'No. To keep costs low and avoid delays, we provide self‑serve support (FAQ and help tips). You can email us for bugs.'}
+                  </p>
+                </details>
+
+                <details className="border rounded-lg p-3">
+                  <summary className="font-semibold cursor-pointer">
+                    {isFrench ? 'Comment sauvegarder mes données (clé USB)?' : 'How do I save my data (USB key)?'}
+                  </summary>
+                  <p className="mt-2 text-sm">
+                    {isFrench
+                      ? "Vos données restent sur votre appareil. Utilisez la fonction de sauvegarde locale pour enregistrer un fichier sur votre clé USB ou votre disque. Aucune connexion internet requise."
+                      : 'Your data stays on your device. Use the local backup feature to save a file to your USB key or drive. No internet required.'}
+                  </p>
+                </details>
+
+                <details className="border rounded-lg p-3">
+                  <summary className="font-semibold cursor-pointer">
+                    {isFrench ? 'Donnez-vous des conseils personnalisés?' : 'Do you provide personalized advice?'}
+                  </summary>
+                  <p className="mt-2 text-sm">
+                    {isFrench
+                      ? "Non. L’outil est éducatif et ne remplace pas un planificateur financier. Nous n’offrons pas de conseils financiers, fiscaux, juridiques ou d’investissement personnalisés."
+                      : 'No. The tool is educational and does not replace a financial planner. We do not provide personalized financial, tax, legal, or investment advice.'}
+                  </p>
+                </details>
+
+                <details className="border rounded-lg p-3">
+                  <summary className="font-semibold cursor-pointer">
+                    {isFrench ? 'Avez-vous des promotions?' : 'Do you have promotions?'}
+                  </summary>
+                  <p className="mt-2 text-sm">
+                    {isFrench
+                      ? "Oui, à certaines périodes (Black Friday, Fêtes, été). Les rabais varient (–25 % à –40 %)."
+                      : 'Yes, during certain periods (Black Friday, Holidays, summer). Discounts vary (–25% to –40%).'}
+                  </p>
                 </details>
               </div>
               <div className="text-center mt-8">

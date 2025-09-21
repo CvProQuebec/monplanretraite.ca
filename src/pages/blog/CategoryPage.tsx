@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import {
   getPostsByCategorySlug,
@@ -14,15 +14,36 @@ import { ArrowLeft } from 'lucide-react';
 const CategoryPage: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
   const { slug } = useParams();
   const { language: uiLanguage } = useLanguage();
-  const lang: 'fr' | 'en' = language || (uiLanguage === 'fr' ? 'fr' : 'en');
+  const location = useLocation();
+  const pathLang: 'fr' | 'en' = location.pathname.startsWith('/en/') ? 'en' : 'fr';
+  const lang: 'fr' | 'en' = language || pathLang || (uiLanguage === 'fr' ? 'fr' : 'en');
   const navigate = useNavigate();
 
   const canonical = slug ? resolveCategorySlug(slug) : undefined;
   const posts = useMemo(() => (slug ? getPostsByCategorySlug(slug, lang) : []), [slug, lang]);
 
+  // Localize category labels for display (keys remain FR for filtering)
+  const categoryLabel = (cat: string | undefined) => {
+    if (!cat) return undefined;
+    if (lang === 'fr') return cat;
+    const map: Record<string, string> = {
+      'Les bases de la retraite': 'Retirement basics',
+      'Comprendre les régimes gouvernementaux': 'Government programs',
+      'Gérer son épargne et ses placements': 'Manage savings and investments',
+      'Planification pour les couples': 'Planning for couples',
+      'Défis spécifiques aux femmes': 'Women-specific challenges',
+      'Aspects pratiques et quotidiens': 'Practical everyday aspects',
+      'Fiscalité simplifiée': 'Simple taxation',
+      'Sujets saisonniers et d’actualité': 'Seasonal and current topics',
+      'Outils et ressources': 'Tools and resources',
+      'Bien-être et qualité de vie': 'Well-being and quality of life',
+    };
+    return map[cat] || cat;
+  };
+
   const t = {
     back: lang === 'fr' ? 'Retour' : 'Back',
-    title: canonical || (lang === 'fr' ? 'Catégorie' : 'Category'),
+    title: canonical ? (lang === 'fr' ? canonical : categoryLabel(canonical)) : (lang === 'fr' ? 'Catégorie' : 'Category'),
     none: lang === 'fr' ? 'Aucun article dans cette catégorie.' : 'No articles in this category.',
     blog: lang === 'fr' ? '/blog' : '/en/blog',
   };
@@ -59,7 +80,7 @@ const CategoryPage: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
                   title={p.title}
                 >
                   <CardHeader>
-                    <div className="text-xs text-blue-700 font-semibold mb-1">{p.category}</div>
+                    <div className="text-xs text-blue-700 font-semibold mb-1">{categoryLabel(p.category)}</div>
                     <CardTitle className="text-base line-clamp-2">{p.title}</CardTitle>
                   </CardHeader>
                   <CardContent>

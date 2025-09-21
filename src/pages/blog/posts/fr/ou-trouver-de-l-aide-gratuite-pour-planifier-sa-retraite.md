@@ -14,6 +14,7 @@ status: published
 readingTime: 4
 oqlfChecked: false
 relatedSlugFr: ou-trouver-de-l-aide-gratuite-pour-planifier-sa-retraite
+relatedSlugEn: free-retirement-help
 ---
 # Où trouver de l'aide gratuite pour planifier sa retraite
 

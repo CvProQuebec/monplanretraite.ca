@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
+import { getAllPosts } from '@/pages/blog/utils/content';
 
 const AccueilOptimise: React.FC = () => {
   const { language } = useLanguage();
@@ -54,6 +55,9 @@ const AccueilOptimise: React.FC = () => {
     setShowOnboardingWizard(false);
   };
 
+  // Compteur dynamique d'articles publiés
+  const totalBlogCount = useMemo(() => getAllPosts().filter(p => p.status === 'published').length, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       
@@ -66,7 +70,7 @@ const AccueilOptimise: React.FC = () => {
             <h1 className="text-5xl font-bold text-gray-900 mb-6">
               {isFrench ? 'Votre retraite mérite mieux qu\'un plan sur le coin d\'une table' : 'Your retirement deserves better than a plan on a napkin'}
             </h1>
-            <p className="text-2xl text-gray-700 max-w-4xl mx-auto mb-8">
+                <p className="text-2xl text-gray-700 max-w-4xl mx-auto mb-6">
               {isFrench 
                 ? 'Préparez-vous efficacement avec nos outils professionnels. Gagnez du temps et maximisez la valeur de vos décisions.'
                 : 'Prepare effectively with our professional tools. Save time and maximize the value of your decisions.'
@@ -90,12 +94,17 @@ const AccueilOptimise: React.FC = () => {
                 <h2 className="text-4xl font-bold mb-4">
                   {isFrench ? 'Trousse de protection familiale' : 'Family Protection Kit'}
                 </h2>
-                <p className="text-xl text-emerald-100 max-w-3xl mx-auto mb-8">
+                <p className="text-xl text-emerald-100 max-w-3xl mx-auto mb-2">
                   {isFrench 
                     ? 'Le premier pas essentiel avant de rencontrer un professionnel.'
                     : 'The essential first step before meeting a professional.'
                   }
                 </p>
+                <div className="text-sm text-emerald-100 max-w-3xl mx-auto mb-6">
+                  {isFrench
+                    ? 'Inclut 8 sections : Personnes, Documents, Finances, Testament, Santé, Assurances, Accès, Vérification.'
+                    : 'Includes 8 sections: People, Documents, Finances, Will, Health, Insurance, Access, Verification.'}
+                </div>
               </div>
 
               {/* 4 icônes simplifiées */}
@@ -130,6 +139,34 @@ const AccueilOptimise: React.FC = () => {
                 <p className="text-emerald-200 text-sm mt-4">
                   {isFrench ? '✨ Aucune inscription requise • Données 100 % privées' : '✨ No registration required • 100% private data'}
                 </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* SECTION: Bibliothèque d'articles — compteur dynamique + CTA */}
+          <Card className="bg-white border-2 border-gray-200 shadow-xl mb-16">
+            <CardContent className="p-6 text-center">
+              <h2 className="text-3xl font-bold text-gray-900 mb-3">
+                {isFrench ? `Bibliothèque d’articles — ${totalBlogCount}+ articles` : `Articles Library — ${totalBlogCount}+ articles`}
+              </h2>
+              <p className="text-gray-700 mb-6">
+                {isFrench
+                  ? 'Accédez gratuitement à notre bibliothèque pour bien vous préparer à la retraite.'
+                  : 'Free access to our library to get ready for retirement.'}
+              </p>
+              <img
+                src="/articles.png"
+                alt={isFrench ? 'Aperçu des articles de blog' : 'Preview of blog articles'}
+                className="mx-auto rounded-xl shadow-lg max-w-full h-auto"
+                loading="lazy"
+              />
+              <div className="mt-6">
+                <Button
+                  onClick={() => navigate(isFrench ? '/blog' : '/en/blog')}
+                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-xl"
+                >
+                  {isFrench ? '📚 Bibliothèque complète' : '📚 Full Library'}
+                </Button>
               </div>
             </CardContent>
           </Card>
@@ -223,11 +260,24 @@ const AccueilOptimise: React.FC = () => {
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center gap-3">
                         <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? 'Module d\'urgence complet' : 'Complete emergency module'}</span>
+                        <span className="text-sm">{isFrench ? 'Module d\'urgence complet (8 sections)' : 'Complete emergency module (8 sections)'}</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? 'Planification de base' : 'Basic planning'}</span>
+                        <span className="text-sm">{isFrench ? 'Planification budget/dépenses (lite)' : 'Budget/expenses planning (lite)'}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="w-5 h-5 text-emerald-500" />
+                        <span className="text-sm">{isFrench ? 'Calculateurs de base (5 outils)' : 'Basic calculators (5 tools)'}</span>
+                      </div>
+                      <div className="pl-7 text-[12px] text-gray-600 -mt-2">
+                        <ul className="list-disc list-inside">
+                          <li>{isFrench ? 'Calculatrice de rendement simple' : 'Simple return calculator'}</li>
+                          <li>{isFrench ? "Comparateur d’options d’achat" : 'Purchase options comparator'}</li>
+                          <li>{isFrench ? 'Estimateur de budget mensuel (lite)' : 'Monthly budget estimator (lite)'}</li>
+                          <li>{isFrench ? 'Aperçu RRQ/CPP — montants et impact' : 'RRQ/CPP preview — amounts and impact'}</li>
+                          <li>{isFrench ? 'Conseils essentiels (aperçu)' : 'Essential tips (preview)'}</li>
+                        </ul>
                       </div>
                       <div className="flex items-center gap-3">
                         <CheckCircle className="w-5 h-5 text-emerald-500" />

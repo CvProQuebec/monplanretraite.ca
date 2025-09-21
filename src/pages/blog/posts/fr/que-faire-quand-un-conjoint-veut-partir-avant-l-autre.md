@@ -13,6 +13,7 @@ status: published
 readingTime: 5
 oqlfChecked: false
 relatedSlugFr: que-faire-quand-un-conjoint-veut-partir-avant-l-autre
+relatedSlugEn: retirement-timing-couples
 ---
 # Que faire quand un conjoint veut partir avant l'autre?
 

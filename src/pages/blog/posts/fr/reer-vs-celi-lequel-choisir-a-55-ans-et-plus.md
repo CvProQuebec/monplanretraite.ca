@@ -17,6 +17,7 @@ status: published
 readingTime: 6
 oqlfChecked: false
 relatedSlugFr: reer-vs-celi-lequel-choisir-a-55-ans-et-plus
+relatedSlugEn: rrsp-tfsa-55plus
 ---
 # REER vs CELI : lequel choisir à 55 ans et plus?
 
