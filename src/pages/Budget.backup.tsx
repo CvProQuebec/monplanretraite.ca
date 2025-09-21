@@ -796,9 +796,9 @@ const Budget: React.FC = () => {
   if (!hasAccess) {
     return (
       <>
-        <div className="mpr-container min-h-screen">
-          <div className="mpr-container">
-            <div className="mpr-section text-center">
+        <div className="min-h-screen bg-gradient-to-br from-red-50 via-orange-50 to-yellow-50">
+          <div className="container mx-auto px-4 py-12">
+            <div className="text-center mb-12">
               <div className="flex justify-center mb-6">
                 <div className="bg-gradient-to-r from-orange-600 to-red-600 p-4 rounded-full shadow-lg">
                   <PiggyBank className="h-12 w-12 text-white" />
@@ -823,7 +823,7 @@ const Budget: React.FC = () => {
                 </AlertDescription>
               </Alert>
 
-              <div className="mpr-form-row cols-auto">
+              <div className="flex justify-center gap-4">
                 <Button 
                   onClick={() => setShowUpgradeModal(true)}
                   size="lg"
@@ -862,7 +862,7 @@ const Budget: React.FC = () => {
       <div className="container mx-auto px-6 py-8 relative z-10">
 
         {/* En-tête spectaculaire */}
-        <div className="mpr-section text-center">
+        <div className="text-center mb-12">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent drop-shadow-2xl" style={{fontSize: '3.5rem'}}>
             💰 {isFrench ? 'Mon budget intelligent' : 'My Smart Budget'}
           </h1>
@@ -875,7 +875,7 @@ const Budget: React.FC = () => {
         </div>
 
         {/* Résumé financier */}
-        <div className="mpr-form-row cols-4">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card className="bg-gradient-to-br from-green-100 to-emerald-100 border-2 border-green-200 shadow-lg">
             <CardContent className="p-6 text-center">
               <TrendingUp className="w-8 h-8 text-green-600 mx-auto mb-2" />
@@ -940,7 +940,7 @@ const Budget: React.FC = () => {
         )}
 
         {/* Onglets principaux */}
-        <Tabs defaultValue={initialTab} className="mpr-form">
+        <Tabs defaultValue={initialTab} className="space-y-6">
           <TabsList className="w-full flex flex-wrap gap-2 gap-y-2 bg-slate-100 backdrop-blur-sm border border-slate-300 p-2 rounded-md h-auto items-stretch overflow-visible">
             {/* ordre optimisé pour FR (libellés plus longs) */}
             <TabsTrigger value="overview" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Vue d\'ensemble' : 'Overview'}</TabsTrigger>
@@ -959,7 +959,7 @@ const Budget: React.FC = () => {
           </TabsList>
 
           {/* Vue d'ensemble */}
-          <TabsContent value="overview" className="mpr-form">
+          <TabsContent value="overview" className="space-y-6">
             <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
               <ContextualTipsPanel
                 language={isFrench ? 'fr' : 'en'}
@@ -972,7 +972,7 @@ const Budget: React.FC = () => {
                 sinkingFunds={budgetSettings.sinkingFunds ?? []}
               />
             </Suspense>
-            <div className="mpr-form-row cols-2">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Graphique des catégories */}
               <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 shadow-lg">
                 <CardHeader>
@@ -1001,7 +1001,7 @@ const Budget: React.FC = () => {
                       </Button>
                     </div>
                   </div>
-                  <div className="mpr-form">
+                  <div className="space-y-4">
                     {expenseCategories.map(category => {
                       const categoryExpenses = budgetData.expenses
                         .filter(e => e.isActive && e.category === category.value)
@@ -1059,7 +1059,7 @@ const Budget: React.FC = () => {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="mpr-form">
+                  <div className="space-y-4">
                     <div className="flex justify-between items-center">
                       <span className="text-gray-700">{isFrench ? 'Dans 3 mois' : 'In 3 months'}</span>
                       <span className={`font-bold ${getAmountColor(budgetData.currentBalance + (netCashFlow * 3))}`}>
@@ -1085,7 +1085,7 @@ const Budget: React.FC = () => {
           </TabsContent>
 
           {/* Gestion des dépenses */}
-          <TabsContent value="expenses" className="mpr-form">
+          <TabsContent value="expenses" className="space-y-6">
             {(() => {
               const linkedCount = budgetLinks.filter(l => l.sourceType === 'expense' && l.sourceId.startsWith('cashflow:')).length;
               if (linkedCount === 0) return null;
@@ -1154,7 +1154,7 @@ const Budget: React.FC = () => {
             </div>
 
             {/* Liste des dépenses */}
-            <div className="mpr-form">
+            <div className="space-y-4">
               {budgetData.expenses.map(expense => {
                 const category = expenseCategories.find(c => c.value === expense.category);
                 const isEditing = editingExpense === expense.id;
@@ -1337,7 +1337,7 @@ const Budget: React.FC = () => {
           </TabsContent>
 
           {/* Calendrier des paiements */}
-          <TabsContent value="calendar" className="mpr-form">
+          <TabsContent value="calendar" className="space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold text-blue-700">
                 {isFrench ? 'Calendrier des paiements' : 'Payment Calendar'}
@@ -1382,7 +1382,7 @@ const Budget: React.FC = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="mpr-form-row cols-7">
+                <div className="grid grid-cols-7 gap-2 mb-4">
                   {['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'].map(day => (
                     <div key={day} className="text-center text-lg font-semibold text-gray-700 p-2">
                       {day}
@@ -1390,7 +1390,7 @@ const Budget: React.FC = () => {
                   ))}
                 </div>
                 
-                <div className="mpr-form-row cols-7">
+                <div className="grid grid-cols-7 gap-2">
                   {Array.from({ length: 35 }, (_, i) => {
                     const firstDay = new Date(selectedYear, selectedMonth, 1).getDay();
                     const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
@@ -1424,17 +1424,17 @@ const Budget: React.FC = () => {
           </TabsContent>
 
           {/* CoastFIRE Calculator */}
-          <TabsContent value="coastfire" className="mpr-form">
+          <TabsContent value="coastfire" className="space-y-6">
             <CoastFIRECalculator />
           </TabsContent>
 
           {/* 99 Trucs pour économiser */}
-          <TabsContent value="tips" className="mpr-form">
+          <TabsContent value="tips" className="space-y-6">
             <EconomyTipsGuide />
           </TabsContent>
 
           {/* Module d'apprentissage */}
-          <TabsContent value="learning" className="mpr-form">
+          <TabsContent value="learning" className="space-y-6">
             <LearningModule 
               moduleId="budget-fundamentals"
               onComplete={() => {
@@ -1447,7 +1447,7 @@ const Budget: React.FC = () => {
           </TabsContent>
 
           {/* Règle 50/30/20 */}
-          <TabsContent value="budgetRule" className="mpr-form">
+          <TabsContent value="budgetRule" className="space-y-6">
             <div className="flex flex-wrap gap-2">
               <Button variant="outline" onClick={() => setBudgetTargets({ needsPct: 55, wantsPct: 25, savingsDebtPct: 20 })}>
                 {isFrench ? 'Preset: Essentiels 55/25/20' : 'Preset: Essentials 55/25/20'}
@@ -1471,7 +1471,7 @@ const Budget: React.FC = () => {
           </TabsContent>
 
           {/* Fonds d’urgence */}
-          <TabsContent value="emergency" className="mpr-form">
+          <TabsContent value="emergency" className="space-y-6">
             <Alert className="border-emerald-200 bg-emerald-50 text-emerald-900">
               <AlertDescription>
                 {isFrench
@@ -1492,7 +1492,7 @@ const Budget: React.FC = () => {
           </TabsContent>
 
           {/* Objectifs planifiés (sinking funds) */}
-          <TabsContent value="sinking" className="mpr-form">
+          <TabsContent value="sinking" className="space-y-6">
             <Alert className="border-indigo-200 bg-indigo-50 text-indigo-900">
               <AlertDescription>
                 {isFrench
@@ -1515,7 +1515,7 @@ const Budget: React.FC = () => {
           </TabsContent>
 
           {/* Dettes — Snowball */}
-          <TabsContent value="debts" className="mpr-form">
+          <TabsContent value="debts" className="space-y-6">
             <Alert className="border-purple-200 bg-purple-50 text-purple-900">
               <AlertDescription>
                 {isFrench
@@ -1533,7 +1533,7 @@ const Budget: React.FC = () => {
           </TabsContent>
 
           {/* Revenus & Déductions */}
-          <TabsContent value="income" className="mpr-form">
+          <TabsContent value="income" className="space-y-6">
             <Alert className="border-blue-200 bg-blue-50 text-blue-800">
               <AlertDescription>
                 {isFrench
@@ -1551,8 +1551,8 @@ const Budget: React.FC = () => {
           </TabsContent>
 
           {/* Valeur nette */}
-          <TabsContent value="networth" className="mpr-form">
-            <div className="mpr-form-row cols-2">
+          <TabsContent value="networth" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Actifs */}
               <Card className="bg-gradient-to-br from-emerald-50 to-green-50 border-2 border-emerald-200 shadow-lg">
                 <CardHeader>
@@ -1560,7 +1560,7 @@ const Budget: React.FC = () => {
                     {isFrench ? 'Actifs' : 'Assets'}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="mpr-form">
+                <CardContent className="space-y-4">
                   <div className="senior-form-row">
                     <Label className="senior-form-label">{isFrench ? 'Encaisse / Banque' : 'Cash / Bank'}</Label>
                     <MoneyInput
@@ -1607,7 +1607,7 @@ const Budget: React.FC = () => {
                     {isFrench ? 'Passifs' : 'Liabilities'}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="mpr-form">
+                <CardContent className="space-y-4">
                   <div className="senior-form-row">
                     <Label className="senior-form-label">{isFrench ? 'Hypothèque' : 'Mortgage'}</Label>
                     <MoneyInput
@@ -1664,7 +1664,7 @@ const Budget: React.FC = () => {
                   {isFrench ? 'Résumé de la valeur nette' : 'Net worth summary'}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="mpr-form">
+              <CardContent className="space-y-4">
                 {(() => {
                   const assetsTotal = (netWorth.assets.cash || 0) + (netWorth.assets.investments || 0) + (netWorth.assets.realEstate || 0) + (netWorth.assets.other || 0);
                   const liabTotal = (netWorth.liabilities.mortgage || 0) + (netWorth.liabilities.auto || 0) + (netWorth.liabilities.credit || 0) + (netWorth.liabilities.student || 0) + (netWorth.liabilities.other || 0);
@@ -1730,8 +1730,8 @@ const Budget: React.FC = () => {
           </TabsContent>
 
           {/* Paramètres */}
-          <TabsContent value="settings" className="mpr-form">
-            <div className="mpr-form-row cols-2">
+          <TabsContent value="settings" className="space-y-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Solde bancaire */}
               <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl">
                 <CardHeader>
@@ -1740,7 +1740,7 @@ const Budget: React.FC = () => {
                     {isFrench ? 'Solde bancaire' : 'Bank Balance'}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="mpr-form">
+                <CardContent className="space-y-4">
                   <div className="senior-form-row">
                     <Label className="senior-form-label">
                       {isFrench ? 'Solde actuel' : 'Current Balance'}
@@ -1774,7 +1774,7 @@ const Budget: React.FC = () => {
                     {isFrench ? 'Objectifs d\'épargne' : 'Savings Goals'}
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="mpr-form">
+                <CardContent className="space-y-4">
                   <div className="senior-form-row">
                     <Label className="senior-form-label">
                       {isFrench ? 'Objectif d\'épargne mensuel' : 'Monthly Savings Goal'}
@@ -1813,7 +1813,7 @@ const Budget: React.FC = () => {
                   </Button>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="mpr-form">
+              <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
                   <Input
                     placeholder={isFrench ? 'Spécifique (ex.: réduire restos)' : 'Specific (e.g., reduce dining)'}

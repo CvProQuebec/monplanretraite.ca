@@ -42,10 +42,10 @@ export const PlanificationDepenses: React.FC = () => {
   }, []);
 
   return (
-    <div className="mpr-container min-h-screen">
-      <div className="mpr-container">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      <div className="container mx-auto px-4 py-8">
         {/* Header Section */}
-        <div className="mpr-section text-center">
+        <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
             <div className="bg-blue-600 p-3 rounded-full">
               <Calculator className="h-8 w-8 text-white" />
@@ -61,7 +61,7 @@ export const PlanificationDepenses: React.FC = () => {
         </div>
 
         {/* Educational Cards */}
-        <div className="mpr-form-row cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card className="border-l-4 border-l-blue-500">
             <CardHeader className="pb-3">
               <div className="flex items-center">
@@ -116,14 +116,14 @@ export const PlanificationDepenses: React.FC = () => {
               <CardTitle className="text-xl text-amber-800">Exemples de scénarios</CardTitle>
             </div>
           </CardHeader>
-          <CardContent className="mpr-form">
-            <div className="mpr-form-row cols-2">
-              <div className="mpr-form">
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-3">
                 <h4 className="font-semibold text-amber-800 flex items-center">
                   <DollarSign className="h-4 w-4 mr-1" />
                   Remplacement d'électroménager
                 </h4>
-                <div className="mpr-field text-sm">
+                <div className="space-y-2 text-sm">
                   <div className="flex justify-between items-center">
                     <span>• Modèle haut de gamme</span>
                     <Badge variant="outline">2 000$</Badge>
@@ -139,12 +139,12 @@ export const PlanificationDepenses: React.FC = () => {
                 </div>
               </div>
               
-              <div className="mpr-form">
+              <div className="space-y-3">
                 <h4 className="font-semibold text-amber-800 flex items-center">
                   <DollarSign className="h-4 w-4 mr-1" />
                   Planification de vacances
                 </h4>
-                <div className="mpr-field text-sm">
+                <div className="space-y-2 text-sm">
                   <div className="flex justify-between items-center">
                     <span>• Croisière de luxe</span>
                     <Badge variant="outline">8 000$</Badge>

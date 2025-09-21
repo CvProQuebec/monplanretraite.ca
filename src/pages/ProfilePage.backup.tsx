@@ -166,8 +166,8 @@ export default function ProfilePage() {
   if (!userData) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
-        <div className="mpr-container">
-          <Card className="mpr-section">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-xl">
             <CardContent className="p-8 text-center">
               <div className="w-24 h-24 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-6">
                 <User className="w-12 h-12 text-blue-600" />
@@ -183,7 +183,7 @@ export default function ProfilePage() {
                 et optimiser votre retraite.
               </p>
               
-              <div className="mpr-form-row cols-2">
+              <div className="grid md:grid-cols-2 gap-6 mb-8 max-w-3xl mx-auto">
                 <div className="p-6 bg-green-50 rounded-lg border border-green-200">
                   <Wand2 className="w-8 h-8 text-green-600 mx-auto mb-3" />
                   <h3 className="font-semibold text-green-800 mb-2">Assistant Guidé</h3>
@@ -212,7 +212,7 @@ export default function ProfilePage() {
                 <Button 
                   onClick={() => setShowOnboarding(true)} 
                   size="lg" 
-                  className="mpr-btn mpr-btn-primary"
+                  className="flex items-center gap-2"
                 >
                   <Wand2 className="w-5 h-5" />
                   Commencer l'assistant guidé
@@ -306,7 +306,7 @@ export default function ProfilePage() {
   // Page de profil avec données existantes
   return (
     <div className="min-h-screen bg-gray-50 py-8">
-      <div className="mpr-container">
+      <div className="container mx-auto px-4 max-w-6xl">
         {/* Header du profil */}
         <div className="mb-8">
           <div className="flex items-center justify-between">
@@ -359,9 +359,9 @@ export default function ProfilePage() {
 
           {/* Onglet Profil */}
           <TabsContent value="profile" className="space-y-6">
-            <div className="mpr-form-row cols-2">
+            <div className="grid md:grid-cols-2 gap-6">
               {/* Informations personnelles */}
-              <Card className="mpr-section">
+              <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <User className="w-5 h-5" />
@@ -369,8 +369,8 @@ export default function ProfilePage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
-                  <div className="mpr-field">
-                    <label>Prénom</label>
+                  <div className="flex justify-between">
+                    <span>Prénom:</span>
                     <span className="font-semibold">{userData.personal?.prenom1}</span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -428,7 +428,7 @@ export default function ProfilePage() {
                   {/* Arbre de décision rapide – tester 62/65/67/70/72 */}
                   <div className="mt-2 flex flex-wrap gap-2">
                     {[62,65,67,70,72].map((age) => (
-                      <Button className="mpr-btn mpr-btn-secondary"
+                      <Button
                         key={age}
                         variant="outline"
                         size="sm"
@@ -490,7 +490,7 @@ export default function ProfilePage() {
               </Card>
 
               {/* Prestations détectées */}
-              <Card className="mpr-section">
+              <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Crown className="w-5 h-5" />
@@ -523,7 +523,7 @@ export default function ProfilePage() {
             </div>
 
             {/* Recommandations */}
-            <Card className="mpr-section">
+            <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Wand2 className="w-5 h-5" />
@@ -566,7 +566,7 @@ export default function ProfilePage() {
 
           {/* Onglet Analyses */}
           <TabsContent value="analysis" className="space-y-6">
-            <Card className="mpr-section">
+            <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Calculator className="w-5 h-5" />
@@ -574,7 +574,7 @@ export default function ProfilePage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="mpr-form-row cols-2">
+                <div className="grid md:grid-cols-2 gap-6">
                   {(() => {
                     const estimatedIncome = OnboardingService.calculateEstimatedIncome(userData);
                     return (
@@ -638,7 +638,7 @@ export default function ProfilePage() {
 
           {/* Section Optionnel */}
           <TabsContent value="optional" className="space-y-6">
-            <Card className="mpr-section">
+            <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Settings className="w-5 h-5" />
@@ -653,7 +653,7 @@ export default function ProfilePage() {
                 <div className="space-y-4">
                   <h4 className="font-semibold text-gray-800">Informations Démographiques</h4>
 
-                  <div className="mpr-form-row cols-2">
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium flex items-center gap-2">Province de résidence <HelpTooltip title={isFrench ? 'RRQ vs RPC' : 'QPP vs CPP'} content={isFrench ? 'Au Québec, vous cotisez au RRQ; ailleurs au Canada, au RPC. Ces régimes sont similaires mais comportent des particularités qui affectent vos prestations.' : 'In Quebec you contribute to QPP; elsewhere to CPP. They are similar but have differences that affect your future benefits.'}><span></span></HelpTooltip></label>
                       <select
@@ -716,7 +716,7 @@ export default function ProfilePage() {
                     Ces informations permettent d'affiner les calculs d'espérance de vie selon la table CPM2014
                   </p>
 
-                  <div className="mpr-form-row cols-2">
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium">État de santé général</label>
                       <select
@@ -764,7 +764,7 @@ export default function ProfilePage() {
                     Ces informations optimisent les projections financières selon les normes IPF 2025
                   </p>
 
-                  <div className="mpr-form-row cols-2">
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Tolérance au risque</label>
                       <select
@@ -808,7 +808,7 @@ export default function ProfilePage() {
                 <div className="space-y-4">
                   <h4 className="font-semibold text-gray-800">Informations Professionnelles Avancées</h4>
 
-                  <div className="mpr-form-row cols-2">
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Secteur d'activité</label>
                       <select
@@ -860,7 +860,7 @@ export default function ProfilePage() {
                     Ces paramètres ajustent les calculs selon les normes IPF 2025
                   </p>
 
-                  <div className="mpr-form-row cols-2">
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium flex items-center gap-2">Hypothèse d'inflation personnalisée (%) <HelpTooltip title={isFrench ? 'Taux d’inflation' : 'Inflation rate'} content={isFrench ? 'Pourquoi 3 % ? C’est proche de la moyenne historique canadienne. L’inflation érode le pouvoir d’achat : 1 $ aujourd’hui ≈ 2,43 $ dans 30 ans à 3 %.' : 'Why 3%? It’s close to Canada’s historical average. Inflation erodes purchasing power: $1 today ≈ $2.43 in 30 years at 3%.'}><span></span></HelpTooltip></label>
                       <input
@@ -902,7 +902,7 @@ export default function ProfilePage() {
                     Ces informations permettent au conseiller intelligent de personnaliser ses recommandations
                   </p>
 
-                  <div className="mpr-form-row cols-2">
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Expérience financière</label>
                       <select
@@ -987,7 +987,7 @@ export default function ProfilePage() {
                     Informations utilisées pour les calculs de ratio d'endettement et optimisation
                   </p>
 
-                  <div className="mpr-form-row cols-2">
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <label className="text-sm font-medium">Fonds d'urgence actuel ($)</label>
                       <input
@@ -1155,7 +1155,7 @@ export default function ProfilePage() {
                 {/* Affichage des calculs CPM2014 */}
                 <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
                   <h4 className="font-semibold text-blue-800 mb-3">Calculs CPM2014 - Espérance de Vie</h4>
-                  <div className="mpr-form-row cols-2">
+                  <div className="grid md:grid-cols-2 gap-4">
                     {userData.personal?.naissance1 && userData.personal?.sexe1 && (
                       <div className="text-sm">
                         <p className="font-medium">{userData.personal.prenom1 || 'Personne 1'}:</p>

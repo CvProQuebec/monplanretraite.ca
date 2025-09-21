@@ -1,6 +1,9 @@
 /* unified-styles.css - Consolidation intelligente de tous les styles CSS */
 /* Combine: accessibility-seniors.css + mobile-optimization.css + mobile-reflow-fix.css + modern-retirement.css + retirement-module.css */
 
+/* ===== IMPORT DU NOUVEAU SYSTÈME MPR UNIFIÉ ===== */
+@import "mpr-unified.css";
+
 /* ===== BASE STYLES ET VARIABLES ===== */
 :root {
   /* Couleurs principales */

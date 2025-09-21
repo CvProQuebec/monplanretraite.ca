@@ -19,6 +19,9 @@ export type BlogFrontMatter = {
   relatedSlugFr?: string;
   relatedSlugEn?: string;
   keyPoints?: string[];
+  featured?: boolean;
+  priority?: number;
+  collection?: string;
 };
 
 export type BlogPost = {
@@ -38,6 +41,9 @@ export type BlogPost = {
   relatedSlugFr?: string;
   relatedSlugEn?: string;
   keyPoints?: string[];
+  featured?: boolean;
+  priority?: number;
+  collection?: string;
   content: string; // raw markdown (without front-matter)
   path: string; // virtual module path
 };
@@ -198,6 +204,9 @@ function buildCache(): BlogPost[] {
       relatedSlugFr: fm.relatedSlugFr,
       relatedSlugEn: fm.relatedSlugEn,
       keyPoints: fm.keyPoints ? fm.keyPoints.map(fixPunctuation) : undefined,
+      featured: (fm as any).featured === true,
+      priority: typeof (fm as any).priority === 'number' ? (fm as any).priority : undefined,
+      collection: (fm as any).collection as string | undefined,
       content,
       path: virtualPath,
     };
@@ -275,3 +284,52 @@ export const BLOG_CATEGORIES = [
   'Outils et ressources',
   'Bien-être et qualité de vie',
 ];
+
+/**
+ * Helpers for categories and featured curation
+ */
+export function getCategoryCounts(language?: 'fr' | 'en'): { category: string; count: number }[] {
+  const list = getAllPosts(language);
+  const map = new Map<string, number>();
+  for (const c of BLOG_CATEGORIES) map.set(c, 0);
+  for (const p of list) {
+    const c = p.category || 'Les bases de la retraite';
+    map.set(c, (map.get(c) || 0) + 1);
+  }
+  return BLOG_CATEGORIES.map((c) => ({ category: c, count: map.get(c) || 0 }));
+}
+
+export function slugifyCategory(cat: string): string {
+  return cat
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+}
+
+export function resolveCategorySlug(slug: string): string | undefined {
+  return BLOG_CATEGORIES.find((c) => slugifyCategory(c) === slug);
+}
+
+export function getPostsByCategorySlug(slug: string, language?: 'fr' | 'en') {
+  const cat = resolveCategorySlug(slug);
+  if (!cat) return [];
+  return getAllPosts(language).filter((p) => p.category === cat);
+}
+
+export function getFeaturedPosts(language?: 'fr' | 'en') {
+  const all = getAllPosts(language);
+  const featured = all.filter((p) => p.featured);
+  if (featured.length > 0) {
+    return [...featured].sort((a, b) => {
+      const pa = a.priority ?? 999;
+      const pb = b.priority ?? 999;
+      if (pa !== pb) return pa - pb;
+      return a.date > b.date ? -1 : 1;
+    });
+  }
+  // Fallback: latest posts
+  return all.slice(0, 6);
+}

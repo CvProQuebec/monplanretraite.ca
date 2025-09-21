@@ -209,7 +209,7 @@ const ImmobilierPage: React.FC = () => {
   const chargesTotales = immobilierData.deuxiemeResidence.charges + immobilierData.troisiemePropriete.charges + immobilierData.quatriemePropriete.charges;
 
   return (
-    <div className="mpr-container min-h-screen" style={{ background: 'linear-gradient(135deg, var(--senior-bg-secondary) 0%, var(--senior-bg-accent) 100%)', color: 'var(--senior-text-primary)' }}>
+    <div className="senior-layout min-h-screen" style={{ background: 'linear-gradient(135deg, var(--senior-bg-secondary) 0%, var(--senior-bg-accent) 100%)', color: 'var(--senior-text-primary)' }}>
       {/* Particules de fond avec couleurs douces */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-2 h-2 rounded-full animate-pulse" style={{ backgroundColor: 'var(--senior-primary-light)' }}></div>
@@ -217,10 +217,10 @@ const ImmobilierPage: React.FC = () => {
         <div className="absolute top-60 left-1/4 w-2 h-2 rounded-full animate-ping" style={{ backgroundColor: 'var(--senior-primary)' }}></div>
       </div>
 
-      <div className="mpr-container relative z-10">
+      <div className="container mx-auto px-6 py-8 relative z-10">
         {/* En-tête */}
-        <div className="mpr-section text-center">
-          <div className="mpr-form-row cols-auto">
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-4 mb-6">
             <Home className="w-16 h-16" style={{ color: 'var(--senior-primary)' }} />
             <h1 style={{ 
               fontSize: 'var(--senior-font-3xl)', 
@@ -239,7 +239,7 @@ const ImmobilierPage: React.FC = () => {
         </div>
 
         {/* Métriques principales */}
-        <div className="mpr-form-row cols-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <Card className="senior-card" style={{ background: 'var(--senior-bg-card)', border: '1px solid var(--senior-border)' }}>
             <CardContent className="p-6 text-center">
               <Home className="w-12 h-12 mx-auto mb-4" style={{ color: 'var(--senior-primary)' }} />
@@ -335,8 +335,8 @@ const ImmobilierPage: React.FC = () => {
                       {currentT.residence}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="mpr-form">
-                    <div className="mpr-form">
+                  <CardContent className="space-y-6">
+                    <div className="space-y-4">
                       <div className="senior-form-row">
                         <Label className="senior-form-label">
                           {currentT.valeurActuelle}
@@ -416,8 +416,8 @@ const ImmobilierPage: React.FC = () => {
                       {currentT.deuxiemeResidence}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="mpr-form">
-                    <div className="mpr-form">
+                  <CardContent className="space-y-6">
+                    <div className="space-y-4">
                       <div className="senior-form-row">
                         <Label className="senior-form-label">
                           {currentT.valeurActuelle}
@@ -492,8 +492,8 @@ const ImmobilierPage: React.FC = () => {
                       {currentT.troisiemePropriete}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="mpr-form">
-                    <div className="mpr-form">
+                  <CardContent className="space-y-6">
+                    <div className="space-y-4">
                       <div className="senior-form-row">
                         <Label className="senior-form-label">
                           {currentT.valeurActuelle}
@@ -568,8 +568,8 @@ const ImmobilierPage: React.FC = () => {
                       {currentT.quatriemePropriete}
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="mpr-form">
-                    <div className="mpr-form">
+                  <CardContent className="space-y-6">
+                    <div className="space-y-4">
                       <div className="senior-form-row">
                         <Label className="senior-form-label">
                           {currentT.valeurActuelle}

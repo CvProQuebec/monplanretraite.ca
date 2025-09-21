@@ -30,6 +30,11 @@ const BlogPage = React.lazy(() => import('./pages/BlogPage'));
 const OptimiserTransmissionCeli = React.lazy(() => import('./pages/blog/OptimiserTransmissionCeli'));
 const BlogIndex = React.lazy(() => import('./pages/blog/BlogIndex'));
 const BlogPost = React.lazy(() => import('./pages/blog/BlogPost'));
+const BlogHome = React.lazy(() => import('./pages/blog/BlogHome'));
+const CategoryIndex = React.lazy(() => import('./pages/blog/CategoryIndex'));
+const CategoryPage = React.lazy(() => import('./pages/blog/CategoryPage'));
+const EssentialsPage = React.lazy(() => import('./pages/blog/EssentialsPage'));
+const ToolsPage = React.lazy(() => import('./pages/blog/ToolsPage'));
 
 // NOUVEAUX MODULES INTÉGRÉS - Lazy loading pour performance seniors
 const SRGAnalysisSection = React.lazy(() => import('./features/retirement/components/SRGAnalysisSection').then(module => ({ default: module.SRGAnalysisSection })));
@@ -159,20 +164,32 @@ function App() {
               {/* 📝 NOUVELLES ROUTES - BLOG */}
               
               {/* Page principale du blog */}
-              <Route path="/blog" element={<BlogIndex />} />
+              <Route path="/blog" element={<BlogHome />} />
               <Route path="/blog/:slug" element={<BlogPost />} />
               {/* English blog */}
-              <Route path="/en/blog" element={<BlogIndex language="en" />} />
+              <Route path="/en/blog" element={<BlogHome language="en" />} />
               <Route path="/en/blog/:slug" element={<BlogPost language="en" />} />
               
-              {/* Catégories du blog */}
-              <Route path="/blog/guides" element={<BlogPage />} />
-              <Route path="/blog/conseils-experts" element={<BlogPage />} />
-              <Route path="/blog/expert-tips" element={<BlogPage />} />
-              <Route path="/blog/etudes-cas" element={<BlogPage />} />
-              <Route path="/blog/case-studies" element={<BlogPage />} />
-              <Route path="/blog/actualites-fiscales" element={<BlogPage />} />
-              <Route path="/blog/tax-news" element={<BlogPage />} />
+              {/* Catégories du blog (nouvelles pages) */}
+              <Route path="/blog/categories" element={<CategoryIndex />} />
+              <Route path="/blog/categorie/:slug" element={<CategoryPage />} />
+              <Route path="/en/blog/categories" element={<CategoryIndex language="en" />} />
+              <Route path="/en/blog/category/:slug" element={<CategoryPage language="en" />} />
+
+              {/* Compat anciennes routes vers l'index des catégories */}
+              <Route path="/blog/guides" element={<CategoryIndex />} />
+              <Route path="/blog/conseils-experts" element={<CategoryIndex />} />
+              <Route path="/blog/expert-tips" element={<CategoryIndex language="en" />} />
+              <Route path="/blog/etudes-cas" element={<CategoryIndex />} />
+              <Route path="/blog/case-studies" element={<CategoryIndex language="en" />} />
+              <Route path="/blog/actualites-fiscales" element={<CategoryIndex />} />
+              <Route path="/blog/tax-news" element={<CategoryIndex language="en" />} />
+
+              {/* Essentiels et Outils */}
+              <Route path="/blog/essentiels" element={<EssentialsPage />} />
+              <Route path="/blog/outils" element={<ToolsPage />} />
+              <Route path="/en/blog/essentials" element={<EssentialsPage language="en" />} />
+              <Route path="/en/blog/tools" element={<ToolsPage language="en" />} />
               
               {/* Articles spécifiques du blog */}
               <Route path="/blog/guides/optimiser-transmission-celi" element={<OptimiserTransmissionCeli />} />

@@ -1,0 +1,323 @@
+/* ===== MPR UNIFIED STYLES - SYSTÈME UNIFORMISÉ SENIORS ===== */
+/* Optimisé pour clientèle 50-90 ans, navigation intuitive, zéro scroll inutile */
+
+:root {
+  /* === PALETTE SENIORS-FRIENDLY === */
+  --mpr-primary: #4c6ef5;           /* Bleu principal - contraste AAA */
+  --mpr-primary-hover: #364fc7;     /* Bleu foncé hover */
+  --mpr-text: #1a365d;             /* Texte principal - contraste AAA */
+  --mpr-text-muted: #64748b;       /* Texte secondaire */
+  --mpr-bg: #ffffff;               /* Fond blanc pur */
+  --mpr-bg-section: #f8fafc;       /* Fond sections */
+  --mpr-border: #e2e8f0;           /* Bordures standard */
+  --mpr-border-focus: #4c6ef5;     /* Bordures focus */
+  --mpr-success: #16a34a;          /* Vert succès */
+  --mpr-warning: #d97706;          /* Orange attention */
+  --mpr-error: #dc2626;            /* Rouge erreur */
+
+  /* === COULEURS TITRES (CONTRASTE AAA) === */
+  --mpr-h1: #0f172a;              /* Noir profond H1 */
+  --mpr-h2: #1a365d;              /* Bleu foncé H2 */
+  --mpr-h3: #1e3a8a;              /* Bleu moyen H3 */
+  --mpr-h4: #1f2937;              /* Gris foncé H4 */
+
+  /* === ESPACEMENTS SENIORS === */
+  --mpr-gap-sm: 8px;
+  --mpr-gap-md: 16px;
+  --mpr-gap-lg: 24px;
+  --mpr-gap-xl: 32px;
+
+  /* === TAILLES POLICES SENIORS === */
+  --mpr-text-sm: 16px;            /* Minimum absolu */
+  --mpr-text-base: 18px;          /* Base champs */
+  --mpr-text-lg: 20px;            /* Labels */
+  --mpr-text-xl: 24px;            /* Titres sections */
+  --mpr-text-2xl: 28px;           /* Titres pages */
+  --mpr-text-3xl: 32px;           /* Titres principaux */
+}
+
+/* ===== TITRES SENIORS (HIÉRARCHIE CLAIRE) ===== */
+h1, .h1 {
+  color: var(--mpr-h1);
+  font-size: var(--mpr-text-3xl);
+  line-height: 1.3;
+  letter-spacing: 0.3px;
+  font-weight: 700;
+  margin-bottom: var(--mpr-gap-lg);
+}
+
+h2, .h2 {
+  color: var(--mpr-h2);
+  font-size: var(--mpr-text-2xl);
+  line-height: 1.35;
+  letter-spacing: 0.3px;
+  font-weight: 600;
+  margin-bottom: var(--mpr-gap-md);
+}
+
+h3, .h3 {
+  color: var(--mpr-h3);
+  font-size: var(--mpr-text-xl);
+  line-height: 1.4;
+  letter-spacing: 0.3px;
+  font-weight: 600;
+  margin-bottom: var(--mpr-gap-sm);
+}
+
+h4, .h4 {
+  color: var(--mpr-h4);
+  font-size: var(--mpr-text-lg);
+  line-height: 1.45;
+  letter-spacing: 0.3px;
+  font-weight: 600;
+  margin-bottom: var(--mpr-gap-sm);
+}
+
+/* ===== SYSTÈME DE GRILLE UNIFORMISÉE ===== */
+.mpr-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--mpr-gap-lg);
+  background: var(--mpr-bg);
+}
+
+.mpr-form {
+  display: grid;
+  gap: var(--mpr-gap-md);
+  width: 100%;
+}
+
+/* Lignes de formulaire - Layouts flexibles */
+.mpr-form-row {
+  display: grid;
+  gap: var(--mpr-gap-md);
+  padding: var(--mpr-gap-sm);
+  background: var(--mpr-bg);
+  border: 1px solid var(--mpr-border);
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.mpr-form-row.cols-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.mpr-form-row.cols-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.mpr-form-row.cols-1 {
+  grid-template-columns: 1fr;
+}
+
+/* ===== CHAMPS LIGNE-PAR-LIGNE (CŒUR DU SYSTÈME) ===== */
+.mpr-field {
+  display: grid;
+  grid-template-columns: minmax(160px, 200px) 1fr;
+  align-items: center;
+  gap: var(--mpr-gap-sm);
+  min-height: 48px;
+}
+
+.mpr-field label {
+  color: var(--mpr-text);
+  font-weight: 600;
+  font-size: var(--mpr-text-sm);
+  line-height: 1.4;
+  /* RÈGLE CRITIQUE : Jamais de wrap sur 2 lignes */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mpr-field input,
+.mpr-field select,
+.mpr-field textarea {
+  min-height: 48px;
+  padding: 10px 12px;
+  font-size: var(--mpr-text-base);
+  border: 2px solid var(--mpr-border);
+  border-radius: 8px;
+  color: var(--mpr-text);
+  background: var(--mpr-bg);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.mpr-field input:focus,
+.mpr-field select:focus,
+.mpr-field textarea:focus {
+  outline: none;
+  border-color: var(--mpr-border-focus);
+  box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.15);
+}
+
+.mpr-field input:disabled,
+.mpr-field select:disabled {
+  background-color: #f3f4f6;
+  color: var(--mpr-text-muted);
+  cursor: not-allowed;
+}
+
+/* Spans pour champs longs */
+.mpr-field.span-2 {
+  grid-column: span 2;
+}
+
+.mpr-field.span-3 {
+  grid-column: span 3;
+}
+
+/* ===== BOUTONS SENIORS-FRIENDLY ===== */
+.mpr-btn {
+  min-height: 56px;
+  min-width: 120px;
+  padding: 12px 24px;
+  font-size: var(--mpr-text-base);
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mpr-gap-sm);
+}
+
+.mpr-btn-primary {
+  background: var(--mpr-primary);
+  color: white;
+}
+
+.mpr-btn-primary:hover {
+  background: var(--mpr-primary-hover);
+  transform: translateY(-1px);
+}
+
+.mpr-btn-secondary {
+  background: transparent;
+  color: var(--mpr-primary);
+  border: 2px solid var(--mpr-primary);
+}
+
+.mpr-btn-secondary:hover {
+  background: var(--mpr-primary);
+  color: white;
+}
+
+/* ===== CARTES RÉSULTATS ===== */
+.mpr-result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--mpr-gap-sm);
+  margin-top: var(--mpr-gap-lg);
+}
+
+.mpr-result-card {
+  background: #f0f9ff;
+  border: 1px solid var(--mpr-primary);
+  border-radius: 8px;
+  padding: var(--mpr-gap-sm);
+  text-align: center;
+}
+
+.mpr-result-amount {
+  font-size: var(--mpr-text-xl);
+  font-weight: 700;
+  color: var(--mpr-primary);
+  margin-bottom: 4px;
+}
+
+.mpr-result-label {
+  font-size: 14px;
+  color: var(--mpr-text-muted);
+}
+
+/* ===== RESPONSIVE SENIORS (MOBILE-FIRST) ===== */
+
+/* Tablettes */
+@media (max-width: 1279px) {
+  .mpr-form-row.cols-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobiles */
+@media (max-width: 767px) {
+  .mpr-container {
+    padding: var(--mpr-gap-md);
+  }
+  
+  .mpr-form-row.cols-3,
+  .mpr-form-row.cols-2 {
+    grid-template-columns: 1fr;
+  }
+  
+  /* RÈGLE CRITIQUE : Conserver label à gauche même en mobile */
+  .mpr-field {
+    grid-template-columns: minmax(120px, 45%) 1fr;
+    align-items: center;
+  }
+  
+  .mpr-result-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  h1, .h1 { font-size: var(--mpr-text-2xl); }
+  h2, .h2 { font-size: var(--mpr-text-xl); }
+}
+
+/* ===== TOOLTIPS POUR LABELS LONGS ===== */
+.mpr-tooltip {
+  position: relative;
+  cursor: help;
+}
+
+.mpr-tooltip::after {
+  content: '?';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: var(--mpr-primary);
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  text-align: center;
+  line-height: 16px;
+  margin-left: 4px;
+}
+
+/* ===== ÉTATS ET VALIDATIONS ===== */
+.mpr-field.error input,
+.mpr-field.error select {
+  border-color: var(--mpr-error);
+}
+
+.mpr-field.success input,
+.mpr-field.success select {
+  border-color: var(--mpr-success);
+}
+
+.mpr-error-message {
+  color: var(--mpr-error);
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* ===== SECTIONS AVEC TITRES ===== */
+.mpr-section {
+  background: var(--mpr-bg-section);
+  border-radius: 12px;
+  padding: var(--mpr-gap-lg);
+  margin-bottom: var(--mpr-gap-xl);
+  border: 1px solid var(--mpr-border);
+}
+
+.mpr-section-title {
+  color: var(--mpr-h2);
+  font-size: var(--mpr-text-2xl);
+  font-weight: 600;
+  margin-bottom: var(--mpr-gap-lg);
+  padding-bottom: var(--mpr-gap-sm);
+  border-bottom: 2px solid var(--mpr-border);
+}

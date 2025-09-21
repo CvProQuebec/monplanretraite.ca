@@ -253,10 +253,10 @@ const Revenus: React.FC = () => {
   ];
 
   return (
-    <div className="mpr-container min-h-screen mobile-reflow-fix revenus-page">
-      <div className="mpr-container mobile-reflow-fix">
+    <div className="min-h-screen bg-gray-50 mobile-reflow-fix revenus-page revenus-container">
+      <div className="container mx-auto px-6 py-8 mobile-reflow-fix">
         {/* En-tête simple */}
-        <div className="mpr-section text-center">
+        <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-6 text-gray-800">
             {isFrench ? '💰 Mes revenus' : '💰 My Income'}
           </h1>
@@ -266,7 +266,7 @@ const Revenus: React.FC = () => {
               : 'Manage your income sources to optimize your retirement planning'
             }
           </p>
-          <div className="mpr-form-row cols-auto">
+          <div className="flex flex-wrap justify-center gap-4 mt-4">
             <HelpTooltip
               title={isFrench ? 'Revenu annuel brut' : 'Annual gross income'}
               content={isFrench
@@ -322,7 +322,7 @@ const Revenus: React.FC = () => {
           <div className="mt-6">
             <Button
               onClick={() => navigate(isFrench ? '/mon-budget?tab=income' : '/my-budget?tab=income')}
-              className="mpr-btn mpr-btn-primary"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3"
             >
               {isFrench ? 'Voir dans le budget' : 'View in budget'}
             </Button>
@@ -429,7 +429,7 @@ const Revenus: React.FC = () => {
           icon={<Briefcase className="w-8 h-8 text-green-600" />}
           className="mb-8"
         >
-          <div className="mpr-form">
+          <div className="space-y-6">
             <div className="text-center">
               <p className="text-lg text-gray-600 mb-6">
                 {isFrench
@@ -480,7 +480,7 @@ const Revenus: React.FC = () => {
           icon={<Shield className="w-8 h-8 text-purple-600" />}
           className="mb-8"
         >
-          <div className="mpr-form">
+          <div className="space-y-6">
                 <div className="text-center">
               <p className="text-lg text-gray-600 mb-6">
               {isFrench 
@@ -528,7 +528,7 @@ const Revenus: React.FC = () => {
           icon={<TrendingUp className="w-8 h-8 text-orange-600" />}
           className="mb-8"
         >
-          <div className="mpr-form">
+          <div className="space-y-6">
                 <div className="text-center">
               <p className="text-lg text-gray-600 mb-6">
               {isFrench 
@@ -563,7 +563,7 @@ const Revenus: React.FC = () => {
 
 
         {/* Section Calculette de rendement */}
-        <div className="mpr-form">
+        <div className="space-y-8 mb-12">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-indigo-300 mb-4 flex items-center justify-center gap-3">
               <Calculator className="w-8 h-8 text-indigo-400" />
@@ -615,13 +615,13 @@ const Revenus: React.FC = () => {
           </div>
 
           {/* Informations sur la calculette */}
-          <div className="mpr-section">
-            <div className="mpr-form">
+          <Card className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 border border-indigo-500/30">
+            <CardContent className="p-6">
               <h4 className="text-lg font-bold text-indigo-300 mb-4 flex items-center gap-2">
                 <Info className="w-5 h-5" />
                 {isFrench ? 'À propos de la calculette de rendement' : 'About the Return Calculator'}
               </h4>
-              <div className="mpr-form-row cols-2 text-sm text-gray-300">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-300">
                 <div>
                   <strong className="text-indigo-300">{isFrench ? 'Fonctionnalités :' : 'Features:'}</strong>
                   <ul className="list-disc list-inside mt-2 space-y-1">
@@ -641,8 +641,8 @@ const Revenus: React.FC = () => {
                   </ul>
                 </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Bouton SAUVEGARDER */}
@@ -706,7 +706,7 @@ const Revenus: React.FC = () => {
         </div>
 
         {/* Boutons d'aide et d'information */}
-        <div className="mpr-section text-center">
+        <div className="text-center mt-8 space-y-4">
           <div className="flex flex-wrap justify-center gap-4">
             <Button
               variant="outline"
@@ -722,7 +722,7 @@ const Revenus: React.FC = () => {
               variant="outline"
               size="sm"
               onClick={() => setShowRRQInfo(!showRRQInfo)}
-              className="mpr-btn mpr-btn-secondary"
+              className="border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-slate-900"
             >
               <Shield className="w-4 h-4 mr-2" />
               {isFrench ? 'Info RRQ' : 'QPP Info'}
