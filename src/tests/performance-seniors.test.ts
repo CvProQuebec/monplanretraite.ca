@@ -248,7 +248,7 @@ describe('Performance Optimization Seniors', () => {
     // Tester les prédictions pour différentes routes
     const predictions = (SeniorsOptimizationService as any).getNavigationPredictions('/ma-retraite');
 
-    expect(predictions).toContain('../features/retirement/components/MonteCarloSimulator');
+    expect(predictions).toContain('../features/retirement/components/optimization/MonteCarloSimulator');
     expect(predictions).toContain('../services/ProfessionalReportGenerator');
   });
 

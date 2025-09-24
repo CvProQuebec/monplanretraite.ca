@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "TestSprite": {
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-Command",
+        "$env:API_KEY=$env:testsprite; npx --yes @testsprite/testsprite-mcp@latest"
+      ]
+    }
+  }
+}

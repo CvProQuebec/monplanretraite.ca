@@ -33,6 +33,7 @@ import SRGService from '../features/retirement/services/SRGService';
 import { UserData } from '../features/retirement/types';
 import { useRetirementData } from '../features/retirement/hooks/useRetirementData';
 import { HelpTooltip } from '../features/retirement/components/HelpTooltip';
+import { FormGrid, FormRow, Field } from '../components/forms/FormGrid';
 
 export default function ProfilePage() {
   const { userData, updateUserData, importData, exportData } = useRetirementData();
@@ -382,16 +383,20 @@ export default function ProfilePage() {
                       } ans
                     </span>
                   </div>
-                  <div className="flex justify-between items-center mt-2">
-                    <span className="text-sm text-gray-600">Corriger la date de naissance</span>
-                    <input
-                      type="date"
-                      className="p-2 border rounded-md text-sm"
-                      value={userData.personal?.naissance1 || ''}
-                      onChange={(e) => updateUserData('personal', { naissance1: e.target.value })}
-                      aria-label="Date de naissance (corriger)"
-                    />
-                  </div>
+                  <FormGrid className="mt-2">
+                    <FormRow cols={2}>
+                      <Field label="Date de naissance (corriger)" htmlFor="naissance1">
+                        <input
+                          id="naissance1"
+                          type="date"
+                          className="p-2 border rounded-md text-sm"
+                          value={userData.personal?.naissance1 || ''}
+                          onChange={(e) => updateUserData('personal', { naissance1: e.target.value })}
+                          aria-label="Date de naissance (corriger)"
+                        />
+                      </Field>
+                    </FormRow>
+                  </FormGrid>
                   <div className="flex justify-between">
 <span className="flex items-center gap-2">Revenu brut annuel <HelpTooltip title={isFrench ? 'Revenu annuel brut' : 'Annual gross income'} content={isFrench ? 'Ce montant sert de base à vos calculs et à votre capacité d’épargne. La cible de remplacement à la retraite est souvent ~70 %, mais elle varie selon votre situation.' : 'This amount underpins your calculations and saving capacity. A common retirement income target is ~70% of pre-retirement income, but it varies by situation.'}><span></span></HelpTooltip></span>
                     <span className="font-semibold">
@@ -439,53 +444,62 @@ export default function ProfilePage() {
                     ))}
                   </div>
                   {/* Situation familiale et résidence */}
-                  <div className="mt-4 grid grid-cols-1 gap-2">
-                    <div className="flex justify-between items-center">
-<label htmlFor="statut-marital" className="text-sm text-gray-600 flex items-center gap-2">Statut marital <HelpTooltip title={isFrench ? 'Situation familiale' : 'Family situation'} content={isFrench ? 'Votre statut familial influence vos besoins et vos stratégies fiscales (ex.: fractionnement du revenu, planification successorale).' : 'Family status influences needs and tax strategies (e.g., income splitting, estate planning).'}><span></span></HelpTooltip></label>
-                      <select
-                        id="statut-marital"
-                        className="p-2 border rounded-md text-sm"
-                        title="Statut marital"
-                        value={(userData.personal as any)?.statutMarital || ''}
-                        onChange={(e) => updateUserData('personal', { statutMarital: e.target.value })}
+                  <FormGrid className="mt-4">
+                    <FormRow cols={2}>
+                      <Field
+                        label="Statut marital"
+                        htmlFor="statut-marital"
+                        tooltip={isFrench ? 'Situation familiale' : 'Family situation'}
                       >
-                        <option value="">Non spécifié</option>
-                        <option value="celibataire">Célibataire</option>
-                        <option value="conjoint">Conjoint</option>
-                        <option value="marie">Marié</option>
-                        <option value="separe">Séparé</option>
-                        <option value="divorce">Divorcé</option>
-                        <option value="veuf">Veuf</option>
-                      </select>
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <label htmlFor="nombre-enfants" className="text-sm text-gray-600">Nombre d'enfants</label>
-                      <input
-                        id="nombre-enfants"
-                        type="number"
-                        min={0}
-                        className="p-2 border rounded-md text-sm w-28 text-right"
-                        value={userData.personal?.nombreEnfants ?? 0}
-                        onChange={(e) => updateUserData('personal', { nombreEnfants: Math.max(0, Number(e.target.value)) })}
-                        aria-label="Nombre d'enfants"
-                        title="Nombre d'enfants"
-                      />
-                    </div>
-                    <div className="flex justify-between items-center">
-                      <label htmlFor="annees-residence-canada" className="text-sm text-gray-600 flex items-center gap-2">Années de résidence au Canada <HelpTooltip title={isFrench ? 'Admissibilité SV' : 'OAS eligibility'} content={isFrench ? 'Vous devez avoir résidé au moins 10 ans au Canada après 18 ans pour être admissible à la Sécurité de la vieillesse. Le montant dépend du total des années de résidence.' : 'At least 10 years of Canadian residence after age 18 is required for OAS eligibility. The amount depends on total residence years.'}><span></span></HelpTooltip></label>
-                      <input
-                        id="annees-residence-canada"
-                        type="number"
-                        min={0}
-                        max={80}
-                        className="p-2 border rounded-md text-sm w-28 text-right"
-                        value={(userData.personal as any)?.anneesResidenceCanada1 ?? ''}
-                        onChange={(e) => updateUserData('personal', { anneesResidenceCanada1: Math.max(0, Number(e.target.value)) })}
-                        aria-label="Années de résidence au Canada"
-                        title="Années de résidence au Canada"
-                      />
-                    </div>
-                  </div>
+                        <select
+                          id="statut-marital"
+                          className="p-2 border rounded-md text-sm"
+                          title="Statut marital"
+                          value={(userData.personal as any)?.statutMarital || ''}
+                          onChange={(e) => updateUserData('personal', { statutMarital: e.target.value })}
+                        >
+                          <option value="">Non spécifié</option>
+                          <option value="celibataire">Célibataire</option>
+                          <option value="conjoint">Conjoint</option>
+                          <option value="marie">Marié</option>
+                          <option value="separe">Séparé</option>
+                          <option value="divorce">Divorcé</option>
+                          <option value="veuf">Veuf</option>
+                        </select>
+                      </Field>
+
+                      <Field label="Nombre d'enfants" htmlFor="nombre-enfants">
+                        <input
+                          id="nombre-enfants"
+                          type="number"
+                          min={0}
+                          className="p-2 border rounded-md text-sm w-28 text-right"
+                          value={userData.personal?.nombreEnfants ?? 0}
+                          onChange={(e) => updateUserData('personal', { nombreEnfants: Math.max(0, Number(e.target.value)) })}
+                          aria-label="Nombre d'enfants"
+                          title="Nombre d'enfants"
+                        />
+                      </Field>
+
+                      <Field
+                        label="Années de résidence au Canada"
+                        htmlFor="annees-residence-canada"
+                        tooltip={isFrench ? 'Admissibilité SV' : 'OAS eligibility'}
+                      >
+                        <input
+                          id="annees-residence-canada"
+                          type="number"
+                          min={0}
+                          max={80}
+                          className="p-2 border rounded-md text-sm w-28 text-right"
+                          value={(userData.personal as any)?.anneesResidenceCanada1 ?? ''}
+                          onChange={(e) => updateUserData('personal', { anneesResidenceCanada1: Math.max(0, Number(e.target.value)) })}
+                          aria-label="Années de résidence au Canada"
+                          title="Années de résidence au Canada"
+                        />
+                      </Field>
+                    </FormRow>
+                  </FormGrid>
                 </CardContent>
               </Card>
 

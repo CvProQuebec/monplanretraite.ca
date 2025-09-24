@@ -96,7 +96,8 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
       id: 'tools',
       label: isEnglish ? 'Tools' : 'Outils',
       icon: Calculator,
-      hasSubmenu: true,
+      hasSubmenu: false,
+      path: isEnglish ? '/tools' : '/outils',
       submenu: [
         // 🟢 OUTILS GRATUITS
         {

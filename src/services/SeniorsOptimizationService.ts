@@ -1,51 +1,172 @@
-export class SeniorsOptimizationService {
+import type {
+  MemoryOptimizationEnvironment,
+  MemoryOptimizationOptions,
+  ModuleImportTask,
+  ModulePreloadErrorContext,
+  ModulePreloadOptions,
+  ModuleWarningReporter,
+  NavigationPredictionMap,
+  PerformanceMonitorHandlers,
+  ScheduledTaskHandle,
+  ScheduledTaskToken
+} from '../types/services';
 
-  /**
-   * Précharge les modules selon le parcours utilisateur seniors
-   */
-  static preloadCriticalModules(): void {
-    // Précharger dans l'ordre d'utilisation typique seniors
-    const preloadOrder = [
+const DEFAULT_PRELOAD_DELAY = 1000;
+
+const DEFAULT_NAVIGATION_PREDICTIONS: NavigationPredictionMap = {
+  '/': ['../pages/MaRetraite', '../pages/ComparisonPage'],
+  '/ma-retraite': [
+    '../features/retirement/components/optimization/MonteCarloSimulator',
+    '../services/ProfessionalReportGenerator'
+  ],
+  '/comparaison': [
+    '../services/ComparisonAnalytics',
+    '../components/comparison/SeniorsCompetitiveComparison'
+  ],
+  '/hypotheses': ['../pages/SimpleAssumptionsPage', '../services/SimpleAssumptionsService']
+};
+
+export type PerformanceEnvironment = {
+  PerformanceObserver?: typeof PerformanceObserver;
+  console?: Pick<Console, 'warn' | 'log'>;
+  document?: Document;
+  location?: Location;
+};
+
+export interface SeniorsOptimizationInitializeConfig {
+  environment?: PerformanceEnvironment;
+  preloadOptions?: ModulePreloadOptions;
+  predictions?: NavigationPredictionMap;
+  reporter?: ModuleWarningReporter;
+  performanceHandlers?: PerformanceMonitorHandlers;
+}
+
+export class SeniorsOptimizationService {
+  private static report(
+    reporter: ModuleWarningReporter | undefined,
+    message: string,
+    error?: unknown
+  ): void {
+    if (reporter) {
+      reporter(message, error);
+    }
+  }
+
+  private static schedule(task: () => void, delay: number, options?: ModulePreloadOptions): ScheduledTaskToken {
+    const scheduler = options?.scheduleTask ?? ((cb: () => void, d: number) => setTimeout(cb, d));
+    return scheduler(task, delay);
+  }
+
+  private static createHandle(token: ScheduledTaskToken, options?: ModulePreloadOptions): ScheduledTaskHandle {
+    return {
+      cancel: () => {
+        const cancelTask = options?.cancelTask ?? ((handle: ScheduledTaskToken) => clearTimeout(handle as never));
+        cancelTask(token);
+      }
+    };
+  }
+
+  private static getDefaultMemoryEnvironment(): MemoryOptimizationEnvironment | undefined {
+    if (typeof performance === 'undefined' || !(performance as unknown as { memory?: { usedJSHeapSize: number } }).memory) {
+      return undefined;
+    }
+
+    const perfWithMemory = performance as unknown as { memory?: { usedJSHeapSize: number } };
+    const usedHeapSize = perfWithMemory.memory?.usedJSHeapSize;
+    if (typeof usedHeapSize !== 'number') {
+      return undefined;
+    }
+
+    const collectGarbage = typeof (globalThis as { gc?: () => void }).gc === 'function'
+      ? () => (globalThis as { gc: () => void }).gc()
+      : undefined;
+
+    return {
+      usedHeapMB: usedHeapSize / 1024 / 1024,
+      collectGarbage
+    };
+  }
+
+  static preloadModules(
+    tasks: readonly ModuleImportTask[],
+    options?: ModulePreloadOptions,
+    reporter?: ModuleWarningReporter
+  ): ScheduledTaskHandle[] {
+    const handles: ScheduledTaskHandle[] = [];
+    const baseDelay = options?.delayMs ?? DEFAULT_PRELOAD_DELAY;
+
+    tasks.forEach((task, index) => {
+      const executeTask = async () => {
+        try {
+          await task();
+        } catch (error) {
+          const context: ModulePreloadErrorContext = { index, error, task };
+          options?.onError?.(context);
+          this.report(reporter, 'Failed to preload module', error);
+        }
+      };
+
+      const token = this.schedule(() => {
+        void executeTask();
+      }, index * baseDelay, options);
+
+      handles.push(this.createHandle(token, options));
+    });
+
+    return handles;
+  }
+
+  static preloadCriticalModules(
+    options?: ModulePreloadOptions,
+    reporter?: ModuleWarningReporter
+  ): ScheduledTaskHandle[] {
+    const tasks: ModuleImportTask[] = [
       () => import('../pages/Accueil'),
       () => import('../pages/MaRetraite'),
       () => import('../components/comparison/SeniorsCompetitiveComparison'),
       () => import('../services/ProfessionalReportGenerator')
     ];
 
-    // Préchargement séquentiel pour éviter surcharge
-    let delay = 0;
-    preloadOrder.forEach(moduleImport => {
-      setTimeout(() => {
-        moduleImport().catch(console.warn);
-      }, delay);
-      delay += 1000; // 1 seconde entre chaque préchargement
-    });
+    return this.preloadModules(tasks, options, reporter);
   }
 
-  /**
-   * Précharge un module spécifique au besoin
-   */
-  static async preloadModule(modulePath: string): Promise<void> {
+  static async preloadModule(modulePath: string, reporter?: ModuleWarningReporter): Promise<void> {
     try {
-      // Vite limitation: dynamic import variables need an ignore hint or a static map.
-      // Suppress analysis and allow runtime resolution for our preloader:
       await import(/* @vite-ignore */ modulePath);
     } catch (error) {
-      console.warn(`Failed to preload module: ${modulePath}`, error);
+      this.report(reporter, `Failed to preload module: ${modulePath}`, error);
+      throw error;
     }
   }
 
-  /**
-   * Optimise les calculs pour éviter blocage interface
-   */
-  static async optimizedCalculation<T>(
+  static preloadPredictedModules(
+    currentPath: string,
+    options?: ModulePreloadOptions,
+    predictions: NavigationPredictionMap = DEFAULT_NAVIGATION_PREDICTIONS,
+    reporter?: ModuleWarningReporter
+  ): ScheduledTaskHandle[] {
+    const modules = this.getNavigationPredictions(currentPath, predictions);
+    if (modules.length === 0) {
+      return [];
+    }
+
+    const tasks = modules.map<ModuleImportTask>((modulePath) => () =>
+      this.preloadModule(modulePath, reporter)
+    );
+
+    return this.preloadModules(tasks, options, reporter);
+  }
+
+  static optimizedCalculation<T>(
     calculation: () => T,
     fallback: T,
-    timeoutMs: number = 5000
+    options?: { timeoutMs?: number; reporter?: ModuleWarningReporter }
   ): Promise<T> {
+    const timeoutMs = options?.timeoutMs ?? 5000;
+
     return new Promise((resolve) => {
       const timeoutId = setTimeout(() => {
-        console.warn('Calculation timeout, using fallback');
+        this.report(options?.reporter, 'Calculation timeout, using fallback');
         resolve(fallback);
       }, timeoutMs);
 
@@ -54,24 +175,23 @@ export class SeniorsOptimizationService {
         clearTimeout(timeoutId);
         resolve(result);
       } catch (error) {
-        console.warn('Calculation error, using fallback:', error);
+        this.report(options?.reporter, 'Calculation error, using fallback', error);
         clearTimeout(timeoutId);
         resolve(fallback);
       }
     });
   }
 
-  /**
-   * Wrapper pour calculs asynchrones avec timeout
-   */
-  static async optimizedAsyncCalculation<T>(
+  static optimizedAsyncCalculation<T>(
     calculation: () => Promise<T>,
     fallback: T,
-    timeoutMs: number = 8000
+    options?: { timeoutMs?: number; reporter?: ModuleWarningReporter }
   ): Promise<T> {
+    const timeoutMs = options?.timeoutMs ?? 8000;
+
     return new Promise((resolve) => {
       const timeoutId = setTimeout(() => {
-        console.warn('Async calculation timeout, using fallback');
+        this.report(options?.reporter, 'Async calculation timeout, using fallback');
         resolve(fallback);
       }, timeoutMs);
 
@@ -81,185 +201,135 @@ export class SeniorsOptimizationService {
           resolve(result);
         })
         .catch((error) => {
-          console.warn('Async calculation error, using fallback:', error);
+          this.report(options?.reporter, 'Async calculation error, using fallback', error);
           clearTimeout(timeoutId);
           resolve(fallback);
         });
     });
   }
 
-  /**
-   * Débouncing pour inputs seniors (éviter calculs trop fréquents)
-   */
-  static debounceCalculation<T extends any[]>(
+  static debounceCalculation<T extends unknown[]>(
     func: (...args: T) => void,
     wait: number = 1000
   ): (...args: T) => void {
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+
     return (...args: T) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait);
+      if (timeout) {
+        clearTimeout(timeout);
+      }
+
+      timeout = setTimeout(() => {
+        func(...args);
+      }, wait);
     };
   }
 
-  /**
-   * Throttling pour calculs intensifs
-   */
-  static throttleCalculation<T extends any[]>(
+  static throttleCalculation<T extends unknown[]>(
     func: (...args: T) => void,
     limit: number = 2000
   ): (...args: T) => void {
-    let inThrottle: boolean;
+    let inThrottle = false;
+
     return (...args: T) => {
       if (!inThrottle) {
         func(...args);
         inThrottle = true;
-        setTimeout(() => inThrottle = false, limit);
+
+        setTimeout(() => {
+          inThrottle = false;
+        }, limit);
       }
     };
   }
 
-  /**
-   * Optimisation mémoire pour gros calculs
-   */
   static async memoryOptimizedCalculation<T>(
     calculation: () => T,
-    options: {
-      maxMemoryMB?: number;
-      cleanup?: () => void;
-    } = {}
+    options: MemoryOptimizationOptions<T> = {}
   ): Promise<T> {
-    const { maxMemoryMB = 50, cleanup } = options;
+    const { maxMemoryMB = 50, cleanup, environment } = options;
+    const env = environment ?? this.getDefaultMemoryEnvironment();
 
-    // Vérifier la mémoire disponible avant calcul
-    if ('memory' in performance) {
-      const memInfo = (performance as any).memory;
-      const usedMB = memInfo.usedJSHeapSize / 1024 / 1024;
-
-      if (usedMB > maxMemoryMB) {
-        // Forcer garbage collection si disponible
-        if ('gc' in window) {
-          (window as any).gc();
-        }
-
-        // Nettoyer si fonction fournie
-        if (cleanup) {
-          cleanup();
-        }
-      }
+    if (env?.usedHeapMB !== undefined && env.usedHeapMB > maxMemoryMB) {
+      env.collectGarbage?.();
+      cleanup?.();
     }
 
     return calculation();
   }
 
-  /**
-   * Préchargement intelligent basé sur navigation prédite
-   */
-  static setupNavigationPrediction(): void {
-    let lastPath = window.location.pathname;
-
-    // Observer les changements de navigation
-    const observer = new MutationObserver(() => {
-      const currentPath = window.location.pathname;
-      if (currentPath !== lastPath) {
-        this.predictAndPreload(currentPath);
-        lastPath = currentPath;
-      }
-    });
-
-    observer.observe(document.body, {
-      childList: true,
-      subtree: true
-    });
+  static getNavigationPredictions(
+    currentPath: string,
+    predictions: NavigationPredictionMap = DEFAULT_NAVIGATION_PREDICTIONS
+  ): readonly string[] {
+    return predictions[currentPath] ?? [];
   }
 
-  /**
-   * Prédire et précharger les modules suivants
-   */
-  private static predictAndPreload(currentPath: string): void {
-    const predictions = this.getNavigationPredictions(currentPath);
+  static monitorPerformance(
+    environment: PerformanceEnvironment = globalThis as PerformanceEnvironment,
+    handlers: PerformanceMonitorHandlers = {}
+  ): () => void {
+    const env = environment ?? (globalThis as PerformanceEnvironment);
+    const ObserverCtor = env?.PerformanceObserver ?? globalThis.PerformanceObserver;
+    if (typeof ObserverCtor !== 'function') {
+      return () => {};
+    }
 
-    predictions.forEach((modulePath, index) => {
-      setTimeout(() => {
-        this.preloadModule(modulePath);
-      }, index * 500); // Précharger progressivement
-    });
-  }
+    const observers: PerformanceObserver[] = [];
+    const consoleRef = env?.console ?? globalThis.console;
 
-  /**
-   * Logique de prédiction basée sur parcours utilisateur
-   */
-  private static getNavigationPredictions(currentPath: string): string[] {
-    const predictions: { [key: string]: string[] } = {
-      '/': ['../pages/MaRetraite', '../pages/ComparisonPage'],
-      '/ma-retraite': ['../features/retirement/components/MonteCarloSimulator', '../services/ProfessionalReportGenerator'],
-      '/comparaison': ['../services/ComparisonAnalytics', '../components/comparison/SeniorsCompetitiveComparison'],
-      '/hypotheses': ['../pages/SimpleAssumptionsPage', '../services/SimpleAssumptionsService']
-    };
-
-    return predictions[currentPath] || [];
-  }
-
-  /**
-   * Monitoring performance pour seniors
-   */
-  static monitorPerformance(): void {
-    // Observer les métriques de performance
-    if ('PerformanceObserver' in window) {
-      // Observer les long tasks (>50ms)
-      const longTaskObserver = new PerformanceObserver((list) => {
+    if (handlers.handleLongTask || consoleRef?.warn) {
+      const longTaskObserver = new ObserverCtor((list) => {
         for (const entry of list.getEntries()) {
-          if (entry.duration > 100) { // Plus de 100ms considéré long pour seniors
-            console.warn('Long task detected:', entry);
-            // Ici on pourrait envoyer métriques à analytics
+          if (handlers.handleLongTask) {
+            handlers.handleLongTask(entry);
+          } else {
+            consoleRef?.warn?.('Long task detected', entry);
           }
         }
       });
 
-      longTaskObserver.observe({ entryTypes: ['longtask'] });
+      try {
+        longTaskObserver.observe({ entryTypes: ['longtask'] });
+        observers.push(longTaskObserver);
+      } catch {
+        longTaskObserver.disconnect();
+      }
+    }
 
-      // Observer les métriques de navigation
-      const navigationObserver = new PerformanceObserver((list) => {
+    if (handlers.handleNavigation || consoleRef?.log) {
+      const navigationObserver = new ObserverCtor((list) => {
         for (const entry of list.getEntries()) {
-          const navEntry = entry as PerformanceNavigationTiming;
-          console.log('Navigation timing:', {
-            loadTime: navEntry.loadEventEnd - navEntry.loadEventStart,
-            domContentLoaded: navEntry.domContentLoadedEventEnd - navEntry.domContentLoadedEventStart,
-            firstPaint: (entry as any).paintTiming?.firstPaint,
-            firstContentfulPaint: (entry as any).paintTiming?.firstContentfulPaint
-          });
+          const navigationEntry = entry as PerformanceNavigationTiming;
+          if (handlers.handleNavigation) {
+            handlers.handleNavigation(navigationEntry);
+          } else if ('loadEventEnd' in navigationEntry && 'loadEventStart' in navigationEntry) {
+            const loadTime = navigationEntry.loadEventEnd - navigationEntry.loadEventStart;
+            const domContentLoaded =
+              ('domContentLoadedEventEnd' in navigationEntry && 'domContentLoadedEventStart' in navigationEntry)
+                ? navigationEntry.domContentLoadedEventEnd - navigationEntry.domContentLoadedEventStart
+                : undefined;
+
+            consoleRef?.log?.('Navigation timing', {
+              loadTime,
+              domContentLoaded
+            });
+          } else {
+            consoleRef?.log?.('Performance entry', navigationEntry);
+          }
         }
       });
 
-      navigationObserver.observe({ entryTypes: ['navigation', 'paint'] });
+      try {
+        navigationObserver.observe({ entryTypes: ['navigation', 'paint'] });
+        observers.push(navigationObserver);
+      } catch {
+        navigationObserver.disconnect();
+      }
     }
-  }
 
-  /**
-   * Initialisation complète du service d'optimisation
-   */
-  static initialize(): void {
-    // Précharger modules critiques
-    this.preloadCriticalModules();
-
-    // Setup prédiction navigation
-    this.setupNavigationPrediction();
-
-    // Monitoring performance
-    this.monitorPerformance();
-
-    console.log('SeniorsOptimizationService initialized');
-  }
-}
-
-// Initialiser automatiquement
-if (typeof window !== 'undefined') {
-  // Attendre que le DOM soit prêt
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => {
-      SeniorsOptimizationService.initialize();
-    });
-  } else {
-    SeniorsOptimizationService.initialize();
+    return () => {
+      observers.forEach((observer) => observer.disconnect());
+    };
   }
 }

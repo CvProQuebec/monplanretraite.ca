@@ -21,6 +21,7 @@ const SeniorsGuidedExperience = React.lazy(() => import('./components/SeniorsGui
 const Budget = React.lazy(() => import('./pages/Budget'));
 const ProfilePage = React.lazy(() => import('./pages/ProfilePage'));
 const ApplyBenefitsAge = React.lazy(() => import('./pages/ApplyBenefitsAge'));
+const AllToolsPage = React.lazy(() => import('./pages/AllToolsPage'));
 
 // Module MVP Hypothèses de Calcul
 const SimpleAssumptionsPage = React.lazy(() => import('./pages/SimpleAssumptionsPage'));
@@ -34,13 +35,22 @@ const BlogHome = React.lazy(() => import('./pages/blog/BlogHome'));
 const CategoryPage = React.lazy(() => import('./pages/blog/CategoryPage'));
 const EssentialsPage = React.lazy(() => import('./pages/blog/EssentialsPage'));
 const ToolsPage = React.lazy(() => import('./pages/blog/ToolsPage'));
+import { BlogRoutes } from './routes/blogRoutes';
+import { MainRoutesHome } from './routes/mainRoutes';
+import { MainRoutesCore } from './routes/mainRoutesCore';
+import { GovernmentRoutes } from './routes/governmentRoutes';
+import ReportsRoutes from './routes/reportsRoutes';
+import { LabsRoutes } from './routes/labsRoutes';
+import { RetirementRoutes } from './routes/retirementRoutes';
+import { MarketingRoutes } from './routes/marketingRoutes';
+import MarketingExtrasRoutes from './routes/marketingExtrasRoutes';
 
 // NOUVEAUX MODULES INTÉGRÉS - Lazy loading pour performance seniors
 const SRGAnalysisSection = React.lazy(() => import('./features/retirement/components/SRGAnalysisSection').then(module => ({ default: module.SRGAnalysisSection })));
 const RREGOPAnalysisSection = React.lazy(() => import('./features/retirement/components/RREGOPAnalysisSection'));
 const RealEstateOptimizationSection = React.lazy(() => import('./features/retirement/components/RealEstateOptimizationSection').then(module => ({ default: module.RealEstateOptimizationSection })));
 const TaxOptimizationDashboard = React.lazy(() => import('./features/retirement/components/TaxOptimizationDashboard').then(module => ({ default: module.TaxOptimizationDashboard })));
-const MonteCarloSimulator = React.lazy(() => import('./features/retirement/components/MonteCarloSimulator').then(module => ({ default: module.MonteCarloSimulator })));
+const MonteCarloSimulator = React.lazy(() => import('./features/retirement/components/optimization/MonteCarloSimulator').then(module => ({ default: module.MonteCarloSimulator })));
 const SensitivityAnalysis = React.lazy(() => import('./features/retirement/components/SensitivityAnalysis').then(module => ({ default: module.SensitivityAnalysis })));
 const ScenarioComparison = React.lazy(() => import('./features/retirement/components/ScenarioComparison').then(module => ({ default: module.ScenarioComparison })));
 const UltimatePlanningDashboard = React.lazy(() => import('./features/retirement/components/UltimatePlanningDashboard').then(module => ({ default: module.UltimatePlanningDashboard })));
@@ -97,6 +107,7 @@ const NotificationsPage = React.lazy(() => import('./pages/NotificationsPage'));
 const ScenariosPage = React.lazy(() => import('./pages/ScenariosPage'));
 const ScenarioComparisonPage = React.lazy(() => import('./pages/ScenarioComparisonPage'));
 
+
 function App() {
   return (
     <AuthProvider>
@@ -108,81 +119,46 @@ function App() {
               <Routes>
               {/* 🏠 NOUVELLES ROUTES PRINCIPALES - Navigation restructurée */}
               
-              {/* Page d'accueil - "VOTRE RETRAITE, VOTRE HISTOIRE" */}
-              <Route path="/" element={<Accueil />} />
-              <Route path="/accueil" element={<Accueil />} />
-              <Route path="/fr" element={<Accueil />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/en" element={<Home />} />
+              {/* Page d'accueil - "VOTRE RETRAITE, VOTRE HISTOIRE" (extraites) */}
+              {MainRoutesHome()}
               
               {/* Page profil - désormais accessible directement (UX seniors) */}
-              <Route path="/profil" element={<ProfilePage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+              {MainRoutesCore()}
+              
+              {/* Modules gouvernementaux (extraits) */}
+              {GovernmentRoutes()}
+
+              {/* Rapports & Wizard (extraits) */}
+              {ReportsRoutes()}
+
+              {/* Zones de test/démonstration (guardées par VITE_ENABLE_LABS) */}
+              {LabsRoutes()}
+              {RetirementRoutes()}
+              {MarketingRoutes()}
+              {MarketingExtrasRoutes()}
               
               {/* Page retraite - "TRAVAILLER AVEC CE QU'ON A" + teaser du tableau de bord (repliable) */}
-              <Route path="/ma-retraite" element={<MaRetraiteWithDashboard />} />
-              <Route path="/my-retirement" element={<MaRetraiteWithDashboard />} />
               
               {/* Page revenus - "GÉREZ VOS SOURCES DE REVENUS" */}
-              <Route path="/mes-revenus" element={<Revenus />} />
-              <Route path="/my-income" element={<IncomePageEn />} />
               
               {/* Page planification d'urgence - "PROTÉGEZ VOS PROCHES" */}
-              <Route path="/planification-urgence" element={<PlanificationUrgence />} />
-              <Route path="/emergency-planning" element={<PlanificationUrgence />} />
               
               {/* Page planification successorale - "ORGANISEZ VOTRE SUCCESSION" */}
-              <Route path="/planification-successorale" element={<PlanificationSuccessorale />} />
-              <Route path="/succession-planning" element={<EstatePlanning />} />
               
               {/* Page planification de dépenses - "OPTIMISEZ VOS ACHATS" */}
-              <Route path="/planification-depenses" element={<PlanificationDepenses />} />
-              <Route path="/expense-planning" element={<SpendingPlanningEn />} />
               
               {/* Assistant financier personnel - "ÉVITEZ LES CATASTROPHES FINANCIÈRES" */}
-              <Route path="/assistant-financier" element={<AssistantFinancier />} />
-              <Route path="/financial-assistant" element={<FinancialAssistantEn />} />
               
               {/* Expérience guidée seniors - Navigation zéro scroll */}
-              <Route path="/guided-experience" element={<SeniorsGuidedExperience />} />
-              <Route path="/experience-guidee" element={<SeniorsGuidedExperience />} />
               
               {/* Module Budget - "GÉREZ VOS FINANCES INTELLIGEMMENT" */}
-              <Route path="/budget" element={<Budget />} />
-              <Route path="/mon-budget" element={<Budget />} />
-              <Route path="/my-budget" element={<Budget />} />
               
               {/* 📊 MODULE MVP HYPOTHÈSES DE CALCUL - TRANSPARENCE TOTALE */}
               
               {/* Page Hypothèses de Calcul - Interface Seniors-Friendly */}
-              <Route path="/hypotheses" element={<SimpleAssumptionsPage />} />
-              <Route path="/hypotheses-calcul" element={<SimpleAssumptionsPage />} />
-              <Route path="/assumptions" element={<SimpleAssumptionsPage />} />
-              <Route path="/calculation-assumptions" element={<SimpleAssumptionsPage />} />
               
-              {/* 📝 NOUVELLES ROUTES - BLOG */}
-              
-              {/* Page principale du blog */}
-              <Route path="/blog" element={<BlogHome />} />
-              <Route path="/blog/:slug" element={<BlogPost />} />
-              {/* English blog */}
-              <Route path="/en/blog" element={<BlogHome language="en" />} />
-              <Route path="/en/blog/:slug" element={<BlogPost language="en" />} />
-              
-              {/* Catégories du blog (nouvelles pages) */}
-              <Route path="/blog/categories" element={<BlogHome />} />
-              <Route path="/blog/categorie/:slug" element={<CategoryPage />} />
-              <Route path="/en/blog/categories" element={<BlogHome language="en" />} />
-              <Route path="/en/blog/category/:slug" element={<CategoryPage language="en" />} />
-
-              {/* Compat anciennes routes vers l'index des catégories */}
-              <Route path="/blog/guides" element={<BlogHome />} />
-              <Route path="/blog/conseils-experts" element={<BlogHome />} />
-              <Route path="/blog/expert-tips" element={<BlogHome language="en" />} />
-              <Route path="/blog/etudes-cas" element={<BlogHome />} />
-              <Route path="/blog/case-studies" element={<BlogHome language="en" />} />
-              <Route path="/blog/actualites-fiscales" element={<BlogHome />} />
-              <Route path="/blog/tax-news" element={<BlogHome language="en" />} />
+              {/* 📝 NOUVELLES ROUTES - BLOG (extraites) */}
+              {BlogRoutes()}
 
               {/* Essentiels et Outils */}
               <Route path="/blog/essentiels" element={<EssentialsPage />} />
@@ -208,235 +184,55 @@ function App() {
               {/* 🏛️ NOUVELLES ROUTES - PRESTATIONS GOUVERNEMENTALES */}
               
               {/* Module SRG (Supplément de Revenu Garanti) */}
-              <Route path="/module-srg" element={<div className="p-8"><SRGAnalysisSection data={{} as any} onUpdate={() => {}} /></div>} />
-              <Route path="/srg-module" element={<div className="p-8"><SRGAnalysisSection data={{} as any} onUpdate={() => {}} /></div>} />
               
               {/* Module RREGOP (Régime de Retraite Gouvernemental) */}
-              <Route path="/module-rregop" element={<RREGOPAnalysisSection userPlan="professional" />} />
-              <Route path="/rregop-module" element={<RREGOPAnalysisSection userPlan="professional" />} />
               
               {/* Module RRQ/CPP */}
-              <Route path="/rrq-cpp-analysis" element={<RRQCPPAnalysis />} />
-              <Route path="/analyse-rrq-cpp" element={<RRQCPPAnalysis />} />
               
               {/* Module CCQ - Commission de la Construction du Québec */}
-              <Route path="/module-ccq" element={<CCQPage />} />
-              <Route path="/ccq-module" element={<CCQPage />} />
               
               {/* Module OAS/GIS */}
-              <Route path="/oas-gis-analysis" element={<OASGISAnalysis />} />
-              <Route path="/analyse-oas-gis" element={<OASGISAnalysis />} />
               
-              <Route path="/prestations/apply" element={<ApplyBenefitsAge />} />
-              <Route path="/benefits/apply" element={<ApplyBenefitsAge />} />
               
               {/* Retraits - Stratégies et application d'ordre */}
-              <Route path="/withdrawal-sequence" element={<DynamicWithdrawalPlanningModule />} />
-              <Route path="/sequence-retrait" element={<DynamicWithdrawalPlanningModule />} />
-              <Route path="/withdrawals/apply" element={<ApplyWithdrawalOrder />} />
-              <Route path="/retraits/apply" element={<ApplyWithdrawalOrder />} />
-              <Route path="/withdrawal-comparison" element={<RetirementWithdrawalComparison />} />
-              <Route path="/comparateur-retraits" element={<RetirementWithdrawalComparison />} />
 
               {/* Notifications 90/60/30 */}
-              <Route path="/notifications/apply" element={<ApplyNotification />} />
-              <Route path="/notifications" element={<NotificationsPage />} />
-              <Route path="/rappels" element={<NotificationsPage />} />
 
-              {/* Scénarios - gestion et comparaison */}
-              <Route path="/scenarios" element={<ScenariosPage />} />
-              <Route path="/scenario-comparison" element={<ScenarioComparisonPage />} />
-              <Route path="/scenarios-compare" element={<ScenarioComparisonPage />} />
               
               {/* 🏠 NOUVELLES ROUTES - OPTIMISATION IMMOBILIÈRE */}
               
               {/* Module Immobilier */}
-              <Route path="/optimisation-immobiliere" element={<RealEstateOptimizationSection userPlan="professional" />} />
-              <Route path="/real-estate-optimization" element={<RealEstateOptimizationSection userPlan="professional" />} />
               
               {/* Page Immobilier - Gestion complète du patrimoine immobilier */}
-              <Route path="/immobilier" element={<ImmobilierPage />} />
-              <Route path="/real-estate" element={<RealEstatePageEn />} />
               
               {/* 📊 NOUVELLES ROUTES - SIMULATIONS */}
               
               {/* Simulateur Monte Carlo */}
-              <Route path="/simulateur-monte-carlo" element={<MonteCarloSimulator />} />
-              <Route path="/monte-carlo-simulator" element={<MonteCarloSimulator />} />
               {/* RRQ quick compare + defer-by-months simulator */}
-              <Route path="/rrq-quick-compare" element={<RRQQuickCompare />} />
-              <Route path="/rrq-delay-simulator" element={<RRQDelaySimulator />} />
               
               {/* Analyse de Sensibilité */}
-              <Route path="/analyse-sensibilite" element={<SensitivityAnalysis />} />
-              <Route path="/sensitivity-analysis" element={<SensitivityAnalysis />} />
               
               {/* Comparaison de Scénarios */}
-              <Route path="/comparaison-scenarios" element={<ScenarioComparison />} />
-              <Route path="/scenario-comparison" element={<ScenarioComparison />} />
               
               {/* 🎯 NOUVELLES ROUTES - OPTIMISATION FISCALE ET PLANIFICATION */}
               
               {/* Optimisation Fiscale */}
-              <Route path="/optimisation-fiscale" element={<TaxOptimizationDashboard />} />
-              <Route path="/tax-optimization" element={<TaxOptimizationDashboard />} />
               
                       {/* Planification Expert */}
-        <Route path="/planification-expert" element={<UltimatePlanningDashboard />} />
-        <Route path="/expert-planning" element={<UltimatePlanningDashboard />} />
         
         {/* Module de Dépenses */}
-        <Route path="/depenses" element={<ExpensesPage />} />
-        <Route path="/expenses" element={<ExpensesPage />} />
         
         {/* 🚀 NOUVEAUX MODULES PHASE 1, 2 ET 3 */}
         
         {/* Phase 1 - Modules Essentiels */}
-        <Route path="/module-celi-succession" element={
-          <div className="p-8">
-            <div className="max-w-4xl mx-auto">
-              <h1 className="text-3xl font-bold text-gray-900 mb-6">Module Succession CÉLI</h1>
-              <p className="text-gray-600 mb-8">Optimisez la transmission de votre CÉLI selon les conseils d'experts.</p>
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-blue-900 mb-4">Points Clés:</h2>
-                <ul className="space-y-2 text-blue-800">
-                  <li>• Nommez un titulaire successeur pour éviter les taxes</li>
-                  <li>• Évitez les erreurs coûteuses de désignation</li>
-                  <li>• Maximisez la transmission tax-free</li>
-                  <li>• Protégez contre les frais d'homologation</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        } />
         
-        <Route path="/calculateur-impact-fiscal-65" element={
-          <div className="p-8">
-            <div className="max-w-4xl mx-auto">
-              <h1 className="text-3xl font-bold text-gray-900 mb-6">Calculateur Impact Fiscal à 65 ans</h1>
-              <p className="text-gray-600 mb-8">Découvrez les économies fiscales automatiques à 65 ans.</p>
-              <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-green-900 mb-4">Économies Potentielles:</h2>
-                <ul className="space-y-2 text-green-800">
-                  <li>• Crédit d'âge fédéral et provincial</li>
-                  <li>• Crédit pour revenu de pension (2 000 $ premiers)</li>
-                  <li>• Fractionnement du revenu de pension</li>
-                  <li>• Réduction d'impôt de 1 600 $+ par année</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        } />
         
-        <Route path="/tableau-bord-10-conseils" element={
-          <div className="p-8">
-            <div className="max-w-4xl mx-auto">
-              <h1 className="text-3xl font-bold text-gray-900 mb-6">Tableau de Bord - 10 Conseils Essentiels</h1>
-              <p className="text-gray-600 mb-8">Suivez votre progression sur les 10 conseils cruciaux pour la retraite.</p>
-              <div className="bg-orange-50 border border-orange-200 rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-orange-900 mb-4">Conseils Intégrés:</h2>
-                <ul className="space-y-2 text-orange-800">
-                  <li>• Connaître ses dépenses mensuelles</li>
-                  <li>• Être libre de dettes</li>
-                  <li>• Consolider ses actifs</li>
-                  <li>• Automatiser les retraits</li>
-                  <li>• Et 6 autres conseils essentiels</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        } />
         
         {/* Phase 2 - Optimisation Avancée */}
-        <Route path="/module-consolidation-actifs" element={
-          <div className="p-8">
-            <div className="max-w-4xl mx-auto">
-              <h1 className="text-3xl font-bold text-gray-900 mb-6">Module Consolidation d'Actifs</h1>
-              <p className="text-gray-600 mb-8">Simplifiez et optimisez la gestion de vos placements.</p>
-              <div className="bg-purple-50 border border-purple-200 rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-purple-900 mb-4">Avantages:</h2>
-                <ul className="space-y-2 text-purple-800">
-                  <li>• Réduction des frais de gestion</li>
-                  <li>• Simplification administrative</li>
-                  <li>• Meilleur suivi de performance</li>
-                  <li>• Économies de 0,5-2 % par année</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        } />
         
-        <Route path="/module-coussin-liquidites" element={
-          <div className="p-8">
-            <div className="max-w-4xl mx-auto">
-              <h1 className="text-3xl font-bold text-gray-900 mb-6">Module Coussin de Liquidités</h1>
-              <p className="text-gray-600 mb-8">Gérez la volatilité avec la stratégie bucket.</p>
-              <div className="bg-cyan-50 border border-cyan-200 rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-cyan-900 mb-4">Stratégie Bucket:</h2>
-                <ul className="space-y-2 text-cyan-800">
-                  <li>• 3-5 ans de liquidités protégées</li>
-                  <li>• Éviter de vendre en baisse de marché</li>
-                  <li>• Maintenir le style de vie désiré</li>
-                  <li>• Réduire le stress financier</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        } />
         
-        <Route path="/centre-education-fiscale" element={
-          <div className="p-8">
-            <div className="max-w-4xl mx-auto">
-              <h1 className="text-3xl font-bold text-gray-900 mb-6">Centre d'Éducation Fiscale</h1>
-              <p className="text-gray-600 mb-8">Maîtrisez les stratégies fiscales pour la retraite.</p>
-              <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-6">
-                <h2 className="text-xl font-semibold text-indigo-900 mb-4">Sujets Couverts:</h2>
-                <ul className="space-y-2 text-indigo-800">
-                  <li>• Fractionnement du revenu</li>
-                  <li>• Optimisation des retraits</li>
-                  <li>• Crédits d'impôt disponibles</li>
-                  <li>• Planification successorale fiscale</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        } />
         
         {/* Phase 3 - Optimisation Experte */}
-        <Route path="/module-regle-4-pourcent" element={
-          <div className="p-8">
-            <FourPercentRuleModule />
-          </div>
-        } />
-        {/* Routes publiques dédiées Règle du 4 % */}
-        <Route path="/regle-4-pourcent" element={
-          <div className="p-8">
-            <FourPercentRuleModule />
-          </div>
-        } />
-        <Route path="/4-percent-rule" element={
-          <div className="p-8">
-            <FourPercentRuleModuleEn />
-          </div>
-        } />
-        <Route path="/four-percent-rule" element={
-          <div className="p-8">
-            <FourPercentRuleModuleEn />
-          </div>
-        } />
-        {/* Placeholders Phase 2/3 */}
-        <Route path="/education-4-pourcent" element={
-          <div className="p-8 text-center">
-            <h1 className="text-2xl font-bold text-gray-800">Centre d’éducation – Règle du 4 %</h1>
-            <p className="text-gray-600 mt-4">Contenu éducatif à venir.</p>
-          </div>
-        } />
-        <Route path="/simulateur-retraite" element={
-          <div className="p-8 text-center">
-            <h1 className="text-2xl font-bold text-gray-800">Simulateur de retraite</h1>
-            <p className="text-gray-600 mt-4">Module avancé à venir.</p>
-          </div>
-        } />
         
         <Route path="/module-allocation-optimale" element={
           <div className="p-8">
@@ -465,16 +261,11 @@ function App() {
               {/* 🧪 ROUTES DE TEST ET VALIDATION */}
               
               {/* Test des contrôles de démonstration avancés */}
-              <Route path="/advanced-demo-controls" element={<AdvancedDemoControls />} />
               
               
               {/* Validation finale - Dernière étape avant déploiement */}
-              <Route path="/validation-finale" element={<FinalValidation />} />
               
               {/* Page comparateur concurrentiel */}
-              <Route path="/comparaison" element={<ComparisonPage />} />
-              <Route path="/comparison" element={<ComparisonPage />} />
-              <Route path="/pourquoi-nous-choisir" element={<ComparisonPage />} />
               
               {/* 🌐 ROUTES BILINGUES EXISTANTES (pour compatibilité) */}
               
@@ -493,12 +284,8 @@ function App() {
               <Route path="/fr/retraite-module-phase1" element={<RetraiteModulePhase1Fr />} />
               <Route path="/en/retirement-module-phase1" element={<RetraiteModulePhase1En />} />
               
-              {/* Routes Rapports de Retraite */}
-              <Route path="/fr/rapports-retraite" element={<RapportsRetraiteFr />} />
-              <Route path="/en/retirement-reports" element={<RetirementReportsEn />} />
               
               {/* Route Phase 2 Demo */}
-              <Route path="/phase2-demo" element={<Phase2DemoPage />} />
               
               {/* Routes Sauvegarder/Charger */}
               <Route path="/fr/sauvegarder-charger" element={<SauvegarderCharger />} />
@@ -511,9 +298,6 @@ function App() {
               {/* Route Admin */}
               <Route path="/admin" element={<div className="p-8 text-center"><h1 className="text-2xl font-bold text-gray-800">Admin Panel</h1><p className="text-gray-600 mt-4">Administration panel - Coming soon</p></div>} />
 
-              {/* 🧭 Wizard Phase 2 */}
-              <Route path="/wizard" element={<WizardPage />} />
-              <Route path="/wizard/:stepId" element={<WizardPage />} />
               
               {/* 🔄 REDIRECTIONS INTELLIGENTES */}
               

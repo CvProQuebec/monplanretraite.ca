@@ -75,3 +75,11 @@ beta-versions/
 dev-notes-private/
 architecture-decisions-private/
 code-review-internal/
+# QA artifacts
+playwright-report/
+test-results/
+reports/e2e/html/
+reports/e2e/junit/results.xml
+reports/security/zap-baseline-report.html
+reports/security/zap-baseline-report.json
+reports/latest-npm-audit.json

@@ -271,8 +271,7 @@ const Revenus: React.FC = () => {
               title={isFrench ? 'Revenu annuel brut' : 'Annual gross income'}
               content={isFrench
                 ? 'Ce montant sert de base à vos calculs et à votre capacité d’épargne. Une cible fréquente de remplacement à la retraite est ~70 %, mais elle varie selon votre situation.'
-                : 'This amount underpins your calculations and saving capacity. A common retirement income target is ~70% of pre-retirement income, but it varies by situation.'
-              }
+                : 'This amount underpins your calculations and saving capacity. A common retirement income target is ~70% of pre-retirement income, but it varies by situation.'}
             >
               <span></span>
             </HelpTooltip>
@@ -281,8 +280,7 @@ const Revenus: React.FC = () => {
               title={isFrench ? 'Régime d’employeur' : 'Employer plan'}
               content={isFrench
                 ? 'Si votre employeur égalise vos cotisations, c’est souvent la priorité #1 — rendement “garanti” de 100 % sur vos contributions.'
-                : 'If your employer matches your contributions, that’s often priority #1 — a “guaranteed” 100% return on your contributions.'
-              }
+                : 'If your employer matches your contributions, that’s often priority #1 — a “guaranteed” 100% return on your contributions.'}
             >
               <span></span>
             </HelpTooltip>
@@ -291,8 +289,7 @@ const Revenus: React.FC = () => {
               title={isFrench ? 'REER' : 'RRSP'}
               content={isFrench
                 ? 'Déduction fiscale immédiate et croissance à l’abri de l’impôt. Conversion obligatoire en FERR à 71 ans avec retraits minimums.'
-                : 'Immediate tax deduction and tax-deferred growth. Must convert to a RRIF at 71 with required minimum withdrawals.'
-              }
+                : 'Immediate tax deduction and tax-deferred growth. Must convert to a RRIF at 71 with required minimum withdrawals.'}
             >
               <span></span>
             </HelpTooltip>
@@ -301,8 +298,7 @@ const Revenus: React.FC = () => {
               title={isFrench ? 'CELI' : 'TFSA'}
               content={isFrench
                 ? 'Retraits non imposables et sans effet sur les prestations gouvernementales. Excellente flexibilité pour la retraite.'
-                : 'Withdrawals are tax-free and don’t impact government benefits. Excellent flexibility for retirement.'
-              }
+                : 'Withdrawals are tax-free and don’t impact government benefits. Excellent flexibility for retirement.'}
             >
               <span></span>
             </HelpTooltip>
@@ -311,8 +307,7 @@ const Revenus: React.FC = () => {
               title={isFrench ? 'Épargnes non enregistrées' : 'Non-registered savings'}
               content={isFrench
                 ? 'Plus flexibles, mais imposés annuellement. Idéales pour les objectifs à moyen terme et après maximisation des comptes enregistrés.'
-                : 'More flexible but taxed annually. Ideal for medium-term goals and once registered accounts are maximized.'
-              }
+                : 'More flexible but taxed annually. Ideal for medium-term goals and once registered accounts are maximized.'}
             >
               <span></span>
             </HelpTooltip>
@@ -339,8 +334,7 @@ const Revenus: React.FC = () => {
               <strong>{isFrench ? 'Conseils :' : 'Tips:'}</strong> {
                 isFrench 
                   ? 'Renseignez toutes vos sources de revenus pour une planification précise. Ces informations sont cruciales pour les calculs de retraite et remplacent les informations de salaire du profil.'
-                  : 'Fill in all your income sources for accurate planning. This information is crucial for retirement calculations and replaces the salary information from the profile.'
-              }
+                  : 'Fill in all your income sources for accurate planning. This information is crucial for retirement calculations and replaces the salary information from the profile.'}
             </AlertDescription>
           </Alert>
         )}
@@ -386,8 +380,7 @@ const Revenus: React.FC = () => {
                 <p className="text-blue-200 text-lg">
                   {isFrench 
                     ? 'Délais et procédures pour votre demande de rente sans carence'
-                    : 'Deadlines and procedures for your pension application without gaps'
-                  }
+                    : 'Deadlines and procedures for your pension application without gaps'}
                 </p>
               </div>
               
@@ -434,8 +427,7 @@ const Revenus: React.FC = () => {
               <p className="text-lg text-gray-600 mb-6">
                 {isFrench
                   ? 'Gérez vos revenus de travail : salaire, emploi saisonnier, travail autonome, revenus de location'
-                  : 'Manage your work income: salary, seasonal employment, self-employment, rental income'
-                }
+                  : 'Manage your work income: salary, seasonal employment, self-employment, rental income'}
               </p>
           </div>
 
@@ -485,15 +477,13 @@ const Revenus: React.FC = () => {
               <p className="text-lg text-gray-600 mb-6">
               {isFrench 
                   ? 'Gérez vos prestations gouvernementales : RRQ/CPP, Sécurité de la vieillesse, Assurance emploi, rentes privées'
-                  : 'Manage your government benefits: QPP/CPP, Old Age Security, Employment Insurance, private pensions'
-              }
+                  : 'Manage your government benefits: QPP/CPP, Old Age Security, Employment Insurance, private pensions'}
             </p>
             <div className="bg-yellow-100 border border-yellow-400 rounded-lg p-4 mb-4">
               <p className="text-yellow-800 font-semibold">
                 {isFrench 
                   ? 'DEBUG: Section Prestations ouverte - RRQ, SV et Rentes privées devraient être visibles'
-                  : 'DEBUG: Benefits section open - RRQ, OAS and Private Pensions should be visible'
-                }
+                  : 'DEBUG: Benefits section open - RRQ, OAS and Private Pensions should be visible'}
               </p>
             </div>
           </div>
@@ -533,8 +523,7 @@ const Revenus: React.FC = () => {
               <p className="text-lg text-gray-600 mb-6">
               {isFrench 
                   ? 'Gérez vos investissements : REER, CELI, CRI, crypto-monnaie'
-                  : 'Manage your investments: RRSP, TFSA, LIRA, cryptocurrency'
-              }
+                  : 'Manage your investments: RRSP, TFSA, LIRA, cryptocurrency'}
             </p>
           </div>
 
@@ -572,8 +561,7 @@ const Revenus: React.FC = () => {
             <p className="text-indigo-200 text-lg mb-8">
               {isFrench 
                 ? 'Calculez et comparez les rendements de vos investissements REER, CELI et CRI'
-                : 'Calculate and compare the returns of your RRSP, TFSA and LIRA investments'
-              }
+                : 'Calculate and compare the returns of your RRSP, TFSA and LIRA investments'}
             </p>
             
             {/* Gating d'accès — Aperçu gratuit pour le plan Free */}
@@ -681,7 +669,7 @@ const Revenus: React.FC = () => {
                 console.error('❌ Erreur lors de la sauvegarde:', error);
                 alert(isFrench 
                   ? `❌ Erreur lors de la sauvegarde: ${error instanceof Error ? error.message : 'Erreur inconnue'}`
-                  : `❌ Error saving data: ${error instanceof Error ? error.message : 'Unknown error'}`
+                  : `❌ Error saving data: ${error instanceof Error ? error.message : 'Unknown error'}` 
                 );
               } finally {
                 setIsSaving(false);

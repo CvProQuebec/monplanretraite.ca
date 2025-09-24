@@ -1,14 +1,14 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { wizardService } from '@/services/WizardService';
-import TaxOptimizationService, { WithdrawalSource } from '@/services/TaxOptimizationService';
+import { RetirementHelpers } from '@/domain/retirement/RetirementDomainAdapter';
+type WithdrawalSource = 'CELI' | 'NON_ENREGISTRE' | 'REER' | 'RRIF' | 'CRI' | 'LIF' | 'PENSION' | string;
 import NotificationSchedulerService from '@/services/NotificationSchedulerService';
 import { PDFExportService } from '@/services/PDFExportService';
 import SeniorsLoadingSpinner from '@/components/SeniorsLoadingSpinner';
 import { formatCurrencyOQLF, formatTimeOQLF } from '@/utils/localeFormat';
 import { AlertCircle, Bell, CheckCircle, FileDown, Shuffle, Wallet } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { TaxOptimizationPDFService } from '@/services/tax/TaxOptimizationPDFService';
 
 /**
  * ResultsWizardStep
@@ -94,7 +94,7 @@ const ResultsWizardStep: React.FC = () => {
 
   // Calcul d'un ordre de retraits recommandé
   useEffect(() => {
-    const order = TaxOptimizationService.suggestWithdrawalOrder(userData);
+    const order = RetirementHelpers.suggestWithdrawalOrder(userData);
     setSuggestedOrder(order);
   }, [userData]);
 
@@ -174,12 +174,12 @@ const ResultsWizardStep: React.FC = () => {
     setExporting(true);
     try {
       const clientName = `${userData?.personal?.prenom1 || ''} ${userData?.personal?.nom1 || ''}`.trim() || (isFrench ? 'Client' : 'Client');
-      const orderLabels = suggestedOrder.map(orderLabel);
+      const orderLabels = suggestedOrder.map(orderLabel); void orderLabels;
       const blob = await PDFExportService.generateBankerReport(isFrench ? 'fr' : 'en', {
         clientName,
         scenarioName: isFrench ? 'Scénario personnel' : 'Personal scenario',
         netMonthlyNeed: monthlyNetNeed || 0,
-        withdrawalOrder: orderLabels,
+        withdrawalOrder: suggestedOrder,
         monthsCoveredOp: monthsCoveredOp ?? undefined,
         yearsCoveredShort: yearsCoveredShort ?? undefined,
         assumptions: [
@@ -316,7 +316,7 @@ const ResultsWizardStep: React.FC = () => {
         clientName = name || undefined;
       } catch {}
       const payload = { language: lang, clientName, ...cache };
-      const blob = await TaxOptimizationPDFService.generateSummary(payload);
+      const blob = (await RetirementHelpers.generateTaxOptimizationSummary(payload)) as Blob;
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -337,7 +337,7 @@ const ResultsWizardStep: React.FC = () => {
   const schedule = useMemo(() => {
     const order = suggestedOrder;
     if (!order.length || monthlyNetNeed <= 0) return null;
-    return TaxOptimizationService.buildMonthlySchedule(scenarioId, monthlyNetNeed, order);
+    return RetirementHelpers.buildMonthlySchedule(scenarioId, monthlyNetNeed, order);
   }, [scenarioId, monthlyNetNeed, suggestedOrder]);
 
   return (

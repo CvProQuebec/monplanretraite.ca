@@ -3,6 +3,7 @@
 
 // Nouveaux types CCQ
 export type * from './ccq';
+export type * from './services';
 
 // Types principaux étendus pour inclure l'emploi précaire
 export interface UserData {

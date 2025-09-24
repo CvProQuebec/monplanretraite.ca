@@ -29,7 +29,7 @@ export { default as InteractiveCard } from './InteractiveCard';
 export { default as InteractiveParticles } from './InteractiveParticles';
 export { default as LanguageSwitcher } from './LanguageSwitcher';
 export { default as MedicalInfoForm } from './MedicalInfoForm';
-export { default as MonteCarloSimulator } from './MonteCarloSimulator';
+export { default as MonteCarloSimulator } from './optimization/MonteCarloSimulator';
 export { default as NavigationDemo } from './NavigationDemo';
 export { default as OASGISAnalysis } from './OASGISAnalysis';
 export { default as PDFExport } from './PDFExport';

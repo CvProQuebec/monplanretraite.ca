@@ -1,0 +1,140 @@
+﻿name: QA Suite
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+env:
+  NODE_VERSION: "20"
+
+jobs:
+  lint_unit:
+    name: Lint, Typecheck & Unit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run lint:boundaries
+      - run: npm run lint:mpr
+      - run: npm run deps:check
+      - run: npm run test:routes
+      - run: npm run test:unit
+      - run: npm run test:vitest
+
+  playwright:
+    name: Playwright E2E
+    needs: lint_unit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps
+      - name: Run E2E tests
+        env:
+          TEST_BASE_URL: http://127.0.0.1:5173
+        run: npm run test:e2e
+      - name: Upload Playwright report
+        if: ${{ failure() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: reports/e2e/html
+
+  security_audit:
+    name: npm audit
+    needs: lint_unit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run test:security:audit
+      - name: Upload audit report
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit
+          path: reports/latest-npm-audit.json
+
+  perf_smoke:
+    name: k6 smoke
+    needs: lint_unit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Start preview server
+        run: |
+          npm run preview -- --host --port 4173 &
+          echo $! > preview.pid
+      - name: Wait for preview
+        run: npx --yes wait-on http://127.0.0.1:4173
+      - name: Install k6
+        run: sudo apt-get update && sudo apt-get install -y k6
+      - name: Run k6 smoke test
+        env:
+          K6_BASE_URL: http://127.0.0.1:4173
+        run: npm run test:perf
+      - name: Stop preview server
+        if: always()
+        run: |
+          kill $(cat preview.pid) || true
+      - name: Upload k6 summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-results
+          path: reports/perf
+
+  zap_baseline:
+    name: OWASP ZAP baseline
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    needs: lint_unit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Start preview server
+        run: |
+          npm run preview -- --host --port 4173 &
+          echo $! > preview.pid
+      - name: Wait for preview
+        run: npx --yes wait-on http://127.0.0.1:4173
+      - name: Run ZAP baseline
+        env:
+          ZAP_TARGET: http://127.0.0.1:4173
+        run: npm run test:security:zap
+      - name: Stop preview server
+        if: always()
+        run: |
+          kill $(cat preview.pid) || true
+      - name: Upload ZAP reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: zap-baseline
+          path: reports/security

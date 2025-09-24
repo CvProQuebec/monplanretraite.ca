@@ -556,6 +556,12 @@ h4, .h4 { color: var(--mpr-h4); }
 .mpr-result-amount { font-size: 24px; font-weight: 700; color: var(--mpr-primary); }
 .mpr-result-label { font-size: 14px; color: var(--mpr-muted); }
 
+/* Plan styling for Tools page */
+.plan-free  { border-color: #e2e8f0; background:#f8fafc; }
+.plan-pro   { border-color: var(--senior-primary); background:#eef2ff; }
+.plan-expert{ border-color: #6d28d9; background:#f5f3ff; }
+.badge{ font-size:14px; font-weight:700; padding:4px 8px; border-radius:999px; background:#fff; border:1px solid currentColor }
+
 /* Bridge rules to convert existing classes to inline label-left layout without changing markup */
 .senior-layout .senior-field-inline { display: grid; grid-template-columns: minmax(160px,200px) 1fr; align-items: center; gap: 8px; }
 .senior-layout .senior-field-inline label { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }

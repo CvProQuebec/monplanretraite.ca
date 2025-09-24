@@ -6,11 +6,41 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Badge } from '@/components/ui/badge';
-import GreedyBaselineOptimizer, { type OptimizeParams } from '@/services/tax/optimizers/GreedyBaselineOptimizer';
-import { simulateYears, type AccountBalances, type Assumptions, type YearDecision, type YearResult } from '@/services/tax/ProjectionEngine';
-import { computeTaxYear, type IncomeInputs } from '@/services/tax/TaxEngine';
-import { evaluateRobustness } from '@/services/tax/RobustnessService';
-import { TaxOptimizationPDFService } from '@/services/tax/TaxOptimizationPDFService';
+import { RetirementHelpers } from '@/domain/retirement/RetirementDomainAdapter';
+
+type AccountBalances = {
+  tfsa: number;
+  nonRegistered: number;
+  rrsp: number;
+  rrif: number;
+  cppAnnual?: number;
+  oasAnnual?: number;
+};
+
+type Assumptions = {
+  province: string;
+  startAge: number;
+  grossReturnTFSA: number;
+  grossReturnNonReg: number;
+  grossReturnRRSP: number;
+  grossReturnRRIF: number;
+  inflation: number;
+  includeCPP: boolean;
+  includeOAS: boolean;
+  nonRegCapitalGainsRatio: number;
+};
+
+type YearDecision = {
+  yearIndex: number;
+  withdrawTFSA: number;
+  withdrawNonReg: number;
+  withdrawRRSP: number;
+  withdrawRRIF: number;
+  startCPP: boolean;
+  startOAS: boolean;
+};
+
+type YearResult = any;
 
 function toNum(v: any): number {
   const n = Number(v);
@@ -66,7 +96,7 @@ function buildRRSPOnlyDecisions(
     const startCPP = (assumptions.includeCPP ?? true) && age >= startCPPAt && !balances.cppAnnual;
     const startOAS = (assumptions.includeOAS ?? true) && age >= startOASAt && !balances.oasAnnual;
 
-    const baseNet = computeTaxYear({
+    const baseNet = RetirementHelpers.computeTaxYear({
       ordinaryIncome: 0,
       eligiblePensionIncome: 0,
       cpp: balances.cppAnnual || 0,
@@ -86,7 +116,7 @@ function buildRRSPOnlyDecisions(
     let best = 0;
     for (let i = 0; i < 24; i++) {
       const mid = (lo + hi) / 2;
-      const net = computeTaxYear({
+      const net = RetirementHelpers.computeTaxYear({
         ordinaryIncome: mid,
         eligiblePensionIncome: 0,
         cpp: balances.cppAnnual || 0,
@@ -247,7 +277,7 @@ export const TaxOptimizationLab: React.FC = () => {
   }), [startAge, nonRegCGRatio]);
 
   const runOptimizer = () => {
-    const params: OptimizeParams = {
+    const params: any = {
       opening,
       assumptions,
       horizonYears: horizon,
@@ -255,13 +285,13 @@ export const TaxOptimizationLab: React.FC = () => {
       startCPPAt,
       startOASAt
     };
-    const decisions = GreedyBaselineOptimizer.optimize(params);
-    const results = simulateYears(opening, assumptions, decisions, horizon);
+    const decisions = RetirementHelpers.greedyOptimize(params);
+    const results = RetirementHelpers.simulateYears(opening, assumptions, decisions, horizon);
     setOptResults(results);
     setGreedyDecisions(decisions);
     if (robustMode) {
       try {
-        const rep = evaluateRobustness(
+        const rep = RetirementHelpers.evaluateRobustness(
           {
             opening,
             assumptions,
@@ -283,12 +313,12 @@ export const TaxOptimizationLab: React.FC = () => {
     runOptimizer();
     // Baseline RRSP-only
     const decisions = buildRRSPOnlyDecisions(opening, assumptions, horizon, targetNetAnnual);
-    const results = simulateYears(opening, assumptions, decisions, horizon);
+    const results = RetirementHelpers.simulateYears(opening, assumptions, decisions, horizon);
     setBaseResults(results);
     setBaseDecisions(decisions);
     if (robustMode) {
       try {
-        const rep = evaluateRobustness(
+        const rep = RetirementHelpers.evaluateRobustness(
           {
             opening,
             assumptions,
@@ -341,7 +371,7 @@ export const TaxOptimizationLab: React.FC = () => {
           try {
             setDpDecisions(msg.payload.decisions || null);
             if (robustMode && (msg.payload.decisions?.length || 0) > 0) {
-              const rep = evaluateRobustness(
+              const rep = RetirementHelpers.evaluateRobustness(
                 {
                   opening,
                   assumptions,
@@ -395,7 +425,7 @@ export const TaxOptimizationLab: React.FC = () => {
         }
       } catch {}
 
-      const blob = await TaxOptimizationPDFService.generateSummary({
+      const blob = await RetirementHelpers.generateTaxOptimizationSummary({
         language: lang,
         clientName,
         horizonYears: horizon,

@@ -1,5 +1,5 @@
 import jsPDF from 'jspdf';
-import { EmergencyData } from '@/components/emergency-planning/types';
+import type { EmergencyData } from '@/types/emergency';
 
 export type EmergencyAudience = 'trusted' | 'notary' | 'planner' | 'liquidator';
 

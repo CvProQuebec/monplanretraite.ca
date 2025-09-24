@@ -1,7 +1,7 @@
 /** @type {import('jest').Config} */
 module.exports = {
   preset: 'ts-jest/presets/default-esm',
-  testEnvironment: 'node', // Switch to 'jsdom' if you add DOM/React tests and install 'jest-environment-jsdom'
+  testEnvironment: 'node', // Default to Node; DOM tests should opt-in via per-test "@jest-environment jsdom"
   roots: ['<rootDir>/src'],
   testMatch: ['**/?(*.)+(test).[tj]s?(x)'],
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
@@ -16,7 +16,15 @@ module.exports = {
       'ts-jest',
       {
         useESM: true,
-        tsconfig: 'tsconfig.json'
+        // Use a TS config compatible with TSX + React for tests
+        tsconfig: {
+          jsx: 'react-jsx',
+          esModuleInterop: true,
+          allowSyntheticDefaultImports: true,
+          module: 'ESNext',
+          moduleResolution: 'bundler',
+          target: 'ES2020'
+        }
       }
     ]
   },

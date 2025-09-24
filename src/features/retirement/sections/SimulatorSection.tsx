@@ -24,7 +24,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { UserData, Calculations } from '../types';
-import { MonteCarloSimulator } from '../components/MonteCarloSimulator';
+import { MonteCarloSimulator } from '../components/optimization/MonteCarloSimulator';
 import { useLanguage } from '../hooks/useLanguage';
 import { formatCurrency, formatPercentage } from '../utils/formatters';
 

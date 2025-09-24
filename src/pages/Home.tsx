@@ -105,12 +105,11 @@ const Home: React.FC = () => {
                 </>
               ) : (
                 <>
-                  Your retirement deserves better<br />
-                  than a plan on a napkin
+                  Your retirement deserves better than a plan on a napkin
                 </>
               )}
             </h1>
-            <p className="text-2xl text-gray-700 max-w-4xl mx-auto mb-8">
+            <p className="text-2xl text-gray-700 max-w-4xl mx-auto mb-8" style={{ display: isFrench ? 'none' : undefined }}>
               {isFrench ? (
                 <>
                   Préparez-vous efficacement avec nos outils professionnels.<br />
@@ -118,12 +117,16 @@ const Home: React.FC = () => {
                 </>
               ) : (
                 <>
-                  Prepare effectively with our professional tools.<br />
-                  Save time and maximize the value of your decisions.
+                  A structured method to clarify, decide, and maximize your wealth.
                 </>
               )}
             </p>
-            <div className="space-y-4 mb-8">
+            {isFrench && (
+              <p className="text-2xl text-gray-700 max-w-4xl mx-auto mb-8">
+                Une méthode structurée pour clarifier, décider et maximiser votre richesse.
+              </p>
+            )}
+            <div className="space-y-4 mb-8 hidden">
               <div className="inline-block bg-red-500 text-white px-6 py-3 rounded-xl font-bold text-lg">
                 {isFrench 
                   ? '💰 Évitez des erreurs de 10 000 $+ avec nos outils professionnels'
@@ -143,6 +146,21 @@ const Home: React.FC = () => {
                       Our tools help you make the right decisions from the start.
                     </>
                   )}
+                </p>
+              </div>
+            </div>
+            {/* New badge + warning with updated copy */}
+            <div className="space-y-4 mb-8">
+              <div className="inline-block bg-red-500 text-white px-6 py-3 rounded-xl font-bold text-lg">
+                {isFrench
+                  ? '💰 Évitez des erreurs qui peuvent vous coûter des milliers de dollars'
+                  : '💰 Avoid mistakes that could cost you thousands of dollars'}
+              </div>
+              <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-r-lg max-w-4xl mx-auto">
+                <p className="text-yellow-800 font-medium">
+                  {isFrench
+                    ? '⚠️ Chaque dollar compte: protégez votre épargne des mauvaises décisions'
+                    : '⚠️ Every dollar counts: protect your savings from bad decisions'}
                 </p>
               </div>
             </div>

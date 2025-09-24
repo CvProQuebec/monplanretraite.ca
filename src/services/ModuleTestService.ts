@@ -1,68 +1,102 @@
-// src/services/ModuleTestService.ts
-// Service pour tester que tous les modules se chargent correctement
+import type {
+  ModuleTestLogEntry,
+  ModuleTestResult,
+  PageTestResult
+} from '../types/services';
+
+interface ModuleTestOptions {
+  log?: (entry: ModuleTestLogEntry) => void;
+}
+
+interface PageTestOptions extends ModuleTestOptions {
+  preload?: boolean;
+}
+
+const payrollCalendarConfig = {
+  firstPayDateOfYear: '2025-01-02',
+  frequency: 'biweekly' as const
+};
 
 export class ModuleTestService {
-  /**
-   * Teste que tous les modules critiques se chargent sans erreur
-   */
-  static async testModuleLoading(): Promise<{ success: boolean; errors: string[] }> {
+  private static addLog(
+    logs: ModuleTestLogEntry[],
+    entry: ModuleTestLogEntry,
+    options?: ModuleTestOptions
+  ): void {
+    logs.push(entry);
+    options?.log?.(entry);
+  }
+
+  static async testModuleLoading(options?: ModuleTestOptions): Promise<ModuleTestResult> {
+    const logs: ModuleTestLogEntry[] = [];
     const errors: string[] = [];
-    
-    try {
-      // Test 1: PayrollCalendarService
-      console.log('🧪 Test chargement PayrollCalendarService...');
-      const { PayrollCalendarService } = await import('./PayrollCalendarService');
-      console.log('✅ PayrollCalendarService chargé avec succès');
-      
-      // Test 2: CalculationTestService
-      console.log('🧪 Test chargement CalculationTestService...');
-      const { CalculationTestService } = await import('./CalculationTestService');
-      console.log('✅ CalculationTestService chargé avec succès');
-      
-      // Test 3: PayrollTestService
-      console.log('🧪 Test chargement PayrollTestService...');
-      const { PayrollTestService } = await import('./PayrollTestService');
-      console.log('✅ PayrollTestService chargé avec succès');
-      
-      // Test 4: Test d'une fonction du PayrollCalendarService
-      console.log('🧪 Test fonction PayrollCalendarService...');
-      const testConfig = {
-        firstPayDateOfYear: '2025-01-02',
-        frequency: 'biweekly' as const
-      };
-      
-      const validation = PayrollCalendarService.validateConfig(testConfig);
-      if (!validation.isValid) {
-        errors.push('PayrollCalendarService validation failed');
-      } else {
-        console.log('✅ PayrollCalendarService fonctionne correctement');
+
+    const runTest = async (
+      label: string,
+      task: () => Promise<void>
+    ): Promise<void> => {
+      this.addLog(logs, { level: 'info', message: `🧪 ${label}` }, options);
+
+      try {
+        await task();
+        this.addLog(logs, { level: 'success', message: `✅ ${label}` }, options);
+      } catch (error) {
+        const message = `❌ ${label}`;
+        errors.push(message);
+        this.addLog(logs, { level: 'error', message, error }, options);
       }
-      
-    } catch (error) {
-      console.error('❌ Erreur lors du chargement des modules:', error);
-      errors.push(`Erreur de chargement: ${error}`);
-    }
-    
+    };
+
+    await runTest('Test chargement PayrollCalendarService', async () => {
+      const { PayrollCalendarService } = await import('./PayrollCalendarService');
+
+      const validation = PayrollCalendarService.validateConfig(payrollCalendarConfig);
+      if (!validation.isValid) {
+        throw new Error('PayrollCalendarService validation failed');
+      }
+    });
+
+    await runTest('Test chargement CalculationTestService', async () => {
+      await import('./CalculationTestService');
+    });
+
+    await runTest('Test chargement PayrollTestService', async () => {
+      await import('./PayrollTestService');
+    });
+
     return {
       success: errors.length === 0,
-      errors
+      errors,
+      logs
     };
   }
-  
-  /**
-   * Teste spécifiquement le chargement de la page Revenus
-   */
-  static async testRevenusPageLoading(): Promise<{ success: boolean; error?: string }> {
+
+  static async testRevenusPageLoading(
+    options?: PageTestOptions
+  ): Promise<PageTestResult> {
+    const logs: ModuleTestLogEntry[] = [];
+
+    const add = (entry: ModuleTestLogEntry) => this.addLog(logs, entry, options);
+
+    add({ level: 'info', message: '🧪 Test chargement page Revenus' });
+
     try {
-      console.log('🧪 Test chargement page Revenus...');
       const { default: Revenus } = await import('../pages/Revenus');
-      console.log('✅ Page Revenus chargée avec succès');
-      return { success: true };
+
+      if (options?.preload) {
+        add({ level: 'info', message: '↺ Préchargement composant Revenus' });
+        await Revenus;
+      }
+
+      add({ level: 'success', message: '✅ Page Revenus chargée avec succès' });
+      return { success: true, logs };
     } catch (error) {
-      console.error('❌ Erreur lors du chargement de la page Revenus:', error);
-      return { 
-        success: false, 
-        error: `Erreur de chargement page Revenus: ${error}` 
+      const message = '❌ Erreur lors du chargement de la page Revenus';
+      add({ level: 'error', message, error });
+      return {
+        success: false,
+        error: `${message}: ${(error as Error)?.message ?? 'Erreur inconnue'}`,
+        logs
       };
     }
   }

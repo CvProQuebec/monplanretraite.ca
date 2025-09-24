@@ -3,10 +3,40 @@ import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import FeatureGate from '@/components/wizard/FeatureGate';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import GreedyBaselineOptimizer, { type OptimizeParams } from '@/services/tax/optimizers/GreedyBaselineOptimizer';
-import { simulateYears, type AccountBalances, type Assumptions, type YearDecision, type YearResult } from '@/services/tax/ProjectionEngine';
-import { evaluateRobustness } from '@/services/tax/RobustnessService';
-import { TaxOptimizationPDFService } from '@/services/tax/TaxOptimizationPDFService';
+import { RetirementHelpers } from '@/domain/retirement/RetirementDomainAdapter';
+type AccountBalances = {
+  tfsa: number;
+  nonRegistered: number;
+  rrsp: number;
+  rrif: number;
+  cppAnnual?: number;
+  oasAnnual?: number;
+};
+
+type Assumptions = {
+  province: string;
+  startAge: number;
+  grossReturnTFSA: number;
+  grossReturnNonReg: number;
+  grossReturnRRSP: number;
+  grossReturnRRIF: number;
+  inflation: number;
+  includeCPP: boolean;
+  includeOAS: boolean;
+  nonRegCapitalGainsRatio: number;
+};
+
+type YearDecision = {
+  yearIndex: number;
+  withdrawTFSA: number;
+  withdrawNonReg: number;
+  withdrawRRSP: number;
+  withdrawRRIF: number;
+  startCPP: boolean;
+  startOAS: boolean;
+};
+
+type YearResult = any;
 import StressTestService from '@/services/StressTestService';
 
 function toNum(v: any): number { const n = Number(v); return Number.isFinite(n) ? n : 0; }
@@ -127,7 +157,7 @@ const WizardOptimizationsStep: React.FC = () => {
   }, []);
 
   const runGreedy = () => {
-    const params: OptimizeParams = {
+    const params: any = {
       opening,
       assumptions,
       horizonYears: horizon,
@@ -135,8 +165,8 @@ const WizardOptimizationsStep: React.FC = () => {
       startCPPAt: 70,
       startOASAt: 70
     };
-    const decisions = GreedyBaselineOptimizer.optimize(params);
-    const results = simulateYears(opening, assumptions, decisions, horizon);
+    const decisions = RetirementHelpers.greedyOptimize(params);
+    const results = RetirementHelpers.simulateYears(opening, assumptions, decisions, horizon);
     setGreedyDecisions(decisions);
     setGreedyResults(results);
     // Cache: save greedy summary for Results/Rapports exports
@@ -152,7 +182,7 @@ const WizardOptimizationsStep: React.FC = () => {
     } catch {}
     if (robustMode) {
       try {
-        const rep = evaluateRobustness(
+        const rep = RetirementHelpers.evaluateRobustness(
           { opening, assumptions, decisions, horizonYears: horizon, targetNetAnnual },
           isFr ? 'fr' : 'en'
         );
@@ -415,13 +445,13 @@ const WizardOptimizationsStep: React.FC = () => {
           clientName = name || undefined;
         }
       } catch {}
-      const blob = await TaxOptimizationPDFService.generateSummary({
+      const blob = await RetirementHelpers.generateTaxOptimizationSummary({
         language: lang,
         clientName,
         horizonYears: horizon,
         targetNetAnnual,
         greedy: greedyResults ? { totalTax: totalTax(greedyResults), robust: greedyRobust || undefined } : undefined,
-        dp: dpResults ? { totalTax: totalTax(dpResults), robust: (dpDecisions && robustMode) ? evaluateRobustness({ opening, assumptions, decisions: dpDecisions, horizonYears: horizon, targetNetAnnual }, lang).robustScore ? evaluateRobustness({ opening, assumptions, decisions: dpDecisions, horizonYears: horizon, targetNetAnnual }, lang) : undefined : undefined, score: dpScore ?? undefined } : undefined,
+        dp: dpResults ? { totalTax: totalTax(dpResults), robust: (dpDecisions && robustMode) ? RetirementHelpers.evaluateRobustness({ opening, assumptions, decisions: dpDecisions, horizonYears: horizon, targetNetAnnual }, lang) : undefined, score: dpScore ?? undefined } : undefined,
         baseline: undefined,
         mc: mcResults
           ? {

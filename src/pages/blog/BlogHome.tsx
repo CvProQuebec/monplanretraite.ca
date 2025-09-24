@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import {
@@ -44,13 +44,14 @@ function matchesQuery(p: BlogPost, q: string): boolean {
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '');
 
-  const content = [
+  const haystack = [
     p.title,
     p.excerpt,
     p.category,
     p.slug,
     ...(p.tags || []),
     ...(p.keyPoints || []),
+    p.content,
   ]
     .map(norm)
     .join(' ');
@@ -98,7 +99,7 @@ function matchesQuery(p: BlogPost, q: string): boolean {
   // For each token, at least one synonym must be contained in content
   return tokens.every((t) => {
     const variants = expandToken(t);
-    return variants.some((v) => content.includes(v));
+    return variants.some((v) => haystack.includes(v));
   });
 }
 
@@ -147,6 +148,7 @@ const BlogHome: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
 
   const [query, setQuery] = useState('');
   const [showAll, setShowAll] = useState(false);
+  const resultsRef = useRef<HTMLDivElement | null>(null);
 
   const featured = useMemo(() => getFeaturedPosts(lang), [lang]);
   const allPosts = useMemo(() => getAllPosts(lang), [lang]);
@@ -238,6 +240,15 @@ const BlogHome: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
               <Input
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    setShowAll(true);
+                    setTimeout(() => {
+                      resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 0);
+                  }
+                }}
                 placeholder={t.searchPlaceholder}
                 className="border-0 focus-visible:ring-0"
               />
@@ -297,7 +308,7 @@ const BlogHome: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
           )}
 
           {/* Grille d'articles modernisée */}
-          <section className="mt-6">
+          <section className="mt-6" ref={resultsRef}>
             <h2 className="text-2xl font-bold text-gray-900 mb-4">
               {query ? (lang === 'fr' ? 'Résultats de recherche' : 'Search results') : t.latestPosts}
             </h2>

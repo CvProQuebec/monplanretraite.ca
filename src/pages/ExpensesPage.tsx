@@ -9,6 +9,7 @@ import { DataMigrationService } from '@/services/DataMigrationService';
 import OverdraftPreventionService from '@/services/OverdraftPreventionService';
 import PurchaseOptionsComparator from '@/components/ui/PurchaseOptionsComparator';
 import NotificationSchedulerService from '@/services/NotificationSchedulerService';
+import { FormGrid, FormRow, Field } from '@/components/forms/FormGrid';
 
 // Données de démonstration
 const demoUserData: UserData = {
@@ -288,33 +289,34 @@ return (
               ? 'Sélectionnez les catégories à inclure dans votre budget. Ces montants seront importés automatiquement.'
               : 'Select which categories to include in your budget. These amounts will be imported automatically.'}
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {([
-              { key: 'logement', label: t.housing },
-              { key: 'servicesPublics', label: t.utilities },
-              { key: 'assurances', label: t.insurance },
-              { key: 'telecom', label: t.telecom },
-              { key: 'alimentation', label: t.food },
-              { key: 'transport', label: t.transport },
-              { key: 'sante', label: t.health },
-              { key: 'loisirs', label: t.leisure }
-            ] as Array<{key: keyof typeof defaultIncludeFlags, label: string}>).map(item => {
-              const flags = (userData.cashflow as any)?.includeFlags || defaultIncludeFlags;
-              const checked = flags[item.key] !== false;
-              return (
-                <label key={item.key} className="flex items-center justify-between bg-gray-50 border rounded-lg p-3">
-                  <span className="text-gray-900">{item.label}</span>
-                  <input
-                    type="checkbox"
-                    className="w-5 h-5"
-                    checked={checked}
-                    onChange={(e) => handleIncludeToggle(item.key, e.target.checked)}
-                    aria-label={`${t.includeInBudget} - ${item.label}`}
-                  />
-                </label>
-              );
-            })}
-          </div>
+          <FormGrid>
+            <FormRow cols={2}>
+              {([
+                { key: 'logement', label: t.housing },
+                { key: 'servicesPublics', label: t.utilities },
+                { key: 'assurances', label: t.insurance },
+                { key: 'telecom', label: t.telecom },
+                { key: 'alimentation', label: t.food },
+                { key: 'transport', label: t.transport },
+                { key: 'sante', label: t.health },
+                { key: 'loisirs', label: t.leisure }
+              ] as Array<{key: keyof typeof defaultIncludeFlags, label: string}>).map(item => {
+                const flags = (userData.cashflow as any)?.includeFlags || defaultIncludeFlags;
+                const checked = flags[item.key] !== false;
+                return (
+                  <Field key={item.key} label={item.label}>
+                    <input
+                      type="checkbox"
+                      className="w-5 h-5"
+                      checked={checked}
+                      onChange={(e) => handleIncludeToggle(item.key, e.target.checked)}
+                      aria-label={`${t.includeInBudget} - ${item.label}`}
+                    />
+                  </Field>
+                );
+              })}
+            </FormRow>
+          </FormGrid>
         </div>
 
         {/* Composant CashflowSection existant */}

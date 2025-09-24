@@ -1,4 +1,23 @@
-import { IncomeEntry } from '@/components/ui/UnifiedIncomeTable';
+/**
+ * Découplage Services ↔ UI:
+ * Déclare un type local minimal pour éviter d'importer un type depuis un composant UI.
+ * (Respect de la règle "Services ne doivent pas dépendre des composants UI")
+ */
+type IncomeEntry = {
+  type: string;
+  description?: string;
+  isActive: boolean;
+  projectedAnnual?: number;
+  monthlyAmount?: number;
+  weeklyNet?: number;
+  toDateAmount?: number;
+  startDate?: string;
+  endDate?: string;
+  weeksUsed?: number;
+  maxWeeks?: number;
+  annualAmount?: number;
+  weeklyAmount?: number;
+};
 
 /**
  * Service d'intégration des revenus unifié

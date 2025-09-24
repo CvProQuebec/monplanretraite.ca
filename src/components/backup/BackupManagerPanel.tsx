@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import BackgroundBackupService, { type BackupConfig, type BackupMeta } from '@/services/BackgroundBackupService';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
+import { FormGrid, FormRow, Field } from '@/components/forms/FormGrid';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -191,21 +192,32 @@ export const BackupManagerPanel: React.FC = () => {
         </Alert>
 
         {/* Session password */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="md:col-span-2">
-            <Label>{t.sessionPwd}</Label>
-            <Input
-              type="password"
-              placeholder={isFr ? 'Mot de passe de sauvegarde' : 'Backup password'}
-              value={pwd}
-              onChange={(e) => setPwd(e.target.value)}
-            />
-            <div className="text-xs text-gray-600 mt-1">{t.sessionPwdHelp}</div>
-          </div>
-          <div className="flex items-end">
-            <Button disabled={busy} onClick={handleSetPwd}>{t.setPwd}</Button>
-          </div>
-        </div>
+        <FormGrid>
+          <FormRow cols={3}>
+            <Field label={t.sessionPwd} htmlFor="backup-session-password" span={2}>
+              <>
+                <Input
+                  id="backup-session-password"
+                  type="password"
+                  placeholder={isFr ? 'Mot de passe de sauvegarde' : 'Backup password'}
+                  value={pwd}
+                  onChange={(e) => setPwd(e.target.value)}
+                />
+                <p className="text-xs text-gray-600 mt-1">{t.sessionPwdHelp}</p>
+              </>
+            </Field>
+            <Field label={t.setPwd} htmlFor="backup-session-password-button">
+              <Button
+                id="backup-session-password-button"
+                type="button"
+                disabled={busy}
+                onClick={handleSetPwd}
+              >
+                {t.setPwd}
+              </Button>
+            </Field>
+          </FormRow>
+        </FormGrid>
 
         <Separator />
 
@@ -245,55 +257,55 @@ export const BackupManagerPanel: React.FC = () => {
             <CardDescription>{isFr ? 'Fréquence et effacement local après sauvegarde.' : 'Frequency and local clear after backup.'}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <Label>{t.freq}</Label>
-                <Input
-                  type="number"
-                  min={1}
-                  value={cfg.frequencyMin}
-                  onChange={(e) => setCfg((c) => ({ ...c, frequencyMin: Math.max(1, parseInt(e.target.value || '1', 10)) }))}
-                />
-              </div>
-              <div>
-                <Label>{t.enableAuto}</Label>
-                <div className="flex gap-2">
-                  <Button
-                    type="button"
-                    variant={cfg.enableAutoBackup ? 'default' : 'outline'}
-                    onClick={() => setCfg((c) => ({ ...c, enableAutoBackup: true }))}
-                  >
-                    {t.enabled}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant={!cfg.enableAutoBackup ? 'default' : 'outline'}
-                    onClick={() => setCfg((c) => ({ ...c, enableAutoBackup: false }))}
-                  >
-                    {t.disabled}
-                  </Button>
-                </div>
-              </div>
-              <div>
-                <Label>{t.clearAfter}</Label>
-                <div className="flex gap-2">
-                  <Button
-                    type="button"
-                    variant={cfg.clearLocalAfterBackup ? 'default' : 'outline'}
-                    onClick={() => setCfg((c) => ({ ...c, clearLocalAfterBackup: true }))}
-                  >
-                    {t.enabled}
-                  </Button>
-                  <Button
-                    type="button"
-                    variant={!cfg.clearLocalAfterBackup ? 'default' : 'outline'}
-                    onClick={() => setCfg((c) => ({ ...c, clearLocalAfterBackup: false }))}
-                  >
-                    {t.disabled}
-                  </Button>
-                </div>
-              </div>
-            </div>
+            <FormGrid>
+              <FormRow cols={3}>
+                <Field label={t.freq} htmlFor="backup-frequency">
+                  <Input
+                    id="backup-frequency"
+                    type="number"
+                    min={1}
+                    value={cfg.frequencyMin}
+                    onChange={(e) => setCfg((c) => ({ ...c, frequencyMin: Math.max(1, parseInt(e.target.value || '1', 10)) }))}
+                  />
+                </Field>
+                <Field label={t.enableAuto}>
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant={cfg.enableAutoBackup ? 'default' : 'outline'}
+                      onClick={() => setCfg((c) => ({ ...c, enableAutoBackup: true }))}
+                    >
+                      {t.enabled}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant={!cfg.enableAutoBackup ? 'default' : 'outline'}
+                      onClick={() => setCfg((c) => ({ ...c, enableAutoBackup: false }))}
+                    >
+                      {t.disabled}
+                    </Button>
+                  </div>
+                </Field>
+                <Field label={t.clearAfter}>
+                  <div className="flex gap-2">
+                    <Button
+                      type="button"
+                      variant={cfg.clearLocalAfterBackup ? 'default' : 'outline'}
+                      onClick={() => setCfg((c) => ({ ...c, clearLocalAfterBackup: true }))}
+                    >
+                      {t.enabled}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant={!cfg.clearLocalAfterBackup ? 'default' : 'outline'}
+                      onClick={() => setCfg((c) => ({ ...c, clearLocalAfterBackup: false }))}
+                    >
+                      {t.disabled}
+                    </Button>
+                  </div>
+                </Field>
+              </FormRow>
+            </FormGrid>
             <div className="flex gap-2">
               <Button disabled={busy} onClick={handleSaveCfg}>{t.saveCfg}</Button>
               <Button disabled={busy} onClick={doBackupNow}>{t.backupNow}</Button>

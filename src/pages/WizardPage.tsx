@@ -7,7 +7,7 @@ import FeatureGate from '@/components/wizard/FeatureGate';
 import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
 import { useSubscriptionLimits } from '@/hooks/useSubscriptionLimits';
 import { PDFExportService } from '@/services/PDFExportService';
-import { TaxOptimizationPDFService } from '@/services/tax/TaxOptimizationPDFService';
+import { RetirementHelpers } from '@/domain/retirement/RetirementDomainAdapter';
 
 // Charger paresseusement les pages/modules existants
 const ProfilePage = React.lazy(() => import('@/pages/ProfilePage'));
@@ -251,7 +251,7 @@ const WizardPage: React.FC = () => {
               clientName = name || undefined;
             } catch {}
             const payload = { language: lang, clientName, ...cache };
-            const blob = await TaxOptimizationPDFService.generateSummary(payload);
+            const blob = await RetirementHelpers.generateTaxOptimizationSummary(payload);
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;

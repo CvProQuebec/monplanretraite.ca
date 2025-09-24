@@ -1,0 +1,1312 @@
+{
+  "generatedAt": "2025-09-24T11:21:29-04:00",
+  "version": "2025-09-24",
+  "project": "MonPlanRetraite.ca",
+  "summary": "Comprehensive QA test plan covering functional, UI/UX, API, security, performance, accessibility, compatibility, resilience, and smoke tests.",
+  "tests": [
+    {
+      "id": "FUNC-001",
+      "section": "Fonctionnel",
+      "title": "Wizard retraite - scenario standard",
+      "description": {
+        "fr": "Valider qu'un utilisateur seniors complete le wizard retraite (profils, revenus, retraits) et que les calculs RRQ/CPP/OAS/SRG sont generes sans erreurs.",
+        "en": "Validate that a senior user can finish the retirement wizard (profiles, incomes, withdrawals) and obtain RRQ/CPP/OAS/GIS outputs without errors."
+      },
+      "preconditions": [
+        "Donnees demo chargees",
+        "`VITE_DISABLE_FIREBASE=true`"
+      ],
+      "steps": [
+        "Ouvrir `/wizard/intro`",
+        "Remplir profils revenus pour 2 personnes",
+        "Configurer objectifs retraits",
+        "Finaliser et generer resultats"
+      ],
+      "expected": "Resume affichant montants mensuels/annuels et suggestions d'optimisation, aucun toast d'erreur",
+      "type": "automated (Playwright E2E + fixtures demo)",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "staging",
+        "prod-like"
+      ],
+      "module": "retirement-wizard",
+      "tags": [
+        "retirement",
+        "wizard",
+        "calculation"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "FUNC-002",
+      "section": "Fonctionnel",
+      "title": "Rapport consultant PDF",
+      "description": {
+        "fr": "Verifier la generation locale du rapport PDF Expert (sans filigrane) avec donnees wizard et caviardage optionnel.",
+        "en": "Verify generation of the Expert PDF report (no watermark) using wizard data with optional redaction toggle."
+      },
+      "preconditions": [
+        "Wizard termine",
+        "`showFullSensitive=false` par defaut"
+      ],
+      "steps": [
+        "Acceder `/wizard/results`",
+        "Cliquer \"Exporter PDF Expert\"",
+        "Confirmer redaction",
+        "Sauvegarder fichier local"
+      ],
+      "expected": "Fichier PDF cree localement, identifiants sensibles masques par defaut, aucune requete reseau",
+      "type": "automated (Playwright + verif PDF via parse binaire minimal)",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "staging"
+      ],
+      "module": "reports-retirement",
+      "tags": [
+        "pdf",
+        "retirement",
+        "security"
+      ],
+      "dependencies": [
+        "FUNC-001"
+      ]
+    },
+    {
+      "id": "FUNC-003",
+      "section": "Fonctionnel",
+      "title": "Monte Carlo 2000 iterations",
+      "description": {
+        "fr": "Assurer que la simulation Monte Carlo execute 2000 iterations et renvoie les statistiques attendues.",
+        "en": "Ensure Monte Carlo simulation runs 2000 iterations and returns the expected statistics."
+      },
+      "preconditions": "Wizard termine ou profil charge.",
+      "steps": [
+        "Ouvrir laboratoire optimisation fiscale",
+        "Activer Monte Carlo 2000",
+        "Lancer simulation",
+        "Observer moyennes et percentiles"
+      ],
+      "expected": "Temps d'execution < 40 s sur machine CI baseline, graphiques et resume robustesse affiches",
+      "type": "automated (Vitest direct sur worker + test e2e Playwright pour UI)",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "perf"
+      ],
+      "module": "retirement-optimization",
+      "tags": [
+        "montecarlo",
+        "worker",
+        "performance"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "FUNC-004",
+      "section": "Fonctionnel",
+      "title": "Cycle sauvegarde urgence",
+      "description": {
+        "fr": "Tester l'export chiffré .mpru puis l'import avec previsualisation et demande de phrase secrete.",
+        "en": "Test emergency .mpru encrypted export followed by import with preview and passphrase prompt."
+      },
+      "preconditions": [
+        "Session deverrouillee",
+        "phrase secrete test definie"
+      ],
+      "steps": [
+        "Aller `/planification-urgence`",
+        "Remplir formulaire minimal",
+        "Exporter .mpru",
+        "Effacer donnees",
+        "Importer fichier",
+        "Valider previsualisation",
+        "Entrer phrase secrete"
+      ],
+      "expected": "Donnees restaurees sans fuite claire, logs redaction OK",
+      "type": "automated (Playwright + verif contenu binaire, fallback test manuel pour bulletin)",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "prod-like"
+      ],
+      "module": "emergency-planning",
+      "tags": [
+        "mpru",
+        "encryption",
+        "emergency"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "FUNC-005",
+      "section": "Fonctionnel",
+      "title": "Budget snapshot",
+      "description": {
+        "fr": "Confirmer que la creation d'un snapshot valeur nette met a jour l'historique et les rappels.",
+        "en": "Confirm that creating a net worth snapshot updates history and reminders."
+      },
+      "preconditions": [
+        "Mode budget actif",
+        "donnees demo"
+      ],
+      "steps": [
+        "Aller `/budget/net-worth`",
+        "Ajouter snapshot",
+        "Verifier liste historique",
+        "Controler notification planifiee"
+      ],
+      "expected": "Snapshot stocke localement, planification rappels mise a jour",
+      "type": "automated (Vitest pour service + Playwright verification UI)",
+      "priority": "Medium",
+      "environments": [
+        "dev",
+        "staging"
+      ],
+      "module": "budget",
+      "tags": [
+        "budget",
+        "notifications"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "UIUX-001",
+      "section": "UI/UX",
+      "title": "Audit UI seniors",
+      "description": {
+        "fr": "Verifier que les pages principales respectent la taille police >=18 px, contraste eleve, focus visible.",
+        "en": "Check that primary pages respect font size >=18 px, high contrast, and visible focus for seniors."
+      },
+      "preconditions": [
+        "Mode seniors actif (valeur par defaut)",
+        "theme clair"
+      ],
+      "steps": [
+        "Scanner `/`, `/wizard/intro`, `/planification-urgence`, `/outils` avec axe-core",
+        "Capturer rapport"
+      ],
+      "expected": "Aucun echec axe-core critique, captures conformes",
+      "type": "automated (Playwright + axe-core)",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "staging"
+      ],
+      "module": "ui-global",
+      "tags": [
+        "accessibility",
+        "seniors",
+        "axe"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "UIUX-002",
+      "section": "UI/UX",
+      "title": "Bascule langue",
+      "description": {
+        "fr": "Assurer que les boutons FR/EN sur accueil et blog conservent le contexte (slug lie, LocalizedRoute).",
+        "en": "Ensure FR/EN toggles on home and blog keep context (paired slug via LocalizedRoute)."
+      },
+      "preconditions": "Contenu blog demarrage disponible.",
+      "steps": [
+        "Visiter `/articles/retraite-101`",
+        "Cliquer bascule EN",
+        "Verifier slug anglais",
+        "Retour FR"
+      ],
+      "expected": "Aucune 404, slugs traduits corrects, navigation accessible clavier",
+      "type": "automated (Playwright)",
+      "priority": "Medium",
+      "environments": [
+        "dev",
+        "staging"
+      ],
+      "module": "marketing-blog",
+      "tags": [
+        "i18n",
+        "routing"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "UIUX-003",
+      "section": "UI/UX",
+      "title": "Flag placeholders",
+      "description": {
+        "fr": "Valider que les pages placeholders ne s'affichent que lorsque `SHOW_PLACEHOLDERS=true`.",
+        "en": "Confirm placeholder pages render only when `SHOW_PLACEHOLDERS=true`."
+      },
+      "preconditions": "Construire app deux fois (flag true/false).",
+      "steps": [
+        "Lancer dev avec flag false, verifier absence routes",
+        "Relancer avec true, confirmer presence"
+      ],
+      "expected": "Comportement conforme, message upgrade affiche",
+      "type": "automated (Vitest config + Playwright scenario)",
+      "priority": "Medium",
+      "environments": [
+        "dev",
+        "staging"
+      ],
+      "module": "marketing-placeholders",
+      "tags": [
+        "flags",
+        "routing"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "UIUX-004",
+      "section": "UI/UX",
+      "title": "CTA mise a niveau",
+      "description": {
+        "fr": "Verifier que la page `/outils` affiche les cartes `ToolCard` avec CTA \"Mettre a niveau\" selon plan.",
+        "en": "Check `/tools` renders `ToolCard` with \"Upgrade\" CTA depending on plan."
+      },
+      "preconditions": "Donnees plan utilisateur (free default) dans storage demo.",
+      "steps": [
+        "Charger `/outils`",
+        "Inspecter carte plan Expert requise",
+        "Passer plan a Pro par fixture",
+        "Recharger"
+      ],
+      "expected": "CTA correct, accessibilite ARIA intacte",
+      "type": "automated (Playwright + mock store)",
+      "priority": "Medium",
+      "environments": [
+        "dev",
+        "staging"
+      ],
+      "module": "tools-page",
+      "tags": [
+        "tools",
+        "plans",
+        "ui"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "UIUX-005",
+      "section": "UI/UX",
+      "title": "FormGrid alignement",
+      "description": {
+        "fr": "Controler que les nouveaux formulaires utilisent `FormGrid/FormRow/Field` et labels associes.",
+        "en": "Ensure new forms leverage `FormGrid/FormRow/Field` components with proper labels."
+      },
+      "preconditions": "Section budgets/urgence accessible.",
+      "steps": [
+        "Inspecter DOM pour `.mpr-form-row`",
+        "Confirmer label `for`/`id`",
+        "Valider aides contextuelles"
+      ],
+      "expected": "Alignement correct, instructions seniors visibles",
+      "type": "automated (Playwright DOM assertions)",
+      "priority": "Low",
+      "environments": "dev.",
+      "module": "forms",
+      "tags": [
+        "forms",
+        "ux"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "API-001",
+      "section": "API / Domaine",
+      "title": "Projection multi-annees",
+      "description": {
+        "fr": "Tester que `RetirementDomainAdapter.buildMonthlySchedule` renvoie calendrier coherent pour 25 ans.",
+        "en": "Test `RetirementDomainAdapter.buildMonthlySchedule` returns coherent schedule for 25 years."
+      },
+      "preconditions": "Dataset demo.",
+      "steps": [
+        "Appeler helper avec scenario",
+        "Valider taille tableau",
+        "Controler totaux"
+      ],
+      "expected": "Sommes positives, totaux concordants avec Annual",
+      "type": "automated (Vitest)",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "CI"
+      ],
+      "module": "domain-retirement",
+      "tags": [
+        "domain",
+        "calculation"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "API-002",
+      "section": "API / Domaine",
+      "title": "Withdrawal order heuristics",
+      "description": {
+        "fr": "Confirmer que `RetirementHelpers.suggestWithdrawalOrder` retourne l'ordre NON_ENREGISTRE -> REER -> CELI et ajoute RRIF si detecte.",
+        "en": "Ensure `RetirementHelpers.suggestWithdrawalOrder` returns NON_ENREGISTRE -> REER -> CELI and appends RRIF when detected."
+      },
+      "preconditions": [
+        "Profil demo avec comptes non enregistres et REER"
+      ],
+      "steps": [
+        "Charger donnees demo",
+        "Appeler helper",
+        "Verifier que l'ordre commence par NON_ENREGISTRE puis REER puis CELI",
+        "Ajouter un compte FERR et confirmer la presence de RRIF"
+      ],
+      "expected": "Ordre par defaut = NON_ENREGISTRE, REER, CELI avec ajout RRIF detecte, aucune exception",
+      "type": "automated (Vitest)",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "CI"
+      ],
+      "module": "domain-retirement",
+      "tags": [
+        "heuristics",
+        "withdrawals"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "API-003",
+      "section": "API / Domaine",
+      "title": "useFlags memo",
+      "description": {
+        "fr": "Confirmer que `useFlags` memoire la resolution et permet override test.",
+        "en": "Confirm `useFlags` memoizes resolution and supports test override."
+      },
+      "preconditions": "Flags definis.",
+      "steps": [
+        "Rendre composant test",
+        "Mesurer re-renders",
+        "Override via provider"
+      ],
+      "expected": "Un seul appel resolution, override efficace",
+      "type": "automated (React Testing Library + Vitest)",
+      "priority": "Medium",
+      "environments": "dev.",
+      "module": "config-flags",
+      "tags": [
+        "flags",
+        "hooks"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "API-004",
+      "section": "API / Domaine",
+      "title": "Backup auto scheduler",
+      "description": {
+        "fr": "Verifier que `BackgroundBackupService` planifie backup et clear option.",
+        "en": "Verify `BackgroundBackupService` schedules backup and clear option."
+      },
+      "preconditions": "Timer mock.",
+      "steps": [
+        "Initialiser service",
+        "Simuler temps",
+        "Verifier appel `saveDirectly`",
+        "Tester option clear after backup"
+      ],
+      "expected": "Appels effectues selon configuration",
+      "type": "automated (Vitest ou Jest)",
+      "priority": "Medium",
+      "environments": [
+        "dev",
+        "CI"
+      ],
+      "module": "services-core",
+      "tags": [
+        "backup",
+        "scheduler"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "API-005",
+      "section": "API / Domaine",
+      "title": "Logs UI injection",
+      "description": {
+        "fr": "S'assurer que `ModuleTestService` renvoie `ModuleTestResult` avec callback `log` optionnel.",
+        "en": "Ensure `ModuleTestService` returns `ModuleTestResult` with optional `log` callback."
+      },
+      "preconditions": "Mock log fourni.",
+      "steps": [
+        "Appeler service avec callback",
+        "Verifier structure result",
+        "Controler absence toasts internes"
+      ],
+      "expected": "Logs passes via callback, aucun side-effect UI",
+      "type": "automated (Vitest)",
+      "priority": "Medium",
+      "environments": "dev.",
+      "module": "services-seniors",
+      "tags": [
+        "logs",
+        "seniors"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "SEC-001",
+      "section": "Securite",
+      "title": "npm audit baseline",
+      "description": {
+        "fr": "Executer `npm audit --production` et echouer si vuln hautes restant.",
+        "en": "Run `npm audit --production` and fail on remaining high vulnerabilities."
+      },
+      "preconditions": [
+        "node 20",
+        "lock a jour"
+      ],
+      "steps": [
+        "Executer audit",
+        "Archiver JSON"
+      ],
+      "expected": "0 vuln high/critical ou exceptions documentees",
+      "type": "automated (CI script)",
+      "priority": "High",
+      "environments": "CI.",
+      "module": "security",
+      "tags": [
+        "npm",
+        "audit"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "SEC-002",
+      "section": "Securite",
+      "title": "ZAP baseline local",
+      "description": {
+        "fr": "Lancer ZAP baseline sur build statique `dist/` via proxy local.",
+        "en": "Run ZAP baseline against static build `dist/` through local proxy."
+      },
+      "preconditions": "Build Vite.",
+      "steps": [
+        "Servir `dist`",
+        "Lancer `zap-baseline.py`",
+        "Export HTML"
+      ],
+      "expected": "Alertes high/medium justifiees ou resolues",
+      "type": "automated (CI optional, manual review alerts)",
+      "priority": "Medium",
+      "environments": "staging.",
+      "module": "security",
+      "tags": [
+        "zap",
+        "owasp"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "SEC-003",
+      "section": "Securite",
+      "title": "Inspecteur .mpru",
+      "description": {
+        "fr": "Controler que le fichier export .mpru ne contient aucune donnee en clair (regex email, montants).",
+        "en": "Ensure exported .mpru file contains no plaintext data (regex email, amounts)."
+      },
+      "preconditions": "Export realise.",
+      "steps": [
+        "Exporter .mpru",
+        "Scanner base64 decode",
+        "Verifier absence patterns"
+      ],
+      "expected": "Donnees chiffrées uniquement",
+      "type": "automated (Node script)",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "prod-like"
+      ],
+      "module": "emergency-security",
+      "tags": [
+        "encryption",
+        "mpru"
+      ],
+      "dependencies": [
+        "FUNC-004"
+      ]
+    },
+    {
+      "id": "SEC-004",
+      "section": "Securite",
+      "title": "Lint frontieres",
+      "description": {
+        "fr": "Confirmer `npm run lint:boundaries` passe et bloque import interdits (`@/services/tax/*`).",
+        "en": "Ensure `npm run lint:boundaries` passes and blocks direct `@/services/tax/*` imports."
+      },
+      "preconditions": "Dependencies installees.",
+      "steps": [
+        "Executer lint",
+        "Verifier sortie"
+      ],
+      "expected": "0 erreur",
+      "type": "automated",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "CI"
+      ],
+      "module": "lint",
+      "tags": [
+        "lint",
+        "boundaries"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "SEC-005",
+      "section": "Securite",
+      "title": "CSP urgence",
+      "description": {
+        "fr": "Verifier entetes CSP actifs sur `/planification-urgence*` dans build Netlify.",
+        "en": "Verify CSP headers active on `/planification-urgence*` in Netlify build."
+      },
+      "preconditions": "Build + fichier `public/_headers`.",
+      "steps": [
+        "Inspecter `_headers`",
+        "Lancer test via `serve` local",
+        "Verifier entete"
+      ],
+      "expected": "CSP stricte presente",
+      "type": "automated (integration test + curl) + revue manuelle",
+      "priority": "Medium",
+      "environments": [
+        "staging",
+        "prod-like"
+      ],
+      "module": "security",
+      "tags": [
+        "csp",
+        "headers"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "PERF-001",
+      "section": "Performance",
+      "title": "Audit bundle budget",
+      "description": {
+        "fr": "S'assurer que le chunk budget reste < 500 kB (gzip) lors du build.",
+        "en": "Ensure budget chunk stays < 500 kB (gzip) during build."
+      },
+      "preconditions": "`npm run build`.",
+      "steps": [
+        "Construire",
+        "Utiliser `vite-bundle-analyzer`",
+        "Vérifier taille"
+      ],
+      "expected": "Taille < 500 kB, sinon issue",
+      "type": "automated (CI)",
+      "priority": "High",
+      "environments": "CI.",
+      "module": "performance",
+      "tags": [
+        "bundle",
+        "budget"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "PERF-002",
+      "section": "Performance",
+      "title": "TTI accueil",
+      "description": {
+        "fr": "Mesurer TTI sur `/` en mode production via Lighthouse CI.",
+        "en": "Measure TTI on `/` production build via Lighthouse CI."
+      },
+      "preconditions": "`npm run build` + `lhci` config.",
+      "steps": [
+        "Servir build",
+        "Lancer `lhci autorun`",
+        "Export rapport"
+      ],
+      "expected": "TTI <= 3.5 s sur machine CI, score Performance >= 90",
+      "type": "automated",
+      "priority": "Medium",
+      "environments": "CI.",
+      "module": "performance",
+      "tags": [
+        "lighthouse",
+        "tti"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "PERF-003",
+      "section": "Performance",
+      "title": "Worker DPBeam",
+      "description": {
+        "fr": "Evaluer temps reponse worker DPBeam (beamWidth standard) et absence blocage UI.",
+        "en": "Evaluate DPBeam worker response time (standard beamWidth) and no UI freeze."
+      },
+      "preconditions": "Profil demo.",
+      "steps": [
+        "Lancer optimisation DP/Beam",
+        "Mesurer progression",
+        "Arreter via bouton stop"
+      ],
+      "expected": "Temps < 25 s, progression updates, stop reussi",
+      "type": "automated (Playwright + instrumentation console)",
+      "priority": "Medium",
+      "environments": "perf.",
+      "module": "retirement-optimization",
+      "tags": [
+        "worker",
+        "dpbeam"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "PERF-004",
+      "section": "Performance",
+      "title": "Notifications perf",
+      "description": {
+        "fr": "Verifier que la planification des notifications (90/60/30 jours) ne deraille pas le thread principal.",
+        "en": "Make sure notification scheduling (90/60/30 days) does not block main thread."
+      },
+      "preconditions": "Mode simulateur.",
+      "steps": [
+        "Simuler creation objectif",
+        "Profiler event loop (Performance API)",
+        "Verifier tasks"
+      ],
+      "expected": "Idle time >= 50 %, pas de blocage > 16 ms",
+      "type": "automated (Vitest + fake timers) + instrumentation",
+      "priority": "Low",
+      "environments": "dev.",
+      "module": "notifications",
+      "tags": [
+        "scheduler",
+        "performance"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "PERF-005",
+      "section": "Performance",
+      "title": "Perf mobile",
+      "description": {
+        "fr": "Mesurer LCP/CLS sur viewport mobile (Pixel 5) pour `/wizard/intro`.",
+        "en": "Measure LCP/CLS on mobile viewport (Pixel 5) for `/wizard/intro`."
+      },
+      "preconditions": "Lighthouse mobile config.",
+      "steps": [
+        "`lhci` mobile",
+        "Export JSON",
+        "Evaluer budgets"
+      ],
+      "expected": "LCP <= 4 s, CLS <= 0.1",
+      "type": "automated",
+      "priority": "Medium",
+      "environments": "CI.",
+      "module": "performance",
+      "tags": [
+        "mobile",
+        "lighthouse"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "A11Y-001",
+      "section": "Accessibilite",
+      "title": "axe-core global",
+      "description": {
+        "fr": "Executer axe-core sur pages critiques (accueil, wizard, urgence, outils).",
+        "en": "Run axe-core on critical pages (home, wizard, emergency, tools)."
+      },
+      "preconditions": "Build ou dev server.",
+      "steps": [
+        "Playwright + axe injection",
+        "Collecter violations"
+      ],
+      "expected": "0 violation serious/critical",
+      "type": "automated",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "CI"
+      ],
+      "module": "accessibility",
+      "tags": [
+        "axe",
+        "playwright"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "A11Y-002",
+      "section": "Accessibilite",
+      "title": "AT wizard",
+      "description": {
+        "fr": "Verifier annonces SR lorsqu'on navigue wizard (role, aria-describedby, `aria-live`).",
+        "en": "Verify screen reader announcements while navigating wizard (role, aria-describedby, `aria-live`)."
+      },
+      "preconditions": "NVDA/VoiceOver tests eventuellement manuels.",
+      "steps": [
+        "Playwright + snapshots `aria`",
+        "Tests manuels NVDA"
+      ],
+      "expected": "Annonces completes",
+      "type": "hybrid (automated + manual assistive tech)",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "staging"
+      ],
+      "module": "accessibility",
+      "tags": [
+        "wizard",
+        "screenreader"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "A11Y-003",
+      "section": "Accessibilite",
+      "title": "Focus dialogues",
+      "description": {
+        "fr": "Tester focus trap et fermeture clavier des dialogues (PDF, confirmation export).",
+        "en": "Test focus trap and keyboard closing on dialogs (PDF, export confirmation)."
+      },
+      "preconditions": [
+        "Pages wizard",
+        "urgence"
+      ],
+      "steps": [
+        "Ouvrir dialogue",
+        "Utiliser Tab/Shift+Tab",
+        "Fermer via Esc/Enter"
+      ],
+      "expected": "Focus reste dans dialogue, fermetures accessibles",
+      "type": "automated (Playwright keyboard)",
+      "priority": "Medium",
+      "environments": "dev.",
+      "module": "accessibility",
+      "tags": [
+        "dialog",
+        "focus"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "A11Y-004",
+      "section": "Accessibilite",
+      "title": "Contraste placeholder",
+      "description": {
+        "fr": "Valider contraste texte/fond sur pages placeholders (couleurs seniors palette).",
+        "en": "Validate text/background contrast on placeholder pages (senior palette)."
+      },
+      "preconditions": "Flag placeholders vrai.",
+      "steps": [
+        "Activer flag",
+        "Utiliser axe color checker",
+        "Verifier ratio >= 4.5:1"
+      ],
+      "expected": "Contraste suffisant",
+      "type": "automated",
+      "priority": "Medium",
+      "environments": "dev.",
+      "module": "marketing",
+      "tags": [
+        "contrast",
+        "placeholder"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "A11Y-005",
+      "section": "Accessibilite",
+      "title": "Zones clic seniors",
+      "description": {
+        "fr": "Controler que boutons principaux respectent hauteur >=56 px et padding suffisant.",
+        "en": "Check primary buttons height >=56 px and sufficient padding."
+      },
+      "preconditions": "Mode seniors actif.",
+      "steps": [
+        "Mesurer via Playwright bounding boxes",
+        "Capturer rapport"
+      ],
+      "expected": "Tous boutons conformes ou correction planifiee",
+      "type": "automated",
+      "priority": "Low",
+      "environments": "dev.",
+      "module": "ui-global",
+      "tags": [
+        "seniors",
+        "buttons"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "COMP-001",
+      "section": "Compatibilite",
+      "title": "Compat Chrome Edge",
+      "description": {
+        "fr": "Executer tests E2E Chrome + Edge (chromium + msedge UA) via Playwright.",
+        "en": "Run E2E tests on Chrome and Edge (chromium + msedge UA) with Playwright."
+      },
+      "preconditions": "Playwright browsers installes.",
+      "steps": [
+        "`npx playwright test --browser=chromium`",
+        "`--browser=msedge`"
+      ],
+      "expected": "Suites vertes",
+      "type": "automated",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "CI"
+      ],
+      "module": "compatibility",
+      "tags": [
+        "browser",
+        "chromium"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "COMP-002",
+      "section": "Compatibilite",
+      "title": "Compat Firefox",
+      "description": {
+        "fr": "Lancer subset tests sur Firefox (navigation, wizard intro).",
+        "en": "Run subset tests on Firefox (navigation, wizard intro)."
+      },
+      "preconditions": "Playwright firefox installe.",
+      "steps": [
+        "`npx playwright test --project=firefox smoke`",
+        "Capturer video"
+      ],
+      "expected": "Tests passes, anomalies en backlog",
+      "type": "automated",
+      "priority": "Medium",
+      "environments": "CI nightly.",
+      "module": "compatibility",
+      "tags": [
+        "firefox"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "COMP-003",
+      "section": "Compatibilite",
+      "title": "Compat Safari",
+      "description": {
+        "fr": "Check manuel sur Safari (Mac) pour wizard + urgence (checklist, video capture).",
+        "en": "Manual check on Safari (Mac) for wizard + emergency (checklist, video capture)."
+      },
+      "preconditions": "Acces Mac test.",
+      "steps": [
+        "Suivre checklist",
+        "Joindre capture"
+      ],
+      "expected": "Aucun bloquant critique",
+      "type": "manual",
+      "priority": "Medium",
+      "environments": "staging.",
+      "module": "compatibility",
+      "tags": [
+        "safari",
+        "manual"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "COMP-004",
+      "section": "Compatibilite",
+      "title": "Compat mobile",
+      "description": {
+        "fr": "Tester responsive sur viewports iPhone 12/Pixel 5 (navigation, formulaires).",
+        "en": "Test responsive on iPhone 12/Pixel 5 viewports (navigation, forms)."
+      },
+      "preconditions": "Playwright device profiles.",
+      "steps": [
+        "`npx playwright test --project=iphone-12`",
+        "`--project=pixel-5`"
+      ],
+      "expected": "Layout stable, aucun overflow",
+      "type": "automated",
+      "priority": "Medium",
+      "environments": [
+        "dev",
+        "CI"
+      ],
+      "module": "compatibility",
+      "tags": [
+        "mobile",
+        "responsive"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "COMP-005",
+      "section": "Compatibilite",
+      "title": "Compat zoom 200",
+      "description": {
+        "fr": "Verifier que l'interface reste utilisable avec zoom navigateur 200 %.",
+        "en": "Ensure interface remains usable at 200 % browser zoom."
+      },
+      "preconditions": "Scenario wizard.",
+      "steps": [
+        "Playwright set viewport scale",
+        "Verifier absence overlap",
+        "Capturer screenshot"
+      ],
+      "expected": "Composants reflow correct",
+      "type": "automated (Playwright + screenshot diff)",
+      "priority": "Low",
+      "environments": "dev.",
+      "module": "accessibility/compat",
+      "tags": [
+        "zoom",
+        "seniors"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "RES-001",
+      "section": "Resilience",
+      "title": "Interruption Monte Carlo",
+      "description": {
+        "fr": "Tester annulation simulation Monte Carlo via bouton stop.",
+        "en": "Test Monte Carlo simulation cancellation via stop button."
+      },
+      "preconditions": "Simulation en cours.",
+      "steps": [
+        "Lancer simulation",
+        "Cliquer stop",
+        "Verifier message resume"
+      ],
+      "expected": "Worker termine proprement, UI responsive",
+      "type": "automated",
+      "priority": "Medium",
+      "environments": "dev.",
+      "module": "resilience",
+      "tags": [
+        "worker",
+        "cancel"
+      ],
+      "dependencies": [
+        "FUNC-003"
+      ]
+    },
+    {
+      "id": "RES-002",
+      "section": "Resilience",
+      "title": "Echec stockage",
+      "description": {
+        "fr": "Simuler echec File System Access et verifier fallback (alerte UI, logs).",
+        "en": "Simulate File System Access failure and verify fallback (UI alert, logs)."
+      },
+      "preconditions": "Mock storage rejette promesse.",
+      "steps": [
+        "Injecter mock rejection",
+        "Observer message"
+      ],
+      "expected": "Message bienveillant, aucune exception non capturee",
+      "type": "automated (Vitest + react testing library)",
+      "priority": "Medium",
+      "environments": "dev.",
+      "module": "resilience",
+      "tags": [
+        "backup",
+        "error"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "RES-003",
+      "section": "Resilience",
+      "title": "Flags degrade",
+      "description": {
+        "fr": "Verifier que l'absence de configuration flags applique valeurs par defaut sans crash.",
+        "en": "Verify missing flags fallback to defaults without crash."
+      },
+      "preconditions": "Variables non definies.",
+      "steps": [
+        "Lancer app sans `.env`",
+        "Observer comportement"
+      ],
+      "expected": "Flags false par defaut, UI stable",
+      "type": "automated (Vitest + env override)",
+      "priority": "Low",
+      "environments": "dev.",
+      "module": "resilience",
+      "tags": [
+        "flags",
+        "defaults"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "RES-004",
+      "section": "Resilience",
+      "title": "Legacy import",
+      "description": {
+        "fr": "Controler que l'import d'un JSON legacy affiche avertissement puis chiffre localement.",
+        "en": "Ensure importing legacy JSON shows warning then encrypts locally."
+      },
+      "preconditions": "Fichier legacy sample.",
+      "steps": [
+        "Importer JSON",
+        "Confirmer avertissement",
+        "Verifier migration storage"
+      ],
+      "expected": "Donnees migrees, avertissement visible",
+      "type": "automated (Playwright + storage inspection)",
+      "priority": "Medium",
+      "environments": "dev.",
+      "module": "emergency",
+      "tags": [
+        "legacy",
+        "migration"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "RES-005",
+      "section": "Resilience",
+      "title": "Auto lock",
+      "description": {
+        "fr": "Valider verrouillage automatique apres 5 min inactivite sur module urgence.",
+        "en": "Validate auto lock after 5 minutes inactivity on emergency module."
+      },
+      "preconditions": "Session deverrouillee.",
+      "steps": [
+        "Ouvrir module",
+        "Avancer temps 5 min",
+        "Verifier ecran lock"
+      ],
+      "expected": "Session se verrouille, message bienveillant",
+      "type": "automated (Playwright + fake timers)",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "staging"
+      ],
+      "module": "emergency",
+      "tags": [
+        "lock",
+        "timeout"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "SMOKE-001",
+      "section": "Smoke",
+      "title": "Smoke routes",
+      "description": {
+        "fr": "Executer `npm run test:routes` pour valider fragments LocalizedRoute.",
+        "en": "Run `npm run test:routes` to validate LocalizedRoute fragments."
+      },
+      "preconditions": "Dep install.",
+      "steps": [
+        "Commande",
+        "Observer resultat"
+      ],
+      "expected": "Tests passes",
+      "type": "automated",
+      "priority": "High",
+      "environments": [
+        "dev",
+        "CI"
+      ],
+      "module": "routing",
+      "tags": [
+        "smoke",
+        "routes"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "SMOKE-002",
+      "section": "Smoke",
+      "title": "Smoke dev server",
+      "description": {
+        "fr": "Confirmer que `npm run dev -- --host` demarre sans erreurs majeures.",
+        "en": "Confirm `npm run dev -- --host` starts without major errors."
+      },
+      "preconditions": "Node 20.",
+      "steps": [
+        "Demarrer",
+        "Attendre build",
+        "Ctrl+C"
+      ],
+      "expected": "Aucun crash",
+      "type": "manual (rapide)",
+      "priority": "Medium",
+      "environments": "dev.",
+      "module": "smoke",
+      "tags": [
+        "devserver"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "SMOKE-003",
+      "section": "Smoke",
+      "title": "Smoke outils",
+      "description": {
+        "fr": "Verifier que `/outils` se charge et liste cartes depuis `tools-catalog`.",
+        "en": "Check `/tools` loads and lists cards from `tools-catalog`."
+      },
+      "preconditions": "Build data.",
+      "steps": [
+        "Playwright open page",
+        "Valider cards"
+      ],
+      "expected": "Page rendue, aucun warning console",
+      "type": "automated",
+      "priority": "Medium",
+      "environments": "dev.",
+      "module": "smoke",
+      "tags": [
+        "tools",
+        "routing"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "SMOKE-004",
+      "section": "Smoke",
+      "title": "Smoke retirement lazy",
+      "description": {
+        "fr": "Tester chargement lazy modules `retirementRoutes` (simulateur, rapports) sans erreurs console.",
+        "en": "Test lazy loading of `retirementRoutes` modules without console errors."
+      },
+      "preconditions": "Build.",
+      "steps": [
+        "Aller `/retraite/outils-avances`",
+        "Surveiller console"
+      ],
+      "expected": "Aucun warning React Suspense",
+      "type": "automated",
+      "priority": "Low",
+      "environments": "dev.",
+      "module": "smoke",
+      "tags": [
+        "lazy",
+        "retirement"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    },
+    {
+      "id": "SMOKE-005",
+      "section": "Smoke",
+      "title": "Smoke sauvegarde",
+      "description": {
+        "fr": "Executer test rapide `BackgroundBackupService` (existing jest) post build.",
+        "en": "Run quick `BackgroundBackupService` test (existing jest) after build."
+      },
+      "preconditions": "`npm run test`.",
+      "steps": [
+        "Commande subset",
+        "Observer succes"
+      ],
+      "expected": "Tests passent",
+      "type": "automated",
+      "priority": "Medium",
+      "environments": [
+        "dev",
+        "CI"
+      ],
+      "module": "smoke",
+      "tags": [
+        "backup",
+        "jest"
+      ],
+      "dependencies": [
+        "[]"
+      ]
+    }
+  ]
+}

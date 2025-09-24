@@ -35,7 +35,7 @@ export const PRELOAD_CONFIG = {
   // Précharger au hover/navigation
   onDemand: [
     '/src/pages/ComparisonPage.tsx',
-    '/src/features/retirement/components/MonteCarloSimulator.tsx',
+    '/src/features/retirement/components/optimization/MonteCarloSimulator.tsx',
     '/src/services/ProfessionalReportGenerator.ts'
   ]
 };

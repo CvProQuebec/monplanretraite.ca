@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { UserData, Calculations } from '../types';
 import { CalculationService } from '../services/CalculationService';
 import { InputSanitizer } from '@/utils/inputSanitizer';
+import { RetirementDataRepository } from '../services/RetirementDataRepository';
 import { DataMigrationService } from '@/services/DataMigrationService';
 
 // Utilisation de sessionStorage pour la persistance temporaire uniquement
@@ -149,6 +150,13 @@ export const useRetirementData = () => {
         setIsLoading(true);
         setError(null);
         
+        // Chargement via le repository (persistance + migration centralisées)
+        try {
+          const validated = RetirementDataRepository.loadInitialData(defaultUserData);
+          setUserData(validated);
+          return;
+        } catch {}
+        
         // Préférer des données importées plus complètes que la session si disponibles
         const sessionRaw = sessionStorage.getItem(SESSION_STORAGE_KEY);
         const localRaw = localStorage.getItem('retirement_data');
@@ -227,13 +235,9 @@ export const useRetirementData = () => {
   useEffect(() => {
     if (!isLoading && userData !== defaultUserData) {
       try {
-        // Sauvegarde en session
-        sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(userData));
-        console.log('💾 Données sauvegardées en session');
-        
-        // Sauvegarde en localStorage pour la persistance
-        localStorage.setItem('retirement_data', JSON.stringify(userData));
-        console.log('💾 Données sauvegardées en localStorage');
+        // Sauvegarde centralisée
+        RetirementDataRepository.save(userData);
+        console.log('💾 Données sauvegardées (repository)');
       } catch (error) {
         console.error('Erreur lors de la sauvegarde:', error);
         setError('Impossible de sauvegarder les données');
@@ -271,11 +275,7 @@ export const useRetirementData = () => {
       // Sauvegarder une copie de sauvegarde locale avant de fermer
       try {
         if (userData !== defaultUserData) {
-          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify({
-            data: userData,
-            timestamp: new Date().toISOString(),
-            sessionId: sessionId
-          }));
+          RetirementDataRepository.saveBackupBeforeUnload(sessionId, userData);
           console.log('💾 Sauvegarde locale créée avant fermeture');
         }
       } catch (error) {
@@ -354,13 +354,11 @@ export const useRetirementData = () => {
   // Fonction de récupération de la dernière sauvegarde locale
   const restoreFromBackup = () => {
     try {
-      const backup = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (backup) {
-        const parsedBackup = JSON.parse(backup);
-        const validatedData = validateUserData(parsedBackup.data);
-        setUserData(validatedData);
+      const restored = RetirementDataRepository.restoreBackup(defaultUserData);
+      if (restored) {
+        setUserData(restored);
         setError(null);
-        console.log('📥 Données restaurées depuis la sauvegarde locale');
+        console.log('📥 Données restaurées depuis la sauvegarde locale (repository)');
         return true;
       }
       return false;
@@ -374,7 +372,7 @@ export const useRetirementData = () => {
   // Fonction de suppression de la sauvegarde locale
   const clearBackup = () => {
     try {
-      localStorage.removeItem(LOCAL_STORAGE_KEY);
+      RetirementDataRepository.clearBackup();
       console.log('🗑️ Sauvegarde locale supprimée');
     } catch (error) {
       console.error('Erreur lors de la suppression de la sauvegarde:', error);

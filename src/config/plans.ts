@@ -719,12 +719,12 @@ export const EMERGENCY_SECTIONS: EmergencySectionItem[] = [
 export const FEATURE_CATALOG: FeatureCatalogItem[] = [
   // Free
   {
-    key: 'emergency',
-    labelFr: "Trousse d'urgence (8 sections) — infos essentielles prêtes",
-    labelEn: 'Emergency kit (8 sections) — essentials ready',
-    descFr: '8 sections : Personnes, Documents, Finances, Testament, Santé, Assurances, Accès, Vérification.',
-    descEn: '8 sections: People, Documents, Finances, Will, Health, Insurance, Access, Verification.',
-    tier: 'free',
+    key: 'inflation-protection',
+    labelFr: "Centre anti‑inflation — protéger le pouvoir d'achat",
+    labelEn: 'Inflation protection center — protect purchasing power',
+    descFr: 'Des idées simples pour garder votre pouvoir d’achat.',
+    descEn: 'Simple ideas to keep your purchasing power.',
+    tier: 'expert',
   },
   {
     key: 'budget',
@@ -875,14 +875,6 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     tier: 'pro',
   },
   {
-    key: 'inflation-protection',
-    labelFr: "Centre anti‑inflation — protéger le pouvoir d'achat",
-    labelEn: 'Inflation protection center — protect purchasing power',
-    descFr: 'Des idées simples pour garder votre pouvoir d’achat.',
-    descEn: 'Simple ideas to keep your purchasing power.',
-    tier: 'pro',
-  },
-  {
     key: 'behavioral-bias',
     labelFr: 'Biais comportementaux — éviter les pièges courants',
     labelEn: 'Behavioral biases — avoid common pitfalls',
@@ -954,6 +946,48 @@ export const FEATURE_CATALOG: FeatureCatalogItem[] = [
     labelEn: 'Advanced AI consulting — deeper suggestions',
     descFr: 'Des recommandations plus fines et adaptées à vos choix.',
     descEn: 'Finer recommendations adapted to your choices.',
+    tier: 'expert',
+  },
+
+  /* Nouveaux différenciateurs Expert (alignés avec la page Outils) */
+  {
+    key: 'dyn-withdrawal',
+    labelFr: 'Retraits dynamiques — adapter le rythme',
+    labelEn: 'Dynamic withdrawals — adapt the pace',
+    descFr: 'Ajuste les retraits selon les marchés et vos objectifs, avec règles avancées.',
+    descEn: 'Adjust withdrawals to markets and goals with advanced rules.',
+    tier: 'expert',
+  },
+  {
+    key: 'ferr-opt',
+    labelFr: 'Optimisation du FERR — réduire l’impôt sur la durée',
+    labelEn: 'RRIF optimization — reduce long‑term tax',
+    descFr: 'Planifie des retraits FERR efficaces pour limiter l’impôt futur.',
+    descEn: 'Plans effective RRIF withdrawals to limit future tax.',
+    tier: 'expert',
+  },
+  {
+    key: 'rrsp-meltdown',
+    labelFr: 'Fonte du REER — stratégie contrôlée',
+    labelEn: 'RRSP meltdown — controlled strategy',
+    descFr: 'Réduit prudemment vos REER pour lisser l’impôt et éviter les seuils.',
+    descEn: 'Carefully wind down RRSPs to smooth taxes and avoid thresholds.',
+    tier: 'expert',
+  },
+  {
+    key: 'tax-opt-multi',
+    labelFr: 'Optimisation fiscale multi‑sources — mieux coordonner',
+    labelEn: 'Multi‑source tax optimization — better coordination',
+    descFr: 'Coordonne retraits et revenus (REER/CELI/Non‑enreg.) pour payer moins.',
+    descEn: 'Coordinates withdrawals and income (RRSP/TFSA/Non‑registered) to pay less.',
+    tier: 'expert',
+  },
+  {
+    key: 'rvdaa',
+    labelFr: 'RVDAA — scénarios avancés',
+    labelEn: 'RVDAA — advanced scenarios',
+    descFr: 'Outil spécialisé pour tester des scénarios d’épargne et de décaissement.',
+    descEn: 'Specialized tool to test saving and decumulation scenarios.',
     tier: 'expert',
   },
 ];
