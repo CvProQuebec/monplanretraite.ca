@@ -34,7 +34,8 @@ export function readEnvBool(key: string, defaultFalse = false): boolean {
 
 export const FLAGS = {
   SHOW_PLACEHOLDERS: readEnvBool('VITE_SHOW_PLACEHOLDERS', false),
-  ENABLE_LABS: readEnvBool('VITE_ENABLE_LABS', false)
+  ENABLE_LABS: readEnvBool('VITE_ENABLE_LABS', false),
+  ENABLE_ALL_TOOLS: readEnvBool('VITE_ENABLE_ALL_TOOLS', false)
 } as const;
 
 export type Flags = typeof FLAGS;

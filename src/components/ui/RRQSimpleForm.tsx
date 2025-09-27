@@ -88,9 +88,9 @@ const RRQSimpleForm: React.FC<RRQSimpleFormProps> = ({
             </h3>
             <p className="text-sm text-gray-600 mb-4">{personName}</p>
             
-            <div className="senior-form-row-triple">
-              <div className="senior-form-field">
-                <label className="senior-form-label">
+            <div className="space-y-3">
+              <div className="flex items-center gap-4">
+                <label htmlFor="ageActuel" className="text-sm font-semibold text-gray-700 min-w-[120px]">
                   {isFrench ? 'Âge actuel' : 'Current Age'}
                 </label>
                 <Input
@@ -99,12 +99,12 @@ const RRQSimpleForm: React.FC<RRQSimpleFormProps> = ({
                   value={formData.ageActuel}
                   onChange={(e) => handleInputChange('ageActuel', e.target.value)}
                   placeholder="Ex: 58"
-                  className="senior-form-input"
+                  className="h-10 text-sm flex-1"
                 />
               </div>
               
-              <div className="senior-form-field">
-                <label className="senior-form-label">
+              <div className="flex items-center gap-4">
+                <label htmlFor="prestationActuelle" className="text-sm font-semibold text-gray-700 min-w-[120px]">
                   {isFrench ? 'Prestation RRQ actuelle' : 'Current QPP Benefit'}
                 </label>
                 <Input
@@ -113,18 +113,18 @@ const RRQSimpleForm: React.FC<RRQSimpleFormProps> = ({
                   value={formData.prestationActuelle}
                   onChange={(e) => handleInputChange('prestationActuelle', e.target.value)}
                   placeholder="Ex: 1 200"
-                  className="senior-form-input"
+                  className="h-10 text-sm flex-1"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <span className="text-xs text-gray-600 flex-1">
                   {isFrench 
                     ? 'Montant mensuel exact fourni par RRQ (consultez "Mon Dossier")'
                     : 'Exact monthly amount provided by QPP (consult "My File")'
                   }
-                </p>
+                </span>
               </div>
               
-              <div className="senior-form-field">
-                <label className="senior-form-label">
+              <div className="flex items-center gap-4">
+                <label htmlFor="prestation70" className="text-sm font-semibold text-gray-700 min-w-[120px]">
                   {isFrench ? 'Prestation RRQ à 70 ans' : 'QPP Benefit at 70 years old'}
                 </label>
                 <Input
@@ -133,14 +133,14 @@ const RRQSimpleForm: React.FC<RRQSimpleFormProps> = ({
                   value={formData.prestation70}
                   onChange={(e) => handleInputChange('prestation70', e.target.value)}
                   placeholder="Ex: 1 500"
-                  className="senior-form-input"
+                  className="h-10 text-sm flex-1"
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <span className="text-xs text-gray-600 flex-1">
                   {isFrench 
                     ? 'Montant mensuel si vous attendez jusqu\'à 70 ans'
                     : 'Monthly amount if you wait until 70 years old'
                   }
-                </p>
+                </span>
               </div>
             </div>
           </div>

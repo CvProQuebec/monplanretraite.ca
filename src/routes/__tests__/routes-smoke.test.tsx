@@ -42,9 +42,9 @@ describe('Routes smoke tests', () => {
             <MainRoutesCore />
             <BlogRoutes />
             <GovernmentRoutes />
-            {RetirementRoutes()}
-            {MarketingRoutes()}
-            {MarketingExtrasRoutes()}
+            <RetirementRoutes />
+            <MarketingRoutes />
+            <MarketingExtrasRoutes />
             <ReportsRoutes />
           </Routes>
         </Suspense>
@@ -58,7 +58,7 @@ describe('Routes smoke tests', () => {
       <MemoryRouter initialEntries={['/pourquoi-nous-choisir']}>
         <Suspense fallback={null}>
           <Routes>
-            {MarketingRoutes()}
+            <MarketingRoutes />
           </Routes>
         </Suspense>
       </MemoryRouter>
@@ -71,7 +71,7 @@ describe('Routes smoke tests', () => {
       <MemoryRouter initialEntries={['/planification-urgence', '/rappels', '/optimisation-fiscale']}>
         <Suspense fallback={null}>
           <Routes>
-            {RetirementRoutes()}
+            <RetirementRoutes />
           </Routes>
         </Suspense>
       </MemoryRouter>

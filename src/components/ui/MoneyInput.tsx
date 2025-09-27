@@ -144,11 +144,6 @@ const MoneyInput: React.FC<MoneyInputProps> = ({
         disabled={disabled}
         className={cn("pl-8", className)}
       />
-      {!isFocused && value > 0 && (
-        <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-500 pointer-events-none">
-          {allowDecimals ? 'Format: 123 456,78' : 'Format: 123 456'}
-        </div>
-      )}
     </div>
   );
 };

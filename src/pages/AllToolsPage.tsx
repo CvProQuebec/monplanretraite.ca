@@ -29,7 +29,7 @@ export default function AllToolsPage() {
       </section>
 
       <section className="mb-8">
-        <h2 className="h2 mb-3">Pro</h2>
+        <h2 className="h2 mb-3">{isEnglish ? 'Professional' : 'Pro'}</h2>
         <div className="mpr-result-grid">
           {pro.map(tool => (
             <ToolCard key={tool.id} tool={tool} />

@@ -17,7 +17,7 @@ import React from 'react';
  *  </FormGrid>
  */
 
-type FormRowCols = 1 | 2 | 3;
+type FormRowCols = 1 | 2 | 3 | 4;
 
 export interface FormGridProps {
   children: React.ReactNode;
@@ -53,7 +53,7 @@ export const FormRow: React.FC<FormRowProps> = ({
   ...rest
 }) => {
   const colsClass =
-    cols === 3 ? 'cols-3' : cols === 2 ? 'cols-2' : 'cols-1';
+    cols === 4 ? 'cols-4' : cols === 3 ? 'cols-3' : cols === 2 ? 'cols-2' : 'cols-1';
   return (
     <div className={`mpr-form-row ${colsClass} ${className}`} {...rest}>
       {children}

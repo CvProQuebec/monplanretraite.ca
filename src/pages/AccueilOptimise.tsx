@@ -156,132 +156,27 @@ const AccueilOptimise: React.FC = () => {
               </p>
               <img
                 src="/articles.png"
-                alt={isFrench ? 'Aperçu des articles de blog' : 'Preview of blog articles'}
-                className="mx-auto rounded-xl shadow-lg max-w-full h-auto"
-                loading="lazy"
-              />
-              <div className="mt-6">
-                <Button
-                  onClick={() => navigate(isFrench ? '/blog' : '/en/blog')}
-                  className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-xl"
-                >
-                  {isFrench ? '📚 Bibliothèque complète' : '📚 Full Library'}
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* SECTION 3: Ce qui nous rend différents - FUSIONNÉE ET OPTIMISÉE */}
-          <Card className="bg-white/90 backdrop-blur-sm border-2 border-blue-200 shadow-xl mb-16">
-            <CardHeader className="text-center pb-6">
-              <CardTitle className="text-3xl font-bold text-blue-900 mb-4">
-                {isFrench ? 'Ce qui nous rend différents' : 'What makes us different'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle className="w-8 h-8 text-green-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {isFrench ? 'Seule solution gratuite' : 'Only free solution'}
-                  </h3>
-                  <p className="text-gray-700">
-                    {isFrench 
-                      ? 'Module d\'urgence professionnel offert gratuitement - une première au Québec'
-                      : 'Professional emergency module offered for free - a first in Quebec'
-                    }
-                  </p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Sparkles className="w-8 h-8 text-blue-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {isFrench ? 'Assistant IA exclusif' : 'Exclusive AI Assistant'}
-                  </h3>
-                  <p className="text-gray-700">
-                    {isFrench 
-                      ? 'Le premier assistant qui évite les catastrophes financières avant qu\'elles arrivent'
-                      : 'The first assistant that prevents financial disasters before they happen'
-                    }
-                  </p>
-                </div>
-                
-                <div className="text-center">
-                  <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Shield className="w-8 h-8 text-purple-600" />
-                  </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">
-                    {isFrench ? 'Sécurité maximale' : 'Maximum security'}
-                  </h3>
-                  <p className="text-gray-700">
-                    {isFrench 
-                      ? 'Vos données restent sur votre appareil. Aucune transmission réseau.'
-                      : 'Your data stays on your device. No network transmission.'
-                    }
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* SECTION 4: Comparaison des plans - VERSION SIMPLIFIÉE (70% plus courte) */}
-          <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-16 rounded-2xl mb-16">
-            <div className="container mx-auto px-6">
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold text-white mb-4">
-                  {isFrench ? 'Choisissez votre niveau de protection' : 'Choose your level of protection'}
-                </h2>
-                <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-                  {isFrench 
-                    ? 'De la protection gratuite à la planification complète avec IA'
-                    : 'From free protection to complete AI-powered planning'
-                  }
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                
-                {/* PLAN GRATUIT - Simplifié */}
-                <Card className="bg-white border-2 border-emerald-200 shadow-xl">
-                  <CardHeader className="text-center pt-6">
-                    <div className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <Shield className="w-8 h-8 text-white" />
-                    </div>
-                    <CardTitle className="text-2xl font-bold text-emerald-900">
-                      {isFrench ? 'Gratuit' : 'Free'}
-                    </CardTitle>
-                    <div className="text-4xl font-bold text-emerald-600 mb-2">0 $</div>
-                  </CardHeader>
-                  <CardContent className="px-6 pb-8">
-                    <div className="space-y-3 mb-6">
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? 'Module d\'urgence complet (8 sections)' : 'Complete emergency module (8 sections)'}</span>
+                alt={isFrench ? 'Aper\u00E7u RRQ/CPP \u2014 montants et impact' : 'RRQ/CPP preview — amounts and impact'}</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? 'Planification budget/dépenses (lite)' : 'Budget/expenses planning (lite)'}</span>
+                        <span className="text-sm">{isFrench ? 'Calculatrice de rendement simple' : 'Simple return calculator'}</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? 'Calculateurs de base (5 outils)' : 'Basic calculators (5 tools)'}</span>
-                      </div>
-                      <div className="pl-7 text-[12px] text-gray-600 -mt-2">
-                        <ul className="list-disc list-inside">
-                          <li>{isFrench ? 'Calculatrice de rendement simple' : 'Simple return calculator'}</li>
-                          <li>{isFrench ? "Comparateur d’options d’achat" : 'Purchase options comparator'}</li>
-                          <li>{isFrench ? 'Estimateur de budget mensuel (lite)' : 'Monthly budget estimator (lite)'}</li>
-                          <li>{isFrench ? 'Aperçu RRQ/CPP — montants et impact' : 'RRQ/CPP preview — amounts and impact'}</li>
-                          <li>{isFrench ? 'Conseils essentiels (aperçu)' : 'Essential tips (preview)'}</li>
-                        </ul>
+                        <span className="text-sm">{isFrench ? "Comparateur d'options d'achat" : 'Purchase options comparator'}</span>
                       </div>
                       <div className="flex items-center gap-3">
                         <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? '5 simulations/mois' : '5 simulations/month'}</span>
+                        <span className="text-sm">{isFrench ? 'Estimateur de budget mensuel (lite)' : 'Monthly budget estimator (lite)'}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="w-5 h-5 text-emerald-500" />
+                        <span className="text-sm">{isFrench ? 'Aperçu RRQ/CPP — montants et impact' : 'RRQ/CPP preview — amounts and impact'}</span>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <CheckCircle className="w-5 h-5 text-emerald-500" />
+                        <span className="text-sm">{isFrench ? 'Conseils essentiels (aperçu)' : 'Essential tips (preview)'}</span>
                       </div>
                     </div>
                     <Button 

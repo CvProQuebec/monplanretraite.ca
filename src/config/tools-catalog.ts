@@ -308,6 +308,18 @@ export const TOOLS_CATALOG: ToolItem[] = [
     icon: 'cup-soda'
   },
 
+  {
+    id: 'ccq',
+    plan: 'professional',
+    routeFr: '/retraite-construction',
+    routeEn: '/construction-retirement',
+    titleFr: 'Retraite — construction (CCQ)',
+    titleEn: 'Construction retirement (CCQ)',
+    descFr: 'Planifiez votre retraite selon les règles de la CCQ : scénarios, périodes d’activité et particularités de l’industrie.',
+    descEn: 'Plan your retirement with CCQ specifics: scenarios, work patterns, and industry particulars.',
+    icon: 'building-2'
+  },
+
   // ====== EXPERT (1) ======
   {
     id: 'succession-planning',

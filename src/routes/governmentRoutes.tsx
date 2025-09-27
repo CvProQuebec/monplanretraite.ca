@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Route } from 'react-router-dom';
+import { LocalizedRoute } from './LocalizedRoute';
 
 /**
  * GovernmentRoutes
@@ -28,6 +29,18 @@ const ApplyBenefitsAge = React.lazy(() => import('@/pages/ApplyBenefitsAge'));
 export function GovernmentRoutes() {
   return (
     <>
+      {/* Module CCQ - Commission de la construction du Québec
+          IMPORTANT: React Router <Routes> n'accepte que <Route> ou <Fragment> comme enfants.
+          Utiliser LocalizedRoute en appel de fonction pour injecter des <Route /> jumeaux. */}
+      {LocalizedRoute({
+        fr: "/retraite-construction",
+        en: "/construction-retirement",
+        element: (
+          <Suspense fallback={null}>
+            <CCQPage />
+          </Suspense>
+        ),
+      })}
       {/* Module SRG (Supplément de Revenu Garanti) */}
       <Route
         path="/module-srg"

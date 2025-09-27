@@ -289,7 +289,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
                   value={eiData.additionalWeeklyIncome}
                   onChange={(value) => handleInputChange('additionalWeeklyIncome', value)}
                   className="senior-form-input bg-slate-700 border-slate-600 text-white"
-                  placeholder="0"
+                  placeholder=""
                   allowDecimals={true}
                 />
               </div>

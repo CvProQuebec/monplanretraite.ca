@@ -2,6 +2,7 @@ import React from 'react';
 import { useLanguage } from '@/hooks/useLanguage';
 import type { ToolItem } from '@/config/tools-catalog';
 import { useSubscriptionLimits } from '@/hooks/useSubscriptionLimits';
+import { useFlags } from '@/hooks/useFlags';
 
 type UserPlan = 'free' | 'professional' | 'expert';
 
@@ -14,9 +15,10 @@ function isLocked(toolPlan: UserPlan, userPlan: UserPlan): boolean {
 
 export function ToolCard({ tool }: { tool: ToolItem }) {
   const { isEnglish } = useLanguage();
+  const { ENABLE_ALL_TOOLS } = useFlags();
   const { currentPlan } = useSubscriptionLimits();
   const userPlan = (currentPlan as UserPlan) || 'free';
-  const locked = isLocked(tool.plan as UserPlan, userPlan);
+  const locked = ENABLE_ALL_TOOLS ? false : isLocked(tool.plan as UserPlan, userPlan);
 
   const title = isEnglish ? tool.titleEn : tool.titleFr;
   const desc = isEnglish ? tool.descEn : tool.descFr;
@@ -27,7 +29,7 @@ export function ToolCard({ tool }: { tool: ToolItem }) {
 
   const planLabel =
     tool.plan === 'free' ? (isEnglish ? 'Free' : 'Gratuit')
-      : tool.plan === 'professional' ? 'Pro'
+      : tool.plan === 'professional' ? (isEnglish ? 'Professional' : 'Pro')
       : 'Expert';
 
   return (

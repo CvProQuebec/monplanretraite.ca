@@ -44,6 +44,7 @@ import { LabsRoutes } from './routes/labsRoutes';
 import { RetirementRoutes } from './routes/retirementRoutes';
 import { MarketingRoutes } from './routes/marketingRoutes';
 import MarketingExtrasRoutes from './routes/marketingExtrasRoutes';
+import { GENERATED_TOOL_ROUTES } from '../generated/fix-tools/ROUTES.react-router';
 
 // NOUVEAUX MODULES INTÉGRÉS - Lazy loading pour performance seniors
 const SRGAnalysisSection = React.lazy(() => import('./features/retirement/components/SRGAnalysisSection').then(module => ({ default: module.SRGAnalysisSection })));
@@ -136,6 +137,11 @@ function App() {
               {RetirementRoutes()}
               {MarketingRoutes()}
               {MarketingExtrasRoutes()}
+
+              {/* Generated tool stubs (catalog paths) — flag-gated placeholders */}
+              {GENERATED_TOOL_ROUTES.map((r) => (
+                <Route key={String(r.path)} path={r.path as any} element={r.element as any} />
+              ))}
               
               {/* Page retraite - "TRAVAILLER AVEC CE QU'ON A" + teaser du tableau de bord (repliable) */}
               
