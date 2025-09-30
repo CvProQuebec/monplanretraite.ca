@@ -12,6 +12,11 @@ if (checkForCorruptedDates()) {
   console.log('✅ Aucune date corrompue détectée');
 }
 
+// Politique « nouvelle session »: démarrer vide à chaque chargement
+try {
+  sessionStorage.removeItem('retirement-session-data');
+} catch {}
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <App />

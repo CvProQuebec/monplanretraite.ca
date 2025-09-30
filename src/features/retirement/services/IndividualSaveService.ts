@@ -9,6 +9,7 @@ export interface Person1Data {
   // Données personnelles Personne 1
   personal: {
     prenom1: string;
+    nom1?: string;
     naissance1: string;
     sexe1: string;
     salaire1: number;
@@ -59,6 +60,7 @@ export interface Person2Data {
   // Données personnelles Personne 2
   personal: {
     prenom2: string;
+    nom2?: string;
     naissance2: string;
     sexe2: string;
     salaire2: number;
@@ -170,6 +172,7 @@ export class IndividualSaveService {
     return {
       personal: {
         prenom1: userData.personal.prenom1,
+        nom1: userData.personal.nom1,
         naissance1: userData.personal.naissance1,
         sexe1: userData.personal.sexe1,
         salaire1: userData.personal.salaire1,
@@ -218,6 +221,7 @@ export class IndividualSaveService {
     return {
       personal: {
         prenom2: userData.personal.prenom2,
+        nom2: userData.personal.nom2,
         naissance2: userData.personal.naissance2,
         sexe2: userData.personal.sexe2,
         salaire2: userData.personal.salaire2,

@@ -266,52 +266,6 @@ const Revenus: React.FC = () => {
               : 'Manage your income sources to optimize your retirement planning'
             }
           </p>
-          <div className="mpr-form-row cols-auto">
-            <HelpTooltip
-              title={isFrench ? 'Revenu annuel brut' : 'Annual gross income'}
-              content={isFrench
-                ? 'Ce montant sert de base à vos calculs et à votre capacité d’épargne. Une cible fréquente de remplacement à la retraite est ~70 %, mais elle varie selon votre situation.'
-                : 'This amount underpins your calculations and saving capacity. A common retirement income target is ~70% of pre-retirement income, but it varies by situation.'}
-            >
-              <span></span>
-            </HelpTooltip>
-
-            <HelpTooltip
-              title={isFrench ? 'Régime d’employeur' : 'Employer plan'}
-              content={isFrench
-                ? 'Si votre employeur égalise vos cotisations, c’est souvent la priorité #1 — rendement “garanti” de 100 % sur vos contributions.'
-                : 'If your employer matches your contributions, that’s often priority #1 — a “guaranteed” 100% return on your contributions.'}
-            >
-              <span></span>
-            </HelpTooltip>
-
-            <HelpTooltip
-              title={isFrench ? 'REER' : 'RRSP'}
-              content={isFrench
-                ? 'Déduction fiscale immédiate et croissance à l’abri de l’impôt. Conversion obligatoire en FERR à 71 ans avec retraits minimums.'
-                : 'Immediate tax deduction and tax-deferred growth. Must convert to a RRIF at 71 with required minimum withdrawals.'}
-            >
-              <span></span>
-            </HelpTooltip>
-
-            <HelpTooltip
-              title={isFrench ? 'CELI' : 'TFSA'}
-              content={isFrench
-                ? 'Retraits non imposables et sans effet sur les prestations gouvernementales. Excellente flexibilité pour la retraite.'
-                : 'Withdrawals are tax-free and don’t impact government benefits. Excellent flexibility for retirement.'}
-            >
-              <span></span>
-            </HelpTooltip>
-
-            <HelpTooltip
-              title={isFrench ? 'Épargnes non enregistrées' : 'Non-registered savings'}
-              content={isFrench
-                ? 'Plus flexibles, mais imposés annuellement. Idéales pour les objectifs à moyen terme et après maximisation des comptes enregistrés.'
-                : 'More flexible but taxed annually. Ideal for medium-term goals and once registered accounts are maximized.'}
-            >
-              <span></span>
-            </HelpTooltip>
-          </div>
 
           {/* Lien rapide vers le module Budget (onglet revenus) */}
           <div className="mt-6">

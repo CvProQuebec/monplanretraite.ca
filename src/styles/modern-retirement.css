@@ -39,7 +39,7 @@
 }
 
 .retirement-navigation .nav-item {
-  background: rgba(255, 255, 255, 0.1) !important;
+  background: #ffffff !important;
   border-radius: 12px !important;
   margin: 0 4px !important;
   transition: var(--transition-normal) !important;
@@ -47,13 +47,13 @@
 }
 
 .retirement-navigation .nav-item:hover {
-  background: rgba(255, 255, 255, 0.2) !important;
+  background: #ffffff !important;
   transform: translateY(-2px) !important;
   box-shadow: var(--shadow-md) !important;
 }
 
 .retirement-navigation .nav-item.active {
-  background: rgba(255, 255, 255, 0.25) !important;
+  background: #ffffff !important;
   box-shadow: var(--shadow-lg) !important;
   border: 2px solid rgba(255, 255, 255, 0.3) !important;
 }

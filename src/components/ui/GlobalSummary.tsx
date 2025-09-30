@@ -604,6 +604,12 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
       }
       
       totals.securiteVieillesse += totalToDate;
+    } else {
+      // Fallback: si svBiannual1 absent, on utilise svMontant1 (mensuel)
+      const svMontant1 = userData?.retirement?.svMontant1 || 0;
+      if (svMontant1 > 0) {
+        totals.securiteVieillesse += monthsCompleted * svMontant1;
+      }
     }
     
     if (sv2 && sv2.periode1 && sv2.periode2) {
@@ -626,6 +632,12 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
       
       totals.securiteVieillesse += totalToDate;
       console.log('🔍 GlobalSummary - SV1 totalToDate:', totalToDate, 'Total SV après Personne 1:', totals.securiteVieillesse);
+    } else {
+      // Fallback: si svBiannual2 absent, on utilise svMontant2 (mensuel)
+      const svMontant2 = userData?.retirement?.svMontant2 || 0;
+      if (svMontant2 > 0) {
+        totals.securiteVieillesse += monthsCompleted * svMontant2;
+      }
     }
     
     if (sv2 && sv2.periode1 && sv2.periode2) {
@@ -720,10 +732,78 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
     console.log('🔍 GlobalSummary - Total rentes privées:', totals.rentesPrivees);
     totals.totalPrestations = totals.rrq + totals.securiteVieillesse + totals.rentesPrivees + totals.assuranceEmploi;
 
-    // Investissements
-    totals.reer = (userData?.personal?.soldeREER1 || 0) + (userData?.personal?.soldeREER2 || 0);
-    totals.celi = (userData?.personal?.soldeCELI1 || 0) + (userData?.personal?.soldeCELI2 || 0);
-    totals.cri = (userData?.personal?.soldeCRI1 || 0) + (userData?.personal?.soldeCRI2 || 0);
+    // Investissements (support des deux schémas)
+    // Assurance-emploi (AE) - calcul du net à ce jour (hebdo)
+    const __calcWeeksBetween = (startDate: Date, endDate: Date) => {
+      const msPerWeek = 1000 * 60 * 60 * 24 * 7;
+      const diff = Math.floor((endDate.getTime() - startDate.getTime()) / msPerWeek) + 1;
+      return Math.max(0, diff);
+    };
+    const __computeAETotal = (entries: any[]) => {
+      const today = new Date();
+      const yearStart = new Date(today.getFullYear(), 0, 1);
+      const yearEnd = new Date(today.getFullYear(), 11, 31);
+      let total = 0;
+      for (const e of entries || []) {
+        if (!e || e.type !== 'assurance-emploi' || e.isActive === false) continue;
+        const grossWeekly = Number(e.weeklyGross ?? e.weeklyAmount ?? 0) || 0;
+        const fed = Number(e.eiFederalTaxWeekly ?? 0) || 0;
+        const prov = Number(e.eiProvincialTaxWeekly ?? 0) || 0;
+        const netWeekly = Math.max(0, grossWeekly - fed - prov);
+        if (netWeekly <= 0) continue;
+        const startStr: string | undefined = e.eiStartDate || e.salaryStartDate || e.startDate;
+        const start = startStr ? new Date(startStr) : yearStart;
+        const maxWeeks = Number(e.maxWeeks ?? e.eiEligibleWeeks ?? 0) || 0;
+        const endByMax = maxWeeks > 0 ? new Date(start.getTime() + (maxWeeks * 7) * 24 * 60 * 60 * 1000) : yearEnd;
+        const effectiveStart = start < yearStart ? yearStart : start;
+        const effectiveEnd = new Date(Math.min(today.getTime(), yearEnd.getTime(), endByMax.getTime()));
+        if (effectiveEnd < effectiveStart) continue;
+        const weeksElapsed = __calcWeeksBetween(effectiveStart, effectiveEnd);
+        let weeksUsed = Number(e.weeksUsed ?? 0) || 0;
+        if (weeksUsed <= 0) weeksUsed = weeksElapsed;
+        if (maxWeeks > 0) weeksUsed = Math.min(weeksUsed, maxWeeks);
+        weeksUsed = Math.min(weeksUsed, weeksElapsed);
+        total += netWeekly * weeksUsed;
+      }
+      return total;
+    };
+    totals.assuranceEmploi = __computeAETotal(unifiedIncome1) + __computeAETotal(unifiedIncome2);
+    // Include advanced EI data if present under retirement.advancedEI1/advancedEI2
+    const __computeFromAdvancedEI = (eiData: any) => {
+      try {
+        if (!eiData || !eiData.eiStartDate) return 0;
+        const today = new Date();
+        const yearStart = new Date(today.getFullYear(), 0, 1);
+        const start = new Date(eiData.eiStartDate);
+        const effectiveStart = start < yearStart ? yearStart : start;
+        const maxWeeks = Number(eiData.eiMaxWeeks ?? 0) || 0;
+        const gross = Number(eiData.eiWeeklyGross ?? 0) || 0;
+        const fed = Number(eiData.eiFederalTax ?? 0) || 0;
+        const prov = Number(eiData.eiProvincialTax ?? 0) || 0;
+        const net = Math.max(0, gross - fed - prov);
+        if (net <= 0) return 0;
+        const weeksElapsed = __calcWeeksBetween(effectiveStart, today);
+        let used = Number(eiData.eiWeeksUsed ?? 0) || weeksElapsed;
+        if (maxWeeks > 0) used = Math.min(used, maxWeeks);
+        used = Math.min(used, weeksElapsed);
+        return net * used;
+      } catch { return 0; }
+    };
+    totals.assuranceEmploi += __computeFromAdvancedEI(userData?.retirement?.advancedEI1);
+    totals.assuranceEmploi += __computeFromAdvancedEI(userData?.retirement?.advancedEI2);
+    // Recompute total including AE
+    totals.totalPrestations = totals.rrq + totals.securiteVieillesse + totals.rentesPrivees + totals.assuranceEmploi;
+
+    const pReer = (userData?.personal?.soldeREER1 || 0) + (userData?.personal?.soldeREER2 || 0);
+    const pCeli = (userData?.personal?.soldeCELI1 || 0) + (userData?.personal?.soldeCELI2 || 0);
+    const pCri  = (userData?.personal?.soldeCRI1  || 0) + (userData?.personal?.soldeCRI2  || 0);
+    const sReer = (userData?.savings?.reer1 || 0) + (userData?.savings?.reer2 || 0);
+    const sCeli = (userData?.savings?.celi1 || 0) + (userData?.savings?.celi2 || 0);
+    const sCri  = (userData?.savings?.cri1  || 0) + (userData?.savings?.cri2  || 0);
+
+    totals.reer = pReer > 0 ? pReer : sReer;
+    totals.celi = pCeli > 0 ? pCeli : sCeli;
+    totals.cri  = pCri  > 0 ? pCri  : sCri;
     totals.crypto = (userData?.personal?.soldeCrypto1 || 0) + (userData?.personal?.soldeCrypto2 || 0);
     totals.totalInvestissements = totals.reer + totals.celi + totals.cri + totals.crypto;
 

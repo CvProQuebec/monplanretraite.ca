@@ -347,6 +347,8 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
     }).format(amount);
   };
   
+  const filteredEntries = incomeEntries.filter(e => e.type !== 'assurance-emploi');
+  
   return (
     <>
       <TooltipProvider>
@@ -394,339 +396,353 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
           </div>
           
           {/* Lignes de revenus - Version Senior */}
-          <div className="space-y-3">
-            {incomeEntries.filter(e => e.type !== 'assurance-emploi').map((entry) => {
-              const typeInfo = getIncomeTypeInfo(entry.type);
-              const isEditing = editingId === entry.id;
-              
-              return (
-                <div key={entry.id} className={`senior-compact-section ${entry.isActive ? 'border-green-400 bg-green-50' : 'border-gray-300 bg-gray-50 opacity-60'} relative overflow-visible`}>
-                  
-                  <h3>{typeInfo.icon} {typeInfo.label} - {entry.description || (isFrench ? 'Sans nom' : 'Unnamed')}</h3>
-                  
-                  {/* Ligne 1 : Type + Description */}
-                  <div className="senior-inline-grid-2">
-                    {/* Type de revenu condensé */}
-                    <div className="senior-field-inline">
-                      <label>{isFrench ? 'Type' : 'Type'}</label>
-                      {isEditing ? (
-                        <select
-                          value={entry.type}
-                          onChange={(e) => updateIncomeEntry(entry.id, { type: e.target.value as any })}
-                        >
-                          {(incomeTypes.filter(type => type.value !== 'assurance-emploi' && type.value !== 'rentes' && type.value !== 'autres')).map(type => (
-                            <option key={type.value} value={type.value}>
-                              {type.icon} {type.label}
-                            </option>
-                          ))}
-                        </select>
-                      ) : (
-                        <input value={`${typeInfo.icon} ${typeInfo.label}`} readOnly />
-                      )}
-                    </div>
+          {filteredEntries.length === 0 ? (
+            <div className="flex items-center justify-end gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+              <Button
+                onClick={addIncomeEntry}
+                size="lg"
+                className="text-white text-xl px-8 py-4 h-16 shadow-lg hover:opacity-80 transition-opacity"
+                style={{backgroundColor: 'var(--senior-success)'}}
+              >
+                <Plus className="w-6 h-6 mr-3" />
+                {isFrench ? 'Ajouter un revenu' : 'Add Income'}
+              </Button>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {filteredEntries.map((entry, index) => {
+                const typeInfo = getIncomeTypeInfo(entry.type);
+                const isEditing = editingId === entry.id;
+                
+                return (
+                  <div key={entry.id} className={`senior-compact-section ${entry.isActive ? 'border-green-400 bg-green-50' : 'border-gray-300 bg-gray-50 opacity-60'} relative overflow-visible`}>
                     
-                    {/* Description condensée */}
-                    <div className="senior-field-inline">
-                      <label>{isFrench ? 'Description' : 'Description'}</label>
-                      {isEditing ? (
-                        <input
-                          value={entry.description}
-                          onChange={(e) => updateIncomeEntry(entry.id, { description: e.target.value })}
-                          placeholder={isFrench ? 'Description...' : 'Description...'}
-                        />
-                      ) : (
-                        <input value={entry.description || (isFrench ? 'Sans nom' : 'Unnamed')} readOnly />
-                      )}
+                    <h3>{typeInfo.icon} {typeInfo.label} - {entry.description || (isFrench ? 'Sans nom' : 'Unnamed')}</h3>
+                    
+                    {/* Ligne 1 : Type + Description */}
+                    <div className="senior-inline-grid-2">
+                      {/* Type de revenu condensé */}
+                      <div className="senior-field-inline">
+                        <label>{isFrench ? 'Type' : 'Type'}</label>
+                        {isEditing ? (
+                          <select
+                            value={entry.type}
+                            onChange={(e) => updateIncomeEntry(entry.id, { type: e.target.value as any })}
+                          >
+                            {(incomeTypes.filter(type => type.value !== 'assurance-emploi' && type.value !== 'rentes' && type.value !== 'autres')).map(type => (
+                              <option key={type.value} value={type.value}>
+                                {type.icon} {type.label}
+                              </option>
+                            ))}
+                          </select>
+                        ) : (
+                          <input value={`${typeInfo.icon} ${typeInfo.label}`} readOnly />
+                        )}
+                      </div>
+                      
+                      {/* Description condensée */}
+                      <div className="senior-field-inline">
+                        <label>{isFrench ? 'Description' : 'Description'}</label>
+                        {isEditing ? (
+                          <input
+                            value={entry.description}
+                            onChange={(e) => updateIncomeEntry(entry.id, { description: e.target.value })}
+                            placeholder={isFrench ? 'Description...' : 'Description...'}
+                          />
+                        ) : (
+                          <input value={entry.description || (isFrench ? 'Sans nom' : 'Unnamed')} readOnly />
+                        )}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Ligne Montant et Fréquence - ligne par ligne */}
-                  <div className="space-y-3 mb-6">
-                    
-                    {/* Montant - ligne par ligne */}
-                    <div className="senior-field-inline">
-                      <label>{isFrench ? 'Montant' : 'Amount'}</label>
-                      {isEditing ? (
-                        <MoneyInput
-                          value={
-                            (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') ? (entry.salaryNetAmount || 0) :
-                            entry.type === 'assurance-emploi' ? (entry.weeklyNet || 0) :
-                            entry.type === 'rentes' ? (entry.pensionAmount || 0) :
-                            entry.type === 'revenus-location' ? (entry.rentalAmount || 0) :
-                            entry.annualAmount || 0
-                          }
-                          onChange={(value) => {
-                            if (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') {
-                              updateIncomeEntry(entry.id, { salaryNetAmount: value });
-                            } else if (entry.type === 'assurance-emploi') {
-                              updateIncomeEntry(entry.id, { weeklyNet: value });
-                            } else if (entry.type === 'rentes') {
-                              updateIncomeEntry(entry.id, { pensionAmount: value });
-                            } else if (entry.type === 'revenus-location') {
-                              updateIncomeEntry(entry.id, { rentalAmount: value });
-                            } else {
-                              updateIncomeEntry(entry.id, { annualAmount: value });
+                    {/* Ligne Montant et Fréquence - ligne par ligne */}
+                    <div className="space-y-3 mb-6">
+                      
+                      {/* Montant - ligne par ligne */}
+                      <div className="senior-field-inline">
+                        <label>{isFrench ? 'Montant' : 'Amount'}</label>
+                        {isEditing ? (
+                          <MoneyInput
+                            value={
+                              (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') ? (entry.salaryNetAmount || 0) :
+                              entry.type === 'assurance-emploi' ? (entry.weeklyNet || 0) :
+                              entry.type === 'rentes' ? (entry.pensionAmount || 0) :
+                              entry.type === 'revenus-location' ? (entry.rentalAmount || 0) :
+                              entry.annualAmount || 0
                             }
-                          }}
-                          className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-32"
-                          placeholder="0"
-                          allowDecimals={true}
-                        />
-                      ) : (
-                        <div className="p-2 bg-gray-50 border border-gray-300 rounded-lg w-32 flex items-center">
-                          <div className="text-sm text-gray-800 font-semibold">
-                            {(entry.type === 'salaire' || entry.type === 'emploi-saisonnier') && entry.salaryNetAmount ? 
-                              formatCurrency(entry.salaryNetAmount) :
-                              entry.type === 'assurance-emploi' && entry.weeklyNet ?
-                              formatCurrency(entry.weeklyNet) :
-                              entry.type === 'rentes' && entry.pensionAmount ?
-                              formatCurrency(entry.pensionAmount) :
-                              entry.type === 'revenus-location' && entry.rentalAmount ?
-                              formatCurrency(entry.rentalAmount) :
-                              entry.annualAmount ? formatCurrency(entry.annualAmount) : '-'
-                            }
+                            onChange={(value) => {
+                              if (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') {
+                                updateIncomeEntry(entry.id, { salaryNetAmount: value });
+                              } else if (entry.type === 'assurance-emploi') {
+                                updateIncomeEntry(entry.id, { weeklyNet: value });
+                              } else if (entry.type === 'rentes') {
+                                updateIncomeEntry(entry.id, { pensionAmount: value });
+                              } else if (entry.type === 'revenus-location') {
+                                updateIncomeEntry(entry.id, { rentalAmount: value });
+                              } else {
+                                updateIncomeEntry(entry.id, { annualAmount: value });
+                              }
+                            }}
+                            className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-32"
+                            placeholder="0"
+                            allowDecimals={true}
+                          />
+                        ) : (
+                          <div className="p-2 bg-gray-50 border border-gray-300 rounded-lg w-32 flex items-center">
+                            <div className="text-sm text-gray-800 font-semibold">
+                              {(entry.type === 'salaire' || entry.type === 'emploi-saisonnier') && entry.salaryNetAmount ? 
+                                formatCurrency(entry.salaryNetAmount) :
+                                entry.type === 'assurance-emploi' && entry.weeklyNet ?
+                                formatCurrency(entry.weeklyNet) :
+                                entry.type === 'rentes' && entry.pensionAmount ?
+                                formatCurrency(entry.pensionAmount) :
+                                entry.type === 'revenus-location' && entry.rentalAmount ?
+                                formatCurrency(entry.rentalAmount) :
+                                entry.annualAmount ? formatCurrency(entry.annualAmount) : '-'
+                              }
+                            </div>
                           </div>
-                        </div>
-                      )}
-                    </div>
-                    
-                    {/* Fréquence - ligne par ligne */}
-                    <div className="senior-field-inline">
-                      <label>{isFrench ? 'Fréquence' : 'Frequency'}</label>
-                      {isEditing ? (
-                        <div className="flex gap-2">
-                          {(entry.type === 'salaire' || entry.type === 'emploi-saisonnier') && (
-                            <Select
-                              value={entry.salaryFrequency || 'monthly'}
-                              onValueChange={(value) => updateIncomeEntry(entry.id, { salaryFrequency: value as any })}
-                            >
-                              <SelectTrigger
-                                className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
-                                aria-label={isFrench ? 'Fréquence de salaire' : 'Salary frequency'}
+                        )}
+                      </div>
+                      
+                      {/* Fréquence - ligne par ligne */}
+                      <div className="senior-field-inline">
+                        <label>{isFrench ? 'Fréquence' : 'Frequency'}</label>
+                        {isEditing ? (
+                          <div className="flex gap-2">
+                            {(entry.type === 'salaire' || entry.type === 'emploi-saisonnier') && (
+                              <Select
+                                value={entry.salaryFrequency || 'monthly'}
+                                onValueChange={(value) => updateIncomeEntry(entry.id, { salaryFrequency: value as any })}
                               >
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent className="bg-white border-4 border-gray-300" style={{zIndex: 9999}} position="item-aligned" side="bottom" align="start" avoidCollisions={false} sticky="always">
-                                {salaryFrequencies.map(freq => (
-                                  <SelectItem key={freq.value} value={freq.value} className="text-xl py-4">
-                                    {freq.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          )}
-                          {entry.type === 'rentes' && (
-                            <Select
-                              value={entry.pensionFrequency || 'monthly'}
-                              onValueChange={(value) => updateIncomeEntry(entry.id, { pensionFrequency: value as any })}
-                            >
-                              <SelectTrigger
-                                className="senior-form-input"
-                                aria-label={isFrench ? 'Fréquence de rente' : 'Pension frequency'}
+                                <SelectTrigger
+                                  className="p-2 border-2 border-gray-300 rounded-lg text-[1.05rem] font-semibold w-40"
+                                  aria-label={isFrench ? 'Fréquence de salaire' : 'Salary frequency'}
+                                >
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="bg-white border-4 border-gray-300" style={{zIndex: 9999}} position="item-aligned" side="bottom" align="start" avoidCollisions={false} sticky="always">
+                                  {salaryFrequencies.map(freq => (
+                                    <SelectItem key={freq.value} value={freq.value} className="text-xl py-4">
+                                      {freq.label}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            )}
+                            {entry.type === 'rentes' && (
+                              <Select
+                                value={entry.pensionFrequency || 'monthly'}
+                                onValueChange={(value) => updateIncomeEntry(entry.id, { pensionFrequency: value as any })}
                               >
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent className="bg-white border-4 border-gray-300" style={{zIndex: 9999}} position="item-aligned" side="bottom" align="start" avoidCollisions={false} sticky="always">
-                                {pensionFrequencies.map(freq => (
-                                  <SelectItem key={freq.value} value={freq.value} className="text-xl py-4">
-                                    {freq.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          )}
-                          {(entry.type === 'dividendes' || entry.type === 'travail-autonome' || entry.type === 'autres') && (
-                            <div className="p-4 bg-gray-100 border-4 border-gray-200 rounded-lg">
-                              <span className="text-lg text-gray-600">{isFrench ? 'Annuel' : 'Annual'}</span>
-                            </div>
-                          )}
-                          {entry.type === 'revenus-location' && (
-                            <div className="relative w-full">
-                              <select
-                                aria-label={isFrench ? 'Fréquence de location' : 'Rental frequency'}
-                                value={entry.rentalFrequency || 'monthly'}
-                                onChange={(e) => updateIncomeEntry(entry.id, { rentalFrequency: e.target.value as any })}
-                                className="w-full p-4 text-xl border-4 border-gray-300 rounded-lg focus:border-blue-500 bg-white appearance-none cursor-pointer relative z-10"
-                                style={{
-                                  position: 'relative',
-                                  zIndex: 10,
-                                  top: 'auto',
-                                  left: 'auto',
-                                  right: 'auto',
-                                  bottom: 'auto',
-                                  transform: 'none',
-                                  marginTop: 0,
-                                  marginBottom: 0
-                                }}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  e.preventDefault();
-                                }}
-                              >
-                                {rentalFrequencies.map(freq => (
-                                  <option key={freq.value} value={freq.value} className="text-xl py-2 bg-white">
-                                    {freq.label}
-                                  </option>
-                                ))}
-                              </select>
-                              <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                                <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                                </svg>
+                                <SelectTrigger
+                                  className="senior-form-input"
+                                  aria-label={isFrench ? 'Fréquence de rente' : 'Pension frequency'}
+                                >
+                                  <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent className="bg-white border-4 border-gray-300" style={{zIndex: 9999}} position="item-aligned" side="bottom" align="start" avoidCollisions={false} sticky="always">
+                                  {pensionFrequencies.map(freq => (
+                                    <SelectItem key={freq.value} value={freq.value} className="text-xl py-4">
+                                      {freq.label}
+                                    </SelectItem>
+                                  ))}
+                                </SelectContent>
+                              </Select>
+                            )}
+                            {(entry.type === 'dividendes' || entry.type === 'travail-autonome' || entry.type === 'autres') && (
+                              <div className="p-4 bg-gray-100 border-4 border-gray-200 rounded-lg">
+                                <span className="text-lg text-gray-600">{isFrench ? 'Annuel' : 'Annual'}</span>
                               </div>
-                            </div>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="p-4 bg-white border-4 border-gray-200 rounded-lg">
-                          <div className="text-lg text-gray-600">
-                            {(entry.type === 'salaire' || entry.type === 'emploi-saisonnier') ? (
-                              salaryFrequencies.find(f => f.value === entry.salaryFrequency)?.label || '-'
-                            ) : entry.type === 'assurance-emploi' ? (
-                              eiPaymentFrequencies.find(f => f.value === entry.eiPaymentFrequency)?.label || (isFrench ? 'Hebdomadaire' : 'Weekly')
-                            ) : entry.type === 'rentes' ? (
-                              pensionFrequencies.find(f => f.value === entry.pensionFrequency)?.label || '-'
-                            ) : entry.type === 'revenus-location' ? (
-                              rentalFrequencies.find(f => f.value === entry.rentalFrequency)?.label || (isFrench ? 'Mensuel' : 'Monthly')
-                            ) : (
-                              isFrench ? 'Annuel' : 'Annual'
+                            )}
+                            {entry.type === 'revenus-location' && (
+                              <div className="relative w-full">
+                                <select
+                                  aria-label={isFrench ? 'Fréquence de location' : 'Rental frequency'}
+                                  value={entry.rentalFrequency || 'monthly'}
+                                  onChange={(e) => updateIncomeEntry(entry.id, { rentalFrequency: e.target.value as any })}
+                                  className="w-full p-4 text-xl border-4 border-gray-300 rounded-lg focus:border-blue-500 bg-white appearance-none cursor-pointer relative z-10"
+                                  style={{
+                                    position: 'relative',
+                                    zIndex: 10,
+                                    top: 'auto',
+                                    left: 'auto',
+                                    right: 'auto',
+                                    bottom: 'auto',
+                                    transform: 'none',
+                                    marginTop: 0,
+                                    marginBottom: 0
+                                  }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    e.preventDefault();
+                                  }}
+                                >
+                                  {rentalFrequencies.map(freq => (
+                                    <option key={freq.value} value={freq.value} className="text-xl py-2 bg-white">
+                                      {freq.label}
+                                    </option>
+                                  ))}
+                                </select>
+                                <div className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                                  <svg className="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                  </svg>
+                                </div>
+                              </div>
                             )}
                           </div>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  
-                  {/* Troisième ligne - Dates - ligne par ligne multi-colonnes */}
-                  <div className="mpr-form-row cols-2 mb-6">
-                    {/* Date de début */}
-                    <div className="senior-field-inline">
-                      <label className="senior-form-label">
-                        {isFrench ? 'Date de début' : 'Start Date'}
-                      </label>
-                      {isEditing ? (
-                        <DateInput
-                          value={
-                            entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryStartDate || '') :
-                            entry.type === 'assurance-emploi' ? (entry.eiStartDate || '') :
-                            entry.type === 'rentes' ? (entry.pensionStartDate || '') :
-                            entry.type === 'revenus-location' ? (entry.rentalStartDate || '') :
-                            ''
-                          }
-                          onChange={(value) => {
-                            if (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') {
-                              updateIncomeEntry(entry.id, { salaryStartDate: value });
-                            } else if (entry.type === 'assurance-emploi') {
-                              updateIncomeEntry(entry.id, { eiStartDate: value });
-                            } else if (entry.type === 'rentes') {
-                              updateIncomeEntry(entry.id, { pensionStartDate: value });
-                            } else if (entry.type === 'revenus-location') {
-                              updateIncomeEntry(entry.id, { rentalStartDate: value });
-                            }
-                          }}
-                          placeholder="AAAA-MM-JJ"
-                          className="senior-form-input"
-                        />
-                      ) : (
-                        <div className="text-lg text-blue-900 font-semibold">
-                          {entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryStartDate || '-') :
-                           entry.type === 'assurance-emploi' ? (entry.eiStartDate || '-') :
-                           entry.type === 'rentes' ? (entry.pensionStartDate || '-') :
-                           entry.type === 'revenus-location' ? (entry.rentalStartDate || '-') :
-                           '-'
-                          }
-                        </div>
-                      )}
+                        ) : (
+                          <div className="p-4 bg-white border-4 border-gray-200 rounded-lg">
+                            <div className="text-lg text-gray-600">
+                              {(entry.type === 'salaire' || entry.type === 'emploi-saisonnier') ? (
+                                salaryFrequencies.find(f => f.value === entry.salaryFrequency)?.label || '-'
+                              ) : entry.type === 'assurance-emploi' ? (
+                                eiPaymentFrequencies.find(f => f.value === entry.eiPaymentFrequency)?.label || (isFrench ? 'Hebdomadaire' : 'Weekly')
+                              ) : entry.type === 'rentes' ? (
+                                pensionFrequencies.find(f => f.value === entry.pensionFrequency)?.label || '-'
+                              ) : entry.type === 'revenus-location' ? (
+                                rentalFrequencies.find(f => f.value === entry.rentalFrequency)?.label || (isFrench ? 'Mensuel' : 'Monthly')
+                              ) : (
+                                isFrench ? 'Annuel' : 'Annual'
+                              )}
+                            </div>
+                          </div>
+                        )}
+                      </div>
                     </div>
                     
-                    {/* Date de fin */}
-                    <div className="senior-field-inline">
-                      <label className="senior-form-label">
-                        {isFrench ? 'Date de fin' : 'End Date'}
-                      </label>
-                      {isEditing ? (
-                        <DateInput
-                          value={
-                            entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryEndDate || '') :
-                            entry.type === 'revenus-location' ? (entry.rentalEndDate || '') :
-                            ''
-                          }
-                          onChange={(value) => {
-                            if (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') {
-                              updateIncomeEntry(entry.id, { salaryEndDate: value });
-                            } else if (entry.type === 'revenus-location') {
-                              updateIncomeEntry(entry.id, { rentalEndDate: value });
+                    {/* Troisième ligne - Dates - ligne par ligne multi-colonnes */}
+                    <div className="mpr-form-row cols-2 mb-6">
+                      {/* Date de début */}
+                      <div className="senior-field-inline">
+                        <label className="senior-form-label">
+                          {isFrench ? 'Date de début' : 'Start Date'}
+                        </label>
+                        {isEditing ? (
+                          <DateInput
+                            value={
+                              entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryStartDate || '') :
+                              entry.type === 'assurance-emploi' ? (entry.eiStartDate || '') :
+                              entry.type === 'rentes' ? (entry.pensionStartDate || '') :
+                              entry.type === 'revenus-location' ? (entry.rentalStartDate || '') :
+                              ''
                             }
-                          }}
-                          placeholder="AAAA-MM-JJ"
-                          className="senior-form-input"
-                        />
-                      ) : (
-                        <div className="text-lg text-red-900 font-semibold">
-                          {entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryEndDate || '-') :
-                           entry.type === 'revenus-location' ? (entry.rentalEndDate || '-') :
-                           '-'
-                          }
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                  
-                  {/* Actions - DISPOSITION SENIOR */}
-                  <div className="flex items-center justify-end gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
-                    <div className="flex gap-3 items-center">
-                      {/* Statut / Validation */}
-                      {isEditing ? (
-                        <button
-                          onClick={() => {
-                            setEditingId(null);
-                            // Afficher une confirmation visuelle
-                            alert(isFrench ? '✅ Modifications sauvegardées !' : '✅ Changes saved!');
-                          }}
-                          title={isFrench ? 'Valider et sauvegarder les modifications' : 'Validate and save changes'}
-                          className="w-12 h-12 rounded-full flex items-center justify-center text-xl text-white hover:opacity-80 transition-opacity"
-                          style={{backgroundColor: 'var(--senior-success)'}}
-                        >
-                          <CheckCircle className="w-6 h-6" />
-                        </button>
-                      ) : (
-                        <button
-                          onClick={() => updateIncomeEntry(entry.id, { isActive: !entry.isActive })}
-                          title={entry.isActive ? (isFrench ? 'Désactiver ce revenu' : 'Deactivate this income') : (isFrench ? 'Activer ce revenu' : 'Activate this income')}
-                          className="w-12 h-12 rounded-full flex items-center justify-center text-xl text-white hover:opacity-80 transition-opacity"
-                          style={{backgroundColor: entry.isActive ? 'var(--senior-success)' : 'var(--senior-text-muted)'}}
-                        >
-                          {entry.isActive ? <CheckCircle className="w-6 h-6" /> : <AlertTriangle className="w-6 h-6" />}
-                        </button>
-                      )}
+                            onChange={(value) => {
+                              if (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') {
+                                updateIncomeEntry(entry.id, { salaryStartDate: value });
+                              } else if (entry.type === 'assurance-emploi') {
+                                updateIncomeEntry(entry.id, { eiStartDate: value });
+                              } else if (entry.type === 'rentes') {
+                                updateIncomeEntry(entry.id, { pensionStartDate: value });
+                              } else if (entry.type === 'revenus-location') {
+                                updateIncomeEntry(entry.id, { rentalStartDate: value });
+                              }
+                            }}
+                            placeholder="AAAA-MM-JJ"
+                            className="senior-form-input"
+                          />
+                        ) : (
+                          <div className="text-lg text-blue-900 font-semibold">
+                            {entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryStartDate || '-') :
+                             entry.type === 'assurance-emploi' ? (entry.eiStartDate || '-') :
+                             entry.type === 'rentes' ? (entry.pensionStartDate || '-') :
+                             entry.type === 'revenus-location' ? (entry.rentalStartDate || '-') :
+                             '-'
+                            }
+                          </div>
+                        )}
+                      </div>
                       
-                      {/* Actions */}
-                      <div className="flex gap-2">
-                        <button
-                          onClick={() => setEditingId(isEditing ? null : entry.id)}
-                          title={isEditing ? (isFrench ? 'Arrêter l\'édition' : 'Stop editing') : (isFrench ? 'Modifier ce revenu' : 'Edit this income')}
-                          className="w-12 h-12 text-white rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
-                          style={{backgroundColor: 'var(--senior-primary)'}}
-                        >
-                          {isEditing ? <X className="w-6 h-6" /> : <Edit className="w-6 h-6" />}
-                        </button>
-                        <button
-                          onClick={() => removeIncomeEntry(entry.id)}
-                          title={isFrench ? 'Supprimer ce revenu' : 'Delete this income'}
-                          className="w-12 h-12 text-white rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
-                          style={{backgroundColor: 'var(--senior-danger)'}}
-                        >
-                          <Trash2 className="w-6 h-6" />
-                        </button>
+                      {/* Date de fin */}
+                      <div className="senior-field-inline">
+                        <label className="senior-form-label">
+                          {isFrench ? 'Date de fin' : 'End Date'}
+                        </label>
+                        {isEditing ? (
+                          <DateInput
+                            value={
+                              entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryEndDate || '') :
+                              entry.type === 'revenus-location' ? (entry.rentalEndDate || '') :
+                              ''
+                            }
+                            onChange={(value) => {
+                              if (entry.type === 'salaire' || entry.type === 'emploi-saisonnier') {
+                                updateIncomeEntry(entry.id, { salaryEndDate: value });
+                              } else if (entry.type === 'revenus-location') {
+                                updateIncomeEntry(entry.id, { rentalEndDate: value });
+                              }
+                            }}
+                            placeholder="AAAA-MM-JJ"
+                            className="senior-form-input"
+                          />
+                        ) : (
+                          <div className="text-lg text-red-900 font-semibold">
+                            {entry.type === 'salaire' || entry.type === 'emploi-saisonnier' ? (entry.salaryEndDate || '-') :
+                             entry.type === 'revenus-location' ? (entry.rentalEndDate || '-') :
+                             '-'
+                            }
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    
+                    {/* Actions - DISPOSITION SENIOR */}
+                    <div className="flex items-center justify-end gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
+                      <div className="flex gap-3 items-center">
+                        {/* Statut / Validation */}
+                        {isEditing ? (
+                          <button
+                            onClick={() => {
+                              setEditingId(null);
+                              // Afficher une confirmation visuelle
+                              alert(isFrench ? '✅ Modifications sauvegardées !' : '✅ Changes saved!');
+                            }}
+                            title={isFrench ? 'Valider et sauvegarder les modifications' : 'Validate and save changes'}
+                            className="w-12 h-12 rounded-full flex items-center justify-center text-xl text-white hover:opacity-80 transition-opacity"
+                            style={{backgroundColor: 'var(--senior-success)'}}
+                          >
+                            <CheckCircle className="w-6 h-6" />
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => updateIncomeEntry(entry.id, { isActive: !entry.isActive })}
+                            title={entry.isActive ? (isFrench ? 'Désactiver ce revenu' : 'Deactivate this income') : (isFrench ? 'Activer ce revenu' : 'Activate this income')}
+                            className="w-12 h-12 rounded-full flex items-center justify-center text-xl text-white hover:opacity-80 transition-opacity"
+                            style={{backgroundColor: entry.isActive ? 'var(--senior-success)' : 'var(--senior-text-muted)'}}
+                          >
+                            {entry.isActive ? <CheckCircle className="w-6 h-6" /> : <AlertTriangle className="w-6 h-6" />}
+                          </button>
+                        )}
+                        
+                        {/* Actions */}
+                        <div className="flex gap-2">
+                          <button
+                            onClick={() => setEditingId(isEditing ? null : entry.id)}
+                            title={isEditing ? (isFrench ? 'Arrêter l\'édition' : 'Stop editing') : (isFrench ? 'Modifier ce revenu' : 'Edit this income')}
+                            className="w-12 h-12 text-white rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                            style={{backgroundColor: 'var(--senior-primary)'}}
+                          >
+                            {isEditing ? <X className="w-6 h-6" /> : <Edit className="w-6 h-6" />}
+                          </button>
+                          <button
+                            onClick={() => removeIncomeEntry(entry.id)}
+                            title={isFrench ? 'Supprimer ce revenu' : 'Delete this income'}
+                            className="w-12 h-12 text-white rounded-full flex items-center justify-center hover:opacity-80 transition-opacity"
+                            style={{backgroundColor: 'var(--senior-danger)'}}
+                          >
+                            <Trash2 className="w-6 h-6" />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
           
-          <div className="text-center">
+          <div className="flex items-center justify-end gap-3 p-4 bg-gray-50 rounded-lg border border-gray-200">
             <Button
               onClick={addIncomeEntry}
               size="lg"

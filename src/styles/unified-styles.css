@@ -313,7 +313,7 @@
 }
 
 .retirement-modern .card {
-  background: rgba(255, 255, 255, 0.95);
+  background: #ffffff;
   backdrop-filter: blur(10px);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
@@ -322,7 +322,7 @@
 }
 
 .retirement-modern .card-header {
-  background: rgba(255, 255, 255, 0.1);
+  background: #ffffff;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   padding: var(--spacing-lg);
 }
@@ -347,7 +347,7 @@
 }
 
 .retirement-modern .metric-card {
-  background: rgba(255, 255, 255, 0.9);
+  background: #ffffff;
   border-radius: var(--radius-lg);
   padding: var(--spacing-xl);
   text-align: center;

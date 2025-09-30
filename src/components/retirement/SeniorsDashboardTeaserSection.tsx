@@ -3,6 +3,7 @@ import SeniorsDashboard from '@/components/SeniorsDashboard';
 import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
 import { formatCurrencyOQLF, formatPercentOQLF } from '@/utils/localeFormat';
 import { ChevronDown, ChevronUp, LayoutDashboard, PiggyBank, Target, Calendar } from 'lucide-react';
+import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 
 /**
  * Section ancrée (#dashboard) affichée en bas de la page "Ma retraite".
@@ -12,6 +13,8 @@ import { ChevronDown, ChevronUp, LayoutDashboard, PiggyBank, Target, Calendar } 
  */
 const SeniorsDashboardTeaserSection: React.FC = () => {
   const { userData } = useRetirementData();
+  const { language } = useLanguage();
+  const isFrench = language === 'fr';
   const [open, setOpen] = useState(false);
 
   // Ouvrir automatiquement si l'ancre #dashboard est présente
@@ -55,10 +58,13 @@ const SeniorsDashboardTeaserSection: React.FC = () => {
         <div className="px-4 sm:px-6 py-4 border-b border-slate-200">
           <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
             <LayoutDashboard className="w-5 h-5 text-amber-600" />
-            Aperçu du tableau de bord
+            {isFrench ? 'Aperçu du tableau de bord' : 'Dashboard Overview'}
           </h2>
           <p className="text-slate-600 text-sm mt-1">
-            Un aperçu de vos indicateurs clés. Cliquez sur le bouton pour afficher le tableau de bord complet.
+            {isFrench 
+              ? 'Un aperçu de vos indicateurs clés. Cliquez sur le bouton pour afficher le tableau de bord complet.'
+              : 'An overview of your key indicators. Click the button to display the complete dashboard.'
+            }
           </p>
         </div>
 
@@ -68,7 +74,9 @@ const SeniorsDashboardTeaserSection: React.FC = () => {
             <div className="flex items-center gap-3 border rounded-md p-3">
               <Calendar className="w-5 h-5 text-slate-600" />
               <div>
-                <div className="text-xs text-slate-500">Revenu net mensuel (approx.)</div>
+                <div className="text-xs text-slate-500">
+                  {isFrench ? 'Revenu net mensuel (approx.)' : 'Monthly Net Income (approx.)'}
+                </div>
                 <div className="text-base font-semibold text-slate-800">
                   {formatCurrencyOQLF(monthlyIncome, { min: 0, max: 0 })}
                 </div>
@@ -79,7 +87,9 @@ const SeniorsDashboardTeaserSection: React.FC = () => {
             <div className="flex items-center gap-3 border rounded-md p-3">
               <Target className="w-5 h-5 text-emerald-600" />
               <div>
-                <div className="text-xs text-slate-500">Règle du 4 % — mensuel</div>
+                <div className="text-xs text-slate-500">
+                  {isFrench ? 'Règle du 4 % — mensuel' : '4% Rule — Monthly'}
+                </div>
                 <div className="text-base font-semibold text-slate-800">
                   {formatCurrencyOQLF(fourPercentMonthly, { min: 0, max: 0 })}
                 </div>
@@ -90,12 +100,17 @@ const SeniorsDashboardTeaserSection: React.FC = () => {
             <div className="flex items-center gap-3 border rounded-md p-3">
               <PiggyBank className="w-5 h-5 text-indigo-600" />
               <div>
-                <div className="text-xs text-slate-500">Épargnes totales</div>
+                <div className="text-xs text-slate-500">
+                  {isFrench ? 'Épargnes totales' : 'Total Savings'}
+                </div>
                 <div className="text-base font-semibold text-slate-800">
                   {formatCurrencyOQLF(totalSavings, { min: 0, max: 0 })}
                 </div>
                 <div className="text-xs text-slate-500">
-                  Taux d&#39;épargne estimé&nbsp;: {formatPercentOQLF(savingsRatePct, { min: 0, max: 1 })}
+                  {isFrench 
+                    ? `Taux d'épargne estimé : ${formatPercentOQLF(savingsRatePct, { min: 0, max: 1 })}`
+                    : `Estimated Savings Rate: ${formatPercentOQLF(savingsRatePct, { min: 0, max: 1 })}`
+                  }
                 </div>
               </div>
             </div>
@@ -112,12 +127,12 @@ const SeniorsDashboardTeaserSection: React.FC = () => {
               {open ? (
                 <>
                   <ChevronUp className="w-4 h-4" />
-                  Masquer le tableau de bord
+                  {isFrench ? 'Masquer le tableau de bord' : 'Hide Dashboard'}
                 </>
               ) : (
                 <>
                   <ChevronDown className="w-4 h-4" />
-                  Afficher le tableau de bord
+                  {isFrench ? 'Afficher le tableau de bord' : 'Show Dashboard'}
                 </>
               )}
             </button>

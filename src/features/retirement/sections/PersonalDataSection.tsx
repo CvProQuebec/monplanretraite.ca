@@ -43,6 +43,18 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
   }, [data.personal?.depensesAnnuelles]);
 
   const handleChange = (field: string, value: any) => {
+    // Logique spéciale pour synchroniser les dépenses retraite
+    if (field === 'depensesMensuelles') {
+      const mens = Number(value) || 0;
+      onUpdate('personal', { depensesMensuelles: mens, depensesRetraite: mens });
+      return;
+    }
+    if (field === 'depensesAnnuelles') {
+      const ann = Number(value) || 0;
+      const mens = Math.round(ann / 12);
+      onUpdate('personal', { depensesAnnuelles: ann, depensesMensuelles: mens, depensesRetraite: mens });
+      return;
+    }
     onUpdate('personal', { [field]: value });
   };
 
@@ -195,8 +207,8 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
                   </Label>
                   <Input
                     type="number"
-                    value={data.personal?.ageRetraite1 || 65}
-                    onChange={(e) => handleChange('ageRetraite1', Number(e.target.value))}
+                    value={data.personal?.ageRetraiteSouhaite1 || 65}
+                    onChange={(e) => handleChange('ageRetraiteSouhaite1', Number(e.target.value))}
                     className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400"
                     min="50"
                     max="100"
@@ -303,8 +315,8 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
                   </Label>
                   <Input
                     type="number"
-                    value={data.personal?.ageRetraite2 || 65}
-                    onChange={(e) => handleChange('ageRetraite2', Number(e.target.value))}
+                    value={data.personal?.ageRetraiteSouhaite2 || 65}
+                    onChange={(e) => handleChange('ageRetraiteSouhaite2', Number(e.target.value))}
                     className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
                     min="50"
                     max="100"

@@ -20,6 +20,7 @@ import {
   Clock,
   AlertCircle
 } from 'lucide-react';
+import SimpleIncomeTable from '@/components/ui/SimpleIncomeTable';
 
 interface SectionProgress {
   id: string;
@@ -80,7 +81,26 @@ export const UnifiedRetirementPage: React.FC = () => {
         </p>
       </div>
 
-      {/* Revenus d'emploi */}
+      {/* Tableau des revenus (saisie simplifiée et complète) */}
+      <div className="bg-white rounded-xl border-2 border-gray-200 p-6 shadow-sm">
+        <div className="flex items-center gap-3 mb-6">
+          <div className="p-3 bg-blue-100 rounded-lg">
+            <Briefcase className="w-6 h-6 text-blue-600" />
+          </div>
+          <div>
+            <h3 className="text-xl font-semibold text-gray-900">
+              {language === 'fr' ? "Tableau des revenus" : 'Income table'}
+            </h3>
+            <p className="text-gray-600">
+              {language === 'fr' ? 'Type, Description, Montant, Fréquence, Date de début, Date de fin' : 'Type, Description, Amount, Frequency, Start, End'}
+            </p>
+          </div>
+        </div>
+        {/* Intégration du composant dédié */}
+        <SimpleIncomeTable />
+      </div>
+
+      {/* Revenus d'emploi (exemple guidé) */}
       <div className="bg-white rounded-xl border-2 border-gray-200 p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-6">
           <div className="p-3 bg-blue-100 rounded-lg">

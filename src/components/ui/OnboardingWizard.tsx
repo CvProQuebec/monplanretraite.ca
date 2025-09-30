@@ -33,6 +33,8 @@ import {
   UserProfile 
 } from '../../services/OnboardingService';
 import { useLanguage } from '../../features/retirement/hooks/useLanguage';
+import WelcomeStep from './onboarding-steps/WelcomeStep';
+import BudgetBasicsStep from './onboarding-steps/BudgetBasicsStep';
 
 interface OnboardingWizardProps {
   isOpen: boolean;
@@ -226,14 +228,75 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
     }
   };
 
+  const renderStepContent = (step: OnboardingStep) => {
+    const handleStepCompleteWrapper = () => {
+      handleStepComplete(step.id);
+    };
+
+    const handleSkipStepWrapper = () => {
+      handleSkipStep();
+    };
+
+    switch (step.component) {
+      case 'WelcomeStep':
+        return (
+          <WelcomeStep 
+            onComplete={handleStepCompleteWrapper}
+            onSkip={step.isOptional ? handleSkipStepWrapper : undefined}
+          />
+        );
+      case 'BudgetBasicsStep':
+        return (
+          <BudgetBasicsStep 
+            onComplete={handleStepCompleteWrapper}
+            onSkip={step.isOptional ? handleSkipStepWrapper : undefined}
+          />
+        );
+      default:
+        // Fallback pour les étapes non encore implémentées
+        return (
+          <Card className="border-2 border-dashed border-gray-200 flex-1">
+            <CardContent className="p-4 text-center h-full flex flex-col justify-center">
+              <div className="space-y-3">
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
+                  {getCategoryIcon(step.category)}
+                </div>
+                <h3 className="text-lg font-semibold">
+                  {step.title}
+                </h3>
+                <p className="text-gray-600 text-sm">
+                  Cette étape sera bientôt disponible avec du contenu interactif.
+                </p>
+                <div className="flex items-center justify-center space-x-3 pt-2">
+                  <Button
+                    onClick={handleStepCompleteWrapper}
+                    className="bg-green-600 hover:bg-green-700"
+                    size="sm"
+                  >
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    {t.markCompleted}
+                  </Button>
+                  {step.isOptional && (
+                    <Button variant="outline" onClick={handleSkipStepWrapper} size="sm">
+                      {t.skipStep}
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        );
+    }
+  };
+
   if (!isOpen) return null;
 
   // Écran de configuration du profil
   if (wizardState.isProfileSetup) {
     return (
-      <div className={`fixed inset-0 bg-white bg-opacity-95 flex items-start justify-center z-50 pt-8 ${className}`}>
-        <Card className="w-full max-w-2xl max-h-[85vh] overflow-y-auto m-4 shadow-2xl border-2 border-blue-200">
-          <CardHeader className="border-b">
+      <div className={`fixed inset-0 bg-white flex items-center justify-center z-50 p-4 ${className}`}>
+        <Card className="w-full max-w-2xl h-[90vh] flex flex-col shadow-2xl border-2 border-blue-200">
+          <CardHeader className="border-b flex-shrink-0">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xl flex items-center">
                 <User className="h-6 w-6 mr-2 text-blue-600" />
@@ -244,7 +307,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
               </Button>
             </div>
           </CardHeader>
-          <CardContent className="p-6">
+          <CardContent className="p-6 flex-1 overflow-y-auto">
             <ProfileSetupForm onSubmit={handleProfileSubmit} />
           </CardContent>
         </Card>
@@ -257,11 +320,11 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
   
   return (
     <div 
-      className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4 ${className} animate-in fade-in duration-300`}
+      className={`fixed inset-0 bg-white flex items-center justify-center z-50 p-4 ${className} animate-in fade-in duration-300`}
       onClick={onClose}
     >
       <Card 
-        className="w-full max-w-4xl max-h-[90vh] overflow-y-auto shadow-2xl border-2 border-blue-200 relative animate-in slide-in-from-bottom-4 duration-300"
+        className="w-full max-w-5xl h-[95vh] overflow-hidden shadow-2xl border-2 border-blue-200 relative animate-in slide-in-from-bottom-4 duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Bouton de fermeture en haut à droite */}
@@ -301,15 +364,15 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
           </div>
         </CardHeader>
 
-        <CardContent className="p-6">
+        <CardContent className="p-3 flex-1 flex flex-col overflow-hidden">
           {currentStep ? (
-            <div className="space-y-6">
-              {/* En-tête de l'étape */}
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center space-x-3 mb-2">
+            <div className="flex-1 flex flex-col min-h-0">
+              {/* En-tête de l'étape - Version compacte */}
+              <div className="flex items-start justify-between mb-3">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center space-x-2 mb-1">
                     {getCategoryIcon(currentStep.category)}
-                    <h2 className="text-2xl font-bold text-gray-900">
+                    <h2 className="text-lg font-bold text-gray-900 truncate">
                       {currentStep.title}
                     </h2>
                     <Badge className={`text-xs ${getCategoryColor(currentStep.category)}`}>
@@ -317,12 +380,12 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                        currentStep.category === 'recommended' ? t.recommended : t.advanced}
                     </Badge>
                   </div>
-                  <p className="text-gray-600 text-lg">
+                  <p className="text-gray-600 text-sm mb-2">
                     {currentStep.description}
                   </p>
-                  <div className="flex items-center space-x-4 mt-3 text-sm text-gray-500">
+                  <div className="flex items-center space-x-3 text-xs text-gray-500">
                     <span className="flex items-center">
-                      <Clock className="h-4 w-4 mr-1" />
+                      <Clock className="h-3 w-3 mr-1" />
                       ~{currentStep.estimatedTime} {t.minutes}
                     </span>
                     {currentStep.isOptional && (
@@ -340,80 +403,54 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                     ...prev, 
                     showStepDetails: !prev.showStepDetails 
                   }))}
+                  className="ml-2 flex-shrink-0"
                 >
-                  <Info className="h-4 w-4 mr-1" />
+                  <Info className="h-3 w-3 mr-1" />
                   {t.details}
                 </Button>
               </div>
 
               {/* Détails de l'étape */}
               {wizardState.showStepDetails && (
-                <Alert className="border-blue-200 bg-blue-50">
+                <Alert className="border-blue-200 bg-blue-50 mb-3">
                   <Info className="h-4 w-4" />
                   <AlertDescription>
-                    <div className="space-y-3">
-                      <p className="text-sm">{currentStep.helpText}</p>
+                    <div className="space-y-2">
+                      <p className="text-xs">{currentStep.helpText}</p>
                       
                       {currentStep.tips.length > 0 && (
                         <div>
-                          <h4 className="font-medium text-sm mb-2">{t.practicalTips}</h4>
-                          <ul className="text-sm space-y-1">
+                          <h4 className="font-medium text-xs mb-1">{t.practicalTips}</h4>
+                          <ul className="text-xs space-y-1">
                             {currentStep.tips.map((tip, index) => (
                               <li key={index} className="flex items-start">
-                                <span className="mr-2">•</span>
+                                <span className="mr-1">•</span>
                                 <span>{tip}</span>
                               </li>
                             ))}
                           </ul>
                         </div>
                       )}
-                      
-
                     </div>
                   </AlertDescription>
                 </Alert>
               )}
 
-              {/* Contenu de l'étape */}
-              <Card className="border-2 border-dashed border-gray-200">
-                <CardContent className="p-8 text-center">
-                  <div className="space-y-4">
-                    <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
-                      {getCategoryIcon(currentStep.category)}
-                    </div>
-                    <h3 className="text-lg font-semibold">
-                      {t.stepContent}
-                    </h3>
-                    <p className="text-gray-600">
-                      {t.stepComponent}
-                    </p>
-                    <div className="flex items-center justify-center space-x-3 pt-4">
-                      <Button
-                        onClick={() => handleStepComplete(currentStep.id)}
-                        className="bg-green-600 hover:bg-green-700"
-                      >
-                        <CheckCircle className="h-4 w-4 mr-2" />
-                        {t.markCompleted}
-                      </Button>
-                      {currentStep.isOptional && (
-                        <Button variant="outline" onClick={handleSkipStep}>
-                          {t.skipStep}
-                        </Button>
-                      )}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              {/* Contenu de l'étape - Composants réels */}
+              <div className="flex-1 min-h-0">
+                {renderStepContent(currentStep)}
+              </div>
 
-              {/* Navigation */}
-              <div className="flex items-center justify-between pt-4 border-t">
+              {/* Navigation - Toujours visible */}
+              <div className="flex items-center justify-between pt-3 border-t mt-3 flex-shrink-0">
                 <div className="flex items-center space-x-2">
                   <Button
                     variant="outline"
                     onClick={handlePreviousStep}
                     disabled={wizardState.currentStepIndex === 0}
+                    size="sm"
                   >
-                    <ChevronLeft className="h-4 w-4 mr-1" />
+                    <ChevronLeft className="h-3 w-3 mr-1" />
                     {t.previous}
                   </Button>
                   <Button
@@ -421,7 +458,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                     onClick={handleRestartPath}
                     size="sm"
                   >
-                    <RotateCcw className="h-4 w-4 mr-1" />
+                    <RotateCcw className="h-3 w-3 mr-1" />
                     {t.restart}
                   </Button>
                 </div>
@@ -436,14 +473,25 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                     size="sm"
                   >
                     {wizardState.isPlaying ? (
-                      <Pause className="h-4 w-4" />
+                      <Pause className="h-3 w-3" />
                     ) : (
-                      <Play className="h-4 w-4" />
+                      <Play className="h-3 w-3" />
                     )}
                   </Button>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-xs text-gray-500">
                     {t.step} {wizardState.currentStepIndex + 1} {t.of} {wizardState.currentPath?.steps.length || 0}
                   </span>
+                  {/* Bouton Continuer accessible en tout temps */}
+                  {currentStep && (
+                    <Button
+                      onClick={() => handleStepComplete(currentStep.id)}
+                      size="sm"
+                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                      aria-label={isFrench ? 'Continuer' : 'Continue'}
+                    >
+                      {t.next}
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
@@ -476,7 +524,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
   );
 };
 
-// Composant de configuration du profil (simplifié pour l'exemple)
+// Composant de configuration du profil (version compacte)
 const ProfileSetupForm: React.FC<{ onSubmit: (profile: UserProfile) => void }> = ({ onSubmit }) => {
   const [formData, setFormData] = useState<Partial<UserProfile>>({
     age: 30,
@@ -496,100 +544,108 @@ const ProfileSetupForm: React.FC<{ onSubmit: (profile: UserProfile) => void }> =
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="text-center mb-6">
-        <h3 className="text-lg font-semibold mb-2">
-          Personnalisons votre expérience
-        </h3>
-        <p className="text-gray-600">
-          Ces informations nous aident à créer un parcours adapté à vos besoins.
-        </p>
+    <div className="h-full flex flex-col">
+      <div className="flex-1 overflow-y-auto">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="text-center mb-4">
+            <h3 className="text-lg font-semibold mb-2">
+              Personnalisons votre expérience
+            </h3>
+            <p className="text-gray-600 text-sm">
+              Ces informations nous aident à créer un parcours adapté à vos besoins.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="age-input" className="block text-sm font-medium mb-1">Âge</label>
+              <input
+                id="age-input"
+                type="number"
+                value={formData.age}
+                onChange={(e) => setFormData(prev => ({ ...prev, age: parseInt(e.target.value) }))}
+                className="w-full p-2 border rounded-md text-sm"
+                min="18"
+                max="100"
+                title="Votre âge actuel"
+                placeholder="Ex: 30"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="retirement-age-input" className="block text-sm font-medium mb-1">Âge de retraite souhaité</label>
+              <input
+                id="retirement-age-input"
+                type="number"
+                value={formData.retirementAge}
+                onChange={(e) => setFormData(prev => ({ ...prev, retirementAge: parseInt(e.target.value) }))}
+                className="w-full p-2 border rounded-md text-sm"
+                min="50"
+                max="75"
+                title="L'âge auquel vous souhaitez prendre votre retraite"
+                placeholder="Ex: 65"
+              />
+            </div>
+
+            <div>
+              <label htmlFor="goal-select" className="block text-sm font-medium mb-1">Objectif principal</label>
+              <select
+                id="goal-select"
+                value={formData.primaryGoal}
+                onChange={(e) => setFormData(prev => ({ ...prev, primaryGoal: e.target.value as any }))}
+                className="w-full p-2 border rounded-md text-sm"
+                title="Votre objectif financier principal"
+              >
+                <option value="budget">Maîtriser mon budget</option>
+                <option value="savings">Développer mon épargne</option>
+                <option value="retirement">Planifier ma retraite</option>
+                <option value="debt">Gérer mes dettes</option>
+                <option value="investment">Apprendre à investir</option>
+              </select>
+            </div>
+
+            <div>
+              <label htmlFor="time-select" className="block text-sm font-medium mb-1">Temps disponible</label>
+              <select
+                id="time-select"
+                value={formData.timeAvailable}
+                onChange={(e) => setFormData(prev => ({ ...prev, timeAvailable: e.target.value as any }))}
+                className="w-full p-2 border rounded-md text-sm"
+                title="Temps que vous souhaitez consacrer au parcours"
+              >
+                <option value="quick">Express (15-20 min)</option>
+                <option value="moderate">Équilibré (30-45 min)</option>
+                <option value="thorough">Complet (60+ min)</option>
+              </select>
+            </div>
+
+            <div className="md:col-span-2">
+              <label htmlFor="experience-select" className="block text-sm font-medium mb-1">Expérience financière</label>
+              <select
+                id="experience-select"
+                value={formData.hasFinancialExperience ? 'yes' : 'no'}
+                onChange={(e) => setFormData(prev => ({ ...prev, hasFinancialExperience: e.target.value === 'yes' }))}
+                className="w-full p-2 border rounded-md text-sm"
+                title="Votre niveau d'expérience en planification financière"
+              >
+                <option value="no">Débutant</option>
+                <option value="yes">Intermédiaire</option>
+              </select>
+            </div>
+          </div>
+        </form>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="age-input" className="block text-sm font-medium mb-2">Âge</label>
-          <input
-            id="age-input"
-            type="number"
-            value={formData.age}
-            onChange={(e) => setFormData(prev => ({ ...prev, age: parseInt(e.target.value) }))}
-            className="w-full p-2 border rounded-md"
-            min="18"
-            max="100"
-            title="Votre âge actuel"
-            placeholder="Ex: 30"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="retirement-age-input" className="block text-sm font-medium mb-2">Âge de retraite souhaité</label>
-          <input
-            id="retirement-age-input"
-            type="number"
-            value={formData.retirementAge}
-            onChange={(e) => setFormData(prev => ({ ...prev, retirementAge: parseInt(e.target.value) }))}
-            className="w-full p-2 border rounded-md"
-            min="50"
-            max="75"
-            title="L'âge auquel vous souhaitez prendre votre retraite"
-            placeholder="Ex: 65"
-          />
-        </div>
-
-        <div>
-          <label htmlFor="goal-select" className="block text-sm font-medium mb-2">Objectif principal</label>
-          <select
-            id="goal-select"
-            value={formData.primaryGoal}
-            onChange={(e) => setFormData(prev => ({ ...prev, primaryGoal: e.target.value as any }))}
-            className="w-full p-2 border rounded-md"
-            title="Votre objectif financier principal"
-          >
-            <option value="budget">Maîtriser mon budget</option>
-            <option value="savings">Développer mon épargne</option>
-            <option value="retirement">Planifier ma retraite</option>
-            <option value="debt">Gérer mes dettes</option>
-            <option value="investment">Apprendre à investir</option>
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="time-select" className="block text-sm font-medium mb-2">Temps disponible</label>
-          <select
-            id="time-select"
-            value={formData.timeAvailable}
-            onChange={(e) => setFormData(prev => ({ ...prev, timeAvailable: e.target.value as any }))}
-            className="w-full p-2 border rounded-md"
-            title="Temps que vous souhaitez consacrer au parcours"
-          >
-            <option value="quick">Express (15-20 min)</option>
-            <option value="moderate">Équilibré (30-45 min)</option>
-            <option value="thorough">Complet (60+ min)</option>
-          </select>
-        </div>
-
-        <div>
-          <label htmlFor="experience-select" className="block text-sm font-medium mb-2">Expérience financière</label>
-          <select
-            id="experience-select"
-            value={formData.hasFinancialExperience ? 'yes' : 'no'}
-            onChange={(e) => setFormData(prev => ({ ...prev, hasFinancialExperience: e.target.value === 'yes' }))}
-            className="w-full p-2 border rounded-md"
-            title="Votre niveau d'expérience en planification financière"
-          >
-            <option value="no">Débutant</option>
-            <option value="yes">Intermédiaire</option>
-          </select>
-        </div>
-      </div>
-
-      <div className="flex items-center justify-center pt-4">
-        <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
+      {/* Bouton de soumission - Toujours visible */}
+      <div className="flex items-center justify-center pt-4 border-t bg-white">
+        <Button 
+          onClick={handleSubmit}
+          className="bg-blue-600 hover:bg-blue-700 px-8 py-3 text-lg font-bold"
+        >
           Créer mon parcours personnalisé
         </Button>
       </div>
-    </form>
+    </div>
   );
 };
 

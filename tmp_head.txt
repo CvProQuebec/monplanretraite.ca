@@ -1,0 +1,200 @@
+﻿/**
+ * Composant OnboardingWizard - Phase 2 Modules NÃ©ophytes
+ * Interface d'accompagnement interactive pour les nouveaux utilisateurs
+ * SystÃ¨me de guidage progressif et personnalisÃ©
+ */
+
+import React, { useState, useEffect } from 'react';
+import { 
+  ChevronRight, 
+  ChevronLeft, 
+  Clock, 
+  CheckCircle, 
+  Circle, 
+  Play, 
+  Pause, 
+  RotateCcw,
+  User,
+  Target,
+  BookOpen,
+  Award,
+  Info,
+  X
+} from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from './card';
+import { Button } from './button';
+import { Badge } from './badge';
+import { Progress } from './progress';
+import { Alert, AlertDescription } from './alert';
+import { 
+  OnboardingService, 
+  OnboardingPath, 
+  OnboardingStep, 
+  UserProfile 
+} from '../../services/OnboardingService';
+import { useLanguage } from '../../features/retirement/hooks/useLanguage';
+import WelcomeStep from './onboarding-steps/WelcomeStep';
+import BudgetBasicsStep from './onboarding-steps/BudgetBasicsStep';
+
+interface OnboardingWizardProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onComplete?: () => void;
+  userProfile?: UserProfile;
+  className?: string;
+}
+
+interface WizardState {
+  currentPath: OnboardingPath | null;
+  currentStepIndex: number;
+  isProfileSetup: boolean;
+  showStepDetails: boolean;
+  isPlaying: boolean;
+  timeSpent: number;
+}
+
+export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
+  isOpen,
+  onClose,
+  onComplete,
+  userProfile,
+  className = ''
+}) => {
+  const { language } = useLanguage();
+  const isFrench = language === 'fr';
+  
+  const [wizardState, setWizardState] = useState<WizardState>({
+    currentPath: null,
+    currentStepIndex: 0,
+    isProfileSetup: !userProfile,
+    showStepDetails: false,
+    isPlaying: false,
+    timeSpent: 0
+  });
+
+  const [profile, setProfile] = useState<UserProfile | null>(userProfile || null);
+  const [progress, setProgress] = useState({ completed: 0, total: 0, percentage: 0 });
+  const [currentStep, setCurrentStep] = useState<OnboardingStep | null>(null);
+
+  const onboardingService = OnboardingService.getInstance();
+
+  // Textes bilingues
+  const t = {
+    // Navigation
+    next: isFrench ? 'Continuer' : 'Next',
+    back: isFrench ? 'PrÃ©cÃ©dent' : 'Back',
+    finish: isFrench ? 'Commencer ma planification' : 'Start My Planning',
+    skip: isFrench ? 'Passer cette Ã©tape' : 'Skip This Step',
+    
+    // Titres et labels
+    pathTitle: isFrench ? 'Parcours d\'accompagnement' : 'Guidance Path',
+    progression: isFrench ? 'Progression' : 'Progress',
+    steps: isFrench ? 'Ã©tapes' : 'steps',
+    details: isFrench ? 'DÃ©tails' : 'Details',
+    essential: isFrench ? 'Essentiel' : 'Essential',
+    recommended: isFrench ? 'RecommandÃ©' : 'Recommended',
+    advanced: isFrench ? 'AvancÃ©' : 'Advanced',
+    optional: isFrench ? 'Optionnel' : 'Optional',
+    minutes: isFrench ? 'min' : 'min',
+    
+    // Boutons
+    markCompleted: isFrench ? 'Marquer comme terminÃ©' : 'Mark as Completed',
+    skipStep: isFrench ? 'Passer cette Ã©tape' : 'Skip This Step',
+    restart: isFrench ? 'Recommencer' : 'Restart',
+    previous: isFrench ? 'PrÃ©cÃ©dent' : 'Previous',
+    step: isFrench ? 'Ã‰tape' : 'Step',
+    of: isFrench ? 'sur' : 'of',
+    
+    // Contenu
+    stepContent: isFrench ? 'Contenu interactif de l\'Ã©tape' : 'Interactive Step Content',
+    stepComponent: isFrench ? 'Ici sera intÃ©grÃ© le composant spÃ©cifique Ã  cette Ã©tape' : 'Here will be integrated the specific component for this step',
+    
+    // Conseils
+    practicalTips: isFrench ? 'ðŸ’¡ Conseils pratiques :' : 'ðŸ’¡ Practical Tips:',
+
+    
+    // Parcours terminÃ©
+    pathCompleted: isFrench ? 'Parcours terminÃ© !' : 'Path Completed!',
+    congratulations: isFrench ? 'FÃ©licitations ! Vous avez terminÃ© le parcours d\'accompagnement.' : 'Congratulations! You have completed the guidance path.',
+    startPlanning: isFrench ? 'Commencer ma planification' : 'Start My Planning',
+    
+    // Messages de sÃ©curitÃ©
+    securityMessage: isFrench 
+      ? 'ðŸ›¡ï¸ Vos donnÃ©es restent sur VOTRE appareil - Aucune transmission Ã  nos serveurs'
+      : 'ðŸ›¡ï¸ Your data stays on YOUR device - No transmission to our servers'
+  };
+
+  useEffect(() => {
+    if (profile && !wizardState.currentPath) {
+      const path = onboardingService.generatePersonalizedPath(profile);
+      setWizardState(prev => ({ ...prev, currentPath: path, isProfileSetup: false }));
+    }
+  }, [profile]);
+
+  useEffect(() => {
+    if (wizardState.currentPath) {
+      const pathProgress = onboardingService.calculateProgress(wizardState.currentPath);
+      setProgress(pathProgress);
+      
+      const nextStep = onboardingService.getNextStep(wizardState.currentPath);
+      setCurrentStep(nextStep);
+    }
+  }, [wizardState.currentPath, wizardState.currentStepIndex]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (wizardState.isPlaying) {
+      interval = setInterval(() => {
+        setWizardState(prev => ({ ...prev, timeSpent: prev.timeSpent + 1 }));
+      }, 1000);
+    }
+    return () => clearInterval(interval);
+  }, [wizardState.isPlaying]);
+
+  const handleProfileSubmit = (newProfile: UserProfile) => {
+    setProfile(newProfile);
+    onboardingService.saveUserProfile(newProfile);
+    setWizardState(prev => ({ ...prev, isProfileSetup: false }));
+  };
+
+  const handleStepComplete = (stepId: string) => {
+    if (wizardState.currentPath) {
+      onboardingService.completeStep(wizardState.currentPath.id, stepId);
+      setWizardState(prev => ({ 
+        ...prev, 
+        currentStepIndex: prev.currentStepIndex + 1 
+      }));
+      
+      // VÃ©rifier si c'est la derniÃ¨re Ã©tape
+      const pathProgress = onboardingService.calculateProgress(wizardState.currentPath);
+      if (pathProgress.percentage === 100) {
+        onComplete?.();
+      }
+    }
+  };
+
+  const handleSkipStep = () => {
+    if (currentStep && currentStep.isOptional) {
+      setWizardState(prev => ({ 
+        ...prev, 
+        currentStepIndex: prev.currentStepIndex + 1 
+      }));
+    }
+  };
+
+  const handlePreviousStep = () => {
+    setWizardState(prev => ({ 
+      ...prev, 
+      currentStepIndex: Math.max(0, prev.currentStepIndex - 1) 
+    }));
+  };
+
+  const handleRestartPath = () => {
+    if (wizardState.currentPath) {
+      onboardingService.resetPath(wizardState.currentPath.id);
+      setWizardState(prev => ({ 
+        ...prev, 
+        currentStepIndex: 0,
+        timeSpent: 0
+      }));
+    }

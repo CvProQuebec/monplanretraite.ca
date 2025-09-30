@@ -199,7 +199,7 @@ h4, .h4 {
 }
 
 .mpr-btn-secondary {
-  background: transparent;
+  background: var(--mpr-bg);
   color: var(--mpr-primary);
   border: 2px solid var(--mpr-primary);
 }

@@ -55,15 +55,15 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
     periode1: {
       dateDebut: "01-01",
       dateFin: "06-30",
-      montant: 713.34 // Montant maximum SV 2025
+      montant: 0
     },
     periode2: {
       dateDebut: "07-01",
       dateFin: "12-31",
-      montant: 713.34
+      montant: 0
     },
     raisonAjustement: '',
-    revenus_annee_precedente: 0
+    revenus_annee_precedente: undefined
   });
 
   const montantMaximumSV = 713.34; // Juillet-septembre 2025
@@ -103,7 +103,7 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
     if (editData.revenus_annee_precedente && editData.revenus_annee_precedente > seuilRecuperation) {
       return calculateClawback(editData.revenus_annee_precedente, montantMaximumSV);
     }
-    return montantMaximumSV;
+    return 0;
   };
 
   // Synchroniser les données quand elles changent
@@ -454,7 +454,7 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
           <Info className="h-6 w-6 text-blue-600" />
           <AlertDescription className="text-gray-900">
             <div className="text-lg">
-              <strong>{isFrench ? 'Montant maximum SV 2025 :' : 'Maximum OAS 2025:'}</strong> {formatCurrency(montantMaximumSV)}/mois
+              {/* Montant maximum retiré pour éviter toute confusion */}
             </div>
             <div className="text-sm mt-1">
               {isFrench 
@@ -470,3 +470,5 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
 };
 
 export default SVBiannualManager;
+
+

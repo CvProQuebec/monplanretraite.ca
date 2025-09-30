@@ -215,7 +215,7 @@ const HealthFactorsSection: React.FC<HealthFactorsSectionProps> = ({
               {personNumber}
             </div>
             <Heart className="w-6 h-6" />
-            {isFrench ? 'Facteurs de Santé' : 'Health Factors'}
+            {isFrench ? 'Facteurs de santé' : 'Health Factors'}
             <Badge variant={completionProgress === 100 ? "default" : "secondary"} className="ml-auto">
               {completionProgress}% {isFrench ? 'complété' : 'complete'}
             </Badge>

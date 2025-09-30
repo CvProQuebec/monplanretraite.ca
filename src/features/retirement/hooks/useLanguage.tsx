@@ -55,13 +55,8 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     setLanguageState(lang);
     localStorage.setItem('retirement-language', lang);
     
-    // Mettre à jour l'URL de manière simple
-    const currentPath = window.location.pathname;
-    const pathWithoutLang = currentPath.replace(/^\/(fr|en)\//, '/');
-    const newPath = `/${lang}${pathWithoutLang}`;
-    
-    // Utiliser window.history pour éviter les erreurs de React Router
-    window.history.replaceState({}, '', newPath);
+    // Ne pas modifier l'URL ici - laisser React Router s'en charger
+    // Le LanguageSelector s'occupe de la navigation
   };
 
   // Fonction de traduction par clé

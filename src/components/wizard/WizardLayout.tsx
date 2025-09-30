@@ -5,6 +5,8 @@ import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { wizardService } from '@/services/WizardService';
 import useWizardProgress from '@/hooks/useWizardProgress';
 import SeniorsLoadingSpinner from '@/components/SeniorsLoadingSpinner';
+import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
+import { FileSaveService } from '@/services/FileSaveService';
 import type { CompletenessStatus, WizardStepId } from '@/types/wizard';
 
 type Mode = 'guide' | 'libre';
@@ -48,6 +50,7 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
   const { language } = useLanguage();
   const isEnglish = language === 'en';
   const { progress, badges, nextPath, currentPath, refresh, loading } = useWizardProgress(scenarioId, isEnglish);
+  const { userData } = useRetirementData();
   const typedBadges = badges as Record<WizardStepId, { complete: boolean; missingCount: number }>;
 
   const [mode, setMode] = useState<Mode>(() => {
@@ -160,10 +163,17 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
               </div>
               <button
                 className="button-primary px-4 py-2"
-                onClick={onSaveNow}
-                aria-label={isEnglish ? 'Save now' : 'Enregistrer maintenant'}
+                onClick={async () => { await onSaveNow(); }}
+                aria-label={isEnglish ? 'Save state' : 'Enregistrer l\'état'}
               >
-                {isEnglish ? 'Save' : 'Enregistrer'}
+                {isEnglish ? 'Save state' : 'Enregistrer état'}
+              </button>
+              <button
+                className="button-secondary px-4 py-2"
+                onClick={async ()=>{ try { await FileSaveService.saveUserData(userData); } catch {} }}
+                aria-label={isEnglish ? 'Save to file' : 'Sauvegarder dans un fichier'}
+              >
+                {isEnglish ? 'Save to file' : 'Sauvegarder'}
               </button>
             </div>
           </div>

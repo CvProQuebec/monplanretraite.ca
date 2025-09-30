@@ -195,7 +195,7 @@ const SocioEconomicSection: React.FC<SocioEconomicSectionProps> = ({
               {personNumber}
             </div>
             <Users className="w-6 h-6" />
-            {isFrench ? 'Profil Socio-Économique' : 'Socio-Economic Profile'}
+            {isFrench ? 'Profil socio-économique' : 'Socio-Economic Profile'}
             <Badge variant={completionProgress === 100 ? "default" : "secondary"} className="ml-auto">
               {completionProgress}% {isFrench ? 'complété' : 'complete'}
             </Badge>
@@ -291,7 +291,7 @@ const SocioEconomicSection: React.FC<SocioEconomicSectionProps> = ({
                     {isFrench ? 'Universitaire' : 'University'}
                   </SelectItem>
                   <SelectItem value="maitrise" className="text-lg py-3">
-                    {isFrench ? 'Maîtrise/Doctorat' : 'Master\'s/PhD'}
+                    {isFrench ? 'Maîtrise/doctorat' : 'Master\'s/PhD'}
                   </SelectItem>
                 </SelectContent>
               </Select>

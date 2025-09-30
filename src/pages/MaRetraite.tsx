@@ -13,6 +13,9 @@ import {
   Heart,
   Save
 } from 'lucide-react';
+import SocioEconomicSection from '@/components/ui/SocioEconomicSection';
+import HealthFactorsSection from '@/components/ui/HealthFactorsSection';
+import EnvironmentFactorsSection from '@/components/ui/EnvironmentFactorsSection';
 import '../../senior-unified-styles.css';
 
 // Styles locaux complémentaires (petit complément aux styles unifiés)
@@ -66,7 +69,9 @@ const pageLocalStyles = `
 
 interface PersonalData {
   prenom1?: string;
+  nom1?: string;
   prenom2?: string;
+  nom2?: string;
   naissance1?: string;
   naissance2?: string;
   sexe1?: string;
@@ -254,7 +259,72 @@ const MaRetraite: React.FC = () => {
     // Enfants
     adj.children = personal.enfants ? 0.3 : 0;
 
-    const total = Math.max(-10, Math.min(10, Object.values(adj).reduce((a, b) => a + b, 0)));
+    // Facteurs socio-économiques
+    const education = (personal as any)[`niveauCompetences${s}`] as string | undefined;
+    if (education === 'expert') adj.education = 0.8;
+    else if (education === 'experimente') adj.education = 0.5;
+    else if (education === 'intermediaire') adj.education = 0.2;
+    else if (education === 'debutant') adj.education = -0.2;
+    else adj.education = 0;
+
+    const sector = (personal as any)[`secteurActivite${s}`] as string | undefined;
+    if (sector === 'sante') adj.workSector = 0.5;
+    else if (sector === 'education') adj.workSector = 0.3;
+    else if (sector === 'technologie') adj.workSector = 0.2;
+    else if (sector === 'construction') adj.workSector = -0.3;
+    else if (sector === 'manufacturier') adj.workSector = -0.2;
+    else adj.workSector = 0;
+
+    const riskTolerance = (personal as any)[`toleranceRisqueInvestissement${s}`] as string | undefined;
+    if (riskTolerance === 'agressif') adj.riskTolerance = 0.3;
+    else if (riskTolerance === 'dynamique') adj.riskTolerance = 0.2;
+    else if (riskTolerance === 'equilibre') adj.riskTolerance = 0;
+    else if (riskTolerance === 'conservateur') adj.riskTolerance = -0.3;
+    else if (riskTolerance === 'tres-conservateur') adj.riskTolerance = -0.5;
+    else adj.riskTolerance = 0;
+
+    // Facteurs environnementaux
+    const livingEnv = (personal as any)[`livingEnvironment${s}`] as string | undefined;
+    if (livingEnv === 'rural') adj.livingEnvironment = 0.5;
+    else if (livingEnv === 'suburbain') adj.livingEnvironment = 0.3;
+    else if (livingEnv === 'urbain') adj.livingEnvironment = -0.2;
+    else adj.livingEnvironment = 0;
+
+    const airQuality = (personal as any)[`airQuality${s}`] as string | undefined;
+    if (airQuality === 'excellente') adj.airQuality = 0.8;
+    else if (airQuality === 'bonne') adj.airQuality = 0.3;
+    else if (airQuality === 'moyenne') adj.airQuality = 0;
+    else if (airQuality === 'pauvre') adj.airQuality = -1.2;
+    else adj.airQuality = 0;
+
+    const waterQuality = (personal as any)[`waterQuality${s}`] as string | undefined;
+    if (waterQuality === 'excellente') adj.waterQuality = 0.3;
+    else if (waterQuality === 'bonne') adj.waterQuality = 0.1;
+    else if (waterQuality === 'moyenne') adj.waterQuality = 0;
+    else if (waterQuality === 'pauvre') adj.waterQuality = -0.5;
+    else adj.waterQuality = 0;
+
+    const greenSpaces = (personal as any)[`accessToGreenSpaces${s}`] as string | undefined;
+    if (greenSpaces === 'excellent') adj.greenSpaces = 0.6;
+    else if (greenSpaces === 'bon') adj.greenSpaces = 0.3;
+    else if (greenSpaces === 'limite') adj.greenSpaces = 0;
+    else if (greenSpaces === 'aucun') adj.greenSpaces = -0.4;
+    else adj.greenSpaces = 0;
+
+    const healthcareDistance = Number((personal as any)[`distanceToSpecializedCare${s}`] ?? 0);
+    if (healthcareDistance <= 5) adj.healthcareAccess = 0.4;
+    else if (healthcareDistance <= 15) adj.healthcareAccess = 0.1;
+    else if (healthcareDistance <= 30) adj.healthcareAccess = 0;
+    else if (healthcareDistance <= 60) adj.healthcareAccess = -0.3;
+    else adj.healthcareAccess = -0.8;
+
+    const communitySupport = (personal as any)[`communitySupport${s}`] as string | undefined;
+    if (communitySupport === 'fort') adj.communitySupport = 0.7;
+    else if (communitySupport === 'modere') adj.communitySupport = 0.2;
+    else if (communitySupport === 'faible') adj.communitySupport = -0.3;
+    else adj.communitySupport = 0;
+
+    const total = Math.max(-15, Math.min(15, Object.values(adj).reduce((a, b) => a + b, 0)));
 
     return {
       ...base,
@@ -306,7 +376,7 @@ const MaRetraite: React.FC = () => {
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4 flex items-center justify-center gap-3">
             <User className="w-10 h-10 text-blue-600" />
-            {isFrench ? 'Mon Profil de Retraite' : 'My Retirement Profile'}
+            {isFrench ? 'Mon profil de retraite' : 'My Retirement Profile'}
           </h1>
           <p className="text-xl text-gray-600">
             {isFrench ? 'Planification financière avec analyse de longévité personnalisée' : 'Financial planning with personalized longevity analysis'}
@@ -332,7 +402,7 @@ const MaRetraite: React.FC = () => {
         <div className="senior-compact-section">
           <h2 className="text-xl font-bold text-blue-800 mb-4 flex items-center gap-2">
             <Users className="w-6 h-6" />
-            {isFrench ? 'Informations de Base' : 'Basic Information'}
+            {isFrench ? 'Informations de base' : 'Basic Information'}
           </h2>
 
           <div className="mpr-form-row cols-2">
@@ -347,7 +417,25 @@ const MaRetraite: React.FC = () => {
           <div className="mpr-form-row cols-2">
                 <div className="senior-field-inline">
                   <label className="senior-form-label" htmlFor="p1-fullname">{isFrench ? 'Nom complet' : 'Full Name'}</label>
-                  <input id="p1-fullname" className="senior-form-input" type="text" placeholder={isFrench ? 'Jean Tremblay' : 'John Smith'} aria-label={isFrench ? 'Nom complet personne 1' : 'Full name person 1'} value={personal.prenom1 || ''} onChange={(e) => updateUserData('personal', { prenom1: e.target.value })} />
+                  <input
+                    id="p1-fullname"
+                    className="senior-form-input"
+                    type="text"
+                    placeholder={isFrench ? 'Jean Tremblay' : 'John Smith'}
+                    aria-label={isFrench ? 'Nom complet personne 1' : 'Full name person 1'}
+                    value={`${personal.prenom1 || ''}${personal.nom1 ? ' ' + personal.nom1 : ''}`}
+                    onChange={(e) => {
+                      const full = (e.target.value || '').trim();
+                      if (!full) {
+                        updateUserData('personal', { prenom1: '', nom1: '' });
+                        return;
+                      }
+                      const parts = full.split(/\s+/);
+                      const last = parts.length > 1 ? parts.pop() as string : '';
+                      const first = parts.join(' ');
+                      updateUserData('personal', { prenom1: first, nom1: last });
+                    }}
+                  />
                 </div>
                 <div className="senior-field-inline">
                   <label className="senior-form-label" htmlFor="p1-birth">{isFrench ? 'Date de naissance *' : 'Birth Date *'}</label>
@@ -388,7 +476,25 @@ const MaRetraite: React.FC = () => {
               <div className="mpr-form-row cols-2">
                 <div className="senior-field-inline">
                   <label className="senior-form-label" htmlFor="p2-fullname">{isFrench ? 'Nom complet' : 'Full Name'}</label>
-                  <input id="p2-fullname" className="senior-form-input" type="text" placeholder={isFrench ? 'Marie Tremblay' : 'Mary Smith'} aria-label={isFrench ? 'Nom complet personne 2' : 'Full name person 2'} value={personal.prenom2 || ''} onChange={(e) => updateUserData('personal', { prenom2: e.target.value })} />
+                  <input
+                    id="p2-fullname"
+                    className="senior-form-input"
+                    type="text"
+                    placeholder={isFrench ? 'Marie Tremblay' : 'Mary Smith'}
+                    aria-label={isFrench ? 'Nom complet personne 2' : 'Full name person 2'}
+                    value={`${personal.prenom2 || ''}${personal.nom2 ? ' ' + personal.nom2 : ''}`}
+                    onChange={(e) => {
+                      const full = (e.target.value || '').trim();
+                      if (!full) {
+                        updateUserData('personal', { prenom2: '', nom2: '' });
+                        return;
+                      }
+                      const parts = full.split(/\s+/);
+                      const last = parts.length > 1 ? parts.pop() as string : '';
+                      const first = parts.join(' ');
+                      updateUserData('personal', { prenom2: first, nom2: last });
+                    }}
+                  />
                 </div>
                 <div className="senior-field-inline">
                   <label className="senior-form-label" htmlFor="p2-birth">{isFrench ? 'Date de naissance' : 'Birth Date'}</label>
@@ -424,12 +530,40 @@ const MaRetraite: React.FC = () => {
         <div className="senior-card">
           <h2 className="text-xl font-bold text-blue-800 mb-4 flex items-center gap-2">
             <Users className="w-6 h-6" />
-            {isFrench ? 'Situation Familiale' : 'Family Situation'}
+            {isFrench ? 'Situation familiale' : 'Family Situation'}
           </h2>
           <div className="mpr-form-row cols-2">
             <div className="senior-field-inline">
               <label className="senior-form-label" htmlFor="marital">{isFrench ? 'Statut matrimonial' : 'Marital Status'}</label>
-              <select id="marital" className="senior-form-select" aria-label={isFrench ? 'Statut matrimonial' : 'Marital status'} value={personal.statutMatrimonial || ''} onChange={(e) => updateUserData('personal', { statutMatrimonial: e.target.value })}>
+              <select
+                id="marital"
+                className="senior-form-select"
+                aria-label={isFrench ? 'Statut matrimonial' : 'Marital status'}
+                value={personal.statutMatrimonial || ''}
+                onChange={(e) => {
+                  const v = e.target.value;
+                  const updates: any = { statutMatrimonial: v };
+                  // Si célibataire: vider Personne 2 et mettre ses montants à 0
+                  if (v === 'celibataire' || v === 'single') {
+                    updates.prenom2 = '';
+                    updates.nom2 = '';
+                    updates.naissance2 = '';
+                    updates.sexe2 = '';
+                    updates.salaire2 = 0;
+                    updates.unifiedIncome2 = [];
+                  }
+                  updateUserData('personal', updates);
+                  if (v === 'celibataire' || v === 'single') {
+                    updateUserData('savings', {
+                      reer2: 0,
+                      celi2: 0,
+                      placements2: 0,
+                      epargne2: 0,
+                      cri2: 0
+                    });
+                  }
+                }}
+              >
                 <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
                 <option value="marie">{isFrench ? 'Marié' : 'Married'}</option>
                 <option value="celibataire">{isFrench ? 'Célibataire' : 'Single'}</option>
@@ -454,7 +588,7 @@ const MaRetraite: React.FC = () => {
             <div className="text-center mb-6">
               <h2 className="text-3xl font-bold mb-3 flex items-center justify-center gap-3">
                 <TrendingUp className="w-8 h-8" />
-                {isFrench ? 'Mode d\'Analyse de Longévité' : 'Longevity Analysis Mode'}
+                {isFrench ? 'Mode d\'analyse de longévité' : 'Longevity Analysis Mode'}
               </h2>
               <p className="text-lg opacity-90">
                 {isFrench ? 'Choisissez le niveau d\'analyse souhaité pour vos projections' : 'Choose your desired level of analysis for your projections'}
@@ -475,7 +609,7 @@ const MaRetraite: React.FC = () => {
               <div className={`mode-option ${longevityMode === 'advanced' ? 'selected' : ''}`} onClick={() => setLongevityMode('advanced')}>
                 <div className="flex items-center gap-3 mb-3">
                   <Zap className="w-6 h-6" />
-                  <h3 className="text-xl font-bold">{isFrench ? 'Avancé Personnalisé' : 'Advanced Personalized'}</h3>
+                  <h3 className="text-xl font-bold">{isFrench ? 'Avancé personnalisé' : 'Advanced Personalized'}</h3>
                 </div>
                 <p className="text-sm opacity-90">
                   {isFrench ? 'Analyse multi-facteurs (santé, style de vie, statut familial).' : 'Multi-factor analysis (health, lifestyle, family status).'}
@@ -488,7 +622,7 @@ const MaRetraite: React.FC = () => {
         {/* Résultats de longévité */}
         {p1Valid && p1Result && (
           <div className="senior-card">
-            <h2 className="text-2xl font-bold text-center mb-6">{isFrench ? 'Analyse de Longévité' : 'Longevity Analysis'}</h2>
+            <h2 className="text-2xl font-bold text-center mb-6">{isFrench ? 'Analyse de longévité' : 'Longevity Analysis'}</h2>
             <div className="mpr-result-grid">
               <div className="result-metric">
                 <div className="result-value">{p1Result.currentAge} {isFrench ? 'ans' : 'years'}</div>
@@ -543,9 +677,42 @@ const MaRetraite: React.FC = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {Object.entries(((p1Result as any).adjustments as Record<string, number>)).map(([k, v]) => {
                     const val = Number(v);
+                    
+                    // Traduction des facteurs selon l'OQLF
+                    const getFactorLabel = (key: string) => {
+                      const translations: Record<string, { fr: string; en: string }> = {
+                        'health': { fr: 'Santé', en: 'Health' },
+                        'lifestyle': { fr: 'Mode de vie', en: 'Lifestyle' },
+                        'exercise': { fr: 'Exercice', en: 'Exercise' },
+                        'sports': { fr: 'Sports', en: 'Sports' },
+                        'smoking': { fr: 'Tabagisme', en: 'Smoking' },
+                        'bmi': { fr: 'IMC', en: 'BMI' },
+                        'hypertension': { fr: 'Hypertension', en: 'Hypertension' },
+                        'glycemie': { fr: 'Glycémie', en: 'Blood Sugar' },
+                        'cholesterol': { fr: 'Cholestérol', en: 'Cholesterol' },
+                        'marital': { fr: 'Situation familiale', en: 'Marital Status' },
+                        'children': { fr: 'Enfants', en: 'Children' },
+                        'education': { fr: 'Éducation', en: 'Education' },
+                        'workSector': { fr: 'Secteur d\'activité', en: 'Work Sector' },
+                        'riskTolerance': { fr: 'Tolérance au risque', en: 'Risk Tolerance' },
+                        'livingEnvironment': { fr: 'Milieu de vie', en: 'Living Environment' },
+                        'airQuality': { fr: 'Qualité de l\'air', en: 'Air Quality' },
+                        'waterQuality': { fr: 'Qualité de l\'eau', en: 'Water Quality' },
+                        'greenSpaces': { fr: 'Espaces verts', en: 'Green Spaces' },
+                        'healthcareAccess': { fr: 'Accès aux soins', en: 'Healthcare Access' },
+                        'communitySupport': { fr: 'Soutien communautaire', en: 'Community Support' }
+                      };
+                      
+                      const translation = translations[key];
+                      if (translation) {
+                        return isFrench ? translation.fr : translation.en;
+                      }
+                      return key;
+                    };
+                    
                     return (
                       <div key={k} className={`impact-indicator ${val > 0 ? 'impact-positive' : val < 0 ? 'impact-negative' : 'impact-neutral'}`}>
-                        <span className="capitalize">{k}</span>
+                        <span className="capitalize">{getFactorLabel(k)}</span>
                         <span className="font-bold">{val > 0 ? '+' : ''}{val.toFixed(1)}</span>
                       </div>
                     );
@@ -556,191 +723,59 @@ const MaRetraite: React.FC = () => {
           </div>
         )}
 
-        {/* Facteurs avancés - UI */}
+        {/* Facteurs Personnalisés - Modules complets */}
         {p1Valid && longevityMode === 'advanced' && (
-          <div className="senior-card">
-            <h2 className="text-xl font-bold text-purple-800 mb-4 flex items-center gap-2">
-              <Heart className="w-6 h-6 text-red-500" />
-              {isFrench ? 'Facteurs Personnalisés' : 'Personalized Factors'}
-            </h2>
+          <div className="space-y-6">
+            {/* Facteurs Socio-économiques */}
+            <SocioEconomicSection
+              userData={userData}
+              updateUserData={updateUserData}
+              isFrench={isFrench}
+              personNumber={1}
+            />
 
-            <div className="mpr-form-row cols-2">
-              {/* Person 1 */}
-              <div className="space-y-3">
-                <h5 className="font-semibold text-sm text-gray-700">{isFrench ? 'Personne 1' : 'Person 1'}</h5>
+            {p2HasData && (
+              <SocioEconomicSection
+                userData={userData}
+                updateUserData={updateUserData}
+                isFrench={isFrench}
+                personNumber={2}
+              />
+            )}
 
-                <div className="senior-field-inline">
-                  <label className="senior-form-label" htmlFor="p1-health">{isFrench ? 'État de santé' : 'Health status'}</label>
-                  <select id="p1-health" className="senior-form-select" aria-label={isFrench ? 'État de santé personne 1' : 'Health status person 1'} value={personal.etatSante1 || ''} onChange={(e) => updateUserData('personal', { etatSante1: e.target.value })}>
-                    <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                    <option value="excellent">Excellent</option>
-                    <option value="tresbon">{isFrench ? 'Très bon' : 'Very good'}</option>
-                    <option value="bon">{isFrench ? 'Bon' : 'Good'}</option>
-                    <option value="moyen">{isFrench ? 'Moyen' : 'Fair'}</option>
-                    <option value="fragile">{isFrench ? 'Fragile' : 'Poor'}</option>
-                  </select>
-                </div>
+            {/* Santé et Mode de Vie */}
+            <HealthFactorsSection
+              userData={userData}
+              updateUserData={updateUserData}
+              isFrench={isFrench}
+              personNumber={1}
+            />
 
-                <div className="senior-field-inline">
-                  <label className="senior-form-label" htmlFor="p1-smoke">{isFrench ? 'Statut tabagique' : 'Smoking status'}</label>
-                  <select id="p1-smoke" className="senior-form-select" aria-label={isFrench ? 'Statut tabagique personne 1' : 'Smoking status person 1'} value={personal.statutTabagique1 || ''} onChange={(e) => updateUserData('personal', { statutTabagique1: e.target.value })}>
-                    <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                    <option value="jamais">{isFrench ? 'Jamais fumé' : 'Never smoked'}</option>
-                    <option value="ancien">{isFrench ? 'Ex-fumeur' : 'Former smoker'}</option>
-                    <option value="actuel">{isFrench ? 'Fumeur actuel' : 'Current smoker'}</option>
-                  </select>
-                </div>
+            {p2HasData && (
+              <HealthFactorsSection
+                userData={userData}
+                updateUserData={updateUserData}
+                isFrench={isFrench}
+                personNumber={2}
+              />
+            )}
 
-                {personal.statutTabagique1 === 'ancien' && (
-                  <div className="senior-field-inline">
-                    <label className="senior-form-label" htmlFor="p1-quit">{isFrench ? 'Années depuis l\'arrêt' : 'Years since quitting'}</label>
-                    <input id="p1-quit" className="senior-form-input" type="number" min={0} max={60} aria-label={isFrench ? 'Années depuis arrêt personne 1' : 'Years since quitting person 1'} value={personal.anneesArretTabac1 || 0} onChange={(e) => updateUserData('personal', { anneesArretTabac1: Number(e.target.value) })} />
-                  </div>
-                )}
+            {/* Environnement de Vie */}
+            <EnvironmentFactorsSection
+              userData={userData}
+              updateUserData={updateUserData}
+              isFrench={isFrench}
+              personNumber={1}
+            />
 
-                <div className="mpr-form-row cols-3">
-                  <div className="senior-field-inline">
-                    <label className="senior-form-label" htmlFor="p1-htn">Hypertension</label>
-                    <select id="p1-htn" className="senior-form-select" aria-label={isFrench ? 'Hypertension personne 1' : 'Hypertension person 1'} value={personal.hypertension1 || ''} onChange={(e) => updateUserData('personal', { hypertension1: e.target.value })}>
-                      <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                      <option value="aucune">{isFrench ? 'Aucune' : 'None'}</option>
-                      <option value="detectee">{isFrench ? 'Détectée' : 'Detected'}</option>
-                      <option value="traitement">{isFrench ? 'Traitement' : 'Treatment'}</option>
-                      <option value="remission">{isFrench ? 'Rémission' : 'Remission'}</option>
-                    </select>
-                  </div>
-                  <div className="senior-field-inline">
-                    <label className="senior-form-label" htmlFor="p1-glu">{isFrench ? 'Glycémie/Diabète' : 'Glycemia/Diabetes'}</label>
-                    <select id="p1-glu" className="senior-form-select" aria-label={isFrench ? 'Glycémie personne 1' : 'Glycemia person 1'} value={personal.glycemie1 || ''} onChange={(e) => updateUserData('personal', { glycemie1: e.target.value })}>
-                      <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                      <option value="aucune">{isFrench ? 'Aucune' : 'None'}</option>
-                      <option value="detectee">{isFrench ? 'Détectée' : 'Detected'}</option>
-                      <option value="traitement">{isFrench ? 'Traitement' : 'Treatment'}</option>
-                      <option value="remission">{isFrench ? 'Rémission' : 'Remission'}</option>
-                    </select>
-                  </div>
-                  <div className="senior-field-inline">
-                    <label className="senior-form-label" htmlFor="p1-chol">Cholestérol</label>
-                    <select id="p1-chol" className="senior-form-select" aria-label={isFrench ? 'Cholestérol personne 1' : 'Cholesterol person 1'} value={personal.cholesterol1 || ''} onChange={(e) => updateUserData('personal', { cholesterol1: e.target.value })}>
-                      <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                      <option value="aucune">{isFrench ? 'Aucune' : 'None'}</option>
-                      <option value="detectee">{isFrench ? 'Détectée' : 'Detected'}</option>
-                      <option value="traitement">{isFrench ? 'Traitement' : 'Treatment'}</option>
-                      <option value="remission">{isFrench ? 'Rémission' : 'Remission'}</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="mpr-form-row cols-3">
-                  <div className="senior-field-inline">
-                    <label className="senior-form-label" htmlFor="p1-hours">{isFrench ? 'Heures d\'exercice/semaine' : 'Exercise hours/week'}</label>
-                    <input id="p1-hours" className="senior-form-input" type="number" min={0} max={40} aria-label={isFrench ? 'Heures exercice personne 1' : 'Exercise hours person 1'} value={personal.heuresExercice1 || 0} onChange={(e) => updateUserData('personal', { heuresExercice1: Number(e.target.value) })} />
-                  </div>
-                  <div className="senior-field-inline">
-                    <label className="senior-form-label" htmlFor="p1-height">{isFrench ? 'Taille (cm)' : 'Height (cm)'}</label>
-                    <input id="p1-height" className="senior-form-input" type="number" min={100} max={250} aria-label={isFrench ? 'Taille personne 1' : 'Height person 1'} value={personal.taille1 || 0} onChange={(e) => updateUserData('personal', { taille1: Number(e.target.value) })} />
-                  </div>
-                  <div className="senior-field-inline">
-                    <label className="senior-form-label" htmlFor="p1-weight">{isFrench ? 'Poids (kg)' : 'Weight (kg)'}</label>
-                    <input id="p1-weight" className="senior-form-input" type="number" min={30} max={300} aria-label={isFrench ? 'Poids personne 1' : 'Weight person 1'} value={personal.poids1 || 0} onChange={(e) => updateUserData('personal', { poids1: Number(e.target.value) })} />
-                  </div>
-                </div>
-
-                {(personal.taille1 && personal.poids1) && (
-                  <div className="p-3 bg-blue-50 rounded-lg">
-                    <div className="text-sm font-semibold text-blue-900">
-                      IMC : {calcBMI(personal.taille1, personal.poids1)?.toFixed(1)}
-                    </div>
-                  </div>
-                )}
-
-                <div className="senior-field-inline">
-                  <label className="senior-form-label">{isFrench ? 'Sports pratiqués' : 'Sports practiced'}</label>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2" role="group" aria-label={isFrench ? 'Sports personne 1' : 'Sports person 1'}>
-                    {sportsOptions.map(opt => {
-                      const current = personal.sports1 || [];
-                      const checked = current.includes(opt.value);
-                      return (
-                        <label key={opt.value} className="flex items-center gap-2 text-sm">
-                          <input
-                            type="checkbox"
-                            aria-label={opt.label}
-                            checked={checked}
-                            onChange={() => {
-                              const next = checked ? current.filter(s => s !== opt.value) : [...current, opt.value];
-                              updateUserData('personal', { sports1: next } as any);
-                            }}
-                          />
-                          <span>{opt.label}</span>
-                        </label>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-
-              {/* Person 2 (optionnel - résumé) */}
-              {p2HasData && (
-                <div className="space-y-3">
-                  <h5 className="font-semibold text-sm text-gray-700">{isFrench ? 'Personne 2' : 'Person 2'}</h5>
-
-                  <div className="senior-field-inline">
-                    <label className="senior-form-label" htmlFor="p2-health">{isFrench ? 'État de santé' : 'Health status'}</label>
-                    <select id="p2-health" className="senior-form-select" aria-label={isFrench ? 'État de santé personne 2' : 'Health status person 2'} value={personal.etatSante2 || ''} onChange={(e) => updateUserData('personal', { etatSante2: e.target.value })}>
-                      <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                      <option value="excellent">Excellent</option>
-                      <option value="tresbon">{isFrench ? 'Très bon' : 'Very good'}</option>
-                      <option value="bon">{isFrench ? 'Bon' : 'Good'}</option>
-                      <option value="moyen">{isFrench ? 'Moyen' : 'Fair'}</option>
-                      <option value="fragile">{isFrench ? 'Fragile' : 'Poor'}</option>
-                    </select>
-                  </div>
-
-                  <div className="senior-field-inline">
-                    <label className="senior-form-label" htmlFor="p2-smoke">{isFrench ? 'Statut tabagique' : 'Smoking status'}</label>
-                    <select id="p2-smoke" className="senior-form-select" aria-label={isFrench ? 'Statut tabagique personne 2' : 'Smoking status person 2'} value={personal.statutTabagique2 || ''} onChange={(e) => updateUserData('personal', { statutTabagique2: e.target.value })}>
-                      <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                      <option value="jamais">{isFrench ? 'Jamais fumé' : 'Never smoked'}</option>
-                      <option value="ancien">{isFrench ? 'Ex-fumeur' : 'Former smoker'}</option>
-                      <option value="actuel">{isFrench ? 'Fumeur actuel' : 'Current smoker'}</option>
-                    </select>
-                  </div>
-
-                  <div className="mpr-form-row cols-3">
-                    <div className="senior-field-inline">
-                      <label className="senior-form-label" htmlFor="p2-htn">Hypertension</label>
-                      <select id="p2-htn" className="senior-form-select" aria-label={isFrench ? 'Hypertension personne 2' : 'Hypertension person 2'} value={personal.hypertension2 || ''} onChange={(e) => updateUserData('personal', { hypertension2: e.target.value })}>
-                        <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                        <option value="aucune">{isFrench ? 'Aucune' : 'None'}</option>
-                        <option value="detectee">{isFrench ? 'Détectée' : 'Detected'}</option>
-                        <option value="traitement">{isFrench ? 'Traitement' : 'Treatment'}</option>
-                        <option value="remission">{isFrench ? 'Rémission' : 'Remission'}</option>
-                      </select>
-                    </div>
-                    <div className="senior-field-inline">
-                      <label className="senior-form-label" htmlFor="p2-glu">{isFrench ? 'Glycémie/Diabète' : 'Glycemia/Diabetes'}</label>
-                      <select id="p2-glu" className="senior-form-select" aria-label={isFrench ? 'Glycémie personne 2' : 'Glycemia person 2'} value={personal.glycemie2 || ''} onChange={(e) => updateUserData('personal', { glycemie2: e.target.value })}>
-                        <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                        <option value="aucune">{isFrench ? 'Aucune' : 'None'}</option>
-                        <option value="detectee">{isFrench ? 'Détectée' : 'Detected'}</option>
-                        <option value="traitement">{isFrench ? 'Traitement' : 'Treatment'}</option>
-                        <option value="remission">{isFrench ? 'Rémission' : 'Remission'}</option>
-                      </select>
-                    </div>
-                    <div className="senior-field-inline">
-                      <label className="senior-form-label" htmlFor="p2-chol">Cholestérol</label>
-                      <select id="p2-chol" className="senior-form-select" aria-label={isFrench ? 'Cholestérol personne 2' : 'Cholesterol person 2'} value={personal.cholesterol2 || ''} onChange={(e) => updateUserData('personal', { cholesterol2: e.target.value })}>
-                        <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                        <option value="aucune">{isFrench ? 'Aucune' : 'None'}</option>
-                        <option value="detectee">{isFrench ? 'Détectée' : 'Detected'}</option>
-                        <option value="traitement">{isFrench ? 'Traitement' : 'Treatment'}</option>
-                        <option value="remission">{isFrench ? 'Rémission' : 'Remission'}</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </div>
+            {p2HasData && (
+              <EnvironmentFactorsSection
+                userData={userData}
+                updateUserData={updateUserData}
+                isFrench={isFrench}
+                personNumber={2}
+              />
+            )}
           </div>
         )}
 

@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { CashflowSection } from '@/features/retirement/sections/CashflowSection';
 import SeasonalExpensesPlannerModule from '@/components/ui/SeasonalExpensesPlannerModule';
 import MonthlyBudgetPlanningModule from '@/components/ui/MonthlyBudgetPlanningModule';
-import { UserData } from '@/features/retirement/types';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { DataMigrationService } from '@/services/DataMigrationService';
@@ -10,9 +9,10 @@ import OverdraftPreventionService from '@/services/OverdraftPreventionService';
 import PurchaseOptionsComparator from '@/components/ui/PurchaseOptionsComparator';
 import NotificationSchedulerService from '@/services/NotificationSchedulerService';
 import { FormGrid, FormRow, Field } from '@/components/forms/FormGrid';
+import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
 
 // Données de démonstration
-const demoUserData: UserData = {
+const demoUserData: any = {
   personal: {
     prenom1: 'Jean',
     prenom2: 'Marie',
@@ -86,7 +86,7 @@ const demoUserData: UserData = {
 };
 
 export const ExpensesPage: React.FC = () => {
-  const [userData, setUserData] = useState<UserData>(demoUserData);
+  const { userData, updateUserData } = useRetirementData();
   const { language } = useLanguage();
   const isFrench = language === 'fr';
 
@@ -140,28 +140,14 @@ export const ExpensesPage: React.FC = () => {
     leisure: isFrench ? 'Loisirs' : 'Leisure'
   };
 
-  const handleUpdate = (section: keyof UserData, updates: any) => {
-    setUserData(prevData => {
-      const newData = {
-        ...prevData,
-        [section]: {
-          ...prevData[section],
-          ...updates
-        }
-      };
-      
-      // Sauvegarder automatiquement dans localStorage avec toutes les ventilations
-      try {
-        localStorage.setItem('retirement_data', JSON.stringify(newData));
-        console.log('Données sauvegardées dans localStorage:', newData);
-        // Notifier l'auto-save du Wizard (Phase 2) si présent
-        try { (window as any).mprNotifyDataChanged?.(); } catch {}
-      } catch (error) {
-        console.error('Erreur lors de la sauvegarde:', error);
-      }
-      
-      return newData;
-    });
+  const handleUpdate = (section: 'personal' | 'retirement' | 'savings' | 'cashflow' | 'seasonalExpenses' | 'advancedExpenses', updates: any) => {
+    try {
+      updateUserData(section, updates);
+      // Notifier l'auto-save du Wizard (Phase 2) si présent
+      try { (window as any).mprNotifyDataChanged?.(); } catch {}
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour:', error);
+    }
   };
 
   const defaultIncludeFlags = {
@@ -183,62 +169,6 @@ export const ExpensesPage: React.FC = () => {
     handleUpdate('cashflow', { includeFlags: nextFlags });
   };
 
-  // Charger les données depuis le stockage local incluant les ventilations
-  useEffect(() => {
-    try {
-      const savedData = localStorage.getItem('retirement_data');
-      if (savedData) {
-        const data = JSON.parse(savedData);
-        
-        // Migration vers la nouvelle structure (Phase 1 — déduplication Immobilier ↔ Dépenses)
-        try {
-          if (DataMigrationService.needsMigration()) {
-            const res = DataMigrationService.migrateUserData(data);
-            if (res?.success) {
-              DataMigrationService.saveMigratedData(data);
-              console.log('✅ Migration effectuée (Phase 1) :', res.migratedFields);
-            } else {
-              console.warn('⚠️ Migration avec avertissements :', res?.errors);
-            }
-          }
-        } catch (mErr) {
-          console.warn('⚠️ Erreur lors de la migration Phase 1 :', mErr);
-        }
-        
-        // Code existant pour cashflow INCHANGÉ
-        if (data.cashflow) {
-          // Charger toutes les données cashflow incluant les ventilations
-          setUserData(prevData => ({
-            ...prevData,
-            cashflow: { 
-              ...prevData.cashflow, 
-              ...data.cashflow,
-              includeFlags: (data.cashflow as any).includeFlags || defaultIncludeFlags,
-              // S'assurer que toutes les ventilations sont chargées
-              logementBreakdown: data.cashflow.logementBreakdown || {},
-              servicesPublicsBreakdown: data.cashflow.servicesPublicsBreakdown || {},
-              assurancesBreakdown: data.cashflow.assurancesBreakdown || {},
-              transportBreakdown: data.cashflow.transportBreakdown || {},
-              santeBreakdown: data.cashflow.santeBreakdown || {},
-              telecomBreakdown: data.cashflow.telecomBreakdown || {}
-            }
-          }));
-          console.log('Données chargées depuis localStorage (incluant ventilations):', data.cashflow);
-        }
-        
-        // AJOUTER seulement cette section :
-        if (data.seasonalExpenses) {
-          setUserData(prevData => ({
-            ...prevData,
-            seasonalExpenses: data.seasonalExpenses
-          }));
-          console.log('Dépenses saisonnières chargées:', data.seasonalExpenses);
-        }
-      }
-    } catch (error) {
-      console.error('Erreur lors du chargement des données:', error);
-    }
-  }, []);
 
 return (
     <div className="min-h-screen bg-white seniors-mode">
@@ -400,7 +330,7 @@ return (
         {/* Nouveau volet Dépenses saisonnières et irrégulières */}
         <div className="mt-8 bg-white rounded-xl p-6 border-2 border-gray-300">
           <SeasonalExpensesPlannerModule
-            data={userData}
+            data={userData as any}
             onUpdate={(updates) => handleUpdate('seasonalExpenses', updates)}
             language={language}
           />
@@ -409,7 +339,7 @@ return (
         {/* Nouveau volet Planification Budgétaire Mensuelle */}
         <div className="mt-8 bg-white rounded-xl p-6 border-2 border-gray-300">
           <MonthlyBudgetPlanningModule
-            data={userData}
+            data={userData as any}
             onUpdate={(updates) => handleUpdate('cashflow', updates)}
             language={language}
           />

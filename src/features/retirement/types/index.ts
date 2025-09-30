@@ -42,8 +42,12 @@ export interface PersonalData {
   nom1?: string;
   nom2?: string;
   situationFamiliale?: string;
+  statutMatrimonial?: string;
+  enfants?: boolean;
   nombreEnfants?: number;
   province?: string;
+  province1?: string;
+  province2?: string;
 
   // Optionnels: Informations pour CPM2014 et projections (alignés avec src/types/index.ts)
   etatSante?: 'excellent' | 'tresbon' | 'bon' | 'moyen' | 'fragile';
@@ -58,6 +62,55 @@ export interface PersonalData {
   objectifPrincipal?: 'epargne' | 'retraite' | 'investissement' | 'dettes' | 'urgence' | 'fiscalite';
   tempsDisponible?: 'tres-limite' | 'limite' | 'modere' | 'disponible';
   toleranceRisqueInvestissement?: 'tres-conservateur' | 'conservateur' | 'equilibre' | 'dynamique' | 'agressif';
+  // Variantes suffixées par personne (alignées avec l'UI avancée)
+  toleranceRisqueInvestissement1?: 'tres-conservateur' | 'conservateur' | 'equilibre' | 'dynamique' | 'agressif';
+  toleranceRisqueInvestissement2?: 'tres-conservateur' | 'conservateur' | 'equilibre' | 'dynamique' | 'agressif';
+  experienceFinanciere1?: 'debutant' | 'intermediaire' | 'experimente' | 'expert';
+  experienceFinanciere2?: 'debutant' | 'intermediaire' | 'experimente' | 'expert';
+
+  // Santé / style de vie (par personne)
+  etatSante1?: string;
+  etatSante2?: string;
+  modeVieActif1?: string;
+  modeVieActif2?: string;
+  smokingStatus1?: string;
+  smokingStatus2?: string;
+  yearsQuitSmoking1?: number;
+  yearsQuitSmoking2?: number;
+  height1?: number;
+  height2?: number;
+  weight1?: number;
+  weight2?: number;
+  physicalActivity1?: string;
+  physicalActivity2?: string;
+  chronicConditions1?: string[];
+  chronicConditions2?: string[];
+
+  // Facteurs environnementaux (par personne)
+  livingEnvironment1?: string;
+  livingEnvironment2?: string;
+  housingType1?: string;
+  housingType2?: string;
+  familyComposition1?: string;
+  familyComposition2?: string;
+  distanceToSpecializedCare1?: number;
+  distanceToSpecializedCare2?: number;
+  waterQuality1?: string;
+  waterQuality2?: string;
+  airQuality1?: string;
+  airQuality2?: string;
+  noiseLevel1?: string;
+  noiseLevel2?: string;
+  accessToGreenSpaces1?: string;
+  accessToGreenSpaces2?: string;
+  transportAccess1?: string;
+  transportAccess2?: string;
+  communitySupport1?: string;
+  communitySupport2?: string;
+  crimeRate1?: string;
+  crimeRate2?: string;
+  climateStressors1?: string[];
+  climateStressors2?: string[];
   
   // NOUVEAUX: Informations d'emploi détaillées
   secteurActivite1?: string;

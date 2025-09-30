@@ -41,7 +41,71 @@ const defaultUserData: UserData = {
     soldeCELI2: 0,
     dateCELI2: '',
     soldeCRI2: 0,
-    dateCRI2: ''
+    dateCRI2: '',
+    
+    // === CHAMPS ANALYSE DE LONGÉVITÉ AVANCÉE ===
+    // Situation familiale
+    statutMatrimonial: '',
+    enfants: false,
+    
+    // Facteurs socio-économiques
+    situationFamiliale: '',
+    niveauCompetences1: undefined,
+    niveauCompetences2: undefined,
+    secteurActivite1: '',
+    secteurActivite2: '',
+    regionEconomique: '',
+    tauxChomageRegional: 0,
+    experienceFinanciere1: undefined as any,
+    experienceFinanciere2: undefined as any,
+    objectifPrincipal: undefined,
+    tempsDisponible: undefined,
+    toleranceRisqueInvestissement1: undefined as any,
+    toleranceRisqueInvestissement2: undefined as any,
+    
+    // Facteurs de santé et mode de vie
+    etatSante1: '',
+    etatSante2: '',
+    modeVieActif1: '',
+    modeVieActif2: '',
+    smokingStatus1: '',
+    smokingStatus2: '',
+    yearsQuitSmoking1: 0,
+    yearsQuitSmoking2: 0,
+    height1: 0,
+    height2: 0,
+    weight1: 0,
+    weight2: 0,
+    physicalActivity1: '',
+    physicalActivity2: '',
+    chronicConditions1: [] as string[],
+    chronicConditions2: [] as string[],
+    
+    // Facteurs environnementaux
+    livingEnvironment1: '',
+    livingEnvironment2: '',
+    housingType1: '',
+    housingType2: '',
+    familyComposition1: '',
+    familyComposition2: '',
+    distanceToSpecializedCare1: 0,
+    distanceToSpecializedCare2: 0,
+    waterQuality1: '',
+    waterQuality2: '',
+    airQuality1: '',
+    airQuality2: '',
+    noiseLevel1: '',
+    noiseLevel2: '',
+    accessToGreenSpaces1: '',
+    accessToGreenSpaces2: '',
+    transportAccess1: '',
+    transportAccess2: '',
+    communitySupport1: '',
+    communitySupport2: '',
+    crimeRate1: '',
+    crimeRate2: '',
+    climateStressors1: [] as string[],
+    climateStressors2: [] as string[]
   },
   retirement: {
     rrqAgeActuel1: 0,  // Maintenant vide
@@ -127,6 +191,58 @@ const validateUserData = (data: any): UserData => {
       mergedData.personal.salaire1 = Math.max(0, mergedData.personal.salaire1);
       mergedData.personal.salaire2 = Math.max(0, mergedData.personal.salaire2);
     }
+
+    // Synchroniser dépenses de retraite (mensuelles) avec depensesMensuelles
+    try {
+      if ((mergedData.personal?.depensesMensuelles || 0) > 0) {
+        mergedData.personal.depensesRetraite = mergedData.personal.depensesMensuelles;
+      } else if ((mergedData.personal?.depensesRetraite || 0) > 0 && (!mergedData.personal?.depensesMensuelles || mergedData.personal.depensesMensuelles === 0)) {
+        mergedData.personal.depensesMensuelles = mergedData.personal.depensesRetraite;
+      }
+    } catch {}
+
+    // Harmoniser investissements entre personal.solde* et savings.*
+    try {
+      const mapPairs: Array<[keyof UserData['savings'], keyof UserData['personal']]> = [
+        ['reer1', 'soldeREER1' as any],
+        ['reer2', 'soldeREER2' as any],
+        ['celi1', 'soldeCELI1' as any],
+        ['celi2', 'soldeCELI2' as any],
+        ['cri1',  'soldeCRI1'  as any],
+        ['cri2',  'soldeCRI2'  as any],
+      ];
+
+      for (const [sKey, pKey] of mapPairs) {
+        const sVal = Number((mergedData.savings as any)?.[sKey] ?? 0);
+        const pVal = Number((mergedData.personal as any)?.[pKey] ?? 0);
+        if ((sVal || 0) <= 0 && (pVal || 0) > 0) {
+          (mergedData.savings as any)[sKey] = pVal;
+        }
+        if ((sVal || 0) > 0 && (pVal || 0) <= 0) {
+          (mergedData.personal as any)[pKey] = sVal;
+        }
+      }
+    } catch {}
+
+    // Normalisation Personne 2 absente OU célibataire: remettre à zéro
+    try {
+      const marital = (mergedData.personal?.statutMatrimonial || '').toLowerCase();
+      const isSingle = marital === 'celibataire' || marital === 'single';
+      const p2HasAny = !!(mergedData.personal?.prenom2 || mergedData.personal?.nom2 || mergedData.personal?.naissance2 || mergedData.personal?.sexe2 || mergedData.personal?.salaire2);
+      if (isSingle || !p2HasAny) {
+        mergedData.personal.prenom2 = '';
+        mergedData.personal.nom2 = '';
+        mergedData.personal.naissance2 = '';
+        mergedData.personal.sexe2 = '' as any;
+        mergedData.personal.salaire2 = 0;
+        mergedData.personal.unifiedIncome2 = [];
+        mergedData.savings.reer2 = 0;
+        mergedData.savings.celi2 = 0;
+        mergedData.savings.placements2 = 0;
+        mergedData.savings.epargne2 = 0;
+        mergedData.savings.cri2 = 0;
+      }
+    } catch {}
 
     console.log('✅ Données validées et fusionnées:', mergedData);
     return mergedData as UserData;
@@ -275,8 +391,8 @@ export const useRetirementData = () => {
       // Sauvegarder une copie de sauvegarde locale avant de fermer
       try {
         if (userData !== defaultUserData) {
+          // Politique: aucune persistance locale automatique
           RetirementDataRepository.saveBackupBeforeUnload(sessionId, userData);
-          console.log('💾 Sauvegarde locale créée avant fermeture');
         }
       } catch (error) {
         console.error('Erreur lors de la sauvegarde locale:', error);
@@ -415,8 +531,7 @@ export const useRetirementData = () => {
         const validatedData = validateUserData(payload);
         setUserData(validatedData);
         
-        // Sauvegarder aussi dans localStorage pour la persistance
-        localStorage.setItem('retirement_data', JSON.stringify(payload));
+        // Ne pas persister automatiquement en local: l'utilisateur conserve son fichier
         
         setError(null);
         console.log('📥 Données importées avec succès');
