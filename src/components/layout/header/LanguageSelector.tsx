@@ -95,53 +95,44 @@ const LanguageSelector = ({ isEnglish }: LanguageSelectorProps) => {
         newPath = '/en';
       }
     } else { // newLang === 'fr'
-      if (!currentPath.startsWith('/en')) {
-        newPath = currentPath;
-      } else {
-        if (currentPath.startsWith('/en/blog')) {
-          // EN blog -> FR blog (preserve slug and map special routes)
-          if (currentPath === '/en/blog' || currentPath === '/en/blog/') {
-            newPath = '/blog';
-          } else if (currentPath.startsWith('/en/blog/essentials')) {
-            newPath = currentPath.replace('/en/blog/essentials', '/blog/essentiels');
-          } else if (currentPath.startsWith('/en/blog/tools')) {
-            newPath = currentPath.replace('/en/blog/tools', '/blog/outils');
-          } else if (currentPath.startsWith('/en/blog/category/')) {
-            newPath = currentPath.replace('/en/blog/category/', '/blog/categorie/');
-          } else {
-            // Article detail EN -> FR with counterpart slug if available
-            const m = currentPath.match(/^\/en\/blog\/([^/]+)\/?$/);
-            if (m) {
-              const enSlug = m[1];
-              const enPost = getPostBySlug(enSlug, 'en');
-              let frSlug = enPost?.relatedSlugFr;
-              if (!frSlug) {
-                const frPosts = getAllPosts('fr');
-                const match = frPosts.find(
-                  (p) => p.relatedSlugEn === (enPost?.relatedSlugEn || enSlug) || p.slug === enPost?.relatedSlugFr
-                );
-                frSlug = match?.slug || enSlug;
-              }
-              newPath = '/blog/' + frSlug;
-            } else {
-              newPath = currentPath.replace(/^\/en/, '');
-            }
-          }
+      if (currentPath.startsWith('/en/blog')) {
+        // EN blog -> FR blog (preserve slug and map special routes)
+        if (currentPath === '/en/blog' || currentPath === '/en/blog/') {
+          newPath = '/blog';
+        } else if (currentPath.startsWith('/en/blog/essentials')) {
+          newPath = currentPath.replace('/en/blog/essentials', '/blog/essentiels');
+        } else if (currentPath.startsWith('/en/blog/tools')) {
+          newPath = currentPath.replace('/en/blog/tools', '/blog/outils');
+        } else if (currentPath.startsWith('/en/blog/category/')) {
+          newPath = currentPath.replace('/en/blog/category/', '/blog/categorie/');
         } else {
-          // Cherche dans le mapping
-          const matchingFrenchPath = Object.keys(routeMapping).find(
-            (key) => routeMapping[key] === currentPath
-          );
-          if (matchingFrenchPath) {
-            newPath = matchingFrenchPath;
-          } else if (currentPath.startsWith('/en/')) {
-            newPath = '/fr' + currentPath.slice(3);
-          } else if (currentPath === '/en') {
-            newPath = '/fr';
+          // Article detail EN -> FR with counterpart slug if available
+          const m = currentPath.match(/^\/en\/blog\/([^/]+)\/?$/);
+          if (m) {
+            const enSlug = m[1];
+            const enPost = getPostBySlug(enSlug, 'en');
+            let frSlug = enPost?.relatedSlugFr;
+            if (!frSlug) {
+              const frPosts = getAllPosts('fr');
+              const match = frPosts.find(
+                (p) => p.relatedSlugEn === (enPost?.relatedSlugEn || enSlug) || p.slug === enPost?.relatedSlugFr
+              );
+              frSlug = match?.slug || enSlug;
+            }
+            newPath = '/blog/' + frSlug;
           } else {
-            newPath = '/fr';
+            newPath = currentPath.replace(/^\/en/, '');
           }
         }
+      } else if (routeMapping[currentPath]) {
+        // Direct mapping (handles routes like /my-income, /home, etc.)
+        newPath = routeMapping[currentPath];
+      } else if (currentPath.startsWith('/en/')) {
+        newPath = '/fr' + currentPath.slice(3);
+      } else if (currentPath === '/en') {
+        newPath = '/fr';
+      } else {
+        newPath = '/fr';
       }
     }
     navigate(newPath);
