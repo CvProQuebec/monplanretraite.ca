@@ -1,5 +1,5 @@
-/**
- * Service de sauvegarde amélioré avec choix du nom et emplacement
+﻿/**
+ * Service de sauvegarde amÃ©liorÃ© avec choix du nom et emplacement
  */
 
 import { LicenseManager } from './LicenseManager';
@@ -24,12 +24,12 @@ export class EnhancedSaveManager {
   private static readonly FILE_EXTENSION = '.json';
 
   /**
-   * Sauvegarde les données avec choix du nom de fichier
+   * Sauvegarde les donnÃ©es avec choix du nom de fichier
    */
   static async saveWithDialog(userData: any, options: SaveOptions = {}): Promise<SaveResult> {
     try {
-      // TEMPORAIRE: Désactivation du blocage de licence pour 1 mois
-      // Vérifier la licence avant de sauvegarder
+      // TEMPORAIRE: DÃ©sactivation du blocage de licence pour 1 mois
+      // VÃ©rifier la licence avant de sauvegarder
       // const licenseCheck = LicenseManager.checkLicense(userData);
       
       // if (!licenseCheck.isValid) {
@@ -37,17 +37,17 @@ export class EnhancedSaveManager {
       //     success: false,
       //     blocked: true,
       //     reason: licenseCheck.reason,
-      //     error: 'Sauvegarde bloquée par la protection de licence'
+      //     error: 'Sauvegarde bloquÃ©e par la protection de licence'
       //   };
       // }
 
-      // Générer le nom de fichier
+      // GÃ©nÃ©rer le nom de fichier
       const filename = this.generateFilename(userData, options);
       
-      // Préparer les données à sauvegarder
+      // PrÃ©parer les donnÃ©es Ã  sauvegarder
       const saveData = this.prepareSaveData(userData);
       
-      // Créer le blob avec les données
+      // CrÃ©er le blob avec les donnÃ©es
       const dataStr = JSON.stringify(saveData, null, 2);
       const dataBlob = new Blob([dataStr], { type: 'application/json' });
       
@@ -66,7 +66,7 @@ export class EnhancedSaveManager {
           await writable.write(dataBlob);
           await writable.close();
           
-          // Sauvegarder le profil après succès
+          // Sauvegarder le profil aprÃ¨s succÃ¨s
           LicenseManager.saveCurrentProfile(userData);
           LicenseManager.updateLastSaved();
           
@@ -78,7 +78,7 @@ export class EnhancedSaveManager {
           if (error.name === 'AbortError') {
             return {
               success: false,
-              error: 'Sauvegarde annulée par l\'utilisateur'
+              error: 'Sauvegarde annulÃ©e par l\'utilisateur'
             };
           }
           throw error;
@@ -90,13 +90,13 @@ export class EnhancedSaveManager {
         link.href = url;
         link.download = filename;
         
-        // Déclencher le téléchargement
+        // DÃ©clencher le tÃ©lÃ©chargement
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
         URL.revokeObjectURL(url);
         
-        // Sauvegarder le profil après succès
+        // Sauvegarder le profil aprÃ¨s succÃ¨s
         LicenseManager.saveCurrentProfile(userData);
         LicenseManager.updateLastSaved();
         
@@ -115,7 +115,7 @@ export class EnhancedSaveManager {
   }
 
   /**
-   * Charge un fichier avec dialogue de sélection
+   * Charge un fichier avec dialogue de sÃ©lection
    */
   static async loadWithDialog(): Promise<{ success: boolean; data?: any; error?: string; blocked?: boolean; reason?: string }> {
     try {
@@ -134,10 +134,10 @@ export class EnhancedSaveManager {
           const content = await file.text();
           const data = JSON.parse(content);
           
-          // Valider les données chargées
+          // Valider les donnÃ©es chargÃ©es
           const validatedData = this.validateLoadedData(data);
           
-          // Vérifier la licence pour les nouvelles données
+          // VÃ©rifier la licence pour les nouvelles donnÃ©es
           const licenseCheck = LicenseManager.checkLicense(validatedData);
           
           if (!licenseCheck.isValid) {
@@ -156,7 +156,7 @@ export class EnhancedSaveManager {
           if (error.name === 'AbortError') {
             return {
               success: false,
-              error: 'Chargement annulé par l\'utilisateur'
+              error: 'Chargement annulÃ© par l\'utilisateur'
             };
           }
           throw error;
@@ -173,7 +173,7 @@ export class EnhancedSaveManager {
             if (!file) {
               resolve({
                 success: false,
-                error: 'Aucun fichier sélectionné'
+                error: 'Aucun fichier sÃ©lectionnÃ©'
               });
               return;
             }
@@ -183,7 +183,7 @@ export class EnhancedSaveManager {
               const data = JSON.parse(content);
               const validatedData = this.validateLoadedData(data);
               
-              // Vérifier la licence pour les nouvelles données
+              // VÃ©rifier la licence pour les nouvelles donnÃ©es
               const licenseCheck = LicenseManager.checkLicense(validatedData);
               
               if (!licenseCheck.isValid) {
@@ -220,11 +220,11 @@ export class EnhancedSaveManager {
   }
 
   /**
-   * Sauvegarde directe sans dialogue (utilise le nom de fichier généré automatiquement)
+   * Sauvegarde directe sans dialogue (utilise le nom de fichier gÃ©nÃ©rÃ© automatiquement)
    */
   static async saveDirectly(userData: any, options: SaveOptions = {}): Promise<SaveResult> {
     try {
-      // Vérifier la licence avant de sauvegarder
+      // VÃ©rifier la licence avant de sauvegarder
       const licenseCheck = LicenseManager.checkLicense(userData);
       
       if (!licenseCheck.isValid) {
@@ -232,33 +232,33 @@ export class EnhancedSaveManager {
           success: false,
           blocked: true,
           reason: licenseCheck.reason,
-          error: 'Sauvegarde bloquée par la protection de licence'
+          error: 'Sauvegarde bloquÃ©e par la protection de licence'
         };
       }
 
-      // Générer le nom de fichier avec la nouvelle méthode
+      // GÃ©nÃ©rer le nom de fichier avec la nouvelle mÃ©thode
       const filename = options.filename || generateFilename(userData, options.includeTimestamp !== false);
       
-      // Préparer les données à sauvegarder
+      // PrÃ©parer les donnÃ©es Ã  sauvegarder
       const saveData = this.prepareSaveData(userData);
       
-      // Créer le blob avec les données
+      // CrÃ©er le blob avec les donnÃ©es
       const dataStr = JSON.stringify(saveData, null, 2);
       const dataBlob = new Blob([dataStr], { type: 'application/json' });
       
-      // Téléchargement direct
+      // TÃ©lÃ©chargement direct
       const url = URL.createObjectURL(dataBlob);
       const link = document.createElement('a');
       link.href = url;
       link.download = filename;
       
-      // Déclencher le téléchargement
+      // DÃ©clencher le tÃ©lÃ©chargement
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
       
-      // Sauvegarder le profil après succès
+      // Sauvegarder le profil aprÃ¨s succÃ¨s
       LicenseManager.saveCurrentProfile(userData);
       LicenseManager.updateLastSaved();
       
@@ -276,15 +276,15 @@ export class EnhancedSaveManager {
   }
 
   /**
-   * Génère un nom de fichier basé sur les données utilisateur (méthode dépréciée)
+   * GÃ©nÃ¨re un nom de fichier basÃ© sur les donnÃ©es utilisateur (mÃ©thode dÃ©prÃ©ciÃ©e)
    */
   private static generateFilename(userData: any, options: SaveOptions): string {
-    // Utiliser la nouvelle méthode
+    // Utiliser la nouvelle mÃ©thode
     return options.filename || generateFilename(userData, options.includeTimestamp !== false);
   }
 
   /**
-   * Prépare les données pour la sauvegarde
+   * PrÃ©pare les donnÃ©es pour la sauvegarde
    */
   private static prepareSaveData(userData: any): any {
     const saveData = {
@@ -299,20 +299,20 @@ export class EnhancedSaveManager {
   }
 
   /**
-   * Valide les données chargées depuis un fichier
+   * Valide les donnÃ©es chargÃ©es depuis un fichier
    */
   private static validateLoadedData(data: any): any {
-    // Vérifier la structure de base
+    // VÃ©rifier la structure de base
     if (!data || typeof data !== 'object') {
       throw new Error('Format de fichier invalide');
     }
     
-    // Si c'est un ancien format (données directes)
+    // Si c'est un ancien format (donnÃ©es directes)
     if (data.personal && !data.data) {
       return data;
     }
     
-    // Si c'est le nouveau format (avec métadonnées)
+    // Si c'est le nouveau format (avec mÃ©tadonnÃ©es)
     if (data.data && data.version) {
       return data.data;
     }
@@ -321,11 +321,11 @@ export class EnhancedSaveManager {
   }
 
   /**
-   * Vérifie si l'utilisateur peut sauvegarder (protection licence)
-   * TEMPORAIRE: Désactivation du blocage de licence pour 1 mois
+   * VÃ©rifie si l'utilisateur peut sauvegarder (protection licence)
+   * TEMPORAIRE: DÃ©sactivation du blocage de licence pour 1 mois
    */
   static canSave(userData: any): { canSave: boolean; reason?: string } {
-    // TEMPORAIRE: Désactivation du blocage de licence pour 1 mois
+    // TEMPORAIRE: DÃ©sactivation du blocage de licence pour 1 mois
     // const licenseCheck = LicenseManager.checkLicense(userData);
     
     // return {
@@ -335,22 +335,22 @@ export class EnhancedSaveManager {
     
     return {
       canSave: true,
-      reason: 'Blocage de licence temporairement désactivé'
+      reason: 'Blocage de licence temporairement dÃ©sactivÃ©'
     };
   }
 
   /**
-   * Vérifie si l'utilisateur peut charger un nouveau profil
-   * TEMPORAIRE: Désactivation du blocage de licence pour 1 mois
+   * VÃ©rifie si l'utilisateur peut charger un nouveau profil
+   * TEMPORAIRE: DÃ©sactivation du blocage de licence pour 1 mois
    */
   static canLoad(): { canLoad: boolean; reason?: string; currentProfile?: string } {
     // TEMPORAIRE: Toujours autoriser le chargement
     return {
       canLoad: true,
-      reason: 'Blocage de licence temporairement désactivé'
+      reason: 'Blocage de licence temporairement dÃ©sactivÃ©'
     };
 
-    // CODE ORIGINAL COMMENTÉ POUR RÉACTIVATION DANS 1 MOIS:
+    // CODE ORIGINAL COMMENTÃ‰ POUR RÃ‰ACTIVATION DANS 1 MOIS:
     /*
     const currentProfile = LicenseManager.getCurrentProfile();
     const hasMultiCode = LicenseManager.hasMultiProfileCode();
@@ -375,7 +375,7 @@ export class EnhancedSaveManager {
     
     return {
       canLoad: false,
-      reason: 'Un profil est déjà actif. Une licence ne peut être utilisée que pour un seul couple.',
+      reason: 'Un profil est dÃ©jÃ  actif. Une licence ne peut Ãªtre utilisÃ©e que pour un seul couple.',
       currentProfile: profileName
     };
     */
@@ -389,11 +389,13 @@ export class EnhancedSaveManager {
   }
 
   /**
-   * Réinitialise la licence (pour les tests)
+   * RÃ©initialise la licence (pour les tests)
    */
   static resetLicense(): void {
     LicenseManager.clearCurrentProfile();
     localStorage.removeItem('promo-code');
-    console.log('🔄 Licence réinitialisée');
+    console.log('ðŸ”„ Licence rÃ©initialisÃ©e');
   }
 }
+
+

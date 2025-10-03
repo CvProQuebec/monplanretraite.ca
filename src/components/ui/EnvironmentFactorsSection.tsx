@@ -251,7 +251,7 @@ const EnvironmentFactorsSection: React.FC<EnvironmentFactorsSectionProps> = ({
         <CardContent className="p-6 space-y-6">
           {/* Type de milieu */}
           <div className="flex items-center gap-4">
-            <Label className="text-lg font-semibold text-gray-900 w-80 flex-shrink-0">
+            <Label className="text-lg font-semibold text-gray-900 w-96 flex-shrink-0">
               <MapPin className="w-5 h-5 inline mr-2" />
               {isFrench ? 'Type de milieu' : 'Environment Type'}
             </Label>
@@ -280,7 +280,7 @@ const EnvironmentFactorsSection: React.FC<EnvironmentFactorsSectionProps> = ({
 
           {/* Type de logement */}
           <div className="flex items-center gap-4">
-            <Label className="text-lg font-semibold text-gray-900 w-80 flex-shrink-0">
+            <Label className="text-lg font-semibold text-gray-900 w-96 flex-shrink-0">
               <Home className="w-5 h-5 inline mr-2" />
               {isFrench ? 'Type de logement' : 'Housing Type'}
             </Label>
@@ -315,7 +315,7 @@ const EnvironmentFactorsSection: React.FC<EnvironmentFactorsSectionProps> = ({
 
           {/* Composition familiale */}
           <div className="flex items-center gap-4">
-            <Label className="text-lg font-semibold text-gray-900 w-80 flex-shrink-0">
+            <Label className="text-lg font-semibold text-gray-900 w-96 flex-shrink-0">
               <Home className="w-5 h-5 inline mr-2" />
               {isFrench ? 'Composition du ménage' : 'Household Composition'}
             </Label>
@@ -347,7 +347,7 @@ const EnvironmentFactorsSection: React.FC<EnvironmentFactorsSectionProps> = ({
 
           {/* Distance aux soins spécialisés */}
           <div className="flex items-center gap-4">
-            <Label className="text-lg font-semibold text-gray-900 w-80 flex-shrink-0">
+            <Label className="text-lg font-semibold text-gray-900 w-96 flex-shrink-0">
               <Building2 className="w-5 h-5 inline mr-2" />
               {isFrench ? 'Distance soins spécialisés (km)' : 'Distance to Specialized Care (km)'}
             </Label>
@@ -366,7 +366,7 @@ const EnvironmentFactorsSection: React.FC<EnvironmentFactorsSectionProps> = ({
 
           {/* Qualité de l'eau */}
           <div className="flex items-center gap-4">
-            <Label className="text-lg font-semibold text-gray-900 w-80 flex-shrink-0">
+            <Label className="text-lg font-semibold text-gray-900 w-96 flex-shrink-0">
               <Droplets className="w-5 h-5 inline mr-2" />
               {isFrench ? 'Qualité de l\'eau' : 'Water Quality'}
             </Label>
@@ -398,7 +398,7 @@ const EnvironmentFactorsSection: React.FC<EnvironmentFactorsSectionProps> = ({
 
           {/* Qualité de l'air */}
           <div className="flex items-center gap-4">
-            <Label className="text-lg font-semibold text-gray-900 w-80 flex-shrink-0">
+            <Label className="text-lg font-semibold text-gray-900 w-96 flex-shrink-0">
               <Wind className="w-5 h-5 inline mr-2" />
               {isFrench ? 'Qualité de l\'air' : 'Air Quality'}
             </Label>
@@ -430,7 +430,7 @@ const EnvironmentFactorsSection: React.FC<EnvironmentFactorsSectionProps> = ({
 
           {/* Accès aux espaces verts */}
           <div className="flex items-center gap-4">
-            <Label className="text-lg font-semibold text-gray-900 w-80 flex-shrink-0">
+            <Label className="text-lg font-semibold text-gray-900 w-96 flex-shrink-0">
               <TreePine className="w-5 h-5 inline mr-2" />
               {isFrench ? 'Accès aux espaces verts' : 'Access to Green Spaces'}
             </Label>
@@ -462,7 +462,7 @@ const EnvironmentFactorsSection: React.FC<EnvironmentFactorsSectionProps> = ({
 
           {/* Accès aux transports */}
           <div className="flex items-center gap-4">
-            <Label className="text-lg font-semibold text-gray-900 w-80 flex-shrink-0">
+            <Label className="text-lg font-semibold text-gray-900 w-96 flex-shrink-0">
               <Car className="w-5 h-5 inline mr-2" />
               {isFrench ? 'Accès aux transports' : 'Transportation Access'}
             </Label>
@@ -494,7 +494,7 @@ const EnvironmentFactorsSection: React.FC<EnvironmentFactorsSectionProps> = ({
 
           {/* Soutien communautaire */}
           <div className="flex items-center gap-4">
-            <Label className="text-lg font-semibold text-gray-900 w-80 flex-shrink-0">
+            <Label className="text-lg font-semibold text-gray-900 w-96 flex-shrink-0">
               <Home className="w-5 h-5 inline mr-2" />
               {isFrench ? 'Soutien communautaire' : 'Community Support'}
             </Label>
@@ -523,7 +523,7 @@ const EnvironmentFactorsSection: React.FC<EnvironmentFactorsSectionProps> = ({
 
           {/* Taux de criminalité */}
           <div className="flex items-center gap-4">
-            <Label className="text-lg font-semibold text-gray-900 w-80 flex-shrink-0">
+            <Label className="text-lg font-semibold text-gray-900 w-96 flex-shrink-0">
               <AlertTriangle className="w-5 h-5 inline mr-2" />
               {isFrench ? 'Sécurité du quartier' : 'Neighborhood Safety'}
             </Label>
@@ -555,7 +555,7 @@ const EnvironmentFactorsSection: React.FC<EnvironmentFactorsSectionProps> = ({
 
           {/* Facteurs climatiques stressants */}
           <div className="flex items-start gap-4">
-            <Label className="text-lg font-semibold text-gray-900 w-80 flex-shrink-0 pt-2">
+            <Label className="text-lg font-semibold text-gray-900 w-96 flex-shrink-0 pt-2">
               <Wind className="w-5 h-5 inline mr-2" />
               {isFrench ? 'Facteurs climatiques stressants' : 'Climate Stressors'}
             </Label>
@@ -565,7 +565,7 @@ const EnvironmentFactorsSection: React.FC<EnvironmentFactorsSectionProps> = ({
                   const current = localData.climateStressors || [];
                   const checked = current.includes(option.value);
                   return (
-                    <label key={option.value} className="flex items-center gap-2 text-sm p-2 border rounded hover:bg-gray-50">
+                    <label key={option.value} className="flex items-center gap-3 text-lg p-2 border rounded hover:bg-gray-50 cursor-pointer">
                       <input
                         type="checkbox"
                         checked={checked}
@@ -575,9 +575,9 @@ const EnvironmentFactorsSection: React.FC<EnvironmentFactorsSectionProps> = ({
                             : [...current, option.value];
                           handleFieldChange('climateStressors', next);
                         }}
-                        className="rounded"
+                        className="w-5 h-5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500"
                       />
-                      <span>{option.label}</span>
+                      <span className="flex-1">{option.label}</span>
                     </label>
                   );
                 })}

@@ -12,51 +12,79 @@ export interface PersonName {
   fallbackName: string;
 }
 
+const computeInitials = (first: string, last: string, fallback: string) => {
+  const letters = [first, last]
+    .filter(Boolean)
+    .map(value => value.trim())
+    .filter(Boolean)
+    .map(name => name.charAt(0).toUpperCase());
+
+  return letters.length > 0 ? letters.join('') : fallback;
+};
+
 /**
- * Hook pour récupérer les noms personnalisés des personnes
- * Utilise les vrais noms saisis dans "Mon profil" ou retourne les noms par défaut
+ * Hook pour récupérer les noms personnalisés des personnes.
+ * Utilise les prénoms et noms saisis dans « Mon profil » ou fournit des valeurs de repli.
  */
 export const usePersonNames = () => {
   const { userData } = useRetirementData();
 
   const personNames = useMemo(() => {
-    // Récupérer les noms depuis les données utilisateur
-    const person1Name = userData.personal?.prenom1 || '';
-    const person2Name = userData.personal?.prenom2 || '';
+    const buildPerson = (
+      id: 'person1' | 'person2',
+      fallback: 'Personne 1' | 'Personne 2',
+      rawFirst?: string,
+      rawLast?: string
+    ): PersonName => {
+      const first = (rawFirst || '').trim();
+      const last = (rawLast || '').trim();
+      const combined = [first, last].filter(Boolean).join(' ').trim();
+      const parsed = parseName(combined || first);
 
-    // Parser les noms
-    const person1Parsed = parseName(person1Name);
-    const person2Parsed = parseName(person2Name);
+      const resolvedFirst = (parsed.firstName || first).trim();
+      const resolvedLast = (parsed.lastName || last).trim();
+      const fullName = [resolvedFirst, resolvedLast].filter(Boolean).join(' ').trim();
+      const displayName = resolvedFirst || fullName || fallback;
+      const initials = computeInitials(resolvedFirst, resolvedLast, id === 'person1' ? 'P1' : 'P2');
 
-    const person1: PersonName = {
-      id: 'person1',
-      fullName: person1Parsed.fullName,
-      displayName: person1Parsed.displayName || person1Parsed.firstName || 'Personne 1',
-      firstName: person1Parsed.firstName,
-      lastName: person1Parsed.lastName,
-      initials: person1Parsed.initials || 'P1',
-      fallbackName: 'Personne 1'
+      return {
+        id,
+        fullName,
+        displayName,
+        firstName: resolvedFirst,
+        lastName: resolvedLast,
+        initials,
+        fallbackName: fallback
+      };
     };
 
-    const person2: PersonName = {
-      id: 'person2',
-      fullName: person2Parsed.fullName,
-      displayName: person2Parsed.displayName || person2Parsed.firstName || 'Personne 2',
-      firstName: person2Parsed.firstName,
-      lastName: person2Parsed.lastName,
-      initials: person2Parsed.initials || 'P2',
-      fallbackName: 'Personne 2'
-    };
+    const person1 = buildPerson(
+      'person1',
+      'Personne 1',
+      userData.personal?.prenom1,
+      userData.personal?.nom1
+    );
+    const person2 = buildPerson(
+      'person2',
+      'Personne 2',
+      userData.personal?.prenom2,
+      userData.personal?.nom2
+    );
 
     return { person1, person2 };
-  }, [userData.personal?.prenom1, userData.personal?.prenom2]);
+  }, [
+    userData.personal?.prenom1,
+    userData.personal?.nom1,
+    userData.personal?.prenom2,
+    userData.personal?.nom2
+  ]);
 
-  /**
-   * Obtenir le nom d'affichage pour une personne spécifique
-   */
-  const getPersonDisplayName = (personId: 'person1' | 'person2', style: 'full' | 'display' | 'first' | 'initials' = 'display') => {
+  const getPersonDisplayName = (
+    personId: 'person1' | 'person2',
+    style: 'full' | 'display' | 'first' | 'initials' = 'display'
+  ) => {
     const person = personNames[personId];
-    
+
     switch (style) {
       case 'full':
         return person.fullName || person.fallbackName;
@@ -71,77 +99,79 @@ export const usePersonNames = () => {
     }
   };
 
-  /**
-   * Obtenir le nom pour les titres de section (avec fallback élégant)
-   */
   const getSectionTitle = (personId: 'person1' | 'person2') => {
     const person = personNames[personId];
-    
+
     if (person.firstName) {
-      // Si on a un prénom, l'utiliser avec une icône
-      return `👤 ${person.firstName}`;
+      return `Profil de ${person.firstName}`;
     }
-    
-    // Sinon utiliser le nom générique avec numéro
-    return personId === 'person1' ? '1️⃣ Personne 1' : '2️⃣ Personne 2';
+
+    return personId === 'person1' ? 'Personne 1' : 'Personne 2';
   };
 
-  /**
-   * Obtenir le nom pour les boutons de sauvegarde
-   */
-  const getSaveButtonLabel = (personId: 'person1' | 'person2', action: 'save' | 'export' | 'print' = 'save') => {
+  const getSaveButtonLabel = (
+    personId: 'person1' | 'person2',
+    action: 'save' | 'export' | 'print' = 'save'
+  ) => {
     const person = personNames[personId];
     const name = person.firstName || person.fallbackName;
-    
+
     switch (action) {
       case 'save':
-        return `💾 Sauvegarder ${name}`;
+        return `Sauvegarder ${name}`;
       case 'export':
-        return `📤 Exporter ${name}`;
+        return `Exporter ${name}`;
       case 'print':
-        return `🖨️ Imprimer ${name}`;
+        return `Imprimer ${name}`;
       default:
         return name;
     }
   };
 
-  /**
-   * Vérifier si une personne a un nom personnalisé
-   */
   const hasCustomName = (personId: 'person1' | 'person2') => {
     const person = personNames[personId];
-    return person.fullName.length > 0;
+    return person.fullName.length > 0 || person.firstName.length > 0;
   };
 
-  /**
-   * Obtenir les options pour le dropdown de sélection
-   */
   const getSelectOptions = () => {
     return [
       {
         value: 'person1',
         label: personNames.person1.displayName,
-        icon: hasCustomName('person1') ? '👤' : '1️⃣'
+        icon: hasCustomName('person1') ? personNames.person1.initials : 'P1'
       },
       {
         value: 'person2',
         label: personNames.person2.displayName,
-        icon: hasCustomName('person2') ? '👤' : '2️⃣'
+        icon: hasCustomName('person2') ? personNames.person2.initials : 'P2'
       }
     ];
   };
 
-  /**
-   * Formater les noms pour les rapports
-   */
-  const formatForReport = (personId: 'person1' | 'person2', style: 'formal' | 'friendly' | 'initials' = 'formal') => {
+  const formatForReport = (
+    personId: 'person1' | 'person2',
+    style: 'formal' | 'friendly' | 'initials' = 'formal'
+  ) => {
     const person = personNames[personId];
-    
+
     if (!person.fullName) {
+      if (style === 'friendly') {
+        return person.firstName || person.fallbackName;
+      }
+      if (style === 'initials') {
+        return person.initials;
+      }
       return person.fallbackName;
     }
-    
-    return formatNameForReport(person.fullName, style);
+
+    switch (style) {
+      case 'friendly':
+        return person.firstName || person.fullName;
+      case 'initials':
+        return person.initials;
+      default:
+        return formatNameForReport(person.fullName);
+    }
   };
 
   return {

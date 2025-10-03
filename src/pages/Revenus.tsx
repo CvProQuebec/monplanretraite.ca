@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -60,24 +60,24 @@ const Revenus: React.FC = () => {
   const [isUpgradeModalOpen, setIsUpgradeModalOpen] = useState(false);
   const [targetPlan, setTargetPlan] = useState<'professional' | 'expert'>('professional');
   
-  // Hook pour les données de retraite
+  // Hook pour les donnÃ©es de retraite
   const { userData, updateUserData } = useRetirementData();
   
-  // Log pour déboguer le chargement des données
+  // Log pour dÃ©boguer le chargement des donnÃ©es
   useEffect(() => {
-    console.log('🔍 Revenus - Données chargées:', userData);
-    console.log('🔍 Revenus - unifiedIncome1:', (userData.personal as any)?.unifiedIncome1);
-    console.log('🔍 Revenus - unifiedIncome2:', (userData.personal as any)?.unifiedIncome2);
+    console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
+    console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
+    console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
     
-    // Vérifier localStorage directement
+    // VÃ©rifier localStorage directement
     const localStorageData = localStorage.getItem('retirement_data');
     if (localStorageData) {
       const parsed = JSON.parse(localStorageData);
-      console.log('🔍 Revenus - Données dans localStorage:', parsed);
-      console.log('🔍 Revenus - unifiedIncome1 dans localStorage:', parsed.personal?.unifiedIncome1);
-      console.log('🔍 Revenus - unifiedIncome2 dans localStorage:', parsed.personal?.unifiedIncome2);
+      console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
+      console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
+      console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
     } else {
-      console.log('❌ Revenus - Aucune donnée dans localStorage');
+      console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
     }
   }, [userData]);
   
@@ -85,7 +85,7 @@ const Revenus: React.FC = () => {
   const [isSaving, setIsSaving] = useState(false);
   const [showRRQInfo, setShowRRQInfo] = useState(false);
   
-  // États pour les sections collapsibles
+  // Ã‰tats pour les sections collapsibles
   const [isRevenusCollapsed, setIsRevenusCollapsed] = useState(false);
   const [isPrestationsCollapsed, setIsPrestationsCollapsed] = useState(false);
   const [isInvestissementsCollapsed, setIsInvestissementsCollapsed] = useState(false);
@@ -94,11 +94,11 @@ const Revenus: React.FC = () => {
   // Correction du reflow mobile pour Samsung S23 Ultra
   useMobileReflowFix();
 
-  // Debug pour les données SV
+  // Debug pour les donnÃ©es SV
   useEffect(() => {
-    console.log('🔍 DEBUG SV - userData.retirement:', userData.retirement);
-    console.log('🔍 DEBUG SV - svBiannual1:', userData.retirement?.svBiannual1);
-    console.log('🔍 DEBUG SV - svBiannual2:', userData.retirement?.svBiannual2);
+    console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
+    console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
+    console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
   }, [userData.retirement]);
 
   const handleChange = (field: string, value: any) => {
@@ -118,7 +118,7 @@ const Revenus: React.FC = () => {
     handleChange(`salaire${person}`, value);
   };
 
-  // Fonctions pour gérer l'expansion/réduction des sections
+  // Fonctions pour gÃ©rer l'expansion/rÃ©duction des sections
   const toggleAllSections = () => {
     const newState = !isAllExpanded;
     setIsAllExpanded(newState);
@@ -129,7 +129,7 @@ const Revenus: React.FC = () => {
 
 
 
-  // Types de revenus disponibles avec métadonnées
+  // Types de revenus disponibles avec mÃ©tadonnÃ©es
   const typesRevenu = [
     { 
       value: 'salaire', 
@@ -192,7 +192,7 @@ const Revenus: React.FC = () => {
     { value: 'autonome', label: isFrench ? 'Travailleur autonome' : 'Self-employed' }
   ];
 
-  // Fréquences de paiement
+  // FrÃ©quences de paiement
   const frequencesPaiement = [
     { value: 'weekly', label: isFrench ? 'Hebdomadaire' : 'Weekly' },
     { value: 'biweekly', label: isFrench ? 'Aux 2 semaines' : 'Bi-weekly' },
@@ -201,12 +201,12 @@ const Revenus: React.FC = () => {
     { value: 'annual', label: isFrench ? 'Annuel' : 'Annual' }
   ];
 
-  // Fonction pour obtenir les métadonnées d'un type de revenu
+  // Fonction pour obtenir les mÃ©tadonnÃ©es d'un type de revenu
   const getRevenueTypeMetadata = (typeRevenu: string) => {
     return typesRevenu.find(type => type.value === typeRevenu) || typesRevenu[0];
   };
 
-  // Fonction pour calculer le montant annuel selon la fréquence
+  // Fonction pour calculer le montant annuel selon la frÃ©quence
   const calculateAnnualAmount = (amount: number, frequency: string) => {
     const multipliers = {
       weekly: 52,
@@ -218,7 +218,7 @@ const Revenus: React.FC = () => {
     return amount * (multipliers[frequency as keyof typeof multipliers] || 1);
   };
 
-  // Fonction pour générer des suggestions de planification
+  // Fonction pour gÃ©nÃ©rer des suggestions de planification
   const generatePlanningAdvice = (person: '1' | '2') => {
     const typeRevenu = userData.personal?.[`typeRevenu${person}` as keyof typeof userData.personal] as string;
     const dateFin = userData.personal?.[`dateFinRevenu${person}` as keyof typeof userData.personal] as string;
@@ -233,7 +233,7 @@ const Revenus: React.FC = () => {
         return {
           type: 'transition',
           message: isFrench 
-            ? `Votre ${metadata.label.toLowerCase()} se termine dans ${daysUntilEnd} jours. Considérez demander votre RRQ le ${new Date(endDate.getTime() + 24 * 60 * 60 * 1000).toLocaleDateString('fr-CA')}.`
+            ? `Votre ${metadata.label.toLowerCase()} se termine dans ${daysUntilEnd} jours. ConsidÃ©rez demander votre RRQ le ${new Date(endDate.getTime() + 24 * 60 * 60 * 1000).toLocaleDateString('fr-CA')}.`
             : `Your ${metadata.label.toLowerCase()} ends in ${daysUntilEnd} days. Consider applying for CPP on ${new Date(endDate.getTime() + 24 * 60 * 60 * 1000).toLocaleDateString('en-CA')}.`,
           urgency: daysUntilEnd <= 90 ? 'high' : 'medium'
         };
@@ -247,22 +247,22 @@ const Revenus: React.FC = () => {
   const statutsProfessionnels = [
     { value: 'actif', label: isFrench ? 'Actif' : 'Active' },
     { value: 'sans-emploi', label: isFrench ? 'Sans emploi' : 'Unemployed' },
-    { value: 'retraite', label: isFrench ? 'À la retraite' : 'Retired' },
-    { value: 'conge-maladie', label: isFrench ? 'Congé maladie' : 'Sick Leave' },
-    { value: 'conge-parental', label: isFrench ? 'Congé parental' : 'Parental Leave' }
+    { value: 'retraite', label: isFrench ? 'Ã€ la retraite' : 'Retired' },
+    { value: 'conge-maladie', label: isFrench ? 'CongÃ© maladie' : 'Sick Leave' },
+    { value: 'conge-parental', label: isFrench ? 'CongÃ© parental' : 'Parental Leave' }
   ];
 
   return (
     <div className="mpr-container min-h-screen mobile-reflow-fix revenus-page">
       <div className="mpr-container mobile-reflow-fix">
-        {/* En-tête simple */}
+        {/* En-tÃªte simple */}
         <div className="mpr-section text-center">
           <h1 className="text-4xl font-bold mb-6 text-gray-800">
-            {isFrench ? '💰 Mes revenus' : '💰 My Income'}
+            {isFrench ? 'ðŸ’° Mes revenus' : 'ðŸ’° My Income'}
           </h1>
           <p className="text-lg text-gray-600 max-w-4xl mx-auto leading-relaxed">
             {isFrench 
-              ? 'Gérez vos sources de revenus pour optimiser votre planification de retraite'
+              ? 'GÃ©rez vos sources de revenus pour optimiser votre planification de retraite'
               : 'Manage your income sources to optimize your retirement planning'
             }
           </p>
@@ -287,27 +287,27 @@ const Revenus: React.FC = () => {
             <AlertDescription className="text-lg">
               <strong>{isFrench ? 'Conseils :' : 'Tips:'}</strong> {
                 isFrench 
-                  ? 'Renseignez toutes vos sources de revenus pour une planification précise. Ces informations sont cruciales pour les calculs de retraite et remplacent les informations de salaire du profil.'
+                  ? 'Renseignez toutes vos sources de revenus pour une planification prÃ©cise. Ces informations sont cruciales pour les calculs de retraite et remplacent les informations de salaire du profil.'
                   : 'Fill in all your income sources for accurate planning. This information is crucial for retirement calculations and replaces the salary information from the profile.'}
             </AlertDescription>
           </Alert>
         )}
 
 
-        {/* Section Information RRQ - Affichée quand pertinent */}
+        {/* Section Information RRQ - AffichÃ©e quand pertinent */}
         {(() => {
-          // Logique pour déterminer quand afficher les informations RRQ
+          // Logique pour dÃ©terminer quand afficher les informations RRQ
           const shouldShowRRQInfo = 
             // Si quelqu'un planifie sa retraite
             userData.personal?.statutProfessionnel1 === 'retraite' ||
             userData.personal?.statutProfessionnel2 === 'retraite' ||
-            // Si quelqu'un reçoit de l'assurance emploi (transition vers retraite)
+            // Si quelqu'un reÃ§oit de l'assurance emploi (transition vers retraite)
             (userData.personal as any)?.typeRevenu1 === 'assurance-emploi' ||
             (userData.personal as any)?.typeRevenu2 === 'assurance-emploi' ||
             // Si quelqu'un a plus de 60 ans (approche de la retraite)
             (userData.personal?.naissance1 && new Date().getFullYear() - new Date(userData.personal.naissance1).getFullYear() >= 60) ||
             (userData.personal?.naissance2 && new Date().getFullYear() - new Date(userData.personal.naissance2).getFullYear() >= 60) ||
-            // Si l'utilisateur a explicitement demandé à voir l'info
+            // Si l'utilisateur a explicitement demandÃ© Ã  voir l'info
             showRRQInfo;
 
           if (!shouldShowRRQInfo) return null;
@@ -327,13 +327,13 @@ const Revenus: React.FC = () => {
                       onClick={() => setShowRRQInfo(false)}
                       className="text-gray-400 hover:text-white"
                     >
-                      ✕
+                      âœ•
                     </Button>
                   )}
                 </div>
                 <p className="text-blue-200 text-lg">
                   {isFrench 
-                    ? 'Délais et procédures pour votre demande de rente sans carence'
+                    ? 'DÃ©lais et procÃ©dures pour votre demande de rente sans carence'
                     : 'Deadlines and procedures for your pension application without gaps'}
                 </p>
               </div>
@@ -342,11 +342,11 @@ const Revenus: React.FC = () => {
           );
         })()}
 
-        {/* Résumé Global */}
+        {/* RÃ©sumÃ© Global */}
         <GlobalSummary userData={userData} isFrench={isFrench} />
 
         <div className="mpr-form">
-        {/* Bouton Tout développer/réduire */}
+        {/* Bouton Tout dÃ©velopper/rÃ©duire */}
         <div className="text-center mb-8">
               <Button 
             onClick={toggleAllSections}
@@ -357,12 +357,12 @@ const Revenus: React.FC = () => {
             {isAllExpanded ? (
               <>
                 <Minimize2 className="w-5 h-5 mr-2" />
-                {isFrench ? 'Tout réduire' : 'Collapse All'}
+                {isFrench ? 'Tout rÃ©duire' : 'Collapse All'}
               </>
             ) : (
               <>
                 <Expand className="w-5 h-5 mr-2" />
-                {isFrench ? 'Tout développer' : 'Expand All'}
+                {isFrench ? 'Tout dÃ©velopper' : 'Expand All'}
               </>
             )}
               </Button>
@@ -380,7 +380,7 @@ const Revenus: React.FC = () => {
             <div className="text-center">
               <p className="text-lg text-gray-600 mb-6">
                 {isFrench
-                  ? 'Gérez vos revenus de travail : salaire, emploi saisonnier, travail autonome, revenus de location'
+                  ? 'GÃ©rez vos revenus de travail : salaire, emploi saisonnier, travail autonome, revenus de location'
                   : 'Manage your work income: salary, seasonal employment, self-employment, rental income'}
               </p>
           </div>
@@ -404,10 +404,10 @@ const Revenus: React.FC = () => {
               personName={userData.personal?.prenom2 || (isFrench ? 'Personne 2' : 'Person 2')}
               data={(userData.personal as any)?.unifiedIncome2 || []}
               onDataChange={(data) => {
-                console.log('🚨 PERSONNE 2 - onDataChange appelé avec:', data);
-                console.log('🚨 PERSONNE 2 - Avant updateUserData, userData.unifiedIncome2:', (userData.personal as any)?.unifiedIncome2);
+                console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
+                console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
                 updateUserData('personal', { unifiedIncome2: data } as any);
-                console.log('🚨 PERSONNE 2 - Après updateUserData');
+                console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
               }}
               isFrench={isFrench}
                 userData={userData}
@@ -430,13 +430,13 @@ const Revenus: React.FC = () => {
                 <div className="text-center">
               <p className="text-lg text-gray-600 mb-6">
               {isFrench 
-                  ? 'Gérez vos prestations gouvernementales : RRQ/CPP, Sécurité de la vieillesse, Assurance emploi, rentes privées'
+                  ? 'GÃ©rez vos prestations gouvernementales : RRQ/CPP, SÃ©curitÃ© de la vieillesse, Assurance emploi, rentes privÃ©es'
                   : 'Manage your government benefits: QPP/CPP, Old Age Security, Employment Insurance, private pensions'}
             </p>
             <div className="bg-yellow-100 border border-yellow-400 rounded-lg p-4 mb-4">
               <p className="text-yellow-800 font-semibold">
                 {isFrench 
-                  ? 'DEBUG: Section Prestations ouverte - RRQ, SV et Rentes privées devraient être visibles'
+                  ? 'DEBUG: Section Prestations ouverte - RRQ, SV et Rentes privÃ©es devraient Ãªtre visibles'
                   : 'DEBUG: Benefits section open - RRQ, OAS and Private Pensions should be visible'}
               </p>
             </div>
@@ -476,7 +476,7 @@ const Revenus: React.FC = () => {
                 <div className="text-center">
               <p className="text-lg text-gray-600 mb-6">
               {isFrench 
-                  ? 'Gérez vos investissements : REER, CELI, CRI, crypto-monnaie'
+                  ? 'GÃ©rez vos investissements : REER, CELI, CRI, crypto-monnaie'
                   : 'Manage your investments: RRSP, TFSA, LIRA, cryptocurrency'}
             </p>
           </div>
@@ -518,13 +518,13 @@ const Revenus: React.FC = () => {
                 : 'Calculate and compare the returns of your RRSP, TFSA and LIRA investments'}
             </p>
             
-            {/* Gating d'accès — Aperçu gratuit pour le plan Free */}
+            {/* Gating d'accÃ¨s â€” AperÃ§u gratuit pour le plan Free */}
             {currentPlan === 'free' && (
               <div className="max-w-3xl mx-auto mb-4">
                 <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-amber-900 text-sm">
                   {isFrench
-                    ? 'Aperçu gratuit — passez à Pro/Expert pour l’étude complète (TWR segmenté, comparaisons multi‑comptes) et le rapport exportable.'
-                    : 'Free preview — upgrade to Pro/Expert for the full study (segmented TWR, multi‑account comparisons) and exportable report.'}
+                    ? 'AperÃ§u gratuit â€” passez Ã  Pro/Expert pour lâ€™Ã©tude complÃ¨te (TWR segmentÃ©, comparaisons multiâ€‘comptes) et le rapport exportable.'
+                    : 'Free preview â€” upgrade to Pro/Expert for the full study (segmented TWR, multiâ€‘account comparisons) and exportable report.'}
                   <div className="mt-3">
                     <Button
                       variant="outline"
@@ -546,7 +546,7 @@ const Revenus: React.FC = () => {
               <ReturnCalculator isFrench={isFrench} />
             </div>
 
-            {/* Modal d’upgrade */}
+            {/* Modal dâ€™upgrade */}
             <AdvancedUpgradeModal
               isOpen={isUpgradeModalOpen}
               onClose={() => setIsUpgradeModalOpen(false)}
@@ -561,15 +561,15 @@ const Revenus: React.FC = () => {
             <div className="mpr-form">
               <h4 className="text-lg font-bold text-indigo-300 mb-4 flex items-center gap-2">
                 <Info className="w-5 h-5" />
-                {isFrench ? 'À propos de la calculette de rendement' : 'About the Return Calculator'}
+                {isFrench ? 'Ã€ propos de la calculette de rendement' : 'About the Return Calculator'}
               </h4>
               <div className="mpr-form-row cols-2 text-sm text-gray-300">
                 <div>
-                  <strong className="text-indigo-300">{isFrench ? 'Fonctionnalités :' : 'Features:'}</strong>
+                  <strong className="text-indigo-300">{isFrench ? 'FonctionnalitÃ©s :' : 'Features:'}</strong>
                   <ul className="list-disc list-inside mt-2 space-y-1">
                     <li>{isFrench ? 'Calcul IRR (Taux de rendement interne)' : 'IRR (Internal Rate of Return) calculation'}</li>
-                    <li>{isFrench ? 'Rendement pondéré dans le temps (TWR)' : 'Time-Weighted Return (TWR)'}</li>
-                    <li>{isFrench ? 'Rendement pondéré par l\'argent (MWR)' : 'Money-Weighted Return (MWR)'}</li>
+                    <li>{isFrench ? 'Rendement pondÃ©rÃ© dans le temps (TWR)' : 'Time-Weighted Return (TWR)'}</li>
+                    <li>{isFrench ? 'Rendement pondÃ©rÃ© par l\'argent (MWR)' : 'Money-Weighted Return (MWR)'}</li>
                     <li>{isFrench ? 'Gestion des contributions multiples' : 'Multiple contributions management'}</li>
                   </ul>
                 </div>
@@ -578,8 +578,8 @@ const Revenus: React.FC = () => {
                   <ul className="list-disc list-inside mt-2 space-y-1">
                     <li>{isFrench ? 'Comparer la performance entre comptes' : 'Compare performance between accounts'}</li>
                     <li>{isFrench ? 'Analyser l\'impact des versements' : 'Analyze contribution impact'}</li>
-                    <li>{isFrench ? 'Évaluer les stratégies d\'investissement' : 'Evaluate investment strategies'}</li>
-                    <li>{isFrench ? 'Optimiser les décisions futures' : 'Optimize future decisions'}</li>
+                    <li>{isFrench ? 'Ã‰valuer les stratÃ©gies d\'investissement' : 'Evaluate investment strategies'}</li>
+                    <li>{isFrench ? 'Optimiser les dÃ©cisions futures' : 'Optimize future decisions'}</li>
                   </ul>
                 </div>
               </div>
@@ -592,57 +592,42 @@ const Revenus: React.FC = () => {
           <Button
             size="lg"
             disabled={isSaving}
-            className="bg-gradient-to-r from-green-500 via-emerald-500 to-teal-600 hover:from-green-600 hover:via-emerald-600 hover:to-teal-700 text-white font-bold text-2xl py-6 px-12 shadow-2xl transform hover:scale-110 transition-all duration-300 border-4 border-white/20 backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed"
+            className="senior-btn senior-btn-primary"
             onClick={async () => {
               setIsSaving(true);
               try {
-                // Utiliser la nouvelle méthode de sauvegarde directe avec gestion des accents
-                const result = await EnhancedSaveManager.saveDirectly(userData, {
+                // Utiliser la nouvelle mÃ©thode de sauvegarde directe avec gestion des accents
+                const result = await EnhancedSaveManager.saveWithDialog(userData, {
                   includeTimestamp: true
                 });
                 
                 if (result.success) {
                   console.log('💾 Données de revenus sauvegardées avec succès:', result.filename);
-                  
-                  // Afficher un message de succès avec le nom du fichier
-                  alert(isFrench 
-                    ? `✅ Revenus sauvegardés avec succès !\nFichier: ${result.filename}`
-                    : `✅ Income data saved successfully!\nFile: ${result.filename}`
-                  );
                 } else if (result.blocked) {
-                  console.warn('🚫 Sauvegarde bloquée:', result.reason);
+                  console.warn('ðŸš« Sauvegarde bloquÃ©e:', result.reason);
                   alert(isFrench 
-                    ? `🚫 Sauvegarde bloquée: ${result.reason}`
-                    : `🚫 Save blocked: ${result.reason}`
+                    ? `ðŸš« 🚫 Sauvegarde bloquée: `
+                    : `ðŸš« Save blocked: ${result.reason}`
                   );
                 } else {
                   throw new Error(result.error || 'Erreur inconnue');
                 }
                 
               } catch (error) {
-                console.error('❌ Erreur lors de la sauvegarde:', error);
+                console.error('âŒ Erreur lors de la sauvegarde:', error);
                 alert(isFrench 
-                  ? `❌ Erreur lors de la sauvegarde: ${error instanceof Error ? error.message : 'Erreur inconnue'}`
-                  : `❌ Error saving data: ${error instanceof Error ? error.message : 'Unknown error'}` 
+                  ? `âŒ Erreur lors de la sauvegarde: ${error instanceof Error ? error.message : 'Erreur inconnue'}`
+                  : `âŒ Error saving data: ${error instanceof Error ? error.message : 'Unknown error'}` 
                 );
               } finally {
                 setIsSaving(false);
               }
             }}
           >
-            <Save className="w-8 h-8 mr-4 animate-pulse" />
-            {isSaving 
-              ? (isFrench ? '💾 SAUVEGARDE...' : '💾 SAVING...')
-              : (isFrench ? '💾 SAUVEGARDER' : '💾 SAVE')
-            }
-            <Shield className="w-8 h-8 ml-4 animate-bounce" />
+            <Save className="w-5 h-5" />
+            {isSaving ? (isFrench ? "Sauvegarde..." : "Saving...") : (isFrench ? "Sauvegarder" : "Save")}
           </Button>
-          <p className="text-gray-300 mt-4 text-lg">
-            {isFrench 
-              ? '✨ Vos informations de revenus sont sécurisées!'
-              : '✨ Your income information is secure!'
-            }
-          </p>
+          <p className="text-gray-600 mt-2 text-base">{isFrench ? "Vos informations de revenus sont s�curis�es." : "Your income information is secure."}</p>
         </div>
 
         </div>
@@ -673,7 +658,7 @@ const Revenus: React.FC = () => {
           
           <p className="text-gray-400 text-sm">
             {isFrench 
-              ? 'Cliquez sur "Info RRQ" pour consulter les délais de demande de rente'
+              ? 'Cliquez sur "Info RRQ" pour consulter les dÃ©lais de demande de rente'
               : 'Click "QPP Info" to view pension application deadlines'
             }
           </p>

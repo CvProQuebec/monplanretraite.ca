@@ -16,6 +16,7 @@ import {
 import SocioEconomicSection from '@/components/ui/SocioEconomicSection';
 import HealthFactorsSection from '@/components/ui/HealthFactorsSection';
 import EnvironmentFactorsSection from '@/components/ui/EnvironmentFactorsSection';
+import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 import '../../senior-unified-styles.css';
 
 // Styles locaux complémentaires (petit complément aux styles unifiés)
@@ -33,12 +34,16 @@ const pageLocalStyles = `
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 16px;
-  margin-bottom: 16px;
+  margin-bottom: 24px;
+  overflow: visible;
+  display: block;
+  clear: both;
 }
 .senior-inline-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .senior-inline-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-.senior-field-inline { display: grid; grid-template-columns: minmax(160px, 200px) 1fr; align-items: center; gap: 8px; }
-.senior-form-label { font-size: 14px; font-weight: 600; color: #2d3748; }
+.senior-field-inline { display: grid; grid-template-columns: 90px 1fr; align-items: center; gap: 6px; }
+.mpr-form-row.cols-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.senior-form-label { font-size: 14px; font-weight: 600; color: #1a202c !important; display: block !important; }
 .senior-form-input, .senior-form-select {
   font-size: 16px; min-height: 48px; padding: 10px 14px; border: 2px solid #e2e8f0; border-radius: 8px; background: white;
 }
@@ -352,8 +357,18 @@ const MaRetraite: React.FC = () => {
   const save = async () => {
     setIsSaving(true);
     try {
-      await new Promise(r => setTimeout(r, 600));
-      alert(isFrench ? 'Données sauvegardées avec succès!' : 'Data saved successfully!');
+      const result = await EnhancedSaveManager.saveWithDialog(userData, { includeTimestamp: true });
+      if (result.success) {
+        alert(isFrench ? 'Sauvegarde réussie.' : 'Saved successfully.');
+      } else {
+        const msg = result.blocked
+          ? (isFrench ? 'Sauvegarde bloquée par la licence. Raison : ' + (result.reason || '') : 'Save blocked by license. Reason: ' + (result.reason || ''))
+          : (result.error || (isFrench ? 'Échec de la sauvegarde.' : 'Save failed.'));
+        alert(msg);
+      }
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      alert((isFrench ? 'Erreur lors de la sauvegarde : ' : 'Error saving: ') + message);
     } finally {
       setIsSaving(false);
     }
@@ -399,14 +414,20 @@ const MaRetraite: React.FC = () => {
         )}
 
         {/* SECTION 1: Informations de base */}
-        <div className="senior-compact-section">
-          <h2 className="text-xl font-bold text-blue-800 mb-4 flex items-center gap-2">
-            <Users className="w-6 h-6" />
-            {isFrench ? 'Informations de base' : 'Basic Information'}
-          </h2>
+        <div className="senior-compact-section" style={{ marginBottom: '32px', paddingBottom: '32px', minHeight: '600px' }}>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-bold text-blue-800 flex items-center gap-2">
+              <Users className="w-6 h-6" />
+              {isFrench ? 'Informations de base' : 'Basic Information'}
+            </h2>
+            <button className="senior-btn senior-btn-primary" disabled={isSaving} onClick={save}>
+              <Save className="w-5 h-5" />
+              {isSaving ? (isFrench ? 'Sauvegarde...' : 'Saving...') : (isFrench ? 'Sauvegarder' : 'Save')}
+            </button>
+          </div>
 
-          <div className="mpr-form-row cols-2">
-            {/* Person 1 */}
+          <div className="grid grid-cols-2 gap-4">
+            {/* Person 1 - GAUCHE */}
             <div className="space-y-3">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold">1</div>
@@ -414,58 +435,121 @@ const MaRetraite: React.FC = () => {
                 {p1Valid && <CheckCircle className="w-4 h-4 text-green-500" />}
               </div>
 
-          <div className="mpr-form-row cols-2">
-                <div className="senior-field-inline">
-                  <label className="senior-form-label" htmlFor="p1-fullname">{isFrench ? 'Nom complet' : 'Full Name'}</label>
-                  <input
-                    id="p1-fullname"
-                    className="senior-form-input"
-                    type="text"
-                    placeholder={isFrench ? 'Jean Tremblay' : 'John Smith'}
-                    aria-label={isFrench ? 'Nom complet personne 1' : 'Full name person 1'}
-                    value={`${personal.prenom1 || ''}${personal.nom1 ? ' ' + personal.nom1 : ''}`}
-                    onChange={(e) => {
-                      const full = (e.target.value || '').trim();
-                      if (!full) {
-                        updateUserData('personal', { prenom1: '', nom1: '' });
-                        return;
-                      }
-                      const parts = full.split(/\s+/);
-                      const last = parts.length > 1 ? parts.pop() as string : '';
-                      const first = parts.join(' ');
-                      updateUserData('personal', { prenom1: first, nom1: last });
-                    }}
-                  />
-                </div>
-                <div className="senior-field-inline">
-                  <label className="senior-form-label" htmlFor="p1-birth">{isFrench ? 'Date de naissance *' : 'Birth Date *'}</label>
-                  <input id="p1-birth" className="senior-form-input" type="date" aria-label={isFrench ? 'Date de naissance personne 1' : 'Birth date person 1'} value={personal.naissance1 || ''} onChange={(e) => updateUserData('personal', { naissance1: e.target.value })} />
-                </div>
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p1-firstname">{isFrench ? 'Prénom' : 'First Name'}</label>
+                <input
+                  id="p1-firstname"
+                  className="senior-form-input"
+                  type="text"
+                  placeholder={isFrench ? 'Jean' : 'John'}
+                  aria-label={isFrench ? 'Prénom personne 1' : 'First name person 1'}
+                  value={personal.prenom1 || ''}
+                  onChange={(e) => updateUserData('personal', { prenom1: e.target.value })}
+                />
               </div>
 
-            <div className="mpr-form-row cols-2">
-                <div className="senior-field-inline">
-                  <label className="senior-form-label" htmlFor="p1-gender">{isFrench ? 'Sexe *' : 'Gender *'}</label>
-                  <select id="p1-gender" className="senior-form-select" aria-label={isFrench ? 'Sexe personne 1' : 'Gender person 1'} value={personal.sexe1 || ''} onChange={(e) => updateUserData('personal', { sexe1: e.target.value })}>
-                    <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                    <option value="homme">{isFrench ? 'Homme' : 'Male'}</option>
-                    <option value="femme">{isFrench ? 'Femme' : 'Female'}</option>
-                  </select>
-                </div>
-                <div className="senior-field-inline">
-                  <label className="senior-form-label" htmlFor="p1-province">Province</label>
-                  <select id="p1-province" className="senior-form-select" aria-label={isFrench ? 'Province personne 1' : 'Province person 1'} value={personal.province1 || personal.province || ''} onChange={(e) => updateUserData('personal', { province1: e.target.value, province: e.target.value })}>
-                    <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                    <option value="QC">Québec</option>
-                    <option value="ON">Ontario</option>
-                    <option value="BC">Colombie-Britannique</option>
-                    <option value="AB">Alberta</option>
-                  </select>
-                </div>
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p1-lastname">{isFrench ? 'Nom' : 'Last Name'}</label>
+                <input
+                  id="p1-lastname"
+                  className="senior-form-input"
+                  type="text"
+                  placeholder={isFrench ? 'Tremblay' : 'Smith'}
+                  aria-label={isFrench ? 'Nom personne 1' : 'Last name person 1'}
+                  value={personal.nom1 || ''}
+                  onChange={(e) => updateUserData('personal', { nom1: e.target.value })}
+                />
+              </div>
+
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p1-gender">{isFrench ? 'Sexe *' : 'Gender *'}</label>
+                <select id="p1-gender" className="senior-form-select" aria-label={isFrench ? 'Sexe personne 1' : 'Gender person 1'} value={personal.sexe1 || ''} onChange={(e) => updateUserData('personal', { sexe1: e.target.value })}>
+                  <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
+                  <option value="homme">{isFrench ? 'Homme' : 'Male'}</option>
+                  <option value="femme">{isFrench ? 'Femme' : 'Female'}</option>
+                </select>
+              </div>
+
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p1-birth">{isFrench ? 'Date naissance *' : 'Birth Date *'}</label>
+                <input 
+                  id="p1-birth" 
+                  className="senior-form-input" 
+                  type="text"
+                  placeholder="AAAA-MM-JJ"
+                  pattern="\d{4}-\d{2}-\d{2}"
+                  maxLength={10}
+                  aria-label={isFrench ? 'Date de naissance personne 1' : 'Birth date person 1'} 
+                  value={personal.naissance1 || ''} 
+                  onChange={(e) => {
+                    let val = e.target.value.replace(/[^\d-]/g, '');
+                    if (val.length === 8 && !val.includes('-')) {
+                      val = val.substring(0, 4) + '-' + val.substring(4, 6) + '-' + val.substring(6, 8);
+                    }
+                    updateUserData('personal', { naissance1: val });
+                  }} 
+                />
+              </div>
+
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p1-province">Province</label>
+                <select id="p1-province" className="senior-form-select" aria-label={isFrench ? 'Province personne 1' : 'Province person 1'} value={personal.province1 || personal.province || 'QC'} onChange={(e) => updateUserData('personal', { province1: e.target.value, province: e.target.value })}>
+                  <option value="QC">Québec</option>
+                  <option value="ON">Ontario</option>
+                  <option value="BC">Colombie-Britannique</option>
+                  <option value="AB">Alberta</option>
+                </select>
+              </div>
+
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p1-marital">{isFrench ? 'Statut matrimonial' : 'Marital Status'}</label>
+                <select
+                  id="p1-marital"
+                  className="senior-form-select"
+                  aria-label={isFrench ? 'Statut matrimonial personne 1' : 'Marital status person 1'}
+                  value={personal.statutMatrimonial || ''}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    const updates: any = { statutMatrimonial: v };
+                    if (v === 'celibataire' || v === 'single') {
+                      updates.prenom2 = '';
+                      updates.nom2 = '';
+                      updates.naissance2 = '';
+                      updates.sexe2 = '';
+                      updates.salaire2 = 0;
+                      updates.unifiedIncome2 = [];
+                    }
+                    updateUserData('personal', updates);
+                    if (v === 'celibataire' || v === 'single') {
+                      updateUserData('savings', {
+                        reer2: 0,
+                        celi2: 0,
+                        placements2: 0,
+                        epargne2: 0,
+                        cri2: 0
+                      });
+                    }
+                  }}
+                >
+                  <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
+                  <option value="marie">{isFrench ? 'Marié' : 'Married'}</option>
+                  <option value="celibataire">{isFrench ? 'Célibataire' : 'Single'}</option>
+                  <option value="conjoint-fait">{isFrench ? 'Conjoint de fait' : 'Common-law'}</option>
+                  <option value="separe">{isFrench ? 'Séparé' : 'Separated'}</option>
+                  <option value="veuf">{isFrench ? 'Veuf' : 'Widowed'}</option>
+                </select>
+              </div>
+
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p1-children">{isFrench ? 'Enfants' : 'Children'}</label>
+                <select id="p1-children" className="senior-form-select" aria-label={isFrench ? 'Enfants personne 1' : 'Children person 1'} value={personal.enfants ? 'oui' : 'non'} onChange={(e) => updateUserData('personal', { enfants: e.target.value === 'oui' })}>
+                  <option value="oui">{isFrench ? 'Oui' : 'Yes'}</option>
+                  <option value="non">{isFrench ? 'Non' : 'No'}</option>
+                </select>
               </div>
             </div>
 
-            {/* Person 2 */}
+            {/* Person 2 - DROITE */}
             <div className="space-y-3">
               <div className="flex items-center gap-2 mb-2">
                 <div className="w-6 h-6 bg-green-600 rounded-full flex items-center justify-center text-white text-xs font-bold">2</div>
@@ -473,111 +557,118 @@ const MaRetraite: React.FC = () => {
                 {p2Valid && <CheckCircle className="w-4 h-4 text-green-500" />}
               </div>
 
-              <div className="mpr-form-row cols-2">
-                <div className="senior-field-inline">
-                  <label className="senior-form-label" htmlFor="p2-fullname">{isFrench ? 'Nom complet' : 'Full Name'}</label>
-                  <input
-                    id="p2-fullname"
-                    className="senior-form-input"
-                    type="text"
-                    placeholder={isFrench ? 'Marie Tremblay' : 'Mary Smith'}
-                    aria-label={isFrench ? 'Nom complet personne 2' : 'Full name person 2'}
-                    value={`${personal.prenom2 || ''}${personal.nom2 ? ' ' + personal.nom2 : ''}`}
-                    onChange={(e) => {
-                      const full = (e.target.value || '').trim();
-                      if (!full) {
-                        updateUserData('personal', { prenom2: '', nom2: '' });
-                        return;
-                      }
-                      const parts = full.split(/\s+/);
-                      const last = parts.length > 1 ? parts.pop() as string : '';
-                      const first = parts.join(' ');
-                      updateUserData('personal', { prenom2: first, nom2: last });
-                    }}
-                  />
-                </div>
-                <div className="senior-field-inline">
-                  <label className="senior-form-label" htmlFor="p2-birth">{isFrench ? 'Date de naissance' : 'Birth Date'}</label>
-                  <input id="p2-birth" className="senior-form-input" type="date" aria-label={isFrench ? 'Date de naissance personne 2' : 'Birth date person 2'} value={personal.naissance2 || ''} onChange={(e) => updateUserData('personal', { naissance2: e.target.value })} />
-                </div>
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p2-firstname">{isFrench ? 'Prénom' : 'First Name'}</label>
+                <input
+                  id="p2-firstname"
+                  className="senior-form-input"
+                  type="text"
+                  placeholder={isFrench ? 'Marie' : 'Mary'}
+                  aria-label={isFrench ? 'Prénom personne 2' : 'First name person 2'}
+                  value={personal.prenom2 || ''}
+                  onChange={(e) => updateUserData('personal', { prenom2: e.target.value })}
+                />
               </div>
 
-              <div className="mpr-form-row cols-2">
-                <div className="senior-field-inline">
-                  <label className="senior-form-label" htmlFor="p2-gender">{isFrench ? 'Sexe' : 'Gender'}</label>
-                  <select id="p2-gender" className="senior-form-select" aria-label={isFrench ? 'Sexe personne 2' : 'Gender person 2'} value={personal.sexe2 || ''} onChange={(e) => updateUserData('personal', { sexe2: e.target.value })}>
-                    <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                    <option value="homme">{isFrench ? 'Homme' : 'Male'}</option>
-                    <option value="femme">{isFrench ? 'Femme' : 'Female'}</option>
-                  </select>
-                </div>
-                <div className="senior-field-inline">
-                  <label className="senior-form-label" htmlFor="p2-province">Province</label>
-                  <select id="p2-province" className="senior-form-select" aria-label={isFrench ? 'Province personne 2' : 'Province person 2'} value={personal.province2 || ''} onChange={(e) => updateUserData('personal', { province2: e.target.value })}>
-                    <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                    <option value="QC">Québec</option>
-                    <option value="ON">Ontario</option>
-                    <option value="BC">Colombie-Britannique</option>
-                    <option value="AB">Alberta</option>
-                  </select>
-                </div>
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p2-lastname">{isFrench ? 'Nom' : 'Last Name'}</label>
+                <input
+                  id="p2-lastname"
+                  className="senior-form-input"
+                  type="text"
+                  placeholder={isFrench ? 'Tremblay' : 'Smith'}
+                  aria-label={isFrench ? 'Nom personne 2' : 'Last name person 2'}
+                  value={personal.nom2 || ''}
+                  onChange={(e) => updateUserData('personal', { nom2: e.target.value })}
+                />
               </div>
-            </div>
-          </div>
-        </div>
 
-        {/* Situation familiale */}
-        <div className="senior-card">
-          <h2 className="text-xl font-bold text-blue-800 mb-4 flex items-center gap-2">
-            <Users className="w-6 h-6" />
-            {isFrench ? 'Situation familiale' : 'Family Situation'}
-          </h2>
-          <div className="mpr-form-row cols-2">
-            <div className="senior-field-inline">
-              <label className="senior-form-label" htmlFor="marital">{isFrench ? 'Statut matrimonial' : 'Marital Status'}</label>
-              <select
-                id="marital"
-                className="senior-form-select"
-                aria-label={isFrench ? 'Statut matrimonial' : 'Marital status'}
-                value={personal.statutMatrimonial || ''}
-                onChange={(e) => {
-                  const v = e.target.value;
-                  const updates: any = { statutMatrimonial: v };
-                  // Si célibataire: vider Personne 2 et mettre ses montants à 0
-                  if (v === 'celibataire' || v === 'single') {
-                    updates.prenom2 = '';
-                    updates.nom2 = '';
-                    updates.naissance2 = '';
-                    updates.sexe2 = '';
-                    updates.salaire2 = 0;
-                    updates.unifiedIncome2 = [];
-                  }
-                  updateUserData('personal', updates);
-                  if (v === 'celibataire' || v === 'single') {
-                    updateUserData('savings', {
-                      reer2: 0,
-                      celi2: 0,
-                      placements2: 0,
-                      epargne2: 0,
-                      cri2: 0
-                    });
-                  }
-                }}
-              >
-                <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
-                <option value="marie">{isFrench ? 'Marié' : 'Married'}</option>
-                <option value="celibataire">{isFrench ? 'Célibataire' : 'Single'}</option>
-                <option value="conjoint-fait">{isFrench ? 'Conjoint de fait' : 'Common-law'}</option>
-                <option value="separe">{isFrench ? 'Séparé' : 'Separated'}</option>
-                <option value="veuf">{isFrench ? 'Veuf' : 'Widowed'}</option>
-              </select>
-            </div>
-            <div className="senior-field-inline">
-              <label className="senior-form-label" htmlFor="children">{isFrench ? 'Enfants' : 'Children'}</label>
-              <select id="children" className="senior-form-select" aria-label={isFrench ? 'Enfants' : 'Children'} value={personal.enfants ? 'oui' : 'non'} onChange={(e) => updateUserData('personal', { enfants: e.target.value === 'oui' })}>
-                <option value="oui">{isFrench ? 'Oui' : 'Yes'}</option>
-                <option value="non">{isFrench ? 'Non' : 'No'}</option>
-              </select>
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p2-gender">{isFrench ? 'Sexe' : 'Gender'}</label>
+                <select id="p2-gender" className="senior-form-select" aria-label={isFrench ? 'Sexe personne 2' : 'Gender person 2'} value={personal.sexe2 || ''} onChange={(e) => updateUserData('personal', { sexe2: e.target.value })}>
+                  <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
+                  <option value="homme">{isFrench ? 'Homme' : 'Male'}</option>
+                  <option value="femme">{isFrench ? 'Femme' : 'Female'}</option>
+                </select>
+              </div>
+
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p2-birth">{isFrench ? 'Date naissance' : 'Birth Date'}</label>
+                <input 
+                  id="p2-birth" 
+                  className="senior-form-input" 
+                  type="text"
+                  placeholder="AAAA-MM-JJ"
+                  pattern="\d{4}-\d{2}-\d{2}"
+                  maxLength={10}
+                  aria-label={isFrench ? 'Date de naissance personne 2' : 'Birth date person 2'} 
+                  value={personal.naissance2 || ''} 
+                  onChange={(e) => {
+                    let val = e.target.value.replace(/[^\d-]/g, '');
+                    if (val.length === 8 && !val.includes('-')) {
+                      val = val.substring(0, 4) + '-' + val.substring(4, 6) + '-' + val.substring(6, 8);
+                    }
+                    updateUserData('personal', { naissance2: val });
+                  }} 
+                />
+              </div>
+
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p2-province">Province</label>
+                <select id="p2-province" className="senior-form-select" aria-label={isFrench ? 'Province personne 2' : 'Province person 2'} value={personal.province2 || 'QC'} onChange={(e) => updateUserData('personal', { province2: e.target.value })}>
+                  <option value="QC">Québec</option>
+                  <option value="ON">Ontario</option>
+                  <option value="BC">Colombie-Britannique</option>
+                  <option value="AB">Alberta</option>
+                </select>
+              </div>
+
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p2-marital">{isFrench ? 'Statut matrimonial' : 'Marital Status'}</label>
+                <select
+                  id="p2-marital"
+                  className="senior-form-select"
+                  aria-label={isFrench ? 'Statut matrimonial personne 2' : 'Marital status person 2'}
+                  value={personal.statutMatrimonial || ''}
+                  onChange={(e) => {
+                    const v = e.target.value;
+                    const updates: any = { statutMatrimonial: v };
+                    if (v === 'celibataire' || v === 'single') {
+                      updates.prenom2 = '';
+                      updates.nom2 = '';
+                      updates.naissance2 = '';
+                      updates.sexe2 = '';
+                      updates.salaire2 = 0;
+                      updates.unifiedIncome2 = [];
+                    }
+                    updateUserData('personal', updates);
+                    if (v === 'celibataire' || v === 'single') {
+                      updateUserData('savings', {
+                        reer2: 0,
+                        celi2: 0,
+                        placements2: 0,
+                        epargne2: 0,
+                        cri2: 0
+                      });
+                    }
+                  }}
+                >
+                  <option value="">{isFrench ? 'Sélectionner' : 'Select'}</option>
+                  <option value="marie">{isFrench ? 'Marié' : 'Married'}</option>
+                  <option value="celibataire">{isFrench ? 'Célibataire' : 'Single'}</option>
+                  <option value="conjoint-fait">{isFrench ? 'Conjoint de fait' : 'Common-law'}</option>
+                  <option value="separe">{isFrench ? 'Séparé' : 'Separated'}</option>
+                  <option value="veuf">{isFrench ? 'Veuf' : 'Widowed'}</option>
+                </select>
+              </div>
+
+              <div className="senior-field-inline">
+                <label className="senior-form-label" htmlFor="p2-children">{isFrench ? 'Enfants' : 'Children'}</label>
+                <select id="p2-children" className="senior-form-select" aria-label={isFrench ? 'Enfants personne 2' : 'Children person 2'} value={personal.enfants ? 'oui' : 'non'} onChange={(e) => updateUserData('personal', { enfants: e.target.value === 'oui' })}>
+                  <option value="oui">{isFrench ? 'Oui' : 'Yes'}</option>
+                  <option value="non">{isFrench ? 'Non' : 'No'}</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -779,13 +870,6 @@ const MaRetraite: React.FC = () => {
           </div>
         )}
 
-        {/* Save */}
-        <div className="flex justify-center mt-6">
-          <button className="senior-btn senior-btn-primary" disabled={isSaving} onClick={save}>
-            <Save className="w-5 h-5" />
-            {isSaving ? (isFrench ? 'Sauvegarde...' : 'Saving...') : (isFrench ? 'Sauvegarder' : 'Save')}
-          </button>
-        </div>
       </div>
     </div>
   );

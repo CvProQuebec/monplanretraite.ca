@@ -21,6 +21,8 @@ import {
   TreePine
 } from 'lucide-react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
+import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
+import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 import '../../senior-unified-styles.css';
 
 /* CSS pour disposition horizontale des formulaires */
@@ -98,6 +100,8 @@ const initialImmobilierData = {
 
 const ImmobilierPage: React.FC = () => {
   const { language } = useLanguage();
+  const { userData } = useRetirementData();
+  const [isSaving, setIsSaving] = useState(false);
 
   // Injecter les styles CSS pour les formulaires horizontaux
   React.useEffect(() => {
@@ -637,6 +641,37 @@ const ImmobilierPage: React.FC = () => {
             </Tabs>
           </CardContent>
         </Card>
+        {/* Bouton Sauvegarder (aligné avec Save/Load) */}
+        <div className="text-center mt-6">
+          <Button
+            disabled={isSaving}
+            onClick={async () => {
+              setIsSaving(true);
+              try {
+                const result = await EnhancedSaveManager.saveWithDialog({
+                  ...userData,
+                  personal: {
+                    ...userData.personal,
+                    immobilierData
+                  }
+                }, { includeTimestamp: true });
+                if (result.success) {
+                  alert((language === 'fr')
+                    ? `✅ Immobilier sauvegardé avec succès !\nFichier : ${result.filename}`
+                    : `✅ Real estate saved successfully!\nFile: ${result.filename}`);
+                }
+              } catch (e) {
+                const msg = e instanceof Error ? e.message : String(e);
+                alert((language === 'fr') ? `❌ Erreur lors de la sauvegarde : ${msg}` : `❌ Error saving: ${msg}`);
+              } finally {
+                setIsSaving(false);
+              }
+            }}
+            className="senior-btn senior-btn-primary"
+          >
+            {isSaving ? (language === 'fr' ? 'Sauvegarde...' : 'Saving...') : (language === 'fr' ? 'Sauvegarder' : 'Save')}
+          </Button>
+        </div>
       </div>
     </div>
   );

@@ -13,7 +13,9 @@ const LOCAL_STORAGE_KEY = 'retirement-backup-data';
 const defaultUserData: UserData = {
   personal: {
     prenom1: '',  // Maintenant vide
+    nom1: '',
     prenom2: '',  // Maintenant vide
+    nom2: '',
     naissance1: '',  // Maintenant vide
     naissance2: '',  // Maintenant vide
     sexe1: '' as any,

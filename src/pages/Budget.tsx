@@ -1,6 +1,6 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+﻿import React, { useState, useEffect, lazy, Suspense } from 'react';
 
-/* CSS pour disposition 3 colonnes des dépenses */
+/* CSS pour disposition 3 colonnes des dÃ©penses */
 const expenseStyles = `
 .senior-expense-row {
   display: grid;
@@ -129,10 +129,10 @@ interface ExpenseEntry {
   description: string;
   amount: number;
   frequency: 'weekly' | 'biweekly' | 'monthly' | 'quarterly' | 'annually' | 'seasonal';
-  /** Part de besoin (%) pour zones grises (0-100). Si non défini, dérivé de la catégorie par défaut. */
+  /** Part de besoin (%) pour zones grises (0-100). Si non dÃ©fini, dÃ©rivÃ© de la catÃ©gorie par dÃ©faut. */
   needSharePct?: number;
   paymentDate?: number; // Jour du mois (1-31)
-  seasonalMonths?: number[]; // Mois pour les dépenses saisonnières
+  seasonalMonths?: number[]; // Mois pour les dÃ©penses saisonniÃ¨res
   isActive: boolean;
   isFixed: boolean; // Fixe ou variable
   notes?: string;
@@ -156,7 +156,7 @@ interface BudgetData {
 }
 
 const Budget: React.FC = () => {
-  // Injecter les styles CSS pour les dépenses
+  // Injecter les styles CSS pour les dÃ©penses
   useEffect(() => {
     const style = document.createElement('style');
     style.textContent = expenseStyles;
@@ -184,7 +184,7 @@ const Budget: React.FC = () => {
 
   const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
-  // Vérifier l'accès au Module Budget avec considération des codes promo
+  // VÃ©rifier l'accÃ¨s au Module Budget avec considÃ©ration des codes promo
   const userPlan = user?.subscription?.plan || 'free';
   const effectivePlan = PromoCodeService.getEffectivePlan(userPlan, appliedCode || '');
   const hasAccess = checkFeatureAccess('hasBudgetModule', effectivePlan);
@@ -196,7 +196,7 @@ const Budget: React.FC = () => {
   const [showAddExpense, setShowAddExpense] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  // Nouveau: paramètres revenus/déductions et cibles 50/30/20
+  // Nouveau: paramÃ¨tres revenus/dÃ©ductions et cibles 50/30/20
   const [budgetSettings, setBudgetSettings] = useState<BudgetSettings>({
     netIncomeMethod: 'regular',
     deductions: [],
@@ -225,11 +225,11 @@ const Budget: React.FC = () => {
     relevance: ''
   });
 
-  // Importer automatiquement les catégories principales de la page Dépenses (cashflow) dans le Budget
+  // Importer automatiquement les catÃ©gories principales de la page DÃ©penses (cashflow) dans le Budget
   const importFromCashflow = () => {
     const cf = (userData as any)?.cashflow;
     if (!cf) {
-      console.warn('Aucune donnée "cashflow" trouvée dans userData');
+      console.warn('Aucune donnÃ©e "cashflow" trouvÃ©e dans userData');
       return;
     }
 
@@ -269,21 +269,21 @@ const Budget: React.FC = () => {
       newLinks.push({ budgetItemId: id, sourceType: 'expense', sourceId });
     };
 
-    // Mappage cashflow -> catégories Budget
-    addIf('logement', 'logement', 'Hypothèque/Loyer', isFrench ? 'Logement' : 'Housing');
+    // Mappage cashflow -> catÃ©gories Budget
+    addIf('logement', 'logement', 'HypothÃ¨que/Loyer', isFrench ? 'Logement' : 'Housing');
     addIf('servicesPublics', 'services', isFrench ? 'Services publics' : 'Utilities', isFrench ? 'Services publics' : 'Utilities');
     addIf('assurances', 'divers', isFrench ? 'Assurances' : 'Insurance', isFrench ? 'Assurances' : 'Insurance');
-    addIf('telecom', 'services', isFrench ? 'Télécommunications' : 'Telecommunications', isFrench ? 'Télécommunications' : 'Telecommunications');
-    addIf('alimentation', 'alimentation', isFrench ? 'Épicerie' : 'Groceries', isFrench ? 'Alimentation' : 'Food');
+    addIf('telecom', 'services', isFrench ? 'TÃ©lÃ©communications' : 'Telecommunications', isFrench ? 'TÃ©lÃ©communications' : 'Telecommunications');
+    addIf('alimentation', 'alimentation', isFrench ? 'Ã‰picerie' : 'Groceries', isFrench ? 'Alimentation' : 'Food');
     addIf('transport', 'transport', isFrench ? 'Transport' : 'Transport', isFrench ? 'Transport' : 'Transport');
-    addIf('sante', 'sante', isFrench ? 'Santé' : 'Health', isFrench ? 'Santé' : 'Health');
+    addIf('sante', 'sante', isFrench ? 'SantÃ©' : 'Health', isFrench ? 'SantÃ©' : 'Health');
     addIf('loisirs', 'loisirs', isFrench ? 'Loisirs' : 'Leisure', isFrench ? 'Loisirs' : 'Leisure');
 
     setBudgetData(prev => ({ ...prev, expenses: newExpenses }));
     setBudgetLinks(newLinks);
   };
 
-  // Catégories de dépenses avec icônes et couleurs
+  // CatÃ©gories de dÃ©penses avec icÃ´nes et couleurs
   const expenseCategories = [
     {
       value: 'logement',
@@ -291,8 +291,8 @@ const Budget: React.FC = () => {
       icon: <Home className="w-4 h-4" />,
       color: 'bg-blue-500',
       subcategories: [
-        'Hypothèque/Loyer', 'Taxes municipales', 'Assurance habitation', 
-        'Entretien', 'Réparations', 'Amélioration'
+        'HypothÃ¨que/Loyer', 'Taxes municipales', 'Assurance habitation', 
+        'Entretien', 'RÃ©parations', 'AmÃ©lioration'
       ]
     },
     {
@@ -301,8 +301,8 @@ const Budget: React.FC = () => {
       icon: <Zap className="w-4 h-4" />,
       color: 'bg-yellow-500',
       subcategories: [
-        'Électricité', 'Gaz naturel', 'Eau', 'Internet', 'Téléphone', 
-        'Câble/Streaming', 'Déneigement', 'Ordures'
+        'Ã‰lectricitÃ©', 'Gaz naturel', 'Eau', 'Internet', 'TÃ©lÃ©phone', 
+        'CÃ¢ble/Streaming', 'DÃ©neigement', 'Ordures'
       ]
     },
     {
@@ -312,7 +312,7 @@ const Budget: React.FC = () => {
       color: 'bg-green-500',
       subcategories: [
         'Paiement auto', 'Essence', 'Assurance auto', 'Entretien', 
-        'Réparations', 'Immatriculation', 'Transport public', 'Stationnement'
+        'RÃ©parations', 'Immatriculation', 'Transport public', 'Stationnement'
       ]
     },
     {
@@ -321,17 +321,17 @@ const Budget: React.FC = () => {
       icon: <Utensils className="w-4 h-4" />,
       color: 'bg-orange-500',
       subcategories: [
-        'Épicerie', 'Restaurants', 'Livraison', 'Café', 'Alcool', 'Suppléments'
+        'Ã‰picerie', 'Restaurants', 'Livraison', 'CafÃ©', 'Alcool', 'SupplÃ©ments'
       ]
     },
     {
       value: 'sante',
-      label: isFrench ? 'Santé' : 'Health',
+      label: isFrench ? 'SantÃ©' : 'Health',
       icon: <Heart className="w-4 h-4" />,
       color: 'bg-red-500',
       subcategories: [
-        'Assurance santé', 'Médicaments', 'Dentiste', 'Optométriste', 
-        'Physiothérapie', 'Gym', 'Massothérapie'
+        'Assurance santÃ©', 'MÃ©dicaments', 'Dentiste', 'OptomÃ©triste', 
+        'PhysiothÃ©rapie', 'Gym', 'MassothÃ©rapie'
       ]
     },
     {
@@ -340,17 +340,17 @@ const Budget: React.FC = () => {
       icon: <Gamepad2 className="w-4 h-4" />,
       color: 'bg-purple-500',
       subcategories: [
-        'Sorties', 'Cinéma', 'Concerts', 'Voyages', 'Hobbies', 
+        'Sorties', 'CinÃ©ma', 'Concerts', 'Voyages', 'Hobbies', 
         'Livres', 'Jeux', 'Abonnements'
       ]
     },
     {
       value: 'epargne',
-      label: isFrench ? 'Épargne' : 'Savings',
+      label: isFrench ? 'Ã‰pargne' : 'Savings',
       icon: <PiggyBank className="w-4 h-4" />,
       color: 'bg-indigo-500',
       subcategories: [
-        'REER', 'CELI', 'Épargne urgence', 'Placements', 'Objectifs', 'Retraite'
+        'REER', 'CELI', 'Ã‰pargne urgence', 'Placements', 'Objectifs', 'Retraite'
       ]
     },
     {
@@ -359,13 +359,13 @@ const Budget: React.FC = () => {
       icon: <ShoppingCart className="w-4 h-4" />,
       color: 'bg-gray-500',
       subcategories: [
-        'Vêtements', 'Cadeaux', 'Dons', 'Frais bancaires', 'Impôts', 
+        'VÃªtements', 'Cadeaux', 'Dons', 'Frais bancaires', 'ImpÃ´ts', 
         'Assurance vie', 'Frais professionnels', 'Autres'
       ]
     }
   ];
 
-  // Fréquences de paiement
+  // FrÃ©quences de paiement
   const frequencies = [
     { value: 'weekly', label: isFrench ? 'Hebdomadaire' : 'Weekly', multiplier: 52 },
     { value: 'biweekly', label: isFrench ? 'Aux 2 semaines' : 'Bi-weekly', multiplier: 26 },
@@ -375,7 +375,7 @@ const Budget: React.FC = () => {
     { value: 'seasonal', label: isFrench ? 'Saisonnier' : 'Seasonal', multiplier: 1 }
   ];
 
-  // Obtenir les revenus depuis le tableau unifié
+  // Obtenir les revenus depuis le tableau unifiÃ©
   const getIncomeData = () => {
     const unifiedIncome1 = (userData.personal as any)?.unifiedIncome1 || [];
     const unifiedIncome2 = (userData.personal as any)?.unifiedIncome2 || [];
@@ -388,7 +388,7 @@ const Budget: React.FC = () => {
 
   const incomeData = getIncomeData();
 
-  // Historique de revenu net mensuel agrégé pour gérer les revenus irréguliers
+  // Historique de revenu net mensuel agrÃ©gÃ© pour gÃ©rer les revenus irrÃ©guliers
   const getBudgetIncomeHistory = (): Record<string, number> => {
     return ((userData.personal as any)?.budgetIncomeHistory) || {};
   };
@@ -423,7 +423,7 @@ const Budget: React.FC = () => {
     return base;
   };
 
-  // Calculer les dépenses mensuelles
+  // Calculer les dÃ©penses mensuelles
   const calculateMonthlyExpenses = () => {
     let total = 0;
     
@@ -440,7 +440,7 @@ const Budget: React.FC = () => {
       }
     });
     
-    // Ajouter l'hypothèque
+    // Ajouter l'hypothÃ¨que
     if (budgetData.mortgage?.isActive) {
       const mortgageFreq = frequencies.find(f => f.value === budgetData.mortgage!.frequency);
       if (mortgageFreq) {
@@ -451,14 +451,14 @@ const Budget: React.FC = () => {
     return total;
   };
 
-  // Calculer le flux de trésorerie net
+  // Calculer le flux de trÃ©sorerie net
   const calculateNetCashFlow = () => {
     const monthlyIncome = incomeData.monthlyIncome;
     const monthlyExpenses = calculateMonthlyExpenses();
     return monthlyIncome - monthlyExpenses;
   };
 
-  // Ajouter une nouvelle dépense
+  // Ajouter une nouvelle dÃ©pense
   const addExpense = () => {
     const newExpense: ExpenseEntry = {
       id: `expense-${Date.now()}`,
@@ -481,7 +481,7 @@ const Budget: React.FC = () => {
     setShowAddExpense(false);
   };
 
-  // Mettre à jour une dépense
+  // Mettre Ã  jour une dÃ©pense
   const updateExpense = (id: string, updates: Partial<ExpenseEntry>) => {
     setBudgetData(prev => ({
       ...prev,
@@ -490,18 +490,18 @@ const Budget: React.FC = () => {
       )
     }));
 
-    // Propagation (MVP) vers la source si l'item est lié à une catégorie cashflow
+    // Propagation (MVP) vers la source si l'item est liÃ© Ã  une catÃ©gorie cashflow
     const link = budgetLinks.find(l => l.budgetItemId === id && l.sourceType === 'expense' && l.sourceId.startsWith('cashflow:'));
     if (link) {
       const key = link.sourceId.replace('cashflow:', '');
-      // Demande simple à l'utilisateur (UX seniors: confirmation explicite)
+      // Demande simple Ã  l'utilisateur (UX seniors: confirmation explicite)
       const apply = window.confirm(
         isFrench
-          ? `Cet élément est lié à la catégorie "${key}" dans la section Dépenses. Appliquer cette modification à la source ?`
+          ? `Cet Ã©lÃ©ment est liÃ© Ã  la catÃ©gorie "${key}" dans la section DÃ©penses. Appliquer cette modification Ã  la source ?`
           : `This item is linked to "${key}" category in Expenses. Apply this change to the source?`
       );
       if (apply) {
-        // Calculer le montant mensuel en fonction de la fréquence (si fournie dans updates)
+        // Calculer le montant mensuel en fonction de la frÃ©quence (si fournie dans updates)
         const targetExpense = budgetData.expenses.find(e => e.id === id);
         const freqValue = updates.frequency || targetExpense?.frequency || 'monthly';
         const amountValue = updates.amount ?? targetExpense?.amount ?? 0;
@@ -510,18 +510,18 @@ const Budget: React.FC = () => {
           ? amountValue / 12
           : ((amountValue || 0) * (freqDef?.multiplier || 12)) / 12;
 
-        // Appliquer à userData.cashflow[key]
+        // Appliquer Ã  userData.cashflow[key]
         try {
           updateUserData('cashflow', { [key]: Math.max(0, Math.round(monthly)) } as any);
-          console.log('🔄 Propagation vers cashflow appliquée:', key, monthly);
+          console.log('💾 Budget sauvegardé avec succès:', result.filename);
         } catch (e) {
-          console.error('❌ Erreur de propagation vers cashflow:', e);
+          console.error('âŒ Erreur de propagation vers cashflow:', e);
         }
       }
     }
   };
 
-  // Supprimer une dépense
+  // Supprimer une dÃ©pense
   const removeExpense = (id: string) => {
     setBudgetData(prev => ({
       ...prev,
@@ -531,29 +531,29 @@ const Budget: React.FC = () => {
 
   // Formater la devise
   const formatCurrency = (amount: number) => {
-    // OQLF: en français, utiliser l’espace insécable avant le $
+    // OQLF: en franÃ§ais, utiliser lâ€™espace insÃ©cable avant le $
     return isFrench ? formatCurrencyOQLF(amount, { min: 0, max: 2 }) : formatCurrencyLocale(amount, 'en');
   };
 
-  // Obtenir la couleur selon le montant (positif/négatif)
+  // Obtenir la couleur selon le montant (positif/nÃ©gatif)
   const getAmountColor = (amount: number) => {
     if (amount > 0) return 'text-green-600';
     if (amount < 0) return 'text-red-600';
     return 'text-gray-600';
   };
 
-  // Sauvegarder les données
+  // Sauvegarder les donnÃ©es
   const handleSave = async () => {
     setIsSaving(true);
     try {
-      // Mettre à jour l'historique de revenu net mensuel (YYYY-MM -> montant)
+      // Mettre Ã  jour l'historique de revenu net mensuel (YYYY-MM -> montant)
       try {
         const now = new Date();
         const ymKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
         const prevHistory = ((userData.personal as any)?.budgetIncomeHistory) || {};
         const updatedHistory = { ...prevHistory, [ymKey]: netMonthlyIncome };
 
-        // Mettre à jour/capturer un snapshot de valeur nette pour le mois courant
+        // Mettre Ã  jour/capturer un snapshot de valeur nette pour le mois courant
         const nwAssets = (netWorth.assets.cash || 0) + (netWorth.assets.investments || 0) + (netWorth.assets.realEstate || 0) + (netWorth.assets.other || 0);
         const nwLiab = (netWorth.liabilities.mortgage || 0) + (netWorth.liabilities.auto || 0) + (netWorth.liabilities.credit || 0) + (netWorth.liabilities.student || 0) + (netWorth.liabilities.other || 0);
         const nwNet = nwAssets - nwLiab;
@@ -564,22 +564,20 @@ const Budget: React.FC = () => {
 
         updateUserData('personal', { budgetData, budgetSettings, budgetLinks, netWorth, netWorthSnapshots: nextSnapshots, budgetIncomeHistory: updatedHistory } as any);
       } catch {
-        // Fallback si échec: sauvegarde sans historique
+        // Fallback si Ã©chec: sauvegarde sans historique
         updateUserData('personal', { budgetData, budgetSettings, budgetLinks, netWorth, netWorthSnapshots } as any);
       }
       
-      const result = await EnhancedSaveManager.saveDirectly(userData, {
-        includeTimestamp: true
-      });
+      const result = await EnhancedSaveManager.saveWithDialog({...userData, personal: {...userData.personal, budgetData, budgetSettings, budgetLinks, netWorth, netWorthSnapshots}}, { includeTimestamp: true });
       
       if (result.success) {
         console.log('💾 Budget sauvegardé avec succès:', result.filename);
-        // Gamification: journaliser et récompenser l'action
+        // Gamification: journaliser et rÃ©compenser l'action
         try {
           const g = GamificationService.getInstance();
           g.logActivity('budget_created');
-          g.addPoints(20, isFrench ? 'Budget sauvegardé' : 'Budget saved');
-          // Succès: Fonds d'urgence complété si la cible est atteinte
+          g.addPoints(20, isFrench ? 'Budget sauvegardÃ©' : 'Budget saved');
+          // SuccÃ¨s: Fonds d'urgence complÃ©tÃ© si la cible est atteinte
           const monthsTarget = budgetSettings.emergencyMonthsTarget ?? 0;
           if (monthsTarget > 0 && allocations.totalNeeds > 0) {
             const monthsSaved = (budgetData.emergencyFund || 0) / allocations.totalNeeds;
@@ -588,11 +586,11 @@ const Budget: React.FC = () => {
             }
           }
         } catch (e) {
-          console.warn('Gamification non appliquée:', e);
+          console.warn('Gamification non appliquÃ©e:', e);
         }
       }
     } catch (error) {
-      console.error('❌ Erreur lors de la sauvegarde du budget:', error);
+      console.error('âŒ Erreur lors de la sauvegarde du budget:', error);
     } finally {
       setIsSaving(false);
     }
@@ -618,12 +616,12 @@ const Budget: React.FC = () => {
       a.click();
       URL.revokeObjectURL(url);
     } catch (e) {
-      console.error('❌ Export PDF échoué:', e);
-      alert(isFrench ? 'Erreur lors de la génération du PDF' : 'Error generating PDF');
+      console.error('âŒ Export PDF Ã©chouÃ©:', e);
+      alert(isFrench ? 'Erreur lors de la gÃ©nÃ©ration du PDF' : 'Error generating PDF');
     }
   };
 
-  // Export CSV des agrégats (mensuel/annuel) par catégorie
+  // Export CSV des agrÃ©gats (mensuel/annuel) par catÃ©gorie
   const handleExportCSV = () => {
     try {
       const period = viewMode === 'annual' ? (isFrench ? 'Annuel' : 'Annual') : (isFrench ? 'Mensuel' : 'Monthly');
@@ -645,10 +643,10 @@ const Budget: React.FC = () => {
 
       const total = rows.reduce((s, r) => s + r.amount, 0);
 
-      const header = isFrench ? 'Catégorie,Montant,Période' : 'Category,Amount,Period';
+      const header = isFrench ? 'CatÃ©gorie,Montant,PÃ©riode' : 'Category,Amount,Period';
       const lines = [header, ...rows.map(r => {
         const cat = `"${(r.category || '').replace(/"/g, '""')}"`;
-        // Valeurs numériques en point décimal pour CSV standard
+        // Valeurs numÃ©riques en point dÃ©cimal pour CSV standard
         return `${cat},${r.amount.toFixed(2)},${period}`;
       }), `${isFrench ? '"Total"' : '"Total"'},${total.toFixed(2)},${period}`];
 
@@ -661,12 +659,12 @@ const Budget: React.FC = () => {
       a.click();
       URL.revokeObjectURL(url);
     } catch (e) {
-      console.error('❌ Export CSV échoué:', e);
-      alert(isFrench ? 'Erreur lors de l’export CSV' : 'Error during CSV export');
+      console.error('âŒ Export CSV Ã©chouÃ©:', e);
+      alert(isFrench ? 'Erreur lors de lâ€™export CSV' : 'Error during CSV export');
     }
   };
 
-  // Rappels budgétaires (90/60/30 pour objectifs + fin de mois)
+  // Rappels budgÃ©taires (90/60/30 pour objectifs + fin de mois)
   const scheduleAllSinkingReminders = () => {
     try {
       const scenarioId = ((userData.personal as any)?.activeScenarioId) || 'budget-default';
@@ -679,8 +677,8 @@ const Budget: React.FC = () => {
           NotificationSchedulerService.scheduleWithdrawalNotice(scenarioId, dueISO, {
             leads: [90, 60, 30],
             channels: ['inapp'],
-            titleOverride: isFrench ? 'Rappel objectif planifié' : 'Planned goal reminder',
-            messageOverride: isFrench ? `Préparez: ${f.name} (échéance ${dueISO})` : `Prepare: ${f.name} (due ${dueISO})`
+            titleOverride: isFrench ? 'Rappel objectif planifiÃ©' : 'Planned goal reminder',
+            messageOverride: isFrench ? `PrÃ©parez: ${f.name} (Ã©chÃ©ance ${dueISO})` : `Prepare: ${f.name} (due ${dueISO})`
           });
           scheduled++;
         } catch (err) {
@@ -688,12 +686,12 @@ const Budget: React.FC = () => {
         }
       }
       if (scheduled > 0) {
-        alert(isFrench ? `Rappels programmés pour ${scheduled} objectif(s).` : `Scheduled reminders for ${scheduled} goal(s).`);
+        alert(isFrench ? `Rappels programmÃ©s pour ${scheduled} objectif(s).` : `Scheduled reminders for ${scheduled} goal(s).`);
       } else {
         alert(isFrench ? 'Aucun objectif avec date valide.' : 'No goals with valid dates.');
       }
     } catch (e) {
-      console.error('❌ Échec planification rappels objectifs:', e);
+      console.error('âŒ Ã‰chec planification rappels objectifs:', e);
       alert(isFrench ? 'Erreur de planification des rappels' : 'Error scheduling reminders');
     }
   };
@@ -712,12 +710,12 @@ const Budget: React.FC = () => {
           leads: [7, 1],
           channels: ['inapp'],
           titleOverride: isFrench ? 'Rappel fin de mois (Budget)' : 'Month-end reminder (Budget)',
-          messageOverride: isFrench ? 'Révisez vos dépenses et sauvegardez votre budget.' : 'Review expenses and save your budget.'
+          messageOverride: isFrench ? 'RÃ©visez vos dÃ©penses et sauvegardez votre budget.' : 'Review expenses and save your budget.'
         }
       });
-      alert(isFrench ? 'Rappels fin de mois programmés (J-7 et J-1).' : 'Month-end reminders scheduled (D-7 and D-1).');
+      alert(isFrench ? 'Rappels fin de mois programmÃ©s (J-7 et J-1).' : 'Month-end reminders scheduled (D-7 and D-1).');
     } catch (e) {
-      console.error('❌ Échec planification EOM:', e);
+      console.error('âŒ Ã‰chec planification EOM:', e);
       alert(isFrench ? 'Erreur lors de la planification fin de mois' : 'Error scheduling month-end reminders');
     }
   };
@@ -726,7 +724,7 @@ const Budget: React.FC = () => {
   const saveSmartGoal = () => {
     const draft = smartDraft;
     if (!draft.title || !draft.deadline) {
-      alert(isFrench ? 'Titre et échéance requis.' : 'Title and deadline are required.');
+      alert(isFrench ? 'Titre et Ã©chÃ©ance requis.' : 'Title and deadline are required.');
       return;
     }
     const goal = { id: `sg-${Date.now()}`, ...draft };
@@ -735,12 +733,12 @@ const Budget: React.FC = () => {
     try {
       updateUserData('personal', { smartGoals: next } as any);
     } catch (e) {
-      console.error('❌ Sauvegarde SMART échouée:', e);
+      console.error('âŒ Sauvegarde SMART Ã©chouÃ©e:', e);
     }
     try {
       const g = GamificationService.getInstance();
       g.logActivity('goal_created', { title: draft.title, deadline: draft.deadline });
-      g.addPoints(30, isFrench ? 'Objectif SMART créé' : 'SMART goal created');
+      g.addPoints(30, isFrench ? 'Objectif SMART crÃ©Ã©' : 'SMART goal created');
     } catch {}
     setSmartDraft({ title: '', measure: '', target: 0, deadline: '', relevance: '' });
   };
@@ -751,11 +749,11 @@ const Budget: React.FC = () => {
     try {
       updateUserData('personal', { smartGoals: next } as any);
     } catch (e) {
-      console.error('❌ Suppression SMART échouée:', e);
+      console.error('âŒ Suppression SMART Ã©chouÃ©e:', e);
     }
   };
 
-  // Charger les données au montage
+  // Charger les donnÃ©es au montage
   useEffect(() => {
     const savedBudgetData = (userData.personal as any)?.budgetData;
     if (savedBudgetData) {
@@ -792,7 +790,7 @@ const Budget: React.FC = () => {
   const [searchParams] = useSearchParams();
   const initialTab = searchParams.get('tab') ?? 'overview';
 
-  // Si l'utilisateur n'a pas accès, afficher le message d'upgrade
+  // Si l'utilisateur n'a pas accÃ¨s, afficher le message d'upgrade
   if (!hasAccess) {
     return (
       <>
@@ -800,7 +798,7 @@ const Budget: React.FC = () => {
           <div className="mpr-container">
             <div className="mpr-section text-center">
               <div className="flex justify-center mb-6">
-                <div className="bg-gradient-to-r from-orange-600 to-red-600 p-4 rounded-full shadow-lg">
+                <div className="senior-btn senior-btn-primary">
                   <PiggyBank className="h-12 w-12 text-white" />
                 </div>
               </div>
@@ -809,7 +807,7 @@ const Budget: React.FC = () => {
               </h1>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
                 {isFrench 
-                  ? 'Cette fonctionnalité est réservée aux plans Professionnel et Expert.'
+                  ? 'Cette fonctionnalitÃ© est rÃ©servÃ©e aux plans Professionnel et Expert.'
                   : 'This feature is reserved for Professional and Expert plans.'
                 }
               </p>
@@ -818,7 +816,7 @@ const Budget: React.FC = () => {
                 <AlertTriangle className="h-5 w-5 text-orange-600" />
                 <AlertDescription className="text-orange-800">
                   <strong>
-                    {isFrench ? 'Accès restreint :' : 'Restricted access:'}
+                    {isFrench ? 'AccÃ¨s restreint :' : 'Restricted access:'}
                   </strong> {getContextualUpgradeMessage(userPlan, requiredPlan)}
                 </AlertDescription>
               </Alert>
@@ -829,7 +827,7 @@ const Budget: React.FC = () => {
                   size="lg"
                   className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white px-8 py-3 text-lg"
                 >
-                  {isFrench ? 'Mettre à niveau maintenant' : 'Upgrade now'}
+                  {isFrench ? 'Mettre Ã  niveau maintenant' : 'Upgrade now'}
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </div>
@@ -861,20 +859,20 @@ const Budget: React.FC = () => {
 
       <div className="container mx-auto px-6 py-8 relative z-10">
 
-        {/* En-tête spectaculaire */}
+        {/* En-tÃªte spectaculaire */}
         <div className="mpr-section text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent drop-shadow-2xl" style={{fontSize: '3.5rem'}}>
-            💰 {isFrench ? 'Mon budget intelligent' : 'My Smart Budget'}
+            ðŸ’° {isFrench ? 'Mon budget intelligent' : 'My Smart Budget'}
           </h1>
           <p className="text-xl md:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed" style={{fontSize: '1.375rem'}}>
             {isFrench 
-              ? 'Gérez vos finances avec précision - revenus, dépenses, et prévisions saisonnières'
+              ? 'GÃ©rez vos finances avec prÃ©cision - revenus, dÃ©penses, et prÃ©visions saisonniÃ¨res'
               : 'Manage your finances with precision - income, expenses, and seasonal forecasts'
             }
           </p>
         </div>
 
-        {/* Résumé financier */}
+        {/* RÃ©sumÃ© financier */}
         <div className="mpr-form-row cols-4">
           <Card className="bg-gradient-to-br from-green-100 to-emerald-100 border-2 border-green-200 shadow-lg">
             <CardContent className="p-6 text-center">
@@ -895,7 +893,7 @@ const Budget: React.FC = () => {
                 {formatCurrency(monthlyExpenses)}
               </div>
               <div className="text-lg text-red-600" style={{fontSize: '1.125rem'}}>
-                {isFrench ? 'Dépenses mensuelles' : 'Monthly Expenses'}
+                {isFrench ? 'DÃ©penses mensuelles' : 'Monthly Expenses'}
               </div>
             </CardContent>
           </Card>
@@ -925,14 +923,14 @@ const Budget: React.FC = () => {
           </Card>
         </div>
 
-        {/* Alertes budgétaires */}
+        {/* Alertes budgÃ©taires */}
         {netCashFlow < 0 && (
           <Alert className="border-red-300 bg-red-50 text-red-800 mb-8">
             <AlertTriangle className="h-5 w-5 text-red-600" />
             <AlertDescription>
               <strong>{isFrench ? 'Attention :' : 'Warning:'}</strong> {
                 isFrench 
-                  ? `Votre flux de trésorerie est négatif de ${formatCurrency(Math.abs(netCashFlow))} par mois. Révisez vos dépenses ou augmentez vos revenus.`
+                  ? `Votre flux de trÃ©sorerie est nÃ©gatif de ${formatCurrency(Math.abs(netCashFlow))} par mois. RÃ©visez vos dÃ©penses ou augmentez vos revenus.`
                   : `Your cash flow is negative by ${formatCurrency(Math.abs(netCashFlow))} per month. Review your expenses or increase your income.`
               }
             </AlertDescription>
@@ -942,25 +940,25 @@ const Budget: React.FC = () => {
         {/* Onglets principaux */}
         <Tabs defaultValue={initialTab} className="mpr-form">
           <TabsList className="w-full flex flex-wrap gap-2 gap-y-2 bg-slate-100 backdrop-blur-sm border border-slate-300 p-2 rounded-md h-auto items-stretch overflow-visible">
-            {/* ordre optimisé pour FR (libellés plus longs) */}
+            {/* ordre optimisÃ© pour FR (libellÃ©s plus longs) */}
             <TabsTrigger value="overview" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Vue d\'ensemble' : 'Overview'}</TabsTrigger>
-            <TabsTrigger value="income" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Revenus et déductions' : 'Income and deductions'}</TabsTrigger>
+            <TabsTrigger value="income" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Revenus et dÃ©ductions' : 'Income and deductions'}</TabsTrigger>
             <TabsTrigger value="budgetRule" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">50/30/20</TabsTrigger>
-            <TabsTrigger value="emergency" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Fonds d’urgence' : 'Emergency fund'}</TabsTrigger>
-            <TabsTrigger value="sinking" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[220px] sm:max-w-none">{isFrench ? 'Objectifs planifiés' : 'Planned goals'}</TabsTrigger>
+            <TabsTrigger value="emergency" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Fonds dâ€™urgence' : 'Emergency fund'}</TabsTrigger>
+            <TabsTrigger value="sinking" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[220px] sm:max-w-none">{isFrench ? 'Objectifs planifiÃ©s' : 'Planned goals'}</TabsTrigger>
             <TabsTrigger value="debts" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Dettes' : 'Debts'}</TabsTrigger>
-            <TabsTrigger value="expenses" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Dépenses' : 'Expenses'}</TabsTrigger>
+            <TabsTrigger value="expenses" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'DÃ©penses' : 'Expenses'}</TabsTrigger>
             <TabsTrigger value="calendar" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Calendrier' : 'Calendar'}</TabsTrigger>
-            <TabsTrigger value="coastfire" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Liberté financière' : 'CoastFIRE'}</TabsTrigger>
+            <TabsTrigger value="coastfire" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'LibertÃ© financiÃ¨re' : 'CoastFIRE'}</TabsTrigger>
             <TabsTrigger value="tips" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? '99 trucs' : '99 tips'}</TabsTrigger>
             <TabsTrigger value="learning" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Apprentissage' : 'Learning'}</TabsTrigger>
             <TabsTrigger value="networth" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Valeur nette' : 'Net worth'}</TabsTrigger>
-            <TabsTrigger value="settings" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'Paramètres' : 'Settings'}</TabsTrigger>
+            <TabsTrigger value="settings" className="font-medium text-sm md:text-base leading-6 px-3 py-2 text-center whitespace-normal break-words max-w-[200px] sm:max-w-none">{isFrench ? 'ParamÃ¨tres' : 'Settings'}</TabsTrigger>
           </TabsList>
 
           {/* Vue d'ensemble */}
           <TabsContent value="overview" className="mpr-form">
-            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
+            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargementâ€¦' : 'Loadingâ€¦'}</div>}>
               <ContextualTipsPanel
                 language={isFrench ? 'fr' : 'en'}
                 allocations={allocations}
@@ -973,12 +971,12 @@ const Budget: React.FC = () => {
               />
             </Suspense>
             <div className="mpr-form-row cols-2">
-              {/* Graphique des catégories */}
+              {/* Graphique des catÃ©gories */}
               <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 shadow-lg">
                 <CardHeader>
                   <CardTitle className="text-xl font-bold text-blue-700 flex items-center gap-2" style={{fontSize: '1.25rem'}}>
                     <BarChart3 className="w-5 h-5" />
-                    {isFrench ? 'Dépenses par catégorie' : 'Expenses by Category'}
+                    {isFrench ? 'DÃ©penses par catÃ©gorie' : 'Expenses by Category'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -996,7 +994,7 @@ const Budget: React.FC = () => {
                           <SelectItem value="annual">{isFrench ? 'Annuel' : 'Annual'}</SelectItem>
                         </SelectContent>
                       </Select>
-                      <Button variant="outline" onClick={handleExportCSV} title={isFrench ? 'Exporter les agrégats en CSV' : 'Export aggregates as CSV'}>
+                      <Button variant="outline" onClick={handleExportCSV} title={isFrench ? 'Exporter les agrÃ©gats en CSV' : 'Export aggregates as CSV'}>
                         {isFrench ? 'Exporter CSV' : 'Export CSV'}
                       </Button>
                     </div>
@@ -1013,18 +1011,18 @@ const Budget: React.FC = () => {
 
                       const percentage = monthlyExpenses > 0 ? (categoryExpenses / monthlyExpenses) * 100 : 0;
 
-                      // Convertir l'icône colorée en emoji selon la catégorie
+                      // Convertir l'icÃ´ne colorÃ©e en emoji selon la catÃ©gorie
                       const getIconByCategory = (categoryValue: string) => {
                         switch(categoryValue) {
-                          case 'logement': return '🏠';
-                          case 'services': return '⚡';
-                          case 'transport': return '🚗';
-                          case 'alimentation': return '🍽️';
-                          case 'sante': return '❤️';
-                          case 'loisirs': return '🎮';
-                          case 'epargne': return '🐷';
-                          case 'divers': return '🛒';
-                          default: return '💰';
+                          case 'logement': return 'ðŸ ';
+                          case 'services': return 'âš¡';
+                          case 'transport': return 'ðŸš—';
+                          case 'alimentation': return 'ðŸ½ï¸';
+                          case 'sante': return 'â¤ï¸';
+                          case 'loisirs': return 'ðŸŽ®';
+                          case 'epargne': return 'ðŸ·';
+                          case 'divers': return 'ðŸ›’';
+                          default: return 'ðŸ’°';
                         }
                       };
 
@@ -1050,12 +1048,12 @@ const Budget: React.FC = () => {
                 </CardContent>
               </Card>
 
-              {/* Prévisions */}
+              {/* PrÃ©visions */}
               <Card className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 shadow-lg">
                 <CardHeader>
                   <CardTitle className="text-xl font-bold text-indigo-700 flex items-center gap-2">
                     <Target className="w-5 h-5" />
-                    {isFrench ? 'Prévisions financières' : 'Financial Forecasts'}
+                    {isFrench ? 'PrÃ©visions financiÃ¨res' : 'Financial Forecasts'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -1084,7 +1082,7 @@ const Budget: React.FC = () => {
             </div>
           </TabsContent>
 
-          {/* Gestion des dépenses */}
+          {/* Gestion des dÃ©penses */}
           <TabsContent value="expenses" className="mpr-form">
             {(() => {
               const linkedCount = budgetLinks.filter(l => l.sourceType === 'expense' && l.sourceId.startsWith('cashflow:')).length;
@@ -1102,7 +1100,7 @@ const Budget: React.FC = () => {
                 try {
                   updateUserData('cashflow', changes);
                 } catch (e) {
-                  console.error('❌ Appliquer tout (cashflow) a échoué:', e);
+                  console.error('âŒ Appliquer tout (cashflow) a Ã©chouÃ©:', e);
                 }
               };
               const dissociateAll = () => {
@@ -1111,13 +1109,13 @@ const Budget: React.FC = () => {
                 try {
                   updateUserData('personal', { budgetLinks: newLinks } as any);
                 } catch (e) {
-                  console.error('❌ Dissocier tout a échoué:', e);
+                  console.error('âŒ Dissocier tout a Ã©chouÃ©:', e);
                 }
               };
               return (
                 <Alert className="border-blue-200 bg-blue-50 text-blue-900">
                   <AlertDescription className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                    <span>{isFrench ? `Synchronisation active: ${linkedCount} poste(s) lié(s) aux Dépenses.` : `Active sync: ${linkedCount} linked item(s) with Expenses.`}</span>
+                    <span>{isFrench ? `Synchronisation active: ${linkedCount} poste(s) liÃ©(s) aux DÃ©penses.` : `Active sync: ${linkedCount} linked item(s) with Expenses.`}</span>
                     <div className="flex gap-2">
                       <Button onClick={applyAll} className="bg-blue-600 hover:bg-blue-700 text-white">
                         {isFrench ? 'Appliquer tout' : 'Apply all'}
@@ -1132,28 +1130,28 @@ const Budget: React.FC = () => {
             })()}
             <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
               <h2 className="text-2xl font-bold text-blue-700">
-                {isFrench ? 'Gestion des dépenses' : 'Expense Management'}
+                {isFrench ? 'Gestion des dÃ©penses' : 'Expense Management'}
               </h2>
               <div className="flex gap-2">
                 <Button
                   onClick={importFromCashflow}
                   className="bg-blue-600 hover:bg-blue-700 text-white"
-                  title={isFrench ? 'Importer vos dépenses mensuelles depuis la section Dépenses' : 'Import your monthly expenses from the Expenses section'}
+                  title={isFrench ? 'Importer vos dÃ©penses mensuelles depuis la section DÃ©penses' : 'Import your monthly expenses from the Expenses section'}
                 >
                   <Download className="w-4 h-4 mr-2" />
-                  {isFrench ? 'Importer depuis Dépenses' : 'Import from Expenses'}
+                  {isFrench ? 'Importer depuis DÃ©penses' : 'Import from Expenses'}
                 </Button>
                 <Button
                   onClick={addExpense}
                   className="bg-gradient-to-r from-green-400 to-emerald-400 hover:from-green-500 hover:to-emerald-500"
                 >
                   <Plus className="w-4 h-4 mr-2" />
-                  {isFrench ? 'Ajouter une dépense' : 'Add Expense'}
+                  {isFrench ? 'Ajouter une dÃ©pense' : 'Add Expense'}
                 </Button>
               </div>
             </div>
 
-            {/* Liste des dépenses */}
+            {/* Liste des dÃ©penses */}
             <div className="mpr-form">
               {budgetData.expenses.map(expense => {
                 const category = expenseCategories.find(c => c.value === expense.category);
@@ -1163,7 +1161,7 @@ const Budget: React.FC = () => {
                   <Card key={expense.id} className="bg-gradient-to-r from-slate-50 to-slate-100 border-2 border-slate-200 shadow-lg">
                     <CardContent className="p-4">
                       <div className="grid grid-cols-12 gap-4 items-center">
-                        {/* Catégorie */}
+                        {/* CatÃ©gorie */}
                         <div className="col-span-2">
                           {isEditing ? (
                             <Select
@@ -1226,7 +1224,7 @@ const Budget: React.FC = () => {
                           )}
                         </div>
 
-                        {/* Fréquence + part de besoin (%) */}
+                        {/* FrÃ©quence + part de besoin (%) */}
                         <div className="col-span-2">
                           {isEditing ? (
                             <>
@@ -1273,7 +1271,7 @@ const Budget: React.FC = () => {
                                 {isFrench ? 'Besoin :' : 'Need:'}{' '}
                                 {typeof expense.needSharePct === 'number'
                                   ? (isFrench ? formatPercentOQLF(expense.needSharePct, { min: 0, max: 0 }) : `${expense.needSharePct}%`)
-                                  : (isFrench ? '—' : '—')}
+                                  : (isFrench ? 'â€”' : 'â€”')}
                               </span>
                             </div>
                           )}
@@ -1302,7 +1300,7 @@ const Budget: React.FC = () => {
                         <div className="col-span-1">
                           <button
                             onClick={() => updateExpense(expense.id, { isActive: !expense.isActive })}
-                            title={expense.isActive ? (isFrench ? 'Désactiver cette dépense' : 'Deactivate this expense') : (isFrench ? 'Activer cette dépense' : 'Activate this expense')}
+                            title={expense.isActive ? (isFrench ? 'DÃ©sactiver cette dÃ©pense' : 'Deactivate this expense') : (isFrench ? 'Activer cette dÃ©pense' : 'Activate this expense')}
                             className={`w-6 h-6 rounded-full flex items-center justify-center ${
                               expense.isActive ? 'bg-green-400 text-white' : 'bg-gray-400 text-gray-100'
                             }`}
@@ -1315,14 +1313,14 @@ const Budget: React.FC = () => {
                         <div className="col-span-1 flex gap-1">
                           <button
                             onClick={() => setEditingExpense(isEditing ? null : expense.id)}
-                            title={isEditing ? (isFrench ? 'Arrêter l\'édition' : 'Stop editing') : (isFrench ? 'Modifier cette dépense' : 'Edit this expense')}
+                            title={isEditing ? (isFrench ? 'ArrÃªter l\'Ã©dition' : 'Stop editing') : (isFrench ? 'Modifier cette dÃ©pense' : 'Edit this expense')}
                             className="p-2 text-blue-600 hover:text-blue-500 hover:bg-blue-50 rounded"
                           >
                             <Edit3 className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => removeExpense(expense.id)}
-                            title={isFrench ? 'Supprimer cette dépense' : 'Delete this expense'}
+                            title={isFrench ? 'Supprimer cette dÃ©pense' : 'Delete this expense'}
                             className="p-2 text-red-600 hover:text-red-500 hover:bg-red-50 rounded"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -1428,7 +1426,7 @@ const Budget: React.FC = () => {
             <CoastFIRECalculator />
           </TabsContent>
 
-          {/* 99 Trucs pour économiser */}
+          {/* 99 Trucs pour Ã©conomiser */}
           <TabsContent value="tips" className="mpr-form">
             <EconomyTipsGuide />
           </TabsContent>
@@ -1438,15 +1436,15 @@ const Budget: React.FC = () => {
             <LearningModule 
               moduleId="budget-fundamentals"
               onComplete={() => {
-                console.log('Module budget-basics complété');
+                console.log('💾 Budget sauvegardé avec succès:', result.filename);
               }}
               onClose={() => {
-                console.log('Module fermé');
+                console.log('💾 Budget sauvegardé avec succès:', result.filename);
               }}
             />
           </TabsContent>
 
-          {/* Règle 50/30/20 */}
+          {/* RÃ¨gle 50/30/20 */}
           <TabsContent value="budgetRule" className="mpr-form">
             <div className="flex flex-wrap gap-2">
               <Button variant="outline" onClick={() => setBudgetTargets({ needsPct: 55, wantsPct: 25, savingsDebtPct: 20 })}>
@@ -1456,10 +1454,10 @@ const Budget: React.FC = () => {
                 {isFrench ? 'Preset: Classique 50/30/20' : 'Preset: Classic 50/30/20'}
               </Button>
               <Button variant="outline" onClick={() => setBudgetTargets({ needsPct: 45, wantsPct: 25, savingsDebtPct: 30 })}>
-                {isFrench ? 'Preset: Épargne 45/25/30' : 'Preset: Savings 45/25/30'}
+                {isFrench ? 'Preset: Ã‰pargne 45/25/30' : 'Preset: Savings 45/25/30'}
               </Button>
             </div>
-            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
+            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargementâ€¦' : 'Loadingâ€¦'}</div>}>
               <BudgetTargetsGauges
                 language={isFrench ? 'fr' : 'en'}
                 netMonthlyIncome={netMonthlyIncome}
@@ -1470,16 +1468,16 @@ const Budget: React.FC = () => {
             </Suspense>
           </TabsContent>
 
-          {/* Fonds d’urgence */}
+          {/* Fonds dâ€™urgence */}
           <TabsContent value="emergency" className="mpr-form">
             <Alert className="border-emerald-200 bg-emerald-50 text-emerald-900">
               <AlertDescription>
                 {isFrench
-                  ? 'Recommandation: gardez 3 à 12 mois de “besoins essentiels” en réserve. Ajustez la cible et suivez votre progression.'
-                  : 'Recommendation: keep 3 to 12 months of “essential needs” in reserve. Adjust the target and track your progress.'}
+                  ? 'Recommandation: gardez 3 Ã  12 mois de â€œbesoins essentielsâ€ en rÃ©serve. Ajustez la cible et suivez votre progression.'
+                  : 'Recommendation: keep 3 to 12 months of â€œessential needsâ€ in reserve. Adjust the target and track your progress.'}
               </AlertDescription>
             </Alert>
-            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
+            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargementâ€¦' : 'Loadingâ€¦'}</div>}>
               <EmergencyFundCard
                 language={isFrench ? 'fr' : 'en'}
                 monthlyNeeds={allocations.totalNeeds}
@@ -1491,13 +1489,13 @@ const Budget: React.FC = () => {
             </Suspense>
           </TabsContent>
 
-          {/* Objectifs planifiés (sinking funds) */}
+          {/* Objectifs planifiÃ©s (sinking funds) */}
           <TabsContent value="sinking" className="mpr-form">
             <Alert className="border-indigo-200 bg-indigo-50 text-indigo-900">
               <AlertDescription>
                 {isFrench
-                  ? 'Planifiez vos projets (ex.: taxes, voyage, réparation). Indiquez une échéance et un montant cible — la mensualité requise est calculée automatiquement.'
-                  : 'Plan your projects (e.g., taxes, travel, repair). Set a due date and a target amount — the required monthly saving is computed automatically.'}
+                  ? 'Planifiez vos projets (ex.: taxes, voyage, rÃ©paration). Indiquez une Ã©chÃ©ance et un montant cible â€” la mensualitÃ© requise est calculÃ©e automatiquement.'
+                  : 'Plan your projects (e.g., taxes, travel, repair). Set a due date and a target amount â€” the required monthly saving is computed automatically.'}
               </AlertDescription>
             </Alert>
             <div className="flex justify-end">
@@ -1505,7 +1503,7 @@ const Budget: React.FC = () => {
                 {isFrench ? 'Planifier rappels 90/60/30' : 'Schedule 90/60/30 reminders'}
               </Button>
             </div>
-            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
+            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargementâ€¦' : 'Loadingâ€¦'}</div>}>
               <SinkingFundsManager
                 language={isFrench ? 'fr' : 'en'}
                 funds={budgetSettings.sinkingFunds ?? []}
@@ -1514,16 +1512,16 @@ const Budget: React.FC = () => {
             </Suspense>
           </TabsContent>
 
-          {/* Dettes — Snowball */}
+          {/* Dettes â€” Snowball */}
           <TabsContent value="debts" className="mpr-form">
             <Alert className="border-purple-200 bg-purple-50 text-purple-900">
               <AlertDescription>
                 {isFrench
-                  ? 'Stratégie “boule de neige”: payez le minimum partout et concentrez un montant additionnel sur la plus petite (ou la plus coûteuse) en premier. Lorsque soldée, enchaînez avec la suivante.'
-                  : '“Snowball” strategy: pay the minimum on all debts and focus an extra amount on the smallest (or the highest rate) first. When paid off, roll the amount into the next.'}
+                  ? 'StratÃ©gie â€œboule de neigeâ€: payez le minimum partout et concentrez un montant additionnel sur la plus petite (ou la plus coÃ»teuse) en premier. Lorsque soldÃ©e, enchaÃ®nez avec la suivante.'
+                  : 'â€œSnowballâ€ strategy: pay the minimum on all debts and focus an extra amount on the smallest (or the highest rate) first. When paid off, roll the amount into the next.'}
               </AlertDescription>
             </Alert>
-            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
+            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargementâ€¦' : 'Loadingâ€¦'}</div>}>
               <DebtSnowballWizard
                 language={isFrench ? 'fr' : 'en'}
                 state={budgetSettings.debtSnowball ?? { debts: [], extraPerMonth: 0, method: 'balance' }}
@@ -1532,16 +1530,16 @@ const Budget: React.FC = () => {
             </Suspense>
           </TabsContent>
 
-          {/* Revenus & Déductions */}
+          {/* Revenus & DÃ©ductions */}
           <TabsContent value="income" className="mpr-form">
             <Alert className="border-blue-200 bg-blue-50 text-blue-800">
               <AlertDescription>
                 {isFrench
-                  ? 'Meilleure pratique : saisissez vos revenus dans la section Revenus. Le budget les utilise automatiquement. Cette section vous permet de démarrer rapidement ou d’ajuster au besoin.'
+                  ? 'Meilleure pratique : saisissez vos revenus dans la section Revenus. Le budget les utilise automatiquement. Cette section vous permet de dÃ©marrer rapidement ou dâ€™ajuster au besoin.'
                   : 'Best practice: enter your income in the Income section. The budget uses it automatically. This section lets you get started quickly or make adjustments if needed.'}
               </AlertDescription>
             </Alert>
-            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargement…' : 'Loading…'}</div>}>
+            <Suspense fallback={<div className="text-gray-600">{isFrench ? 'Chargementâ€¦' : 'Loadingâ€¦'}</div>}>
               <IncomeDeductionsForm
                 language={isFrench ? 'fr' : 'en'}
                 value={budgetSettings}
@@ -1609,7 +1607,7 @@ const Budget: React.FC = () => {
                 </CardHeader>
                 <CardContent className="mpr-form">
                   <div className="senior-form-row">
-                    <Label className="senior-form-label">{isFrench ? 'Hypothèque' : 'Mortgage'}</Label>
+                    <Label className="senior-form-label">{isFrench ? 'HypothÃ¨que' : 'Mortgage'}</Label>
                     <MoneyInput
                       value={netWorth.liabilities.mortgage}
                       onChange={(v) => setNetWorth(prev => ({ ...prev, liabilities: { ...prev.liabilities, mortgage: v } }))}
@@ -1627,7 +1625,7 @@ const Budget: React.FC = () => {
                     />
                   </div>
                   <div className="senior-form-row">
-                    <Label className="senior-form-label">{isFrench ? 'Crédit' : 'Credit'}</Label>
+                    <Label className="senior-form-label">{isFrench ? 'CrÃ©dit' : 'Credit'}</Label>
                     <MoneyInput
                       value={netWorth.liabilities.credit}
                       onChange={(v) => setNetWorth(prev => ({ ...prev, liabilities: { ...prev.liabilities, credit: v } }))}
@@ -1636,7 +1634,7 @@ const Budget: React.FC = () => {
                     />
                   </div>
                   <div className="senior-form-row">
-                    <Label className="senior-form-label">{isFrench ? 'Études' : 'Student loans'}</Label>
+                    <Label className="senior-form-label">{isFrench ? 'Ã‰tudes' : 'Student loans'}</Label>
                     <MoneyInput
                       value={netWorth.liabilities.student}
                       onChange={(v) => setNetWorth(prev => ({ ...prev, liabilities: { ...prev.liabilities, student: v } }))}
@@ -1657,11 +1655,11 @@ const Budget: React.FC = () => {
               </Card>
             </div>
 
-            {/* Résumé + snapshots */}
+            {/* RÃ©sumÃ© + snapshots */}
             <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 shadow-lg">
               <CardHeader>
                 <CardTitle className="text-xl font-bold text-blue-700 flex items-center gap-2">
-                  {isFrench ? 'Résumé de la valeur nette' : 'Net worth summary'}
+                  {isFrench ? 'RÃ©sumÃ© de la valeur nette' : 'Net worth summary'}
                 </CardTitle>
               </CardHeader>
               <CardContent className="mpr-form">
@@ -1676,7 +1674,7 @@ const Budget: React.FC = () => {
                     setNetWorthSnapshots(next.sort((a, b) => a.date.localeCompare(b.date)));
                     try {
                       const g = GamificationService.getInstance();
-                      g.addPoints(10, isFrench ? 'Instantané de valeur nette' : 'Net worth snapshot');
+                      g.addPoints(10, isFrench ? 'InstantanÃ© de valeur nette' : 'Net worth snapshot');
                       g.logActivity('savings_updated', { amount: assetsTotal });
                     } catch {}
                   };
@@ -1698,10 +1696,10 @@ const Budget: React.FC = () => {
                       </div>
                       <div className="flex items-center justify-between">
                         <Button onClick={captureSnapshot} className="bg-blue-600 hover:bg-blue-700 text-white">
-                          {isFrench ? 'Capturer un instantané' : 'Capture snapshot'}
+                          {isFrench ? 'Capturer un instantanÃ©' : 'Capture snapshot'}
                         </Button>
                         <div className="text-sm text-gray-600">
-                          {isFrench ? 'Instantanés enregistrés' : 'Saved snapshots'}: {netWorthSnapshots.length}
+                          {isFrench ? 'InstantanÃ©s enregistrÃ©s' : 'Saved snapshots'}: {netWorthSnapshots.length}
                         </div>
                       </div>
                       <div className="max-h-48 overflow-auto border rounded bg-white">
@@ -1729,7 +1727,7 @@ const Budget: React.FC = () => {
             </Card>
           </TabsContent>
 
-          {/* Paramètres */}
+          {/* ParamÃ¨tres */}
           <TabsContent value="settings" className="mpr-form">
             <div className="mpr-form-row cols-2">
               {/* Solde bancaire */}
@@ -1766,18 +1764,18 @@ const Budget: React.FC = () => {
                 </CardContent>
               </Card>
 
-              {/* Objectifs d'épargne */}
+              {/* Objectifs d'Ã©pargne */}
               <Card className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 shadow-lg">
                 <CardHeader>
                   <CardTitle className="text-xl font-bold text-indigo-700 flex items-center gap-2">
                     <Target className="w-5 h-5" />
-                    {isFrench ? 'Objectifs d\'épargne' : 'Savings Goals'}
+                    {isFrench ? 'Objectifs d\'Ã©pargne' : 'Savings Goals'}
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="mpr-form">
                   <div className="senior-form-row">
                     <Label className="senior-form-label">
-                      {isFrench ? 'Objectif d\'épargne mensuel' : 'Monthly Savings Goal'}
+                      {isFrench ? 'Objectif d\'Ã©pargne mensuel' : 'Monthly Savings Goal'}
                     </Label>
                     <MoneyInput
                       value={budgetData.savingsGoal}
@@ -1816,7 +1814,7 @@ const Budget: React.FC = () => {
               <CardContent className="mpr-form">
                 <div className="grid grid-cols-1 md:grid-cols-5 gap-3">
                   <Input
-                    placeholder={isFrench ? 'Spécifique (ex.: réduire restos)' : 'Specific (e.g., reduce dining)'}
+                    placeholder={isFrench ? 'SpÃ©cifique (ex.: rÃ©duire restos)' : 'Specific (e.g., reduce dining)'}
                     value={smartDraft.title}
                     onChange={(e) => setSmartDraft((d) => ({ ...d, title: e.target.value }))}
                     className="md:col-span-2 bg-white border-slate-300 text-gray-900"
@@ -1848,7 +1846,7 @@ const Budget: React.FC = () => {
                 />
                 <div className="flex justify-end">
                   <Button onClick={saveSmartGoal} className="bg-blue-600 hover:bg-blue-700 text-white">
-                    {isFrench ? 'Enregistrer l’objectif' : 'Save goal'}
+                    {isFrench ? 'Enregistrer lâ€™objectif' : 'Save goal'}
                   </Button>
                 </div>
 
@@ -1858,7 +1856,7 @@ const Budget: React.FC = () => {
                       <div>{isFrench ? 'Objectif' : 'Goal'}</div>
                       <div>{isFrench ? 'Mesure' : 'Measure'}</div>
                       <div>{isFrench ? 'Cible' : 'Target'}</div>
-                      <div>{isFrench ? 'Échéance' : 'Deadline'}</div>
+                      <div>{isFrench ? 'Ã‰chÃ©ance' : 'Deadline'}</div>
                       <div>{isFrench ? 'Pertinence' : 'Relevant'}</div>
                       <div></div>
                     </div>
@@ -1892,22 +1890,19 @@ const Budget: React.FC = () => {
             className="bg-gradient-to-r from-green-400 via-emerald-400 to-teal-500 hover:from-green-500 hover:via-emerald-500 hover:to-teal-600 text-white font-bold text-2xl py-6 px-12 shadow-lg transform hover:scale-105 transition-all duration-300 border-2 border-green-200 backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed" style={{fontSize: '1.5rem', minHeight: '64px'}}
           >
             <Save className="w-8 h-8 mr-4 animate-pulse" />
-            {isSaving 
-              ? (isFrench ? '💾 SAUVEGARDE...' : '💾 SAVING...')
-              : (isFrench ? '💾 SAUVEGARDER BUDGET' : '💾 SAVE BUDGET')
-            }
+            {isSaving ? (isFrench ? 'Sauvegarde...' : 'Saving...') : (isFrench ? 'Sauvegarder' : 'Save')}
           </Button>
           <Button
             onClick={handleExportPDF}
             size="lg"
             className="ml-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xl py-6 px-8 border-2 border-blue-200"
           >
-            {isFrench ? '📄 Exporter PDF' : '📄 Export PDF'}
+            {isFrench ? 'ðŸ“„ Exporter PDF' : 'ðŸ“„ Export PDF'}
           </Button>
           <p className="text-gray-700 mt-4 text-lg" style={{fontSize: '1.125rem'}}>
             {isFrench 
-              ? '✨ Votre budget intelligent est sécurisé!'
-              : '✨ Your smart budget is secure!'
+              ? 'âœ¨ Votre budget intelligent est sÃ©curisÃ©!'
+              : 'âœ¨ Your smart budget is secure!'
             }
           </p>
         </div>
