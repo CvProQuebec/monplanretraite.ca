@@ -1,4 +1,4 @@
-// src/features/retirement/components/DigitalAccessForm.tsx
+﻿// src/features/retirement/components/DigitalAccessForm.tsx
 // Formulaire pour les accès numériques et mots de passe
 
 import React, { useState } from 'react';
@@ -37,7 +37,7 @@ interface DigitalAccessFormProps {
 }
 
 const accessTypeOptions = [
-  { value: 'email', label: 'Courriel', icon: '📧', color: 'bg-blue-100 text-blue-800' },
+  { value: 'email', label: 'Courriel', icon: '📧', color: 'bg-mpr-interactive-lt text-mpr-navy' },
   { value: 'banking', label: 'Services bancaires', icon: '🏦', color: 'bg-green-100 text-green-800' },
   { value: 'social', label: 'Réseaux sociaux', icon: '👥', color: 'bg-purple-100 text-purple-800' },
   { value: 'subscription', label: 'Abonnements', icon: '📺', color: 'bg-orange-100 text-orange-800' },
@@ -180,7 +180,7 @@ export const DigitalAccessForm: React.FC<DigitalAccessFormProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Smartphone className="w-5 h-5 text-blue-600" />
+            <Smartphone className="w-5 h-5 text-mpr-interactive" />
             Accès numériques et mots de passe
           </CardTitle>
           <CardDescription>
@@ -232,7 +232,7 @@ export const DigitalAccessForm: React.FC<DigitalAccessFormProps> = ({
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="border-blue-200 bg-blue-50">
+            <Card className="border-mpr-border bg-mpr-interactive-lt">
               <CardHeader>
                 <CardTitle className="text-lg flex items-center gap-2">
                   <Lock className="w-5 h-5" />
@@ -449,7 +449,7 @@ export const DigitalAccessForm: React.FC<DigitalAccessFormProps> = ({
                                 href={access.siteWeb} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
-                                className="text-blue-600 hover:underline"
+                                className="text-mpr-interactive hover:underline"
                               >
                                 {access.siteWeb}
                               </a>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Input } from './input';
@@ -135,7 +135,7 @@ export const ExcessLiquidityDetector: React.FC<ExcessLiquidityDetectorProps> = (
     return (
       <Card className="w-full max-w-4xl mx-auto">
         <CardHeader className="text-center">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mb-4">
+          <div className="mx-auto w-16 h-16 bg-gradient-to-r from-mpr-interactive to-cyan-500 rounded-full flex items-center justify-center mb-4">
             <PiggyBank className="w-8 h-8 text-white" />
           </div>
           <CardTitle className="text-2xl font-bold text-gray-900">
@@ -154,12 +154,12 @@ export const ExcessLiquidityDetector: React.FC<ExcessLiquidityDetectorProps> = (
             <p className="text-gray-600 mb-6">
               L'analyse des liquidités excessives est disponible avec les plans Professionnel et Expert.
             </p>
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-              <p className="text-sm text-blue-800">
+            <div className="bg-mpr-interactive-lt border border-mpr-border rounded-lg p-4 mb-6">
+              <p className="text-sm text-mpr-navy">
                 <strong>Économies potentielles:</strong> Jusqu'à 5000$+ par année en coût d'opportunité évité
               </p>
             </div>
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+            <Button className="bg-gradient-to-r from-mpr-interactive to-purple-600 hover:from-mpr-navy-mid hover:to-purple-700">
               Débloquer le Module
             </Button>
           </div>
@@ -173,7 +173,7 @@ export const ExcessLiquidityDetector: React.FC<ExcessLiquidityDetectorProps> = (
       {/* En-tête */}
       <Card>
         <CardHeader className="text-center">
-          <div className="mx-auto w-16 h-16 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full flex items-center justify-center mb-4">
+          <div className="mx-auto w-16 h-16 bg-gradient-to-r from-mpr-interactive to-cyan-500 rounded-full flex items-center justify-center mb-4">
             <PiggyBank className="w-8 h-8 text-white" />
           </div>
           <CardTitle className="text-2xl font-bold text-gray-900">
@@ -292,7 +292,7 @@ export const ExcessLiquidityDetector: React.FC<ExcessLiquidityDetectorProps> = (
           <Button 
             onClick={analyzeLiquidity}
             disabled={isAnalyzing}
-            className="w-full bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600"
+            className="w-full bg-gradient-to-r from-mpr-interactive to-cyan-500 hover:from-mpr-interactive hover:to-cyan-600"
           >
             {isAnalyzing ? (
               <>
@@ -329,8 +329,8 @@ export const ExcessLiquidityDetector: React.FC<ExcessLiquidityDetectorProps> = (
                   <div className="text-sm text-gray-600">Liquidités Recommandées</div>
                 </div>
                 
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <div className="text-2xl font-bold text-blue-600">
+                <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+                  <div className="text-2xl font-bold text-mpr-interactive">
                     {liquidityData.cashSavings.toLocaleString()}$
                   </div>
                   <div className="text-sm text-gray-600">Liquidités Actuelles</div>
@@ -447,16 +447,16 @@ export const ExcessLiquidityDetector: React.FC<ExcessLiquidityDetectorProps> = (
               <div className="space-y-4">
                 {analysis.recommendations.map((recommendation, index) => (
                   <div key={index} className="flex items-start gap-3">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2 flex-shrink-0"></div>
                     <p className="text-sm text-gray-700">{recommendation}</p>
                   </div>
                 ))}
               </div>
 
               {analysis.excessLiquidity > 0 && (
-                <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                  <h4 className="font-semibold text-blue-900 mb-2">Plan d'Action Suggéré:</h4>
-                  <div className="space-y-2 text-sm text-blue-800">
+                <div className="mt-6 p-4 bg-mpr-interactive-lt border border-mpr-border rounded-lg">
+                  <h4 className="font-semibold text-mpr-navy mb-2">Plan d'Action Suggéré:</h4>
+                  <div className="space-y-2 text-sm text-mpr-navy">
                     <div className="flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
                       <span>Conservez {analysis.recommendedCash.toLocaleString()}$ en liquidités</span>

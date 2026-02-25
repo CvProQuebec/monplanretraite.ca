@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -51,8 +51,8 @@ const inlineFormStyles = `
 }
 
 .senior-form-input:focus {
-  border-color: #4c6ef5;
-  box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.1);
+  border-color: #2B5BA8;
+  box-shadow: 0 0 0 3px rgba(43, 91, 168, 0.1);
   outline: none;
 }
 
@@ -388,7 +388,7 @@ const ImmobilierPage: React.FC = () => {
                     </div>
 
                     {/* Résumé de l'équité */}
-                    <div className="p-6 rounded-lg border" style={{ background: 'rgba(76, 110, 245, 0.1)', borderColor: 'var(--senior-primary)' }}>
+                    <div className="p-6 rounded-lg border" style={{ background: 'rgba(43, 91, 168, 0.1)', borderColor: 'var(--senior-primary)' }}>
                       <div className="text-center">
                         <p className="font-bold mb-2" style={{ fontSize: 'var(--senior-font-lg)', color: 'var(--senior-text-primary)' }}>
                           {currentT.equite}: {formatCurrencyQuebec(equiteResidence)}

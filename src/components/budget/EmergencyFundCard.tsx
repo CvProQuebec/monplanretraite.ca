@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+﻿import React, { useMemo, useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
@@ -100,10 +100,10 @@ const EmergencyFundCard: React.FC<Props> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
           <div className="bg-gray-50 border rounded-md p-3">
             <div className="flex items-center gap-2 text-gray-800">
-              <Target className="w-4 h-4 text-indigo-600" />
+              <Target className="w-4 h-4 text-mpr-interactive" />
               <span className="font-medium">{t('targetAmount', language)}</span>
             </div>
-            <div className="text-2xl font-bold text-indigo-700 mt-1">
+            <div className="text-2xl font-bold text-mpr-navy mt-1">
               {formatCurrencyLocale(targetAmount, language)}
             </div>
           </div>

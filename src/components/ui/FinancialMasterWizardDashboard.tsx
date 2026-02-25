@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Badge } from './badge';
@@ -253,7 +253,7 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
     switch (priority) {
       case 'high': return 'border-red-500 bg-red-50';
       case 'medium': return 'border-yellow-500 bg-yellow-50';
-      case 'low': return 'border-blue-500 bg-blue-50';
+      case 'low': return 'border-mpr-interactive bg-mpr-interactive-lt';
       default: return 'border-gray-500 bg-gray-50';
     }
   };
@@ -261,7 +261,7 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
   const MasterWizardHeader = () => (
     <div className="text-center mb-8">
       <div className="flex justify-center mb-4">
-        <div className="bg-blue-600 p-4 rounded-full shadow-lg">
+        <div className="bg-mpr-interactive p-4 rounded-full shadow-lg">
           <Heart className="h-10 w-10 text-white" />
         </div>
       </div>
@@ -271,14 +271,14 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
       <p className="text-xl text-gray-700 max-w-2xl mx-auto mb-4">
         Je vous aide à prendre le contrôle de vos finances pour une meilleure retraite
       </p>
-      <div className="bg-blue-50 p-4 rounded-lg max-w-xl mx-auto">
-        <p className="text-blue-800 font-medium">
+      <div className="bg-mpr-interactive-lt p-4 rounded-lg max-w-xl mx-auto">
+        <p className="text-mpr-navy font-medium">
           ✓ Simple et facile à comprendre
         </p>
-        <p className="text-blue-800 font-medium">
+        <p className="text-mpr-navy font-medium">
           ✓ Basé sur les règles du gouvernement du Canada
         </p>
-        <p className="text-blue-800 font-medium">
+        <p className="text-mpr-navy font-medium">
           ✓ Vos données restent privées sur votre ordinateur
         </p>
       </div>
@@ -286,7 +286,7 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
   );
 
   const GovernmentExpertisePanel = () => (
-    <Card className="border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-blue-50">
+    <Card className="border-2 border-purple-200 bg-gradient-to-r from-purple-50 to-mpr-interactive-lt">
       <CardHeader>
         <div className="flex items-center justify-between">
           <div className="flex items-center">
@@ -333,7 +333,7 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
         <div className="mt-6 pt-4 border-t border-purple-200">
           <Button 
             onClick={() => setShowEducationCenter(true)}
-            className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700"
+            className="w-full bg-gradient-to-r from-purple-600 to-mpr-interactive hover:from-purple-700 hover:to-mpr-interactive-dk"
           >
             <BookOpen className="h-4 w-4 mr-2" />
             Accéder au Centre d'Éducation Gouvernementale
@@ -347,7 +347,7 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
     <Card>
       <CardHeader>
         <div className="flex items-center">
-          <Brain className="h-5 w-5 text-blue-600 mr-2" />
+          <Brain className="h-5 w-5 text-mpr-interactive mr-2" />
           <CardTitle>Recommandations du Maître Financier</CardTitle>
         </div>
         <CardDescription>
@@ -368,12 +368,12 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
             <Alert key={index} className={
               rec.severity === 'CRITICAL' ? 'border-red-200 bg-red-50' :
               rec.severity === 'HIGH' ? 'border-yellow-200 bg-yellow-50' :
-              'border-blue-200 bg-blue-50'
+              'border-mpr-border bg-mpr-interactive-lt'
             }>
               <div className="flex items-start space-x-3">
                 {rec.severity === 'CRITICAL' ? <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5" /> :
                  rec.severity === 'HIGH' ? <Clock className="h-5 w-5 text-yellow-500 mt-0.5" /> :
-                 <Lightbulb className="h-5 w-5 text-blue-500 mt-0.5" />}
+                 <Lightbulb className="h-5 w-5 text-mpr-interactive mt-0.5" />}
                 <div className="flex-1">
                   <AlertDescription>
                     <div className="flex items-center justify-between mb-2">
@@ -445,14 +445,14 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-gray-500">Modules disponibles</p>
-              <p className="text-2xl font-bold text-blue-600">
+              <p className="text-2xl font-bold text-mpr-interactive">
                 {userPlan === 'expert' ? '11' : userPlan === 'professional' ? '7' : '3'}
               </p>
               <p className="text-xs text-gray-400">
                 Expertise gouvernementale
               </p>
             </div>
-            <BookOpen className="h-8 w-8 text-blue-600" />
+            <BookOpen className="h-8 w-8 text-mpr-interactive" />
           </div>
         </CardContent>
       </Card>
@@ -478,10 +478,10 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
   const SimpleFinancialWizard = () => (
     <div className="space-y-8">
       {/* Step 1: Your Financial Health */}
-      <Card className="border-2 border-blue-200">
-        <CardHeader className="bg-blue-50">
+      <Card className="border-2 border-mpr-border">
+        <CardHeader className="bg-mpr-interactive-lt">
           <CardTitle className="flex items-center text-xl">
-            <Heart className="h-6 w-6 text-blue-600 mr-2" />
+            <Heart className="h-6 w-6 text-mpr-interactive mr-2" />
             Étape 1: Votre santé financière
           </CardTitle>
           <CardDescription className="text-lg">
@@ -593,8 +593,8 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
                     </div>
                   )}
                   {governmentProfile.currentRRSPValue > 50000 && (
-                    <div className="flex items-center p-3 bg-blue-50 rounded-lg">
-                      <Calculator className="h-5 w-5 text-blue-500 mr-3" />
+                    <div className="flex items-center p-3 bg-mpr-interactive-lt rounded-lg">
+                      <Calculator className="h-5 w-5 text-mpr-interactive mr-3" />
                       <div>
                         <div className="font-semibold">Optimisation REER/FERR</div>
                         <div className="text-sm text-gray-600">Stratégies pour économiser sur les impôts</div>
@@ -631,7 +631,7 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
         <CardContent className="p-6">
           {recommendations.length === 0 ? (
             <div className="text-center py-8">
-              <Heart className="h-12 w-12 text-blue-400 mx-auto mb-4" />
+              <Heart className="h-12 w-12 text-mpr-interactive mx-auto mb-4" />
               <h3 className="text-xl font-semibold mb-2">J'analyse votre situation...</h3>
               <p className="text-gray-600 text-lg">
                 Je regarde vos informations pour vous donner les meilleurs conseils
@@ -643,12 +643,12 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
                 <div key={index} className={`p-4 rounded-lg border-l-4 ${
                   rec.severity === 'CRITICAL' ? 'border-l-red-500 bg-red-50' :
                   rec.severity === 'HIGH' ? 'border-l-orange-500 bg-orange-50' :
-                  'border-l-blue-500 bg-blue-50'
+                  'border-l-blue-500 bg-mpr-interactive-lt'
                 }`}>
                   <div className="flex items-start space-x-3">
                     {rec.severity === 'CRITICAL' ? <AlertTriangle className="h-6 w-6 text-red-500 mt-1" /> :
                      rec.severity === 'HIGH' ? <Clock className="h-6 w-6 text-orange-500 mt-1" /> :
-                     <Lightbulb className="h-6 w-6 text-blue-500 mt-1" />}
+                     <Lightbulb className="h-6 w-6 text-mpr-interactive mt-1" />}
                     <div className="flex-1">
                       <h4 className="text-lg font-semibold mb-2">{rec.title}</h4>
                       <p className="text-base mb-3">{rec.message}</p>
@@ -685,7 +685,7 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Button 
               onClick={() => setShowEducationCenter(true)}
-              className="h-16 text-lg bg-blue-600 hover:bg-blue-700"
+              className="h-16 text-lg bg-mpr-interactive hover:bg-mpr-interactive-dk"
             >
               <BookOpen className="h-6 w-6 mr-2" />
               Guide d'éducation financière
@@ -699,9 +699,9 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
             </Button>
           </div>
           
-          <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-            <h4 className="font-semibold text-blue-800 mb-2">💡 Le saviez-vous?</h4>
-            <p className="text-blue-700">
+          <div className="mt-6 p-4 bg-mpr-interactive-lt rounded-lg">
+            <h4 className="font-semibold text-mpr-navy mb-2">💡 Le saviez-vous?</h4>
+            <p className="text-mpr-navy">
               Commencer à planifier sa retraite même avec de petits montants peut faire une grande différence. 
               Même 50$ par mois peut devenir plusieurs milliers de dollars avec le temps!
             </p>
@@ -712,7 +712,7 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-green-50">
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <MasterWizardHeader />
         
@@ -724,7 +724,7 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
           <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle className="flex items-center">
-                <BookOpen className="h-6 w-6 text-blue-600 mr-2" />
+                <BookOpen className="h-6 w-6 text-mpr-interactive mr-2" />
                 Guide d'éducation financière
               </DialogTitle>
               <DialogDescription>
@@ -737,19 +737,19 @@ export const FinancialMasterWizardDashboard: React.FC<FinancialMasterWizardDashb
 
         {/* Simple Footer */}
         <div className="mt-12 text-center">
-          <Card className="bg-blue-50 border-blue-200">
+          <Card className="bg-mpr-interactive-lt border-mpr-border">
             <CardContent className="p-6">
               <div className="flex items-center justify-center mb-3">
-                <Heart className="h-6 w-6 text-blue-600 mr-2" />
-                <h3 className="text-xl font-semibold text-blue-800">
+                <Heart className="h-6 w-6 text-mpr-interactive mr-2" />
+                <h3 className="text-xl font-semibold text-mpr-navy">
                   Votre Guide Financier Personnel
                 </h3>
               </div>
-              <p className="text-blue-700 text-lg max-w-2xl mx-auto">
+              <p className="text-mpr-navy text-lg max-w-2xl mx-auto">
                 Je suis là pour vous aider à prendre le contrôle de vos finances, 
                 étape par étape, avec des mots simples et des conseils pratiques.
               </p>
-              <div className="flex justify-center items-center mt-4 space-x-8 text-blue-600">
+              <div className="flex justify-center items-center mt-4 space-x-8 text-mpr-interactive">
                 <div className="flex items-center">
                   <Shield className="h-5 w-5 mr-2" />
                   <span className="font-medium">Vos données sont privées</span>

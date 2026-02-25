@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -53,7 +53,7 @@ export function UltimatePlanningDashboard() {
           montant: Math.min(revenuAnnuel * 0.18, 29210),
           economieAnnuelle: Math.round(Math.min(revenuAnnuel * 0.18, 29210) * 0.25),
           priorite: 'haute',
-          couleur: 'bg-blue-100 border-blue-300'
+          couleur: 'bg-mpr-interactive-lt border-mpr-border'
         },
         {
           nom: 'Stratégie CELI',
@@ -312,7 +312,7 @@ export function UltimatePlanningDashboard() {
                         <div className="text-sm text-gray-600">Âge de retraite</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-blue-600 mb-2">
+                        <div className="text-2xl font-bold text-mpr-interactive mb-2">
                           {results.resume.objectifRetraiteInflation.toLocaleString()} $
                         </div>
                         <div className="text-sm text-gray-600">Objectif avec inflation</div>
@@ -361,7 +361,7 @@ export function UltimatePlanningDashboard() {
                             </div>
                             <div>
                               <div className="font-semibold text-gray-700">Économie annuelle :</div>
-                              <div className="text-blue-600">{strategy.economieAnnuelle.toLocaleString()} $</div>
+                              <div className="text-mpr-interactive">{strategy.economieAnnuelle.toLocaleString()} $</div>
                             </div>
                           </div>
                           <div className="text-xs text-gray-600 mt-2">
@@ -374,9 +374,9 @@ export function UltimatePlanningDashboard() {
                 </Card>
 
                 {/* Plan d'action */}
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200">
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-mpr-border">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-blue-800">
+                    <CardTitle className="flex items-center gap-3 text-mpr-navy">
                       <Zap className="w-6 h-6" />
                       Plan d'Action Personnalisé
                     </CardTitle>

@@ -1,4 +1,4 @@
-// ===== COMPOSANT DE TEST - CALCULATIONSERVICE AMÉLIORÉ =====
+﻿// ===== COMPOSANT DE TEST - CALCULATIONSERVICE AMÉLIORÉ =====
 // Composant pour tester et valider les nouvelles fonctionnalités
 
 import React, { useState } from 'react';
@@ -195,9 +195,9 @@ export const CalculationServiceTest: React.FC = () => {
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <h4 className="font-semibold text-blue-900 mb-2">Valeur Nette</h4>
-                    <div className="text-2xl font-bold text-blue-600">
+                  <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+                    <h4 className="font-semibold text-mpr-navy mb-2">Valeur Nette</h4>
+                    <div className="text-2xl font-bold text-mpr-interactive">
                       ${calculations.netWorth?.toLocaleString() || 'N/A'}
                     </div>
                   </div>
@@ -230,9 +230,9 @@ export const CalculationServiceTest: React.FC = () => {
                     </div>
                   </div>
                   
-                  <div className="p-4 bg-indigo-50 rounded-lg">
-                    <h4 className="font-semibold text-indigo-900 mb-2">Économies Fiscales</h4>
-                    <div className="text-2xl font-bold text-indigo-600">
+                  <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+                    <h4 className="font-semibold text-mpr-navy mb-2">Économies Fiscales</h4>
+                    <div className="text-2xl font-bold text-mpr-interactive">
                       ${calculations.taxSavings?.toLocaleString() || 'N/A'}
                     </div>
                   </div>
@@ -255,9 +255,9 @@ export const CalculationServiceTest: React.FC = () => {
                   <div className="space-y-4">
                     <h4 className="font-semibold text-lg">Personne 1</h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="p-3 bg-blue-50 rounded-lg">
-                        <span className="text-sm text-blue-700">Décision recommandée:</span>
-                        <div className="font-semibold text-blue-900">
+                      <div className="p-3 bg-mpr-interactive-lt rounded-lg">
+                        <span className="text-sm text-mpr-navy">Décision recommandée:</span>
+                        <div className="font-semibold text-mpr-navy">
                           {calculations.rrqOptimization.person1.recommandationPersonnalisee?.decision || 'N/A'}
                         </div>
                       </div>
@@ -309,9 +309,9 @@ export const CalculationServiceTest: React.FC = () => {
                 {calculations.oasGisProjection ? (
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="p-4 bg-blue-50 rounded-lg">
-                        <h4 className="font-semibold text-blue-900 mb-2">Total Mensuel OAS</h4>
-                        <div className="text-2xl font-bold text-blue-600">
+                      <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+                        <h4 className="font-semibold text-mpr-navy mb-2">Total Mensuel OAS</h4>
+                        <div className="text-2xl font-bold text-mpr-interactive">
                           ${calculations.oasGisProjection.householdTotal.monthlyOAS?.toFixed(2) || 'N/A'}
                         </div>
                       </div>
@@ -379,9 +379,9 @@ export const CalculationServiceTest: React.FC = () => {
                         </Badge>
                       </div>
                       
-                      <div className="p-3 bg-blue-50 rounded-lg">
-                        <span className="text-sm text-blue-700">Score global:</span>
-                        <div className="font-semibold text-blue-900">
+                      <div className="p-3 bg-mpr-interactive-lt rounded-lg">
+                        <span className="text-sm text-mpr-navy">Score global:</span>
+                        <div className="font-semibold text-mpr-navy">
                           {calculations.riskAnalysis.overallRiskScore || 'N/A'}/100
                         </div>
                       </div>

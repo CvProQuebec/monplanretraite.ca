@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
 import { CashflowSection } from '@/features/retirement/sections/CashflowSection';
 import SeasonalExpensesPlannerModule from '@/components/ui/SeasonalExpensesPlannerModule';
 import MonthlyBudgetPlanningModule from '@/components/ui/MonthlyBudgetPlanningModule';
@@ -188,8 +188,8 @@ return (
         {/* Header */}
         <div className="bg-white border-2 border-gray-300 rounded-xl p-6 text-center mb-8">
           <div className="flex justify-center mb-4">
-            <div className="bg-white p-3 rounded-full border-2 border-blue-600">
-              <svg className="h-8 w-8 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-white p-3 rounded-full border-2 border-mpr-interactive">
+              <svg className="h-8 w-8 text-mpr-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
               </svg>
             </div>
@@ -203,7 +203,7 @@ return (
         </div>
 
         {/* Bonnes pratiques - Dépenses comme source de vérité */}
-        <Alert className="border-blue-200 bg-blue-50 text-blue-800 mb-6">
+        <Alert className="border-mpr-border bg-mpr-interactive-lt text-mpr-navy mb-6">
           <AlertDescription>
             {isFrench
               ? 'Meilleure pratique : saisissez vos dépenses ici. Elles s’afficheront automatiquement dans votre budget. Vous évitez ainsi de les retaper.'
@@ -270,7 +270,7 @@ return (
           </p>
 
           {monthEndScheduled && (
-            <div className="mb-4 text-sm text-blue-800 bg-blue-50 border border-blue-200 rounded-lg p-3">
+            <div className="mb-4 text-sm text-mpr-navy bg-mpr-interactive-lt border border-mpr-border rounded-lg p-3">
               {isFrench
                 ? 'Rappels fin de mois planifiés pour les 3 prochains mois.'
                 : 'Month-end reminders scheduled for the next 3 months.'}
@@ -298,9 +298,9 @@ return (
                 {overdraft.monthlyCashflow.toLocaleString(isFrench ? 'fr-CA' : 'en-CA', { style: 'currency', currency: 'CAD' })}
               </div>
             </div>
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 text-sm">
-              <div className="text-blue-800 font-semibold">{isFrench ? 'Fonds d’urgence estimé' : 'Estimated emergency fund'}</div>
-              <div className="text-blue-900 text-lg font-bold">
+            <div className="bg-mpr-interactive-lt border border-mpr-border rounded-lg p-3 text-sm">
+              <div className="text-mpr-navy font-semibold">{isFrench ? 'Fonds d’urgence estimé' : 'Estimated emergency fund'}</div>
+              <div className="text-mpr-navy text-lg font-bold">
                 {overdraft.emergencySaved.toLocaleString(isFrench ? 'fr-CA' : 'en-CA', { style: 'currency', currency: 'CAD' })}
               </div>
             </div>
@@ -311,7 +311,7 @@ return (
               const color =
                 a.severity === 'error' ? { bg: 'bg-red-50', border: 'border-red-300', text: 'text-red-900', title: 'text-red-800' } :
                 a.severity === 'warning' ? { bg: 'bg-amber-50', border: 'border-amber-300', text: 'text-amber-900', title: 'text-amber-800' } :
-                { bg: 'bg-blue-50', border: 'border-blue-300', text: 'text-blue-900', title: 'text-blue-800' };
+                { bg: 'bg-mpr-interactive-lt', border: 'border-mpr-border', text: 'text-mpr-navy', title: 'text-mpr-navy' };
               return (
                 <div key={a.id + i} className={`${color.bg} ${color.border} border rounded-lg p-3`}>
                   <div className={`font-semibold ${color.title}`}>

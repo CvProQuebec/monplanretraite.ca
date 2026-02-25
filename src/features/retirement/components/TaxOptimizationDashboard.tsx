@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -52,7 +52,7 @@ export function TaxOptimizationDashboard() {
           montant: Math.min(contributionREERMax, revenuAnnuel * 0.25),
           economieAnnuelle: Math.round(Math.min(contributionREERMax, revenuAnnuel * 0.25) * 0.25),
           priorite: 'haute',
-          couleur: 'bg-blue-100 border-blue-300'
+          couleur: 'bg-mpr-interactive-lt border-mpr-border'
         },
         {
           nom: 'Stratégie CELI',
@@ -270,7 +270,7 @@ export function TaxOptimizationDashboard() {
                         <div className="text-sm text-gray-600">Économie annuelle</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-blue-600 mb-2">
+                        <div className="text-2xl font-bold text-mpr-interactive mb-2">
                           {results.economieCumulative.toLocaleString()} $
                         </div>
                         <div className="text-sm text-gray-600">Économie totale ({results.anneesEpargne} ans)</div>
@@ -313,7 +313,7 @@ export function TaxOptimizationDashboard() {
                             </div>
                             <div>
                               <div className="font-semibold text-gray-700">Économie annuelle :</div>
-                              <div className="text-blue-600">{strategy.economieAnnuelle.toLocaleString()} $</div>
+                              <div className="text-mpr-interactive">{strategy.economieAnnuelle.toLocaleString()} $</div>
                             </div>
                           </div>
                           <div className="text-xs text-gray-600 mt-2">
@@ -327,9 +327,9 @@ export function TaxOptimizationDashboard() {
 
                 {/* Recommandations */}
                 {results.recommandations.length > 0 && (
-                  <Card className="bg-blue-50 border-2 border-blue-200">
+                  <Card className="bg-mpr-interactive-lt border-2 border-mpr-border">
                     <CardHeader>
-                      <CardTitle className="flex items-center gap-3 text-blue-800">
+                      <CardTitle className="flex items-center gap-3 text-mpr-navy">
                         <Info className="w-6 h-6" />
                         Recommandations Personnalisées
                       </CardTitle>
@@ -337,8 +337,8 @@ export function TaxOptimizationDashboard() {
                     <CardContent>
                       <div className="space-y-3">
                         {results.recommandations.map((recommandation: any, index: number) => (
-                          <div key={index} className="border-l-4 border-blue-500 pl-4">
-                            <h4 className="font-semibold text-blue-800">{recommandation.titre}</h4>
+                          <div key={index} className="border-l-4 border-mpr-interactive pl-4">
+                            <h4 className="font-semibold text-mpr-navy">{recommandation.titre}</h4>
                             <p className="text-sm text-gray-700 mb-2">{recommandation.description}</p>
                             <div className="text-xs text-gray-600">
                               <strong>Impact :</strong> {recommandation.impact} | <strong>Priorité :</strong> {recommandation.priorite}

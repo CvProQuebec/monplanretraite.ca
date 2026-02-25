@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -96,11 +96,11 @@ const RRQCPPAnalysis: React.FC = () => {
   const isFrench = language === 'fr';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-mpr-navy to-mpr-navy text-white">
       {/* Particules de fond */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-3 h-3 bg-indigo-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-20 left-10 w-2 h-2 bg-mpr-interactive rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-mpr-interactive rounded-full animate-bounce"></div>
         <div className="absolute top-60 left-1/4 w-2 h-2 bg-purple-400 rounded-full animate-ping"></div>
       </div>
 
@@ -108,12 +108,12 @@ const RRQCPPAnalysis: React.FC = () => {
         {/* En-tête */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-4 mb-6">
-            <Shield className="w-16 h-16 text-blue-400" />
-            <h1 className="text-6xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent drop-shadow-2xl">
+            <Shield className="w-16 h-16 text-mpr-interactive" />
+            <h1 className="text-6xl font-bold bg-gradient-to-r from-mpr-interactive via-mpr-interactive to-purple-400 bg-clip-text text-transparent drop-shadow-2xl">
               {currentT.title}
             </h1>
           </div>
-          <p className="text-2xl text-blue-200 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-2xl text-mpr-interactive-lt max-w-4xl mx-auto leading-relaxed">
             {currentT.subtitle}
           </p>
         </div>
@@ -125,14 +125,14 @@ const RRQCPPAnalysis: React.FC = () => {
               <TabsList className="grid w-full grid-cols-4 bg-white/20 p-2 rounded-xl h-16 border-2 border-white/30 shadow-lg">
                 <TabsTrigger 
                   value="overview" 
-                  className="data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-200 px-6 py-3 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-white/20 data-[state=inactive]:text-white data-[state=inactive]:hover:bg-white/30"
+                  className="data-[state=active]:bg-mpr-interactive data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-mpr-border px-6 py-3 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-white/20 data-[state=inactive]:text-white data-[state=inactive]:hover:bg-white/30"
                 >
                   <Info className="w-5 h-5 mr-2" />
                   {currentT.overview}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="rrq-analysis"
-                  className="data-[state=active]:bg-indigo-600 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-indigo-200 px-6 py-3 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-white/20 data-[state=inactive]:text-white data-[state=inactive]:hover:bg-white/30"
+                  className="data-[state=active]:bg-mpr-interactive data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-mpr-border px-6 py-3 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-white/20 data-[state=inactive]:text-white data-[state=inactive]:hover:bg-white/30"
                 >
                   <Calculator className="w-5 h-5 mr-2" />
                   {currentT.rrqAnalysis}
@@ -159,20 +159,20 @@ const RRQCPPAnalysis: React.FC = () => {
                   {/* Description */}
                   <Card className="bg-white/10 backdrop-blur-sm border-white/20">
                     <CardHeader>
-                      <CardTitle className="text-2xl text-blue-200 flex items-center gap-3">
-                        <Info className="w-8 h-8 text-blue-400" />
+                      <CardTitle className="text-2xl text-mpr-interactive-lt flex items-center gap-3">
+                        <Info className="w-8 h-8 text-mpr-interactive" />
                         {currentT.overview}
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <p className="text-lg text-blue-100 leading-relaxed mb-6">
+                      <p className="text-lg text-mpr-interactive-lt leading-relaxed mb-6">
                         {currentT.overviewDescription}
                       </p>
                       <div className="space-y-3">
                         {currentT.features.map((feature, index) => (
                           <div key={index} className="flex items-center gap-3">
                             <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0" />
-                            <span className="text-blue-100">{feature}</span>
+                            <span className="text-mpr-interactive-lt">{feature}</span>
                           </div>
                         ))}
                       </div>
@@ -182,22 +182,22 @@ const RRQCPPAnalysis: React.FC = () => {
                   {/* Statistiques */}
                   <Card className="bg-white/10 backdrop-blur-sm border-white/20">
                     <CardHeader>
-                      <CardTitle className="text-2xl text-blue-200 flex items-center gap-3">
-                        <BarChart3 className="w-8 h-8 text-blue-400" />
+                      <CardTitle className="text-2xl text-mpr-interactive-lt flex items-center gap-3">
+                        <BarChart3 className="w-8 h-8 text-mpr-interactive" />
                         {isFrench ? 'Statistiques RRQ/CPP' : 'RRQ/CPP Statistics'}
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       <div className="grid grid-cols-2 gap-4">
-                        <div className="text-center p-4 bg-blue-500/20 rounded-lg border border-blue-400/30">
-                          <p className="text-2xl font-bold text-blue-200">2025</p>
-                          <p className="text-sm text-blue-300">
+                        <div className="text-center p-4 bg-mpr-interactive/20 rounded-lg border border-mpr-interactive/30">
+                          <p className="text-2xl font-bold text-mpr-interactive-lt">2025</p>
+                          <p className="text-sm text-mpr-interactive">
                             {isFrench ? 'Année de référence' : 'Reference Year'}
                           </p>
                         </div>
-                        <div className="text-center p-4 bg-indigo-500/20 rounded-lg border border-indigo-400/30">
-                          <p className="text-2xl font-bold text-indigo-200">6.40%</p>
-                          <p className="text-sm text-indigo-300">
+                        <div className="text-center p-4 bg-mpr-interactive/20 rounded-lg border border-mpr-interactive/30">
+                          <p className="text-2xl font-bold text-mpr-interactive-lt">6.40%</p>
+                          <p className="text-sm text-mpr-interactive">
                             {isFrench ? 'Taux RRQ 2025' : 'RRQ Rate 2025'}
                           </p>
                         </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -355,7 +355,7 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
   // Couleurs pour les types de comptes
   const getAccountColor = (type: 'REER' | 'CELI' | 'CRI') => {
     switch (type) {
-      case 'REER': return 'text-blue-600 bg-blue-50 border-blue-200';
+      case 'REER': return 'text-mpr-interactive bg-mpr-interactive-lt border-mpr-border';
       case 'CELI': return 'text-green-600 bg-green-50 border-green-200';
       case 'CRI': return 'text-purple-600 bg-purple-50 border-purple-200';
     }
@@ -366,7 +366,7 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
       <DialogTrigger asChild>
         <Button 
           size="lg"
-          className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-600 hover:from-indigo-600 hover:via-purple-600 hover:to-pink-700 text-white font-bold shadow-xl transform hover:scale-105 transition-all duration-300"
+          className="bg-gradient-to-r from-mpr-interactive via-purple-500 to-pink-600 hover:from-mpr-interactive hover:via-purple-600 hover:to-pink-700 text-white font-bold shadow-xl transform hover:scale-105 transition-all duration-300"
         >
           <Calculator className="w-6 h-6 mr-3" />
           {isFrench ? '📊 Calculette de rendement avancée' : '📊 Advanced Return Calculator'}
@@ -376,7 +376,7 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
       
       <DialogContent className="max-w-6xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-indigo-700 flex items-center gap-3">
+          <DialogTitle className="text-2xl font-bold text-mpr-navy flex items-center gap-3">
             <BarChart3 className="w-8 h-8" />
             {isFrench ? 'Calculette de rendement professionnelle' : 'Professional Return Calculator'}
           </DialogTitle>
@@ -692,7 +692,7 @@ const ReturnCalculator: React.FC<ReturnCalculatorProps> = ({ isFrench = true }) 
                             <div className="font-semibold text-gray-600">
                               {isFrench ? 'Contributions nettes' : 'Net contributions'}
                             </div>
-                            <div className="font-bold text-blue-600">
+                            <div className="font-bold text-mpr-interactive">
                               ${result.netContributions.toLocaleString()}
                             </div>
                           </div>

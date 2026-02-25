@@ -1,4 +1,4 @@
-// src/features/retirement/components/ScenarioComparison.tsx
+﻿// src/features/retirement/components/ScenarioComparison.tsx
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -27,7 +27,7 @@ export function ScenarioComparison() {
       anneesEpargne: 20,
       ageRetraite: 67,
       risque: 'Faible',
-      couleur: 'bg-blue-100 border-blue-300'
+      couleur: 'bg-mpr-interactive-lt border-mpr-border'
     },
     {
       id: 2,
@@ -188,12 +188,12 @@ export function ScenarioComparison() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-purple-50">
       <div className="container mx-auto px-6 py-12">
         {/* En-tête */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <GitCompare className="w-12 h-12 text-indigo-600" />
+            <GitCompare className="w-12 h-12 text-mpr-interactive" />
             <h1 className="text-4xl font-bold text-gray-900">
               Comparaison de Scénarios
             </h1>
@@ -277,7 +277,7 @@ export function ScenarioComparison() {
             onClick={runComparison}
             disabled={isComparing}
             size="lg"
-            className="bg-indigo-600 hover:bg-indigo-700 px-8 py-3"
+            className="bg-mpr-interactive hover:bg-mpr-interactive-dk px-8 py-3"
           >
             {isComparing ? 'Comparaison en cours...' : 'Comparer les Scénarios'}
           </Button>
@@ -287,9 +287,9 @@ export function ScenarioComparison() {
         {results && (
           <div className="space-y-8">
             {/* Résumé de la comparaison */}
-            <Card className="bg-white/80 backdrop-blur-sm border-2 border-indigo-200">
+            <Card className="bg-white/80 backdrop-blur-sm border-2 border-mpr-border">
               <CardHeader>
-                <CardTitle className="flex items-center gap-3 text-indigo-800">
+                <CardTitle className="flex items-center gap-3 text-mpr-navy">
                   <BarChart3 className="w-6 h-6" />
                   Résumé de la Comparaison
                 </CardTitle>
@@ -297,7 +297,7 @@ export function ScenarioComparison() {
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-indigo-600 mb-2">
+                    <div className="text-2xl font-bold text-mpr-interactive mb-2">
                       {results.comparaison.montantMoyen.toLocaleString()} $
                     </div>
                     <div className="text-sm text-gray-600">Montant moyen</div>
@@ -350,7 +350,7 @@ export function ScenarioComparison() {
                   </CardHeader>
                   <CardContent className="space-y-4">
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-indigo-600 mb-2">
+                      <div className="text-3xl font-bold text-mpr-interactive mb-2">
                         {scenario.calculs.montantFinal.toLocaleString()} $
                       </div>
                       <div className="text-sm text-gray-600">Capital final</div>
@@ -363,7 +363,7 @@ export function ScenarioComparison() {
                       </div>
                       <div>
                         <div className="font-semibold text-gray-700">Rente mensuelle :</div>
-                        <div className="text-blue-600">{scenario.calculs.renteMensuelle.toLocaleString()} $</div>
+                        <div className="text-mpr-interactive">{scenario.calculs.renteMensuelle.toLocaleString()} $</div>
                       </div>
                       <div>
                         <div className="font-semibold text-gray-700">Valeur viagère :</div>

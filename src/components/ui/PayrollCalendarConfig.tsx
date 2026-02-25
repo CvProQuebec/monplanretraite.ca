@@ -1,4 +1,4 @@
-// src/components/ui/PayrollCalendarConfig.tsx
+﻿// src/components/ui/PayrollCalendarConfig.tsx
 // Composant pour configurer le calendrier de paie
 
 import React, { useState } from 'react';
@@ -76,8 +76,8 @@ export const PayrollCalendarConfig: React.FC<PayrollCalendarConfigProps> = ({
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-xl font-bold text-blue-800 flex items-center gap-2">
-          <Calendar className="w-6 h-6 text-blue-600" />
+        <CardTitle className="text-xl font-bold text-mpr-navy flex items-center gap-2">
+          <Calendar className="w-6 h-6 text-mpr-interactive" />
           {isFrench ? 'Configuration du Calendrier de Paie' : 'Payroll Calendar Configuration'}
         </CardTitle>
         <CardDescription>
@@ -158,7 +158,7 @@ export const PayrollCalendarConfig: React.FC<PayrollCalendarConfigProps> = ({
           <Button
             onClick={generatePreview}
             disabled={!validation.isValid}
-            className="bg-blue-600 hover:bg-blue-700 text-white"
+            className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white"
           >
             <Clock className="w-4 h-4 mr-2" />
             {isFrench ? 'Générer la prévisualisation' : 'Generate Preview'}
@@ -193,11 +193,11 @@ export const PayrollCalendarConfig: React.FC<PayrollCalendarConfigProps> = ({
               </div>
             </div>
 
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h3 className="font-semibold text-blue-800 mb-3">
+            <div className="bg-mpr-interactive-lt border border-mpr-border rounded-lg p-4">
+              <h3 className="font-semibold text-mpr-navy mb-3">
                 {isFrench ? 'Exemple de calcul (2720,73$ aux 2 semaines)' : 'Calculation Example ($2,720.73 bi-weekly)'}
               </h3>
-              <p className="text-blue-700 font-medium">
+              <p className="text-mpr-navy font-medium">
                 {isFrench ? 'Gains totaux à ce jour:' : 'Total earnings to date:'} {formatCurrency(preview.totalEarnings)}
               </p>
             </div>

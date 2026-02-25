@@ -1,4 +1,4 @@
-// src/features/retirement/sections/BackupSecuritySection.tsx
+﻿// src/features/retirement/sections/BackupSecuritySection.tsx
 import React, { useState, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -212,10 +212,10 @@ export const BackupSecuritySection: React.FC<BackupSecuritySectionProps> = ({ da
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-mpr-navy text-white">
       {/* Particules animées en arrière-plan */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-20 left-10 w-2 h-2 bg-mpr-interactive rounded-full animate-pulse"></div>
         <div className="absolute top-40 right-20 w-3 h-3 bg-purple-400 rounded-full animate-bounce"></div>
         <div className="absolute bottom-40 left-20 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
         <div className="absolute top-60 left-1/2 w-1 h-1 bg-yellow-400 rounded-full animate-pulse"></div>
@@ -238,7 +238,7 @@ export const BackupSecuritySection: React.FC<BackupSecuritySectionProps> = ({ da
           <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="flex items-center gap-3 text-white">
-                <Save className="w-6 h-6 text-blue-400" />
+                <Save className="w-6 h-6 text-mpr-interactive" />
                 Gestion des Sauvegardes
               </CardTitle>
               <CardDescription className="text-gray-300">
@@ -249,7 +249,7 @@ export const BackupSecuritySection: React.FC<BackupSecuritySectionProps> = ({ da
               <div className="flex gap-3">
                 <Dialog open={saveDialogOpen} onOpenChange={setSaveDialogOpen}>
                   <DialogTrigger asChild>
-                    <Button className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-0 shadow-lg">
+                    <Button className="flex-1 bg-gradient-to-r from-mpr-interactive to-mpr-interactive-dk hover:from-mpr-navy-mid hover:to-mpr-navy-mid text-white border-0 shadow-lg">
                       <Save className="w-4 h-4 mr-2" />
                       Sauvegarder
                     </Button>
@@ -377,7 +377,7 @@ export const BackupSecuritySection: React.FC<BackupSecuritySectionProps> = ({ da
                 </Dialog>
               </div>
 
-              <Alert className="bg-blue-900/20 border-blue-400 text-blue-200">
+              <Alert className="bg-mpr-navy/20 border-mpr-interactive text-mpr-interactive-lt">
                 <Info className="h-4 w-4" />
                 <AlertTitle>Information de sécurité</AlertTitle>
                 <AlertDescription>
@@ -445,7 +445,7 @@ export const BackupSecuritySection: React.FC<BackupSecuritySectionProps> = ({ da
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center p-4 bg-slate-700/50 rounded-lg">
-                <Database className="w-8 h-8 text-blue-400 mx-auto mb-2" />
+                <Database className="w-8 h-8 text-mpr-interactive mx-auto mb-2" />
                 <h3 className="font-semibold text-white mb-1">Sauvegarde Automatique</h3>
                 <p className="text-sm text-gray-300">Vos données sont sauvegardées automatiquement en session</p>
               </div>

@@ -1,4 +1,4 @@
-// ===== COMPOSANT ANALYSE RRQ AVANCÉE =====
+﻿// ===== COMPOSANT ANALYSE RRQ AVANCÉE =====
 // Interface utilisateur pour l'analyse RRQ 2025 avec recommandations personnalisées
 
 import React, { useState } from 'react';
@@ -166,7 +166,7 @@ export const AdvancedRRQAnalysisComponent: React.FC<AdvancedRRQAnalysisProps> = 
 
   const getDecisionColor = (decision: string) => {
     switch (decision) {
-      case 'COMMENCER_MAINTENANT': return 'bg-blue-100 text-blue-800';
+      case 'COMMENCER_MAINTENANT': return 'bg-mpr-interactive-lt text-mpr-navy';
       case 'ATTENDRE_JUSQU_72': return 'bg-purple-100 text-purple-800';
       case 'STRATEGIE_FLEXIBLE': return 'bg-orange-100 text-orange-800';
       default: return 'bg-gray-100 text-gray-800';
@@ -203,7 +203,7 @@ export const AdvancedRRQAnalysisComponent: React.FC<AdvancedRRQAnalysisProps> = 
                 type="number"
                 value={formData.montantActuel}
                 onChange={(e) => handleInputChange('montantActuel', Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mpr-interactive"
                 title={t.currentAmount}
                 aria-label={t.currentAmount}
               />
@@ -217,7 +217,7 @@ export const AdvancedRRQAnalysisComponent: React.FC<AdvancedRRQAnalysisProps> = 
                 type="number"
                 value={formData.montant70}
                 onChange={(e) => handleInputChange('montant70', Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mpr-interactive"
                 title={t.age70}
                 aria-label={t.age70}
               />
@@ -231,7 +231,7 @@ export const AdvancedRRQAnalysisComponent: React.FC<AdvancedRRQAnalysisProps> = 
                 type="number"
                 value={formData.montant72}
                 onChange={(e) => handleInputChange('montant72', Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mpr-interactive"
                 title={t.age72}
                 aria-label={t.age72}
               />
@@ -245,7 +245,7 @@ export const AdvancedRRQAnalysisComponent: React.FC<AdvancedRRQAnalysisProps> = 
                 type="number"
                 value={formData.esperanceVie}
                 onChange={(e) => handleInputChange('esperanceVie', Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mpr-interactive"
                 title={t.lifeExpectancy}
                 aria-label={t.lifeExpectancy}
               />
@@ -258,7 +258,7 @@ export const AdvancedRRQAnalysisComponent: React.FC<AdvancedRRQAnalysisProps> = 
               <select
                 value={formData.sexe}
                 onChange={(e) => handleInputChange('sexe', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mpr-interactive"
                 title={t.gender}
                 aria-label={t.gender}
               >
@@ -274,7 +274,7 @@ export const AdvancedRRQAnalysisComponent: React.FC<AdvancedRRQAnalysisProps> = 
               <select
                 value={formData.situationFinanciere}
                 onChange={(e) => handleInputChange('situationFinanciere', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mpr-interactive"
                 title={t.financialSituation}
                 aria-label={t.financialSituation}
               >
@@ -329,11 +329,11 @@ export const AdvancedRRQAnalysisComponent: React.FC<AdvancedRRQAnalysisProps> = 
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+                    <div className="text-2xl font-bold text-mpr-interactive">
                       ${analysis.montantMensuel.toFixed(2)}
                     </div>
-                    <div className="text-sm text-blue-600">Montant mensuel actuel</div>
+                    <div className="text-sm text-mpr-interactive">Montant mensuel actuel</div>
                   </div>
                   
                   <div className="text-center p-4 bg-green-50 rounded-lg">
@@ -424,7 +424,7 @@ export const AdvancedRRQAnalysisComponent: React.FC<AdvancedRRQAnalysisProps> = 
               <CardContent>
                 <div className="space-y-4">
                   {/* Décision recommandée */}
-                  <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
+                  <div className="p-4 bg-gradient-to-r from-mpr-interactive-lt to-purple-50 rounded-lg">
                     <div className="flex items-center gap-3 mb-3">
                       <Badge className={getDecisionColor(analysis.recommandationPersonnalisee.decision)}>
                         {analysis.recommandationPersonnalisee.decision === 'COMMENCER_MAINTENANT' && t.startNow}
@@ -439,7 +439,7 @@ export const AdvancedRRQAnalysisComponent: React.FC<AdvancedRRQAnalysisProps> = 
                     <div className="space-y-2">
                       {analysis.recommandationPersonnalisee.raisonnement.map((raison, index) => (
                         <div key={index} className="flex items-start gap-2">
-                          <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                          <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2 flex-shrink-0"></div>
                           <span className="text-gray-700">{raison}</span>
                         </div>
                       ))}

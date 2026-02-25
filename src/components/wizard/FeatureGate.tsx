@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { PLAN_CONFIG, isFeatureEnabled, getRequiredPlanForFeature } from '@/config/plans';
 import type { SubscriptionPlan, PlanLimits } from '@/types/subscription';
 import { useSubscriptionLimits } from '@/hooks/useSubscriptionLimits';
@@ -21,7 +21,7 @@ const DefaultLockedCard: React.FC<{ feature: FeatureKey; currentPlan: Subscripti
         Cette fonctionnalité nécessite le forfait <strong>{requiredBadge}</strong>.
       </div>
       <div className="mt-2">
-        <a href="/premium" className="inline-block px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">
+        <a href="/premium" className="inline-block px-4 py-2 rounded bg-mpr-interactive text-white hover:bg-mpr-interactive-dk">
           Voir les forfaits
         </a>
       </div>

@@ -1,4 +1,4 @@
-// Composant pour l'impression et la signature des directives médicales anticipées
+﻿// Composant pour l'impression et la signature des directives médicales anticipées
 import React, { useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -100,9 +100,9 @@ export const MedicalDirectivesPrint: React.FC<MedicalDirectivesPrintProps> = ({
             </Button>
           </div>
           
-          <Alert className="border-blue-200 bg-blue-50">
-            <Info className="h-4 w-4 text-blue-600" />
-            <AlertDescription className="text-blue-800">
+          <Alert className="border-mpr-border bg-mpr-interactive-lt">
+            <Info className="h-4 w-4 text-mpr-interactive" />
+            <AlertDescription className="text-mpr-navy">
               <strong>Conseil :</strong> {isEnglish 
                 ? 'Print this document, sign it, and keep it with your important papers. Consider having it notarized for legal validity.'
                 : 'Imprimez ce document, signez-le et conservez-le avec vos papiers importants. Considérez le faire notarier pour sa validité légale.'
@@ -183,7 +183,7 @@ export const MedicalDirectivesPrint: React.FC<MedicalDirectivesPrintProps> = ({
 
           {/* Traitements médicaux */}
           <div>
-            <h3 className="text-lg font-medium text-blue-900 mb-3">
+            <h3 className="text-lg font-medium text-mpr-navy mb-3">
               💊 {isEnglish ? 'Medical Treatments' : 'Traitements médicaux'}
             </h3>
             <div className="space-y-2 text-sm">
@@ -312,7 +312,7 @@ export const MedicalDirectivesPrint: React.FC<MedicalDirectivesPrintProps> = ({
 
         {/* Consultation et validation */}
         <div className="border-t border-gray-200 pt-4">
-          <h3 className="text-lg font-medium text-blue-900 mb-3">
+          <h3 className="text-lg font-medium text-mpr-navy mb-3">
             👥 {isEnglish ? 'Consultation and Validation' : 'Consultation et validation'}
           </h3>
           <div className="space-y-2 text-sm">

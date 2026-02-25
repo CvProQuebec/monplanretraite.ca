@@ -1,4 +1,4 @@
-// Onglet de planification successorale - Plan Ultimate
+﻿// Onglet de planification successorale - Plan Ultimate
 // Stratégies de protection, optimisation fiscale et planification d'assurance
 // Respectant la typographie québécoise et les limites professionnelles
 
@@ -293,9 +293,9 @@ export const EstatePlanningTab: React.FC<EstatePlanningTabProps> = ({
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
-              <div className="text-2xl font-bold text-blue-900">{data.estatePlanning.assetProtection.length}</div>
-              <div className="text-sm text-blue-700">Stratégies de protection</div>
+            <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+              <div className="text-2xl font-bold text-mpr-navy">{data.estatePlanning.assetProtection.length}</div>
+              <div className="text-sm text-mpr-navy">Stratégies de protection</div>
             </div>
             <div className="text-center p-4 bg-green-50 rounded-lg">
               <div className="text-2xl font-bold text-green-900">{data.estatePlanning.taxOptimization.length}</div>
@@ -460,7 +460,7 @@ export const EstatePlanningTab: React.FC<EstatePlanningTabProps> = ({
 
                           <div className="space-y-2">
                             <div>
-                              <span className="text-sm font-medium text-blue-600">Exigences :</span>
+                              <span className="text-sm font-medium text-mpr-interactive">Exigences :</span>
                               <ul className="list-disc list-inside text-sm text-muted-foreground ml-2">
                                 {strategy.requirements.map((req, index) => (
                                   <li key={index}>{req}</li>
@@ -562,7 +562,7 @@ export const EstatePlanningTab: React.FC<EstatePlanningTabProps> = ({
                               </ul>
                             </div>
                             <div>
-                              <span className="text-sm font-medium text-blue-600">Recommandations :</span>
+                              <span className="text-sm font-medium text-mpr-interactive">Recommandations :</span>
                               <ul className="list-disc list-inside text-sm text-muted-foreground ml-2">
                                 {strategy.recommendations.map((rec, index) => (
                                   <li key={index}>{rec}</li>
@@ -869,14 +869,14 @@ export const EstatePlanningTab: React.FC<EstatePlanningTabProps> = ({
       </Dialog>
 
       {/* Informations et aide */}
-      <Card className="border-blue-200 bg-blue-50">
+      <Card className="border-mpr-border bg-mpr-interactive-lt">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-900">
+          <CardTitle className="flex items-center gap-2 text-mpr-navy">
             <Info className="h-5 w-5" />
             À propos de la planification successorale
           </CardTitle>
         </CardHeader>
-        <CardContent className="text-blue-700">
+        <CardContent className="text-mpr-navy">
           <p className="mb-3">
             La planification successorale avancée vous permet de créer des stratégies personnalisées 
             pour protéger votre patrimoine, optimiser vos impôts et planifier vos assurances.

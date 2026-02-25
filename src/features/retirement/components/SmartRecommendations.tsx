@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Brain, 
@@ -257,7 +257,7 @@ export const SmartRecommendations: React.FC<SmartRecommendationsProps> = ({
   const getTypeIcon = (type: string) => {
     switch (type) {
       case 'optimization':
-        return { icon: Zap, color: 'text-blue-600', bgColor: 'bg-blue-100' };
+        return { icon: Zap, color: 'text-mpr-interactive', bgColor: 'bg-mpr-interactive-lt' };
       case 'suggestion':
         return { icon: Lightbulb, color: 'text-yellow-600', bgColor: 'bg-yellow-100' };
       case 'warning':
@@ -279,7 +279,7 @@ export const SmartRecommendations: React.FC<SmartRecommendationsProps> = ({
       case 'medium':
         return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'low':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
+        return 'bg-mpr-interactive-lt text-mpr-navy border-mpr-border';
       default:
         return 'bg-gray-100 text-gray-800 border-gray-200';
     }
@@ -291,7 +291,7 @@ export const SmartRecommendations: React.FC<SmartRecommendationsProps> = ({
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-6 border-2 border-green-200"
+        className="bg-gradient-to-r from-green-50 to-mpr-interactive-lt rounded-xl p-6 border-2 border-green-200"
       >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
@@ -390,7 +390,7 @@ export const SmartRecommendations: React.FC<SmartRecommendationsProps> = ({
                 )}
                 className={`px-3 py-1 rounded-lg text-xs font-medium transition-colors ${
                   activeFilters.includes(type)
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-mpr-interactive text-white'
                     : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
               >
@@ -419,7 +419,7 @@ export const SmartRecommendations: React.FC<SmartRecommendationsProps> = ({
           {/* Bouton de rafraîchissement */}
           <button
             onClick={generateRecommendations}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
+            className="px-4 py-2 bg-mpr-interactive text-white rounded-lg hover:bg-mpr-interactive-dk transition-colors text-sm"
           >
             Actualiser
           </button>
@@ -452,7 +452,7 @@ export const SmartRecommendations: React.FC<SmartRecommendationsProps> = ({
                 className={`bg-white rounded-xl p-6 border-2 transition-all duration-200 ${
                   recommendation.applied 
                     ? 'border-green-200 bg-green-50' 
-                    : 'border-gray-200 hover:border-blue-300 hover:shadow-md'
+                    : 'border-gray-200 hover:border-mpr-border hover:shadow-md'
                 }`}
               >
                 <div className="flex items-start justify-between">

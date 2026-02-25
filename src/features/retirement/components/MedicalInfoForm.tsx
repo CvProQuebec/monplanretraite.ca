@@ -1,4 +1,4 @@
-// src/features/retirement/components/MedicalInfoForm.tsx
+﻿// src/features/retirement/components/MedicalInfoForm.tsx
 // Formulaire pour les informations médicales
 
 import React, { useState } from 'react';
@@ -336,7 +336,7 @@ export const MedicalInfoForm: React.FC<MedicalInfoFormProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            <Pill className="w-5 h-5 text-blue-600" />
+            <Pill className="w-5 h-5 text-mpr-interactive" />
             Médicaments actuels
           </CardTitle>
           <CardDescription>
@@ -345,7 +345,7 @@ export const MedicalInfoForm: React.FC<MedicalInfoFormProps> = ({
         </CardHeader>
         <CardContent className="space-y-4">
           {/* Ajout de médicament */}
-          <Card className="bg-blue-50 border-blue-200">
+          <Card className="bg-mpr-interactive-lt border-mpr-border">
             <CardContent className="p-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
                 <div>
@@ -551,7 +551,7 @@ export const MedicalInfoForm: React.FC<MedicalInfoFormProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="text-lg flex items-center gap-2">
-            <Stethoscope className="w-5 h-5 text-blue-600" />
+            <Stethoscope className="w-5 h-5 text-mpr-interactive" />
             Médecin de famille
           </CardTitle>
         </CardHeader>

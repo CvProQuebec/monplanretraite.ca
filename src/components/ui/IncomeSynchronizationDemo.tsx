@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -69,9 +69,9 @@ const IncomeSynchronizationDemo: React.FC<IncomeSynchronizationDemoProps> = ({ i
 
   return (
     <div className="space-y-6">
-      <Card className="bg-gradient-to-r from-blue-50 to-green-50 border-2 border-blue-200">
+      <Card className="bg-gradient-to-r from-mpr-interactive-lt to-green-50 border-2 border-mpr-border">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-blue-800 flex items-center gap-2">
+          <CardTitle className="text-2xl font-bold text-mpr-navy flex items-center gap-2">
             <RefreshCw className="w-6 h-6" />
             {isFrench ? 'Démonstration de Synchronisation des Revenus' : 'Income Synchronization Demo'}
           </CardTitle>
@@ -162,7 +162,7 @@ const IncomeSynchronizationDemo: React.FC<IncomeSynchronizationDemoProps> = ({ i
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-blue-900">
+                  <div className="text-3xl font-bold text-mpr-navy">
                     ${synchronizedData.totalHouseholdIncome.toLocaleString()}
                   </div>
                   <div className="text-sm text-gray-600">
@@ -210,7 +210,7 @@ const IncomeSynchronizationDemo: React.FC<IncomeSynchronizationDemoProps> = ({ i
                 </div>
                 
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-700">
+                  <div className="text-2xl font-bold text-mpr-navy">
                     {longevityImpact.healthMultiplier.toFixed(2)}x
                   </div>
                   <div className="text-sm text-gray-600">
@@ -219,7 +219,7 @@ const IncomeSynchronizationDemo: React.FC<IncomeSynchronizationDemoProps> = ({ i
                 </div>
                 
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-indigo-700">
+                  <div className="text-2xl font-bold text-mpr-navy">
                     {(longevityImpact.stressReduction * 100).toFixed(1)}%
                   </div>
                   <div className="text-sm text-gray-600">

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { 
@@ -56,7 +56,7 @@ const hasPlanAccess = (userPlan: SubscriptionPlan, requiredPlan: SubscriptionPla
 const getPlanIcon = (plan: SubscriptionPlan) => {
   switch (plan) {
     case 'professional':
-      return <Star className="w-6 h-6 text-blue-600" />;
+      return <Star className="w-6 h-6 text-mpr-interactive" />;
     case 'expert':
       return <Crown className="w-6 h-6 text-purple-600" />;
     default:
@@ -68,7 +68,7 @@ const getPlanIcon = (plan: SubscriptionPlan) => {
 const getPlanColor = (plan: SubscriptionPlan) => {
   switch (plan) {
     case 'professional':
-      return 'text-blue-600';
+      return 'text-mpr-interactive';
     case 'expert':
       return 'text-purple-600';
     default:
@@ -250,7 +250,7 @@ export const PlanRestrictedSection: React.FC<PlanRestrictedSectionProps> = ({
 
           {/* Bouton d'upgrade */}
           <Button 
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+            className="w-full bg-gradient-to-r from-mpr-interactive to-purple-600 hover:from-mpr-navy-mid hover:to-purple-700"
             onClick={() => {
               // Rediriger vers la page de tarification
               window.location.href = language === 'fr' ? '/fr/retraite' : '/en/retirement';
@@ -292,10 +292,10 @@ export const UpgradeMessage: React.FC<{
   const { language } = useLanguage();
   
   return (
-    <div className={cn("text-center p-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border border-blue-200", className)}>
+    <div className={cn("text-center p-6 bg-gradient-to-r from-mpr-interactive-lt to-purple-50 rounded-lg border border-mpr-border", className)}>
       <div className="flex items-center justify-center gap-2 mb-3">
         {getPlanIcon(requiredPlan)}
-        <span className="font-medium text-blue-800">
+        <span className="font-medium text-mpr-navy">
           {language === 'fr' 
             ? `Plan ${getPlanName(requiredPlan, language)} requis`
             : `${getPlanName(requiredPlan, language)} plan required`
@@ -303,7 +303,7 @@ export const UpgradeMessage: React.FC<{
         </span>
       </div>
       {feature && (
-        <p className="text-blue-700 mb-4">
+        <p className="text-mpr-navy mb-4">
           {language === 'fr'
             ? `La fonctionnalité "${feature}" nécessite un plan supérieur`
             : `The "${feature}" feature requires a higher plan`
@@ -312,7 +312,7 @@ export const UpgradeMessage: React.FC<{
       )}
       <Button 
         size="sm"
-        className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+        className="bg-gradient-to-r from-mpr-interactive to-purple-600 hover:from-mpr-navy-mid hover:to-purple-700"
         onClick={() => {
           window.location.href = language === 'fr' ? '/fr/retraite' : '/en/retirement';
         }}

@@ -1,4 +1,4 @@
-// src/features/retirement/components/ComprehensiveMedicalRecordForm.tsx
+﻿// src/features/retirement/components/ComprehensiveMedicalRecordForm.tsx
 // Formulaire pour le dossier médical complet
 
 import React, { useState } from 'react';
@@ -356,15 +356,15 @@ export const ComprehensiveMedicalRecordForm: React.FC<ComprehensiveMedicalRecord
   return (
     <div className="space-y-6">
       {/* En-tête */}
-      <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+      <Card className="bg-gradient-to-r from-mpr-interactive-lt to-mpr-interactive-lt border-mpr-border">
         <CardHeader>
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
-              <Heart className="w-6 h-6 text-blue-600" />
+            <div className="w-12 h-12 bg-mpr-interactive-lt rounded-full flex items-center justify-center">
+              <Heart className="w-6 h-6 text-mpr-interactive" />
             </div>
             <div>
-              <CardTitle className="text-blue-900">Dossier médical complet</CardTitle>
-              <CardDescription className="text-blue-700">
+              <CardTitle className="text-mpr-navy">Dossier médical complet</CardTitle>
+              <CardDescription className="text-mpr-navy">
                 Centralisez toutes vos informations médicales importantes
               </CardDescription>
             </div>

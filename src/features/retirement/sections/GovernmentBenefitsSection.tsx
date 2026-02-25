@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -71,7 +71,7 @@ export default function GovernmentBenefitsSection({ userData, onDataChange }: Go
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Crown className="h-6 w-6 text-blue-600" />
+            <Crown className="h-6 w-6 text-mpr-interactive" />
             Prestations Gouvernementales Complètes
           </CardTitle>
           <CardDescription>
@@ -93,8 +93,8 @@ export default function GovernmentBenefitsSection({ userData, onDataChange }: Go
           {/* Vue d'ensemble des résultats */}
           {governmentResults && (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              <div className="text-center p-4 bg-blue-50 rounded-lg">
-                <div className="text-2xl font-bold text-blue-600">
+              <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+                <div className="text-2xl font-bold text-mpr-interactive">
                   ${governmentResults.revenuTotalGaranti?.toLocaleString('fr-CA') || '0'}
                 </div>
                 <div className="text-sm text-gray-600">Revenu total garanti</div>
@@ -278,7 +278,7 @@ export default function GovernmentBenefitsSection({ userData, onDataChange }: Go
                 </ul>
               </div>
 
-              <div className="p-4 bg-blue-50 rounded-lg border-l-4 border-blue-400">
+              <div className="p-4 bg-mpr-interactive-lt rounded-lg border-l-4 border-mpr-interactive">
                 <h4 className="font-semibold mb-2">📊 Sources de revenus garantis</h4>
                 <div className="text-sm space-y-2">
                   <div className="flex justify-between">
@@ -296,7 +296,7 @@ export default function GovernmentBenefitsSection({ userData, onDataChange }: Go
                   <Separator />
                   <div className="flex justify-between font-semibold">
                     <span>Total garanti:</span>
-                    <span className="text-blue-600">${governmentResults?.revenuTotalGaranti?.toLocaleString('fr-CA') || '0'}/an</span>
+                    <span className="text-mpr-interactive">${governmentResults?.revenuTotalGaranti?.toLocaleString('fr-CA') || '0'}/an</span>
                   </div>
                 </div>
               </div>

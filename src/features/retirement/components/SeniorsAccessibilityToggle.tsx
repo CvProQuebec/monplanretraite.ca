@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Eye, EyeOff, Settings, Palette, Type, Contrast, Navigation, Rocket, Sparkles, Zap, Play, Pause, RotateCcw } from 'lucide-react';
 import { useDemoControls } from '../hooks/useDemoControls';
 
@@ -102,10 +102,10 @@ export const NavigationToggle: React.FC<NavigationToggleProps> = ({
         className={`
           flex items-center gap-2 px-4 py-2 rounded-lg border-2 transition-all duration-200
           ${isSeniorsMode 
-            ? 'bg-blue-600 text-white border-blue-600 shadow-lg' 
-            : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400'
+            ? 'bg-mpr-interactive text-white border-mpr-interactive shadow-lg' 
+            : 'bg-white text-gray-700 border-gray-300 hover:border-mpr-interactive'
           }
-          hover:shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2
+          hover:shadow-md focus:outline-none focus:ring-2 focus:ring-mpr-interactive focus:ring-offset-2
         `}
         title="Options de navigation et d'accessibilité"
       >
@@ -134,12 +134,12 @@ export const NavigationToggle: React.FC<NavigationToggleProps> = ({
                     onClick={() => setIsSeniorsMode(false)}
                     className={`w-full p-3 rounded-lg border-2 transition-all duration-200 text-left ${
                       !isSeniorsMode 
-                        ? 'bg-blue-50 border-blue-300 text-blue-800' 
+                        ? 'bg-mpr-interactive-lt border-mpr-border text-mpr-navy' 
                         : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-gray-300'
                     }`}
                   >
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                      <div className="w-3 h-3 rounded-full bg-mpr-interactive"></div>
                       <span className="font-medium">Mode Standard</span>
                     </div>
                     <p className="text-sm text-gray-500 mt-1">Interface standard avec toutes les fonctionnalités</p>
@@ -149,7 +149,7 @@ export const NavigationToggle: React.FC<NavigationToggleProps> = ({
                     onClick={() => setIsSeniorsMode(true)}
                     className={`w-full p-3 rounded-lg border-2 transition-all duration-200 text-left ${
                       isSeniorsMode 
-                        ? 'bg-blue-50 border-blue-300 text-blue-800' 
+                        ? 'bg-mpr-interactive-lt border-mpr-border text-mpr-navy' 
                         : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-gray-300'
                     }`}
                   >
@@ -170,11 +170,11 @@ export const NavigationToggle: React.FC<NavigationToggleProps> = ({
                     onClick={startThemeRotation}
                     className={`flex items-center gap-3 p-3 rounded-lg border-2 transition-all duration-200 ${
                       isRotating 
-                        ? 'bg-blue-50 border-blue-300 text-blue-800' 
+                        ? 'bg-mpr-interactive-lt border-mpr-border text-mpr-navy' 
                         : 'bg-gray-50 border-gray-200 text-gray-600 hover:border-gray-300'
                     }`}
                   >
-                    <Rocket className={`w-5 h-5 ${isRotating ? 'text-blue-600' : 'text-gray-500'}`} />
+                    <Rocket className={`w-5 h-5 ${isRotating ? 'text-mpr-interactive' : 'text-gray-500'}`} />
                     <div className="text-left">
                       <div className="font-medium">Démarrer Rotation</div>
                       <div className="text-sm text-gray-500">

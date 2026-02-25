@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calculator, TrendingUp, DollarSign } from 'lucide-react';
 import { IncomeEntry } from './SeniorsFriendlyIncomeTable';
@@ -131,10 +131,10 @@ const IncomeTotalsSummary: React.FC<IncomeTotalsSummaryProps> = ({
   };
 
   return (
-    <Card className="bg-gradient-to-br from-blue-50 to-green-50 border-4 border-blue-200 shadow-xl">
-      <CardHeader className="border-b-4 border-blue-100 bg-gradient-to-r from-blue-100 to-green-100">
-        <CardTitle className="text-3xl font-bold text-blue-800 flex items-center gap-4">
-          <Calculator className="w-8 h-8 text-blue-600" />
+    <Card className="bg-gradient-to-br from-mpr-interactive-lt to-green-50 border-4 border-mpr-border shadow-xl">
+      <CardHeader className="border-b-4 border-mpr-border bg-gradient-to-r from-mpr-interactive-lt to-green-100">
+        <CardTitle className="text-3xl font-bold text-mpr-navy flex items-center gap-4">
+          <Calculator className="w-8 h-8 text-mpr-interactive" />
           <span>{isFrench ? 'Résumé des revenus de travail' : 'Work Income Summary'}</span>
           <TrendingUp className="w-8 h-8 text-green-600" />
         </CardTitle>
@@ -145,11 +145,11 @@ const IncomeTotalsSummary: React.FC<IncomeTotalsSummaryProps> = ({
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-blue-100 border-b-2 border-blue-200">
-                <th className="text-left p-4 text-lg font-bold text-blue-800">
+              <tr className="bg-mpr-interactive-lt border-b-2 border-mpr-border">
+                <th className="text-left p-4 text-lg font-bold text-mpr-navy">
                   {isFrench ? 'Type de revenu' : 'Income Type'}
                 </th>
-                <th className="text-right p-4 text-lg font-bold text-blue-800">
+                <th className="text-right p-4 text-lg font-bold text-mpr-navy">
                   {person1Name}
                 </th>
                 <th className="text-right p-4 text-lg font-bold text-green-800">
@@ -176,7 +176,7 @@ const IncomeTotalsSummary: React.FC<IncomeTotalsSummaryProps> = ({
                         {incomeTypeLabels[type as keyof typeof incomeTypeLabels]}
                       </span>
                     </td>
-                    <td className="p-4 text-right text-lg font-semibold text-blue-700">
+                    <td className="p-4 text-right text-lg font-semibold text-mpr-navy">
                       {person1Amount > 0 ? formatCurrency(person1Amount) : '-'}
                     </td>
                     <td className="p-4 text-right text-lg font-semibold text-green-700">
@@ -190,12 +190,12 @@ const IncomeTotalsSummary: React.FC<IncomeTotalsSummaryProps> = ({
               })}
             </tbody>
             <tfoot>
-              <tr className="bg-gradient-to-r from-purple-100 to-blue-100 border-t-4 border-purple-200">
+              <tr className="bg-gradient-to-r from-purple-100 to-mpr-interactive-lt border-t-4 border-purple-200">
                 <td className="p-4 text-xl font-bold text-purple-800 flex items-center gap-3">
                   <DollarSign className="w-6 h-6" />
                   {isFrench ? 'TOTAL GÉNÉRAL' : 'GRAND TOTAL'}
                 </td>
-                <td className="p-4 text-right text-xl font-bold text-blue-800">
+                <td className="p-4 text-right text-xl font-bold text-mpr-navy">
                   {formatCurrency(person1Totals.total)}
                 </td>
                 <td className="p-4 text-right text-xl font-bold text-green-800">
@@ -210,12 +210,12 @@ const IncomeTotalsSummary: React.FC<IncomeTotalsSummaryProps> = ({
         </div>
 
         {/* Informations supplémentaires */}
-        <div className="mt-6 p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
-          <h4 className="text-lg font-bold text-blue-800 mb-2 flex items-center gap-2">
+        <div className="mt-6 p-4 bg-mpr-interactive-lt rounded-lg border-2 border-mpr-border">
+          <h4 className="text-lg font-bold text-mpr-navy mb-2 flex items-center gap-2">
             <Calculator className="w-5 h-5" />
             {isFrench ? 'Informations sur les calculs' : 'Calculation Information'}
           </h4>
-          <ul className="text-sm text-blue-700 space-y-1">
+          <ul className="text-sm text-mpr-navy space-y-1">
             <li>• {isFrench ? 'Tous les montants sont calculés sur une base annuelle' : 'All amounts are calculated on an annual basis'}</li>
             <li>• {isFrench ? 'Seuls les revenus actifs sont inclus dans les totaux' : 'Only active income entries are included in totals'}</li>
             <li>• {isFrench ? 'Les fréquences de paiement sont converties automatiquement' : 'Payment frequencies are automatically converted'}</li>

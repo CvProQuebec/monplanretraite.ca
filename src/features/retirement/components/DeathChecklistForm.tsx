@@ -1,4 +1,4 @@
-// src/features/retirement/components/DeathChecklistForm.tsx
+﻿// src/features/retirement/components/DeathChecklistForm.tsx
 // Liste de vérification pour les proches en cas de décès
 
 import React, { useState } from 'react';
@@ -72,9 +72,9 @@ const checklistCategories = [
     id: 'financial',
     title: 'Affaires financières',
     icon: CreditCard,
-    color: 'text-blue-600',
-    bgColor: 'bg-blue-50',
-    borderColor: 'border-blue-200',
+    color: 'text-mpr-interactive',
+    bgColor: 'bg-mpr-interactive-lt',
+    borderColor: 'border-mpr-border',
     items: [
       { id: 'contact_banks', text: 'Contacter toutes les institutions financières', priority: 'high' },
       { id: 'freeze_accounts', text: 'Geler les comptes bancaires personnels', priority: 'high' },
@@ -120,9 +120,9 @@ const checklistCategories = [
     id: 'legal',
     title: 'Affaires légales',
     icon: FileText,
-    color: 'text-indigo-600',
-    bgColor: 'bg-indigo-50',
-    borderColor: 'border-indigo-200',
+    color: 'text-mpr-interactive',
+    bgColor: 'bg-mpr-interactive-lt',
+    borderColor: 'border-mpr-border',
     items: [
       { id: 'probate', text: 'Entamer les procédures de succession si nécessaire', priority: 'high' },
       { id: 'property_transfer', text: 'Organiser le transfert des propriétés', priority: 'high' },
@@ -272,7 +272,7 @@ export const DeathChecklistForm: React.FC<DeathChecklistFormProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <CheckSquare className="w-5 h-5 text-indigo-600" />
+            <CheckSquare className="w-5 h-5 text-mpr-interactive" />
             Liste de vérification en cas de décès
           </CardTitle>
           <CardDescription>
@@ -460,10 +460,10 @@ export const DeathChecklistForm: React.FC<DeathChecklistFormProps> = ({
       )}
 
       {/* Instructions d'utilisation */}
-      <Card className="border-blue-200 bg-blue-50">
+      <Card className="border-mpr-border bg-mpr-interactive-lt">
         <CardContent className="p-4">
-          <h4 className="font-semibold text-blue-800 mb-2">Instructions d'utilisation</h4>
-          <ul className="text-sm text-blue-700 space-y-1">
+          <h4 className="font-semibold text-mpr-navy mb-2">Instructions d'utilisation</h4>
+          <ul className="text-sm text-mpr-navy space-y-1">
             <li>• Cliquez sur les catégories pour les développer/réduire</li>
             <li>• Cochez les tâches au fur et à mesure de leur completion</li>
             <li>• Ajoutez des notes pour documenter les actions prises</li>

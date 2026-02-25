@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Alert, AlertDescription } from './alert';
@@ -244,7 +244,7 @@ const DynamicWithdrawalPlanningModule: React.FC = () => {
 
   const getComplexityColor = (complexity: string): string => {
     switch (complexity) {
-      case 'Simple': return 'bg-blue-100 text-blue-800';
+      case 'Simple': return 'bg-mpr-interactive-lt text-mpr-navy';
       case 'Intermédiaire': return 'bg-purple-100 text-purple-800';
       case 'Avancé': return 'bg-orange-100 text-orange-800';
       default: return 'bg-gray-100 text-gray-800';
@@ -286,7 +286,7 @@ const DynamicWithdrawalPlanningModule: React.FC = () => {
                 {withdrawalStrategies.map((strategy) => (
                   <Card 
                     key={strategy.id} 
-                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedStrategy === strategy.id ? 'ring-2 ring-blue-500' : ''}`}
+                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedStrategy === strategy.id ? 'ring-2 ring-mpr-interactive' : ''}`}
                     onClick={() => setSelectedStrategy(strategy.id)}
                   >
                     <CardHeader>
@@ -345,7 +345,7 @@ const DynamicWithdrawalPlanningModule: React.FC = () => {
                         <ul className="text-sm space-y-1">
                           {strategy.implementation.slice(0, 2).map((step, i) => (
                             <li key={i} className="flex items-start gap-2">
-                              <Target className="h-3 w-3 text-blue-600 mt-0.5 flex-shrink-0" />
+                              <Target className="h-3 w-3 text-mpr-interactive mt-0.5 flex-shrink-0" />
                               <span>{step}</span>
                             </li>
                           ))}
@@ -356,7 +356,7 @@ const DynamicWithdrawalPlanningModule: React.FC = () => {
                 ))}
               </div>
 
-              <Card className="bg-gradient-to-r from-green-50 to-blue-50">
+              <Card className="bg-gradient-to-r from-green-50 to-mpr-interactive-lt">
                 <CardHeader>
                   <CardTitle className="text-lg">Comparaison des approches de retrait</CardTitle>
                 </CardHeader>
@@ -408,14 +408,14 @@ const DynamicWithdrawalPlanningModule: React.FC = () => {
                 {cashFlowBuffers.map((buffer) => (
                   <Card 
                     key={buffer.id} 
-                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedBuffer === buffer.id ? 'ring-2 ring-blue-500' : ''}`}
+                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedBuffer === buffer.id ? 'ring-2 ring-mpr-interactive' : ''}`}
                     onClick={() => setSelectedBuffer(buffer.id)}
                   >
                     <CardHeader>
                       <CardTitle className="text-lg">{buffer.name}</CardTitle>
                       <div className="flex gap-2">
                         <Badge variant="outline">{buffer.duration}</Badge>
-                        <Badge className="bg-blue-100 text-blue-800">
+                        <Badge className="bg-mpr-interactive-lt text-mpr-navy">
                           {buffer.amount.toLocaleString('fr-CA', {
                             style: 'currency',
                             currency: 'CAD',
@@ -459,7 +459,7 @@ const DynamicWithdrawalPlanningModule: React.FC = () => {
                   <div className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       <div className="text-center p-4 bg-white rounded">
-                        <div className="text-2xl font-bold text-blue-600">12-24</div>
+                        <div className="text-2xl font-bold text-mpr-interactive">12-24</div>
                         <div className="text-sm text-gray-600">Mois de dépenses</div>
                         <div className="text-xs">en liquidités</div>
                       </div>
@@ -610,7 +610,7 @@ const DynamicWithdrawalPlanningModule: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
                     <Card>
                       <CardContent className="p-4">
-                        <div className="text-2xl font-bold text-blue-600">
+                        <div className="text-2xl font-bold text-mpr-interactive">
                           {calculation.annualWithdrawal.toLocaleString('fr-CA', {
                             style: 'currency',
                             currency: 'CAD',
@@ -680,26 +680,26 @@ const DynamicWithdrawalPlanningModule: React.FC = () => {
 
             <TabsContent value="implementation" className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <Card className="bg-blue-50">
+                <Card className="bg-mpr-interactive-lt">
                   <CardHeader>
-                    <CardTitle className="text-lg text-blue-800">Phase 1 : Préparation (6 mois avant)</CardTitle>
+                    <CardTitle className="text-lg text-mpr-navy">Phase 1 : Préparation (6 mois avant)</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm">
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                         <span>Analyser le portefeuille actuel et les besoins</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                         <span>Choisir la stratégie de retrait appropriée</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                         <span>Établir les tampons de liquidité nécessaires</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                         <span>Consulter un conseiller financier si nécessaire</span>
                       </li>
                     </ul>

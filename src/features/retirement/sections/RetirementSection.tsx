@@ -1,4 +1,4 @@
-// src/features/retirement/sections/RetirementSection.tsx
+﻿// src/features/retirement/sections/RetirementSection.tsx
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -115,16 +115,16 @@ export const RetirementSection: React.FC = () => {
       case 'conservative': return 'bg-green-500';
       case 'moderate': return 'bg-yellow-500';
       case 'aggressive': return 'bg-red-500';
-      default: return 'bg-blue-500';
+      default: return 'bg-mpr-interactive';
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-mpr-navy text-white">
       {/* Particules de fond visibles */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-mpr-interactive rounded-full animate-bounce"></div>
         <div className="absolute top-60 left-1/4 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
         <div className="absolute top-80 right-1/3 w-1 h-1 bg-red-400 rounded-full animate-pulse"></div>
         <div className="absolute top-96 left-1/2 w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
@@ -245,9 +245,9 @@ export const RetirementSection: React.FC = () => {
           </Card>
 
           {/* Résultats - Design spectaculaire */}
-          <Card className="bg-gradient-to-br from-indigo-800/90 to-purple-800/90 border-0 shadow-2xl backdrop-blur-sm">
-            <CardHeader className="border-b border-indigo-600">
-              <CardTitle className="flex items-center gap-3 text-2xl text-blue-300">
+          <Card className="bg-gradient-to-br from-mpr-navy/90 to-purple-800/90 border-0 shadow-2xl backdrop-blur-sm">
+            <CardHeader className="border-b border-mpr-interactive">
+              <CardTitle className="flex items-center gap-3 text-2xl text-mpr-interactive">
                 <TrendingUp className="w-8 h-8" />
                 {t.results}
               </CardTitle>
@@ -270,8 +270,8 @@ export const RetirementSection: React.FC = () => {
                   <div className="text-sm text-gray-300">{t.projectedSavings}</div>
                 </div>
                 
-                <div className="bg-gradient-to-br from-blue-600/20 to-blue-500/20 p-4 rounded-lg border border-blue-500/30">
-                  <div className="text-2xl font-bold text-blue-400">
+                <div className="bg-gradient-to-br from-mpr-interactive/20 to-mpr-interactive/20 p-4 rounded-lg border border-mpr-interactive/30">
+                  <div className="text-2xl font-bold text-mpr-interactive">
                     ${Math.round(monthlyIncome).toLocaleString()}
                   </div>
                   <div className="text-sm text-gray-300">{t.monthlyIncome}</div>
@@ -292,7 +292,7 @@ export const RetirementSection: React.FC = () => {
                 
                 <div className="flex justify-between items-center p-3 bg-slate-700/50 rounded-lg">
                   <span className="text-gray-300">{t.investmentGrowth}</span>
-                  <span className="text-blue-400 font-bold">${Math.round(projectedSavings - currentSavings - totalContributions).toLocaleString()}</span>
+                  <span className="text-mpr-interactive font-bold">${Math.round(projectedSavings - currentSavings - totalContributions).toLocaleString()}</span>
                 </div>
               </div>
             </CardContent>
@@ -320,11 +320,11 @@ export const RetirementSection: React.FC = () => {
               </div>
               
               <div className="flex items-start gap-3">
-                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                <div className="w-8 h-8 bg-mpr-interactive rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                   <TrendingUp className="w-5 h-5 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-blue-300 mb-1">{t.tip2}</h4>
+                  <h4 className="font-semibold text-mpr-interactive mb-1">{t.tip2}</h4>
                   <p className="text-gray-300 text-sm">Augmentez vos contributions de 1% chaque année ou lors des augmentations.</p>
                 </div>
               </div>

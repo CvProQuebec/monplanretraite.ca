@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Brain, 
@@ -365,7 +365,7 @@ export const PredictiveOptimization: React.FC<PredictiveOptimizationProps> = ({
               {/* Contexte et prédictions */}
               <div>
                 <h5 className="font-medium text-gray-700 mb-3 flex items-center gap-2">
-                  <Clock className="w-4 h-4 text-blue-600" />
+                  <Clock className="w-4 h-4 text-mpr-interactive" />
                   Contexte d'Optimisation
                 </h5>
                 
@@ -384,7 +384,7 @@ export const PredictiveOptimization: React.FC<PredictiveOptimizationProps> = ({
                   </div>
                   <div className="flex justify-between">
                     <span className="text-gray-600">Confiance IA:</span>
-                    <span className="font-medium text-blue-600">
+                    <span className="font-medium text-mpr-interactive">
                       {Math.round(currentOptimization.confidence * 100)}%
                     </span>
                   </div>
@@ -444,7 +444,7 @@ export const PredictiveOptimization: React.FC<PredictiveOptimizationProps> = ({
             
             <button
               onClick={() => setShowAdvanced(!showAdvanced)}
-              className="px-3 py-1 text-sm text-blue-600 hover:text-blue-700 transition-colors"
+              className="px-3 py-1 text-sm text-mpr-interactive hover:text-mpr-navy transition-colors"
             >
               {showAdvanced ? 'Masquer' : 'Afficher'}
             </button>
@@ -482,7 +482,7 @@ export const PredictiveOptimization: React.FC<PredictiveOptimizationProps> = ({
                           {optimization.applied ? 'Appliquée' : 'En attente'}
                         </span>
                         
-                        <span className="text-sm text-blue-600 font-medium">
+                        <span className="text-sm text-mpr-interactive font-medium">
                           {Math.round(optimization.confidence * 100)}%
                         </span>
                       </div>

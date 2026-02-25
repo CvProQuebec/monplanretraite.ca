@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Alert, AlertDescription } from './alert';
@@ -208,7 +208,7 @@ const RRSPMeltdownStrategiesModule: React.FC = () => {
                 {meltdownScenarios.map((scenario) => (
                   <Card 
                     key={scenario.id} 
-                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedScenario === scenario.id ? 'ring-2 ring-blue-500' : ''}`}
+                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedScenario === scenario.id ? 'ring-2 ring-mpr-interactive' : ''}`}
                     onClick={() => setSelectedScenario(scenario.id)}
                   >
                     <CardHeader>
@@ -254,7 +254,7 @@ const RRSPMeltdownStrategiesModule: React.FC = () => {
                         <ul className="text-sm space-y-1">
                           {scenario.considerations.map((consideration, i) => (
                             <li key={i} className="flex items-start gap-2">
-                              <Info className="h-3 w-3 text-blue-600 mt-0.5 flex-shrink-0" />
+                              <Info className="h-3 w-3 text-mpr-interactive mt-0.5 flex-shrink-0" />
                               <span>{consideration}</span>
                             </li>
                           ))}
@@ -370,7 +370,7 @@ const RRSPMeltdownStrategiesModule: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
                     <Card>
                       <CardContent className="p-4">
-                        <div className="text-2xl font-bold text-blue-600">
+                        <div className="text-2xl font-bold text-mpr-interactive">
                           {calculation.annualWithdrawal.toLocaleString('fr-CA', {
                             style: 'currency',
                             currency: 'CAD',
@@ -450,9 +450,9 @@ const RRSPMeltdownStrategiesModule: React.FC = () => {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <Card className="bg-blue-50">
+                    <Card className="bg-mpr-interactive-lt">
                       <CardHeader>
-                        <CardTitle className="text-lg text-blue-800">Phase 1 : Préparation (50-55 ans)</CardTitle>
+                        <CardTitle className="text-lg text-mpr-navy">Phase 1 : Préparation (50-55 ans)</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <ul className="space-y-2 text-sm">
@@ -579,27 +579,27 @@ const RRSPMeltdownStrategiesModule: React.FC = () => {
                     </div>
 
                     <div>
-                      <h3 className="font-semibold text-blue-700 mb-3">Considérations importantes :</h3>
+                      <h3 className="font-semibold text-mpr-navy mb-3">Considérations importantes :</h3>
                       <div className="space-y-3">
-                        <div className="p-3 border-l-4 border-blue-500 bg-blue-50">
+                        <div className="p-3 border-l-4 border-mpr-interactive bg-mpr-interactive-lt">
                           <h4 className="font-medium">Situation du conjoint</h4>
                           <p className="text-sm text-gray-600">
                             Coordonner avec les revenus et la situation fiscale du conjoint
                           </p>
                         </div>
-                        <div className="p-3 border-l-4 border-blue-500 bg-blue-50">
+                        <div className="p-3 border-l-4 border-mpr-interactive bg-mpr-interactive-lt">
                           <h4 className="font-medium">Autres sources de revenus</h4>
                           <p className="text-sm text-gray-600">
                             Considérer l'impact des pensions, rentes et autres revenus
                           </p>
                         </div>
-                        <div className="p-3 border-l-4 border-blue-500 bg-blue-50">
+                        <div className="p-3 border-l-4 border-mpr-interactive bg-mpr-interactive-lt">
                           <h4 className="font-medium">Besoins de liquidités</h4>
                           <p className="text-sm text-gray-600">
                             S'assurer que les retraits correspondent aux besoins réels
                           </p>
                         </div>
-                        <div className="p-3 border-l-4 border-blue-500 bg-blue-50">
+                        <div className="p-3 border-l-4 border-mpr-interactive bg-mpr-interactive-lt">
                           <h4 className="font-medium">Planification successorale</h4>
                           <p className="text-sm text-gray-600">
                             Impact sur la transmission du patrimoine aux héritiers

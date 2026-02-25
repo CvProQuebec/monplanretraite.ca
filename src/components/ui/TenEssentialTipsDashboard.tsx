@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Badge } from './badge';
@@ -327,7 +327,7 @@ const TenEssentialTipsDashboard: React.FC = () => {
     <div className="max-w-7xl mx-auto p-6 space-y-8">
       {/* En-tête */}
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-4">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 to-mpr-interactive bg-clip-text text-transparent mb-4">
           Les 10 Conseils Essentiels pour la Retraite
         </h1>
         <p className="text-xl text-gray-600 max-w-4xl mx-auto">
@@ -363,7 +363,7 @@ const TenEssentialTipsDashboard: React.FC = () => {
               <div className="text-sm text-gray-600">Conseils complétés</div>
             </div>
             <div className="p-4 bg-white rounded-lg border">
-              <div className="text-2xl font-bold text-blue-600">
+              <div className="text-2xl font-bold text-mpr-interactive">
                 {tipStatuses.filter(s => !s.completed).length}
               </div>
               <div className="text-sm text-gray-600">Conseils restants</div>
@@ -373,10 +373,10 @@ const TenEssentialTipsDashboard: React.FC = () => {
       </Card>
 
       {/* Alerte motivationnelle */}
-      <Alert className="border-blue-500 bg-blue-50">
-        <Zap className="h-5 w-5 text-blue-500" />
-        <AlertTitle className="text-blue-800">💡 CONSEIL D'EXPERT</AlertTitle>
-        <AlertDescription className="text-blue-700 text-lg">
+      <Alert className="border-mpr-interactive bg-mpr-interactive-lt">
+        <Zap className="h-5 w-5 text-mpr-interactive" />
+        <AlertTitle className="text-mpr-navy">💡 CONSEIL D'EXPERT</AlertTitle>
+        <AlertDescription className="text-mpr-navy text-lg">
           <strong>Ne vous laissez pas submerger !</strong> Commencez par les conseils de priorité haute. 
           Même en appliquant seulement 3-4 de ces conseils, vous pourriez économiser des milliers de dollars 
           et réduire considérablement le stress de votre retraite.
@@ -396,7 +396,7 @@ const TenEssentialTipsDashboard: React.FC = () => {
               <Card 
                 key={tip.id} 
                 className={`cursor-pointer transition-all duration-200 hover:shadow-lg ${
-                  selectedTip === tip.id ? 'ring-2 ring-blue-500 bg-blue-50' : ''
+                  selectedTip === tip.id ? 'ring-2 ring-mpr-interactive bg-mpr-interactive-lt' : ''
                 } ${isCompleted ? 'bg-green-50 border-green-200' : ''}`}
                 onClick={() => setSelectedTip(tip.id)}
               >
@@ -468,7 +468,7 @@ const TenEssentialTipsDashboard: React.FC = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-3">
                   {React.cloneElement(selectedTipData.icon as React.ReactElement, {
-                    className: "w-6 h-6 text-blue-600"
+                    className: "w-6 h-6 text-mpr-interactive"
                   })}
                   {selectedTipData.title}
                 </CardTitle>
@@ -480,13 +480,13 @@ const TenEssentialTipsDashboard: React.FC = () => {
                 {/* Étapes d'action */}
                 <div>
                   <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                    <Target className="w-4 h-4 text-blue-600" />
+                    <Target className="w-4 h-4 text-mpr-interactive" />
                     Plan d'action
                   </h4>
                   <ul className="space-y-2">
                     {selectedTipData.actionSteps.map((step, index) => (
                       <li key={index} className="flex items-start gap-2 text-sm">
-                        <div className="w-5 h-5 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xs font-bold mt-0.5">
+                        <div className="w-5 h-5 bg-mpr-interactive-lt text-mpr-interactive rounded-full flex items-center justify-center text-xs font-bold mt-0.5">
                           {index + 1}
                         </div>
                         <span>{step}</span>
@@ -526,7 +526,7 @@ const TenEssentialTipsDashboard: React.FC = () => {
                   className={`w-full ${
                     tipStatuses.find(s => s.id === selectedTipData.id)?.completed
                       ? 'bg-green-600 hover:bg-green-700'
-                      : 'bg-blue-600 hover:bg-blue-700'
+                      : 'bg-mpr-interactive hover:bg-mpr-interactive-dk'
                   }`}
                 >
                   {tipStatuses.find(s => s.id === selectedTipData.id)?.completed ? (
@@ -563,7 +563,7 @@ const TenEssentialTipsDashboard: React.FC = () => {
       </div>
 
       {/* Section motivation finale */}
-      <Card className="bg-gradient-to-r from-purple-50 to-blue-50 border-purple-200">
+      <Card className="bg-gradient-to-r from-purple-50 to-mpr-interactive-lt border-purple-200">
         <CardContent className="p-8 text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
             <TrendingUp className="w-8 h-8 text-purple-600" />

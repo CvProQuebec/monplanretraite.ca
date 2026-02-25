@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { UserData } from '@/types';
 
@@ -23,7 +23,7 @@ const UnifiedIncomeDebug: React.FC<UnifiedIncomeDebugProps> = ({ userData, isFre
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Personne 1 */}
           <div className="bg-white p-4 rounded-lg border">
-            <h4 className="font-semibold text-blue-800 mb-2">Personne 1 - unifiedIncome1</h4>
+            <h4 className="font-semibold text-mpr-navy mb-2">Personne 1 - unifiedIncome1</h4>
             <div className="text-sm">
               <div><strong>Nombre d'entrées:</strong> {unifiedIncome1.length}</div>
               {unifiedIncome1.length > 0 ? (

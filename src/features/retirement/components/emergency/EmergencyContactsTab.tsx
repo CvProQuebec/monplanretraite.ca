@@ -1,4 +1,4 @@
-// Onglet des contacts d'urgence
+﻿// Onglet des contacts d'urgence
 // Respectant la typographie québécoise (espaces avant : et $, pas avant ; ! ?)
 
 import React from 'react';
@@ -84,9 +84,9 @@ export const EmergencyContactsTab: React.FC<EmergencyContactsTabProps> = ({ data
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-3 bg-blue-50 rounded-lg">
-              <div className="text-2xl font-bold text-blue-600">{contactsCompletes}</div>
-              <div className="text-sm text-blue-600">Contacts complets</div>
+            <div className="text-center p-3 bg-mpr-interactive-lt rounded-lg">
+              <div className="text-2xl font-bold text-mpr-interactive">{contactsCompletes}</div>
+              <div className="text-sm text-mpr-interactive">Contacts complets</div>
             </div>
             <div className="text-center p-3 bg-green-50 rounded-lg">
               <div className="text-2xl font-bold text-green-600">{data.length}</div>
@@ -234,9 +234,9 @@ export const EmergencyContactsTab: React.FC<EmergencyContactsTabProps> = ({ data
 
       {/* Limite de la version gratuite */}
       {data.length >= 5 && (
-        <Alert className="border-blue-200 bg-blue-50">
-          <Info className="h-4 w-4 text-blue-600" />
-          <AlertDescription className="text-blue-800">
+        <Alert className="border-mpr-border bg-mpr-interactive-lt">
+          <Info className="h-4 w-4 text-mpr-interactive" />
+          <AlertDescription className="text-mpr-navy">
             <strong>Limite de la version gratuite :</strong> Vous avez atteint le maximum de 5 contacts d'urgence. 
             Passez au plan Professionnel pour ajouter plus de contacts et accéder à toutes les fonctionnalités.
           </AlertDescription>
@@ -244,31 +244,31 @@ export const EmergencyContactsTab: React.FC<EmergencyContactsTabProps> = ({ data
       )}
 
       {/* Conseils d'utilisation */}
-      <Card className="border-blue-200 bg-blue-50">
+      <Card className="border-mpr-border bg-mpr-interactive-lt">
         <CardHeader>
-          <CardTitle className="text-blue-900">Conseils pour vos contacts d'urgence</CardTitle>
+          <CardTitle className="text-mpr-navy">Conseils pour vos contacts d'urgence</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3 text-blue-800">
+        <CardContent className="space-y-3 text-mpr-navy">
           <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+            <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2 flex-shrink-0"></div>
             <p className="text-sm">
               <strong>Choisissez des personnes de confiance</strong> qui peuvent prendre des décisions importantes en votre nom
             </p>
           </div>
           <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+            <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2 flex-shrink-0"></div>
             <p className="text-sm">
               <strong>Assurez-vous qu'elles sont disponibles</strong> et peuvent être jointes rapidement
             </p>
           </div>
           <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+            <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2 flex-shrink-0"></div>
             <p className="text-sm">
               <strong>Informez-les de leur rôle</strong> et donnez-leur accès à ce document
             </p>
           </div>
           <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+            <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2 flex-shrink-0"></div>
             <p className="text-sm">
               <strong>Mettez à jour régulièrement</strong> leurs coordonnées et informations
             </p>

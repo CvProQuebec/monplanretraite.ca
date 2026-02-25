@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -139,13 +139,13 @@ const RRQPeriodsInput: React.FC<RRQPeriodsInputProps> = ({
   const montantSuggere = calculateSuggestedAmount();
 
   return (
-    <Card className="bg-white border-2 border-blue-200 shadow-lg">
-      <CardHeader className="bg-blue-50 border-b-2 border-blue-200">
-        <CardTitle className="text-xl font-bold text-blue-800 flex items-center gap-2">
+    <Card className="bg-white border-2 border-mpr-border shadow-lg">
+      <CardHeader className="bg-mpr-interactive-lt border-b-2 border-mpr-border">
+        <CardTitle className="text-xl font-bold text-mpr-navy flex items-center gap-2">
           <Flag className="w-6 h-6" />
           {isFrench ? 'RRQ/CPP - Périodes 2025' : 'QPP/CPP - 2025 Periods'}
         </CardTitle>
-        <p className="text-sm text-blue-600">
+        <p className="text-sm text-mpr-interactive">
           {isFrench 
             ? 'Personne ' + personNumber + ' - Configuration des montants RRQ par période'
             : 'Person ' + personNumber + ' - RRQ amounts by period configuration'
@@ -304,7 +304,7 @@ const RRQPeriodsInput: React.FC<RRQPeriodsInputProps> = ({
               console.log('RRQ data saved:', rrqData);
               alert(isFrench ? 'Données RRQ sauvegardées avec succès!' : 'RRQ data saved successfully!');
             }}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg"
+            className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white px-6 py-2 rounded-lg"
           >
             {isFrench ? 'Sauvegarder' : 'Save'}
           </Button>

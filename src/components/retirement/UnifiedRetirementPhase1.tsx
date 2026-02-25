@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { RetirementNavigation } from '@/features/retirement';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 
@@ -13,7 +13,7 @@ const UnifiedRetirementPhase1: React.FC<UnifiedRetirementPhase1Props> = ({
   const isFrench = language === 'fr';
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 ${className}`}>
+    <div className={`min-h-screen bg-gradient-to-br from-slate-50 via-mpr-interactive-lt to-mpr-interactive-lt ${className}`}>
       {/* Navigation Phase 1 - Bilingual */}
       <RetirementNavigation />
       

@@ -1,4 +1,4 @@
-// src/features/retirement/sections/TaxOptimizationSection.tsx
+﻿// src/features/retirement/sections/TaxOptimizationSection.tsx
 import React, { useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -57,10 +57,10 @@ export const TaxOptimizationSection: React.FC<TaxOptimizationSectionProps> = ({ 
     : 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-mpr-navy text-white">
       {/* Particules animées en arrière-plan */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-20 left-10 w-2 h-2 bg-mpr-interactive rounded-full animate-pulse"></div>
         <div className="absolute top-40 right-20 w-3 h-3 bg-purple-400 rounded-full animate-bounce"></div>
         <div className="absolute bottom-40 left-20 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
         <div className="absolute top-60 left-1/2 w-1 h-1 bg-yellow-400 rounded-full animate-pulse"></div>
@@ -80,7 +80,7 @@ export const TaxOptimizationSection: React.FC<TaxOptimizationSectionProps> = ({ 
         <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl backdrop-blur-sm">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-white">
-              <Calculator className="w-5 h-5 text-blue-400" />
+              <Calculator className="w-5 h-5 text-mpr-interactive" />
               {t.taxOptimization.title}
             </CardTitle>
             <CardDescription className="text-gray-300">
@@ -116,10 +116,10 @@ export const TaxOptimizationSection: React.FC<TaxOptimizationSectionProps> = ({ 
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-2 mb-2">
-                    <Target className="w-4 h-4 text-blue-500" />
+                    <Target className="w-4 h-4 text-mpr-interactive" />
                     <span className="text-sm font-medium">{t.taxOptimization.optimizedBurden}</span>
                   </div>
-                  <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-2xl font-bold text-mpr-interactive">
                     {formatCurrency(optimizationResult.optimizedTaxBurden)}
                   </div>
                 </CardContent>
@@ -229,7 +229,7 @@ export const TaxOptimizationSection: React.FC<TaxOptimizationSectionProps> = ({ 
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="text-3xl font-bold text-blue-600 mb-2">
+                  <div className="text-3xl font-bold text-mpr-interactive mb-2">
                     {formatCurrency(optimizationResult.reerContributionRoom)}
                   </div>
                   <p className="text-sm text-muted-foreground mb-4">
@@ -353,11 +353,11 @@ export const TaxOptimizationSection: React.FC<TaxOptimizationSectionProps> = ({ 
               <CardContent>
                 {optimizationResult.pensionIncomeOptimization > 0 ? (
                   <div className="space-y-4">
-                    <div className="text-center p-6 bg-blue-50 rounded-lg">
-                      <div className="text-3xl font-bold text-blue-600 mb-2">
+                    <div className="text-center p-6 bg-mpr-interactive-lt rounded-lg">
+                      <div className="text-3xl font-bold text-mpr-interactive mb-2">
                         {formatCurrency(optimizationResult.pensionIncomeOptimization)}
                       </div>
-                      <p className="text-sm text-blue-700">
+                      <p className="text-sm text-mpr-navy">
                         {language === 'en' ? 'Annual savings through pension income optimization' : 'Économies annuelles par l\'optimisation des revenus de pension'}
                       </p>
                     </div>

@@ -1,4 +1,4 @@
-// Onglet de l'emploi et prestations
+﻿// Onglet de l'emploi et prestations
 // Composant de base pour la version gratuite
 
 import React from 'react';
@@ -22,13 +22,13 @@ export const EmploymentTab: React.FC<EmploymentTabProps> = ({ data, onUpdate }) 
 
   return (
     <div className="space-y-6">
-      <Card className="border-blue-200 bg-blue-50">
+      <Card className="border-mpr-border bg-mpr-interactive-lt">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-900">
+          <CardTitle className="flex items-center gap-2 text-mpr-navy">
             <Briefcase className="w-5 h-5" />
             Emploi et prestations
           </CardTitle>
-          <CardDescription className="text-blue-700">
+          <CardDescription className="text-mpr-navy">
             Informations sur votre emploi actuel et vos prestations sociales.
           </CardDescription>
         </CardHeader>

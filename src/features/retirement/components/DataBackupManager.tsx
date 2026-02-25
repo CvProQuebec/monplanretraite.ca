@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+﻿import React, { useState, useRef } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -465,18 +465,18 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
               </DialogHeader>
               <div className="space-y-4">
                 {/* Informations de sauvegarde - Version compacte */}
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                <div className="bg-mpr-interactive-lt border border-mpr-border rounded-lg p-3">
                   <div className="flex items-center justify-between mb-2">
-                    <div className="flex items-center gap-2 text-sm text-blue-800">
+                    <div className="flex items-center gap-2 text-sm text-mpr-navy">
                       <Info className="h-4 w-4" />
                       <span className="font-medium">{t.backupInfo}</span>
                     </div>
-                    <span className="text-xs text-blue-600 font-medium">
+                    <span className="text-xs text-mpr-interactive font-medium">
                       {getEstimatedSize()}
                     </span>
                   </div>
                   
-                  <div className="text-xs text-blue-700">
+                  <div className="text-xs text-mpr-navy">
                     <span className="font-medium">{t.securityLevel}:</span> {t.high}
                   </div>
                 </div>
@@ -594,7 +594,7 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
                    <Label htmlFor="file-input" className="text-base font-semibold">
                      {t.selectFile}
                    </Label>
-                   <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-blue-400 transition-colors">
+                   <div className="border-2 border-dashed border-gray-300 rounded-lg p-4 hover:border-mpr-interactive transition-colors">
                      <Input
                        id="file-input"
                        ref={fileInputRef}
@@ -604,12 +604,12 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
                        className="cursor-pointer"
                      />
                      {selectedFile && (
-                       <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                         <div className="flex items-center gap-2 text-sm text-blue-800">
+                       <div className="mt-3 p-3 bg-mpr-interactive-lt border border-mpr-border rounded-lg">
+                         <div className="flex items-center gap-2 text-sm text-mpr-navy">
                            <FileText className="h-4 w-4" />
                            <span className="font-medium">Fichier sélectionné:</span>
                          </div>
-                         <div className="mt-1 text-sm text-blue-700 font-mono">
+                         <div className="mt-1 text-sm text-mpr-navy font-mono">
                            {selectedFile.name}
                          </div>
                        </div>
@@ -663,7 +663,7 @@ const DataBackupManager: React.FC<DataBackupManagerProps> = ({ data, onDataLoad 
                    <Button 
                      onClick={handleLoad} 
                      disabled={isLoading || !selectedFile || !loadPassword} 
-                     className="flex-1 h-12 text-lg font-semibold bg-blue-600 hover:bg-blue-700"
+                     className="flex-1 h-12 text-lg font-semibold bg-mpr-interactive hover:bg-mpr-interactive-dk"
                    >
                      {isLoading ? (
                        <div className="flex items-center gap-2">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
@@ -110,7 +110,7 @@ export const IntelligentReportSection: React.FC<IntelligentReportSectionProps> =
     const situationColors = {
       critique: 'bg-red-100 text-red-800 border-red-300',
       attention: 'bg-yellow-100 text-yellow-800 border-yellow-300',
-      stable: 'bg-blue-100 text-blue-800 border-blue-300',
+      stable: 'bg-mpr-interactive-lt text-mpr-navy border-mpr-border',
       favorable: 'bg-green-100 text-green-800 border-green-300'
     };
 
@@ -160,7 +160,7 @@ export const IntelligentReportSection: React.FC<IntelligentReportSectionProps> =
                 </div>
                 
                 <div className="text-center p-4 bg-white rounded-lg border">
-                  <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-2xl font-bold text-mpr-interactive">
                     {executiveSummary.revenus.projetes.toLocaleString()} $
                   </div>
                   <div className="text-sm text-gray-600">
@@ -194,9 +194,9 @@ export const IntelligentReportSection: React.FC<IntelligentReportSectionProps> =
               )}
               
               {executiveSummary.opportunites.rregopOptimisation > 0 && (
-                <div className="flex justify-between items-center p-3 bg-blue-50 rounded-lg">
+                <div className="flex justify-between items-center p-3 bg-mpr-interactive-lt rounded-lg">
                   <span className="font-medium">Optimisation RREGOP</span>
-                  <span className="font-bold text-blue-600">
+                  <span className="font-bold text-mpr-interactive">
                     +{executiveSummary.opportunites.rregopOptimisation.toLocaleString()} $ /an
                   </span>
                 </div>
@@ -238,13 +238,13 @@ export const IntelligentReportSection: React.FC<IntelligentReportSectionProps> =
     const severityIcons = {
       urgent: <AlertTriangle className="w-5 h-5 text-red-500" />,
       important: <Clock className="w-5 h-5 text-yellow-500" />,
-      attention: <Lightbulb className="w-5 h-5 text-blue-500" />
+      attention: <Lightbulb className="w-5 h-5 text-mpr-interactive" />
     };
 
     const severityColors = {
       urgent: 'border-red-300 bg-red-50',
       important: 'border-yellow-300 bg-yellow-50',
-      attention: 'border-blue-300 bg-blue-50'
+      attention: 'border-mpr-border bg-mpr-interactive-lt'
     };
 
     return (
@@ -304,7 +304,7 @@ export const IntelligentReportSection: React.FC<IntelligentReportSectionProps> =
       'immediat': 'bg-red-100 text-red-800',
       '3-mois': 'bg-orange-100 text-orange-800',
       '6-mois': 'bg-yellow-100 text-yellow-800',
-      '1-an': 'bg-blue-100 text-blue-800',
+      '1-an': 'bg-mpr-interactive-lt text-mpr-navy',
       'long-terme': 'bg-gray-100 text-gray-800'
     };
 
@@ -321,7 +321,7 @@ export const IntelligentReportSection: React.FC<IntelligentReportSectionProps> =
             <CardHeader>
               <div className="flex items-center justify-between">
                 <CardTitle className="flex items-center gap-2">
-                  <span className="bg-blue-500 text-white rounded-full w-6 h-6 text-sm flex items-center justify-center">
+                  <span className="bg-mpr-interactive text-white rounded-full w-6 h-6 text-sm flex items-center justify-center">
                     {index + 1}
                   </span>
                   {action.title}
@@ -376,7 +376,7 @@ export const IntelligentReportSection: React.FC<IntelligentReportSectionProps> =
                               href={resource.url} 
                               target="_blank" 
                               rel="noopener noreferrer"
-                              className="text-xs text-blue-600 hover:underline block"
+                              className="text-xs text-mpr-interactive hover:underline block"
                             >
                               {resource.url}
                             </a>
@@ -461,8 +461,8 @@ export const IntelligentReportSection: React.FC<IntelligentReportSectionProps> =
             <CardContent>
               <div className="space-y-3">
                 {milestones.map((milestone, index) => (
-                  <div key={index} className="flex items-center gap-4 p-3 bg-blue-50 rounded-lg">
-                    <div className="w-12 h-12 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold">
+                  <div key={index} className="flex items-center gap-4 p-3 bg-mpr-interactive-lt rounded-lg">
+                    <div className="w-12 h-12 bg-mpr-interactive text-white rounded-full flex items-center justify-center font-bold">
                       {index + 1}
                     </div>
                     <div className="flex-1">
@@ -566,7 +566,7 @@ export const IntelligentReportSection: React.FC<IntelligentReportSectionProps> =
                 </div>
                 
                 <div className="text-center p-3 bg-white rounded border">
-                  <div className="text-lg font-bold text-blue-600">
+                  <div className="text-lg font-bold text-mpr-interactive">
                     {scenario.results.viager.toLocaleString()} $
                   </div>
                   <div className="text-sm text-gray-600">
@@ -647,7 +647,7 @@ export const IntelligentReportSection: React.FC<IntelligentReportSectionProps> =
     return (
       <Card>
         <CardContent className="p-8 text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-mpr-interactive mx-auto mb-4"></div>
           <p className="text-gray-600">
             {isFrench ? 'Génération de votre rapport personnalisé...' : 'Generating your personalized report...'}
           </p>

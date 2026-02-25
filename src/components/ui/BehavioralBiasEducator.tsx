@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Input } from './input';
@@ -351,7 +351,7 @@ export const BehavioralBiasEducator: React.FC<BehavioralBiasEducatorProps> = ({ 
                 <strong>Impact critique:</strong> Les biais comportementaux peuvent coûter 3-7% de rendement annuel
               </p>
             </div>
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+            <Button className="bg-gradient-to-r from-mpr-interactive to-purple-600 hover:from-mpr-navy-mid hover:to-purple-700">
               Débloquer le Module
             </Button>
           </div>
@@ -403,7 +403,7 @@ export const BehavioralBiasEducator: React.FC<BehavioralBiasEducatorProps> = ({ 
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+            <div className="p-4 bg-mpr-interactive-lt border border-mpr-border rounded-lg">
               <p className="text-gray-800 font-medium">
                 {scenarios[currentScenario].scenario}
               </p>
@@ -414,11 +414,11 @@ export const BehavioralBiasEducator: React.FC<BehavioralBiasEducatorProps> = ({ 
                 <Button
                   key={index}
                   variant="outline"
-                  className="w-full text-left justify-start h-auto p-4 hover:bg-blue-50"
+                  className="w-full text-left justify-start h-auto p-4 hover:bg-mpr-interactive-lt"
                   onClick={() => handleAnswer(index)}
                 >
                   <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-semibold mt-0.5">
+                    <div className="w-6 h-6 rounded-full bg-mpr-interactive-lt text-mpr-interactive flex items-center justify-center text-sm font-semibold mt-0.5">
                       {String.fromCharCode(65 + index)}
                     </div>
                     <span className="text-gray-700">{option}</span>
@@ -595,7 +595,7 @@ export const BehavioralBiasEducator: React.FC<BehavioralBiasEducatorProps> = ({ 
             </div>
             
             <div className="flex items-start gap-3">
-              <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+              <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2"></div>
               <div>
                 <h4 className="font-semibold">Mise en Place de Garde-Fous</h4>
                 <p className="text-sm text-gray-600">

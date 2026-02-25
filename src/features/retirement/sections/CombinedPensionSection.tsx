@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 interface CombinedPensionSectionProps {
   className?: string;
@@ -70,7 +70,7 @@ export const CombinedPensionSection: React.FC<CombinedPensionSectionProps> = ({ 
   const t = texts[isFrench ? 'fr' : 'en'];
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-mpr-navy text-white">
       <div className="container mx-auto px-6 py-8">
         <div className="space-y-8">
           {/* En-tête de la section */}
@@ -95,8 +95,8 @@ export const CombinedPensionSection: React.FC<CombinedPensionSectionProps> = ({ 
           </div>
 
           {/* Fonctionnalités clés */}
-          <div className="bg-white/10 backdrop-blur-sm border-blue-300/30 rounded-lg p-6">
-            <h2 className="text-2xl font-bold text-blue-400 mb-4 flex items-center gap-3">
+          <div className="bg-white/10 backdrop-blur-sm border-mpr-border/30 rounded-lg p-6">
+            <h2 className="text-2xl font-bold text-mpr-interactive mb-4 flex items-center gap-3">
               <span className="text-3xl">✨</span>
               {t.features}
             </h2>
@@ -148,9 +148,9 @@ export const CombinedPensionSection: React.FC<CombinedPensionSectionProps> = ({ 
                       {isFrench ? 'Pension fédérale canadienne' : 'Federal Canadian pension'}
                     </p>
                   </div>
-                  <div className="p-4 bg-blue-900/20 rounded-lg border border-blue-300/20">
-                    <h4 className="font-semibold text-blue-300 mb-2">RRQ</h4>
-                    <p className="text-blue-200 text-sm">
+                  <div className="p-4 bg-mpr-navy/20 rounded-lg border border-mpr-border/20">
+                    <h4 className="font-semibold text-mpr-interactive mb-2">RRQ</h4>
+                    <p className="text-mpr-interactive-lt text-sm">
                       {isFrench ? 'Pension provinciale québécoise' : 'Provincial Quebec pension'}
                     </p>
                   </div>
@@ -159,8 +159,8 @@ export const CombinedPensionSection: React.FC<CombinedPensionSectionProps> = ({ 
             </div>
 
             {/* Planificateur */}
-            <div className="bg-white/10 backdrop-blur-sm border-blue-300/30 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-blue-400 mb-4 flex items-center gap-3">
+            <div className="bg-white/10 backdrop-blur-sm border-mpr-border/30 rounded-lg p-6">
+              <h3 className="text-xl font-bold text-mpr-interactive mb-4 flex items-center gap-3">
                 <span className="text-2xl">🧮</span>
                 {t.planner}
               </h3>
@@ -171,7 +171,7 @@ export const CombinedPensionSection: React.FC<CombinedPensionSectionProps> = ({ 
                     : 'The advanced planner allows you to simulate different retirement scenarios considering all your income sources.'
                   }
                 </p>
-                <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+                <button className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white px-6 py-3 rounded-lg font-semibold transition-colors">
                   {t.startPlanning}
                 </button>
               </div>
@@ -208,7 +208,7 @@ export const CombinedPensionSection: React.FC<CombinedPensionSectionProps> = ({ 
                 href="https://www.canada.ca/fr/services/prestations/pensionspubliques/rpc.html"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors bg-blue-900/20 px-4 py-2 rounded-lg border border-blue-400/30"
+                className="inline-flex items-center gap-2 text-mpr-interactive hover:text-mpr-interactive transition-colors bg-mpr-navy/20 px-4 py-2 rounded-lg border border-mpr-interactive/30"
               >
                 <span className="text-xl">🌐</span>
                 {t.officialCPP}

@@ -1,4 +1,4 @@
-// src/features/retirement/sections/RecommendationsSection.tsx
+﻿// src/features/retirement/sections/RecommendationsSection.tsx
 import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -176,7 +176,7 @@ export const RecommendationsSection: React.FC<RecommendationsSectionProps> = ({
                 <TabsTrigger value="important" className="text-amber-600">
                   Important
                 </TabsTrigger>
-                <TabsTrigger value="optimization" className="text-blue-600">
+                <TabsTrigger value="optimization" className="text-mpr-interactive">
                   Optimisation
                 </TabsTrigger>
                 <TabsTrigger value="suggestion" className="text-green-600">
@@ -229,7 +229,7 @@ const MetricCard: React.FC<{
     purple: 'bg-purple-50 text-purple-700',
     green: 'bg-green-50 text-green-700',
     red: 'bg-red-50 text-red-700',
-    blue: 'bg-blue-50 text-blue-700'
+    blue: 'bg-mpr-interactive-lt text-mpr-navy'
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -208,14 +208,14 @@ const ReportGenerator: React.FC = () => {
                   key={type}
                   className={`cursor-pointer transition-all ${
                     reportOptions.type === type 
-                      ? 'ring-2 ring-blue-500 bg-blue-50' 
+                      ? 'ring-2 ring-mpr-interactive bg-mpr-interactive-lt' 
                       : 'hover:bg-gray-50'
                   } ${!hasAccess ? 'opacity-60' : ''}`}
                   onClick={() => hasAccess && setReportOptions(prev => ({ ...prev, type }))}
                 >
                   <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
-                      <div className="text-blue-600">{info.icon}</div>
+                      <div className="text-mpr-interactive">{info.icon}</div>
                       <Badge variant={hasAccess ? 'default' : 'secondary'}>
                         {info.badge}
                       </Badge>

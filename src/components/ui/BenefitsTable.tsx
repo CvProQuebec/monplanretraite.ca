@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, ChevronUp, Plus, Calculator, Shield, Flag, DollarSign } from 'lucide-react';
@@ -163,11 +163,11 @@ const BenefitsTable: React.FC<BenefitsTableProps> = ({
   const totals = getBenefitsTotals();
 
   return (
-    <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-4 border-blue-200 shadow-xl">
-      <CardHeader className="border-b-4 border-blue-200">
+    <Card className="bg-gradient-to-r from-mpr-interactive-lt to-mpr-interactive-lt border-4 border-mpr-border shadow-xl">
+      <CardHeader className="border-b-4 border-mpr-border">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-2xl font-bold text-blue-800 flex items-center gap-3">
-            <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold text-xl">
+          <CardTitle className="text-2xl font-bold text-mpr-navy flex items-center gap-3">
+            <div className="w-10 h-10 bg-mpr-interactive rounded-full flex items-center justify-center text-white font-bold text-xl">
               {personNumber}
             </div>
             {isFrench ? 'Prestations' : 'Benefits'} - {personName}
@@ -177,7 +177,7 @@ const BenefitsTable: React.FC<BenefitsTableProps> = ({
               variant="ghost"
               size="sm"
               onClick={onToggleCollapse}
-              className="text-blue-600 hover:text-blue-800"
+              className="text-mpr-interactive hover:text-mpr-navy"
             >
               {isCollapsed ? <ChevronDown className="w-6 h-6" /> : <ChevronUp className="w-6 h-6" />}
             </Button>
@@ -211,8 +211,8 @@ const BenefitsTable: React.FC<BenefitsTableProps> = ({
           />
 
           {/* Section Assurance emploi */}
-          <div className="bg-white p-6 rounded-lg border-2 border-indigo-200">
-            <h3 className="text-xl font-bold text-indigo-800 mb-4 flex items-center gap-2">
+          <div className="bg-white p-6 rounded-lg border-2 border-mpr-border">
+            <h3 className="text-xl font-bold text-mpr-navy mb-4 flex items-center gap-2">
               <DollarSign className="w-6 h-6" />
               {isFrench ? 'Assurance emploi (AE)' : 'Employment Insurance (EI)'}
             </h3>
@@ -234,7 +234,7 @@ const BenefitsTable: React.FC<BenefitsTableProps> = ({
                 <label className="senior-form-label">
                   {isFrench ? 'Montant à ce jour' : 'Amount to Date'}
                 </label>
-                <div className="p-3 bg-gray-100 border-2 border-gray-300 rounded-lg text-lg font-bold text-indigo-600">
+                <div className="p-3 bg-gray-100 border-2 border-gray-300 rounded-lg text-lg font-bold text-mpr-interactive">
                   {formatCurrency(totals.assuranceEmploi)}
                 </div>
               </div>

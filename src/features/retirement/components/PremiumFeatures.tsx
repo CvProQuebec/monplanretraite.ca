@@ -1,4 +1,4 @@
-// Composant principal pour les fonctionnalités premium du module CPP
+﻿// Composant principal pour les fonctionnalités premium du module CPP
 // Phase 3: Modélisation Monte Carlo, Optimisation fiscale, Planification successorale, API
 
 import React, { useState, useEffect } from 'react';
@@ -391,7 +391,7 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
                       <CardContent>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                           <div className="text-center">
-                            <div className="text-2xl font-bold text-blue-600">
+                            <div className="text-2xl font-bold text-mpr-interactive">
                               {monteCarloResults.summary.successRate.toFixed(1)}{' %'}
                             </div>
                             <div className="text-sm text-gray-600">Taux de succès</div>
@@ -457,7 +457,7 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
                           <ul className="space-y-2">
                             {monteCarloResults.recommendations.map((rec, index) => (
                               <li key={index} className="flex items-start gap-2">
-                                <Info className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                                <Info className="w-4 h-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                                 <span>{rec}</span>
                               </li>
                             ))}
@@ -624,7 +624,7 @@ export const PremiumFeatures: React.FC<PremiumFeaturesProps> = ({ cppData, class
                       <CardContent>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                           <div className="text-center">
-                            <div className="text-2xl font-bold text-blue-600">
+                            <div className="text-2xl font-bold text-mpr-interactive">
                               ${survivorResults.combined.totalDeathBenefit.toFixed(0)}
                             </div>
                             <div className="text-sm text-gray-600">Prestation de décès</div>

@@ -1,4 +1,4 @@
-/* Styles spécialisés pour comparateur seniors */
+﻿/* Styles spécialisés pour comparateur seniors */
 
 .seniors-comparison-widget {
   max-width: 1200px;
@@ -121,8 +121,8 @@
 }
 
 .senior-form-input:focus {
-  border-color: #4c6ef5;
-  box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.1);
+  border-color: #2B5BA8;
+  box-shadow: 0 0 0 3px rgba(43, 91, 168, 0.1);
   outline: none;
 }
 
@@ -159,7 +159,7 @@
 
 /* === VARIABLES CSS SENIOR PALETTE === */
 :root {
-  --senior-primary: #4c6ef5;
+  --senior-primary: #2B5BA8;
   --senior-bg-card: #ffffff;
   --senior-bg-primary: #ffffff;
   --senior-bg-accent: #e3f2fd;
@@ -230,15 +230,15 @@
 }
 
 .senior-form-field .senior-form-input:focus {
-  border-color: var(--senior-primary, #4c6ef5);
-  box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.1);
+  border-color: var(--senior-primary, #2B5BA8);
+  box-shadow: 0 0 0 3px rgba(43, 91, 168, 0.1);
   outline: none;
 }
 
 /* === CARTES DE RÉSULTATS === */
 .senior-result-card {
   background: var(--senior-bg-accent, #e3f2fd);
-  border: 1px solid var(--senior-primary, #4c6ef5);
+  border: 1px solid var(--senior-primary, #2B5BA8);
   border-radius: var(--senior-radius-lg, 12px);
   padding: 20px;
   margin-bottom: 20px;
@@ -260,7 +260,7 @@
 .senior-result-amount {
   font-size: 24px;
   font-weight: 700;
-  color: var(--senior-primary, #4c6ef5);
+  color: var(--senior-primary, #2B5BA8);
   margin-bottom: 4px;
 }
 
@@ -279,8 +279,8 @@
 }
 
 .senior-alert-info {
-  background: rgba(76, 110, 245, 0.1);
-  border: 1px solid var(--senior-primary, #4c6ef5);
+  background: rgba(43, 91, 168, 0.1);
+  border: 1px solid var(--senior-primary, #2B5BA8);
   border-radius: var(--senior-radius, 8px);
   padding: 16px;
   margin-bottom: 20px;

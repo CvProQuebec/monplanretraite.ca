@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Rocket, 
@@ -41,7 +41,7 @@ export const AdvancedDemoControls: React.FC = () => {
   } = useDemoControls();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-mpr-interactive-lt to-mpr-interactive-lt p-8">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -101,18 +101,18 @@ export const AdvancedDemoControls: React.FC = () => {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.3, duration: 0.6 }}
-            className="bg-white rounded-2xl shadow-xl p-6 border-2 border-blue-200"
+            className="bg-white rounded-2xl shadow-xl p-6 border-2 border-mpr-border"
           >
             <h3 className="text-2xl font-semibold text-gray-800 mb-4 flex items-center gap-2">
-              <Rocket className="w-6 h-6 text-blue-600" />
+              <Rocket className="w-6 h-6 text-mpr-interactive" />
               Contrôles de Thèmes
             </h3>
             
             <div className="space-y-4">
-              <div className="flex items-center justify-between p-4 bg-blue-50 rounded-xl">
+              <div className="flex items-center justify-between p-4 bg-mpr-interactive-lt rounded-xl">
                 <div>
-                  <h4 className="font-semibold text-blue-800">Rotation Automatique</h4>
-                  <p className="text-sm text-blue-600">
+                  <h4 className="font-semibold text-mpr-navy">Rotation Automatique</h4>
+                  <p className="text-sm text-mpr-interactive">
                     {isRotating ? 'Thèmes en rotation toutes les 3 secondes' : 'Thèmes statiques'}
                   </p>
                 </div>
@@ -120,8 +120,8 @@ export const AdvancedDemoControls: React.FC = () => {
                   onClick={startThemeRotation}
                   className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                     isRotating
-                      ? 'bg-blue-600 text-white shadow-md'
-                      : 'bg-white text-blue-600 border-2 border-blue-300 hover:bg-blue-50'
+                      ? 'bg-mpr-interactive text-white shadow-md'
+                      : 'bg-white text-mpr-interactive border-2 border-mpr-border hover:bg-mpr-interactive-lt'
                   }`}
                 >
                   {isRotating ? (
@@ -138,10 +138,10 @@ export const AdvancedDemoControls: React.FC = () => {
                 </button>
               </div>
 
-              <div className="p-4 bg-gradient-to-r from-blue-100 to-purple-100 rounded-xl">
+              <div className="p-4 bg-gradient-to-r from-mpr-interactive-lt to-purple-100 rounded-xl">
                 <h4 className="font-semibold text-gray-800 mb-2">Thème Actuel</h4>
                 <div className="flex items-center gap-2">
-                  <div className="w-4 h-4 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full"></div>
+                  <div className="w-4 h-4 bg-gradient-to-r from-mpr-interactive to-purple-500 rounded-full"></div>
                   <span className="text-sm text-gray-700">
                     {isRotating ? 'Rotation active' : 'Thème statique'}
                   </span>
@@ -288,7 +288,7 @@ export const AdvancedDemoControls: React.FC = () => {
 
               {/* Zone de test de la physique */}
               {showPhysics && (
-                <div className="h-32 bg-gradient-to-br from-green-50 to-blue-100 rounded-xl border-2 border-dashed border-green-300 relative overflow-hidden">
+                <div className="h-32 bg-gradient-to-br from-green-50 to-mpr-interactive-lt rounded-xl border-2 border-dashed border-green-300 relative overflow-hidden">
                   <PhysicsCard
                     physics={{ 
                       gravity: physicsGravity, 
@@ -298,7 +298,7 @@ export const AdvancedDemoControls: React.FC = () => {
                     effects={{ shadow: true, glow: false }}
                     className="absolute top-4 left-4 w-16 h-16 cursor-grab"
                   >
-                    <div className="w-full h-full bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center">
+                    <div className="w-full h-full bg-gradient-to-br from-green-400 to-mpr-interactive rounded-full flex items-center justify-center">
                       <span className="text-white text-xs font-bold">Test</span>
                     </div>
                   </PhysicsCard>
@@ -406,7 +406,7 @@ export const AdvancedDemoControls: React.FC = () => {
                     togglePhysics();
                     startThemeRotation();
                   }}
-                  className="px-3 py-1 bg-blue-600 text-white text-xs rounded hover:bg-blue-700 transition-colors"
+                  className="px-3 py-1 bg-mpr-interactive text-white text-xs rounded hover:bg-mpr-interactive-dk transition-colors"
                 >
                   Activer Tout
                 </button>

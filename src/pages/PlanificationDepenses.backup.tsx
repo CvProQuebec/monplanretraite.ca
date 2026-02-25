@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { ExpenseScenarioPlanner } from '../features/retirement/components/ExpenseScenarioPlanner';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Alert, AlertDescription } from '../components/ui/alert';
@@ -42,12 +42,12 @@ export const PlanificationDepenses: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt">
       <div className="container mx-auto px-4 py-8">
         {/* Header Section */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <div className="bg-blue-600 p-3 rounded-full">
+            <div className="bg-mpr-interactive p-3 rounded-full">
               <Calculator className="h-8 w-8 text-white" />
             </div>
           </div>
@@ -65,7 +65,7 @@ export const PlanificationDepenses: React.FC = () => {
           <Card className="border-l-4 border-l-blue-500">
             <CardHeader className="pb-3">
               <div className="flex items-center">
-                <Target className="h-5 w-5 text-blue-600 mr-2" />
+                <Target className="h-5 w-5 text-mpr-interactive mr-2" />
                 <CardTitle className="text-lg">Comparaison d'options</CardTitle>
               </div>
             </CardHeader>
@@ -186,15 +186,15 @@ export const PlanificationDepenses: React.FC = () => {
 
         {/* Footer Information */}
         <div className="mt-8 text-center">
-          <Card className="bg-blue-50 border-blue-200">
+          <Card className="bg-mpr-interactive-lt border-mpr-border">
             <CardContent className="p-6">
               <div className="flex items-center justify-center mb-3">
-                <Calculator className="h-5 w-5 text-blue-600 mr-2" />
-                <h3 className="text-lg font-semibold text-blue-800">
+                <Calculator className="h-5 w-5 text-mpr-interactive mr-2" />
+                <h3 className="text-lg font-semibold text-mpr-navy">
                   Planification financière intelligente
                 </h3>
               </div>
-              <p className="text-blue-700 text-sm max-w-2xl mx-auto">
+              <p className="text-mpr-navy text-sm max-w-2xl mx-auto">
                 Cet outil vous aide à prendre des décisions financières éclairées en analysant 
                 l'impact de vos dépenses sur votre flux de trésorerie. Toutes les données sont 
                 sauvegardées localement sur votre appareil pour votre confidentialité.

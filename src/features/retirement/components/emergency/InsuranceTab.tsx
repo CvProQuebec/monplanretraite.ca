@@ -1,4 +1,4 @@
-// Onglet des assurances
+﻿// Onglet des assurances
 // Plan Professional - Gestion avancée des assurances
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -170,11 +170,11 @@ export const InsuranceTab: React.FC<InsuranceTabProps> = ({ data, onUpdate }) =>
     const colors: Record<string, string> = {
       life: 'bg-red-100 text-red-800',
       health: 'bg-green-100 text-green-800',
-      auto: 'bg-blue-100 text-blue-800',
+      auto: 'bg-mpr-interactive-lt text-mpr-navy',
       home: 'bg-orange-100 text-orange-800',
       disability: 'bg-purple-100 text-purple-800',
       travel: 'bg-yellow-100 text-yellow-800',
-      business: 'bg-indigo-100 text-indigo-800',
+      business: 'bg-mpr-interactive-lt text-mpr-navy',
       other: 'bg-gray-100 text-gray-800'
     };
     return colors[type] || colors.other;
@@ -224,7 +224,7 @@ export const InsuranceTab: React.FC<InsuranceTabProps> = ({ data, onUpdate }) =>
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <Shield className="h-5 w-5 text-blue-600" />
+              <Shield className="h-5 w-5 text-mpr-interactive" />
               <div>
                 <p className="text-sm text-muted-foreground">Total des polices</p>
                 <p className="text-2xl font-bold">{data.length}</p>

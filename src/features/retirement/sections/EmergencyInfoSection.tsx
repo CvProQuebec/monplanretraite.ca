@@ -1,4 +1,4 @@
-// Section principale "Informations en cas d'urgence"
+﻿// Section principale "Informations en cas d'urgence"
 // Respectant la typographie québécoise et l'accessibilité
 
 import React, { useState, useEffect } from 'react';
@@ -229,11 +229,11 @@ export const EmergencyInfoSection: React.FC = () => {
   const stats = EmergencyInfoService.getUsageStats();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-mpr-navy text-white">
       {/* Particules animées en arrière-plan */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-mpr-interactive rounded-full animate-bounce"></div>
         <div className="absolute bottom-40 left-20 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
         <div className="absolute top-60 left-1/2 w-1 h-1 bg-red-400 rounded-full animate-pulse"></div>
         <div className="absolute top-96 left-1/4 w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
@@ -267,9 +267,9 @@ export const EmergencyInfoSection: React.FC = () => {
         </Card>
 
         {/* Note de sécurité */}
-        <Alert className="border-blue-400 bg-blue-900/20 text-blue-200 mb-8">
-          <Shield className="h-5 w-5 text-blue-400" />
-          <AlertDescription className="text-blue-200 text-lg">
+        <Alert className="border-mpr-interactive bg-mpr-navy/20 text-mpr-interactive-lt mb-8">
+          <Shield className="h-5 w-5 text-mpr-interactive" />
+          <AlertDescription className="text-mpr-interactive-lt text-lg">
             <strong>Sécurité :</strong> {t.securityNote}
           </AlertDescription>
         </Alert>
@@ -291,7 +291,7 @@ export const EmergencyInfoSection: React.FC = () => {
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div className="text-center">
-                <div className="font-bold text-blue-400">{stats.contactsCompletes}</div>
+                <div className="font-bold text-mpr-interactive">{stats.contactsCompletes}</div>
                 <div className="text-green-200">Contacts</div>
               </div>
               <div className="text-center">

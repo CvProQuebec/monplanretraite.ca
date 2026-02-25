@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 
 type PlaceholderInfoPageProps = {
   title: string;
@@ -19,11 +19,11 @@ export default function PlaceholderInfoPage({
   tone = 'blue'
 }: PlaceholderInfoPageProps) {
   const toneMap: Record<NonNullable<PlaceholderInfoPageProps['tone']>, { bg: string; border: string; text: string }> = {
-    blue: { bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-900' },
+    blue: { bg: 'bg-mpr-interactive-lt', border: 'border-mpr-border', text: 'text-mpr-navy' },
     green: { bg: 'bg-green-50', border: 'border-green-200', text: 'text-green-900' },
     orange: { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-900' },
     purple: { bg: 'bg-purple-50', border: 'border-purple-200', text: 'text-purple-900' },
-    indigo: { bg: 'bg-indigo-50', border: 'border-indigo-200', text: 'text-indigo-900' },
+    indigo: { bg: 'bg-mpr-interactive-lt', border: 'border-mpr-border', text: 'text-mpr-navy' },
     cyan: { bg: 'bg-cyan-50', border: 'border-cyan-200', text: 'text-cyan-900' }
   };
 

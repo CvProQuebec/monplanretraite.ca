@@ -1,4 +1,4 @@
-// src/features/retirement/components/PDFExport.tsx
+﻿// src/features/retirement/components/PDFExport.tsx
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -99,7 +99,7 @@ export const PDFExport: React.FC<PDFExportProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-blue-600" />
+            <FileText className="w-5 h-5 text-mpr-interactive" />
             {t('reports.professionalExport')}
           </CardTitle>
           <CardDescription>
@@ -148,7 +148,7 @@ export const PDFExport: React.FC<PDFExportProps> = ({
                   <Button
                     size="lg"
                     onClick={generatePDF}
-                    className="bg-blue-600 hover:bg-blue-700"
+                    className="bg-mpr-interactive hover:bg-mpr-interactive-dk"
                   >
                     <FileDown className="w-5 h-5 mr-2" />
                     {t('reports.generateReport')}
@@ -162,7 +162,7 @@ export const PDFExport: React.FC<PDFExportProps> = ({
                   className="w-full max-w-md space-y-4"
                 >
                   <div className="text-center">
-                    <Loader2 className="w-8 h-8 animate-spin mx-auto mb-2 text-blue-600" />
+                    <Loader2 className="w-8 h-8 animate-spin mx-auto mb-2 text-mpr-interactive" />
                     <p className="text-sm font-medium">{t('reports.generatingReport')}</p>
                   </div>
                   
@@ -215,7 +215,7 @@ const InfoCard: React.FC<{
     <Card className="h-full">
       <CardContent className="pt-6">
         <div className="flex items-start gap-3">
-          <div className="p-2 bg-blue-100 rounded-lg text-blue-600">
+          <div className="p-2 bg-mpr-interactive-lt rounded-lg text-mpr-interactive">
             {icon}
           </div>
           <div className="flex-1">
@@ -229,7 +229,7 @@ const InfoCard: React.FC<{
                   transition={{ delay: index * 0.1 }}
                   className="text-xs text-gray-600 flex items-start gap-2"
                 >
-                  <span className="text-blue-600 mt-0.5">•</span>
+                  <span className="text-mpr-interactive mt-0.5">•</span>
                   <span>{item}</span>
                 </motion.li>
               ))}

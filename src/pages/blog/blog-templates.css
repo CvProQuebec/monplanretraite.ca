@@ -1,9 +1,9 @@
-/* Templates CSS — conforme au guide "Claude instructions transformation_immediate.html" */
+﻿/* Templates CSS — conforme au guide "Claude instructions transformation_immediate.html" */
 
 /* Variables par défaut (fallbacks) */
 :root {
-  --senior-primary: #4c6ef5;
-  --senior-primary-dark: #364fc7;
+  --senior-primary: #2B5BA8;
+  --senior-primary-dark: #1F4A8F;
   --senior-success: #51cf66;
   --senior-warning: #ffd43b;
   --senior-error: #ff6b6b;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AlertTriangle, Phone, Mail, ExternalLink, HardHat, Calculator, FileText, Users } from 'lucide-react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
@@ -185,7 +185,7 @@ const CCQPage: React.FC = () => {
                           href="https://www.ccq.org/fr-CA/avantages-sociaux/retraite" 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="text-blue-600 hover:text-blue-800 underline"
+                          className="text-mpr-interactive hover:text-mpr-navy underline"
                         >
                           {content.contacts.website}
                         </a>
@@ -291,7 +291,7 @@ const CCQPage: React.FC = () => {
                 href="https://www.ccq.org/fr-CA/avantages-sociaux/retraite" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center text-blue-600 hover:text-blue-800 underline"
+                className="flex items-center text-mpr-interactive hover:text-mpr-navy underline"
               >
                 <ExternalLink className="w-4 h-4 mr-2" />
                 {isEnglish ? 'Official CCQ Retirement Page' : 'Page Officielle Retraite CCQ'}
@@ -300,7 +300,7 @@ const CCQPage: React.FC = () => {
                 href="https://www.ccq.org/fr-CA/avantages-sociaux/retraite/releve-annuel" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="flex items-center text-blue-600 hover:text-blue-800 underline"
+                className="flex items-center text-mpr-interactive hover:text-mpr-navy underline"
               >
                 <FileText className="w-4 h-4 mr-2" />
                 {isEnglish ? 'Annual Statement' : 'Relevé Annuel'}

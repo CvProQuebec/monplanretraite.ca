@@ -1,4 +1,4 @@
-// ===== COMPOSANT DE VALIDATION CLAUDE - SUITE DE TESTS COMPLÈTE =====
+﻿// ===== COMPOSANT DE VALIDATION CLAUDE - SUITE DE TESTS COMPLÈTE =====
 // Interface utilisateur pour exécuter et visualiser tous les tests de validation
 
 import React, { useState } from 'react';
@@ -194,7 +194,7 @@ export const ClaudeValidationTest: React.FC = () => {
   const getStatusIcon = (status: string) => {
     switch (status) {
       case 'pending': return <Clock className="w-4 h-4 text-gray-400" />;
-      case 'running': return <Clock className="w-4 h-4 text-blue-500 animate-spin" />;
+      case 'running': return <Clock className="w-4 h-4 text-mpr-interactive animate-spin" />;
       case 'success': return <CheckCircle className="w-4 h-4 text-green-500" />;
       case 'error': return <XCircle className="w-4 h-4 text-red-500" />;
       default: return <Clock className="w-4 h-4 text-gray-400" />;
@@ -204,7 +204,7 @@ export const ClaudeValidationTest: React.FC = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'pending': return <Badge variant="outline">En attente</Badge>;
-      case 'running': return <Badge className="bg-blue-100 text-blue-800">En cours</Badge>;
+      case 'running': return <Badge className="bg-mpr-interactive-lt text-mpr-navy">En cours</Badge>;
       case 'success': return <Badge className="bg-green-100 text-green-800">Réussi</Badge>;
       case 'error': return <Badge className="bg-red-100 text-red-800">Échoué</Badge>;
       default: return <Badge variant="outline">Inconnu</Badge>;
@@ -456,14 +456,14 @@ export const ClaudeValidationTest: React.FC = () => {
       )}
 
       {/* Instructions d'utilisation */}
-      <Card className="bg-blue-50 border-blue-200">
+      <Card className="bg-mpr-interactive-lt border-mpr-border">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-900">
+          <CardTitle className="flex items-center gap-2 text-mpr-navy">
             <FileText className="w-5 h-5" />
             Instructions d'Utilisation
           </CardTitle>
         </CardHeader>
-        <CardContent className="text-blue-800">
+        <CardContent className="text-mpr-navy">
           <div className="space-y-3">
             <div>
               <h4 className="font-semibold mb-2">🎯 Objectif des Tests:</h4>

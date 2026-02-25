@@ -1,4 +1,4 @@
-// src/features/retirement/sections/RealEstateSection.tsx
+﻿// src/features/retirement/sections/RealEstateSection.tsx
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -51,7 +51,7 @@ export const RealEstateSection: React.FC<RealEstateSectionProps> = ({ data, onUp
   const patrimoineImmobilierTotal = equiteResidence + equiteLocative;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-900 to-blue-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-teal-900 to-mpr-navy text-white">
       <div className="container mx-auto px-6 py-8">
         {/* Header */}
         <div className="text-center mb-12">
@@ -114,18 +114,18 @@ export const RealEstateSection: React.FC<RealEstateSectionProps> = ({ data, onUp
             </CardContent>
           </Card>
 
-          <Card className="bg-white/10 backdrop-blur-sm border-blue-300/30">
+          <Card className="bg-white/10 backdrop-blur-sm border-mpr-border/30">
             <CardHeader className="pb-3">
-              <CardTitle className="text-blue-400 flex items-center gap-2">
+              <CardTitle className="text-mpr-interactive flex items-center gap-2">
                 <TrendingUp className="w-5 h-5" />
                 {isFrench ? 'Patrimoine total' : 'Total wealth'}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-blue-400">
+              <div className="text-2xl font-bold text-mpr-interactive">
                 {isFrench ? formatMontantOQLF(patrimoineImmobilierTotal) : `$${patrimoineImmobilierTotal.toLocaleString()}`}
               </div>
-              <div className="text-blue-200 text-sm">
+              <div className="text-mpr-interactive-lt text-sm">
                 {isFrench ? 'Valeur nette immobilière' : 'Net real estate value'}
               </div>
             </CardContent>

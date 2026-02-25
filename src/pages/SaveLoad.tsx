@@ -7,11 +7,11 @@ const SaveLoad: React.FC = () => {
   const isFrench = language === "fr";
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-purple-50">
       <div className="container mx-auto px-6 py-10">
-        <Card className="bg-white border-2 border-blue-200 shadow-xl">
+        <Card className="bg-white border-2 border-mpr-border shadow-xl">
           <CardHeader className="text-center">
-            <CardTitle className="text-3xl font-bold text-blue-900">
+            <CardTitle className="text-3xl font-bold text-mpr-navy">
               {isFrench ? "Sauvegarder / Charger" : "Save / Load"}
             </CardTitle>
           </CardHeader>

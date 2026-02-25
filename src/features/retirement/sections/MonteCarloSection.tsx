@@ -1,4 +1,4 @@
-// src/features/retirement/sections/MonteCarloSection.tsx
+﻿// src/features/retirement/sections/MonteCarloSection.tsx
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -150,7 +150,7 @@ export const MonteCarloSection: React.FC<MonteCarloSectionProps> = ({ data, onUp
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-mpr-navy text-white">
       <div className="container mx-auto px-6 py-8">
         {/* En-tête */}
         <div className="text-center mb-8">
@@ -275,10 +275,10 @@ export const MonteCarloSection: React.FC<MonteCarloSectionProps> = ({ data, onUp
               <CardContent>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-400">
+                    <div className="text-2xl font-bold text-mpr-interactive">
                       {monteCarloResults.summary.successRate.toFixed(1)}%
                     </div>
-                    <div className="text-sm text-blue-200">{t.successRate}</div>
+                    <div className="text-sm text-mpr-interactive-lt">{t.successRate}</div>
                   </div>
                   <div className="text-center">
                     <div className="text-2xl font-bold text-green-400">
@@ -361,13 +361,13 @@ export const MonteCarloSection: React.FC<MonteCarloSectionProps> = ({ data, onUp
 
         {/* Message d'information si pas de résultats */}
         {!monteCarloResults && !isMonteCarloRunning && (
-          <Card className="bg-white/10 backdrop-blur-sm border-blue-300/30">
+          <Card className="bg-white/10 backdrop-blur-sm border-mpr-border/30">
             <CardContent className="p-8 text-center">
-              <Info className="w-16 h-16 text-blue-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-blue-300 mb-2">
+              <Info className="w-16 h-16 text-mpr-interactive mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-mpr-interactive mb-2">
                 {isFrench ? 'Prêt pour la simulation' : 'Ready for Simulation'}
               </h3>
-              <p className="text-blue-200">
+              <p className="text-mpr-interactive-lt">
                 {isFrench 
                   ? 'Configurez vos paramètres et lancez une simulation Monte Carlo pour analyser les risques de votre plan de retraite.'
                   : 'Configure your parameters and run a Monte Carlo simulation to analyze the risks of your retirement plan.'

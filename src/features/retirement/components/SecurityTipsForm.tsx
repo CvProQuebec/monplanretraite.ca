@@ -1,4 +1,4 @@
-// src/features/retirement/components/SecurityTipsForm.tsx
+﻿// src/features/retirement/components/SecurityTipsForm.tsx
 // Conseils de sécurité et protection des documents
 
 import React, { useState } from 'react';
@@ -219,7 +219,7 @@ const categoryInfo = {
   },
   backup: { 
     label: 'Sauvegardes', 
-    color: 'bg-blue-100 text-blue-800', 
+    color: 'bg-mpr-interactive-lt text-mpr-navy', 
     icon: Copy,
     description: 'Copies et sauvegardes des documents'
   },
@@ -492,7 +492,7 @@ export const SecurityTipsForm: React.FC<SecurityTipsFormProps> = ({ className })
                           variant="ghost"
                           size="sm"
                           onClick={() => toggleTipExpansion(tip.id)}
-                          className="p-0 h-auto text-blue-600 hover:text-blue-800"
+                          className="p-0 h-auto text-mpr-interactive hover:text-mpr-navy"
                         >
                           {isExpanded ? 'Masquer les détails' : 'Voir les étapes détaillées'}
                         </Button>
@@ -511,7 +511,7 @@ export const SecurityTipsForm: React.FC<SecurityTipsFormProps> = ({ className })
                                 <ul className="space-y-1">
                                   {tip.actionItems.map((item, index) => (
                                     <li key={index} className="text-sm text-gray-700 flex items-start gap-2">
-                                      <span className="text-blue-600 font-bold min-w-[20px]">{index + 1}.</span>
+                                      <span className="text-mpr-interactive font-bold min-w-[20px]">{index + 1}.</span>
                                       <span>{item}</span>
                                     </li>
                                   ))}
@@ -548,15 +548,15 @@ export const SecurityTipsForm: React.FC<SecurityTipsFormProps> = ({ className })
       </div>
 
       {/* Conseils généraux */}
-      <Card className="bg-blue-50 border-blue-200">
+      <Card className="bg-mpr-interactive-lt border-mpr-border">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-800">
+          <CardTitle className="flex items-center gap-2 text-mpr-navy">
             <Info className="w-5 h-5" />
             Conseils généraux de sécurité
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3 text-sm text-blue-700">
+          <div className="space-y-3 text-sm text-mpr-navy">
             <div className="flex items-start gap-2">
               <span className="font-bold">•</span>
               <span><strong>Règle du 3-2-1 :</strong> 3 copies de vos documents, sur 2 supports différents, dont 1 hors site.</span>

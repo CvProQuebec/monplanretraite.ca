@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+﻿import React, { useMemo, useState } from 'react';
 import {
   LineChart,
   Line,
@@ -194,7 +194,7 @@ const CoupleAnalysis: React.FC<CoupleAnalysisProps> = ({
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-700 mb-2">
+              <div className="text-3xl font-bold text-mpr-navy mb-2">
                 {person1LifeExpectancy.toFixed(1)}
               </div>
               <div className="text-sm text-gray-600 mb-2">
@@ -278,7 +278,7 @@ const CoupleAnalysis: React.FC<CoupleAnalysisProps> = ({
                   <div className="text-xs text-gray-600 mb-2">
                     {isFrench ? 'ans' : 'years'}
                   </div>
-                  <div className="text-sm font-medium text-blue-600">
+                  <div className="text-sm font-medium text-mpr-interactive">
                     {milestone.jointSurvival.toFixed(0)}%
                   </div>
                   <div className="text-xs text-gray-500">
@@ -382,13 +382,13 @@ const CoupleAnalysis: React.FC<CoupleAnalysisProps> = ({
               </div>
             </div>
 
-            <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
-              <Target className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+            <div className="flex items-start gap-3 p-3 bg-mpr-interactive-lt rounded-lg">
+              <Target className="w-5 h-5 text-mpr-interactive mt-0.5 flex-shrink-0" />
               <div>
-                <div className="font-medium text-blue-800">
+                <div className="font-medium text-mpr-navy">
                   {isFrench ? 'Soins de Longue Durée' : 'Long-term Care Planning'}
                 </div>
-                <div className="text-sm text-blue-700 mt-1">
+                <div className="text-sm text-mpr-navy mt-1">
                   {isFrench
                     ? `Préparez-vous pour ${coupleMetrics.carePlanningYears.toFixed(0)} années potentielles de soins requis.`
                     : `Prepare for ${coupleMetrics.carePlanningYears.toFixed(0)} potential years of care needs.`

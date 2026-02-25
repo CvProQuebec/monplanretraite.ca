@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { getAllPosts, type BlogPost } from './utils/content';
@@ -75,7 +75,7 @@ const EssentialsPage: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
   const openPost = (p: BlogPost) => navigate(`${lang === 'en' ? '/en/blog' : '/blog'}/${p.slug}`);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-purple-50">
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
@@ -98,7 +98,7 @@ const EssentialsPage: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
             </div>
             <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
               <div
-                className="h-3 bg-blue-600 rounded-full transition-all"
+                className="h-3 bg-mpr-interactive rounded-full transition-all"
                 style={{ width: `${progressPct}%` }}
               />
             </div>
@@ -114,20 +114,20 @@ const EssentialsPage: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
                     <button
                       aria-label={isRead ? t.completed : 'Mark as read'}
                       onClick={() => toggleRead(p.id)}
-                      className={`mt-1 rounded-full ${isRead ? 'text-green-600' : 'text-gray-400'} hover:text-blue-600`}
+                      className={`mt-1 rounded-full ${isRead ? 'text-green-600' : 'text-gray-400'} hover:text-mpr-interactive`}
                       title={isRead ? t.completed : 'Mark as read'}
                     >
                       {isRead ? <CheckCircle2 className="w-6 h-6" /> : <Circle className="w-6 h-6" />}
                     </button>
                     <div className="flex-1">
-                      <div className="flex items-center gap-2 text-xs text-blue-700 font-semibold">
+                      <div className="flex items-center gap-2 text-xs text-mpr-navy font-semibold">
                         <Star className="w-4 h-4" />
                         <span>{idx + 1 < 10 ? `0${idx + 1}` : idx + 1}</span>
                         <span>·</span>
                         <span>{p.category}</span>
                       </div>
                       <h2
-                        className="text-lg md:text-xl font-bold text-gray-900 mt-1 mb-1 cursor-pointer hover:text-blue-700"
+                        className="text-lg md:text-xl font-bold text-gray-900 mt-1 mb-1 cursor-pointer hover:text-mpr-navy"
                         onClick={() => openPost(p)}
                       >
                         {p.title}

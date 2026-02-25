@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Alert, AlertDescription } from './alert';
@@ -264,7 +264,7 @@ const RetirementSpendingPsychologyModule: React.FC = () => {
                 {spendingPhases.map((phase) => (
                   <Card 
                     key={phase.id} 
-                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedPhase === phase.id ? 'ring-2 ring-blue-500' : ''}`}
+                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedPhase === phase.id ? 'ring-2 ring-mpr-interactive' : ''}`}
                     onClick={() => setSelectedPhase(phase.id)}
                   >
                     <CardHeader>
@@ -277,8 +277,8 @@ const RetirementSpendingPsychologyModule: React.FC = () => {
                       <CardDescription>{phase.description}</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      <div className="p-3 bg-blue-50 rounded">
-                        <div className="font-medium text-blue-800 text-sm">Pattern de dépenses</div>
+                      <div className="p-3 bg-mpr-interactive-lt rounded">
+                        <div className="font-medium text-mpr-navy text-sm">Pattern de dépenses</div>
                         <div className="text-sm">{phase.spendingPattern}</div>
                       </div>
 
@@ -287,7 +287,7 @@ const RetirementSpendingPsychologyModule: React.FC = () => {
                         <ul className="text-sm space-y-1">
                           {phase.keyCharacteristics.slice(0, 2).map((char, i) => (
                             <li key={i} className="flex items-start gap-2">
-                              <CheckCircle className="h-3 w-3 text-blue-600 mt-0.5 flex-shrink-0" />
+                              <CheckCircle className="h-3 w-3 text-mpr-interactive mt-0.5 flex-shrink-0" />
                               <span>{char}</span>
                             </li>
                           ))}
@@ -321,7 +321,7 @@ const RetirementSpendingPsychologyModule: React.FC = () => {
                 ))}
               </div>
 
-              <Card className="bg-gradient-to-r from-blue-50 to-purple-50">
+              <Card className="bg-gradient-to-r from-mpr-interactive-lt to-purple-50">
                 <CardHeader>
                   <CardTitle className="text-lg">Évolution des dépenses par phase</CardTitle>
                 </CardHeader>
@@ -362,7 +362,7 @@ const RetirementSpendingPsychologyModule: React.FC = () => {
                 {spendingBehaviors.map((behavior) => (
                   <Card 
                     key={behavior.id} 
-                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedBehavior === behavior.id ? 'ring-2 ring-blue-500' : ''}`}
+                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedBehavior === behavior.id ? 'ring-2 ring-mpr-interactive' : ''}`}
                     onClick={() => setSelectedBehavior(behavior.id)}
                   >
                     <CardHeader>
@@ -523,26 +523,26 @@ const RetirementSpendingPsychologyModule: React.FC = () => {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-blue-50">
+                <Card className="bg-mpr-interactive-lt">
                   <CardHeader>
-                    <CardTitle className="text-lg text-blue-800">Stratégies générales</CardTitle>
+                    <CardTitle className="text-lg text-mpr-navy">Stratégies générales</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-2 text-sm">
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                         <span><strong>Flexibilité budgétaire :</strong> Ajuster selon les phases de vie</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                         <span><strong>Communication ouverte :</strong> Discuter avec famille et conseillers</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                         <span><strong>Révisions régulières :</strong> Adapter aux changements de situation</span>
                       </li>
                       <li className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                        <CheckCircle className="h-4 w-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                         <span><strong>Équilibre vie-argent :</strong> Prioriser le bien-être global</span>
                       </li>
                     </ul>

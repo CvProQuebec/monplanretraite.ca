@@ -1,4 +1,4 @@
-// Composant pour les directives médicales anticipées détaillées
+﻿// Composant pour les directives médicales anticipées détaillées
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -105,7 +105,7 @@ export const MedicalDirectivesSection: React.FC<MedicalDirectivesSectionProps> =
         {[
           { value: 'oui', label: 'Oui', color: 'bg-green-100 text-green-800 border-green-300' },
           { value: 'non', label: 'Non', color: 'bg-red-100 text-red-800 border-red-300' },
-          { value: 'famille', label: 'À discuter avec ma famille', color: 'bg-blue-100 text-blue-800 border-blue-300' },
+          { value: 'famille', label: 'À discuter avec ma famille', color: 'bg-mpr-interactive-lt text-mpr-navy border-mpr-border' },
           { value: 'non_specifie', label: 'Non spécifié', color: 'bg-gray-100 text-gray-800 border-gray-300' }
         ].map((choice) => (
           <button
@@ -168,7 +168,7 @@ export const MedicalDirectivesSection: React.FC<MedicalDirectivesSectionProps> =
       {/* Traitements médicaux */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg text-blue-900">
+          <CardTitle className="text-lg text-mpr-navy">
             💊 Traitements médicaux
           </CardTitle>
           <CardDescription>
@@ -221,7 +221,7 @@ export const MedicalDirectivesSection: React.FC<MedicalDirectivesSectionProps> =
             <div className="flex flex-wrap gap-3">
               {[
                 { value: 'domicile', label: 'À domicile', color: 'bg-green-100 text-green-800 border-green-300' },
-                { value: 'hopital', label: 'À l\'hôpital', color: 'bg-blue-100 text-blue-800 border-blue-300' },
+                { value: 'hopital', label: 'À l\'hôpital', color: 'bg-mpr-interactive-lt text-mpr-navy border-mpr-border' },
                 { value: 'centre_soins', label: 'Centre de soins', color: 'bg-purple-100 text-purple-800 border-purple-300' },
                 { value: 'non_specifie', label: 'Non spécifié', color: 'bg-gray-100 text-gray-800 border-gray-300' }
               ].map((choice) => (
@@ -245,7 +245,7 @@ export const MedicalDirectivesSection: React.FC<MedicalDirectivesSectionProps> =
       {/* Situations neurologiques */}
       <Card>
         <CardHeader>
-          <CardTitle className="text-lg text-indigo-900">
+          <CardTitle className="text-lg text-mpr-navy">
             🧠 Situations neurologiques
           </CardTitle>
           <CardDescription>
@@ -283,7 +283,7 @@ export const MedicalDirectivesSection: React.FC<MedicalDirectivesSectionProps> =
                 <div className="flex flex-wrap gap-3">
                   {[
                     { value: 'tous', label: 'Tous les organes', color: 'bg-green-100 text-green-800 border-green-300' },
-                    { value: 'certains', label: 'Certains seulement', color: 'bg-blue-100 text-blue-800 border-blue-300' },
+                    { value: 'certains', label: 'Certains seulement', color: 'bg-mpr-interactive-lt text-mpr-navy border-mpr-border' },
                     { value: 'aucun', label: 'Aucun', color: 'bg-red-100 text-red-800 border-red-300' },
                     { value: 'non_specifie', label: 'Non spécifié', color: 'bg-gray-100 text-gray-800 border-gray-300' }
                   ].map((choice) => (
@@ -309,7 +309,7 @@ export const MedicalDirectivesSection: React.FC<MedicalDirectivesSectionProps> =
                 <div className="flex flex-wrap gap-3">
                   {[
                     { value: 'oui', label: 'Tous les tissus', color: 'bg-green-100 text-green-800 border-green-300' },
-                    { value: 'certains', label: 'Certains tissus', color: 'bg-blue-100 text-blue-800 border-blue-300' },
+                    { value: 'certains', label: 'Certains tissus', color: 'bg-mpr-interactive-lt text-mpr-navy border-mpr-border' },
                     { value: 'non', label: 'Aucun tissu', color: 'bg-red-100 text-red-800 border-red-300' },
                     { value: 'non_specifie', label: 'Non spécifié', color: 'bg-gray-100 text-gray-800 border-gray-300' }
                   ].map((choice) => (
@@ -334,7 +334,7 @@ export const MedicalDirectivesSection: React.FC<MedicalDirectivesSectionProps> =
                 </Label>
                 <div className="flex flex-wrap gap-3">
                   {[
-                    { value: 'mort_cerebrale', label: 'Mort cérébrale seulement', color: 'bg-blue-100 text-blue-800 border-blue-300' },
+                    { value: 'mort_cerebrale', label: 'Mort cérébrale seulement', color: 'bg-mpr-interactive-lt text-mpr-navy border-mpr-border' },
                     { value: 'arret_cardiaque', label: 'Arrêt cardiaque aussi', color: 'bg-green-100 text-green-800 border-green-300' },
                     { value: 'les_deux', label: 'Les deux conditions', color: 'bg-purple-100 text-purple-800 border-purple-300' },
                     { value: 'non_specifie', label: 'Non spécifié', color: 'bg-gray-100 text-gray-800 border-gray-300' }
@@ -391,8 +391,8 @@ export const MedicalDirectivesSection: React.FC<MedicalDirectivesSectionProps> =
           )}
 
           {directives.donOrganes === 'famille' && (
-            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-sm text-blue-800">
+            <div className="p-4 bg-mpr-interactive-lt border border-mpr-border rounded-lg">
+              <p className="text-sm text-mpr-navy">
                 <strong>À discuter :</strong> Parlez de votre décision avec votre famille. Le don d'organes peut sauver des vies 
                 et donner un sens à votre départ. Considérez les implications éthiques et médicales.
               </p>
@@ -402,9 +402,9 @@ export const MedicalDirectivesSection: React.FC<MedicalDirectivesSectionProps> =
       </Card>
 
       {/* Consultation et validation */}
-      <Card className="border-blue-200 bg-blue-50">
+      <Card className="border-mpr-border bg-mpr-interactive-lt">
         <CardHeader>
-          <CardTitle className="text-blue-900">
+          <CardTitle className="text-mpr-navy">
             👥 Consultation et validation
           </CardTitle>
           <CardDescription>
@@ -419,7 +419,7 @@ export const MedicalDirectivesSection: React.FC<MedicalDirectivesSectionProps> =
                 checked={consultationSiConscient}
                 onCheckedChange={(checked) => onUpdate('consultationSiConscient', checked)}
               />
-              <Label htmlFor="consultation-conscient" className="text-blue-900">
+              <Label htmlFor="consultation-conscient" className="text-mpr-navy">
                 Si je suis conscient, veuillez me consulter pour validation ou approbation
               </Label>
             </div>
@@ -427,7 +427,7 @@ export const MedicalDirectivesSection: React.FC<MedicalDirectivesSectionProps> =
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-blue-900">
+              <Label className="text-sm font-medium text-mpr-navy">
                 Personne de confiance principale
               </Label>
               <Input
@@ -439,7 +439,7 @@ export const MedicalDirectivesSection: React.FC<MedicalDirectivesSectionProps> =
             </div>
             
             <div className="space-y-2">
-              <Label className="text-sm font-medium text-blue-900">
+              <Label className="text-sm font-medium text-mpr-navy">
                 Personne de confiance secondaire
               </Label>
               <Input
@@ -472,7 +472,7 @@ export const MedicalDirectivesSection: React.FC<MedicalDirectivesSectionProps> =
               {[
                 { value: 'oui', label: 'J\'ai entamé des procédures', color: 'bg-green-100 text-green-800 border-green-300' },
                 { value: 'non', label: 'Je n\'ai pas entamé de procédures', color: 'bg-red-100 text-red-800 border-red-300' },
-                { value: 'a_discuter', label: 'À discuter avec ma famille', color: 'bg-blue-100 text-blue-800 border-blue-300' },
+                { value: 'a_discuter', label: 'À discuter avec ma famille', color: 'bg-mpr-interactive-lt text-mpr-navy border-mpr-border' },
                 { value: 'non_specifie', label: 'Non spécifié', color: 'bg-gray-100 text-gray-800 border-gray-300' }
               ].map((choice) => (
                 <button

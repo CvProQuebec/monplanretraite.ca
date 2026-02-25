@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -184,7 +184,7 @@ export const BackupSecurityTips: React.FC = () => {
           <h4 className="font-medium text-sm">{tr.storageMedia.title}</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             <div className="flex items-start gap-2 p-2 border rounded-lg">
-              <Usb className="w-4 h-4 text-blue-600 mt-0.5" />
+              <Usb className="w-4 h-4 text-mpr-interactive mt-0.5" />
               <div>
                 <div className="font-medium text-sm">{tr.storageMedia.usb}</div>
                 <div className="text-xs text-muted-foreground">{tr.storageMedia.usbDesc}</div>
@@ -262,21 +262,21 @@ export const BackupSecurityTips: React.FC = () => {
             <h4 className="font-medium text-sm">{tr.specificTips.title}</h4>
             <div className="space-y-2">
               <div className="flex items-start gap-2">
-                <Info className="w-4 h-4 text-blue-600 mt-0.5" />
+                <Info className="w-4 h-4 text-mpr-interactive mt-0.5" />
                 <div>
                   <div className="text-sm font-medium">{tr.specificTips.naming}</div>
                   <div className="text-xs text-muted-foreground">{tr.specificTips.namingDesc}</div>
                 </div>
               </div>
               <div className="flex items-start gap-2">
-                <Info className="w-4 h-4 text-blue-600 mt-0.5" />
+                <Info className="w-4 h-4 text-mpr-interactive mt-0.5" />
                 <div>
                   <div className="text-sm font-medium">{tr.specificTips.versioning}</div>
                   <div className="text-xs text-muted-foreground">{tr.specificTips.versioningDesc}</div>
                 </div>
               </div>
               <div className="flex items-start gap-2">
-                <Info className="w-4 h-4 text-blue-600 mt-0.5" />
+                <Info className="w-4 h-4 text-mpr-interactive mt-0.5" />
                 <div>
                   <div className="text-sm font-medium">{tr.specificTips.metadata}</div>
                   <div className="text-xs text-muted-foreground">{tr.specificTips.metadataDesc}</div>

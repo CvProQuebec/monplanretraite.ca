@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -24,7 +24,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
   const isFrench = language === 'fr';
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-purple-50">
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-4xl mx-auto">
           
@@ -32,7 +32,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
           <Button 
             onClick={() => navigate('/blog')}
             variant="ghost" 
-            className="mb-6 text-blue-600 hover:text-blue-800"
+            className="mb-6 text-mpr-interactive hover:text-mpr-navy"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             {isFrench ? 'Retour au Blog' : 'Back to Blog'}
@@ -41,7 +41,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
           {/* Article Header */}
           <div className="bg-white rounded-2xl shadow-xl p-8 mb-8">
             <div className="text-center mb-8">
-              <div className="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold mb-4">
+              <div className="inline-block bg-mpr-interactive-lt text-mpr-navy px-3 py-1 rounded-full text-sm font-semibold mb-4">
                 📚 {isFrench ? 'Guide pratique' : 'Practical Guide'}
               </div>
               <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -105,8 +105,8 @@ const OptimiserTransmissionCeli: React.FC = () => {
             {/* Section 1: Les Bases */}
             <div className="mb-8">
               <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-3">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                  <FileText className="w-4 h-4 text-blue-600" />
+                <div className="w-8 h-8 bg-mpr-interactive-lt rounded-full flex items-center justify-center">
+                  <FileText className="w-4 h-4 text-mpr-interactive" />
                 </div>
                 {isFrench ? 'Les bases de la transmission CÉLI' : 'TFSA Transmission Basics'}
               </h2>
@@ -165,7 +165,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
                 {/* Stratégie 1 */}
                 <Card className="border-l-4 border-l-blue-500">
                   <CardHeader>
-                    <CardTitle className="text-xl text-blue-900">
+                    <CardTitle className="text-xl text-mpr-navy">
                       1. {isFrench ? 'Nommer un titulaire successeur' : 'Name a Successor Holder'}
                     </CardTitle>
                   </CardHeader>
@@ -176,11 +176,11 @@ const OptimiserTransmissionCeli: React.FC = () => {
                         : 'The most effective strategy is to designate your spouse as successor holder rather than just beneficiary.'
                       }
                     </p>
-                    <div className="bg-blue-50 p-4 rounded-lg">
-                      <h4 className="font-semibold text-blue-900 mb-2">
+                    <div className="bg-mpr-interactive-lt p-4 rounded-lg">
+                      <h4 className="font-semibold text-mpr-navy mb-2">
                         {isFrench ? 'Avantages :' : 'Benefits:'}
                       </h4>
-                      <ul className="space-y-1 text-blue-800 text-sm">
+                      <ul className="space-y-1 text-mpr-navy text-sm">
                         <li className="flex items-center gap-2">
                           <CheckCircle className="w-4 h-4 text-green-500" />
                           {isFrench ? 'Aucun impact fiscal immédiat' : 'No immediate tax impact'}
@@ -316,7 +316,7 @@ const OptimiserTransmissionCeli: React.FC = () => {
                 {isFrench ? 'Exemple concret' : 'Concrete Example'}
               </h2>
               
-              <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-200">
+              <Card className="bg-gradient-to-r from-green-50 to-mpr-interactive-lt border-2 border-green-200">
                 <CardHeader>
                   <CardTitle className="text-xl text-green-900">
                     {isFrench ? 'Famille Tremblay : Optimisation réussie' : 'Tremblay Family: Successful Optimization'}
@@ -389,10 +389,10 @@ const OptimiserTransmissionCeli: React.FC = () => {
                     desc: isFrench ? 'Coordonnez avec votre planification globale' : 'Coordinate with your overall planning'
                   }
                 ].map((point, index) => (
-                  <Card key={index} className="border-l-4 border-l-blue-500 bg-blue-50">
+                  <Card key={index} className="border-l-4 border-l-blue-500 bg-mpr-interactive-lt">
                     <CardContent className="p-4">
-                      <h4 className="font-semibold text-blue-900 mb-1">{point.title}</h4>
-                      <p className="text-blue-800 text-sm">{point.desc}</p>
+                      <h4 className="font-semibold text-mpr-navy mb-1">{point.title}</h4>
+                      <p className="text-mpr-navy text-sm">{point.desc}</p>
                     </CardContent>
                   </Card>
                 ))}
@@ -400,11 +400,11 @@ const OptimiserTransmissionCeli: React.FC = () => {
             </div>
 
             {/* Call to Action */}
-            <div className="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-2xl p-8 text-center text-white">
+            <div className="bg-gradient-to-r from-mpr-interactive to-mpr-navy-mid rounded-2xl p-8 text-center text-white">
               <h3 className="text-2xl font-bold mb-4">
                 {isFrench ? 'Prêt à optimiser votre CÉLI ?' : 'Ready to Optimize Your TFSA?'}
               </h3>
-              <p className="text-blue-100 mb-6 max-w-2xl mx-auto">
+              <p className="text-mpr-interactive-lt mb-6 max-w-2xl mx-auto">
                 {isFrench 
                   ? 'Utilisez nos outils professionnels pour planifier efficacement la transmission de votre CÉLI'
                   : 'Use our professional tools to efficiently plan your TFSA transmission'
@@ -413,14 +413,14 @@ const OptimiserTransmissionCeli: React.FC = () => {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
                   onClick={() => navigate('/planification-successorale')}
-                  className="bg-white text-blue-600 hover:bg-gray-100 font-semibold px-8 py-3"
+                  className="bg-white text-mpr-interactive hover:bg-gray-100 font-semibold px-8 py-3"
                 >
                   {isFrench ? 'Planification successorale' : 'Estate Planning'}
                 </Button>
                 <Button 
                   onClick={() => navigate('/blog')}
                   variant="outline" 
-                  className="border-white text-white hover:bg-white hover:text-blue-600 font-semibold px-8 py-3"
+                  className="border-white text-white hover:bg-white hover:text-mpr-interactive font-semibold px-8 py-3"
                 >
                   {isFrench ? 'Plus d\'articles' : 'More Articles'}
                 </Button>
@@ -455,10 +455,10 @@ const OptimiserTransmissionCeli: React.FC = () => {
                     className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow cursor-pointer"
                     onClick={() => navigate(article.path)}
                   >
-                    <div className="text-xs text-blue-600 font-semibold mb-1">
+                    <div className="text-xs text-mpr-interactive font-semibold mb-1">
                       {article.category}
                     </div>
-                    <h4 className="font-semibold text-gray-900 hover:text-blue-600 transition-colors">
+                    <h4 className="font-semibold text-gray-900 hover:text-mpr-interactive transition-colors">
                       {article.title}
                     </h4>
                   </div>

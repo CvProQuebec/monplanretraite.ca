@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+﻿import React, { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
@@ -165,12 +165,12 @@ export default function ProfilePage() {
   // Si pas de données utilisateur, afficher l'écran d'accueil
   if (!userData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
+      <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt py-8">
         <div className="container mx-auto px-4 max-w-4xl">
           <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-xl">
             <CardContent className="p-8 text-center">
-              <div className="w-24 h-24 mx-auto bg-blue-100 rounded-full flex items-center justify-center mb-6">
-                <User className="w-12 h-12 text-blue-600" />
+              <div className="w-24 h-24 mx-auto bg-mpr-interactive-lt rounded-full flex items-center justify-center mb-6">
+                <User className="w-12 h-12 text-mpr-interactive" />
               </div>
               
               <h1 className="text-3xl font-bold text-gray-800 mb-4">
@@ -192,18 +192,18 @@ export default function ProfilePage() {
                   </p>
                 </div>
                 
-                <div className="p-6 bg-blue-50 rounded-lg border border-blue-200">
-                  <Calculator className="w-8 h-8 text-blue-600 mx-auto mb-3" />
-                  <h3 className="font-semibold text-blue-800 mb-2">Calculs Automatiques</h3>
-                  <p className="text-sm text-blue-700">
+                <div className="p-6 bg-mpr-interactive-lt rounded-lg border border-mpr-border">
+                  <Calculator className="w-8 h-8 text-mpr-interactive mx-auto mb-3" />
+                  <h3 className="font-semibold text-mpr-navy mb-2">Calculs Automatiques</h3>
+                  <p className="text-sm text-mpr-navy">
                     Détection automatique RREGOP, SRG et optimisations
                   </p>
                 </div>
               </div>
               
-              <Alert className="max-w-2xl mx-auto border-blue-200 bg-blue-50 mb-8">
+              <Alert className="max-w-2xl mx-auto border-mpr-border bg-mpr-interactive-lt mb-8">
                 <Shield className="h-4 w-4" />
-                <AlertDescription className="text-blue-800">
+                <AlertDescription className="text-mpr-navy">
                   🛡️ Toutes vos données restent sur VOTRE appareil - Aucune transmission à nos serveurs
                 </AlertDescription>
               </Alert>
@@ -533,9 +533,9 @@ export default function ProfilePage() {
               <CardContent>
                 <div className="space-y-3">
                   {OnboardingService.generateRecommendations(userData).map((rec, index) => (
-                    <Alert key={index} className="border-blue-200 bg-blue-50">
+                    <Alert key={index} className="border-mpr-border bg-mpr-interactive-lt">
                       <CheckCircle className="h-4 w-4" />
-                      <AlertDescription className="text-blue-800">
+                      <AlertDescription className="text-mpr-navy">
                         {rec}
                       </AlertDescription>
                     </Alert>
@@ -600,18 +600,18 @@ export default function ProfilePage() {
                           </div>
                           <div className="flex justify-between">
                             <span>SRG:</span>
-                            <span className="font-semibold text-blue-600">
+                            <span className="font-semibold text-mpr-interactive">
                               {estimatedIncome.srg.toLocaleString()} $ /an
                             </span>
                           </div>
                         </div>
                         
-                        <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                          <h4 className="font-semibold text-blue-800 mb-2">Total annuel</h4>
-                          <p className="text-2xl font-bold text-blue-600">
+                        <div className="p-4 bg-mpr-interactive-lt rounded-lg border border-mpr-border">
+                          <h4 className="font-semibold text-mpr-navy mb-2">Total annuel</h4>
+                          <p className="text-2xl font-bold text-mpr-interactive">
                             {estimatedIncome.total.toLocaleString()} $
                           </p>
-                          <p className="text-sm text-blue-700 mt-1">
+                          <p className="text-sm text-mpr-navy mt-1">
                             Revenus mensuels: {(estimatedIncome.total / 12).toLocaleString()} $
                           </p>
                         </div>
@@ -1153,13 +1153,13 @@ export default function ProfilePage() {
                 </div>
 
                 {/* Affichage des calculs CPM2014 */}
-                <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <h4 className="font-semibold text-blue-800 mb-3">Calculs CPM2014 - Espérance de Vie</h4>
+                <div className="mt-6 p-4 bg-mpr-interactive-lt rounded-lg border border-mpr-border">
+                  <h4 className="font-semibold text-mpr-navy mb-3">Calculs CPM2014 - Espérance de Vie</h4>
                   <div className="grid md:grid-cols-2 gap-4">
                     {userData.personal?.naissance1 && userData.personal?.sexe1 && (
                       <div className="text-sm">
                         <p className="font-medium">{userData.personal.prenom1 || 'Personne 1'}:</p>
-                        <p className="text-blue-600">
+                        <p className="text-mpr-interactive">
                           Espérance de vie: {(() => {
                             const age = new Date().getFullYear() - new Date(userData.personal.naissance1).getFullYear();
                             const gender = userData.personal.sexe1 === 'F' ? 'female' : 'male';
@@ -1177,7 +1177,7 @@ export default function ProfilePage() {
                     {userData.personal?.naissance2 && userData.personal?.sexe2 && (
                       <div className="text-sm">
                         <p className="font-medium">{userData.personal.prenom2 || 'Personne 2'}:</p>
-                        <p className="text-blue-600">
+                        <p className="text-mpr-interactive">
                           Espérance de vie: {(() => {
                             const age = new Date().getFullYear() - new Date(userData.personal.naissance2).getFullYear();
                             const gender = userData.personal.sexe2 === 'F' ? 'female' : 'male';

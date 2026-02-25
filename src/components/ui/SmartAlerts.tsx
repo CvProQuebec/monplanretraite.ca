@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Composant SmartAlerts - Phase 1 Modules Néophytes
  * Affiche les alertes intelligentes de prévention d'erreurs
  * Interface conviviale pour les débutants en planification financière
@@ -86,7 +86,7 @@ export const SmartAlerts: React.FC<SmartAlertsProps> = ({
       case 'warning':
         return <AlertCircle className="h-5 w-5 text-yellow-500" />;
       case 'info':
-        return <Info className="h-5 w-5 text-blue-500" />;
+        return <Info className="h-5 w-5 text-mpr-interactive" />;
     }
   };
 
@@ -97,7 +97,7 @@ export const SmartAlerts: React.FC<SmartAlertsProps> = ({
       case 'warning':
         return 'border-yellow-200 bg-yellow-50';
       case 'info':
-        return 'border-blue-200 bg-blue-50';
+        return 'border-mpr-border bg-mpr-interactive-lt';
     }
   };
 
@@ -183,7 +183,7 @@ export const SmartAlerts: React.FC<SmartAlertsProps> = ({
                   </span>
                 )}
                 {alertStats.info > 0 && (
-                  <span className="flex items-center text-blue-600">
+                  <span className="flex items-center text-mpr-interactive">
                     <Info className="h-4 w-4 mr-1" />
                     {alertStats.info} conseil{alertStats.info > 1 ? 's' : ''}
                   </span>
@@ -196,9 +196,9 @@ export const SmartAlerts: React.FC<SmartAlertsProps> = ({
 
       {/* Conseils personnalisés */}
       {personalizedAdvice.length > 0 && (
-        <Card className="border-blue-200 bg-blue-50">
+        <Card className="border-mpr-border bg-mpr-interactive-lt">
           <CardHeader className="pb-3">
-            <CardTitle className="text-lg text-blue-800 flex items-center">
+            <CardTitle className="text-lg text-mpr-navy flex items-center">
               <Info className="h-5 w-5 mr-2" />
               Conseils personnalisés
             </CardTitle>
@@ -206,7 +206,7 @@ export const SmartAlerts: React.FC<SmartAlertsProps> = ({
           <CardContent>
             <ul className="space-y-2">
               {personalizedAdvice.map((advice, index) => (
-                <li key={index} className="text-blue-700 text-sm flex items-start">
+                <li key={index} className="text-mpr-navy text-sm flex items-start">
                   <span className="mr-2">•</span>
                   <span>{advice}</span>
                 </li>

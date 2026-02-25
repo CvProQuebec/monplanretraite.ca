@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Page MVP "Hypothèses de Calcul" - Interface Seniors-Friendly
  * Fond blanc, texte noir, gros caractères, espacement généreux
  * 
@@ -58,19 +58,19 @@ export default function SimpleAssumptionsPage() {
 
       {/* Paramètres simples (interactifs) */}
       <div className="max-w-4xl mx-auto mb-6">
-        <Card className="bg-white border-2 border-blue-200 shadow-md">
+        <Card className="bg-white border-2 border-mpr-border shadow-md">
           <CardHeader className="p-6">
             <h2 className="text-2xl font-bold text-gray-900">Vos paramètres simples</h2>
           </CardHeader>
           <CardContent className="p-6 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Taux de remplacement */}
-              <div className="bg-blue-50 border-2 border-blue-200 rounded-lg p-4">
+              <div className="bg-mpr-interactive-lt border-2 border-mpr-border rounded-lg p-4">
                 <div className="flex items-center justify-between mb-3">
-                  <label htmlFor="slider-remplacement" className="text-lg font-semibold text-blue-900">
+                  <label htmlFor="slider-remplacement" className="text-lg font-semibold text-mpr-navy">
                     Taux de remplacement (%)
                   </label>
-                  <div className="text-xl font-bold text-blue-700">
+                  <div className="text-xl font-bold text-mpr-navy">
                     {Math.round(((typeof tauxRemplacement === 'number' ? (tauxRemplacement > 1 ? tauxRemplacement / 100 : tauxRemplacement) : 0.75) * 100) * 10) / 10} %
                   </div>
                 </div>
@@ -87,7 +87,7 @@ export default function SimpleAssumptionsPage() {
                   }}
                   className="w-full"
                 />
-                <p className="text-sm text-blue-800 mt-2">
+                <p className="text-sm text-mpr-navy mt-2">
                   Ajustez entre 60 % et 90 % selon votre style de vie. Par défaut: 75 %.
                 </p>
               </div>
@@ -173,13 +173,13 @@ export default function SimpleAssumptionsPage() {
         
         {/* Section méthodologie simple */}
         <div className="mt-8">
-          <Card className="bg-blue-50 border-2 border-blue-200">
+          <Card className="bg-mpr-interactive-lt border-2 border-mpr-border">
             <CardContent className="p-8">
-              <h3 className="text-2xl font-bold text-blue-900 mb-6 flex items-center gap-3">
+              <h3 className="text-2xl font-bold text-mpr-navy mb-6 flex items-center gap-3">
                 <Info className="w-8 h-8" />
                 Pourquoi ces hypothèses ?
               </h3>
-              <div className="text-xl text-blue-800 space-y-4 leading-relaxed">
+              <div className="text-xl text-mpr-navy space-y-4 leading-relaxed">
                 <p>
                   <strong>L'Institut de planification financière</strong> établit les standards 
                   que tous les professionnels du Québec doivent suivre.
@@ -188,7 +188,7 @@ export default function SimpleAssumptionsPage() {
                   En utilisant ces mêmes hypothèses, vos projections sont 
                   <strong> cohérentes avec celles d'un planificateur financier professionnel</strong>.
                 </p>
-                <p className="text-lg text-blue-700 pt-4 border-t border-blue-200">
+                <p className="text-lg text-mpr-navy pt-4 border-t border-mpr-border">
                   Source : {assumptions.source} • Mise à jour : {assumptions.lastUpdated}
                 </p>
               </div>
@@ -275,20 +275,20 @@ function AssumptionRow({ label, value, tooltip, icon }: {
           
           <button
             onClick={() => setShowTooltip(!showTooltip)}
-            className="w-12 h-12 bg-blue-100 hover:bg-blue-200 rounded-full flex items-center justify-center transition-colors"
+            className="w-12 h-12 bg-mpr-interactive-lt hover:bg-mpr-interactive-lt rounded-full flex items-center justify-center transition-colors"
             aria-label={`Plus d'informations sur ${tooltip.title}`}
           >
-            <Info className="w-6 h-6 text-blue-600" />
+            <Info className="w-6 h-6 text-mpr-interactive" />
           </button>
         </div>
       </div>
       
       {/* Tooltip simple */}
       {showTooltip && (
-        <div className="mt-6 p-6 bg-blue-50 border-2 border-blue-200 rounded-lg">
-          <h5 className="font-semibold text-blue-900 mb-3 text-xl">{tooltip.title}</h5>
-          <p className="text-blue-800 mb-3 text-lg">{tooltip.description}</p>
-          <p className="text-blue-700 italic text-lg">
+        <div className="mt-6 p-6 bg-mpr-interactive-lt border-2 border-mpr-border rounded-lg">
+          <h5 className="font-semibold text-mpr-navy mb-3 text-xl">{tooltip.title}</h5>
+          <p className="text-mpr-navy mb-3 text-lg">{tooltip.description}</p>
+          <p className="text-mpr-navy italic text-lg">
             <strong>Exemple :</strong> {tooltip.example}
           </p>
         </div>

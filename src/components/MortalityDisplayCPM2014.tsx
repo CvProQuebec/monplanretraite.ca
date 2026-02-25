@@ -1,4 +1,4 @@
-import * as React from 'react';
+﻿import * as React from 'react';
 import { MORTALITY_CPM2014 } from '../config/financial-assumptions';
 
 interface MortalityDisplayProps {
@@ -27,7 +27,7 @@ export function MortalityDisplayCPM2014({ age, gender, showDetails = false, resu
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div className="stat-card">
           <div className="text-sm text-gray-600">Espérance de vie</div>
-          <div className="text-2xl font-bold text-blue-600">
+          <div className="text-2xl font-bold text-mpr-interactive">
             {analysis.lifeExpectancy} ans
           </div>
         </div>

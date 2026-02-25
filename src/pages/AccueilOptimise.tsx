@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -59,7 +59,7 @@ const AccueilOptimise: React.FC = () => {
   const totalBlogCount = useMemo(() => getAllPosts().filter(p => p.status === 'published').length, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-purple-50">
       
       {/* Contenu principal optimisé */}
       <div className="container mx-auto px-6 py-8">
@@ -189,26 +189,26 @@ const AccueilOptimise: React.FC = () => {
                 </Card>
 
                 {/* PLAN PROFESSIONNEL - Simplifié */}
-                <Card className="bg-white border-4 border-blue-400 shadow-2xl relative">
+                <Card className="bg-white border-4 border-mpr-interactive shadow-2xl relative">
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-                    <div className="bg-blue-500 text-white px-6 py-2 rounded-full text-sm font-bold">
+                    <div className="bg-mpr-interactive text-white px-6 py-2 rounded-full text-sm font-bold">
                       {isFrench ? '⭐ RECOMMANDÉ' : '⭐ RECOMMENDED'}
                     </div>
                   </div>
                   <CardHeader className="text-center pt-8">
-                    <div className="w-16 h-16 bg-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-mpr-interactive rounded-full flex items-center justify-center mx-auto mb-4">
                       <Sparkles className="w-8 h-8 text-white" />
                     </div>
-                    <CardTitle className="text-2xl font-bold text-blue-900">
+                    <CardTitle className="text-2xl font-bold text-mpr-navy">
                       {isFrench ? 'Professionnel' : 'Professional'}
                     </CardTitle>
-                    <div className="text-4xl font-bold text-blue-600 mb-1">297 $</div>
-                    <div className="text-sm text-blue-600">{isFrench ? '/an' : '/year'}</div>
+                    <div className="text-4xl font-bold text-mpr-interactive mb-1">297 $</div>
+                    <div className="text-sm text-mpr-interactive">{isFrench ? '/an' : '/year'}</div>
                   </CardHeader>
                   <CardContent className="px-6 pb-8">
                     <div className="space-y-3 mb-6">
                       <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-blue-500" />
+                        <CheckCircle className="w-5 h-5 text-mpr-interactive" />
                         <span className="text-sm">{isFrench ? 'Tout du plan Gratuit +' : 'Everything from Free +'}</span>
                       </div>
                       <div className="flex items-center gap-3">
@@ -216,17 +216,17 @@ const AccueilOptimise: React.FC = () => {
                         <span className="text-sm font-semibold">{isFrench ? 'Assistant IA Personnel' : 'Personal AI Assistant'}</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-blue-500" />
+                        <CheckCircle className="w-5 h-5 text-mpr-interactive" />
                         <span className="text-sm">{isFrench ? 'Simulations illimitées' : 'Unlimited simulations'}</span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-blue-500" />
+                        <CheckCircle className="w-5 h-5 text-mpr-interactive" />
                         <span className="text-sm">{isFrench ? 'Optimisation fiscale' : 'Tax optimization'}</span>
                       </div>
                     </div>
                     <Button 
                       onClick={() => handleUpgradeClick('professional')}
-                      className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3"
+                      className="w-full bg-mpr-interactive hover:bg-mpr-interactive-dk text-white font-bold py-3"
                     >
                       {isFrench ? 'Choisir Professionnel' : 'Choose Professional'}
                     </Button>
@@ -275,7 +275,7 @@ const AccueilOptimise: React.FC = () => {
               </div>
 
               <div className="text-center mt-8">
-                <p className="text-blue-200 text-sm">
+                <p className="text-mpr-interactive-lt text-sm">
                   {isFrench ? '✨ Garantie 14 jours remboursé sur tous les plans payants' : '✨ 14-day money-back guarantee on all paid plans'}
                 </p>
               </div>
@@ -283,7 +283,7 @@ const AccueilOptimise: React.FC = () => {
           </div>
 
           {/* SECTION 5: CTA Final - Optimisé */}
-          <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-2xl">
+          <Card className="bg-gradient-to-r from-mpr-interactive to-purple-600 text-white border-0 shadow-2xl">
             <CardContent className="text-center p-12">
               <h2 className="text-4xl font-bold mb-6">
                 {isFrench ? 'Prêt à prendre le contrôle de votre avenir?' : 'Ready to take control of your future?'}
@@ -298,7 +298,7 @@ const AccueilOptimise: React.FC = () => {
                 <Button 
                   onClick={() => setShowOnboardingWizard(true)}
                   size="lg"
-                  className="bg-white text-blue-600 hover:bg-gray-100 font-bold px-8 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="bg-white text-mpr-interactive hover:bg-gray-100 font-bold px-8 py-4 text-lg rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
                 >
                   {isFrench ? '🎯 Commencer GRATUITEMENT' : '🎯 Start FREE'}
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -307,7 +307,7 @@ const AccueilOptimise: React.FC = () => {
                   onClick={() => handleUpgradeClick('professional')}
                   size="lg"
                   variant="outline"
-                  className="border-2 border-white text-white hover:bg-white hover:text-blue-600 font-bold px-8 py-4 text-lg rounded-xl transition-all duration-300"
+                  className="border-2 border-white text-white hover:bg-white hover:text-mpr-interactive font-bold px-8 py-4 text-lg rounded-xl transition-all duration-300"
                 >
                   {isFrench ? '🚀 Voir les plans payants' : '🚀 View paid plans'}
                 </Button>

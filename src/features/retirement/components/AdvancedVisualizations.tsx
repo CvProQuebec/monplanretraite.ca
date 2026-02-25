@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -257,9 +257,9 @@ export const AdvancedVisualizations: React.FC<AdvancedVisualizationsProps> = ({
                 {/* Légende */}
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div className="space-y-2">
-                    <div className="w-4 h-4 bg-blue-500 rounded mx-auto"></div>
+                    <div className="w-4 h-4 bg-mpr-interactive rounded mx-auto"></div>
                     <div className="text-sm font-medium">{t.cpp}</div>
-                    <div className="text-lg font-bold text-blue-600">
+                    <div className="text-lg font-bold text-mpr-interactive">
                       ${combinedResults.cpp.pensionMensuelle.toFixed(2)}
                     </div>
                   </div>
@@ -381,7 +381,7 @@ export const AdvancedVisualizations: React.FC<AdvancedVisualizationsProps> = ({
                 {/* Métriques de durabilité */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-blue-600 mb-2">
+                    <div className="text-3xl font-bold text-mpr-interactive mb-2">
                       {combinedResults.replacementRate.toFixed(1)}%
                     </div>
                     <div className="text-sm text-gray-600">{t.replacementRate}</div>
@@ -453,8 +453,8 @@ export const AdvancedVisualizations: React.FC<AdvancedVisualizationsProps> = ({
             <CardContent>
               <div className="space-y-4">
                 {combinedResults.recommendations.map((recommendation, index) => (
-                  <div key={index} className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
-                    <Info className="h-5 w-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                  <div key={index} className="flex items-start gap-3 p-3 bg-mpr-interactive-lt rounded-lg">
+                    <Info className="h-5 w-5 text-mpr-interactive mt-0.5 flex-shrink-0" />
                     <span className="text-sm text-gray-700">{recommendation}</span>
                   </div>
                 ))}

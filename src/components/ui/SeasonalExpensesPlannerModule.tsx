@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { UserData } from '../../types';
 
 interface SeasonalExpense {
@@ -285,7 +285,7 @@ export const SeasonalExpensesPlannerModule: React.FC<SeasonalExpensesPlannerProp
             onClick={() => setActiveCategory(cat.id)}
             className={`px-4 py-2 mr-2 rounded-t-lg font-medium ${
               activeCategory === cat.id 
-                ? 'bg-blue-500 text-white border-b-2 border-blue-500' 
+                ? 'bg-mpr-interactive text-white border-b-2 border-mpr-interactive' 
                 : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
             }`}
           >
@@ -307,7 +307,7 @@ export const SeasonalExpensesPlannerModule: React.FC<SeasonalExpensesPlannerProp
                     type="checkbox"
                     checked={expense.isActive}
                     onChange={(e) => updateExpense(expense.id, { isActive: e.target.checked })}
-                    className="mt-1 h-5 w-5 text-blue-600"
+                    className="mt-1 h-5 w-5 text-mpr-interactive"
                   />
                   
                   <div className="flex-1">
@@ -340,7 +340,7 @@ export const SeasonalExpensesPlannerModule: React.FC<SeasonalExpensesPlannerProp
                               onChange={(e) => updateExpense(expense.id, { 
                                 isPlanned: e.target.checked 
                               })}
-                              className="h-4 w-4 text-blue-600"
+                              className="h-4 w-4 text-mpr-interactive"
                             />
                             <span className="text-sm font-medium">
                               Planifié pour cette année
@@ -381,12 +381,12 @@ export const SeasonalExpensesPlannerModule: React.FC<SeasonalExpensesPlannerProp
       </div>
 
       {/* Résumé budgétaire */}
-      <div className="mt-6 bg-blue-50 rounded-lg p-4">
+      <div className="mt-6 bg-mpr-interactive-lt rounded-lg p-4">
         <h3 className="font-bold text-lg mb-2">📊 Impact budgétaire annuel</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <p className="text-sm text-gray-600">Dépenses planifiées cette année</p>
-            <p className="text-2xl font-bold text-blue-600">
+            <p className="text-2xl font-bold text-mpr-interactive">
               {new Intl.NumberFormat('fr-CA', { 
                 style: 'currency', 
                 currency: 'CAD' 

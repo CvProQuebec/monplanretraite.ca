@@ -1,4 +1,4 @@
-// src/pages/RetraiteFr.tsx
+﻿// src/pages/RetraiteFr.tsx
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
@@ -19,7 +19,7 @@ const RetraiteFr: React.FC = () => {
   const t = translations[language];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-navy via-mpr-navy-mid to-mpr-navy">
       {/* Navigation Phase 1 Intégrée */}
       <RetirementNavigation />
       

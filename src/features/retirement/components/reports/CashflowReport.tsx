@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, Calendar, DollarSign, AlertTriangle, FileText, BarChart3, PieChart, Clock } from 'lucide-react';
@@ -93,7 +93,7 @@ const CashflowReport: React.FC<CashflowReportProps> = ({
       {/* En-tête du rapport */}
       <div className="text-center border-b pb-6">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-blue-600 rounded-xl flex items-center justify-center">
+          <div className="w-12 h-12 bg-gradient-to-br from-green-600 to-mpr-interactive rounded-xl flex items-center justify-center">
             <TrendingUp className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900">{tr.title}</h1>
@@ -127,7 +127,7 @@ const CashflowReport: React.FC<CashflowReportProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-blue-600" />
+            <Calendar className="w-5 h-5 text-mpr-interactive" />
             {tr.currentMonth} - {mockData.currentMonth.name}
           </CardTitle>
         </CardHeader>
@@ -141,9 +141,9 @@ const CashflowReport: React.FC<CashflowReportProps> = ({
               <p className="text-sm text-gray-600">{tr.expenses}</p>
               <p className="text-2xl font-bold text-red-900">${mockData.currentMonth.totalExpenses.toLocaleString()}</p>
             </div>
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
+            <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
               <p className="text-sm text-gray-600">{tr.balance}</p>
-              <p className="text-2xl font-bold text-blue-900">${mockData.currentMonth.totalBalance.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-mpr-navy">${mockData.currentMonth.totalBalance.toLocaleString()}</p>
             </div>
           </div>
           
@@ -201,9 +201,9 @@ const CashflowReport: React.FC<CashflowReportProps> = ({
               <p className="text-sm text-gray-600">{tr.expenses}</p>
               <p className="text-2xl font-bold text-red-900">${mockData.nextMonth.totalExpenses.toLocaleString()}</p>
             </div>
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
+            <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
               <p className="text-sm text-gray-600">{tr.balance}</p>
-              <p className="text-2xl font-bold text-blue-900">${mockData.nextMonth.totalBalance.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-mpr-navy">${mockData.nextMonth.totalBalance.toLocaleString()}</p>
             </div>
           </div>
           
@@ -219,7 +219,7 @@ const CashflowReport: React.FC<CashflowReportProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <PieChart className="w-5 h-5 text-indigo-600" />
+            <PieChart className="w-5 h-5 text-mpr-interactive" />
             {tr.expenseCategories}
           </CardTitle>
         </CardHeader>
@@ -278,28 +278,28 @@ const CashflowReport: React.FC<CashflowReportProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <DollarSign className="w-5 h-5 text-blue-600" />
+            <DollarSign className="w-5 h-5 text-mpr-interactive" />
             {tr.recommendations}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">1</div>
+              <div className="w-6 h-6 bg-mpr-interactive text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">1</div>
               <div>
                 <p className="font-medium">Set up automatic savings transfers</p>
                 <p className="text-sm text-gray-600">Transfer ${mockData.currentMonth.totalBalance} monthly to savings account</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">2</div>
+              <div className="w-6 h-6 bg-mpr-interactive text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">2</div>
               <div>
                 <p className="font-medium">Review housing expenses</p>
                 <p className="text-sm text-gray-600">Consider refinancing or downsizing to reduce housing costs</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">3</div>
+              <div className="w-6 h-6 bg-mpr-interactive text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">3</div>
               <div>
                 <p className="font-medium">Create weekly budget targets</p>
                 <p className="text-sm text-gray-600">Aim for weekly expenses under $2,000</p>

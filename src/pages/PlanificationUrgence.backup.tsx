@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   Save, Download, Upload, FileText, Eye, EyeOff, Plus, Trash2, 
   Phone, Heart, Shield, Home, Car, CreditCard, Building, Users,
@@ -717,10 +717,10 @@ const PlanificationUrgence: React.FC = () => {
     .form-section > h2 {
       /* Niveau 1 - plus foncé */
       /* Fallback RGBA si color-mix non supporté */
-      background: rgba(76,110,245,0.22);
+      background: rgba(43, 91, 168,0.22);
       /* Préférence: mélange dynamique avec la couleur du thème */
-      background: color-mix(in srgb, var(--senior-primary, #4c6ef5) 22%, white);
-      border: 2px solid color-mix(in srgb, var(--senior-primary, #4c6ef5) 35%, var(--senior-border, #e2e8f0));
+      background: color-mix(in srgb, var(--senior-primary, #2B5BA8) 22%, white);
+      border: 2px solid color-mix(in srgb, var(--senior-primary, #2B5BA8) 35%, var(--senior-border, #e2e8f0));
       border-radius: 10px;
       padding: 12px 14px;
       color: var(--senior-text-primary, #1a365d);
@@ -729,13 +729,13 @@ const PlanificationUrgence: React.FC = () => {
     .form-section h3,
     .item-card > h4 {
       /* Niveau 2 - moyen */
-      background: rgba(76,110,245,0.15);
-      background: color-mix(in srgb, var(--senior-primary, #4c6ef5) 15%, white);
+      background: rgba(43, 91, 168,0.15);
+      background: color-mix(in srgb, var(--senior-primary, #2B5BA8) 15%, white);
       display: inline-block;
       padding: 6px 10px;
       border-radius: 6px;
       color: var(--senior-text-primary, #1a365d);
-      border: 1px solid color-mix(in srgb, var(--senior-primary, #4c6ef5) 25%, var(--senior-border, #e2e8f0));
+      border: 1px solid color-mix(in srgb, var(--senior-primary, #2B5BA8) 25%, var(--senior-border, #e2e8f0));
       margin-bottom: 6px;
     }
     .form-grid {
@@ -752,12 +752,12 @@ const PlanificationUrgence: React.FC = () => {
       /* Niveau 3 - plus pâle */
       font-weight: 700;
       color: var(--senior-text-primary, #1a365d);
-      background: rgba(76,110,245,0.08);
-      background: color-mix(in srgb, var(--senior-primary, #4c6ef5) 8%, white);
+      background: rgba(43, 91, 168,0.08);
+      background: color-mix(in srgb, var(--senior-primary, #2B5BA8) 8%, white);
       display: inline-block;
       padding: 4px 10px;
       border-radius: 6px;
-      border: 1px solid color-mix(in srgb, var(--senior-primary, #4c6ef5) 15%, var(--senior-border, #e2e8f0));
+      border: 1px solid color-mix(in srgb, var(--senior-primary, #2B5BA8) 15%, var(--senior-border, #e2e8f0));
     }
     .form-input {
       padding: 12px;
@@ -818,7 +818,7 @@ const PlanificationUrgence: React.FC = () => {
       justify-content: space-between;
       align-items: center;
       transition: all 0.2s;
-      border-left: 6px solid var(--senior-primary, #4c6ef5);
+      border-left: 6px solid var(--senior-primary, #2B5BA8);
       position: relative;
       min-height: 64px; /* zone cliquable 48px+ */
     }
@@ -827,7 +827,7 @@ const PlanificationUrgence: React.FC = () => {
     }
     .collapsible-header:focus,
     .collapsible-header[tabindex="0"]:focus {
-      outline: 3px solid var(--senior-primary, #4c6ef5);
+      outline: 3px solid var(--senior-primary, #2B5BA8);
       outline-offset: 2px;
     }
     .collapsible-hint {

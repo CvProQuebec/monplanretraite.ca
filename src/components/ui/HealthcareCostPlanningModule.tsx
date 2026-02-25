@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+﻿import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -427,8 +427,8 @@ const HealthcareCostPlanningModule: React.FC = () => {
                     <div className="text-sm text-gray-600">Coût Total Estimé (Vie Entière)</div>
                   </div>
                   
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+                    <div className="text-2xl font-bold text-mpr-interactive">
                       {formatCurrency(projection.averageAnnualCost)}
                     </div>
                     <div className="text-sm text-gray-600">Coût Annuel Moyen</div>
@@ -485,8 +485,8 @@ const HealthcareCostPlanningModule: React.FC = () => {
                   <h4 className="font-semibold">Recommandations Personnalisées</h4>
                   <div className="space-y-2">
                     {projection.recommendations.map((rec, index) => (
-                      <div key={index} className="flex items-start gap-2 p-3 bg-blue-50 rounded-lg">
-                        <AlertTriangle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <div key={index} className="flex items-start gap-2 p-3 bg-mpr-interactive-lt rounded-lg">
+                        <AlertTriangle className="h-4 w-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                         <span className="text-sm">{rec}</span>
                       </div>
                     ))}
@@ -558,7 +558,7 @@ const HealthcareCostPlanningModule: React.FC = () => {
               <div className="space-y-4">
                 <h4 className="font-semibold text-lg">Réalités du Système de Santé Canadien</h4>
                 
-                <div className="p-4 bg-blue-50 rounded-lg">
+                <div className="p-4 bg-mpr-interactive-lt rounded-lg">
                   <h5 className="font-medium">Couverture Publique vs Privée</h5>
                   <p className="text-sm text-gray-600 mt-2">
                     Le système public couvre les soins hospitaliers et médicaux de base, mais plusieurs 
@@ -627,7 +627,7 @@ const HealthcareCostPlanningModule: React.FC = () => {
                 <h4 className="font-semibold text-lg">Programmes Gouvernementaux Disponibles</h4>
                 
                 <div className="space-y-3">
-                  <div className="p-4 border-l-4 border-blue-500 bg-blue-50">
+                  <div className="p-4 border-l-4 border-mpr-interactive bg-mpr-interactive-lt">
                     <h5 className="font-medium">Crédit d'Impôt pour Frais Médicaux</h5>
                     <p className="text-sm text-gray-600 mt-1">
                       Crédit fédéral et provincial pour frais médicaux dépassant 3% du revenu net 

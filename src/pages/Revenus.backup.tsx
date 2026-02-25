@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -322,7 +322,7 @@ const Revenus: React.FC = () => {
           <div className="mt-6">
             <Button
               onClick={() => navigate(isFrench ? '/mon-budget?tab=income' : '/my-budget?tab=income')}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3"
+              className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white px-6 py-3"
             >
               {isFrench ? 'Voir dans le budget' : 'View in budget'}
             </Button>
@@ -368,8 +368,8 @@ const Revenus: React.FC = () => {
             <div className="mb-12">
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-4">
-                  <h2 className="text-3xl font-bold text-blue-300 mb-4 flex items-center justify-center gap-3">
-                    <Shield className="w-8 h-8 text-blue-400" />
+                  <h2 className="text-3xl font-bold text-mpr-interactive mb-4 flex items-center justify-center gap-3">
+                    <Shield className="w-8 h-8 text-mpr-interactive" />
                     {isFrench ? 'Information Importante - RRQ' : 'Important Information - QPP'}
                   </h2>
                   {!showRRQInfo && (
@@ -383,7 +383,7 @@ const Revenus: React.FC = () => {
                     </Button>
                   )}
                 </div>
-                <p className="text-blue-200 text-lg">
+                <p className="text-mpr-interactive-lt text-lg">
                   {isFrench 
                     ? 'Délais et procédures pour votre demande de rente sans carence'
                     : 'Deadlines and procedures for your pension application without gaps'
@@ -405,7 +405,7 @@ const Revenus: React.FC = () => {
             onClick={toggleAllSections}
                 variant="outline"
             size="lg"
-            className="bg-white border-2 border-indigo-300 text-indigo-600 hover:bg-indigo-50 font-bold text-lg px-8 py-3"
+            className="bg-white border-2 border-mpr-border text-mpr-interactive hover:bg-mpr-interactive-lt font-bold text-lg px-8 py-3"
           >
             {isAllExpanded ? (
               <>
@@ -565,11 +565,11 @@ const Revenus: React.FC = () => {
         {/* Section Calculette de rendement */}
         <div className="space-y-8 mb-12">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-indigo-300 mb-4 flex items-center justify-center gap-3">
-              <Calculator className="w-8 h-8 text-indigo-400" />
+            <h2 className="text-3xl font-bold text-mpr-interactive mb-4 flex items-center justify-center gap-3">
+              <Calculator className="w-8 h-8 text-mpr-interactive" />
               {isFrench ? 'Analyse de Performance' : 'Performance Analysis'}
             </h2>
-            <p className="text-indigo-200 text-lg mb-8">
+            <p className="text-mpr-interactive-lt text-lg mb-8">
               {isFrench 
                 ? 'Calculez et comparez les rendements de vos investissements REER, CELI et CRI'
                 : 'Calculate and compare the returns of your RRSP, TFSA and LIRA investments'
@@ -615,15 +615,15 @@ const Revenus: React.FC = () => {
           </div>
 
           {/* Informations sur la calculette */}
-          <Card className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 border border-indigo-500/30">
+          <Card className="bg-gradient-to-r from-mpr-navy/50 to-purple-900/50 border border-mpr-interactive/30">
             <CardContent className="p-6">
-              <h4 className="text-lg font-bold text-indigo-300 mb-4 flex items-center gap-2">
+              <h4 className="text-lg font-bold text-mpr-interactive mb-4 flex items-center gap-2">
                 <Info className="w-5 h-5" />
                 {isFrench ? 'À propos de la calculette de rendement' : 'About the Return Calculator'}
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gray-300">
                 <div>
-                  <strong className="text-indigo-300">{isFrench ? 'Fonctionnalités :' : 'Features:'}</strong>
+                  <strong className="text-mpr-interactive">{isFrench ? 'Fonctionnalités :' : 'Features:'}</strong>
                   <ul className="list-disc list-inside mt-2 space-y-1">
                     <li>{isFrench ? 'Calcul IRR (Taux de rendement interne)' : 'IRR (Internal Rate of Return) calculation'}</li>
                     <li>{isFrench ? 'Rendement pondéré dans le temps (TWR)' : 'Time-Weighted Return (TWR)'}</li>
@@ -722,7 +722,7 @@ const Revenus: React.FC = () => {
               variant="outline"
               size="sm"
               onClick={() => setShowRRQInfo(!showRRQInfo)}
-              className="border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-slate-900"
+              className="border-mpr-interactive text-mpr-interactive hover:bg-mpr-interactive hover:text-slate-900"
             >
               <Shield className="w-4 h-4 mr-2" />
               {isFrench ? 'Info RRQ' : 'QPP Info'}

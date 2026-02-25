@@ -1,4 +1,4 @@
-// src/components/SecurityNotificationManager.tsx
+﻿// src/components/SecurityNotificationManager.tsx
 // Gestionnaire des notifications de sécurité pour le système de sauvegarde
 
 import React, { useEffect, useState } from 'react';
@@ -168,7 +168,7 @@ const SecurityNotificationManager = React.forwardRef<
       case 'success':
         return <CheckCircle className="w-4 h-4 text-green-600" />;
       case 'info':
-        return <Info className="w-4 h-4 text-blue-600" />;
+        return <Info className="w-4 h-4 text-mpr-interactive" />;
       default:
         return <Info className="w-4 h-4" />;
     }
@@ -183,7 +183,7 @@ const SecurityNotificationManager = React.forwardRef<
       case 'success':
         return 'border-green-200 bg-green-50';
       case 'info':
-        return 'border-blue-200 bg-blue-50';
+        return 'border-mpr-border bg-mpr-interactive-lt';
       default:
         return 'border-gray-200 bg-gray-50';
     }

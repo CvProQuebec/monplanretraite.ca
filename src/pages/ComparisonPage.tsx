@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { SeniorsCompetitiveComparison } from '../components/comparison/SeniorsCompetitiveComparison';
 import type { UserProfile as ComparisonUserProfile } from '../services/CompetitiveComparisonService';
 
@@ -31,11 +31,11 @@ export function ComparisonPage() {
           <div className="profile-grid grid grid-cols-2 md:grid-cols-4 gap-6">
             <div className="profile-item">
               <label className="text-lg font-semibold text-gray-700">Âge actuel</label>
-              <div className="text-2xl font-bold text-blue-600">{demoProfile.currentAge} ans</div>
+              <div className="text-2xl font-bold text-mpr-interactive">{demoProfile.currentAge} ans</div>
             </div>
             <div className="profile-item">
               <label className="text-lg font-semibold text-gray-700">Épargnes actuelles</label>
-              <div className="text-2xl font-bold text-blue-600">
+              <div className="text-2xl font-bold text-mpr-interactive">
                 {new Intl.NumberFormat('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 }).format(
                   demoProfile.currentSavings
                 )}
@@ -43,7 +43,7 @@ export function ComparisonPage() {
             </div>
             <div className="profile-item">
               <label className="text-lg font-semibold text-gray-700">Épargne mensuelle</label>
-              <div className="text-2xl font-bold text-blue-600">
+              <div className="text-2xl font-bold text-mpr-interactive">
                 {new Intl.NumberFormat('fr-CA', { style: 'currency', currency: 'CAD', minimumFractionDigits: 0 }).format(
                   demoProfile.monthlyContribution
                 )}
@@ -51,7 +51,7 @@ export function ComparisonPage() {
             </div>
             <div className="profile-item">
               <label className="text-lg font-semibold text-gray-700">Retraite à</label>
-              <div className="text-2xl font-bold text-blue-600">{demoProfile.retirementAge} ans</div>
+              <div className="text-2xl font-bold text-mpr-interactive">{demoProfile.retirementAge} ans</div>
             </div>
           </div>
         </div>
@@ -65,7 +65,7 @@ export function ComparisonPage() {
 
           <div className="education-grid grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="education-item">
-              <h3 className="text-xl font-bold text-blue-800 mb-3">Normes IPF 2025</h3>
+              <h3 className="text-xl font-bold text-mpr-navy mb-3">Normes IPF 2025</h3>
               <p className="text-lg text-gray-700 leading-relaxed">
                 Nous utilisons les hypothèses officielles de l'Institut de planification financière, mises à jour en
                 2025. Ces normes reflètent les conditions économiques actuelles et les prévisions les plus récentes.
@@ -73,7 +73,7 @@ export function ComparisonPage() {
             </div>
 
             <div className="education-item">
-              <h3 className="text-xl font-bold text-blue-800 mb-3">Table CPM2014</h3>
+              <h3 className="text-xl font-bold text-mpr-navy mb-3">Table CPM2014</h3>
               <p className="text-lg text-gray-700 leading-relaxed">
                 Notre calcul d'espérance de vie utilise la table officielle des retraités canadiens de l'Institut
                 canadien des actuaires, plus précise que les estimations génériques.

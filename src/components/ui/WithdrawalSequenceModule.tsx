@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+﻿import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -240,7 +240,7 @@ const WithdrawalSequenceModule: React.FC = () => {
     <div className="max-w-6xl mx-auto p-6 space-y-6">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-2">
-          <TrendingUp className="h-8 w-8 text-blue-600" />
+          <TrendingUp className="h-8 w-8 text-mpr-interactive" />
           <h1 className="text-3xl font-bold text-gray-900">
             Séquence Optimale des Retraits
           </h1>
@@ -416,8 +416,8 @@ const WithdrawalSequenceModule: React.FC = () => {
                     <div className="text-sm text-gray-600">Longévité du Portefeuille</div>
                   </div>
                   
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+                    <div className="text-2xl font-bold text-mpr-interactive">
                       {formatCurrency(result.totalTaxSaved)}
                     </div>
                     <div className="text-sm text-gray-600">Économies Fiscales Estimées</div>
@@ -565,8 +565,8 @@ const WithdrawalSequenceModule: React.FC = () => {
                       <h4 className="font-semibold mb-3">Recommandations</h4>
                       <div className="space-y-2">
                         {result.riskAnalysis.recommendations.map((rec, index) => (
-                          <div key={index} className="flex items-start gap-2 p-3 bg-blue-50 rounded-lg">
-                            <AlertTriangle className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                          <div key={index} className="flex items-start gap-2 p-3 bg-mpr-interactive-lt rounded-lg">
+                            <AlertTriangle className="h-4 w-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                             <span className="text-sm">{rec}</span>
                           </div>
                         ))}
@@ -640,7 +640,7 @@ const WithdrawalSequenceModule: React.FC = () => {
               <div className="space-y-4">
                 <h4 className="font-semibold text-lg">Pourquoi la Séquence Importe-t-elle ?</h4>
                 
-                <div className="p-4 bg-blue-50 rounded-lg">
+                <div className="p-4 bg-mpr-interactive-lt rounded-lg">
                   <h5 className="font-medium">Impact Fiscal Différentiel</h5>
                   <p className="text-sm text-gray-600 mt-2">
                     Selon le Gouvernement du Canada, les différents types de revenus sont imposés différemment :
@@ -675,7 +675,7 @@ const WithdrawalSequenceModule: React.FC = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 border rounded-lg">
-                    <h5 className="font-medium text-blue-600">Conversion REER → FERR</h5>
+                    <h5 className="font-medium text-mpr-interactive">Conversion REER → FERR</h5>
                     <p className="text-sm text-gray-600 mt-2">
                       <strong>Obligatoire :</strong> Au plus tard le 31 décembre de l'année de vos 71 ans
                     </p>
@@ -685,7 +685,7 @@ const WithdrawalSequenceModule: React.FC = () => {
                   </div>
                   
                   <div className="p-4 border rounded-lg">
-                    <h5 className="font-medium text-blue-600">Pourcentages FERR</h5>
+                    <h5 className="font-medium text-mpr-interactive">Pourcentages FERR</h5>
                     <p className="text-sm text-gray-600 mt-2">
                       <strong>71 ans :</strong> 5.28% minimum
                     </p>
@@ -698,7 +698,7 @@ const WithdrawalSequenceModule: React.FC = () => {
                   </div>
                   
                   <div className="p-4 border rounded-lg">
-                    <h5 className="font-medium text-blue-600">Stratégie Conjoint Plus Jeune</h5>
+                    <h5 className="font-medium text-mpr-interactive">Stratégie Conjoint Plus Jeune</h5>
                     <p className="text-sm text-gray-600 mt-2">
                       Vous pouvez baser les retraits FERR sur l'âge de votre conjoint s'il est plus jeune, 
                       réduisant ainsi les retraits minimums obligatoires.
@@ -706,7 +706,7 @@ const WithdrawalSequenceModule: React.FC = () => {
                   </div>
                   
                   <div className="p-4 border rounded-lg">
-                    <h5 className="font-medium text-blue-600">Fractionnement de Revenu</h5>
+                    <h5 className="font-medium text-mpr-interactive">Fractionnement de Revenu</h5>
                     <p className="text-sm text-gray-600 mt-2">
                       À partir de 65 ans, vous pouvez fractionner jusqu'à 50% de vos revenus de 
                       pension admissibles avec votre conjoint.

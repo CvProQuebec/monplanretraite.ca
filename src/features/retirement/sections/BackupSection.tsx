@@ -1,4 +1,4 @@
-// src/features/retirement/sections/BackupSection.tsx
+﻿// src/features/retirement/sections/BackupSection.tsx
 import React, { useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Shield, Download, Upload, Lock, FileText, AlertTriangle, CheckCircle, LogIn } from 'lucide-react';
@@ -62,8 +62,8 @@ export const BackupSection: React.FC<BackupSectionProps> = ({ data, onDataLoad }
       {/* En-tête de la section */}
       <div className="text-center space-y-4">
         <div className="flex justify-center">
-          <div className="p-3 bg-blue-100 rounded-full">
-            <Shield className="h-8 w-8 text-blue-600" />
+          <div className="p-3 bg-mpr-interactive-lt rounded-full">
+            <Shield className="h-8 w-8 text-mpr-interactive" />
           </div>
         </div>
         <h2 className="text-3xl font-bold text-gray-900">
@@ -121,12 +121,12 @@ export const BackupSection: React.FC<BackupSectionProps> = ({ data, onDataLoad }
       {(() => {
         console.log('🔍 BackupSection - Rendu conditionnel - user:', user, 'loading:', loading, '!user:', !user);
         return !user && (
-          <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-200">
+          <Card className="bg-gradient-to-r from-mpr-interactive-lt to-mpr-interactive-lt border-mpr-border">
             <CardHeader className="text-center">
-              <CardTitle className="text-xl text-blue-800">
+              <CardTitle className="text-xl text-mpr-navy">
                 {language === 'fr' ? 'Connexion Requise' : 'Login Required'}
               </CardTitle>
-              <CardDescription className="text-blue-600">
+              <CardDescription className="text-mpr-interactive">
                 {language === 'fr' 
                   ? 'Connectez-vous pour accéder à la sauvegarde sécurisée de vos données'
                   : 'Sign in to access secure backup of your data'
@@ -152,7 +152,7 @@ export const BackupSection: React.FC<BackupSectionProps> = ({ data, onDataLoad }
                 }
               </Button>
               
-              <div className="text-sm text-blue-600">
+              <div className="text-sm text-mpr-interactive">
                 <Shield className="w-4 h-4 inline mr-1" />
                 {language === 'fr' 
                   ? 'Connexion sécurisée et privée'
@@ -324,8 +324,8 @@ const SecurityFeatureCard: React.FC<{
     <Card className="text-center">
       <CardContent className="pt-6">
         <div className="flex justify-center mb-4">
-          <div className="p-3 bg-blue-100 rounded-full">
-            <div className="text-blue-600">{icon}</div>
+          <div className="p-3 bg-mpr-interactive-lt rounded-full">
+            <div className="text-mpr-interactive">{icon}</div>
           </div>
         </div>
         <h3 className="font-semibold text-lg mb-2">{title}</h3>

@@ -1,4 +1,4 @@
-
+﻿
 import React, { useState, useEffect } from "react";
 import { Play, ExternalLink, AlertCircle, Info } from "lucide-react";
 
@@ -143,7 +143,7 @@ const YoutubePlayer: React.FC<YoutubePlayerProps> = ({
         // Affichage des informations de la vidéo
         <div className="absolute inset-0 flex items-center justify-center bg-charcoal-800">
           <div className="text-center text-white p-6 max-w-md">
-            <Info className="w-16 h-16 text-blue-500 mx-auto mb-4" />
+            <Info className="w-16 h-16 text-mpr-interactive mx-auto mb-4" />
             <h3 className="text-xl font-semibold mb-2">Informations de la vidéo</h3>
             <p className="text-gray-300 mb-4">
               {title || "Vidéo YouTube"}
@@ -241,7 +241,7 @@ const YoutubePlayer: React.FC<YoutubePlayerProps> = ({
             
             {/* Bouton d'information */}
             <div 
-              className="rounded-full bg-blue-600/90 p-4 hover:bg-blue-600 cursor-pointer transition-all duration-300 transform hover:scale-110 shadow-2xl"
+              className="rounded-full bg-mpr-interactive/90 p-4 hover:bg-mpr-interactive cursor-pointer transition-all duration-300 transform hover:scale-110 shadow-2xl"
               onClick={handleInfoClick}
             >
               <Info className="w-6 h-6 text-white" />

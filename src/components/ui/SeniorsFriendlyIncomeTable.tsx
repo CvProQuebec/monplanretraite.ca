@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+﻿import React, { useState, useEffect, useCallback, useRef } from 'react';
 import {
   DollarSign,
   Plus,
@@ -183,7 +183,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
       description: isFrench ? 'Votre salaire avec dates et fréquence de paiement' : 'Your salary with dates and payment frequency',
       frequency: 'annual',
       showToDate: false,
-      color: 'bg-blue-600',
+      color: 'bg-mpr-interactive',
       icon: '💼'
     },
     { 
@@ -237,7 +237,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
       description: isFrench ? 'Revenus annuels de votre travail autonome' : 'Annual income from your self-employment',
       frequency: 'annual',
       showToDate: false,
-      color: 'bg-indigo-600',
+      color: 'bg-mpr-interactive',
       icon: '💻'
     },
     { 
@@ -343,28 +343,28 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
   
   const filteredEntries = incomeEntries.filter(e => e.type !== 'assurance-emploi');
 
-  const fieldLabelClasses = 'text-sm font-semibold text-blue-900';
+  const fieldLabelClasses = 'text-sm font-semibold text-mpr-navy';
   const fieldWrapperClasses = 'space-y-2';
-  const inputClasses = 'w-full h-14 rounded-xl border-2 border-blue-200 bg-white px-4 text-lg font-medium text-blue-900 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-200 focus:border-blue-400';
-  const readOnlyClasses = 'w-full h-14 rounded-xl border-2 border-blue-100 bg-blue-50 flex items-center px-4 text-lg font-semibold text-blue-900';
+  const inputClasses = 'w-full h-14 rounded-xl border-2 border-mpr-border bg-white px-4 text-lg font-medium text-mpr-navy transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-mpr-border focus:border-mpr-interactive';
+  const readOnlyClasses = 'w-full h-14 rounded-xl border-2 border-mpr-border bg-mpr-interactive-lt flex items-center px-4 text-lg font-semibold text-mpr-navy';
   const statusChipClasses = 'inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-semibold';
   
   return (
     <>
       <TooltipProvider>
-      <Card className="bg-white border-4 border-blue-200 shadow-xl">
-        <CardHeader className="border-b-4 border-blue-100 bg-blue-50">
-          <CardTitle className="text-3xl font-bold text-blue-800 flex items-center gap-4">
-            <div className={`w-12 h-12 ${personNumber === 1 ? 'bg-blue-600' : 'bg-green-600'} rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg`}>
+      <Card className="bg-white border-4 border-mpr-border shadow-xl">
+        <CardHeader className="border-b-4 border-mpr-border bg-mpr-interactive-lt">
+          <CardTitle className="text-3xl font-bold text-mpr-navy flex items-center gap-4">
+            <div className={`w-12 h-12 ${personNumber === 1 ? 'bg-mpr-interactive' : 'bg-green-600'} rounded-full flex items-center justify-center text-white font-bold text-xl shadow-lg`}>
               {personNumber}
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-3">
-                <DollarSign className="w-8 h-8 text-blue-600" />
+                <DollarSign className="w-8 h-8 text-mpr-interactive" />
                 <span>{isFrench ? 'Tableau des revenus' : 'Income Table'} - {personName}</span>
                 <Tooltip>
                   <TooltipTrigger>
-                    <HelpCircle className="w-6 h-6 text-blue-500 cursor-help" />
+                    <HelpCircle className="w-6 h-6 text-mpr-interactive cursor-help" />
                   </TooltipTrigger>
                   <TooltipContent className="max-w-md">
                     <p className="text-lg">
@@ -378,7 +378,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
               </div>
             </div>
           </CardTitle>
-          <CardDescription className="text-xl text-blue-700 mt-2">
+          <CardDescription className="text-xl text-mpr-navy mt-2">
             {isFrench 
               ? 'Gestion unifiée de tous vos types de revenus avec calculs automatiques'
               : 'Unified management of all your income types with automatic calculations'
@@ -388,7 +388,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
         
         <CardContent className="p-6 space-y-6 relative overflow-visible">
           {/* En-tête du tableau - Version Senior */}
-          <div className="grid grid-cols-8 gap-4 text-xl font-bold text-blue-800 border-b-4 border-blue-200 pb-4">
+          <div className="grid grid-cols-8 gap-4 text-xl font-bold text-mpr-navy border-b-4 border-mpr-border pb-4">
             <div className="col-span-2">{isFrench ? 'Type de revenu' : 'Income Type'}</div>
             <div className="col-span-2">{isFrench ? 'Description' : 'Description'}</div>
             <div className="col-span-2">{isFrench ? 'Montant' : 'Amount'}</div>
@@ -397,7 +397,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
           
           {/* Lignes de revenus - Version Senior */}
           {filteredEntries.length === 0 ? (
-            <div className="flex items-center justify-end gap-3 p-4 bg-gray-50 rounded-xl border border-blue-100">
+            <div className="flex items-center justify-end gap-3 p-4 bg-gray-50 rounded-xl border border-mpr-border">
               <Button
                 onClick={addIncomeEntry}
                 size="lg"
@@ -420,7 +420,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                 const selectableIncomeTypes = incomeTypes.filter(type => type.value === entry.type || (type.value !== 'assurance-emploi' && type.value !== 'rentes' && type.value !== 'autres'));
 
                 const cardClasses = isEditing
-                  ? 'border-blue-300 bg-white shadow-xl ring-2 ring-blue-100'
+                  ? 'border-mpr-border bg-white shadow-xl ring-2 ring-mpr-border'
                   : entry.isActive
                     ? 'border-green-200 bg-white shadow-md'
                     : 'border-gray-200 bg-gray-100 opacity-70';
@@ -490,7 +490,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                   >
                     <div className="p-6 space-y-6">
                       <div className="flex flex-wrap items-center justify-between gap-3">
-                        <h3 className="text-2xl font-semibold text-blue-900 flex items-center gap-3">
+                        <h3 className="text-2xl font-semibold text-mpr-navy flex items-center gap-3">
                           <span className="text-3xl leading-none">{typeInfo.icon}</span>
                           <span>{typeInfo.label} — {entry.description || (isFrench ? 'Sans nom' : 'Unnamed')}</span>
                         </h3>
@@ -696,7 +696,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                         </div>
                       )}
 
-                      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-blue-100 pt-4">
+                      <div className="flex flex-wrap items-center justify-between gap-4 border-t border-mpr-border pt-4">
                         <div>
                           <Button
                             onClick={() => updateIncomeEntry(entry.id, { isActive: !entry.isActive })}
@@ -717,7 +717,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                               </Button>
                               <Button
                                 onClick={() => setEditingId(null)}
-                                className="h-12 rounded-xl bg-blue-500 px-6 text-white text-base font-semibold shadow hover:bg-blue-600 focus-visible:ring-2 focus-visible:ring-blue-300"
+                                className="h-12 rounded-xl bg-mpr-interactive px-6 text-white text-base font-semibold shadow hover:bg-mpr-interactive focus-visible:ring-2 focus-visible:ring-mpr-interactive"
                               >
                                 <X className="w-5 h-5 mr-2" />
                                 {isFrench ? 'Annuler' : 'Cancel'}
@@ -734,7 +734,7 @@ const SeniorsFriendlyIncomeTable: React.FC<SeniorsFriendlyIncomeTableProps> = ({
                               </Button>
                               <Button
                                 onClick={() => setEditingId(entry.id)}
-                                className="h-12 rounded-xl bg-blue-500 px-6 text-white text-base font-semibold shadow hover:bg-blue-600 focus-visible:ring-2 focus-visible:ring-blue-300"
+                                className="h-12 rounded-xl bg-mpr-interactive px-6 text-white text-base font-semibold shadow hover:bg-mpr-interactive focus-visible:ring-2 focus-visible:ring-mpr-interactive"
                               >
                                 <Edit className="w-5 h-5 mr-2" />
                                 {isFrench ? 'Modifier' : 'Edit'}

@@ -316,8 +316,8 @@ const Revenus: React.FC = () => {
             <div className="mb-12">
               <div className="text-center mb-8">
                 <div className="flex items-center justify-center gap-4">
-                  <h2 className="text-3xl font-bold text-blue-300 mb-4 flex items-center justify-center gap-3">
-                    <Shield className="w-8 h-8 text-blue-400" />
+                  <h2 className="text-3xl font-bold text-mpr-interactive mb-4 flex items-center justify-center gap-3">
+                    <Shield className="w-8 h-8 text-mpr-interactive" />
                     {isFrench ? 'Information Importante - RRQ' : 'Important Information - QPP'}
                   </h2>
                   {!showRRQInfo && (
@@ -331,7 +331,7 @@ const Revenus: React.FC = () => {
                     </Button>
                   )}
                 </div>
-                <p className="text-blue-200 text-lg">
+                <p className="text-mpr-interactive-lt text-lg">
                   {isFrench 
                     ? 'DÃ©lais et procÃ©dures pour votre demande de rente sans carence'
                     : 'Deadlines and procedures for your pension application without gaps'}
@@ -352,7 +352,7 @@ const Revenus: React.FC = () => {
             onClick={toggleAllSections}
                 variant="outline"
             size="lg"
-            className="bg-white border-2 border-indigo-300 text-indigo-600 hover:bg-indigo-50 font-bold text-lg px-8 py-3"
+            className="bg-white border-2 border-mpr-border text-mpr-interactive hover:bg-mpr-interactive-lt font-bold text-lg px-8 py-3"
           >
             {isAllExpanded ? (
               <>
@@ -508,11 +508,11 @@ const Revenus: React.FC = () => {
         {/* Section Calculette de rendement */}
         <div className="mpr-form">
           <div className="text-center">
-            <h2 className="text-3xl font-bold text-indigo-300 mb-4 flex items-center justify-center gap-3">
-              <Calculator className="w-8 h-8 text-indigo-400" />
+            <h2 className="text-3xl font-bold text-mpr-interactive mb-4 flex items-center justify-center gap-3">
+              <Calculator className="w-8 h-8 text-mpr-interactive" />
               {isFrench ? 'Analyse de Performance' : 'Performance Analysis'}
             </h2>
-            <p className="text-indigo-200 text-lg mb-8">
+            <p className="text-mpr-interactive-lt text-lg mb-8">
               {isFrench 
                 ? 'Calculez et comparez les rendements de vos investissements REER, CELI et CRI'
                 : 'Calculate and compare the returns of your RRSP, TFSA and LIRA investments'}
@@ -559,13 +559,13 @@ const Revenus: React.FC = () => {
           {/* Informations sur la calculette */}
           <div className="mpr-section">
             <div className="mpr-form">
-              <h4 className="text-lg font-bold text-indigo-300 mb-4 flex items-center gap-2">
+              <h4 className="text-lg font-bold text-mpr-interactive mb-4 flex items-center gap-2">
                 <Info className="w-5 h-5" />
                 {isFrench ? 'Ã€ propos de la calculette de rendement' : 'About the Return Calculator'}
               </h4>
               <div className="mpr-form-row cols-2 text-sm text-gray-300">
                 <div>
-                  <strong className="text-indigo-300">{isFrench ? 'FonctionnalitÃ©s :' : 'Features:'}</strong>
+                  <strong className="text-mpr-interactive">{isFrench ? 'FonctionnalitÃ©s :' : 'Features:'}</strong>
                   <ul className="list-disc list-inside mt-2 space-y-1">
                     <li>{isFrench ? 'Calcul IRR (Taux de rendement interne)' : 'IRR (Internal Rate of Return) calculation'}</li>
                     <li>{isFrench ? 'Rendement pondÃ©rÃ© dans le temps (TWR)' : 'Time-Weighted Return (TWR)'}</li>

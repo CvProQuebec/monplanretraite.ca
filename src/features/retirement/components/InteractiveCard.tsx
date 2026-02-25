@@ -1,4 +1,4 @@
-// Composant de carte interactive avec effets 3D et animations
+﻿// Composant de carte interactive avec effets 3D et animations
 import React from 'react';
 import { LucideIcon } from 'lucide-react';
 
@@ -31,10 +31,10 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
       icon: 'text-green-600'
     },
     'in-progress': {
-      bg: 'from-blue-500 to-purple-600',
-      text: 'text-blue-700',
-      border: 'border-blue-300',
-      icon: 'text-blue-600'
+      bg: 'from-mpr-interactive to-purple-600',
+      text: 'text-mpr-navy',
+      border: 'border-mpr-border',
+      icon: 'text-mpr-interactive'
     },
     locked: {
       bg: 'from-gray-400 to-gray-600',
@@ -57,14 +57,14 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
       className={`
         group relative bg-white rounded-xl p-6 shadow-lg 
         transform transition-all duration-500 hover:scale-105 hover:shadow-2xl
-        cursor-pointer border border-gray-200 hover:border-blue-300
+        cursor-pointer border border-gray-200 hover:border-mpr-border
         ${onClick ? 'hover:cursor-pointer' : ''}
         ${className}
       `}
       onClick={onClick}
     >
       {/* Effet de brillance au hover */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-400/0 via-blue-400/10 to-blue-400/0 
+      <div className="absolute inset-0 bg-gradient-to-r from-mpr-interactive/0 via-mpr-interactive/10 to-mpr-interactive/0 
                     opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
       
       {/* Effet de bordure lumineuse */}
@@ -89,7 +89,7 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
           <div className={`
             px-3 py-1 rounded-full text-xs font-medium
             ${status === 'completed' ? 'bg-green-100 text-green-800' : ''}
-            ${status === 'in-progress' ? 'bg-blue-100 text-blue-800' : ''}
+            ${status === 'in-progress' ? 'bg-mpr-interactive-lt text-mpr-navy' : ''}
             ${status === 'locked' ? 'bg-gray-100 text-gray-800' : ''}
             ${status === 'premium' ? 'bg-purple-100 text-purple-800' : ''}
           `}>
@@ -102,7 +102,7 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
         
         {/* Contenu principal */}
         <h3 className={`
-          text-xl font-bold mb-3 group-hover:text-blue-600 
+          text-xl font-bold mb-3 group-hover:text-mpr-interactive 
           transition-colors duration-300 ${config.text}
         `}>
           {title}
@@ -145,12 +145,12 @@ export const InteractiveCard: React.FC<InteractiveCardProps> = ({
         {/* Indicateur d'action */}
         {onClick && (
           <div className="mt-4 flex items-center justify-between">
-            <div className="text-xs text-gray-400 group-hover:text-blue-500 transition-colors duration-300">
+            <div className="text-xs text-gray-400 group-hover:text-mpr-interactive transition-colors duration-300">
               Cliquez pour accéder
             </div>
             <div className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center 
-                          group-hover:bg-blue-100 group-hover:scale-110 transition-all duration-300">
-              <svg className="w-3 h-3 text-gray-400 group-hover:text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          group-hover:bg-mpr-interactive-lt group-hover:scale-110 transition-all duration-300">
+              <svg className="w-3 h-3 text-gray-400 group-hover:text-mpr-interactive" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </div>

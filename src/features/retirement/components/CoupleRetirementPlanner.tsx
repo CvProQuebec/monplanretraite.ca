@@ -1,4 +1,4 @@
-// src/features/retirement/components/CoupleRetirementPlanner.tsx
+﻿// src/features/retirement/components/CoupleRetirementPlanner.tsx
 // Composant principal pour la planification de retraite de couple (CPP + RRQ)
 
 import React, { useState, useEffect } from 'react';
@@ -199,17 +199,17 @@ export const CoupleRetirementPlanner: React.FC<CoupleRetirementPlannerProps> = (
   if (!hasSecondPerson) {
     return (
       <div className={`space-y-6 ${className}`}>
-        <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+        <Card className="bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt border-mpr-border">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-                <Users className="w-8 h-8 text-blue-600" />
+              <div className="w-16 h-16 bg-mpr-interactive-lt rounded-full flex items-center justify-center">
+                <Users className="w-8 h-8 text-mpr-interactive" />
               </div>
             </div>
-            <CardTitle className="text-3xl text-blue-900 mb-3">
+            <CardTitle className="text-3xl text-mpr-navy mb-3">
               {t.title}
             </CardTitle>
-            <CardDescription className="text-lg text-blue-700">
+            <CardDescription className="text-lg text-mpr-navy">
               {t.subtitle}
             </CardDescription>
           </CardHeader>
@@ -233,17 +233,17 @@ export const CoupleRetirementPlanner: React.FC<CoupleRetirementPlannerProps> = (
   return (
     <div className={`space-y-6 ${className}`}>
       {/* En-tête */}
-      <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+      <Card className="bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt border-mpr-border">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-              <Users className="w-8 h-8 text-blue-600" />
+            <div className="w-16 h-16 bg-mpr-interactive-lt rounded-full flex items-center justify-center">
+              <Users className="w-8 h-8 text-mpr-interactive" />
             </div>
           </div>
-          <CardTitle className="text-3xl text-blue-900 mb-3">
+          <CardTitle className="text-3xl text-mpr-navy mb-3">
             {t.title}
           </CardTitle>
-          <CardDescription className="text-lg text-blue-700">
+          <CardDescription className="text-lg text-mpr-navy">
             {t.subtitle}
           </CardDescription>
         </CardHeader>
@@ -261,8 +261,8 @@ export const CoupleRetirementPlanner: React.FC<CoupleRetirementPlannerProps> = (
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Personne 1 */}
-              <div className="p-4 bg-blue-50 rounded-lg">
-                <h4 className="font-semibold text-blue-900 mb-2">
+              <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+                <h4 className="font-semibold text-mpr-navy mb-2">
                   {coupleData.person1.prenom || t.person1}
                 </h4>
                 <div className="space-y-1 text-sm">
@@ -293,7 +293,7 @@ export const CoupleRetirementPlanner: React.FC<CoupleRetirementPlannerProps> = (
                 onClick={calculateCouplePensions}
                 disabled={isCalculating}
                 size="lg"
-                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3"
+                className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white px-8 py-3"
               >
                 {isCalculating ? (
                   <>
@@ -347,7 +347,7 @@ export const CoupleRetirementPlanner: React.FC<CoupleRetirementPlannerProps> = (
                       </div>
                       
                       <div className="text-center p-4 bg-white rounded-lg shadow-sm">
-                        <div className="text-3xl font-bold text-blue-600">
+                        <div className="text-3xl font-bold text-mpr-interactive">
                           {formatCurrency(results.couple.totalAnnuel)}
                         </div>
                         <div className="text-sm text-gray-600">{t.totalAnnual}</div>
@@ -418,7 +418,7 @@ export const CoupleRetirementPlanner: React.FC<CoupleRetirementPlannerProps> = (
               {/* Personne 1 */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-blue-900">
+                  <CardTitle className="text-mpr-navy">
                     {coupleData?.person1.prenom || t.person1}
                   </CardTitle>
                 </CardHeader>
@@ -442,7 +442,7 @@ export const CoupleRetirementPlanner: React.FC<CoupleRetirementPlannerProps> = (
                     
                     <div className="flex justify-between items-center pt-2 border-t">
                       <span className="font-semibold">Total mensuel:</span>
-                      <span className="font-bold text-lg text-blue-600">
+                      <span className="font-bold text-lg text-mpr-interactive">
                         {formatCurrency(results.person1.total)}
                       </span>
                     </div>
@@ -527,7 +527,7 @@ export const CoupleRetirementPlanner: React.FC<CoupleRetirementPlannerProps> = (
                         <ul className="space-y-1">
                           {optimization.etapes.map((etape, idx) => (
                             <li key={idx} className="flex items-center gap-2 text-sm">
-                              <ArrowRight className="w-4 h-4 text-blue-500" />
+                              <ArrowRight className="w-4 h-4 text-mpr-interactive" />
                               {etape}
                             </li>
                           ))}
@@ -545,7 +545,7 @@ export const CoupleRetirementPlanner: React.FC<CoupleRetirementPlannerProps> = (
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Shield className="w-5 h-5 text-blue-500" />
+                  <Shield className="w-5 h-5 text-mpr-interactive" />
                   {t.survivorScenarios}
                 </CardTitle>
               </CardHeader>

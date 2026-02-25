@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Brain, 
@@ -218,12 +218,12 @@ export const ContextualAdaptation: React.FC<ContextualAdaptationProps> = ({
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-6 border-2 border-blue-200"
+        className="bg-gradient-to-r from-mpr-interactive-lt to-purple-50 rounded-xl p-6 border-2 border-mpr-border"
       >
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="p-3 bg-blue-100 rounded-full">
-              <Brain className="w-6 h-6 text-blue-600" />
+            <div className="p-3 bg-mpr-interactive-lt rounded-full">
+              <Brain className="w-6 h-6 text-mpr-interactive" />
             </div>
             <div>
               <h3 className="text-xl font-semibold text-gray-800">
@@ -252,8 +252,8 @@ export const ContextualAdaptation: React.FC<ContextualAdaptationProps> = ({
               disabled={isAdapting}
               className={`px-4 py-2 rounded-lg font-medium transition-all duration-200 ${
                 isAdapting
-                  ? 'bg-blue-600 text-white shadow-md'
-                  : 'bg-blue-500 text-white hover:bg-blue-600'
+                  ? 'bg-mpr-interactive text-white shadow-md'
+                  : 'bg-mpr-interactive text-white hover:bg-mpr-interactive'
               }`}
             >
               {isAdapting ? (
@@ -273,32 +273,32 @@ export const ContextualAdaptation: React.FC<ContextualAdaptationProps> = ({
 
         {/* Contexte actuel */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-blue-200">
-            <Clock className="w-4 h-4 text-blue-600" />
+          <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-mpr-border">
+            <Clock className="w-4 h-4 text-mpr-interactive" />
             <div>
               <div className="text-xs text-gray-500">Période</div>
               <div className="font-medium text-gray-800">{formattedContext.timeOfDay}</div>
             </div>
           </div>
           
-          <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-blue-200">
-            <Smartphone className="w-4 h-4 text-blue-600" />
+          <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-mpr-border">
+            <Smartphone className="w-4 h-4 text-mpr-interactive" />
             <div>
               <div className="text-xs text-gray-500">Appareil</div>
               <div className="font-medium text-gray-800">{formattedContext.deviceType}</div>
             </div>
           </div>
           
-          <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-blue-200">
-            <Wifi className="w-4 h-4 text-blue-600" />
+          <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-mpr-border">
+            <Wifi className="w-4 h-4 text-mpr-interactive" />
             <div>
               <div className="text-xs text-gray-500">Connexion</div>
               <div className="font-medium text-gray-800">{formattedContext.connectionSpeed}</div>
             </div>
           </div>
           
-          <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-blue-200">
-            <Activity className="w-4 h-4 text-blue-600" />
+          <div className="flex items-center gap-2 p-3 bg-white rounded-lg border border-mpr-border">
+            <Activity className="w-4 h-4 text-mpr-interactive" />
             <div>
               <div className="text-xs text-gray-500">Activité</div>
               <div className="font-medium text-gray-800">{formattedContext.userActivity}</div>
@@ -321,7 +321,7 @@ export const ContextualAdaptation: React.FC<ContextualAdaptationProps> = ({
           
           <button
             onClick={() => setShowDetails(!showDetails)}
-            className="px-3 py-1 text-sm text-blue-600 hover:text-blue-700 transition-colors"
+            className="px-3 py-1 text-sm text-mpr-interactive hover:text-mpr-navy transition-colors"
           >
             {showDetails ? 'Masquer' : 'Afficher'}
           </button>
@@ -355,15 +355,15 @@ export const ContextualAdaptation: React.FC<ContextualAdaptationProps> = ({
                   <div className="text-sm text-green-600">Tendances détectées</div>
                 </div>
                 
-                <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                <div className="p-4 bg-mpr-interactive-lt rounded-lg border border-mpr-border">
                   <div className="flex items-center gap-2 mb-2">
-                    <Target className="w-5 h-5 text-blue-600" />
-                    <span className="font-medium text-blue-800">Confiance Moyenne</span>
+                    <Target className="w-5 h-5 text-mpr-interactive" />
+                    <span className="font-medium text-mpr-navy">Confiance Moyenne</span>
                   </div>
-                  <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-2xl font-bold text-mpr-interactive">
                     {Math.round((preferences.reduce((sum, p) => sum + p.confidence, 0) / Math.max(preferences.length, 1)) * 100)}%
                   </div>
-                  <div className="text-sm text-blue-600">Précision IA</div>
+                  <div className="text-sm text-mpr-interactive">Précision IA</div>
                 </div>
               </div>
 

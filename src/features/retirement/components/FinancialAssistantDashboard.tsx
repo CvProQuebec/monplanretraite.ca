@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import { Badge } from '../../../components/ui/badge';
@@ -278,7 +278,7 @@ export const FinancialAssistantDashboard: React.FC<FinancialAssistantDashboardPr
     <Card>
       <CardHeader>
         <div className="flex items-center">
-          <Brain className="h-5 w-5 text-blue-600 mr-2" />
+          <Brain className="h-5 w-5 text-mpr-interactive mr-2" />
           <CardTitle>Recommandations intelligentes</CardTitle>
         </div>
         <CardDescription>
@@ -299,12 +299,12 @@ export const FinancialAssistantDashboard: React.FC<FinancialAssistantDashboardPr
             <Alert key={index} className={
               alert.severity === 'error' ? 'border-red-200 bg-red-50' :
               alert.severity === 'warning' ? 'border-yellow-200 bg-yellow-50' :
-              'border-blue-200 bg-blue-50'
+              'border-mpr-border bg-mpr-interactive-lt'
             }>
               <div className="flex items-start space-x-3">
                 {alert.severity === 'error' ? <AlertTriangle className="h-5 w-5 text-red-500 mt-0.5" /> :
                  alert.severity === 'warning' ? <AlertTriangle className="h-5 w-5 text-yellow-500 mt-0.5" /> :
-                 <Lightbulb className="h-5 w-5 text-blue-500 mt-0.5" />}
+                 <Lightbulb className="h-5 w-5 text-mpr-interactive mt-0.5" />}
                 <div className="flex-1">
                   <AlertDescription>
                     <p className="font-medium mb-2">{alert.message}</p>
@@ -332,12 +332,12 @@ export const FinancialAssistantDashboard: React.FC<FinancialAssistantDashboardPr
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex justify-center mb-4">
-            <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-3 rounded-full">
+            <div className="bg-gradient-to-r from-mpr-interactive to-purple-600 p-3 rounded-full">
               <Brain className="h-8 w-8 text-white" />
             </div>
           </div>
@@ -561,9 +561,9 @@ export const FinancialAssistantDashboard: React.FC<FinancialAssistantDashboardPr
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="p-4 bg-blue-50 rounded-lg">
-                      <h4 className="font-semibold text-blue-800 mb-2">Court terme (1-3 mois)</h4>
-                      <ul className="text-sm text-blue-700 space-y-1">
+                    <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+                      <h4 className="font-semibold text-mpr-navy mb-2">Court terme (1-3 mois)</h4>
+                      <ul className="text-sm text-mpr-navy space-y-1">
                         <li>• Constituer un fonds d'urgence de {formatCurrency(monthlyExpenses * 3)}</li>
                         <li>• Automatiser l'épargne de {formatCurrency(Math.max(200, (monthlyIncome - monthlyExpenses) * 0.2))} par mois</li>
                         <li>• Réviser et optimiser les dépenses récurrentes</li>
@@ -596,21 +596,21 @@ export const FinancialAssistantDashboard: React.FC<FinancialAssistantDashboardPr
 
         {/* Footer */}
         <div className="mt-12 text-center">
-          <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+          <Card className="bg-gradient-to-r from-mpr-interactive-lt to-purple-50 border-mpr-border">
             <CardContent className="p-6">
               <div className="flex items-center justify-center mb-3">
-                <Brain className="h-6 w-6 text-blue-600 mr-2" />
-                <h3 className="text-xl font-semibold text-blue-800">
+                <Brain className="h-6 w-6 text-mpr-interactive mr-2" />
+                <h3 className="text-xl font-semibold text-mpr-navy">
                   Assistant Financier Personnel
                 </h3>
               </div>
-              <p className="text-blue-700 max-w-3xl mx-auto">
+              <p className="text-mpr-navy max-w-3xl mx-auto">
                 Cet assistant intelligent analyse votre situation financière en temps réel, 
                 vous aide à éviter les catastrophes financières et vous guide vers une 
                 meilleure santé financière. Toutes vos données restent privées et sécurisées 
                 sur votre appareil.
               </p>
-              <div className="flex justify-center items-center mt-4 space-x-6 text-sm text-blue-600">
+              <div className="flex justify-center items-center mt-4 space-x-6 text-sm text-mpr-interactive">
                 <div className="flex items-center">
                   <Shield className="h-4 w-4 mr-1" />
                   Données sécurisées

@@ -1,4 +1,4 @@
-// src/features/retirement/sections/CashflowSection.tsx
+﻿// src/features/retirement/sections/CashflowSection.tsx
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import SeniorsFriendlyInput from '@/components/forms/SeniorsFriendlyInput';
@@ -126,10 +126,10 @@ const ExpenseBreakdown: React.FC<ExpenseBreakdownProps> = ({
           {t.cashflow.breakdownButton}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-white border-4 border-blue-300 shadow-2xl">
-        <DialogHeader className="bg-blue-100 p-8 border-b-4 border-blue-400">
-          <DialogTitle className="text-3xl font-bold text-blue-900 flex items-center gap-4">
-            <Settings className="w-8 h-8 text-blue-700" />
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-white border-4 border-mpr-border shadow-2xl">
+        <DialogHeader className="bg-mpr-interactive-lt p-8 border-b-4 border-mpr-interactive">
+          <DialogTitle className="text-3xl font-bold text-mpr-navy flex items-center gap-4">
+            <Settings className="w-8 h-8 text-mpr-navy" />
             {t.cashflow.breakdownButton} : {title}
           </DialogTitle>
         </DialogHeader>
@@ -143,14 +143,14 @@ const ExpenseBreakdown: React.FC<ExpenseBreakdownProps> = ({
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Total Manuel */}
-              <div className="bg-blue-100 p-6 rounded-lg border-2 border-blue-400 text-center">
-                <p className="text-xl font-bold text-blue-800 mb-2">
+              <div className="bg-mpr-interactive-lt p-6 rounded-lg border-2 border-mpr-interactive text-center">
+                <p className="text-xl font-bold text-mpr-navy mb-2">
                   {language === 'fr' ? 'Total Manuel' : 'Manual Total'}
                 </p>
-                <p className="text-4xl font-bold text-blue-900 mb-2">
+                <p className="text-4xl font-bold text-mpr-navy mb-2">
                   {formatCurrency(total)}
                 </p>
-                <p className="text-lg text-blue-700">
+                <p className="text-lg text-mpr-navy">
                   {language === 'fr' ? 'Montant saisi' : 'Entered amount'}
                 </p>
               </div>
@@ -190,7 +190,7 @@ const ExpenseBreakdown: React.FC<ExpenseBreakdownProps> = ({
           {/* Section Détails - Ultra-Simple en 2 Colonnes */}
           <div className="bg-white border-2 border-gray-300 rounded-xl p-6">
             <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-              <Settings className="w-6 h-6 text-blue-600" />
+              <Settings className="w-6 h-6 text-mpr-interactive" />
               {language === 'fr' ? 'Détails par Catégorie' : 'Category Details'}
             </h3>
             
@@ -198,7 +198,7 @@ const ExpenseBreakdown: React.FC<ExpenseBreakdownProps> = ({
               {categories.map((category) => (
                 <div key={category.key} className="border-2 border-gray-200 rounded-lg p-4 bg-gray-50">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="w-7 h-7 flex items-center justify-center bg-blue-100 rounded-full">
+                    <div className="w-7 h-7 flex items-center justify-center bg-mpr-interactive-lt rounded-full">
                       {category.icon}
                     </div>
                     <Label className="text-lg font-bold text-gray-800">
@@ -234,7 +234,7 @@ const ExpenseBreakdown: React.FC<ExpenseBreakdownProps> = ({
           </Button>
           <Button 
             onClick={handleSave}
-            className="px-8 py-4 text-xl font-bold bg-blue-600 hover:bg-blue-700 text-white shadow-lg hover:shadow-xl transition-all duration-200 border-4 border-blue-500"
+            className="px-8 py-4 text-xl font-bold bg-mpr-interactive hover:bg-mpr-interactive-dk text-white shadow-lg hover:shadow-xl transition-all duration-200 border-4 border-mpr-interactive"
           >
             <CheckCircle className="w-6 h-6 mr-3" />
             {t.cashflow.save}
@@ -411,15 +411,15 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
           </CardContent>
         </Card>
 
-        <Card className="cashflow-metric-enhanced border-l-8 border-l-blue-500 bg-gradient-to-br from-blue-50 to-blue-100 shadow-xl">
+        <Card className="cashflow-metric-enhanced border-l-8 border-l-blue-500 bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt shadow-xl">
           <CardContent className="pt-8 pb-6">
             <div className="space-y-3 text-center">
-              <p className="cashflow-metric-label text-lg font-semibold text-blue-700">{language === 'fr' ? 'Taux d\'épargne' : 'Savings Rate'}</p>
+              <p className="cashflow-metric-label text-lg font-semibold text-mpr-navy">{language === 'fr' ? 'Taux d\'épargne' : 'Savings Rate'}</p>
               <div className="flex items-center gap-3 mb-2">
                 <Progress value={Math.max(0, tauxEpargne)} className="flex-1 h-3" />
-                <span className="cashflow-metric-value text-2xl font-bold text-blue-800">{tauxEpargne.toFixed(1)}%</span>
+                <span className="cashflow-metric-value text-2xl font-bold text-mpr-navy">{tauxEpargne.toFixed(1)}%</span>
               </div>
-              <p className="cashflow-metric-description text-sm text-blue-600">{language === 'fr' ? 'Objectif : 20 %' : 'Goal: 20%'}</p>
+              <p className="cashflow-metric-description text-sm text-mpr-interactive">{language === 'fr' ? 'Objectif : 20 %' : 'Goal: 20%'}</p>
             </div>
           </CardContent>
         </Card>
@@ -438,7 +438,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                </TabsTrigger>
                <TabsTrigger 
                  value="analyse"
-                 className="cashflow-tab-enhanced data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-200 px-4 py-2 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-200"
+                 className="cashflow-tab-enhanced data-[state=active]:bg-mpr-interactive data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-4 focus:ring-mpr-border px-4 py-2 text-lg font-bold rounded-lg transition-all duration-200 data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700 data-[state=inactive]:hover:bg-gray-200"
                >
                  {language === 'fr' ? 'Analyse 50/30/20' : '50/30/20 Analysis'}
                </TabsTrigger>
@@ -519,7 +519,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                             value={amount || ''}
                             onChange={(e) => handleChange(row.key, parseFloat((e.target.value || '0').replace(',', '.')) || 0)}
                             placeholder="0"
-                            className="text-lg font-semibold bg-white text-gray-900 border-2 border-slate-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 rounded"
+                            className="text-lg font-semibold bg-white text-gray-900 border-2 border-slate-300 focus:border-mpr-interactive focus:ring-2 focus:ring-mpr-border rounded"
                           />
                         </div>
                         <div className="col-span-3">
@@ -565,8 +565,8 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                           <Home className="w-6 h-6 text-red-500" />
                           {language === 'fr' ? 'Logement (loyer/hypothèque)' : 'Housing (rent/mortgage)'}
                           <div className="flex items-center gap-2 ml-2">
-                            <RefreshCw className="w-4 h-4 text-blue-500" />
-                            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">
+                            <RefreshCw className="w-4 h-4 text-mpr-interactive" />
+                            <span className="text-xs bg-mpr-interactive-lt text-mpr-navy px-2 py-1 rounded-full font-medium">
                               {language === 'fr' ? 'Synchronisé' : 'Synced'}
                             </span>
                           </div>
@@ -619,8 +619,8 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                           <Shield className="w-6 h-6 text-red-500" />
                           {language === 'fr' ? 'Assurances (habitation, auto, vie)' : 'Insurance (home, auto, life)'}
                           <div className="flex items-center gap-2 ml-2">
-                            <RefreshCw className="w-4 h-4 text-blue-500" />
-                            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full font-medium">
+                            <RefreshCw className="w-4 h-4 text-mpr-interactive" />
+                            <span className="text-xs bg-mpr-interactive-lt text-mpr-navy px-2 py-1 rounded-full font-medium">
                               {language === 'fr' ? 'Synchronisé' : 'Synced'}
                             </span>
                           </div>
@@ -858,11 +858,11 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                 </Card>
 
                 {/* Évaluation et conseils */}
-                <Card className="bg-blue-50 border-blue-200">
+                <Card className="bg-mpr-interactive-lt border-mpr-border">
                   <CardHeader>
-                    <CardTitle className="text-lg text-blue-800">{t.cashflow.budgetEvaluation}</CardTitle>
+                    <CardTitle className="text-lg text-mpr-navy">{t.cashflow.budgetEvaluation}</CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4 text-blue-700">
+                  <CardContent className="space-y-4 text-mpr-navy">
                     {ratioEssentiels > 60 && (
                       <div className="flex items-start gap-2">
                         <AlertCircle className="w-4 h-4 mt-0.5 text-red-500" />
@@ -902,7 +902,7 @@ export const CashflowSection: React.FC<CashflowSectionProps> = ({ data, onUpdate
                       </div>
                     )}
 
-                    <div className="mt-4 p-3 bg-blue-100 rounded-lg">
+                    <div className="mt-4 p-3 bg-mpr-interactive-lt rounded-lg">
                       <p className="text-sm font-medium">
                         💡 <strong>Conseil :</strong> L'objectif est d'épargner au moins 20 % de vos revenus pour assurer une retraite confortable.
                       </p>

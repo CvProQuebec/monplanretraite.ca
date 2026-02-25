@@ -1,4 +1,4 @@
-// src/pages/SauvegarderCharger.tsx
+﻿// src/pages/SauvegarderCharger.tsx
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -364,7 +364,7 @@ export default function SauvegarderCharger() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-mpr-interactive-lt to-mpr-interactive-lt p-6">
       <div className="max-w-6xl mx-auto">
         {/* En-tête */}
         <div className="text-center mb-8">
@@ -384,7 +384,7 @@ export default function SauvegarderCharger() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Database className="w-5 h-5 text-blue-600" />
+                <Database className="w-5 h-5 text-mpr-interactive" />
                 {currentLanguage ? 'Créer une sauvegarde' : 'Create a Backup'}
               </CardTitle>
               <CardDescription>
@@ -529,7 +529,7 @@ export default function SauvegarderCharger() {
                   className={`rounded-2xl border-4 ${dragActive ? 'border-green-500 bg-green-50' : 'border-gray-300 bg-white'} p-6 text-center transition-colors`}
                 >
                   <div className="flex items-center justify-center gap-3 mb-4">
-                    <div className="w-9 h-9 rounded-full bg-blue-600 text-white flex items-center justify-center text-xl font-bold">1</div>
+                    <div className="w-9 h-9 rounded-full bg-mpr-interactive text-white flex items-center justify-center text-xl font-bold">1</div>
                     <h4 className="text-xl font-bold">
                       {currentLanguage ? 'Choisir votre fichier de sauvegarde' : 'Choose your backup file'}
                     </h4>
@@ -544,7 +544,7 @@ export default function SauvegarderCharger() {
                   <div className="flex items-center justify-center">
                     <label
                       htmlFor="import-file"
-                      className="cursor-pointer inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-blue-600 text-white hover:bg-blue-700 text-lg font-semibold"
+                      className="cursor-pointer inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-mpr-interactive text-white hover:bg-mpr-interactive-dk text-lg font-semibold"
                     >
                       <Upload className="w-5 h-5" />
                       {currentLanguage ? 'Choisir un fichier' : 'Choose a file'}
@@ -612,7 +612,7 @@ export default function SauvegarderCharger() {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Download className="w-5 h-5 text-blue-600" />
+                <Download className="w-5 h-5 text-mpr-interactive" />
                 {currentLanguage ? 'Exporter des données' : 'Export Data'}
               </CardTitle>
               <CardDescription>
@@ -796,7 +796,7 @@ export default function SauvegarderCharger() {
                 
                 <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                   <div className="flex items-center gap-3">
-                    <RefreshCw className="w-5 h-5 text-blue-600" />
+                    <RefreshCw className="w-5 h-5 text-mpr-interactive" />
                     <div>
                       <p className="font-medium">
                         {currentLanguage ? 'Sauvegarde quotidienne' : 'Daily Backup'}

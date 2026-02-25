@@ -1,4 +1,4 @@
-// src/features/retirement/sections/NavigationBar.tsx
+﻿// src/features/retirement/sections/NavigationBar.tsx
 import React from 'react';
 import { 
   BarChart3, 
@@ -84,8 +84,8 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
                   onClick={() => navigate(externalPath)}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all duration-200 hover:scale-105 ${
                     activeSection === section.id
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 hover:border-blue-300'
+                      ? 'bg-mpr-interactive text-white shadow-lg'
+                      : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-50 hover:border-mpr-border'
                   }`}
                 >
                   <section.icon className="w-4 h-4" />

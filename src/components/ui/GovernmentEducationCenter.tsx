@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Alert, AlertDescription } from './alert';
@@ -247,7 +247,7 @@ const GovernmentEducationCenter: React.FC = () => {
 
   const getCategoryColor = (category: string): string => {
     switch (category) {
-      case 'Programmes': return 'bg-blue-100 text-blue-800';
+      case 'Programmes': return 'bg-mpr-interactive-lt text-mpr-navy';
       case 'Stratégies': return 'bg-purple-100 text-purple-800';
       case 'Protection': return 'bg-orange-100 text-orange-800';
       case 'Planification': return 'bg-teal-100 text-teal-800';
@@ -402,7 +402,7 @@ const GovernmentEducationCenter: React.FC = () => {
             <TabsContent value="paths" className="space-y-4">
               <div className="space-y-4">
                 {learningPaths.map((path) => (
-                  <Card key={path.id} className={`cursor-pointer transition-all hover:shadow-lg ${selectedPath === path.id ? 'ring-2 ring-blue-500' : ''}`}>
+                  <Card key={path.id} className={`cursor-pointer transition-all hover:shadow-lg ${selectedPath === path.id ? 'ring-2 ring-mpr-interactive' : ''}`}>
                     <CardHeader>
                       <CardTitle className="flex items-center justify-between">
                         <span>{path.name}</span>
@@ -457,7 +457,7 @@ const GovernmentEducationCenter: React.FC = () => {
                         </Button>
                         <div className="w-full bg-gray-200 rounded-full h-2 self-center">
                           <div 
-                            className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                            className="bg-mpr-interactive h-2 rounded-full transition-all duration-300" 
                             style={{ width: `${getPathProgress(path.id)}%` }}
                           ></div>
                         </div>
@@ -472,7 +472,7 @@ const GovernmentEducationCenter: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <Card>
                   <CardContent className="p-4">
-                    <div className="text-2xl font-bold text-blue-600">
+                    <div className="text-2xl font-bold text-mpr-interactive">
                       {completedModules.size}
                     </div>
                     <div className="text-sm text-gray-600">Modules complétés</div>
@@ -525,7 +525,7 @@ const GovernmentEducationCenter: React.FC = () => {
                           </div>
                           <div className="w-full bg-gray-200 rounded-full h-2">
                             <div 
-                              className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+                              className="bg-mpr-interactive h-2 rounded-full transition-all duration-300" 
                               style={{ width: `${progress}%` }}
                             ></div>
                           </div>

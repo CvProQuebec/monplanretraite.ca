@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Calculator, TrendingUp, AlertTriangle, FileText, BarChart3, Target, Shield, Activity } from 'lucide-react';
@@ -82,7 +82,7 @@ const MonteCarloReport: React.FC<MonteCarloReportProps> = ({
       {/* En-tête du rapport */}
       <div className="text-center border-b pb-6">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
+          <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-mpr-interactive rounded-xl flex items-center justify-center">
             <Calculator className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900">{tr.title}</h1>
@@ -116,15 +116,15 @@ const MonteCarloReport: React.FC<MonteCarloReportProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Activity className="w-5 h-5 text-blue-600" />
+            <Activity className="w-5 h-5 text-mpr-interactive" />
             {tr.simulationSummary}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
+            <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
               <p className="text-sm text-gray-600">{tr.simulations}</p>
-              <p className="text-2xl font-bold text-blue-900">{mockData.totalSimulations.toLocaleString()}</p>
+              <p className="text-2xl font-bold text-mpr-navy">{mockData.totalSimulations.toLocaleString()}</p>
             </div>
             <div className="text-center p-4 bg-green-50 rounded-lg">
               <p className="text-sm text-gray-600">{tr.successRate}</p>
@@ -141,7 +141,7 @@ const MonteCarloReport: React.FC<MonteCarloReportProps> = ({
           </div>
           
           {/* Objectif de retraite */}
-          <div className="text-center p-6 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg">
+          <div className="text-center p-6 bg-gradient-to-r from-purple-50 to-mpr-interactive-lt rounded-lg">
             <p className="text-2xl font-bold text-purple-900">
               ${mockData.targetAmount.toLocaleString()}
             </p>
@@ -170,9 +170,9 @@ const MonteCarloReport: React.FC<MonteCarloReportProps> = ({
               <p className="text-xl font-bold text-yellow-900">${mockData.scenarios.percentile25.toLocaleString()}</p>
               <p className="text-xs text-gray-500">Conservative</p>
             </div>
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
+            <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
               <p className="text-sm text-gray-600">{tr.medianCase}</p>
-              <p className="text-xl font-bold text-blue-900">${mockData.scenarios.medianCase.toLocaleString()}</p>
+              <p className="text-xl font-bold text-mpr-navy">${mockData.scenarios.medianCase.toLocaleString()}</p>
               <p className="text-xs text-gray-500">50th percentile</p>
             </div>
             <div className="text-center p-4 bg-green-50 rounded-lg">
@@ -207,9 +207,9 @@ const MonteCarloReport: React.FC<MonteCarloReportProps> = ({
                 <p className="text-2xl font-bold text-green-900">{mockData.successRate}%</p>
                 <p className="text-xs text-gray-500">Reaching target amount</p>
               </div>
-              <div className="p-4 bg-blue-50 rounded-lg text-center">
+              <div className="p-4 bg-mpr-interactive-lt rounded-lg text-center">
                 <p className="text-sm text-gray-600">Confidence Interval</p>
-                <p className="text-lg font-bold text-blue-900">75% - 90%</p>
+                <p className="text-lg font-bold text-mpr-navy">75% - 90%</p>
                 <p className="text-xs text-gray-500">Range of outcomes</p>
               </div>
               <div className="p-4 bg-purple-50 rounded-lg text-center">
@@ -253,7 +253,7 @@ const MonteCarloReport: React.FC<MonteCarloReportProps> = ({
                 </div>
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-gray-600">Mitigation Strategy:</span>
-                  <span className="text-blue-600 font-medium">{factor.mitigation}</span>
+                  <span className="text-mpr-interactive font-medium">{factor.mitigation}</span>
                 </div>
               </div>
             ))}
@@ -265,7 +265,7 @@ const MonteCarloReport: React.FC<MonteCarloReportProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-blue-600" />
+            <TrendingUp className="w-5 h-5 text-mpr-interactive" />
             {tr.recommendations}
           </CardTitle>
         </CardHeader>
@@ -279,9 +279,9 @@ const MonteCarloReport: React.FC<MonteCarloReportProps> = ({
                 <li>• Consider adding inflation-protected securities (TIPS)</li>
               </ul>
             </div>
-            <div className="p-4 bg-blue-50 rounded-lg">
-              <h4 className="font-semibold text-blue-900 mb-2">📊 Portfolio Adjustments</h4>
-              <ul className="text-blue-700 text-sm space-y-1">
+            <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+              <h4 className="font-semibold text-mpr-navy mb-2">📊 Portfolio Adjustments</h4>
+              <ul className="text-mpr-navy text-sm space-y-1">
                 <li>• Implement bond tent strategy for sequence risk protection</li>
                 <li>• Add real estate and commodities for inflation hedge</li>
                 <li>• Consider annuities for longevity risk management</li>

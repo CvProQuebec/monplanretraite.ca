@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
@@ -120,7 +120,7 @@ export const WeeklyFinancialTracker: React.FC<WeeklyFinancialTrackerProps> = ({
 
   const getAlertIcon = (severity: 'info' | 'warning' | 'error') => {
     switch (severity) {
-      case 'info': return <CheckCircle className="h-4 w-4 text-blue-500" />;
+      case 'info': return <CheckCircle className="h-4 w-4 text-mpr-interactive" />;
       case 'warning': return <AlertTriangle className="h-4 w-4 text-yellow-500" />;
       case 'error': return <AlertTriangle className="h-4 w-4 text-red-500" />;
     }
@@ -128,7 +128,7 @@ export const WeeklyFinancialTracker: React.FC<WeeklyFinancialTrackerProps> = ({
 
   const getAlertColor = (severity: 'info' | 'warning' | 'error') => {
     switch (severity) {
-      case 'info': return 'border-blue-200 bg-blue-50';
+      case 'info': return 'border-mpr-border bg-mpr-interactive-lt';
       case 'warning': return 'border-yellow-200 bg-yellow-50';
       case 'error': return 'border-red-200 bg-red-50';
     }
@@ -349,13 +349,13 @@ export const WeeklyFinancialTracker: React.FC<WeeklyFinancialTrackerProps> = ({
                     </div>
                     
                     <div className={`text-center p-4 rounded-lg ${
-                      currentSnapshot.netCashFlow >= 0 ? 'bg-blue-50' : 'bg-yellow-50'
+                      currentSnapshot.netCashFlow >= 0 ? 'bg-mpr-interactive-lt' : 'bg-yellow-50'
                     }`}>
                       <p className={`text-sm ${
-                        currentSnapshot.netCashFlow >= 0 ? 'text-blue-600' : 'text-yellow-600'
+                        currentSnapshot.netCashFlow >= 0 ? 'text-mpr-interactive' : 'text-yellow-600'
                       }`}>Flux net</p>
                       <p className={`text-2xl font-bold ${
-                        currentSnapshot.netCashFlow >= 0 ? 'text-blue-700' : 'text-yellow-700'
+                        currentSnapshot.netCashFlow >= 0 ? 'text-mpr-navy' : 'text-yellow-700'
                       }`}>
                         {formatCurrency(currentSnapshot.netCashFlow)}
                       </p>
@@ -461,10 +461,10 @@ export const WeeklyFinancialTracker: React.FC<WeeklyFinancialTrackerProps> = ({
                       <p className="text-xl font-bold text-red-700">{formatCurrency(trends.avgExpenses)}</p>
                     </div>
                     
-                    <div className="text-center p-4 bg-blue-50 rounded-lg">
-                      <DollarSign className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                      <p className="text-sm text-blue-600">Solde moyen</p>
-                      <p className="text-xl font-bold text-blue-700">{formatCurrency(trends.avgBalance)}</p>
+                    <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+                      <DollarSign className="h-8 w-8 text-mpr-interactive mx-auto mb-2" />
+                      <p className="text-sm text-mpr-interactive">Solde moyen</p>
+                      <p className="text-xl font-bold text-mpr-navy">{formatCurrency(trends.avgBalance)}</p>
                     </div>
                   </div>
                 </CardContent>

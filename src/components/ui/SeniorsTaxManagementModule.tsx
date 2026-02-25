@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -201,7 +201,7 @@ const SeniorsTaxManagementModule: React.FC<SeniorsTaxManagementModuleProps> = ({
       {/* Taxes Municipales */}
       <Card className="border-l-4 border-l-blue-500 seniors-card">
         <CardHeader>
-          <CardTitle className="flex items-center gap-3 text-blue-800 text-2xl">
+          <CardTitle className="flex items-center gap-3 text-mpr-navy text-2xl">
             <Building className="w-6 h-6" />
             {isFrench ? 'Taxes Municipales' : 'Municipal Taxes'}
             <Badge variant="outline" className="ml-auto text-lg px-3 py-1">
@@ -245,7 +245,7 @@ const SeniorsTaxManagementModule: React.FC<SeniorsTaxManagementModuleProps> = ({
               </h4>
               <Button 
                 onClick={addMunicipalPayment}
-                className="bg-blue-600 hover:bg-blue-700 text-white h-12 px-4"
+                className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white h-12 px-4"
               >
                 <Plus className="w-5 h-5 mr-2" />
                 {isFrench ? 'Ajouter un paiement' : 'Add payment'}
@@ -257,10 +257,10 @@ const SeniorsTaxManagementModule: React.FC<SeniorsTaxManagementModuleProps> = ({
                 <div key={payment.id} className={`p-4 rounded-lg border-2 ${
                   isDatePassed(payment.date) 
                     ? 'bg-red-50 border-red-200' 
-                    : 'bg-blue-50 border-blue-200'
+                    : 'bg-mpr-interactive-lt border-mpr-border'
                 }`}>
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-lg font-semibold text-blue-800">
+                    <span className="text-lg font-semibold text-mpr-navy">
                       {isFrench ? `Paiement ${index + 1}` : `Payment ${index + 1}`}
                     </span>
                     <div className="flex items-center gap-2">
@@ -310,14 +310,14 @@ const SeniorsTaxManagementModule: React.FC<SeniorsTaxManagementModuleProps> = ({
           </div>
 
           {/* Résumé */}
-          <div className="bg-blue-100 p-4 rounded-lg border-2 border-blue-200">
+          <div className="bg-mpr-interactive-lt p-4 rounded-lg border-2 border-mpr-border">
             <div className="flex justify-between items-center">
-              <span className="font-semibold text-lg text-blue-800">
+              <span className="font-semibold text-lg text-mpr-navy">
                 {isFrench ? 'Équivalent mensuel' : 'Monthly equivalent'}
               </span>
               <SeniorsAmountDisplay 
                 amount={calculateMonthlyEquivalent(municipalData.totalAmount)}
-                className="text-2xl font-bold text-blue-900"
+                className="text-2xl font-bold text-mpr-navy"
               />
             </div>
           </div>
@@ -439,7 +439,7 @@ const SeniorsTaxManagementModule: React.FC<SeniorsTaxManagementModuleProps> = ({
       <div className="flex justify-center">
         <Button 
           onClick={handleSyncToHousing}
-          className="bg-blue-600 hover:bg-blue-700 text-white h-16 px-8 text-lg"
+          className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white h-16 px-8 text-lg"
         >
           <RefreshCw className="w-5 h-5 mr-3" />
           {isFrench ? 'Synchroniser avec Logement' : 'Sync with Housing'}

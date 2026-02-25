@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -155,15 +155,15 @@ const LongevityDashboard: React.FC<LongevityDashboardProps> = ({
         <div className="space-y-6">
           {/* Key Metrics */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            <Card className="bg-gradient-to-r from-blue-50 to-blue-100">
+            <Card className="bg-gradient-to-r from-mpr-interactive-lt to-mpr-interactive-lt">
               <CardContent className="p-4">
                 <div className="flex items-center gap-2 mb-2">
-                  <Heart className="w-5 h-5 text-blue-600" />
-                  <span className="text-sm font-medium text-blue-800">
+                  <Heart className="w-5 h-5 text-mpr-interactive" />
+                  <span className="text-sm font-medium text-mpr-navy">
                     {isFrench ? 'Espérance de Vie' : 'Life Expectancy'}
                   </span>
                 </div>
-                <div className="text-2xl font-bold text-blue-700">
+                <div className="text-2xl font-bold text-mpr-navy">
                   {dashboardMetrics.lifeExpectancy.toFixed(1)} {isFrench ? 'ans' : 'years'}
                 </div>
               </CardContent>

@@ -1,4 +1,4 @@
-// src/features/retirement/components/FinancialAccountsForm.tsx
+﻿// src/features/retirement/components/FinancialAccountsForm.tsx
 // Formulaire pour les comptes financiers
 
 import React, { useState } from 'react';
@@ -37,7 +37,7 @@ interface FinancialAccountsFormProps {
 }
 
 const accountTypeOptions = [
-  { value: 'cheque', label: 'Compte chèque', icon: '💳', color: 'bg-blue-100 text-blue-800' },
+  { value: 'cheque', label: 'Compte chèque', icon: '💳', color: 'bg-mpr-interactive-lt text-mpr-navy' },
   { value: 'epargne', label: 'Compte épargne', icon: '💰', color: 'bg-green-100 text-green-800' },
   { value: 'placement', label: 'Compte placement', icon: '📈', color: 'bg-purple-100 text-purple-800' },
   { value: 'reer', label: 'REER', icon: '🏦', color: 'bg-orange-100 text-orange-800' },
@@ -354,7 +354,7 @@ export const FinancialAccountsForm: React.FC<FinancialAccountsFormProps> = ({
                 </div>
 
                 {/* Procuration */}
-                <Card className="bg-blue-50 border-blue-200">
+                <Card className="bg-mpr-interactive-lt border-mpr-border">
                   <CardHeader className="pb-3">
                     <CardTitle className="text-sm flex items-center gap-2">
                       <User className="w-4 h-4" />

@@ -1,4 +1,4 @@
-// Onglet de collaboration - Plan Ultimate
+﻿// Onglet de collaboration - Plan Ultimate
 // Gestion des accès partagés, workflow collaboratif et notifications
 // Respectant la typographie québécoise et les limites professionnelles
 
@@ -346,7 +346,7 @@ export const CollaborationTab: React.FC<CollaborationTabProps> = ({
   const getRoleBadge = (role: string) => {
     switch (role) {
       case 'lecture':
-        return <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">Lecture</Badge>;
+        return <Badge variant="outline" className="bg-mpr-interactive-lt text-mpr-navy border-mpr-border">Lecture</Badge>;
       case 'commentaire':
         return <Badge variant="outline" className="bg-green-50 text-green-700 border-green-200">Commentaire</Badge>;
       case 'édition':
@@ -432,9 +432,9 @@ export const CollaborationTab: React.FC<CollaborationTabProps> = ({
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
-              <div className="text-2xl font-bold text-blue-900">{data.collaboration.sharedAccess.length}</div>
-              <div className="text-sm text-blue-700">Accès partagés</div>
+            <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+              <div className="text-2xl font-bold text-mpr-navy">{data.collaboration.sharedAccess.length}</div>
+              <div className="text-sm text-mpr-navy">Accès partagés</div>
             </div>
             <div className="text-center p-4 bg-green-50 rounded-lg">
               <div className="text-2xl font-bold text-green-900">{data.collaboration.workflow.length}</div>
@@ -589,7 +589,7 @@ export const CollaborationTab: React.FC<CollaborationTabProps> = ({
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">
-                            <div className="w-6 h-6 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-medium">
+                            <div className="w-6 h-6 rounded-full bg-mpr-interactive-lt text-mpr-interactive flex items-center justify-center text-sm font-medium">
                               {step.order}
                             </div>
                             <h3 className="font-semibold">{step.name}</h3>
@@ -615,7 +615,7 @@ export const CollaborationTab: React.FC<CollaborationTabProps> = ({
 
                           {step.comments.length > 0 && (
                             <div className="space-y-1">
-                              <span className="text-sm font-medium text-blue-600">Commentaires :</span>
+                              <span className="text-sm font-medium text-mpr-interactive">Commentaires :</span>
                               <ul className="list-disc list-inside text-sm text-muted-foreground ml-2">
                                 {step.comments.map((comment, index) => (
                                   <li key={index}>{comment}</li>
@@ -1100,14 +1100,14 @@ export const CollaborationTab: React.FC<CollaborationTabProps> = ({
       </Dialog>
 
       {/* Informations et aide */}
-      <Card className="border-blue-200 bg-blue-50">
+      <Card className="border-mpr-border bg-mpr-interactive-lt">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-900">
+          <CardTitle className="flex items-center gap-2 text-mpr-navy">
             <Info className="h-5 w-5" />
             À propos de la collaboration
           </CardTitle>
         </CardHeader>
-        <CardContent className="text-blue-700">
+        <CardContent className="text-mpr-navy">
           <p className="mb-3">
             La collaboration vous permet de partager vos informations de planification successorale 
             avec des professionnels qualifiés tout en maintenant le contrôle sur les accès et permissions.

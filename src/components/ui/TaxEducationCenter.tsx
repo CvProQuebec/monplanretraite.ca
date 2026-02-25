@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -250,7 +250,7 @@ const TaxEducationCenter: React.FC = () => {
           </CardHeader>
           <CardContent>
             <div className="text-center">
-              <div className="text-xl font-bold text-blue-600">
+              <div className="text-xl font-bold text-mpr-interactive">
                 {getCompletionPercentage() < 30 ? 'Débutant' :
                  getCompletionPercentage() < 70 ? 'Intermédiaire' : 'Expert'}
               </div>

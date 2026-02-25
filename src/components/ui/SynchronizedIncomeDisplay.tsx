@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { DollarSign, TrendingUp, Users, Calculator } from 'lucide-react';
@@ -23,9 +23,9 @@ const SynchronizedIncomeDisplay: React.FC<SynchronizedIncomeDisplayProps> = ({
   const incomeImpact = IncomeSynchronizationService.calculateIncomeLongevityImpact(incomeData);
 
   return (
-    <Card className={`bg-gradient-to-r from-blue-50 to-green-50 border-2 border-blue-200 ${className}`}>
+    <Card className={`bg-gradient-to-r from-mpr-interactive-lt to-green-50 border-2 border-mpr-border ${className}`}>
       <CardHeader className="pb-3">
-        <CardTitle className="text-xl font-bold text-blue-800 flex items-center gap-2">
+        <CardTitle className="text-xl font-bold text-mpr-navy flex items-center gap-2">
           <DollarSign className="w-6 h-6" />
           {isFrench ? 'Revenus Synchronisés' : 'Synchronized Income'}
           <Badge variant="secondary" className="ml-auto">
@@ -37,7 +37,7 @@ const SynchronizedIncomeDisplay: React.FC<SynchronizedIncomeDisplayProps> = ({
       <CardContent className="space-y-4">
         {/* Revenus totaux */}
         <div className="text-center">
-          <div className="text-4xl font-bold text-blue-900 mb-2">
+          <div className="text-4xl font-bold text-mpr-navy mb-2">
             {formatCurrency(incomeData.totalHouseholdIncome, { showCents: false })}
           </div>
           <div className="text-sm text-gray-600">
@@ -51,7 +51,7 @@ const SynchronizedIncomeDisplay: React.FC<SynchronizedIncomeDisplayProps> = ({
         {showDetails && (
           <>
             {/* Détail des revenus individuels */}
-            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-blue-200">
+            <div className="grid grid-cols-2 gap-4 pt-4 border-t border-mpr-border">
               <div className="text-center">
                 <div className="text-lg font-semibold text-gray-800">
                   {formatCurrency(incomeData.person1Income, { showCents: false })}
@@ -97,7 +97,7 @@ const SynchronizedIncomeDisplay: React.FC<SynchronizedIncomeDisplayProps> = ({
                 </div>
                 
                 <div className="text-center">
-                  <div className="text-lg font-bold text-blue-700">
+                  <div className="text-lg font-bold text-mpr-navy">
                     {(incomeImpact.stressReduction * 100).toFixed(1)}%
                   </div>
                   <div className="text-xs text-gray-600">

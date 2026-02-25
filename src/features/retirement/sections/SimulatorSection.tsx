@@ -1,4 +1,4 @@
-// src/features/retirement/sections/SimulatorSection.tsx
+﻿// src/features/retirement/sections/SimulatorSection.tsx
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -147,10 +147,10 @@ export const SimulatorSection: React.FC<SimulatorSectionProps> = ({ data, calcul
   const currentScenario = scenarios.find(s => s.id === activeScenario);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-mpr-navy text-white">
       {/* Particules animées en arrière-plan */}
       <div className="fixed inset-0 z-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+        <div className="absolute top-20 left-10 w-2 h-2 bg-mpr-interactive rounded-full animate-pulse"></div>
         <div className="absolute top-40 right-20 w-3 h-3 bg-purple-400 rounded-full animate-bounce"></div>
         <div className="absolute bottom-40 left-20 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
         <div className="absolute top-60 left-1/2 w-1 h-1 bg-yellow-400 rounded-full animate-pulse"></div>
@@ -171,7 +171,7 @@ export const SimulatorSection: React.FC<SimulatorSectionProps> = ({ data, calcul
         <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl backdrop-blur-sm">
           <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
-              <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-purple-600 rounded-full flex items-center justify-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-mpr-interactive to-purple-600 rounded-full flex items-center justify-center">
                 <Zap className="w-8 h-8 text-white" />
               </div>
             </div>
@@ -185,29 +185,29 @@ export const SimulatorSection: React.FC<SimulatorSectionProps> = ({ data, calcul
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
             <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Dices className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 bg-mpr-interactive-lt rounded-full flex items-center justify-center mx-auto mb-3">
+                <Dices className="w-6 h-6 text-mpr-interactive" />
               </div>
-              <h3 className="font-semibold text-blue-900 mb-2">{t.monteCarloPillar}</h3>
-              <p className="text-sm text-blue-700">
+              <h3 className="font-semibold text-mpr-navy mb-2">{t.monteCarloPillar}</h3>
+              <p className="text-sm text-mpr-navy">
                 {t.monteCarloPillarDesc}
               </p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Shield className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 bg-mpr-interactive-lt rounded-full flex items-center justify-center mx-auto mb-3">
+                <Shield className="w-6 h-6 text-mpr-interactive" />
               </div>
-              <h3 className="font-semibold text-blue-900 mb-2">{t.riskManagement}</h3>
-              <p className="text-sm text-blue-700">
+              <h3 className="font-semibold text-mpr-navy mb-2">{t.riskManagement}</h3>
+              <p className="text-sm text-mpr-navy">
                 {t.riskManagementDesc}
               </p>
             </div>
             <div className="text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <BarChart3 className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 bg-mpr-interactive-lt rounded-full flex items-center justify-center mx-auto mb-3">
+                <BarChart3 className="w-6 h-6 text-mpr-interactive" />
               </div>
-              <h3 className="font-semibold text-blue-900 mb-2">{t.detailedAnalysis}</h3>
-              <p className="text-sm text-blue-700">
+              <h3 className="font-semibold text-mpr-navy mb-2">{t.detailedAnalysis}</h3>
+              <p className="text-sm text-mpr-navy">
                 {t.detailedAnalysisDesc}
               </p>
             </div>
@@ -216,7 +216,7 @@ export const SimulatorSection: React.FC<SimulatorSectionProps> = ({ data, calcul
       </Card>
 
       {/* En-tête principal avec métriques */}
-      <Card className="bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200">
+      <Card className="bg-gradient-to-br from-purple-50 to-mpr-interactive-lt border-purple-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-3 text-2xl">
             <Calculator className="w-7 h-7 text-purple-600" />
@@ -237,7 +237,7 @@ export const SimulatorSection: React.FC<SimulatorSectionProps> = ({ data, calcul
               <div className="text-sm text-gray-600">{t.sufficiency}</div>
             </div>
             <div className="text-center p-4 bg-white rounded-lg shadow-sm">
-              <div className="text-2xl font-bold text-blue-600">
+              <div className="text-2xl font-bold text-mpr-interactive">
                 {(data.personal.ageRetraiteSouhaite1 || 65) - Math.floor((new Date().getTime() - new Date(data.personal.naissance1).getTime()) / (365.25 * 24 * 60 * 60 * 1000))} {language === 'fr' ? 'ans' : 'years'}
               </div>
               <div className="text-sm text-gray-600">{t.timeRemaining}</div>

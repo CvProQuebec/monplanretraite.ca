@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import SeniorsFriendlyInput from '../forms/SeniorsFriendlyInput';
 import { Label } from '@/components/ui/label';
@@ -294,7 +294,7 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
       {/* En-tête */}
       <div className="text-center bg-white border-2 border-gray-300 rounded-xl p-6">
         <h2 className="text-3xl font-bold text-black mb-2 flex items-center justify-center gap-3">
-          <Calendar className="w-8 h-8 text-blue-300" />
+          <Calendar className="w-8 h-8 text-mpr-interactive" />
           {t.title}
         </h2>
         <p className="text-lg text-black">
@@ -305,7 +305,7 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
       {/* Navigation par onglets */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid w-full grid-cols-2 bg-white border-2 border-gray-300 rounded-xl">
-          <TabsTrigger value="dueDates" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700">
+          <TabsTrigger value="dueDates" className="data-[state=active]:bg-mpr-interactive data-[state=active]:text-white data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700">
             <Clock className="w-4 h-4 mr-2" />
             {t.dueDatesTab}
           </TabsTrigger>
@@ -336,7 +336,7 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
                         setSelectedCategory('logement');
                         setEditingDueDate(null);
                       }}
-                      className="bg-blue-600 hover:bg-blue-700"
+                      className="bg-mpr-interactive hover:bg-mpr-interactive-dk"
                     >
                       <Plus className="w-4 h-4 mr-2" />
                       {t.addDueDate}
@@ -379,7 +379,7 @@ const MonthlyBudgetPlanningModule: React.FC<MonthlyBudgetPlanningModuleProps> = 
                   return (
                     <div key={categoryKey} className="border rounded-lg p-4">
                       <h3 className="text-lg font-semibold text-gray-800 mb-3 flex items-center gap-2">
-                        <Settings className="w-5 h-5 text-blue-600" />
+                        <Settings className="w-5 h-5 text-mpr-interactive" />
                         {categoryLabel}
                       </h3>
                       

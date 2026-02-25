@@ -1,4 +1,4 @@
-// src/pages/RetraiteEn.tsx
+﻿// src/pages/RetraiteEn.tsx
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../components/ui/card';
 import { Button } from '../components/ui/button';
@@ -14,7 +14,7 @@ const RetraiteEn: React.FC = () => {
   const t = translations[language];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-mpr-interactive-lt to-mpr-interactive-lt">
       {/* Integrated Phase 1 Navigation */}
       <RetirementNavigation />
       
@@ -35,7 +35,7 @@ const RetraiteEn: React.FC = () => {
           <Card className="hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Shield className="w-5 h-5 text-blue-600" />
+                <Shield className="w-5 h-5 text-mpr-interactive" />
                 Basic Planning
               </CardTitle>
               <CardDescription>

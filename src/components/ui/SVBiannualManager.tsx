@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -118,7 +118,7 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
     <Card className="bg-white border-4 border-gray-300 shadow-lg">
       <CardHeader className="border-b-4 border-gray-300 bg-gray-50">
         <CardTitle className="text-2xl font-bold text-gray-900 flex items-center gap-4">
-          <div className={`w-10 h-10 ${personNumber === 1 ? 'bg-blue-600' : 'bg-green-600'} rounded-full flex items-center justify-center text-white font-bold text-lg`}>
+          <div className={`w-10 h-10 ${personNumber === 1 ? 'bg-mpr-interactive' : 'bg-green-600'} rounded-full flex items-center justify-center text-white font-bold text-lg`}>
             {personNumber}
           </div>
           {isFrench ? 'Sécurité de la vieillesse' : 'Old Age Security'} - {personName}
@@ -157,7 +157,7 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
             <div className="senior-result-card">
               <div className="flex items-center gap-4 mb-4">
                 <label className="flex items-center gap-3 text-lg font-bold text-gray-900 min-w-fit">
-                  <Calculator className="w-6 h-6 text-blue-600" />
+                  <Calculator className="w-6 h-6 text-mpr-interactive" />
                   {isFrench ? `Revenus de ${editData.annee - 1} (optionnel)` : `${editData.annee - 1} Income (optional)`}
                 </label>
                 <MoneyInput
@@ -317,8 +317,8 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
             </div>
 
             {/* Résumé */}
-            <div className="bg-blue-50 border-4 border-blue-300 rounded-lg p-6">
-              <h4 className="text-2xl font-bold text-blue-800 mb-6">
+            <div className="bg-mpr-interactive-lt border-4 border-mpr-border rounded-lg p-6">
+              <h4 className="text-2xl font-bold text-mpr-navy mb-6">
                 {isFrench ? 'Résumé annuel' : 'Annual Summary'}
               </h4>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
@@ -331,7 +331,7 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
                   </div>
                 </div>
                 <div className="bg-white border-2 border-gray-300 rounded-lg p-4">
-                  <div className="text-3xl font-bold text-blue-600">
+                  <div className="text-3xl font-bold text-mpr-interactive">
                     {formatCurrency(calculateMonthlyAverage())}
                   </div>
                   <div className="text-lg text-gray-700 font-semibold">
@@ -406,10 +406,10 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
             </div>
 
             {/* Total annuel */}
-            <div className="bg-blue-50 border-4 border-blue-300 rounded-lg p-6">
+            <div className="bg-mpr-interactive-lt border-4 border-mpr-border rounded-lg p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h4 className="text-2xl font-bold text-blue-800">
+                  <h4 className="text-2xl font-bold text-mpr-navy">
                     {isFrench ? 'Total annuel' : 'Annual Total'}
                   </h4>
                   <p className="text-lg text-gray-700">
@@ -417,7 +417,7 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
                   </p>
                 </div>
                 <div className="text-right">
-                  <div className="text-3xl font-bold text-blue-600">
+                  <div className="text-3xl font-bold text-mpr-interactive">
                     {formatCurrency(calculateAnnualTotal())}
                   </div>
                   <div className="text-lg text-gray-700 font-semibold">
@@ -441,7 +441,7 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
             <Button
               onClick={() => setIsEditing(true)}
               variant="outline"
-              className="w-full border-4 border-blue-500 text-blue-700 hover:bg-blue-100 text-xl font-bold h-16"
+              className="w-full border-4 border-mpr-interactive text-mpr-navy hover:bg-mpr-interactive-lt text-xl font-bold h-16"
             >
               <Edit3 className="w-6 h-6 mr-3" />
               {isFrench ? 'Modifier les montants' : 'Edit amounts'}
@@ -450,8 +450,8 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
         )}
 
         {/* Information sur le montant maximum */}
-        <Alert className="border-4 border-blue-500 bg-blue-50">
-          <Info className="h-6 w-6 text-blue-600" />
+        <Alert className="border-4 border-mpr-interactive bg-mpr-interactive-lt">
+          <Info className="h-6 w-6 text-mpr-interactive" />
           <AlertDescription className="text-gray-900">
             <div className="text-lg">
               {/* Montant maximum retiré pour éviter toute confusion */}

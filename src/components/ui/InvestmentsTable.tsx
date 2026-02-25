@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ChevronDown, ChevronUp, Plus, TrendingUp, DollarSign, Percent, BarChart3, Calculator } from 'lucide-react';
@@ -89,8 +89,8 @@ const InvestmentsTable: React.FC<InvestmentsTableProps> = ({
       {!isCollapsed && (
         <CardContent className="p-4 space-y-4 investments-compact">
           {/* REER */}
-          <div className="bg-white p-3 rounded-lg border-2 border-blue-200">
-            <h3 className="text-lg font-bold text-blue-800 mb-2 flex items-center gap-2">
+          <div className="bg-white p-3 rounded-lg border-2 border-mpr-border">
+            <h3 className="text-lg font-bold text-mpr-navy mb-2 flex items-center gap-2">
               <BarChart3 className="w-5 h-5" />
               {isFrench ? 'REER (Régime enregistré d\'épargne-retraite)' : 'RRSP (Registered Retirement Savings Plan)'}
             </h3>
@@ -266,7 +266,7 @@ const InvestmentsTable: React.FC<InvestmentsTableProps> = ({
               
               <div className="grid grid-cols-1 md:grid-cols-5 gap-4 text-center">
                 <div>
-                  <div className="text-3xl font-bold text-blue-600">
+                  <div className="text-3xl font-bold text-mpr-interactive">
                     {formatCurrency(totals.reer)}
                   </div>
                   <div className="text-lg text-gray-700">

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Button } from './button';
 import { Card, CardContent } from './card';
 import { Badge } from './badge';
@@ -35,13 +35,13 @@ const LongevityModeSelector: React.FC<LongevityModeSelectorProps> = ({
           <div
             className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
               mode === 'standard'
-                ? 'border-blue-500 bg-blue-50'
-                : 'border-gray-200 hover:border-blue-300'
+                ? 'border-mpr-interactive bg-mpr-interactive-lt'
+                : 'border-gray-200 hover:border-mpr-border'
             }`}
             onClick={() => onModeChange('standard')}
           >
             <div className="flex items-center gap-3 mb-3">
-              <Zap className="w-6 h-6 text-blue-600" />
+              <Zap className="w-6 h-6 text-mpr-interactive" />
               <div>
                 <h4 className="font-semibold text-gray-900">
                   {isFrench ? 'Mode Standard IPF2025' : 'Standard IPF2025 Mode'}
@@ -50,7 +50,7 @@ const LongevityModeSelector: React.FC<LongevityModeSelectorProps> = ({
                   {isFrench ? 'Rapide' : 'Quick'}
                 </Badge>
               </div>
-              {mode === 'standard' && <CheckCircle className="w-5 h-5 text-blue-600" />}
+              {mode === 'standard' && <CheckCircle className="w-5 h-5 text-mpr-interactive" />}
             </div>
             <p className="text-sm text-gray-600 mb-3">
               {isFrench

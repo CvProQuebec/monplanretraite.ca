@@ -1,4 +1,4 @@
-// Tableau de bord du plan Ultimate (300 $)
+﻿// Tableau de bord du plan Ultimate (300 $)
 // Planification successorale avancée et rapports de préparation
 // Respectant la typographie québécoise et les limites professionnelles
 
@@ -187,7 +187,7 @@ export const UltimatePlanningDashboard: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* En-tête du plan Ultimate */}
-      <Card className="border-gradient-to-r from-purple-500 to-blue-600 bg-gradient-to-r from-purple-50 to-blue-50">
+      <Card className="border-gradient-to-r from-purple-500 to-mpr-interactive bg-gradient-to-r from-purple-50 to-mpr-interactive-lt">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center gap-3 mb-4">
             <Crown className="h-12 w-12 text-purple-600" />
@@ -349,14 +349,14 @@ export const UltimatePlanningDashboard: React.FC = () => {
       </Tabs>
 
       {/* Informations et aide */}
-      <Card className="border-blue-200 bg-blue-50">
+      <Card className="border-mpr-border bg-mpr-interactive-lt">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-900">
+          <CardTitle className="flex items-center gap-2 text-mpr-navy">
             <Info className="h-5 w-5" />
             À propos du plan Ultimate
           </CardTitle>
         </CardHeader>
-        <CardContent className="text-blue-700">
+        <CardContent className="text-mpr-navy">
           <p className="mb-3">
             Le plan Ultimate vous donne accès à des outils avancés de planification successorale, 
             des simulations financières sophistiquées et des rapports de préparation professionnels 

@@ -1,4 +1,4 @@
-// src/components/ui/FourPercentRuleModuleEn.tsx
+﻿// src/components/ui/FourPercentRuleModuleEn.tsx
 import React, { useEffect, useMemo, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -183,7 +183,7 @@ export default function FourPercentRuleModuleEn({ className }: { className?: str
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Calculator className="h-6 w-6 text-blue-600" />
+            <Calculator className="h-6 w-6 text-mpr-interactive" />
             <CardTitle>Modernized 4% Rule</CardTitle>
           </div>
           <CardDescription>
@@ -252,7 +252,7 @@ export default function FourPercentRuleModuleEn({ className }: { className?: str
                 <div className="space-y-4">
                   <Card className="p-4">
                     <div className="text-center space-y-2">
-                      <div className="text-2xl font-bold text-blue-600">
+                      <div className="text-2xl font-bold text-mpr-interactive">
                         {formatPercentEN(currentSuccessRate, 1)}
                       </div>
                       <div className="text-sm text-gray-600">Probability of success (Trinity, 30 years)</div>
@@ -427,7 +427,7 @@ export default function FourPercentRuleModuleEn({ className }: { className?: str
 
                     <div className="space-y-4">
                       <Card className="p-4 text-center">
-                        <div className="text-3xl font-bold text-blue-600">~30 years</div>
+                        <div className="text-3xl font-bold text-mpr-interactive">~30 years</div>
                         <div className="text-sm text-gray-600">Typical retirement horizon</div>
                       </Card>
 

@@ -1,4 +1,4 @@
-// ===== COMPOSANT ANALYSE OAS/GIS =====
+﻿// ===== COMPOSANT ANALYSE OAS/GIS =====
 // Interface utilisateur pour l'analyse Sécurité de la vieillesse et Supplément de revenu garanti
 
 import React, { useState } from 'react';
@@ -179,7 +179,7 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
                 type="number"
                 value={formData.age}
                 onChange={(e) => handleInputChange('age', Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mpr-interactive"
                 title={t.age}
                 aria-label={t.age}
               />
@@ -200,7 +200,7 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
                 type="number"
                 value={formData.revenuAnnuel}
                 onChange={(e) => handleInputChange('revenuAnnuel', Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mpr-interactive"
                 title={t.annualIncome}
                 aria-label={t.annualIncome}
               />
@@ -220,7 +220,7 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
               <select
                 value={formData.statutConjoint}
                 onChange={(e) => handleInputChange('statutConjoint', e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mpr-interactive"
                 title={t.maritalStatus}
                 aria-label={t.maritalStatus}
               >
@@ -245,7 +245,7 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
                 type="number"
                 value={formData.revenuConjoint}
                 onChange={(e) => handleInputChange('revenuConjoint', Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mpr-interactive"
                 title={t.spouseIncome}
                 aria-label={t.spouseIncome}
                 disabled={formData.statutConjoint === 'SEUL'}
@@ -267,7 +267,7 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
                 type="number"
                 value={formData.anneesResidence}
                 onChange={(e) => handleInputChange('anneesResidence', Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-mpr-interactive"
                 title={t.yearsResidence}
                 aria-label={t.yearsResidence}
                 min="0"
@@ -319,27 +319,27 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* OAS */}
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+                  <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+                    <h4 className="font-semibold text-mpr-navy mb-3 flex items-center gap-2">
                       <Shield className="w-5 h-5" />
                       {t.oas}
                     </h4>
                     <div className="space-y-2">
                       <div className="flex justify-between">
-                        <span className="text-sm text-blue-700">{t.monthlyAmount}:</span>
-                        <span className="font-semibold text-blue-900">
+                        <span className="text-sm text-mpr-navy">{t.monthlyAmount}:</span>
+                        <span className="font-semibold text-mpr-navy">
                           ${analysis.securiteVieillesse.montantMensuel.toFixed(2)}
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-sm text-blue-700">{t.startAge}:</span>
-                        <span className="font-semibold text-blue-900">
+                        <span className="text-sm text-mpr-navy">{t.startAge}:</span>
+                        <span className="font-semibold text-mpr-navy">
                           {analysis.securiteVieillesse.ageDebut} ans
                         </span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-sm text-blue-700">{t.recoveryThreshold}:</span>
-                        <span className="font-semibold text-blue-900">
+                        <span className="text-sm text-mpr-navy">{t.recoveryThreshold}:</span>
+                        <span className="font-semibold text-mpr-navy">
                           ${analysis.securiteVieillesse.seuil_recuperation.toLocaleString()}
                         </span>
                       </div>
@@ -376,7 +376,7 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
                 </div>
 
                 {/* Revenu total projeté */}
-                <div className="mt-6 p-4 bg-gradient-to-r from-purple-50 to-indigo-50 rounded-lg">
+                <div className="mt-6 p-4 bg-gradient-to-r from-purple-50 to-mpr-interactive-lt rounded-lg">
                   <h4 className="font-semibold text-purple-900 mb-2 flex items-center gap-2">
                     <TrendingUp className="w-5 h-5" />
                     Revenu total mensuel projeté
@@ -414,22 +414,22 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
               <CardContent>
                 <div className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="p-4 bg-blue-50 rounded-lg">
-                      <h5 className="font-semibold text-blue-900 mb-2">{t.monthlyAmount}</h5>
-                      <div className="text-2xl font-bold text-blue-600">
+                    <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+                      <h5 className="font-semibold text-mpr-navy mb-2">{t.monthlyAmount}</h5>
+                      <div className="text-2xl font-bold text-mpr-interactive">
                         ${analysis.securiteVieillesse.montantMensuel.toFixed(2)}
                       </div>
-                      <p className="text-sm text-blue-600">
+                      <p className="text-sm text-mpr-interactive">
                         Montant mensuel de la pension OAS
                       </p>
                     </div>
                     
-                    <div className="p-4 bg-blue-50 rounded-lg">
-                      <h5 className="font-semibold text-blue-900 mb-2">{t.startAge}</h5>
-                      <div className="text-2xl font-bold text-blue-600">
+                    <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+                      <h5 className="font-semibold text-mpr-navy mb-2">{t.startAge}</h5>
+                      <div className="text-2xl font-bold text-mpr-interactive">
                         {analysis.securiteVieillesse.ageDebut} ans
                       </div>
-                      <p className="text-sm text-blue-600">
+                      <p className="text-sm text-mpr-interactive">
                         Âge de début de la pension
                       </p>
                     </div>
@@ -540,14 +540,14 @@ export const OASGISAnalysisComponent: React.FC<OASGISAnalysisProps> = ({
                     </div>
                   </div>
 
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <h5 className="font-semibold text-blue-900 mb-2">
+                  <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+                    <h5 className="font-semibold text-mpr-navy mb-2">
                       Information importante
                     </h5>
-                    <p className="text-sm text-blue-700">
+                    <p className="text-sm text-mpr-navy">
                       {t.optimizationNote}
                     </p>
-                    <p className="text-sm text-blue-700 mt-2">
+                    <p className="text-sm text-mpr-navy mt-2">
                       {t.gisInfo}
                     </p>
                   </div>

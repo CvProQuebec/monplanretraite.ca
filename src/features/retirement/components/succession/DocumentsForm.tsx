@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -123,7 +123,7 @@ export const DocumentsForm: React.FC<DocumentsFormProps> = ({ documents, onUpdat
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <FileText className="h-5 w-5 text-blue-600" />
+              <FileText className="h-5 w-5 text-mpr-interactive" />
               <div>
                 <p className="text-sm text-muted-foreground">Total documents</p>
                 <p className="text-2xl font-bold">{documents.length}</p>
@@ -313,7 +313,7 @@ export const DocumentsForm: React.FC<DocumentsFormProps> = ({ documents, onUpdat
                     <div className="flex items-start justify-between">
                       <div className="flex-1 space-y-2">
                         <div className="flex items-center space-x-2">
-                          <IconComponent className="h-5 w-5 text-blue-600" />
+                          <IconComponent className="h-5 w-5 text-mpr-interactive" />
                           <h4 className="font-semibold text-lg">{document.nom}</h4>
                           <Badge variant="outline">{typeInfo?.label}</Badge>
                           {document.notaire && (
@@ -404,7 +404,7 @@ export const DocumentsForm: React.FC<DocumentsFormProps> = ({ documents, onUpdat
                 
                 return (
                   <div key={type.value} className="text-center p-3 bg-muted rounded-lg">
-                    <IconComponent className="h-6 w-6 mx-auto mb-2 text-blue-600" />
+                    <IconComponent className="h-6 w-6 mx-auto mb-2 text-mpr-interactive" />
                     <p className="font-semibold">{type.label}</p>
                     <p className="text-sm text-muted-foreground">{count} document{count > 1 ? 's' : ''}</p>
                   </div>
@@ -416,11 +416,11 @@ export const DocumentsForm: React.FC<DocumentsFormProps> = ({ documents, onUpdat
       )}
 
       {/* Conseils et rappels */}
-      <Card className="bg-blue-50 border-blue-200">
+      <Card className="bg-mpr-interactive-lt border-mpr-border">
         <CardHeader>
-          <CardTitle className="text-blue-900">Conseils importants</CardTitle>
+          <CardTitle className="text-mpr-navy">Conseils importants</CardTitle>
         </CardHeader>
-        <CardContent className="text-blue-800">
+        <CardContent className="text-mpr-navy">
           <ul className="space-y-2 text-sm">
             <li>• <strong>Testament :</strong> Assurez-vous qu'il soit valide légalement (olographe, notarié ou devant témoins)</li>
             <li>• <strong>Copies :</strong> Conservez des copies dans plusieurs endroits sûrs</li>

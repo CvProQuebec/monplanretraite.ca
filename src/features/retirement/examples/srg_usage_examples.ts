@@ -1,4 +1,4 @@
-// src/features/retirement/examples/SRGUsageExamples.tsx
+﻿// src/features/retirement/examples/SRGUsageExamples.tsx
 // Exemples d'utilisation du module SRG - Guide d'implémentation
 // 100 % SÉCURISÉ - AUCUNE TRANSMISSION RÉSEAU
 
@@ -106,8 +106,8 @@ export const RetirementAnalysisWithSRG: React.FC = () => {
               <h3 className="text-lg font-semibold">Résultats SRG</h3>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-blue-50 p-4 rounded">
-                  <div className="text-sm font-medium text-blue-600">
+                <div className="bg-mpr-interactive-lt p-4 rounded">
+                  <div className="text-sm font-medium text-mpr-interactive">
                     {userData.personal.prenom1}
                   </div>
                   <div className="text-xl font-bold">
@@ -207,7 +207,7 @@ export const SRGQuickEvaluation: React.FC<{ userData: UserData }> = ({ userData 
               <ul className="space-y-1">
                 {evaluation.recommendedActions.map((action, index) => (
                   <li key={index} className="text-sm flex items-start gap-2">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                    <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2 flex-shrink-0"></div>
                     {action}
                   </li>
                 ))}
@@ -282,9 +282,9 @@ export const SRGTestCases: React.FC = () => {
             
             <TestCaseResults userData={testCase.userData as UserData} />
             
-            <div className="mt-4 p-3 bg-blue-50 rounded">
-              <div className="text-sm font-medium text-blue-700">Résultat attendu:</div>
-              <div className="text-sm text-blue-600">{testCase.expectedResult}</div>
+            <div className="mt-4 p-3 bg-mpr-interactive-lt rounded">
+              <div className="text-sm font-medium text-mpr-navy">Résultat attendu:</div>
+              <div className="text-sm text-mpr-interactive">{testCase.expectedResult}</div>
             </div>
           </CardContent>
         </Card>

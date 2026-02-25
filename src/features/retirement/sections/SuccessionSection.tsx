@@ -1,4 +1,4 @@
-// src/features/retirement/sections/SuccessionSection.tsx
+﻿// src/features/retirement/sections/SuccessionSection.tsx
 import React from 'react';
 import { SuccessionTab } from '../components/emergency/SuccessionTab';
 import { useRetirementData } from '../hooks/useRetirementData';
@@ -51,7 +51,7 @@ export const SuccessionSection: React.FC<SuccessionSectionProps> = ({ data, onUp
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-mpr-navy text-white">
       <div className="container mx-auto px-6 py-8">
         {/* En-tête */}
         <div className="text-center mb-8">

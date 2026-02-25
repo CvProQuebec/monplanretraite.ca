@@ -1,4 +1,4 @@
-// Composant de skeleton intelligent avec IA et animations fluides
+﻿// Composant de skeleton intelligent avec IA et animations fluides
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -431,13 +431,13 @@ export const IntelligentSkeleton: React.FC<IntelligentSkeletonProps> = ({
       {/* Indicateur d'analyse IA */}
       {isAnalyzing && (
         <motion.div
-          className="flex items-center justify-center p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl border border-blue-200"
+          className="flex items-center justify-center p-4 bg-gradient-to-r from-mpr-interactive-lt to-purple-50 rounded-xl border border-mpr-border"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
         >
-          <Brain className="w-5 h-5 text-blue-600 mr-2 animate-pulse" />
-          <span className="text-blue-700 font-medium">
+          <Brain className="w-5 h-5 text-mpr-interactive mr-2 animate-pulse" />
+          <span className="text-mpr-navy font-medium">
             IA en train d'analyser le contenu...
           </span>
         </motion.div>

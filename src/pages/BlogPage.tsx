@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -27,7 +27,7 @@ const BlogPage: React.FC = () => {
         ? 'Des guides détaillés pour optimiser votre planification financière'
         : 'Detailed guides to optimize your financial planning',
       icon: BookOpen,
-      color: 'from-blue-500 to-blue-600',
+      color: 'from-mpr-interactive to-mpr-interactive',
       articles: [
         {
           title: isFrench ? 'Comment optimiser la transmission de votre CÉLI' : 'How to optimize your TFSA transmission',
@@ -108,7 +108,7 @@ const BlogPage: React.FC = () => {
         ? 'Les dernières nouvelles fiscales et leurs impacts sur votre retraite'
         : 'Latest tax news and their impact on your retirement',
       icon: TrendingUp,
-      color: 'from-purple-500 to-indigo-600',
+      color: 'from-purple-500 to-mpr-interactive',
       articles: [
         {
           title: isFrench ? 'Budget 2024 : Nouveautés pour les retraités' : 'Budget 2024: News for Retirees',
@@ -139,7 +139,7 @@ const BlogPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-purple-50">
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-6xl mx-auto">
           
@@ -179,10 +179,10 @@ const BlogPage: React.FC = () => {
                     {category.articles.map((article, index) => (
                       <div 
                         key={index}
-                        className="border-l-4 border-gray-200 pl-4 hover:border-blue-400 transition-colors cursor-pointer"
+                        className="border-l-4 border-gray-200 pl-4 hover:border-mpr-interactive transition-colors cursor-pointer"
                         onClick={() => handleArticleClick(article.path)}
                       >
-                        <h4 className="font-semibold text-gray-900 hover:text-blue-600 transition-colors">
+                        <h4 className="font-semibold text-gray-900 hover:text-mpr-interactive transition-colors">
                           {article.title}
                         </h4>
                         <p className="text-sm text-gray-600 mt-1">
@@ -244,10 +244,10 @@ const BlogPage: React.FC = () => {
                   className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow cursor-pointer"
                   onClick={() => handleArticleClick(article.path)}
                 >
-                  <div className="text-xs text-blue-600 font-semibold mb-2">
+                  <div className="text-xs text-mpr-interactive font-semibold mb-2">
                     {article.category}
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
+                  <h3 className="font-semibold text-gray-900 mb-2 hover:text-mpr-interactive transition-colors">
                     {article.title}
                   </h3>
                   <div className="flex items-center gap-4 text-xs text-gray-500">

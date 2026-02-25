@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { RetirementApp } from '@/features/retirement';
 import { useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
@@ -116,7 +116,7 @@ const UnifiedRetirementModule: React.FC = () => {
   // For French: use full RetirementApp, for English: use debug interface
   if (isFrench) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-mpr-navy">
         <div className="container mx-auto px-6 py-8">
           <RetirementApp 
             activeSection={activeSection || new URLSearchParams(window.location.search).get('section') || 'dashboard'} 
@@ -130,7 +130,7 @@ const UnifiedRetirementModule: React.FC = () => {
 
   // English debug interface
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt p-8">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
@@ -151,7 +151,7 @@ const UnifiedRetirementModule: React.FC = () => {
                 onClick={() => handleSectionChange(section)}
                 className={`p-3 rounded-lg transition-colors ${
                   activeSection === section
-                    ? 'bg-blue-600 text-white'
+                    ? 'bg-mpr-interactive text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -175,9 +175,9 @@ const UnifiedRetirementModule: React.FC = () => {
               </p>
             </div>
 
-            <div className="p-4 bg-blue-50 rounded-lg">
-              <h3 className="font-semibold text-blue-700 mb-2">{t.userInfo}</h3>
-              <p className="text-blue-600">
+            <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+              <h3 className="font-semibold text-mpr-navy mb-2">{t.userInfo}</h3>
+              <p className="text-mpr-interactive">
                 {user ? `${t.loggedInAs}: ${user.email || 'User'}` : t.notLoggedIn}
               </p>
             </div>

@@ -1,4 +1,4 @@
-// src/features/retirement/components/CPPCalculator.tsx
+﻿// src/features/retirement/components/CPPCalculator.tsx
 
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -446,7 +446,7 @@ export const CPPCalculator: React.FC<CPPCalculatorProps> = ({ className }) => {
                         <div className="text-sm text-gray-600">{t.basePension}</div>
                       </div>
                       <div className="text-center p-4 bg-white rounded-lg shadow-sm">
-                        <div className="text-2xl font-bold text-blue-600">
+                        <div className="text-2xl font-bold text-mpr-interactive">
                           {formatCurrency(results.pensionAjustee)}
                         </div>
                         <div className="text-sm text-gray-600">{t.adjustedPension}</div>
@@ -489,11 +489,11 @@ export const CPPCalculator: React.FC<CPPCalculatorProps> = ({ className }) => {
                         </div>
                         <div className="text-sm text-green-600">{t.age65}</div>
                         </div>
-                      <div className="text-center p-4 bg-blue-50 rounded-lg">
-                        <div className="text-xl font-bold text-blue-700">
+                      <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+                        <div className="text-xl font-bold text-mpr-navy">
                           {formatCurrency(results.projections.age70)}
                         </div>
-                        <div className="text-sm text-blue-600">{t.age70}</div>
+                        <div className="text-sm text-mpr-interactive">{t.age70}</div>
                       </div>
                       <div className="text-center p-4 bg-purple-50 rounded-lg">
                         <div className="text-xl font-bold text-purple-700">
@@ -650,10 +650,10 @@ export const CPPCalculator: React.FC<CPPCalculatorProps> = ({ className }) => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <div className="p-4 bg-blue-50 rounded-lg">
-                    <h4 className="font-semibold text-blue-900 mb-2">{t.maxAmount2025}</h4>
-                    <p className="text-2xl font-bold text-blue-600">$1,433.00</p>
-                    <p className="text-sm text-blue-700">par mois</p>
+                  <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+                    <h4 className="font-semibold text-mpr-navy mb-2">{t.maxAmount2025}</h4>
+                    <p className="text-2xl font-bold text-mpr-interactive">$1,433.00</p>
+                    <p className="text-sm text-mpr-navy">par mois</p>
                   </div>
                   <div className="p-4 bg-green-50 rounded-lg">
                     <h4 className="font-semibold text-green-900 mb-2">{t.avgAmount2024}</h4>

@@ -1,4 +1,4 @@
-// src/features/retirement/components/EmergencyContactsForm.tsx
+﻿// src/features/retirement/components/EmergencyContactsForm.tsx
 // Formulaire pour les contacts d'urgence
 
 import React, { useState } from 'react';
@@ -189,7 +189,7 @@ export const EmergencyContactsForm: React.FC<EmergencyContactsFormProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Phone className="w-5 h-5 text-blue-600" />
+            <Phone className="w-5 h-5 text-mpr-interactive" />
             Contacts d'urgence
           </CardTitle>
           <CardDescription>
@@ -235,7 +235,7 @@ export const EmergencyContactsForm: React.FC<EmergencyContactsFormProps> = ({
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="border-blue-200 bg-blue-50">
+            <Card className="border-mpr-border bg-mpr-interactive-lt">
               <CardHeader>
                 <CardTitle className="text-lg">
                   {editingContact ? 'Modifier le contact' : 'Nouveau contact d\'urgence'}
@@ -441,7 +441,7 @@ export const EmergencyContactsForm: React.FC<EmergencyContactsFormProps> = ({
                       <div className="space-y-1 text-sm text-gray-600">
                         <div className="flex items-center gap-2">
                           <Phone className="w-4 h-4" />
-                          <a href={`tel:${contact.telephone}`} className="hover:text-blue-600">
+                          <a href={`tel:${contact.telephone}`} className="hover:text-mpr-interactive">
                             {contact.telephone}
                           </a>
                         </div>
@@ -449,7 +449,7 @@ export const EmergencyContactsForm: React.FC<EmergencyContactsFormProps> = ({
                         {contact.email && (
                           <div className="flex items-center gap-2">
                             <Mail className="w-4 h-4" />
-                            <a href={`mailto:${contact.email}`} className="hover:text-blue-600">
+                            <a href={`mailto:${contact.email}`} className="hover:text-mpr-interactive">
                               {contact.email}
                             </a>
                           </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Flag, Settings, BarChart3 } from 'lucide-react';
@@ -23,13 +23,13 @@ const RRQManager: React.FC<RRQManagerProps> = ({
   const [activeTab, setActiveTab] = useState<'input' | 'summary'>('input');
 
   return (
-    <Card className="bg-white border-2 border-blue-200 shadow-xl">
-      <CardHeader className="bg-blue-50 border-b-2 border-blue-200">
-        <CardTitle className="text-2xl font-bold text-blue-800 flex items-center gap-3">
+    <Card className="bg-white border-2 border-mpr-border shadow-xl">
+      <CardHeader className="bg-mpr-interactive-lt border-b-2 border-mpr-border">
+        <CardTitle className="text-2xl font-bold text-mpr-navy flex items-center gap-3">
           <Flag className="w-8 h-8" />
           {isFrench ? 'RRQ/CPP - Gestion 2025' : 'QPP/CPP - 2025 Management'}
         </CardTitle>
-        <p className="text-blue-600">
+        <p className="text-mpr-interactive">
           {isFrench 
             ? 'Personne ' + personNumber + ' - Configuration et suivi des montants RRQ'
             : 'Person ' + personNumber + ' - RRQ amounts configuration and tracking'
@@ -45,7 +45,7 @@ const RRQManager: React.FC<RRQManagerProps> = ({
             onClick={() => setActiveTab('input')}
             className={`flex-1 rounded-none border-0 ${
               activeTab === 'input' 
-                ? 'bg-blue-600 text-white' 
+                ? 'bg-mpr-interactive text-white' 
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >
@@ -57,7 +57,7 @@ const RRQManager: React.FC<RRQManagerProps> = ({
             onClick={() => setActiveTab('summary')}
             className={`flex-1 rounded-none border-0 ${
               activeTab === 'summary' 
-                ? 'bg-blue-600 text-white' 
+                ? 'bg-mpr-interactive text-white' 
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >

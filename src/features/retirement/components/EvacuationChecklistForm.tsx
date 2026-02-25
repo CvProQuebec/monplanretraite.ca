@@ -1,4 +1,4 @@
-// src/features/retirement/components/EvacuationChecklistForm.tsx
+﻿// src/features/retirement/components/EvacuationChecklistForm.tsx
 // Formulaire pour la liste d'évacuation d'urgence
 
 import React, { useState } from 'react';
@@ -210,7 +210,7 @@ export const EvacuationChecklistForm: React.FC<EvacuationChecklistFormProps> = (
       case 'essential': return 'bg-red-100 text-red-800 border-red-200';
       case 'important': return 'bg-orange-100 text-orange-800 border-orange-200';
       case 'valuable': return 'bg-purple-100 text-purple-800 border-purple-200';
-      case 'comfort': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'comfort': return 'bg-mpr-interactive-lt text-mpr-navy border-mpr-border';
       default: return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
@@ -276,8 +276,8 @@ export const EvacuationChecklistForm: React.FC<EvacuationChecklistFormProps> = (
             </div>
             
             <div className="text-center p-3 bg-white rounded-lg">
-              <Clock className="w-6 h-6 text-blue-600 mx-auto mb-1" />
-              <div className="text-2xl font-bold text-blue-600">{stats.total}</div>
+              <Clock className="w-6 h-6 text-mpr-interactive mx-auto mb-1" />
+              <div className="text-2xl font-bold text-mpr-interactive">{stats.total}</div>
               <div className="text-xs text-gray-600">Articles total</div>
             </div>
             

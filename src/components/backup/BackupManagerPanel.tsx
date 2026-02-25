@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import BackgroundBackupService, { type BackupConfig, type BackupMeta } from '@/services/BackgroundBackupService';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
@@ -184,7 +184,7 @@ export const BackupManagerPanel: React.FC = () => {
             <AlertDescription>⚠️ {t.warnings.second}</AlertDescription>
           </Alert>
         )}
-        <Alert className="border-blue-200 bg-blue-50 text-blue-900">
+        <Alert className="border-mpr-border bg-mpr-interactive-lt text-mpr-navy">
           <AlertDescription>🔐 {t.warnings.privacy}</AlertDescription>
         </Alert>
         <Alert className="border-gray-200 bg-gray-50 text-gray-800">

@@ -1,4 +1,4 @@
-// src/components/ui/FERROptimizationModule.tsx
+﻿// src/components/ui/FERROptimizationModule.tsx
 /**
  * MODULE FERR OPTIMISÉ - Fonds Enregistré de Revenu de Retraite
  * 
@@ -358,7 +358,7 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
               </div>
 
               {hasSpouse && (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border rounded-lg bg-blue-50">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 border rounded-lg bg-mpr-interactive-lt">
                   <div>
                     <Label htmlFor="spouseAge">Âge du conjoint</Label>
                     <Input
@@ -578,9 +578,9 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
                     </div>
                   </div>
 
-                  <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                    <h3 className="font-semibold text-lg text-blue-800 mb-2">Économies Annuelles Totales</h3>
-                    <p className="text-3xl font-bold text-blue-600">
+                  <div className="mt-6 p-4 bg-mpr-interactive-lt border border-mpr-border rounded-lg">
+                    <h3 className="font-semibold text-lg text-mpr-navy mb-2">Économies Annuelles Totales</h3>
+                    <p className="text-3xl font-bold text-mpr-interactive">
                       {optimization.annualSavings.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
                     </p>
                     <p className="text-sm text-gray-600 mt-1">

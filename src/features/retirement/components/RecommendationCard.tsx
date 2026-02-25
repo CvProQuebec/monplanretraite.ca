@@ -1,4 +1,4 @@
-// src/features/retirement/components/RecommendationCard.tsx
+﻿// src/features/retirement/components/RecommendationCard.tsx
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -49,9 +49,9 @@ export const RecommendationCard: React.FC<RecommendationCardProps> = ({
       borderColor: 'border-l-amber-500'
     },
     optimization: {
-      color: 'bg-blue-100 text-blue-800 border-blue-200',
+      color: 'bg-mpr-interactive-lt text-mpr-navy border-mpr-border',
       icon: TrendingUp,
-      bgColor: 'bg-blue-50',
+      bgColor: 'bg-mpr-interactive-lt',
       borderColor: 'border-l-blue-500'
     },
     suggestion: {

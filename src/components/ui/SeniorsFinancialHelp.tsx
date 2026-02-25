@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -23,7 +23,7 @@ const SeniorsFinancialHelp: React.FC<SeniorsFinancialHelpProps> = ({ isFrench })
 
   const financialTerms = [
     {
-      icon: <DollarSign className="w-8 h-8 text-blue-600" />,
+      icon: <DollarSign className="w-8 h-8 text-mpr-interactive" />,
       term: isFrench ? 'Salaire' : 'Salary',
       definition: isFrench 
         ? 'Le montant d\'argent que vous recevez chaque année de votre emploi principal'
@@ -63,7 +63,7 @@ const SeniorsFinancialHelp: React.FC<SeniorsFinancialHelpProps> = ({ isFrench })
       example: isFrench ? 'Exemple: 1 200 $ par mois' : 'Example: $1,200 per month'
     },
     {
-      icon: <Laptop className="w-8 h-8 text-indigo-600" />,
+      icon: <Laptop className="w-8 h-8 text-mpr-interactive" />,
       term: isFrench ? 'Travail autonome' : 'Self-Employment',
       definition: isFrench 
         ? 'L\'argent que vous gagnez en travaillant pour vous-même'
@@ -79,7 +79,7 @@ const SeniorsFinancialHelp: React.FC<SeniorsFinancialHelpProps> = ({ isFrench })
           onClick={() => setShowHelp(true)}
           variant="outline"
           size="lg"
-          className="bg-blue-50 border-2 border-blue-300 text-blue-700 hover:bg-blue-100 text-xl px-8 py-4 h-16"
+          className="bg-mpr-interactive-lt border-2 border-mpr-border text-mpr-navy hover:bg-mpr-interactive-lt text-xl px-8 py-4 h-16"
         >
           <HelpCircle className="w-6 h-6 mr-3" />
           {isFrench ? 'Aide : Que signifient ces termes ?' : 'Help: What do these terms mean?'}
@@ -89,18 +89,18 @@ const SeniorsFinancialHelp: React.FC<SeniorsFinancialHelpProps> = ({ isFrench })
   }
 
   return (
-    <Card className="bg-blue-50 border-4 border-blue-200 shadow-xl mb-8">
-      <CardHeader className="bg-blue-100 border-b-4 border-blue-300">
+    <Card className="bg-mpr-interactive-lt border-4 border-mpr-border shadow-xl mb-8">
+      <CardHeader className="bg-mpr-interactive-lt border-b-4 border-mpr-border">
         <div className="flex items-center justify-between">
-          <CardTitle className="text-3xl font-bold text-blue-800 flex items-center gap-3">
-            <Info className="w-8 h-8 text-blue-600" />
+          <CardTitle className="text-3xl font-bold text-mpr-navy flex items-center gap-3">
+            <Info className="w-8 h-8 text-mpr-interactive" />
             {isFrench ? 'Guide des termes financiers' : 'Financial Terms Guide'}
           </CardTitle>
           <Button
             onClick={() => setShowHelp(false)}
             variant="outline"
             size="lg"
-            className="bg-white border-2 border-blue-300 text-blue-700 hover:bg-blue-50 h-12 w-12 p-0"
+            className="bg-white border-2 border-mpr-border text-mpr-navy hover:bg-mpr-interactive-lt h-12 w-12 p-0"
           >
             <X className="w-6 h-6" />
           </Button>
@@ -108,9 +108,9 @@ const SeniorsFinancialHelp: React.FC<SeniorsFinancialHelpProps> = ({ isFrench })
       </CardHeader>
       
       <CardContent className="p-8">
-        <Alert className="border-blue-300 bg-blue-100 mb-6">
-          <Info className="h-6 w-6 text-blue-600" />
-          <AlertDescription className="text-lg text-blue-800">
+        <Alert className="border-mpr-border bg-mpr-interactive-lt mb-6">
+          <Info className="h-6 w-6 text-mpr-interactive" />
+          <AlertDescription className="text-lg text-mpr-navy">
             <strong>{isFrench ? 'Pourquoi c\'est important :' : 'Why this matters:'}</strong>
             <br />
             {isFrench 
@@ -149,7 +149,7 @@ const SeniorsFinancialHelp: React.FC<SeniorsFinancialHelpProps> = ({ isFrench })
           <Button
             onClick={() => setShowHelp(false)}
             size="lg"
-            className="bg-blue-600 hover:bg-blue-700 text-white text-xl px-8 py-4 h-16"
+            className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white text-xl px-8 py-4 h-16"
           >
             {isFrench ? 'J\'ai compris, fermer l\'aide' : 'I understand, close help'}
           </Button>

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SeniorsGuidedExperience - Composant Principal Navigation Zéro Scroll
  * Interface ultra-simplifiée pour seniors (50-90 ans)
  * UNE ÉTAPE = UN ÉCRAN COMPLET | NAVIGATION FIXE | ASSISTANT PERMANENT
@@ -68,7 +68,7 @@ const seniorsStyles = `
   }
 
   .seniors-header {
-    background: linear-gradient(135deg, #4c6ef5 0%, #6c5ce7 100%);
+    background: linear-gradient(135deg, #2B5BA8 0%, #6c5ce7 100%);
     color: white;
     padding: 30px;
     text-align: center;
@@ -127,7 +127,7 @@ const seniorsStyles = `
     border-radius: 12px;
     padding: 25px;
     margin-bottom: 30px;
-    border-left: 5px solid #4c6ef5;
+    border-left: 5px solid #2B5BA8;
   }
 
   .seniors-assistant-message {
@@ -192,8 +192,8 @@ const seniorsStyles = `
 
   .seniors-input:focus {
     outline: none;
-    border-color: #4c6ef5;
-    box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.1);
+    border-color: #2B5BA8;
+    box-shadow: 0 0 0 3px rgba(43, 91, 168, 0.1);
   }
 
   .seniors-select-trigger {
@@ -223,15 +223,15 @@ const seniorsStyles = `
   }
 
   .seniors-nav-button-primary {
-    background: linear-gradient(135deg, #4c6ef5 0%, #6c5ce7 100%);
+    background: linear-gradient(135deg, #2B5BA8 0%, #6c5ce7 100%);
     color: white;
     border: none;
-    box-shadow: 0 4px 12px rgba(76, 110, 245, 0.3);
+    box-shadow: 0 4px 12px rgba(43, 91, 168, 0.3);
   }
 
   .seniors-nav-button-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(76, 110, 245, 0.4);
+    box-shadow: 0 6px 20px rgba(43, 91, 168, 0.4);
   }
 
   .seniors-nav-button-secondary {
@@ -514,7 +514,7 @@ export const SeniorsGuidedExperience: React.FC<SeniorsGuidedExperienceProps> = (
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="text-center p-4">
-            <User size={32} className="mx-auto mb-2 text-blue-500" />
+            <User size={32} className="mx-auto mb-2 text-mpr-interactive" />
             <h4 className="font-semibold">Profil personnel</h4>
             <p className="text-sm text-gray-600">Vos informations de base</p>
           </div>
@@ -756,9 +756,9 @@ export const SeniorsGuidedExperience: React.FC<SeniorsGuidedExperienceProps> = (
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="p-4 bg-blue-50 rounded-lg">
-          <h4 className="font-semibold text-blue-800 mb-2">🍁 Régime de rentes du Québec (RRQ)</h4>
-          <p className="text-sm text-blue-700">
+        <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+          <h4 className="font-semibold text-mpr-navy mb-2">🍁 Régime de rentes du Québec (RRQ)</h4>
+          <p className="text-sm text-mpr-navy">
             Calculé automatiquement selon votre âge et vos revenus
           </p>
         </div>
@@ -797,7 +797,7 @@ export const SeniorsGuidedExperience: React.FC<SeniorsGuidedExperienceProps> = (
         </p>
       </div>
       
-      <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg mb-6">
+      <div className="bg-gradient-to-r from-green-50 to-mpr-interactive-lt p-6 rounded-lg mb-6">
         <h4 className="font-bold text-lg mb-4">📊 Aperçu de vos résultats :</h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white p-4 rounded-lg shadow-sm">
@@ -805,7 +805,7 @@ export const SeniorsGuidedExperience: React.FC<SeniorsGuidedExperienceProps> = (
             <p className="text-sm text-gray-600">Statut général de votre retraite</p>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-sm">
-            <div className="text-2xl font-bold text-blue-600">🎯 Règle du 4%</div>
+            <div className="text-2xl font-bold text-mpr-interactive">🎯 Règle du 4%</div>
             <p className="text-sm text-gray-600">Stratégie de décaissement recommandée</p>
           </div>
         </div>
@@ -829,7 +829,7 @@ export const SeniorsGuidedExperience: React.FC<SeniorsGuidedExperienceProps> = (
       <div className="seniors-guided-container">
         <div className="seniors-main-content">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-mpr-interactive mx-auto mb-4"></div>
             <p>Chargement de votre assistant personnel...</p>
           </div>
         </div>

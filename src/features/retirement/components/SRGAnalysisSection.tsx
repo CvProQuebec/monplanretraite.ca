@@ -1,4 +1,4 @@
-// SRGAnalysisSection.tsx - Interface Supplément de Revenu Garanti
+﻿// SRGAnalysisSection.tsx - Interface Supplément de Revenu Garanti
 // SÉCURISÉ - Toutes les données restent dans le navigateur
 
 import React, { useState, useMemo } from 'react';
@@ -170,7 +170,7 @@ export const SRGAnalysisSection: React.FC<SRGAnalysisSectionProps> = ({
               variant={alerte.type === 'critique' ? 'destructive' : 'default'}
               className={
                 alerte.type === 'attention' ? 'border-yellow-300 bg-yellow-50' :
-                alerte.type === 'info' ? 'border-blue-300 bg-blue-50' : ''
+                alerte.type === 'info' ? 'border-mpr-border bg-mpr-interactive-lt' : ''
               }
             >
               <AlertTriangle className="h-4 w-4" />
@@ -286,11 +286,11 @@ export const SRGAnalysisSection: React.FC<SRGAnalysisSectionProps> = ({
                   </div>
                   
                   <div className="grid grid-cols-2 gap-2 text-sm">
-                    <div className="text-center p-2 bg-blue-50 rounded">
-                      <div className="font-semibold text-blue-700">
+                    <div className="text-center p-2 bg-mpr-interactive-lt rounded">
+                      <div className="font-semibold text-mpr-navy">
                         {srgAnalysis.impactFinancier.decennal.toLocaleString('fr-CA')} $
                       </div>
-                      <div className="text-blue-600">
+                      <div className="text-mpr-interactive">
                         {isFrench ? '10 ans' : '10 years'}
                       </div>
                     </div>
@@ -400,7 +400,7 @@ export const SRGAnalysisSection: React.FC<SRGAnalysisSectionProps> = ({
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold text-blue-600">
+                <div className="text-3xl font-bold text-mpr-interactive">
                   {srgAnalysis.impactFinancier.decennal.toLocaleString('fr-CA')} $
                 </div>
                 <p className="text-sm text-gray-600 mt-2">
@@ -427,9 +427,9 @@ export const SRGAnalysisSection: React.FC<SRGAnalysisSectionProps> = ({
           </div>
 
           {/* Recommandations finales */}
-          <Card className="border-blue-200 bg-blue-50">
+          <Card className="border-mpr-border bg-mpr-interactive-lt">
             <CardHeader>
-              <CardTitle className="text-blue-800">
+              <CardTitle className="text-mpr-navy">
                 {isFrench ? 'Recommandations finales' : 'Final Recommendations'}
               </CardTitle>
             </CardHeader>
@@ -447,7 +447,7 @@ export const SRGAnalysisSection: React.FC<SRGAnalysisSectionProps> = ({
                       </p>
                     </div>
                     <div className="flex items-start gap-2">
-                      <TrendingUp className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                      <TrendingUp className="w-5 h-5 text-mpr-interactive mt-0.5 flex-shrink-0" />
                       <p>
                         {isFrench ? 
                           'Suivez les stratégies d\'optimisation pour maximiser vos prestations.' :
@@ -458,7 +458,7 @@ export const SRGAnalysisSection: React.FC<SRGAnalysisSectionProps> = ({
                   </>
                 ) : (
                   <div className="flex items-start gap-2">
-                    <Info className="w-5 h-5 text-blue-500 mt-0.5 flex-shrink-0" />
+                    <Info className="w-5 h-5 text-mpr-interactive mt-0.5 flex-shrink-0" />
                     <p>
                       {isFrench ? 
                         'Vous n\'êtes pas éligible actuellement, mais surveillez les changements de votre situation financière.' :

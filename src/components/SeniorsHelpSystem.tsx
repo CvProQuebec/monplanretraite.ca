@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 
 interface HelpTooltipProps {
   content: string;
@@ -40,14 +40,14 @@ export function SeniorsHelpTooltip({
         <div
           role="dialog"
           aria-modal="true"
-          className="help-content absolute z-50 mt-2 w-80 max-w-[90vw] bg-white border-2 border-blue-200 rounded-lg shadow-xl p-4"
+          className="help-content absolute z-50 mt-2 w-80 max-w-[90vw] bg-white border-2 border-mpr-border rounded-lg shadow-xl p-4"
         >
           <div className="help-text text-base text-gray-800 mb-3">
             {content}
           </div>
 
           {example && (
-            <div className="help-example bg-blue-50 border border-blue-200 rounded-md p-3 text-sm text-blue-900 mb-3">
+            <div className="help-example bg-mpr-interactive-lt border border-mpr-border rounded-md p-3 text-sm text-mpr-navy mb-3">
               <strong>Exemple :</strong> {example}
             </div>
           )}

@@ -1,4 +1,4 @@
-// Démonstration complète de la Phase 2 : L'Expérience Immersive & Intelligente
+﻿// Démonstration complète de la Phase 2 : L'Expérience Immersive & Intelligente
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
@@ -179,7 +179,7 @@ export const Phase2Demo: React.FC = () => {
         transition={{ duration: 0.8 }}
       >
         <motion.h1 
-          className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
+          className="text-5xl font-bold mb-4 bg-gradient-to-r from-mpr-interactive to-purple-600 bg-clip-text text-transparent"
           animate={{ 
             scale: [1, 1.05, 1],
             rotateZ: [0, 1, -1, 0]
@@ -247,7 +247,7 @@ export const Phase2Demo: React.FC = () => {
                 animate={{ rotate: isRotating ? 360 : 0 }}
                 transition={{ duration: 2, repeat: isRotating ? Infinity : 0 }}
               >
-                <RotateCcw className="w-8 h-8 mx-auto mb-2 text-blue-500" />
+                <RotateCcw className="w-8 h-8 mx-auto mb-2 text-mpr-interactive" />
               </motion.div>
               <h3 className="font-semibold">
                 {isRotating ? 'Arrêter' : 'Démarrer'} Rotation
@@ -324,7 +324,7 @@ export const Phase2Demo: React.FC = () => {
                 }}
                 className={`cursor-pointer transition-all duration-300 ${
                   activeModule === module.id 
-                    ? 'ring-4 ring-blue-400/50 scale-105' 
+                    ? 'ring-4 ring-mpr-interactive/50 scale-105' 
                     : ''
                 }`}
                 onClick={() => handleModuleSelect(module.id)}
@@ -333,7 +333,7 @@ export const Phase2Demo: React.FC = () => {
                   <div className="flex items-center gap-3 mb-4">
                     <div className={`p-2 rounded-lg ${
                       module.status === 'active' ? 'bg-green-100 text-green-600' :
-                      module.status === 'learning' ? 'bg-blue-100 text-blue-600' :
+                      module.status === 'learning' ? 'bg-mpr-interactive-lt text-mpr-interactive' :
                       module.status === 'optimizing' ? 'bg-yellow-100 text-yellow-600' :
                       'bg-gray-100 text-gray-600'
                     }`}>
@@ -358,7 +358,7 @@ export const Phase2Demo: React.FC = () => {
                     </div>
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <motion.div
-                        className="bg-gradient-to-r from-green-400 to-blue-500 h-2 rounded-full"
+                        className="bg-gradient-to-r from-green-400 to-mpr-interactive h-2 rounded-full"
                         initial={{ width: 0 }}
                         animate={{ width: `${module.performance}%` }}
                         transition={{ delay: 0.2 * index, duration: 1 }}
@@ -370,7 +370,7 @@ export const Phase2Demo: React.FC = () => {
                   <div className="space-y-1">
                     {module.features.map((feature, fIndex) => (
                       <div key={fIndex} className="flex items-center gap-2 text-sm text-gray-600">
-                        <div className="w-1.5 h-1.5 rounded-full bg-blue-400"></div>
+                        <div className="w-1.5 h-1.5 rounded-full bg-mpr-interactive"></div>
                         {feature}
                       </div>
                     ))}
@@ -397,9 +397,9 @@ export const Phase2Demo: React.FC = () => {
           {/* Zone de test physique */}
           <div className="space-y-4">
             <h3 className="text-xl font-semibold text-center mb-4">🧪 Test de Physique</h3>
-            <div className="h-64 bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl border-2 border-dashed border-blue-300 flex items-center justify-center">
+            <div className="h-64 bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt rounded-xl border-2 border-dashed border-mpr-border flex items-center justify-center">
               <motion.div
-                className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full cursor-grab"
+                className="w-16 h-16 bg-gradient-to-r from-mpr-interactive to-purple-600 rounded-full cursor-grab"
                 drag
                 dragConstraints={{ left: -50, right: 50, top: -50, bottom: 50 }}
                 dragElastic={0.8}

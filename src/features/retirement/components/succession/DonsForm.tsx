@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -126,7 +126,7 @@ export const DonsForm: React.FC<DonsFormProps> = ({ dons, onUpdate }) => {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <Gift className="h-5 w-5 text-blue-600" />
+              <Gift className="h-5 w-5 text-mpr-interactive" />
               <div>
                 <p className="text-sm text-muted-foreground">Organismes</p>
                 <p className="text-2xl font-bold">{dons.length}</p>
@@ -339,7 +339,7 @@ export const DonsForm: React.FC<DonsFormProps> = ({ dons, onUpdate }) => {
                             </Badge>
                           )}
                           {don.typeLegs === 'pourcentage' && don.pourcentage && (
-                            <Badge className="bg-blue-100 text-blue-800">
+                            <Badge className="bg-mpr-interactive-lt text-mpr-navy">
                               {don.pourcentage}%
                             </Badge>
                           )}
@@ -418,11 +418,11 @@ export const DonsForm: React.FC<DonsFormProps> = ({ dons, onUpdate }) => {
       </Card>
 
       {/* Conseils */}
-      <Card className="bg-blue-50 border-blue-200">
+      <Card className="bg-mpr-interactive-lt border-mpr-border">
         <CardHeader>
-          <CardTitle className="text-blue-900">Conseils pour vos dons caritatifs</CardTitle>
+          <CardTitle className="text-mpr-navy">Conseils pour vos dons caritatifs</CardTitle>
         </CardHeader>
-        <CardContent className="text-blue-800">
+        <CardContent className="text-mpr-navy">
           <ul className="space-y-2 text-sm">
             <li>• <strong>Vérifiez l'admissibilité :</strong> Assurez-vous que l'organisme est reconnu par l'ARC</li>
             <li>• <strong>Numéro d'enregistrement :</strong> Notez le numéro d'organisme de charité</li>

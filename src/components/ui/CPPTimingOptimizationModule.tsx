@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Alert, AlertDescription } from './alert';
@@ -186,7 +186,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
   const getScenarioColor = (scenarioId: string): string => {
     switch (scenarioId) {
       case 'early': return 'bg-red-100 text-red-800';
-      case 'standard': return 'bg-blue-100 text-blue-800';
+      case 'standard': return 'bg-mpr-interactive-lt text-mpr-navy';
       case 'delayed': return 'bg-green-100 text-green-800';
       case 'hybrid': return 'bg-purple-100 text-purple-800';
       default: return 'bg-gray-100 text-gray-800';
@@ -227,7 +227,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
                 {cppScenarios.map((scenario) => (
                   <Card 
                     key={scenario.id} 
-                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedScenario === scenario.id ? 'ring-2 ring-blue-500' : ''}`}
+                    className={`cursor-pointer transition-all hover:shadow-lg ${selectedScenario === scenario.id ? 'ring-2 ring-mpr-interactive' : ''}`}
                     onClick={() => setSelectedScenario(scenario.id)}
                   >
                     <CardHeader>
@@ -241,8 +241,8 @@ const CPPTimingOptimizationModule: React.FC = () => {
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div className="grid grid-cols-2 gap-4">
-                        <div className="text-center p-3 bg-blue-50 rounded">
-                          <div className="text-2xl font-bold text-blue-600">
+                        <div className="text-center p-3 bg-mpr-interactive-lt rounded">
+                          <div className="text-2xl font-bold text-mpr-interactive">
                             {scenario.monthlyBenefit.toLocaleString('fr-CA', {
                               style: 'currency',
                               currency: 'CAD',
@@ -269,7 +269,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div 
-                            className="bg-blue-600 h-2 rounded-full" 
+                            className="bg-mpr-interactive h-2 rounded-full" 
                             style={{ width: `${Math.min((scenario.breakEvenAge - 60) / 30 * 100, 100)}%` }}
                           ></div>
                         </div>
@@ -436,7 +436,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
                     <Card>
                       <CardContent className="p-4">
-                        <div className="text-2xl font-bold text-blue-600">
+                        <div className="text-2xl font-bold text-mpr-interactive">
                           {calculation.adjustedMonthlyBenefit.toLocaleString('fr-CA', {
                             style: 'currency',
                             currency: 'CAD',
@@ -566,9 +566,9 @@ const CPPTimingOptimizationModule: React.FC = () => {
                     </Card>
                   </div>
 
-                  <Card className="bg-blue-50">
+                  <Card className="bg-mpr-interactive-lt">
                     <CardHeader>
-                      <CardTitle className="text-lg text-blue-800">Questionnaire d'aide à la décision</CardTitle>
+                      <CardTitle className="text-lg text-mpr-navy">Questionnaire d'aide à la décision</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-4">
@@ -642,9 +642,9 @@ const CPPTimingOptimizationModule: React.FC = () => {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <Card className="bg-blue-50">
+                    <Card className="bg-mpr-interactive-lt">
                       <CardHeader>
-                        <CardTitle className="text-lg text-blue-800">Stratégie du "Bridge"</CardTitle>
+                        <CardTitle className="text-lg text-mpr-navy">Stratégie du "Bridge"</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <p className="text-sm mb-3">

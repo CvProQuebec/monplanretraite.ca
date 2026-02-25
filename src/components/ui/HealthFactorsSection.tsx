@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
@@ -344,7 +344,7 @@ const HealthFactorsSection: React.FC<HealthFactorsSectionProps> = ({
           )}
 
           {/* BMI Calculator */}
-          <div className="space-y-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+          <div className="space-y-4 p-4 bg-mpr-interactive-lt rounded-lg border border-mpr-border">
             <div className="flex items-center gap-2">
               <Label className="text-lg font-semibold text-gray-900">
                 <Scale className="w-5 h-5 inline mr-2" />
@@ -369,7 +369,7 @@ const HealthFactorsSection: React.FC<HealthFactorsSectionProps> = ({
                   type="number"
                   value={localData.height || ''}
                   onChange={(e) => handleFieldChange('height', parseFloat(e.target.value) || 0)}
-                  className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 text-lg h-12"
+                  className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-mpr-interactive focus:ring-2 focus:ring-mpr-border text-lg h-12"
                   placeholder={isFrench ? 'Ex: 170' : 'Ex: 170'}
                   min="100"
                   max="250"
@@ -383,7 +383,7 @@ const HealthFactorsSection: React.FC<HealthFactorsSectionProps> = ({
                   type="number"
                   value={localData.weight || ''}
                   onChange={(e) => handleFieldChange('weight', parseFloat(e.target.value) || 0)}
-                  className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-blue-600 focus:ring-2 focus:ring-blue-200 text-lg h-12"
+                  className="bg-white border-2 border-gray-300 text-gray-900 placeholder-gray-500 focus:border-mpr-interactive focus:ring-2 focus:ring-mpr-border text-lg h-12"
                   placeholder={isFrench ? 'Ex: 70' : 'Ex: 70'}
                   min="30"
                   max="300"

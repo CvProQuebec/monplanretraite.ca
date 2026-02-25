@@ -1,4 +1,4 @@
-// src/features/retirement/components/SimpleRetirementApp.tsx
+﻿// src/features/retirement/components/SimpleRetirementApp.tsx
 import React, { useState } from 'react';
 import { useRetirementData } from '../hooks/useRetirementData';
 import { LanguageProvider } from '../hooks/useLanguage';
@@ -43,7 +43,7 @@ export const SimpleRetirementApp: React.FC = () => {
   return (
     <LanguageProvider>
       <div className="min-h-screen bg-charcoal-700">
-        <div className="pt-20 bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="pt-20 bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt">
           <HeroSection />
           <div className="container mx-auto px-4 py-8">
             <NavigationBar 

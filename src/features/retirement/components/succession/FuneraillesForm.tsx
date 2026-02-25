@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -93,10 +93,10 @@ export const FuneraillesForm: React.FC<FuneraillesFormProps> = ({ volontes, onUp
                         value={type.value}
                         checked={formData.type === type.value}
                         onChange={(e) => handleChange('type', e.target.value)}
-                        className="w-4 h-4 text-blue-600"
+                        className="w-4 h-4 text-mpr-interactive"
                       />
                       <label htmlFor={type.value} className="flex items-center space-x-2 cursor-pointer">
-                        <IconComponent className="h-4 w-4 text-blue-600" />
+                        <IconComponent className="h-4 w-4 text-mpr-interactive" />
                         <span>{type.label}</span>
                       </label>
                     </div>
@@ -249,7 +249,7 @@ export const FuneraillesForm: React.FC<FuneraillesFormProps> = ({ volontes, onUp
               <div className="flex items-center space-x-2">
                 <Heart className="h-5 w-5 text-red-600" />
                 <h4 className="text-lg font-semibold">Mes souhaits funéraires</h4>
-                <Badge className="bg-blue-100 text-blue-800">
+                <Badge className="bg-mpr-interactive-lt text-mpr-navy">
                   {typesFunerailles.find(t => t.value === volontes.type)?.label}
                 </Badge>
               </div>
@@ -326,9 +326,9 @@ export const FuneraillesForm: React.FC<FuneraillesFormProps> = ({ volontes, onUp
               </div>
 
               {volontes.volontesSpeciales && (
-                <div className="mt-4 p-4 bg-blue-50 rounded-md">
-                  <h5 className="font-semibold text-blue-900 mb-2">Volontés spéciales :</h5>
-                  <p className="text-sm text-blue-800 whitespace-pre-wrap">{volontes.volontesSpeciales}</p>
+                <div className="mt-4 p-4 bg-mpr-interactive-lt rounded-md">
+                  <h5 className="font-semibold text-mpr-navy mb-2">Volontés spéciales :</h5>
+                  <p className="text-sm text-mpr-navy whitespace-pre-wrap">{volontes.volontesSpeciales}</p>
                 </div>
               )}
 

@@ -1,4 +1,4 @@
-// Header MonPlanRetraite - Navigation intégrée
+﻿// Header MonPlanRetraite - Navigation intégrée
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
@@ -251,7 +251,7 @@ export const Header: React.FC = () => {
             ) : (
               <button
                 onClick={() => navigate('/')}
-                className="px-6 py-3 bg-white text-blue-600 rounded-lg font-medium hover:bg-mpr-interactive-lt transition-colors"
+                className="px-6 py-3 bg-white text-mpr-interactive rounded-lg font-medium hover:bg-mpr-interactive-lt transition-colors"
               >
                 {language === 'fr' ? 'Se connecter' : 'Sign In'}
               </button>

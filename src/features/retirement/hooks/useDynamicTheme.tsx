@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+﻿import { useState, useEffect, useCallback } from 'react';
 
 // Types pour les thèmes dynamiques
 export interface DynamicTheme {
@@ -25,7 +25,7 @@ const THEMES: Record<string, DynamicTheme> = {
     particles: true,
     animations: 'fluide',
     primary: 'from-amber-400 to-orange-500',
-    secondary: 'from-blue-400 to-cyan-500',
+    secondary: 'from-mpr-interactive to-cyan-500',
     accent: 'from-yellow-300 to-amber-400',
     background: 'from-orange-50 via-amber-50 to-yellow-50',
     timeOfDay: 'morning'
@@ -37,10 +37,10 @@ const THEMES: Record<string, DynamicTheme> = {
     intensity: 0.6,
     particles: false,
     animations: 'subtile',
-    primary: 'from-blue-500 to-indigo-600',
+    primary: 'from-mpr-interactive to-mpr-interactive',
     secondary: 'from-green-400 to-emerald-500',
-    accent: 'from-cyan-300 to-blue-400',
-    background: 'from-blue-50 via-indigo-50 to-purple-50',
+    accent: 'from-cyan-300 to-mpr-interactive',
+    background: 'from-mpr-interactive-lt via-mpr-interactive-lt to-purple-50',
     timeOfDay: 'afternoon'
   },
   evening: {
@@ -51,7 +51,7 @@ const THEMES: Record<string, DynamicTheme> = {
     particles: true,
     animations: 'douce',
     primary: 'from-purple-500 to-pink-600',
-    secondary: 'from-indigo-400 to-purple-500',
+    secondary: 'from-mpr-interactive to-purple-500',
     accent: 'from-pink-300 to-rose-400',
     background: 'from-purple-50 via-pink-50 to-rose-50',
     timeOfDay: 'evening'
@@ -64,9 +64,9 @@ const THEMES: Record<string, DynamicTheme> = {
     particles: true,
     animations: 'magique',
     primary: 'from-slate-600 to-gray-800',
-    secondary: 'from-purple-600 to-indigo-700',
-    accent: 'from-blue-400 to-purple-500',
-    background: 'from-slate-900 via-gray-800 to-indigo-900',
+    secondary: 'from-purple-600 to-mpr-navy-mid',
+    accent: 'from-mpr-interactive to-purple-500',
+    background: 'from-slate-900 via-gray-800 to-mpr-navy',
     timeOfDay: 'night'
   },
   premium: {
@@ -89,8 +89,8 @@ const THEMES: Record<string, DynamicTheme> = {
     particles: true,
     animations: 'artistique',
     primary: 'from-pink-500 to-rose-600',
-    secondary: 'from-purple-500 to-indigo-600',
-    accent: 'from-cyan-400 to-blue-500',
+    secondary: 'from-purple-500 to-mpr-interactive',
+    accent: 'from-cyan-400 to-mpr-interactive',
     background: 'from-pink-50 via-rose-50 to-purple-50'
   }
 };

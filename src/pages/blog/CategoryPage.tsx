@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+﻿import React, { useMemo } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import {
@@ -51,7 +51,7 @@ const CategoryPage: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
   const openPost = (p: BlogPost) => navigate(`${lang === 'en' ? '/en/blog' : '/blog'}/${p.slug}`);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-purple-50">
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -80,7 +80,7 @@ const CategoryPage: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
                   title={p.title}
                 >
                   <CardHeader>
-                    <div className="text-xs text-blue-700 font-semibold mb-1">{categoryLabel(p.category)}</div>
+                    <div className="text-xs text-mpr-navy font-semibold mb-1">{categoryLabel(p.category)}</div>
                     <CardTitle className="text-base line-clamp-2">{p.title}</CardTitle>
                   </CardHeader>
                   <CardContent>

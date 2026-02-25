@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -127,7 +127,7 @@ const AssetConsolidationModule: React.FC = () => {
     <div className="w-full max-w-6xl mx-auto p-6 space-y-6">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
-          <Building2 className="h-8 w-8 text-blue-600" />
+          <Building2 className="h-8 w-8 text-mpr-interactive" />
           <h1 className="text-3xl font-bold text-gray-900">
             Module de Consolidation d'Actifs
           </h1>
@@ -293,14 +293,14 @@ const AssetConsolidationModule: React.FC = () => {
               <Card>
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
-                    <Target className="h-5 w-5 text-blue-600" />
+                    <Target className="h-5 w-5 text-mpr-interactive" />
                     Plan Recommandé
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                  <div className="flex items-center justify-between p-3 bg-mpr-interactive-lt rounded-lg">
                     <span className="font-medium">Institutions cibles</span>
-                    <Badge className="bg-blue-100 text-blue-800">
+                    <Badge className="bg-mpr-interactive-lt text-mpr-navy">
                       {consolidationPlan.targetInstitutions}
                     </Badge>
                   </div>
@@ -425,13 +425,13 @@ const AssetConsolidationModule: React.FC = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-blue-600" />
+                  <Clock className="h-5 w-5 text-mpr-interactive" />
                   Avantages Pratiques
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-blue-600 mt-0.5" />
+                  <CheckCircle className="h-5 w-5 text-mpr-interactive mt-0.5" />
                   <div>
                     <div className="font-medium">Simplification administrative</div>
                     <div className="text-sm text-gray-600">
@@ -441,6 +441,6 @@ const AssetConsolidationModule: React.FC = () => {
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <CheckCircle className="h-5 w-5 text-blue-600 mt-0.5" />
+                  <CheckCircle className="h-5 w-5 text-mpr-interactive mt-0.5" />
                   <div>
                     <div className="font-medium">Gestion centralisée</div>

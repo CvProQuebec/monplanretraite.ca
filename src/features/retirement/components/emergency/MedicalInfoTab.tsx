@@ -1,4 +1,4 @@
-// Onglet des informations médicales
+﻿// Onglet des informations médicales
 // Respectant la typographie québécoise (espaces avant : et $, pas avant ; ! ?)
 
 import React, { useState } from 'react';
@@ -233,10 +233,10 @@ export const MedicalInfoTab: React.FC<MedicalInfoTabProps> = ({ data, onUpdate }
         <CardContent className="space-y-4">
           {/* Liste des médicaments existants */}
           {data.medicamentsActuels.map((medication, index) => (
-            <Card key={index} className="border-2 border-blue-200 bg-blue-50">
+            <Card key={index} className="border-2 border-mpr-border bg-mpr-interactive-lt">
               <CardContent className="pt-4">
                 <div className="flex items-center justify-between mb-3">
-                  <h4 className="font-medium text-blue-900">Médicament {index + 1}</h4>
+                  <h4 className="font-medium text-mpr-navy">Médicament {index + 1}</h4>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -249,7 +249,7 @@ export const MedicalInfoTab: React.FC<MedicalInfoTabProps> = ({ data, onUpdate }
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                   <div className="space-y-1">
-                    <Label className="text-xs text-blue-700">Nom</Label>
+                    <Label className="text-xs text-mpr-navy">Nom</Label>
                     <Input
                       value={medication.nom}
                       onChange={(e) => updateMedication(index, 'nom', e.target.value)}
@@ -259,7 +259,7 @@ export const MedicalInfoTab: React.FC<MedicalInfoTabProps> = ({ data, onUpdate }
                   </div>
                   
                   <div className="space-y-1">
-                    <Label className="text-xs text-blue-700">Dosage</Label>
+                    <Label className="text-xs text-mpr-navy">Dosage</Label>
                     <Input
                       value={medication.dosage}
                       onChange={(e) => updateMedication(index, 'dosage', e.target.value)}
@@ -269,7 +269,7 @@ export const MedicalInfoTab: React.FC<MedicalInfoTabProps> = ({ data, onUpdate }
                   </div>
                   
                   <div className="space-y-1">
-                    <Label className="text-xs text-blue-700">Fréquence</Label>
+                    <Label className="text-xs text-mpr-navy">Fréquence</Label>
                     <Input
                       value={medication.frequence}
                       onChange={(e) => updateMedication(index, 'frequence', e.target.value)}
@@ -333,31 +333,31 @@ export const MedicalInfoTab: React.FC<MedicalInfoTabProps> = ({ data, onUpdate }
       </Card>
 
       {/* Conseils d'utilisation */}
-      <Card className="border-blue-200 bg-blue-50">
+      <Card className="border-mpr-border bg-mpr-interactive-lt">
         <CardHeader>
-          <CardTitle className="text-blue-900">Conseils pour vos informations médicales</CardTitle>
+          <CardTitle className="text-mpr-navy">Conseils pour vos informations médicales</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-3 text-blue-800">
+        <CardContent className="space-y-3 text-mpr-navy">
           <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+            <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2 flex-shrink-0"></div>
             <p className="text-sm">
               <strong>Mettez à jour régulièrement</strong> vos informations médicales, surtout après un changement de traitement
             </p>
           </div>
           <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+            <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2 flex-shrink-0"></div>
             <p className="text-sm">
               <strong>Incluez tous vos médicaments</strong> : prescrits, en vente libre, vitamines et suppléments
             </p>
           </div>
           <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+            <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2 flex-shrink-0"></div>
             <p className="text-sm">
               <strong>Précisez les allergies</strong> et leurs réactions pour éviter les complications
             </p>
           </div>
           <div className="flex items-start gap-2">
-            <div className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"></div>
+            <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2 flex-shrink-0"></div>
             <p className="text-sm">
               <strong>Partagez ce document</strong> avec vos proches et votre médecin traitant
             </p>
@@ -367,9 +367,9 @@ export const MedicalInfoTab: React.FC<MedicalInfoTabProps> = ({ data, onUpdate }
 
       {/* Limite de la version gratuite */}
       {medicationsCount >= 5 && (
-        <Alert className="border-blue-200 bg-blue-50">
-          <Info className="h-4 w-4 text-blue-600" />
-          <AlertDescription className="text-blue-800">
+        <Alert className="border-mpr-border bg-mpr-interactive-lt">
+          <Info className="h-4 w-4 text-mpr-interactive" />
+          <AlertDescription className="text-mpr-navy">
             <strong>Limite de la version gratuite :</strong> Vous avez atteint le maximum de 5 médicaments. 
             Passez au plan Professionnel pour ajouter plus de médicaments et accéder à toutes les fonctionnalités.
           </AlertDescription>

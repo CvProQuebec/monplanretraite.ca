@@ -1,4 +1,4 @@
-// src/features/retirement/components/RRQQuickCompare.tsx
+﻿// src/features/retirement/components/RRQQuickCompare.tsx
 import React, { useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -89,7 +89,7 @@ export default function RRQQuickCompare() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Flag className="w-5 h-5 text-blue-600" />
+            <Flag className="w-5 h-5 text-mpr-interactive" />
             {isFrench ? 'Comparateur RRQ/CPP — maintenant vs 70/72' : 'RRQ/CPP Quick Compare — now vs 70/72'}
           </CardTitle>
           <CardDescription>
@@ -101,7 +101,7 @@ export default function RRQQuickCompare() {
         <CardContent className="grid md:grid-cols-3 gap-4">
           <div className="p-4 border rounded-lg bg-white">
             <div className="text-sm text-gray-600">{isFrench ? 'Commencer maintenant' : 'Start now'}</div>
-            <div className="text-2xl font-bold text-blue-700">{fmt(nowTotal)}</div>
+            <div className="text-2xl font-bold text-mpr-navy">{fmt(nowTotal)}</div>
             <Badge variant="outline" className="mt-2">
               {isFrench ? 'Mensuel (ménage)' : 'Monthly (household)'}
             </Badge>
@@ -143,9 +143,9 @@ export default function RRQQuickCompare() {
         </CardContent>
       </Card>
 
-      <Alert className="border-blue-200 bg-blue-50">
-        <Info className="h-4 w-4 text-blue-600" />
-        <AlertDescription className="text-blue-800">
+      <Alert className="border-mpr-border bg-mpr-interactive-lt">
+        <Info className="h-4 w-4 text-mpr-interactive" />
+        <AlertDescription className="text-mpr-navy">
           {isFrench
             ? 'Information éducative seulement : ces montants sont estimatifs et n’incluent pas tous les paramètres officiels. Utilisez l’analyse détaillée RRQ/CPP pour une décision.'
             : 'Educational information only: these amounts are estimates and may not reflect all official parameters. Use the detailed RRQ/CPP analysis before deciding.'}

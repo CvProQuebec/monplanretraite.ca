@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { motion, useMotionValue, useTransform, PanInfo } from 'framer-motion';
 
 // Types pour la physique
@@ -114,11 +114,11 @@ export const PhysicsCard: React.FC<PhysicsCardProps> = ({
     // Ombre dynamique
     effectsConfig.shadow && (
       isDragging 
-        ? 'shadow-2xl shadow-blue-500/25' 
+        ? 'shadow-2xl shadow-mpr-interactive/25' 
         : 'shadow-lg hover:shadow-xl'
     ),
     // Lueur d'énergie
-    effectsConfig.glow && energy > 0.5 && 'ring-4 ring-blue-400/50',
+    effectsConfig.glow && energy > 0.5 && 'ring-4 ring-mpr-interactive/50',
     // Effet de survol
     'hover:scale-105 active:scale-95',
     className
@@ -143,7 +143,7 @@ export const PhysicsCard: React.FC<PhysicsCardProps> = ({
         {Array.from({ length: Math.floor(energy * 10) }, (_, i) => (
           <motion.div
             key={`particle-${dragCount}-${i}`}
-            className="absolute w-1 h-1 bg-blue-400 rounded-full"
+            className="absolute w-1 h-1 bg-mpr-interactive rounded-full"
             initial={{
               x: '50%',
               y: '50%',
@@ -230,7 +230,7 @@ export const PhysicsCard: React.FC<PhysicsCardProps> = ({
       {effectsConfig.ripple && ripples.map(ripple => (
         <motion.div
           key={ripple.id}
-          className="absolute pointer-events-none bg-blue-400/30 rounded-full"
+          className="absolute pointer-events-none bg-mpr-interactive/30 rounded-full"
           style={{
             left: `${ripple.x}%`,
             top: `${ripple.y}%`,
@@ -245,7 +245,7 @@ export const PhysicsCard: React.FC<PhysicsCardProps> = ({
       {/* Indicateur d'énergie */}
       {energy > 0.2 && (
         <motion.div
-          className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full z-20"
+          className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-mpr-interactive to-purple-500 rounded-full z-20"
           animate={{ 
             scale: [1, 1.2, 1],
             opacity: [0.8, 1, 0.8]

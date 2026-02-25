@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { 
   DollarSign, 
@@ -84,8 +84,8 @@ export const UnifiedRetirementPage: React.FC = () => {
       {/* Tableau des revenus (saisie simplifiée et complète) */}
       <div className="bg-white rounded-xl border-2 border-gray-200 p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-3 bg-blue-100 rounded-lg">
-            <Briefcase className="w-6 h-6 text-blue-600" />
+          <div className="p-3 bg-mpr-interactive-lt rounded-lg">
+            <Briefcase className="w-6 h-6 text-mpr-interactive" />
           </div>
           <div>
             <h3 className="text-xl font-semibold text-gray-900">
@@ -103,8 +103,8 @@ export const UnifiedRetirementPage: React.FC = () => {
       {/* Revenus d'emploi (exemple guidé) */}
       <div className="bg-white rounded-xl border-2 border-gray-200 p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-3 bg-blue-100 rounded-lg">
-            <Briefcase className="w-6 h-6 text-blue-600" />
+          <div className="p-3 bg-mpr-interactive-lt rounded-lg">
+            <Briefcase className="w-6 h-6 text-mpr-interactive" />
           </div>
           <div>
             <h3 className="text-xl font-semibold text-gray-900">
@@ -125,7 +125,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="number"
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-mpr-interactive focus:outline-none"
                 placeholder="65,000"
               />
             </div>
@@ -139,7 +139,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="number"
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-mpr-interactive focus:outline-none"
                 placeholder="1,200"
               />
             </div>
@@ -173,7 +173,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="number"
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-mpr-interactive focus:outline-none"
                 placeholder="125,000"
               />
             </div>
@@ -185,7 +185,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="number"
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-mpr-interactive focus:outline-none"
                 placeholder="45,000"
               />
             </div>
@@ -199,7 +199,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="number"
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-mpr-interactive focus:outline-none"
                 placeholder="25,000"
               />
             </div>
@@ -232,7 +232,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="number"
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-mpr-interactive focus:outline-none"
                 placeholder="450,000"
               />
             </div>
@@ -246,7 +246,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="number"
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-mpr-interactive focus:outline-none"
                 placeholder="180,000"
               />
             </div>
@@ -270,18 +270,18 @@ export const UnifiedRetirementPage: React.FC = () => {
           </div>
         </div>
         
-        <div className="bg-blue-50 rounded-lg p-4">
+        <div className="bg-mpr-interactive-lt rounded-lg p-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex justify-between items-center">
               <span className="font-medium">CPP/RRQ {language === 'fr' ? 'estimé' : 'estimated'}:</span>
-              <span className="text-lg font-bold text-blue-600">$1,203/mois</span>
+              <span className="text-lg font-bold text-mpr-interactive">$1,203/mois</span>
             </div>
             <div className="flex justify-between items-center">
               <span className="font-medium">{language === 'fr' ? 'Pension de la Sécurité de la vieillesse' : 'Old Age Security'}:</span>
-              <span className="text-lg font-bold text-blue-600">$685/mois</span>
+              <span className="text-lg font-bold text-mpr-interactive">$685/mois</span>
             </div>
           </div>
-          <p className="text-sm text-blue-700 mt-2">
+          <p className="text-sm text-mpr-navy mt-2">
             {language === 'fr' 
               ? '✓ Calculs basés sur vos 35 meilleures années de cotisation'
               : '✓ Calculations based on your 35 best contribution years'
@@ -309,8 +309,8 @@ export const UnifiedRetirementPage: React.FC = () => {
       {/* Budget mensuel de base */}
       <div className="bg-white rounded-xl border-2 border-gray-200 p-6 shadow-sm">
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-3 bg-blue-100 rounded-lg">
-            <Home className="w-6 h-6 text-blue-600" />
+          <div className="p-3 bg-mpr-interactive-lt rounded-lg">
+            <Home className="w-6 h-6 text-mpr-interactive" />
           </div>
           <div>
             <h3 className="text-xl font-semibold text-gray-900">
@@ -331,7 +331,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="number"
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-mpr-interactive focus:outline-none"
                 placeholder="1,800"
               />
             </div>
@@ -345,7 +345,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               <Utensils className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="number"
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-mpr-interactive focus:outline-none"
                 placeholder="600"
               />
             </div>
@@ -359,7 +359,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               <Car className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="number"
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-mpr-interactive focus:outline-none"
                 placeholder="400"
               />
             </div>
@@ -373,7 +373,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               <Zap className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="number"
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-mpr-interactive focus:outline-none"
                 placeholder="250"
               />
             </div>
@@ -406,7 +406,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="number"
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-mpr-interactive focus:outline-none"
                 placeholder="3,600"
               />
             </div>
@@ -423,7 +423,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="number"
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-blue-500 focus:outline-none"
+                className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg text-lg focus:border-mpr-interactive focus:outline-none"
                 placeholder="4,000"
               />
             </div>
@@ -498,7 +498,7 @@ export const UnifiedRetirementPage: React.FC = () => {
       </div>
 
       {/* Résumé des calculs */}
-      <div className="bg-gradient-to-r from-blue-50 to-green-50 rounded-xl border-2 border-blue-200 p-8 shadow-sm">
+      <div className="bg-gradient-to-r from-mpr-interactive-lt to-green-50 rounded-xl border-2 border-mpr-border p-8 shadow-sm">
         <div className="text-center mb-8">
           <h3 className="text-2xl font-bold text-gray-900 mb-4">
             {language === 'fr' ? '🎯 Votre plan de retraite personnalisé' : '🎯 Your personalized retirement plan'}
@@ -508,7 +508,7 @@ export const UnifiedRetirementPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="text-center">
             <div className="bg-white rounded-lg p-6 shadow-sm">
-              <div className="text-3xl font-bold text-blue-600 mb-2">65 ans</div>
+              <div className="text-3xl font-bold text-mpr-interactive mb-2">65 ans</div>
               <div className="text-lg font-medium text-gray-900">
                 {language === 'fr' ? 'Âge optimal de retraite' : 'Optimal retirement age'}
               </div>
@@ -551,13 +551,13 @@ export const UnifiedRetirementPage: React.FC = () => {
         </h3>
         
         <div className="space-y-4">
-          <div className="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
+          <div className="flex justify-between items-center p-4 bg-mpr-interactive-lt rounded-lg">
             <span className="font-medium">CPP/RRQ</span>
-            <span className="text-lg font-bold text-blue-600">$1,203</span>
+            <span className="text-lg font-bold text-mpr-interactive">$1,203</span>
           </div>
-          <div className="flex justify-between items-center p-4 bg-blue-50 rounded-lg">
+          <div className="flex justify-between items-center p-4 bg-mpr-interactive-lt rounded-lg">
             <span className="font-medium">{language === 'fr' ? 'Pension de la Sécurité de la vieillesse' : 'Old Age Security'}</span>
-            <span className="text-lg font-bold text-blue-600">$685</span>
+            <span className="text-lg font-bold text-mpr-interactive">$685</span>
           </div>
           <div className="flex justify-between items-center p-4 bg-green-50 rounded-lg">
             <span className="font-medium">{language === 'fr' ? 'Régime de pension d\'employeur' : 'Employer pension plan'}</span>
@@ -599,7 +599,7 @@ export const UnifiedRetirementPage: React.FC = () => {
           </div>
           
           <div className="flex items-start gap-3 p-4 bg-white rounded-lg">
-            <TrendingUp className="w-6 h-6 text-blue-500 mt-1 flex-shrink-0" />
+            <TrendingUp className="w-6 h-6 text-mpr-interactive mt-1 flex-shrink-0" />
             <div>
               <div className="font-medium text-gray-900">
                 {language === 'fr' ? 'Considérez reporter votre retraite de 2 ans' : 'Consider delaying retirement by 2 years'}
@@ -639,10 +639,10 @@ export const UnifiedRetirementPage: React.FC = () => {
             <span className="text-lg font-medium text-gray-900">
               {language === 'fr' ? 'Progression globale' : 'Overall progress'}
             </span>
-            <span className="text-lg font-bold text-blue-600">53%</span>
+            <span className="text-lg font-bold text-mpr-interactive">53%</span>
           </div>
           <div className="w-full bg-gray-200 rounded-full h-3">
-            <div className="bg-blue-600 h-3 rounded-full" style={{ width: '53%' }}></div>
+            <div className="bg-mpr-interactive h-3 rounded-full" style={{ width: '53%' }}></div>
           </div>
         </div>
 
@@ -659,7 +659,7 @@ export const UnifiedRetirementPage: React.FC = () => {
                   onClick={() => setActiveSection(section.id)}
                   className={`flex flex-col items-center p-6 rounded-xl border-2 transition-all duration-200 min-w-[200px] ${
                     activeSection === section.id
-                      ? 'bg-blue-100 border-blue-500 text-blue-700 shadow-md'
+                      ? 'bg-mpr-interactive-lt border-mpr-interactive text-mpr-navy shadow-md'
                       : 'bg-white border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300'
                   }`}
                 >
@@ -712,7 +712,7 @@ export const UnifiedRetirementPage: React.FC = () => {
           </button>
 
           <div className="flex items-center gap-4">
-            <button className="px-6 py-3 bg-blue-100 text-blue-700 rounded-lg font-medium hover:bg-blue-200 transition-colors">
+            <button className="px-6 py-3 bg-mpr-interactive-lt text-mpr-navy rounded-lg font-medium hover:bg-mpr-interactive-lt transition-colors">
               {language === 'fr' ? 'Sauvegarder' : 'Save'}
             </button>
             <button className="px-6 py-3 bg-green-100 text-green-700 rounded-lg font-medium hover:bg-green-200 transition-colors">
@@ -728,7 +728,7 @@ export const UnifiedRetirementPage: React.FC = () => {
               }
             }}
             disabled={sections.findIndex(s => s.id === activeSection) === sections.length - 1}
-            className="flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-6 py-3 bg-mpr-interactive text-white rounded-lg font-medium hover:bg-mpr-interactive-dk transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {language === 'fr' ? 'Section suivante' : 'Next section'}
             <ChevronRight className="w-5 h-5" />

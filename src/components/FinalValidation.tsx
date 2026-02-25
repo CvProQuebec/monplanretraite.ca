@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -482,7 +482,7 @@ const FinalValidation: React.FC = () => {
       case 'medium':
         return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'low':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
+        return 'bg-mpr-interactive-lt text-mpr-navy border-mpr-border';
       default:
         return 'bg-gray-100 text-gray-800 border-gray-200';
     }
@@ -491,13 +491,13 @@ const FinalValidation: React.FC = () => {
   const isReadyForDeployment = summary.error === 0 && summary.warning === 0;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-purple-50 p-6">
       <div className="max-w-7xl mx-auto">
         {/* En-tête de validation finale */}
-        <Card className="mb-6 border-2 border-blue-200">
+        <Card className="mb-6 border-2 border-mpr-border">
           <CardHeader className="text-center">
             <CardTitle className="flex items-center justify-center gap-3 text-2xl">
-              <Rocket className="w-8 h-8 text-blue-600" />
+              <Rocket className="w-8 h-8 text-mpr-interactive" />
               🚀 Validation Finale - Prêt pour le Déploiement ?
             </CardTitle>
             <p className="text-gray-600 text-lg">
@@ -535,10 +535,10 @@ const FinalValidation: React.FC = () => {
                 <div className="text-2xl font-bold text-yellow-800">{summary.warning}</div>
                 <div className="text-sm text-yellow-600">Avertissements</div>
               </div>
-              <div className="text-center p-4 bg-blue-50 rounded-lg border border-blue-200">
-                <Star className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-                <div className="text-2xl font-bold text-blue-800">{summary.total}</div>
-                <div className="text-sm text-blue-600">Total</div>
+              <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg border border-mpr-border">
+                <Star className="w-8 h-8 text-mpr-interactive mx-auto mb-2" />
+                <div className="text-2xl font-bold text-mpr-navy">{summary.total}</div>
+                <div className="text-sm text-mpr-interactive">Total</div>
               </div>
             </div>
 
@@ -723,9 +723,9 @@ const FinalValidation: React.FC = () => {
 
         {/* Recommandations de déploiement */}
         {summary.total > 0 && (
-          <Card className="border-2 border-blue-200">
+          <Card className="border-2 border-mpr-border">
             <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-blue-800">
+              <CardTitle className="flex items-center gap-3 text-mpr-navy">
                 <Heart className="w-6 h-6" />
                 💝 Recommandations de Déploiement
               </CardTitle>
@@ -764,11 +764,11 @@ const FinalValidation: React.FC = () => {
                   </div>
                 )}
                 
-                <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                  <h4 className="font-semibold text-blue-800 mb-2">
+                <div className="p-4 bg-mpr-interactive-lt rounded-lg border border-mpr-border">
+                  <h4 className="font-semibold text-mpr-navy mb-2">
                     🚀 Prochaines étapes
                   </h4>
-                  <div className="text-sm text-blue-700 space-y-2">
+                  <div className="text-sm text-mpr-navy space-y-2">
                     <p><strong>1.</strong> {isReadyForDeployment ? 'Déployer l\'application' : 'Corriger les problèmes identifiés'}</p>
                     <p><strong>2.</strong> Tester en environnement de production</p>
                     <p><strong>3.</strong> Valider l'expérience utilisateur finale</p>

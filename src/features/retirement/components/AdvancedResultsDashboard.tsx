@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+﻿import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
@@ -492,7 +492,7 @@ const ScenariosTab: React.FC<any> = ({ scenarios, selectedScenario, onScenarioCh
       key: 'moderate', 
       name: 'Modéré', 
       description: '50e percentile - Équilibré',
-      color: 'bg-blue-100 text-blue-800'
+      color: 'bg-mpr-interactive-lt text-mpr-navy'
     },
     { 
       key: 'optimistic', 
@@ -516,7 +516,7 @@ const ScenariosTab: React.FC<any> = ({ scenarios, selectedScenario, onScenarioCh
           <Card 
             key={scenario.key}
             className={`cursor-pointer transition-all ${
-              selectedScenario === scenario.key ? 'ring-2 ring-blue-500' : ''
+              selectedScenario === scenario.key ? 'ring-2 ring-mpr-interactive' : ''
             }`}
             onClick={() => onScenarioChange(scenario.key)}
           >
@@ -672,7 +672,7 @@ const RiskAnalysisTab: React.FC<any> = ({ riskAnalysis, statistics }) => {
                 <p className="text-sm text-gray-600 mb-2">{risk.description}</p>
                 
                 <div className="text-sm">
-                  <span className="font-medium text-blue-600">Stratégie d'atténuation: </span>
+                  <span className="font-medium text-mpr-interactive">Stratégie d'atténuation: </span>
                   {risk.mitigation}
                 </div>
               </div>

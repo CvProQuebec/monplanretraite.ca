@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Input } from './input';
@@ -452,7 +452,7 @@ const ProgressiveRetirementModule: React.FC = () => {
                   <div>
                     <h3 className="font-semibold mb-2">Timing optimal des prestations gouvernementales</h3>
                     <div className="space-y-2">
-                      <div className="p-3 bg-blue-50 rounded-lg">
+                      <div className="p-3 bg-mpr-interactive-lt rounded-lg">
                         <strong>RRQ à 60 ans :</strong> Réduction de 0,6% par mois (36% de réduction maximale)
                       </div>
                       <div className="p-3 bg-green-50 rounded-lg">
@@ -482,7 +482,7 @@ const ProgressiveRetirementModule: React.FC = () => {
                   <div>
                     <h3 className="font-semibold mb-2">Stratégies de transition recommandées</h3>
                     <div className="space-y-3">
-                      <div className="border-l-4 border-blue-500 pl-4">
+                      <div className="border-l-4 border-mpr-interactive pl-4">
                         <strong>Phase 1 (55-60 ans) :</strong> Réduction graduelle des heures, maximisation des cotisations REER
                       </div>
                       <div className="border-l-4 border-green-500 pl-4">

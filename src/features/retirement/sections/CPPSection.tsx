@@ -1,4 +1,4 @@
-// src/features/retirement/sections/CPPSection.tsx
+﻿// src/features/retirement/sections/CPPSection.tsx
 
 import React from 'react';
 
@@ -60,7 +60,7 @@ export const CPPSection: React.FC<CPPSectionProps> = ({ className }) => {
   const t = texts[isFrench ? 'fr' : 'en'];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-mpr-navy text-white">
       <div className="container mx-auto px-6 py-8">
         <div className="space-y-8">
           {/* En-tête de la section */}
@@ -85,8 +85,8 @@ export const CPPSection: React.FC<CPPSectionProps> = ({ className }) => {
           </div>
 
           {/* Fonctionnalités principales */}
-          <div className="bg-white/10 backdrop-blur-sm border-blue-300/30 rounded-lg p-6">
-            <h2 className="text-2xl font-bold text-blue-400 mb-4 flex items-center gap-3">
+          <div className="bg-white/10 backdrop-blur-sm border-mpr-border/30 rounded-lg p-6">
+            <h2 className="text-2xl font-bold text-mpr-interactive mb-4 flex items-center gap-3">
               <span className="text-3xl">✨</span>
               {isFrench ? 'Fonctionnalités principales' : 'Key Features'}
             </h2>
@@ -109,7 +109,7 @@ export const CPPSection: React.FC<CPPSectionProps> = ({ className }) => {
             <div className="space-y-3">
               {t.differences.map((difference, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <span className="text-blue-400 text-xl">ℹ️</span>
+                  <span className="text-mpr-interactive text-xl">ℹ️</span>
                   <span className="text-gray-200">{difference}</span>
                 </div>
               ))}

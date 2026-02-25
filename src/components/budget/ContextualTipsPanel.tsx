@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Target, Shield, PiggyBank, TrendingDown, BookOpen, Link as LinkIcon } from 'lucide-react';
@@ -99,7 +99,7 @@ const ContextualTipsPanel: React.FC<Props> = ({
   if (allocations.pctNeeds > targets.needsPct + 5 && !isDismissed('tip-needs-high')) {
     tips.push({
       id: 'tip-needs-high',
-      icon: <Target className="w-4 h-4 text-blue-700" />,
+      icon: <Target className="w-4 h-4 text-mpr-navy" />,
       title: isFr ? 'Vos besoins dépassent la cible' : 'Your needs exceed target',
       body: isFr
         ? `Cible besoins: ${targets.needsPct} %, réalisé: ${allocations.pctNeeds.toFixed(1)} %. Réduisez quelques dépenses essentielles ou augmentez votre revenu net.`
@@ -152,7 +152,7 @@ const ContextualTipsPanel: React.FC<Props> = ({
   if (savingsDebtRoom > 5 && !isDismissed('tip-savings-room')) {
     tips.push({
       id: 'tip-savings-room',
-      icon: <PiggyBank className="w-4 h-4 text-indigo-700" />,
+      icon: <PiggyBank className="w-4 h-4 text-mpr-navy" />,
       title: isFr ? 'Augmenter l’épargne/dettes' : 'Increase savings/debt allocation',
       body: isFr
         ? `Il reste un écart d’environ ${savingsDebtRoom.toFixed(1)} points par rapport à la cible Épargne/Dettes.`
@@ -186,7 +186,7 @@ const ContextualTipsPanel: React.FC<Props> = ({
     if (dups.length > 0) {
       tips.push({
         id: 'tip-duplicate-expenses',
-        icon: <PiggyBank className="w-4 h-4 text-indigo-700" />,
+        icon: <PiggyBank className="w-4 h-4 text-mpr-navy" />,
         title: isFr ? 'Dépenses en double détectées' : 'Duplicate expenses detected',
         body: isFr
           ? 'Vous avez plusieurs postes avec le même libellé. Consolidation recommandée pour éviter les doublons et erreurs.'
@@ -298,7 +298,7 @@ const ContextualTipsPanel: React.FC<Props> = ({
 
       tips.push({
         id: 'tip-annual-unprovisioned',
-        icon: <Shield className="w-4 h-4 text-indigo-700" />,
+        icon: <Shield className="w-4 h-4 text-mpr-navy" />,
         title: isFr ? 'Charges annuelles non provisionnées' : 'Unprovisioned annual charges',
         body: isFr
           ? `Nous avons détecté ${missingEntries.length} dépense(s) annuelle(s)/trimestrielle(s) sans objectif planifié. Créez un “objectif planifié” pour étaler le coût.`
@@ -334,7 +334,7 @@ const ContextualTipsPanel: React.FC<Props> = ({
                 <div className="text-sm text-slate-700">{t.body}</div>
                 <button
                   onClick={onReadGuide}
-                  className="mt-1 inline-flex items-center text-xs text-blue-700 hover:underline"
+                  className="mt-1 inline-flex items-center text-xs text-mpr-navy hover:underline"
                   title={isFr ? 'Marquer comme lu (guide)' : 'Mark as read (guide)'}
                 >
                   <BookOpen className="w-3 h-3 mr-1" />
@@ -344,7 +344,7 @@ const ContextualTipsPanel: React.FC<Props> = ({
             </div>
             <div className="flex gap-2">
               {t.cta && (
-                <Button onClick={t.cta.action} className="bg-blue-600 hover:bg-blue-700 text-white">
+                <Button onClick={t.cta.action} className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white">
                   <LinkIcon className="w-4 h-4 mr-2" />
                   {t.cta.label}
                 </Button>

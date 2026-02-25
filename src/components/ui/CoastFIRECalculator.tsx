@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Calculateur CoastFIRE - Indépendance Financière Anticipée
  * Calcule l'âge auquel vous pouvez arrêter d'épargner pour la retraite
  * Basé sur l'expertise Retraite101 et la règle du 4%
@@ -39,8 +39,8 @@ const inlineFormStyles = `
 }
 
 .senior-form-input:focus {
-  border-color: #4c6ef5;
-  box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.1);
+  border-color: #2B5BA8;
+  box-shadow: 0 0 0 3px rgba(43, 91, 168, 0.1);
   outline: none;
 }
 
@@ -156,13 +156,13 @@ export const CoastFIRECalculator: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+      <Card className="border-2 border-mpr-border bg-gradient-to-r from-mpr-interactive-lt to-mpr-interactive-lt">
         <CardHeader>
-          <CardTitle className="flex items-center text-xl text-blue-900">
+          <CardTitle className="flex items-center text-xl text-mpr-navy">
             <TrendingUp className="h-6 w-6 mr-2" />
             Calculateur de liberté financière
           </CardTitle>
-          <p className="text-blue-700">
+          <p className="text-mpr-navy">
             Découvrez à quel âge vous pourrez arrêter d'épargner et laisser vos placements croître jusqu'à la retraite.
           </p>
         </CardHeader>
@@ -278,10 +278,10 @@ export const CoastFIRECalculator: React.FC = () => {
           <CardContent>
             {results && (
               <div className="space-y-4">
-                <div className="p-4 bg-blue-50 rounded-lg">
+                <div className="p-4 bg-mpr-interactive-lt rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium">Capital cible nécessaire :</span>
-                    <span className="font-bold text-blue-600">
+                    <span className="font-bold text-mpr-interactive">
                       {formatCurrency(results.targetAmount)}
                     </span>
                   </div>
@@ -341,7 +341,7 @@ export const CoastFIRECalculator: React.FC = () => {
 
       {/* Explication détaillée */}
       {showExplanation && (
-        <Alert className="border-blue-200 bg-blue-50">
+        <Alert className="border-mpr-border bg-mpr-interactive-lt">
           <Info className="h-4 w-4" />
           <AlertDescription>
             <div className="space-y-3">

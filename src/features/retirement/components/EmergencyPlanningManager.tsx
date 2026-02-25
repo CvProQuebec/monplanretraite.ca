@@ -1,4 +1,4 @@
-// src/features/retirement/components/EmergencyPlanningManager.tsx
+﻿// src/features/retirement/components/EmergencyPlanningManager.tsx
 // Composant principal pour la gestion de la planification d'urgence - Version simplifiée
 
 import React from 'react';
@@ -24,17 +24,17 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
   return (
     <div className={`space-y-6 ${className}`}>
       {/* Message d'information */}
-      <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+      <Card className="bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt border-mpr-border">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center">
-              <Shield className="w-8 h-8 text-blue-600" />
+            <div className="w-16 h-16 bg-mpr-interactive-lt rounded-full flex items-center justify-center">
+              <Shield className="w-8 h-8 text-mpr-interactive" />
             </div>
           </div>
-          <CardTitle className="text-3xl text-blue-900 mb-3">
+          <CardTitle className="text-3xl text-mpr-navy mb-3">
             Gestionnaire de planification d'urgence
           </CardTitle>
-          <CardDescription className="text-lg text-blue-700 mb-4">
+          <CardDescription className="text-lg text-mpr-navy mb-4">
             Module de planification d'urgence en cours de développement
           </CardDescription>
         </CardHeader>
@@ -50,8 +50,8 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <h4 className="font-semibold text-blue-900">Fonctionnalités prévues :</h4>
-              <ul className="space-y-2 text-sm text-blue-800">
+              <h4 className="font-semibold text-mpr-navy">Fonctionnalités prévues :</h4>
+              <ul className="space-y-2 text-sm text-mpr-navy">
                 <li className="flex items-center gap-2">
                   <Shield className="w-4 h-4" />
                   Gestion des contacts d'urgence
@@ -72,8 +72,8 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
             </div>
 
             <div className="space-y-4">
-              <h4 className="font-semibold text-blue-900">Avantages :</h4>
-              <ul className="space-y-2 text-sm text-blue-800">
+              <h4 className="font-semibold text-mpr-navy">Avantages :</h4>
+              <ul className="space-y-2 text-sm text-mpr-navy">
                 <li>• Protection complète de votre famille</li>
                 <li>• Accès rapide aux informations critiques</li>
                 <li>• Réduction du stress en cas d'urgence</li>
@@ -83,7 +83,7 @@ export const EmergencyPlanningManager: React.FC<EmergencyPlanningManagerProps> =
           </div>
 
           <div className="mt-8 flex justify-center gap-4">
-            <Button disabled className="bg-blue-600 text-white">
+            <Button disabled className="bg-mpr-interactive text-white">
               <Plus className="w-4 h-4 mr-2" />
               Créer un plan d'urgence
             </Button>

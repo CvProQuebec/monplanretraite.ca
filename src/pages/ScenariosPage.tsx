@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRetirementData } from '@/features/retirement/hooks/useRetirementData';
 import { CalculationService } from '@/features/retirement/services/CalculationService';
@@ -72,11 +72,11 @@ const ScenariosPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-mpr-interactive-lt">
       <div className="container mx-auto px-6 py-10 space-y-6">
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
-            <h1 className="text-3xl font-bold text-indigo-900">Gestion des scénarios</h1>
+            <h1 className="text-3xl font-bold text-mpr-navy">Gestion des scénarios</h1>
             <p className="text-slate-700">
               Créez des scénarios A/B/C, comparez vos options et exportez un rapport PDF en format lettre US.
             </p>
@@ -85,7 +85,7 @@ const ScenariosPage: React.FC = () => {
             <Button variant="outline" onClick={handleReset} title="Réinitialiser tous les scénarios (garde la base)">
               Réinitialiser
             </Button>
-            <Button className="bg-indigo-600 hover:bg-indigo-700" onClick={() => navigate('/scenario-comparison')}>
+            <Button className="bg-mpr-interactive hover:bg-mpr-interactive-dk" onClick={() => navigate('/scenario-comparison')}>
               <GitBranch className="w-4 h-4 mr-2" />
               Comparer
             </Button>
@@ -98,9 +98,9 @@ const ScenariosPage: React.FC = () => {
           </Alert>
         )}
 
-        <Card className="border-2 border-indigo-200 shadow-sm">
+        <Card className="border-2 border-mpr-border shadow-sm">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-indigo-800">
+            <CardTitle className="flex items-center gap-2 text-mpr-navy">
               <FileSpreadsheet className="w-5 h-5" />
               Scénario de base
             </CardTitle>

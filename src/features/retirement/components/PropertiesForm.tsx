@@ -1,4 +1,4 @@
-// src/features/retirement/components/PropertiesForm.tsx
+﻿// src/features/retirement/components/PropertiesForm.tsx
 // Formulaire pour les propriétés immobilières et biens
 
 import React, { useState } from 'react';
@@ -195,7 +195,7 @@ export const PropertiesForm: React.FC<PropertiesFormProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Home className="w-5 h-5 text-blue-600" />
+            <Home className="w-5 h-5 text-mpr-interactive" />
             Propriétés immobilières et biens
           </CardTitle>
           <CardDescription>
@@ -252,7 +252,7 @@ export const PropertiesForm: React.FC<PropertiesFormProps> = ({
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Card className="border-blue-200 bg-blue-50">
+            <Card className="border-mpr-border bg-mpr-interactive-lt">
               <CardHeader>
                 <CardTitle className="text-lg">
                   {editingProperty ? 'Modifier la propriété' : 'Nouvelle propriété'}

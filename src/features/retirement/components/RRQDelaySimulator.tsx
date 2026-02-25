@@ -1,4 +1,4 @@
-// src/features/retirement/components/RRQDelaySimulator.tsx
+﻿// src/features/retirement/components/RRQDelaySimulator.tsx
 import React, { useMemo, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -84,7 +84,7 @@ export default function RRQDelaySimulator() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Clock className="w-5 h-5 text-blue-600" />
+            <Clock className="w-5 h-5 text-mpr-interactive" />
             {isFrench ? 'Simulateur — reporter de X mois (RRQ/CPP)' : 'Simulator — defer by X months (RRQ/CPP)'}
           </CardTitle>
           <CardDescription>
@@ -103,7 +103,7 @@ export default function RRQDelaySimulator() {
                   {isFrench ? 'Mois de report' : 'Months of deferral'}
                 </span>
               </div>
-              <div className="text-xl font-bold text-blue-700">{delayMonths}</div>
+              <div className="text-xl font-bold text-mpr-navy">{delayMonths}</div>
             </div>
             <div className="px-2">
               <Slider
@@ -126,7 +126,7 @@ export default function RRQDelaySimulator() {
           <div className="grid md:grid-cols-3 gap-4">
             <div className="p-4 border rounded-lg bg-white">
               <div className="text-sm text-gray-600">{isFrench ? 'Montant actuel' : 'Current amount'}</div>
-              <div className="text-2xl font-bold text-blue-700">{fmt(nowTotal)}</div>
+              <div className="text-2xl font-bold text-mpr-navy">{fmt(nowTotal)}</div>
               <div className="text-xs text-gray-600 mt-1">
                 {isFrench ? 'Mensuel (ménage)' : 'Monthly (household)'}
               </div>
@@ -154,9 +154,9 @@ export default function RRQDelaySimulator() {
             </div>
           </div>
 
-          <Alert className="border-blue-200 bg-blue-50">
-            <Info className="h-4 w-4 text-blue-600" />
-            <AlertDescription className="text-blue-800">
+          <Alert className="border-mpr-border bg-mpr-interactive-lt">
+            <Info className="h-4 w-4 text-mpr-interactive" />
+            <AlertDescription className="text-mpr-navy">
               {isFrench
                 ? 'Information éducative seulement : il s’agit d’estimations simplifiées. Utilisez l’analyse détaillée RRQ/CPP pour une décision officielle.'
                 : 'Educational information only: simplified estimates. Use the detailed RRQ/CPP analysis for official decisions.'}

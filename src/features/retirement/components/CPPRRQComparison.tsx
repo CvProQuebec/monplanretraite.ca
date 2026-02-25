@@ -1,4 +1,4 @@
-// src/features/retirement/components/CPPRRQComparison.tsx
+﻿// src/features/retirement/components/CPPRRQComparison.tsx
 
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -279,12 +279,12 @@ export const CPPRRQComparison: React.FC<CPPRRQComparisonProps> = ({ className })
                 </CardHeader>
               </Card>
 
-              <Card className="border-blue-200 bg-blue-50">
+              <Card className="border-mpr-border bg-mpr-interactive-lt">
                 <CardHeader className="text-center">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Shield className="w-8 h-8 text-blue-600" />
+                  <div className="w-16 h-16 bg-mpr-interactive-lt rounded-full flex items-center justify-center mx-auto mb-3">
+                    <Shield className="w-8 h-8 text-mpr-interactive" />
                   </div>
-                  <CardTitle className="text-xl text-blue-900">{t.rrq}</CardTitle>
+                  <CardTitle className="text-xl text-mpr-navy">{t.rrq}</CardTitle>
                   <CardDescription className="text-red-700">{t.rrqDescription}</CardDescription>
                 </CardHeader>
               </Card>
@@ -308,7 +308,7 @@ export const CPPRRQComparison: React.FC<CPPRRQComparisonProps> = ({ className })
                         </Badge>
                       </div>
                       <div className="text-center">
-                        <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                        <Badge variant="outline" className="bg-mpr-interactive-lt text-mpr-navy border-mpr-border">
                           {difference.rrq}
                         </Badge>
                       </div>
@@ -363,9 +363,9 @@ export const CPPRRQComparison: React.FC<CPPRRQComparisonProps> = ({ className })
                 </CardContent>
               </Card>
 
-              <Card className="border-blue-200">
+              <Card className="border-mpr-border">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-blue-900">
+                  <CardTitle className="flex items-center gap-2 text-mpr-navy">
                     <Shield className="w-5 h-5" />
                     RRQ
                   </CardTitle>
@@ -403,9 +403,9 @@ export const CPPRRQComparison: React.FC<CPPRRQComparisonProps> = ({ className })
                 </CardContent>
               </Card>
 
-              <Card className="border-blue-200">
+              <Card className="border-mpr-border">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-blue-900">
+                  <CardTitle className="flex items-center gap-2 text-mpr-navy">
                     <Shield className="w-5 h-5" />
                     RRQ
                   </CardTitle>
@@ -443,9 +443,9 @@ export const CPPRRQComparison: React.FC<CPPRRQComparisonProps> = ({ className })
                 </CardContent>
               </Card>
 
-              <Card className="border-blue-200">
+              <Card className="border-mpr-border">
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2 text-blue-900">
+                  <CardTitle className="flex items-center gap-2 text-mpr-navy">
                     <Shield className="w-5 h-5" />
                     RRQ
                   </CardTitle>

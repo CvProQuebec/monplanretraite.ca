@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -267,7 +267,7 @@ export const SessionManager: React.FC = () => {
 
           {/* Restauration depuis sauvegarde */}
           {hasBackup() && (
-            <div className="flex items-center justify-between p-3 border rounded-lg bg-blue-50">
+            <div className="flex items-center justify-between p-3 border rounded-lg bg-mpr-interactive-lt">
               <div>
                 <h4 className="font-medium">{t.restoreBackup}</h4>
                 <p className="text-sm text-gray-600">{t.restoreDescription}</p>

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Composant OnboardingWizard - Phase 2 Modules Néophytes
  * Interface d'accompagnement interactive pour les nouveaux utilisateurs
  * Système de guidage progressif et personnalisé
@@ -211,7 +211,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
       case 'essential':
         return <Target className="h-4 w-4 text-red-500" />;
       case 'recommended':
-        return <BookOpen className="h-4 w-4 text-blue-500" />;
+        return <BookOpen className="h-4 w-4 text-mpr-interactive" />;
       case 'advanced':
         return <Award className="h-4 w-4 text-purple-500" />;
     }
@@ -222,7 +222,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
       case 'essential':
         return 'bg-red-100 text-red-800 border-red-200';
       case 'recommended':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
+        return 'bg-mpr-interactive-lt text-mpr-navy border-mpr-border';
       case 'advanced':
         return 'bg-purple-100 text-purple-800 border-purple-200';
     }
@@ -258,7 +258,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
           <Card className="border-2 border-dashed border-gray-200 flex-1">
             <CardContent className="p-4 text-center h-full flex flex-col justify-center">
               <div className="space-y-3">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
+                <div className="w-12 h-12 bg-mpr-interactive-lt rounded-full flex items-center justify-center mx-auto">
                   {getCategoryIcon(step.category)}
                 </div>
                 <h3 className="text-lg font-semibold">
@@ -295,11 +295,11 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
   if (wizardState.isProfileSetup) {
     return (
       <div className={`fixed inset-0 bg-white flex items-center justify-center z-50 p-4 ${className}`}>
-        <Card className="w-full max-w-2xl h-[90vh] flex flex-col shadow-2xl border-2 border-blue-200">
+        <Card className="w-full max-w-2xl h-[90vh] flex flex-col shadow-2xl border-2 border-mpr-border">
           <CardHeader className="border-b flex-shrink-0">
             <div className="flex items-center justify-between">
               <CardTitle className="text-xl flex items-center">
-                <User className="h-6 w-6 mr-2 text-blue-600" />
+                <User className="h-6 w-6 mr-2 text-mpr-interactive" />
                 Configuration de votre profil
               </CardTitle>
               <Button variant="ghost" size="sm" onClick={onClose}>
@@ -324,7 +324,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
       onClick={onClose}
     >
       <Card 
-        className="w-full max-w-5xl h-[95vh] overflow-hidden shadow-2xl border-2 border-blue-200 relative animate-in slide-in-from-bottom-4 duration-300"
+        className="w-full max-w-5xl h-[95vh] overflow-hidden shadow-2xl border-2 border-mpr-border relative animate-in slide-in-from-bottom-4 duration-300"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Bouton de fermeture en haut à droite */}
@@ -336,13 +336,13 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
         >
           <X className="h-5 w-5" />
         </Button>
-        <CardHeader className="border-b bg-gradient-to-r from-blue-50 to-indigo-50">
+        <CardHeader className="border-b bg-gradient-to-r from-mpr-interactive-lt to-mpr-interactive-lt">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-xl text-blue-900">
+              <CardTitle className="text-xl text-mpr-navy">
                 {wizardState.currentPath?.name || t.pathTitle}
               </CardTitle>
-              <p className="text-sm text-blue-700 mt-1">
+              <p className="text-sm text-mpr-navy mt-1">
                 {wizardState.currentPath?.description}
               </p>
             </div>
@@ -356,7 +356,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
           
           {/* Barre de progression */}
           <div className="mt-4">
-            <div className="flex items-center justify-between text-sm text-blue-700 mb-2">
+            <div className="flex items-center justify-between text-sm text-mpr-navy mb-2">
               <span>{t.progression}</span>
               <span>{progress.completed}/{progress.total} {t.steps}</span>
             </div>
@@ -412,7 +412,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
 
               {/* Détails de l'étape */}
               {wizardState.showStepDetails && (
-                <Alert className="border-blue-200 bg-blue-50 mb-3">
+                <Alert className="border-mpr-border bg-mpr-interactive-lt mb-3">
                   <Info className="h-4 w-4" />
                   <AlertDescription>
                     <div className="space-y-2">
@@ -486,7 +486,7 @@ export const OnboardingWizard: React.FC<OnboardingWizardProps> = ({
                     <Button
                       onClick={() => handleStepComplete(currentStep.id)}
                       size="sm"
-                      className="bg-blue-600 hover:bg-blue-700 text-white"
+                      className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white"
                       aria-label={isFrench ? 'Continuer' : 'Continue'}
                     >
                       {t.next}
@@ -640,7 +640,7 @@ const ProfileSetupForm: React.FC<{ onSubmit: (profile: UserProfile) => void }> =
       <div className="flex items-center justify-center pt-4 border-t bg-white">
         <Button 
           onClick={handleSubmit}
-          className="bg-blue-600 hover:bg-blue-700 px-8 py-3 text-lg font-bold"
+          className="bg-mpr-interactive hover:bg-mpr-interactive-dk px-8 py-3 text-lg font-bold"
         >
           Créer mon parcours personnalisé
         </Button>

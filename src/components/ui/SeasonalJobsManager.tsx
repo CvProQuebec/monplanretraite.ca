@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import DateInput from '@/components/ui/DateInput';
@@ -68,8 +68,8 @@ const SeasonalJobsManager: React.FC<SeasonalJobsManagerProps> = ({
     { 
       value: 'winter', 
       label: isFrench ? 'Hiver' : 'Winter',
-      icon: <Snowflake className="w-4 h-4 text-blue-500" />,
-      color: 'bg-blue-500',
+      icon: <Snowflake className="w-4 h-4 text-mpr-interactive" />,
+      color: 'bg-mpr-interactive',
       examples: isFrench 
         ? ['Déneigeur', 'Moniteur de ski', 'Préparateur fiscal', 'Vendeur temps des fêtes']
         : ['Snow removal', 'Ski instructor', 'Tax preparer', 'Holiday sales']
@@ -401,7 +401,7 @@ const SeasonalJobsManager: React.FC<SeasonalJobsManagerProps> = ({
                             {isFrench ? 'Est:' : 'Est:'} {formatCurrency(job.estimatedEarnings)}
                           </div>
                           {job.isCompleted && job.actualEarnings && (
-                            <div className="text-sm font-medium text-blue-400">
+                            <div className="text-sm font-medium text-mpr-interactive">
                               {isFrench ? 'Réel:' : 'Act:'} {formatCurrency(job.actualEarnings)}
                             </div>
                           )}
@@ -420,7 +420,7 @@ const SeasonalJobsManager: React.FC<SeasonalJobsManagerProps> = ({
                         variant="ghost"
                         size="sm"
                         onClick={() => setEditingId(isEditing ? null : job.id)}
-                        className="text-blue-400 hover:text-blue-300 hover:bg-blue-900/20"
+                        className="text-mpr-interactive hover:text-mpr-interactive hover:bg-mpr-navy/20"
                       >
                         {isEditing ? (isFrench ? 'Terminer' : 'Done') : (isFrench ? 'Modifier' : 'Edit')}
                       </Button>
@@ -481,9 +481,9 @@ const SeasonalJobsManager: React.FC<SeasonalJobsManagerProps> = ({
         </Alert>
 
         {/* Exemples d'emplois par saison */}
-        <Card className="bg-gradient-to-r from-indigo-900/50 to-purple-900/50 border border-indigo-500/30">
+        <Card className="bg-gradient-to-r from-mpr-navy/50 to-purple-900/50 border border-mpr-interactive/30">
           <CardContent className="p-4">
-            <h4 className="text-lg font-bold text-indigo-300 mb-4 flex items-center gap-2">
+            <h4 className="text-lg font-bold text-mpr-interactive mb-4 flex items-center gap-2">
               <MapPin className="w-5 h-5" />
               {isFrench ? 'Exemples d\'emplois saisonniers' : 'Seasonal Job Examples'}
             </h4>

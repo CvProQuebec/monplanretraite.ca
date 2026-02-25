@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -402,9 +402,9 @@ const SeasonalIrregularExpensesModule: React.FC<SeasonalIrregularExpensesProps> 
 
       {/* Message d'aide - Version Seniors */}
       {showHelp && (
-        <Alert className="border-2 border-blue-400 bg-blue-50">
-          <Info className="h-6 w-6 text-blue-700" />
-          <AlertDescription className="text-blue-900 text-lg leading-relaxed">
+        <Alert className="border-2 border-mpr-interactive bg-mpr-interactive-lt">
+          <Info className="h-6 w-6 text-mpr-navy" />
+          <AlertDescription className="text-mpr-navy text-lg leading-relaxed">
             <strong className="text-xl">{language === 'fr' ? 'Dépenses saisonnières :' : 'Seasonal expenses:'}</strong> 
             <br />
             {language === 'fr' 

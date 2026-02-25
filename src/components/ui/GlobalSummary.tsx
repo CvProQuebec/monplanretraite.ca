@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Calculator, DollarSign, TrendingUp, Shield, Flag, Briefcase } from 'lucide-react';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
@@ -816,10 +816,10 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
   const totals = getGlobalTotals();
 
   return (
-    <Card className="bg-gradient-to-r from-indigo-900 to-purple-900 border-4 border-indigo-300 shadow-2xl mb-8">
-      <CardHeader className="border-b-4 border-indigo-300">
+    <Card className="bg-gradient-to-r from-mpr-navy to-purple-900 border-4 border-mpr-border shadow-2xl mb-8">
+      <CardHeader className="border-b-4 border-mpr-border">
         <CardTitle className="text-3xl font-bold text-white flex items-center justify-center gap-4">
-          <Calculator className="w-10 h-10 text-indigo-300" />
+          <Calculator className="w-10 h-10 text-mpr-interactive" />
           {isFrench ? 'Résumé familial' : 'Family Summary'}
         </CardTitle>
       </CardHeader>
@@ -827,15 +827,15 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
       <CardContent className="p-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Revenus de travail */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border-2 border-blue-300">
-            <h3 className="text-xl font-bold text-blue-300 mb-4 flex items-center gap-2">
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border-2 border-mpr-border">
+            <h3 className="text-xl font-bold text-mpr-interactive mb-4 flex items-center gap-2">
               <Briefcase className="w-6 h-6" />
               {isFrench ? 'Revenus de travail' : 'Work Income'}
             </h3>
             <div className="space-y-3">
               <div className="flex justify-between">
                 <span className="text-white">{isFrench ? 'Salaire:' : 'Salary:'}</span>
-                <span className="font-bold text-blue-300">{formatCurrency(totals.salaire)}</span>
+                <span className="font-bold text-mpr-interactive">{formatCurrency(totals.salaire)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white">{isFrench ? 'Travail autonome:' : 'Self-employment:'}</span>
@@ -860,10 +860,10 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
                 <span className="font-bold text-pink-300">{formatCurrency(totals.autresRevenus)}</span>
               </div>
               
-              <div className="border-t border-blue-300 pt-2 mt-4">
+              <div className="border-t border-mpr-border pt-2 mt-4">
                 <div className="flex justify-between text-lg">
                   <span className="text-white font-bold">{isFrench ? 'Total revenus:' : 'Total Income:'}</span>
-                  <span className="font-bold text-blue-300">{formatCurrency(totals.totalRevenus)}</span>
+                  <span className="font-bold text-mpr-interactive">{formatCurrency(totals.totalRevenus)}</span>
                 </div>
               </div>
             </div>
@@ -878,7 +878,7 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
             <div className="space-y-3">
               <div className="flex justify-between">
                 <span className="text-white">{isFrench ? 'RRQ/CPP:' : 'QPP/CPP:'}</span>
-                <span className="font-bold text-blue-300">{formatCurrency(totals.rrq)}</span>
+                <span className="font-bold text-mpr-interactive">{formatCurrency(totals.rrq)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white">{isFrench ? 'Sécurité vieillesse:' : 'Old Age Security:'}</span>
@@ -910,7 +910,7 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
             <div className="space-y-3">
               <div className="flex justify-between">
                 <span className="text-white">{isFrench ? 'REER:' : 'RRSP:'}</span>
-                <span className="font-bold text-blue-300">{formatCurrency(totals.reer)}</span>
+                <span className="font-bold text-mpr-interactive">{formatCurrency(totals.reer)}</span>
               </div>
               <div className="flex justify-between">
                 <span className="text-white">{isFrench ? 'CELI:' : 'TFSA:'}</span>
@@ -940,7 +940,7 @@ const GlobalSummary: React.FC<GlobalSummaryProps> = ({ userData, isFrench }) => 
             <div className="text-4xl font-bold text-white mb-2">
               {formatCurrency(totals.totalGeneral)}
             </div>
-            <div className="text-xl text-indigo-200">
+            <div className="text-xl text-mpr-interactive-lt">
               {isFrench ? 'Total des revenus et prestations annuels' : 'Total Annual Income and Benefits'}
             </div>
           </div>

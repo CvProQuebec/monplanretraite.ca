@@ -1,4 +1,4 @@
-// Onglet des documents importants
+﻿// Onglet des documents importants
 // Plan Professional - Gestion avancée des documents
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -143,13 +143,13 @@ export const DocumentsTab: React.FC<DocumentsTabProps> = ({ data, onUpdate }) =>
 
   const getDocumentTypeColor = (type: string) => {
     const colors: Record<string, string> = {
-      personal: 'bg-blue-100 text-blue-800',
+      personal: 'bg-mpr-interactive-lt text-mpr-navy',
       medical: 'bg-red-100 text-red-800',
       financial: 'bg-green-100 text-green-800',
       legal: 'bg-purple-100 text-purple-800',
       property: 'bg-orange-100 text-orange-800',
       insurance: 'bg-yellow-100 text-yellow-800',
-      employment: 'bg-indigo-100 text-indigo-800',
+      employment: 'bg-mpr-interactive-lt text-mpr-navy',
       other: 'bg-gray-100 text-gray-800'
     };
     return colors[type] || colors.other;
@@ -175,7 +175,7 @@ export const DocumentsTab: React.FC<DocumentsTabProps> = ({ data, onUpdate }) =>
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <FileText className="h-5 w-5 text-blue-600" />
+              <FileText className="h-5 w-5 text-mpr-interactive" />
               <div>
                 <p className="text-sm text-muted-foreground">Total des documents</p>
                 <p className="text-2xl font-bold">{data.length}</p>

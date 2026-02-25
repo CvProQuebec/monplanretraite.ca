@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -202,11 +202,11 @@ export const TaxOptimizationTest: React.FC = () => {
             <CardContent>
               <div className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  <div className="text-center p-3 bg-blue-50 rounded">
-                    <div className="text-lg font-bold text-blue-700">
+                  <div className="text-center p-3 bg-mpr-interactive-lt rounded">
+                    <div className="text-lg font-bold text-mpr-navy">
                       {testResults.withdrawal?.sequencePhases?.length || 0}
                     </div>
-                    <div className="text-sm text-blue-600">Phases de décaissement</div>
+                    <div className="text-sm text-mpr-interactive">Phases de décaissement</div>
                   </div>
                   
                   <div className="text-center p-3 bg-green-50 rounded">
@@ -295,7 +295,7 @@ export const TaxOptimizationTest: React.FC = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <h3 className="font-medium mb-3">Fond d'urgence recommandé</h3>
-                  <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-2xl font-bold text-mpr-interactive">
                     {formatCurrency(testResults.budget?.fondUrgenceRequis || 0)}
                   </div>
                   <div className="text-sm text-gray-600 mt-1">

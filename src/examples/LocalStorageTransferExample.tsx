@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Exemple d'utilisation du LocalStorageTransferDialog
  * Ce composant peut être intégré dans n'importe quelle page du site
  */
@@ -24,7 +24,7 @@ const LocalStorageTransferExample: React.FC = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Database className="h-6 w-6 text-blue-600" />
+            <Database className="h-6 w-6 text-mpr-interactive" />
             Sauvegarde des données locales
           </CardTitle>
         </CardHeader>
@@ -36,12 +36,12 @@ const LocalStorageTransferExample: React.FC = () => {
               stockées dans le navigateur vers un fichier local sur votre ordinateur.
             </p>
             
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-              <h4 className="font-semibold text-blue-800 mb-2 flex items-center gap-2">
+            <div className="bg-mpr-interactive-lt border border-mpr-border rounded-lg p-4">
+              <h4 className="font-semibold text-mpr-navy mb-2 flex items-center gap-2">
                 <Shield className="h-4 w-4" />
                 Ce qui se passe lors du transfert :
               </h4>
-              <ul className="text-blue-700 text-sm space-y-1">
+              <ul className="text-mpr-navy text-sm space-y-1">
                 <li>• Récupération de toutes les données sécurisées et régulières</li>
                 <li>• Suggestion d'un nom de fichier intelligent</li>
                 <li>• Possibilité de personnaliser le nom et la description</li>

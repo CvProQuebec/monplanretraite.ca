@@ -1,4 +1,4 @@
-// Onglet des informations financières
+﻿// Onglet des informations financières
 // Plan Professional - Gestion avancée des finances
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -322,7 +322,7 @@ export const FinancialTab: React.FC<FinancialTabProps> = ({ data, onUpdate }) =>
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <CreditCard className="h-5 w-5 text-blue-600" />
+              <CreditCard className="h-5 w-5 text-mpr-interactive" />
               <div>
                 <p className="text-sm text-muted-foreground">Limite de crédit</p>
                 <p className="text-lg font-bold">{totalCreditLimit.toLocaleString('fr-CA')} $</p>

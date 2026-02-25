@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import MobileNavLink from "./MobileNavLink";
@@ -60,7 +60,7 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
   // Helper to get link classes based on active state
   const getMobileLinkClasses = (path: string) => {
     const isActive = location.pathname === path;
-    const baseColor = "text-blue-900";
+    const baseColor = "text-mpr-navy";
     const hoverColor = "hover:text-amber-600";
     const activeColor = "text-amber-600";
     
@@ -150,7 +150,7 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
           
           {/* Section Outils / Tools */}
           <div className="py-2 border-t border-gray-200">
-            <h3 className="text-sm font-bold text-blue-600 uppercase tracking-wide mb-2">
+            <h3 className="text-sm font-bold text-mpr-interactive uppercase tracking-wide mb-2">
               {isEnglish ? "Tools" : "Outils"}
             </h3>
             
@@ -341,7 +341,7 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
           
           {/* Section Modules Éducatifs / Educational Modules */}
           <div className="py-2 border-t border-gray-200">
-            <h3 className="text-sm font-bold text-blue-600 uppercase tracking-wide mb-2">
+            <h3 className="text-sm font-bold text-mpr-interactive uppercase tracking-wide mb-2">
               {isEnglish ? "Educational Modules" : "Modules Éducatifs"}
             </h3>
             
@@ -356,7 +356,7 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
           
           {/* Autres sections existantes */}
           <div className="py-2 border-t border-gray-200">
-            <h3 className="text-sm font-bold text-blue-600 uppercase tracking-wide mb-2">
+            <h3 className="text-sm font-bold text-mpr-interactive uppercase tracking-wide mb-2">
               {isEnglish ? "Analysis Tools" : "Outils d'Analyse"}
             </h3>
             

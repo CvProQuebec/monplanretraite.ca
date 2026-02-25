@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
@@ -225,7 +225,7 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
   return (
     <div className={`space-y-3 ${className}`}>
       <Label htmlFor={id} className="text-lg font-semibold text-gray-800 flex items-center gap-2 mb-3">
-        <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-5 h-5 text-mpr-interactive" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
         {label}
@@ -242,7 +242,7 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
           onBlur={handleBlur}
           className={`w-full text-center text-lg p-4 h-14 border-2 transition-all duration-200 font-mono ${
             getValidationClass()
-          } hover:border-blue-400 focus:border-blue-500 focus:ring-2 focus:ring-blue-200`}
+          } hover:border-mpr-interactive focus:border-mpr-interactive focus:ring-2 focus:ring-mpr-border`}
         />
         
         {/* Indicateur de validation */}
@@ -262,10 +262,10 @@ export const CustomBirthDateInput: React.FC<CustomBirthDateInputProps> = ({
         
         {/* Message d'aide */}
         {isEditing && (
-          <div className="absolute top-full left-0 right-0 mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg text-sm text-blue-800 shadow-lg z-20">
+          <div className="absolute top-full left-0 right-0 mt-2 p-3 bg-mpr-interactive-lt border border-mpr-border rounded-lg text-sm text-mpr-navy shadow-lg z-20">
             <div className="font-semibold mb-1">💡 Conseils de saisie :</div>
-            <div>• Tapez directement : <span className="font-mono bg-blue-100 px-1 rounded">19870605</span> → <span className="font-mono bg-green-100 px-1 rounded">1987-06-05</span></div>
-            <div>• Ou utilisez le format : <span className="font-mono bg-blue-100 px-1 rounded">1987-06-05</span></div>
+            <div>• Tapez directement : <span className="font-mono bg-mpr-interactive-lt px-1 rounded">19870605</span> → <span className="font-mono bg-green-100 px-1 rounded">1987-06-05</span></div>
+            <div>• Ou utilisez le format : <span className="font-mono bg-mpr-interactive-lt px-1 rounded">1987-06-05</span></div>
             <div>• La date sera automatiquement formatée et validée</div>
           </div>
         )}

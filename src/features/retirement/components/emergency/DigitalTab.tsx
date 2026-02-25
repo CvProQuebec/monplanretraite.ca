@@ -1,4 +1,4 @@
-// Onglet des accès numériques
+﻿// Onglet des accès numériques
 // Plan Professional - Gestion avancée des accès numériques
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -285,7 +285,7 @@ export const DigitalTab: React.FC<DigitalTabProps> = ({ data, onUpdate }) => {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <Globe className="h-5 w-5 text-blue-600" />
+              <Globe className="h-5 w-5 text-mpr-interactive" />
               <div>
                 <p className="text-sm text-muted-foreground">Total des comptes</p>
                 <p className="text-2xl font-bold">{totalAccounts}</p>
@@ -343,8 +343,8 @@ export const DigitalTab: React.FC<DigitalTabProps> = ({ data, onUpdate }) => {
       )}
 
       {publicSocialAccounts > 0 && (
-        <Alert className="border-blue-200 bg-blue-50">
-          <Info className="h-4 w-4 text-blue-600" />
+        <Alert className="border-mpr-border bg-mpr-interactive-lt">
+          <Info className="h-4 w-4 text-mpr-interactive" />
           <AlertDescription>
             <strong>Information :</strong> {publicSocialAccounts} de vos comptes de réseaux sociaux sont publics. 
             Assurez-vous que les informations partagées sont appropriées.
@@ -764,7 +764,7 @@ export const DigitalTab: React.FC<DigitalTabProps> = ({ data, onUpdate }) => {
                               {emailPurposes.find(p => p.value === social.purpose)?.label}
                             </Badge>
                             {social.isPublic ? (
-                              <Badge className="bg-blue-100 text-blue-800">Public</Badge>
+                              <Badge className="bg-mpr-interactive-lt text-mpr-navy">Public</Badge>
                             ) : (
                               <Badge className="bg-gray-100 text-gray-800">Privé</Badge>
                             )}

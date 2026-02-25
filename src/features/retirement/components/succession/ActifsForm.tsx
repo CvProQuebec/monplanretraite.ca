@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -134,7 +134,7 @@ export const ActifsForm: React.FC<ActifsFormProps> = ({ actifs, onUpdate }) => {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <Building className="h-5 w-5 text-blue-600" />
+              <Building className="h-5 w-5 text-mpr-interactive" />
               <div>
                 <p className="text-sm text-muted-foreground">Total actifs</p>
                 <p className="text-2xl font-bold">{actifs.length}</p>
@@ -352,7 +352,7 @@ export const ActifsForm: React.FC<ActifsFormProps> = ({ actifs, onUpdate }) => {
                     <div className="flex items-start justify-between">
                       <div className="flex-1 space-y-2">
                         <div className="flex items-center space-x-2">
-                          <IconComponent className="h-5 w-5 text-blue-600" />
+                          <IconComponent className="h-5 w-5 text-mpr-interactive" />
                           <h4 className="font-semibold text-lg">{actif.nom}</h4>
                           <Badge variant="outline">{typeInfo?.label}</Badge>
                           <Badge className="bg-green-100 text-green-800">
@@ -451,7 +451,7 @@ export const ActifsForm: React.FC<ActifsFormProps> = ({ actifs, onUpdate }) => {
                 
                 return (
                   <div key={type.value} className="text-center p-3 bg-muted rounded-lg">
-                    <IconComponent className="h-6 w-6 mx-auto mb-2 text-blue-600" />
+                    <IconComponent className="h-6 w-6 mx-auto mb-2 text-mpr-interactive" />
                     <p className="font-semibold">{type.label}</p>
                     <p className="text-sm text-muted-foreground">{count} actif{count > 1 ? 's' : ''}</p>
                     <p className="text-sm font-medium">

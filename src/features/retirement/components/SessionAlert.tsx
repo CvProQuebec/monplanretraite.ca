@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { X, Info, Shield, AlertTriangle } from 'lucide-react';
@@ -68,26 +68,26 @@ export const SessionAlert: React.FC = () => {
   }
 
   return (
-    <Alert className="mb-6 border-blue-200 bg-blue-50">
+    <Alert className="mb-6 border-mpr-border bg-mpr-interactive-lt">
       <div className="flex items-start gap-3">
-        <Shield className="h-5 w-5 text-blue-600 mt-0.5" />
+        <Shield className="h-5 w-5 text-mpr-interactive mt-0.5" />
         <div className="flex-1">
           <AlertDescription className="space-y-2">
             <div className="flex items-center justify-between">
-              <h4 className="font-semibold text-blue-900">{t.title}</h4>
+              <h4 className="font-semibold text-mpr-navy">{t.title}</h4>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleDismiss}
-                className="h-6 w-6 p-0 text-blue-600 hover:text-blue-800"
+                className="h-6 w-6 p-0 text-mpr-interactive hover:text-mpr-navy"
               >
                 <X className="h-4 w-4" />
               </Button>
             </div>
             
-            <p className="text-blue-800">{t.message}</p>
+            <p className="text-mpr-navy">{t.message}</p>
             
-            <div className="flex items-center gap-2 text-sm text-blue-700">
+            <div className="flex items-center gap-2 text-sm text-mpr-navy">
               <Info className="h-4 w-4" />
               <span>{t.details}</span>
             </div>
@@ -97,7 +97,7 @@ export const SessionAlert: React.FC = () => {
                 variant="outline"
                 size="sm"
                 onClick={handleLearnMore}
-                className="border-blue-300 text-blue-700 hover:bg-blue-100"
+                className="border-mpr-border text-mpr-navy hover:bg-mpr-interactive-lt"
               >
                 {t.learnMore}
               </Button>
@@ -105,7 +105,7 @@ export const SessionAlert: React.FC = () => {
                 variant="ghost"
                 size="sm"
                 onClick={handleDismiss}
-                className="text-blue-600 hover:text-blue-800"
+                className="text-mpr-interactive hover:text-mpr-navy"
               >
                 {t.dismiss}
               </Button>

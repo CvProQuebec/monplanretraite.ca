@@ -1,4 +1,4 @@
-// src/components/ui/FourPercentRuleModule.tsx
+﻿// src/components/ui/FourPercentRuleModule.tsx
 import React, { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -175,7 +175,7 @@ export const FourPercentRuleModule: React.FC<FourPercentRuleModuleProps> = ({ cl
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Calculator className="h-6 w-6 text-blue-600" />
+            <Calculator className="h-6 w-6 text-mpr-interactive" />
             <CardTitle>Règle des 4 % modernisée</CardTitle>
           </div>
           <CardDescription>
@@ -244,7 +244,7 @@ export const FourPercentRuleModule: React.FC<FourPercentRuleModuleProps> = ({ cl
                 <div className="space-y-4">
                   <Card className="p-4">
                     <div className="text-center space-y-2">
-<div className="text-2xl font-bold text-blue-600">
+<div className="text-2xl font-bold text-mpr-interactive">
                         {formatPercentOQLF(currentSuccessRate, { min: 1, max: 1 })}
                       </div>
                       <div className="text-sm text-gray-600">Probabilité de succès (Trinity, 30 ans)</div>
@@ -428,7 +428,7 @@ Taux de succès faible. Réduisez le taux de retrait à {formatPercentOQLF(Math.
 
                     <div className="space-y-4">
                       <Card className="p-4 text-center">
-                        <div className="text-3xl font-bold text-blue-600">~30 ans</div>
+                        <div className="text-3xl font-bold text-mpr-interactive">~30 ans</div>
                         <div className="text-sm text-gray-600">
                           Horizon typique d’une retraite
                         </div>

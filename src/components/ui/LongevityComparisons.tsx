@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+﻿import React, { useMemo } from 'react';
 import {
   BarChart,
   Bar,
@@ -132,7 +132,7 @@ const LongevityComparisons: React.FC<LongevityComparisonsProps> = ({
       return (
         <div className="bg-white p-3 border rounded-lg shadow-lg">
           <p className="font-semibold">{data.label}</p>
-          <p className="text-blue-600">
+          <p className="text-mpr-interactive">
             {isFrench ? 'Espérance de vie:' : 'Life expectancy:'} {data.value.toFixed(1)} {isFrench ? 'ans' : 'years'}
           </p>
           {data.isUser && (
@@ -161,9 +161,9 @@ const LongevityComparisons: React.FC<LongevityComparisonsProps> = ({
       </div>
 
       {/* Main Comparison Card */}
-      <Card className="bg-gradient-to-r from-blue-50 to-indigo-50">
+      <Card className="bg-gradient-to-r from-mpr-interactive-lt to-mpr-interactive-lt">
         <CardHeader>
-          <CardTitle className="text-lg text-blue-800 flex items-center gap-2">
+          <CardTitle className="text-lg text-mpr-navy flex items-center gap-2">
             {getPercentileIcon(comparisonData.percentileRank)}
             {isFrench ? 'Votre Position Relative' : 'Your Relative Position'}
           </CardTitle>
@@ -172,7 +172,7 @@ const LongevityComparisons: React.FC<LongevityComparisonsProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Percentile Rank */}
             <div className="text-center">
-              <div className="text-3xl font-bold text-blue-700 mb-2">
+              <div className="text-3xl font-bold text-mpr-navy mb-2">
                 {comparisonData.percentileRank.toFixed(0)}th
               </div>
               <div className="text-sm text-gray-600 mb-2">
@@ -274,7 +274,7 @@ const LongevityComparisons: React.FC<LongevityComparisonsProps> = ({
                     province.rank === 1 ? 'bg-yellow-400 text-yellow-900' :
                     province.rank === 2 ? 'bg-gray-400 text-gray-900' :
                     province.rank === 3 ? 'bg-orange-400 text-orange-900' :
-                    'bg-blue-100 text-blue-800'
+                    'bg-mpr-interactive-lt text-mpr-navy'
                   }`}>
                     {province.rank}
                   </div>
@@ -351,7 +351,7 @@ const LongevityComparisons: React.FC<LongevityComparisonsProps> = ({
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-700">
+              <div className="text-2xl font-bold text-mpr-navy">
                 {comparisonData.percentileRank.toFixed(0)}%
               </div>
               <div className="text-sm text-gray-600">

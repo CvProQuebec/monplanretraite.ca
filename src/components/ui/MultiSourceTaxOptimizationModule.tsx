@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+﻿import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -228,7 +228,7 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
 
   const getTimelineColor = (timeline: string): string => {
     switch (timeline) {
-      case 'immediate': return 'bg-blue-100 text-blue-800';
+      case 'immediate': return 'bg-mpr-interactive-lt text-mpr-navy';
       case 'short-term': return 'bg-purple-100 text-purple-800';
       case 'long-term': return 'bg-orange-100 text-orange-800';
       default: return 'bg-gray-100 text-gray-800';
@@ -440,8 +440,8 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
                     <div className="text-sm text-gray-600">Fardeau Fiscal Optimisé</div>
                   </div>
                   
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+                    <div className="text-2xl font-bold text-mpr-interactive">
                       {formatCurrency(optimization.totalSavings)}
                     </div>
                     <div className="text-sm text-gray-600">Économies Totales</div>
@@ -530,7 +530,7 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
               <div className="space-y-4">
                 <h4 className="font-semibold text-lg">Programmes Gouvernementaux Clés</h4>
                 
-                <div className="p-4 bg-blue-50 rounded-lg">
+                <div className="p-4 bg-mpr-interactive-lt rounded-lg">
                   <h5 className="font-medium">Fractionnement de Revenu de Pension</h5>
                   <p className="text-sm text-gray-600 mt-2">
                     À partir de 65 ans, vous pouvez transférer jusqu'à 50% de votre revenu de pension 

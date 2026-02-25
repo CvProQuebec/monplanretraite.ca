@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../hooks/useLanguage';
@@ -293,11 +293,11 @@ export const RetirementNavigation: React.FC = () => {
   return (
     <div className={`min-h-screen transition-all duration-1000 ${
       currentTheme.id === 'morning' ? 'bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50' :
-      currentTheme.id === 'afternoon' ? 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50' :
+      currentTheme.id === 'afternoon' ? 'bg-gradient-to-br from-mpr-interactive-lt via-mpr-interactive-lt to-purple-50' :
       currentTheme.id === 'evening' ? 'bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50' :
-      currentTheme.id === 'night' ? 'bg-gradient-to-br from-slate-900 via-gray-800 to-indigo-900' :
+      currentTheme.id === 'night' ? 'bg-gradient-to-br from-slate-900 via-gray-800 to-mpr-navy' :
       currentTheme.id === 'premium' ? 'bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50' :
-      'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50'
+      'bg-gradient-to-br from-mpr-interactive-lt via-mpr-interactive-lt to-purple-50'
     }`}>
       {/* Particules de fond Phase 2 */}
       {showParticles && (
@@ -350,7 +350,7 @@ export const RetirementNavigation: React.FC = () => {
                                      <div className="flex items-center gap-3 mb-4 min-h-[80px]">
                     <div className={`p-2 rounded-lg ${
                       card.status === 'completed' ? 'bg-green-100 text-green-600' :
-                      card.status === 'in-progress' ? 'bg-blue-100 text-blue-600' :
+                      card.status === 'in-progress' ? 'bg-mpr-interactive-lt text-mpr-interactive' :
                       'bg-gray-100 text-gray-600'
                     }`}>
                       <card.icon className="w-6 h-6" />
@@ -370,7 +370,7 @@ export const RetirementNavigation: React.FC = () => {
                     <div className="w-full bg-gray-200 rounded-full h-2">
                       <motion.div
                         className={`h-2 rounded-full ${
-                          card.status === 'completed' ? 'bg-green-500' : 'bg-blue-500'
+                          card.status === 'completed' ? 'bg-green-500' : 'bg-mpr-interactive'
                         }`}
                         initial={{ width: 0 }}
                         animate={{ width: `${card.progress}%` }}
@@ -380,13 +380,13 @@ export const RetirementNavigation: React.FC = () => {
                     <div className="flex items-center justify-between mt-2">
                       <span className={`text-xs px-2 py-1 rounded-full ${
                         card.status === 'completed' ? 'bg-green-100 text-green-800' :
-                        card.status === 'in-progress' ? 'bg-blue-100 text-blue-800' :
+                        card.status === 'in-progress' ? 'bg-mpr-interactive-lt text-mpr-navy' :
                         'bg-gray-100 text-gray-800'
                       }`}>
                         {card.status === 'completed' ? 'Terminé' : 
                          card.status === 'in-progress' ? 'En cours' : 'Verrouillé'}
                       </span>
-                      <span className="text-xs text-blue-600 hover:underline cursor-pointer">
+                      <span className="text-xs text-mpr-interactive hover:underline cursor-pointer">
                         Cliquez pour accéder
                       </span>
                     </div>

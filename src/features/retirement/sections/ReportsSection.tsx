@@ -1,4 +1,4 @@
-// src/features/retirement/sections/ReportsSection.tsx
+﻿// src/features/retirement/sections/ReportsSection.tsx
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -29,7 +29,7 @@ export const ReportsSection: React.FC<ReportsSectionProps> = ({ data, calculatio
       title: isFrench ? 'Rapport complet' : 'Comprehensive Report',
       description: isFrench ? 'Analyse détaillée de votre plan de retraite' : 'Detailed analysis of your retirement plan',
       icon: FileText,
-      color: 'from-blue-600 to-indigo-600',
+      color: 'from-mpr-interactive to-mpr-interactive',
       features: [
         isFrench ? 'Page de couverture personnalisée' : 'Custom cover page',
         isFrench ? 'Résumé exécutif' : 'Executive summary',
@@ -91,10 +91,10 @@ export const ReportsSection: React.FC<ReportsSectionProps> = ({ data, calculatio
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-mpr-navy to-mpr-navy text-white">
       {/* Arrière-plan animé */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-mpr-interactive rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
         <div className="absolute top-40 left-1/2 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
@@ -102,14 +102,14 @@ export const ReportsSection: React.FC<ReportsSectionProps> = ({ data, calculatio
       <div className="relative z-10 container mx-auto px-6 py-8">
         {/* En-tête spectaculaire */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-3 mb-4 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm font-bold shadow-2xl">
+          <div className="inline-flex items-center gap-3 mb-4 px-6 py-3 bg-gradient-to-r from-mpr-interactive to-purple-600 text-white rounded-full text-sm font-bold shadow-2xl">
             <FileText className="w-5 h-5" />
             {isFrench ? 'RAPPORTS PROFESSIONNELS' : 'PROFESSIONAL REPORTS'}
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-2xl">
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-mpr-interactive via-purple-400 to-pink-400 bg-clip-text text-transparent drop-shadow-2xl">
             {isFrench ? '📊 Rapports de retraite' : '📊 Retirement Reports'}
           </h1>
-          <p className="text-xl text-blue-200 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl text-mpr-interactive-lt max-w-4xl mx-auto leading-relaxed">
             {isFrench 
               ? 'Transformez vos données financières en rapports professionnels et insights stratégiques'
               : 'Transform your financial data into professional reports and strategic insights'
@@ -119,7 +119,7 @@ export const ReportsSection: React.FC<ReportsSectionProps> = ({ data, calculatio
 
         {/* Types de rapports */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-center mb-8 text-blue-200">
+          <h2 className="text-2xl font-bold text-center mb-8 text-mpr-interactive-lt">
             {isFrench ? 'Choisissez votre type de rapport' : 'Choose Your Report Type'}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -128,7 +128,7 @@ export const ReportsSection: React.FC<ReportsSectionProps> = ({ data, calculatio
                 key={report.id}
                 className={`cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl ${
                   selectedReportType === report.id 
-                    ? 'ring-4 ring-blue-400 bg-gradient-to-br from-white/20 to-white/10' 
+                    ? 'ring-4 ring-mpr-interactive bg-gradient-to-br from-white/20 to-white/10' 
                     : 'bg-white/10'
                 } backdrop-blur-sm border-white/20`}
                 onClick={() => setSelectedReportType(report.id)}
@@ -138,19 +138,19 @@ export const ReportsSection: React.FC<ReportsSectionProps> = ({ data, calculatio
                     <report.icon className="w-8 h-8 text-white" />
                   </div>
                   <CardTitle className="text-white text-xl">{report.title}</CardTitle>
-                  <CardDescription className="text-blue-200">{report.description}</CardDescription>
+                  <CardDescription className="text-mpr-interactive-lt">{report.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2">
                     {report.features.map((feature, index) => (
-                      <li key={index} className="flex items-center gap-2 text-sm text-blue-100">
+                      <li key={index} className="flex items-center gap-2 text-sm text-mpr-interactive-lt">
                         <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
                         {feature}
                       </li>
                     ))}
                   </ul>
                   {selectedReportType === report.id && (
-                    <Badge className="mt-4 bg-blue-500 text-white">
+                    <Badge className="mt-4 bg-mpr-interactive text-white">
                       {isFrench ? 'Sélectionné' : 'Selected'}
                     </Badge>
                   )}
@@ -167,7 +167,7 @@ export const ReportsSection: React.FC<ReportsSectionProps> = ({ data, calculatio
               <Sparkles className="w-7 h-7 text-yellow-400" />
               {isFrench ? 'Fonctionnalités avancées' : 'Advanced Features'}
             </CardTitle>
-            <CardDescription className="text-blue-200">
+            <CardDescription className="text-mpr-interactive-lt">
               {isFrench 
                 ? 'Tous nos rapports incluent ces fonctionnalités professionnelles'
                 : 'All our reports include these professional features'
@@ -178,11 +178,11 @@ export const ReportsSection: React.FC<ReportsSectionProps> = ({ data, calculatio
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {reportFeatures.map((feature, index) => (
                 <div key={index} className="text-center p-4 rounded-lg bg-white/5 hover:bg-white/10 transition-all duration-300">
-                  <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-500 flex items-center justify-center">
+                  <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-gradient-to-r from-mpr-interactive to-purple-500 flex items-center justify-center">
                     <feature.icon className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="font-semibold text-white mb-2">{feature.title}</h3>
-                  <p className="text-sm text-blue-200">{feature.description}</p>
+                  <p className="text-sm text-mpr-interactive-lt">{feature.description}</p>
                 </div>
               ))}
             </div>
@@ -190,7 +190,7 @@ export const ReportsSection: React.FC<ReportsSectionProps> = ({ data, calculatio
         </Card>
 
         {/* Générateur de rapport */}
-        <Card className="bg-gradient-to-br from-indigo-800/50 to-purple-800/50 backdrop-blur-sm border-purple-300/30 mb-12">
+        <Card className="bg-gradient-to-br from-mpr-navy/50 to-purple-800/50 backdrop-blur-sm border-purple-300/30 mb-12">
           <CardHeader className="text-center">
             <CardTitle className="text-2xl font-bold text-purple-200 flex items-center justify-center gap-3">
               <Zap className="w-7 h-7 text-yellow-400" />
@@ -204,7 +204,7 @@ export const ReportsSection: React.FC<ReportsSectionProps> = ({ data, calculatio
                 {isFrench ? 'État de préparation du rapport' : 'Report Preparation Status'}
               </h3>
               <Progress value={85} className="h-3 mb-4" />
-              <p className="text-blue-200">
+              <p className="text-mpr-interactive-lt">
                 {isFrench ? '85% des données collectées' : '85% of data collected'}
               </p>
             </div>
@@ -219,7 +219,7 @@ export const ReportsSection: React.FC<ReportsSectionProps> = ({ data, calculatio
 
             {/* Actions rapides */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white">
+              <Button className="bg-gradient-to-r from-mpr-interactive to-mpr-interactive-dk hover:from-mpr-navy-mid hover:to-mpr-navy-mid text-white">
                 <Eye className="w-4 h-4 mr-2" />
                 {isFrench ? 'Aperçu' : 'Preview'}
               </Button>
@@ -259,7 +259,7 @@ export const ReportsSection: React.FC<ReportsSectionProps> = ({ data, calculatio
               </div>
               <div className="space-y-3">
                 <h4 className="font-semibold flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-blue-400" />
+                  <Clock className="w-5 h-5 text-mpr-interactive" />
                   {isFrench ? 'Mise à jour' : 'Updates'}
                 </h4>
                 <p className="text-sm">

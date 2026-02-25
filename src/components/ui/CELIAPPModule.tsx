@@ -1,4 +1,4 @@
-// src/components/ui/CELIAPPModule.tsx
+﻿// src/components/ui/CELIAPPModule.tsx
 /**
  * MODULE CELIAPP - Compte d'Épargne Libre d'Impôt pour l'Achat d'une Première Propriété
  * 
@@ -339,9 +339,9 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
                 </div>
               </div>
 
-              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="p-4 bg-mpr-interactive-lt border border-mpr-border rounded-lg">
                 <h3 className="font-semibold mb-2">Mise de fonds requise</h3>
-                <p className="text-2xl font-bold text-blue-600">
+                <p className="text-2xl font-bold text-mpr-interactive">
                   {(homePrice * (downPaymentPercent / 100)).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
                 </p>
               </div>
@@ -433,7 +433,7 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
                   </div>
                   <div className="p-4 border rounded-lg">
                     <Label>Solde projeté à l'achat</Label>
-                    <p className="text-2xl font-bold text-blue-600">
+                    <p className="text-2xl font-bold text-mpr-interactive">
                       {calculations.projectedBalance.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
                     </p>
                   </div>
@@ -525,9 +525,9 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
                     </AlertDescription>
                   </Alert>
 
-                  <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                    <h3 className="font-semibold text-lg text-blue-800 mb-2">Avantage CELIAPP</h3>
-                    <p className="text-3xl font-bold text-blue-600">
+                  <div className="mt-4 p-4 bg-mpr-interactive-lt border border-mpr-border rounded-lg">
+                    <h3 className="font-semibold text-lg text-mpr-navy mb-2">Avantage CELIAPP</h3>
+                    <p className="text-3xl font-bold text-mpr-interactive">
                       {comparison.advantageCELIAPP.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
                     </p>
                     <p className="text-sm text-gray-600 mt-1">
@@ -725,8 +725,8 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
                 </div>
               </div>
 
-              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                <h3 className="font-semibold text-blue-800 mb-2">Comparaison avec autres programmes</h3>
+              <div className="p-4 bg-mpr-interactive-lt border border-mpr-border rounded-lg">
+                <h3 className="font-semibold text-mpr-navy mb-2">Comparaison avec autres programmes</h3>
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>

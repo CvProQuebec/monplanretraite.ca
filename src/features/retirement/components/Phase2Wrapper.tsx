@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { InteractiveParticles } from './InteractiveParticles';
 import { useDynamicTheme } from '../hooks/useDynamicTheme';
@@ -67,17 +67,17 @@ export const Phase2Wrapper: React.FC<Phase2WrapperProps> = ({
       case 'morning':
         return 'bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50';
       case 'afternoon':
-        return 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50';
+        return 'bg-gradient-to-br from-mpr-interactive-lt via-mpr-interactive-lt to-purple-50';
       case 'evening':
         return 'bg-gradient-to-br from-purple-50 via-pink-50 to-rose-50';
       case 'night':
-        return 'bg-gradient-to-br from-slate-900 via-gray-800 to-indigo-900';
+        return 'bg-gradient-to-br from-slate-900 via-gray-800 to-mpr-navy';
       case 'premium':
         return 'bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50';
       case 'creative':
         return 'bg-gradient-to-br from-pink-50 via-rose-50 to-purple-50';
       default:
-        return 'bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50';
+        return 'bg-gradient-to-br from-mpr-interactive-lt via-mpr-interactive-lt to-purple-50';
     }
   };
 
@@ -129,7 +129,7 @@ export const Phase2Wrapper: React.FC<Phase2WrapperProps> = ({
                   id="particles-toggle"
                   checked={isParticlesVisible}
                   onChange={(e) => setIsParticlesVisible(e.target.checked)}
-                  className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                  className="w-4 h-4 text-mpr-interactive rounded focus:ring-mpr-interactive"
                 />
                 <label htmlFor="particles-toggle" className="text-sm text-gray-700">
                   Particules
@@ -197,7 +197,7 @@ export const Phase2Wrapper: React.FC<Phase2WrapperProps> = ({
           <div className="flex items-center gap-2 text-sm">
             <div className={`w-3 h-3 rounded-full ${
               currentTheme.id === 'morning' ? 'bg-orange-400' :
-              currentTheme.id === 'afternoon' ? 'bg-blue-400' :
+              currentTheme.id === 'afternoon' ? 'bg-mpr-interactive' :
               currentTheme.id === 'evening' ? 'bg-purple-400' :
               currentTheme.id === 'night' ? 'bg-slate-400' :
               currentTheme.id === 'premium' ? 'bg-amber-400' :

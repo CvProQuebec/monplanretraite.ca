@@ -1,4 +1,4 @@
-// ===== MODULE CCQ - COMMISSION DE LA CONSTRUCTION DU QUÉBEC =====
+﻿// ===== MODULE CCQ - COMMISSION DE LA CONSTRUCTION DU QUÉBEC =====
 // Composant principal pour le régime de retraite des travailleurs de la construction
 
 import React, { useState, useEffect } from 'react';
@@ -635,7 +635,7 @@ export default function CCQModule({ data, onUpdate, language = 'fr' }: CCQModule
           {calculationResult ? (
             <>
               {/* Vue d'ensemble */}
-              <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-green-200">
+              <Card className="bg-gradient-to-r from-green-50 to-mpr-interactive-lt border-green-200">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-green-800">
                     <DollarSign className="w-5 h-5" />
@@ -651,10 +651,10 @@ export default function CCQModule({ data, onUpdate, language = 'fr' }: CCQModule
                       <div className="text-sm text-green-600">{tr.renteAnnuelle}</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-blue-700">
+                      <div className="text-3xl font-bold text-mpr-navy">
                         {formatCurrency(calculationResult.renteMensuelleTotale)}
                       </div>
-                      <div className="text-sm text-blue-600">{tr.renteMensuelle}</div>
+                      <div className="text-sm text-mpr-interactive">{tr.renteMensuelle}</div>
                     </div>
                     <div className="text-center">
                       <div className="text-3xl font-bold text-purple-700">
@@ -692,7 +692,7 @@ export default function CCQModule({ data, onUpdate, language = 'fr' }: CCQModule
 
                 <Card>
                   <CardHeader>
-                    <CardTitle className="text-blue-700">{tr.compteComplementaire}</CardTitle>
+                    <CardTitle className="text-mpr-navy">{tr.compteComplementaire}</CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-2">
@@ -704,7 +704,7 @@ export default function CCQModule({ data, onUpdate, language = 'fr' }: CCQModule
                       </div>
                       <div className="flex justify-between">
                         <span>Rente annuelle:</span>
-                        <span className="font-semibold text-blue-700">
+                        <span className="font-semibold text-mpr-navy">
                           {formatCurrency(calculationResult.compteComplementaire.renteAnnuelle)}
                         </span>
                       </div>
@@ -805,7 +805,7 @@ export default function CCQModule({ data, onUpdate, language = 'fr' }: CCQModule
                   <CardContent>
                     <div className="space-y-3">
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-blue-600">
+                        <div className="text-2xl font-bold text-mpr-interactive">
                           {formatCurrency(scenario.resultat.renteMensuelleTotale)}
                         </div>
                         <div className="text-sm text-gray-600">par mois</div>

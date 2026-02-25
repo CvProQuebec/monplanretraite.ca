@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
@@ -31,7 +31,7 @@ const RRQInfoCard: React.FC<RRQInfoCardProps> = ({
   if (!isVisible) return null;
 
   const content = (
-    <Card className={`${showAsModal ? 'fixed inset-4 z-50 max-w-4xl mx-auto my-8 overflow-y-auto' : ''} bg-gradient-to-br from-blue-900/95 to-indigo-900/95 border-2 border-blue-400 shadow-2xl backdrop-blur-sm`}>
+    <Card className={`${showAsModal ? 'fixed inset-4 z-50 max-w-4xl mx-auto my-8 overflow-y-auto' : ''} bg-gradient-to-br from-mpr-navy/95 to-mpr-navy/95 border-2 border-mpr-interactive shadow-2xl backdrop-blur-sm`}>
       {showAsModal && (
         <div className="absolute top-4 right-4">
           <Button
@@ -45,14 +45,14 @@ const RRQInfoCard: React.FC<RRQInfoCardProps> = ({
         </div>
       )}
       
-      <CardHeader className="bg-gradient-to-r from-blue-600/30 to-indigo-600/30 border-b border-blue-400">
-        <CardTitle className="text-2xl font-bold text-blue-300 flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center">
+      <CardHeader className="bg-gradient-to-r from-mpr-interactive/30 to-mpr-interactive/30 border-b border-mpr-interactive">
+        <CardTitle className="text-2xl font-bold text-mpr-interactive flex items-center gap-3">
+          <div className="w-10 h-10 bg-gradient-to-r from-mpr-interactive to-mpr-interactive rounded-full flex items-center justify-center">
             <FileText className="w-6 h-6 text-white" />
           </div>
           {isFrench ? 'Demande de rente RRQ - Information importante' : 'QPP Pension Application - Important Information'}
         </CardTitle>
-        <CardDescription className="text-blue-200 text-lg">
+        <CardDescription className="text-mpr-interactive-lt text-lg">
           {isFrench 
             ? 'Délais et procédures pour éviter toute carence dans vos prestations'
             : 'Deadlines and procedures to avoid any gaps in your benefits'
@@ -78,12 +78,12 @@ const RRQInfoCard: React.FC<RRQInfoCardProps> = ({
           <Card className="bg-slate-800/50 border-slate-600">
             <CardContent className="p-4">
               <div className="flex items-center gap-3 mb-3">
-                <Calendar className="w-6 h-6 text-blue-400" />
-                <h4 className="font-bold text-blue-300">
+                <Calendar className="w-6 h-6 text-mpr-interactive" />
+                <h4 className="font-bold text-mpr-interactive">
                   {isFrench ? 'Délai maximal' : 'Maximum Deadline'}
                 </h4>
               </div>
-              <div className="text-2xl font-bold text-blue-400 mb-2">12 mois</div>
+              <div className="text-2xl font-bold text-mpr-interactive mb-2">12 mois</div>
               <p className="text-sm text-gray-300">
                 {isFrench 
                   ? 'Vous ne pouvez pas présenter votre demande plus de 12 mois avant la date de premier paiement souhaitée.'
@@ -149,7 +149,7 @@ const RRQInfoCard: React.FC<RRQInfoCardProps> = ({
           <Button
             variant="outline"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="w-full border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-slate-900"
+            className="w-full border-mpr-interactive text-mpr-interactive hover:bg-mpr-interactive hover:text-slate-900"
           >
             <Info className="w-4 h-4 mr-2" />
             {isFrench 
@@ -160,14 +160,14 @@ const RRQInfoCard: React.FC<RRQInfoCardProps> = ({
 
           {isExpanded && (
             <div className="space-y-4 p-4 bg-slate-800/30 rounded-lg border border-slate-600">
-              <h4 className="text-lg font-bold text-blue-300 flex items-center gap-2">
+              <h4 className="text-lg font-bold text-mpr-interactive flex items-center gap-2">
                 <Shield className="w-5 h-5" />
                 {isFrench ? 'Détails importants' : 'Important Details'}
               </h4>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h5 className="font-semibold text-blue-300 mb-2">
+                  <h5 className="font-semibold text-mpr-interactive mb-2">
                     {isFrench ? 'Pourquoi 3 mois à l\'avance ?' : 'Why 3 months in advance?'}
                   </h5>
                   <ul className="list-disc list-inside text-sm text-gray-300 space-y-1">
@@ -179,7 +179,7 @@ const RRQInfoCard: React.FC<RRQInfoCardProps> = ({
                 </div>
                 
                 <div>
-                  <h5 className="font-semibold text-blue-300 mb-2">
+                  <h5 className="font-semibold text-mpr-interactive mb-2">
                     {isFrench ? 'Conséquences d\'un retard' : 'Consequences of Delay'}
                   </h5>
                   <ul className="list-disc list-inside text-sm text-gray-300 space-y-1">
@@ -191,8 +191,8 @@ const RRQInfoCard: React.FC<RRQInfoCardProps> = ({
                 </div>
               </div>
 
-              <div className="mt-4 p-4 bg-blue-900/30 rounded-lg">
-                <h5 className="font-semibold text-blue-300 mb-2 flex items-center gap-2">
+              <div className="mt-4 p-4 bg-mpr-navy/30 rounded-lg">
+                <h5 className="font-semibold text-mpr-interactive mb-2 flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   {isFrench ? 'Calendrier de planification suggéré' : 'Suggested Planning Timeline'}
                 </h5>
@@ -220,7 +220,7 @@ const RRQInfoCard: React.FC<RRQInfoCardProps> = ({
         </div>
 
         {/* Actions recommandées */}
-        <Card className="bg-gradient-to-r from-green-900/30 to-blue-900/30 border border-green-500/30">
+        <Card className="bg-gradient-to-r from-green-900/30 to-mpr-navy/30 border border-green-500/30">
           <CardContent className="p-4">
             <h4 className="font-bold text-green-300 mb-3 flex items-center gap-2">
               <CheckCircle className="w-5 h-5" />
@@ -236,7 +236,7 @@ const RRQInfoCard: React.FC<RRQInfoCardProps> = ({
                 </ul>
               </div>
               <div>
-                <strong className="text-blue-300">{isFrench ? 'Après la demande :' : 'After applying:'}</strong>
+                <strong className="text-mpr-interactive">{isFrench ? 'Après la demande :' : 'After applying:'}</strong>
                 <ul className="list-disc list-inside mt-1 text-gray-300 space-y-1">
                   <li>{isFrench ? 'Suivre le statut de la demande' : 'Track application status'}</li>
                   <li>{isFrench ? 'Répondre rapidement aux demandes' : 'Respond quickly to requests'}</li>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { PLAN_CONFIG, PROMO_CODES, calculatePriceWithPromo, calculateAnnualSavings } from '@/config/plans';
 import { useLanguage } from '../hooks/useLanguage';
 import { Check, Star, Zap, Crown, Shield, Users, FileText, BarChart3, Brain, Settings } from 'lucide-react';
@@ -138,7 +138,7 @@ export const PricingSection: React.FC = () => {
       id: 'professional',
       name: language === 'fr' ? 'Professionnel' : 'Professional',
       icon: <Zap className="w-6 h-6" />,
-      color: 'from-blue-500 to-purple-600',
+      color: 'from-mpr-interactive to-purple-600',
       badge: t[language].recommended
     },
     {
@@ -152,7 +152,7 @@ export const PricingSection: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 bg-gradient-to-br from-gray-50 to-blue-50">
+    <section className="py-16 bg-gradient-to-br from-gray-50 to-mpr-interactive-lt">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
@@ -172,7 +172,7 @@ export const PricingSection: React.FC = () => {
                 onClick={() => setBillingCycle('month')}
                 className={`px-6 py-2 rounded-md font-medium transition-all ${
                   billingCycle === 'month'
-                    ? 'bg-blue-600 text-white shadow-lg'
+                    ? 'bg-mpr-interactive text-white shadow-lg'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
@@ -182,7 +182,7 @@ export const PricingSection: React.FC = () => {
                 onClick={() => setBillingCycle('year')}
                 className={`px-6 py-2 rounded-md font-medium transition-all ${
                   billingCycle === 'year'
-                    ? 'bg-blue-600 text-white shadow-lg'
+                    ? 'bg-mpr-interactive text-white shadow-lg'
                     : 'text-gray-600 hover:text-gray-900'
                 }`}
               >
@@ -200,11 +200,11 @@ export const PricingSection: React.FC = () => {
               value={promoCode}
               onChange={(e) => setPromoCode(e.target.value)}
               placeholder={t[language].promoPlaceholder}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-mpr-interactive focus:border-transparent"
             />
             <button
               onClick={handlePromoCode}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              className="px-6 py-2 bg-mpr-interactive text-white rounded-lg hover:bg-mpr-interactive-dk transition-colors"
             >
               {t[language].applyPromo}
             </button>
@@ -248,7 +248,7 @@ export const PricingSection: React.FC = () => {
                   <div className={`absolute -top-4 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-full text-sm font-bold ${
                     isPopular
                       ? 'bg-yellow-400 text-black'
-                      : 'bg-blue-600 text-white'
+                      : 'bg-mpr-interactive text-white'
                   }`}>
                     {plan.badge}
                   </div>
@@ -331,7 +331,7 @@ export const PricingSection: React.FC = () => {
                     ? 'bg-gray-600 text-white hover:bg-gray-700'
                     : isPopular
                     ? 'bg-yellow-500 text-black hover:bg-yellow-600'
-                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                    : 'bg-mpr-interactive text-white hover:bg-mpr-interactive-dk'
                 }`}>
                   {plan.id === 'free' 
                     ? t[language].startFree 
@@ -353,7 +353,7 @@ export const PricingSection: React.FC = () => {
           <div className="grid md:grid-cols-4 gap-4 max-w-4xl mx-auto">
             {Object.entries(PROMO_CODES).map(([code, promo]) => (
               <div key={code} className="bg-white rounded-lg p-4 shadow-md">
-                <div className="font-bold text-lg text-blue-600 mb-2">{code}</div>
+                <div className="font-bold text-lg text-mpr-interactive mb-2">{code}</div>
                 <div className="text-sm text-gray-600 mb-2">
                   {language === 'fr' ? promo.description : promo.description.replace('Tests et développement', 'Testing & Development')}
                 </div>

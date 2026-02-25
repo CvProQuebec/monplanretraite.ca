@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Input } from './input';
@@ -209,7 +209,7 @@ export const InflationProtectionCenter: React.FC<InflationProtectionCenterProps>
                 <strong>Protection essentielle:</strong> L'inflation peut réduire votre pouvoir d'achat de 50%+ sur 25 ans
               </p>
             </div>
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+            <Button className="bg-gradient-to-r from-mpr-interactive to-purple-600 hover:from-mpr-navy-mid hover:to-purple-700">
               Débloquer le Module
             </Button>
           </div>
@@ -402,8 +402,8 @@ export const InflationProtectionCenter: React.FC<InflationProtectionCenterProps>
                   <div className="text-sm text-gray-600">Pouvoir d'Achat Réel</div>
                 </div>
                 
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <div className="text-2xl font-bold text-blue-600">
+                <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+                  <div className="text-2xl font-bold text-mpr-interactive">
                     {analysis.recommendedProtection.toLocaleString()}$
                   </div>
                   <div className="text-sm text-gray-600">Protection Recommandée</div>
@@ -415,7 +415,7 @@ export const InflationProtectionCenter: React.FC<InflationProtectionCenterProps>
                   <Badge 
                     className={`px-4 py-2 text-sm ${
                       protectionLevel.color === 'green' ? 'bg-green-100 text-green-800' :
-                      protectionLevel.color === 'blue' ? 'bg-blue-100 text-blue-800' :
+                      protectionLevel.color === 'blue' ? 'bg-mpr-interactive-lt text-mpr-navy' :
                       protectionLevel.color === 'yellow' ? 'bg-yellow-100 text-yellow-800' :
                       'bg-red-100 text-red-800'
                     }`}
@@ -467,7 +467,7 @@ export const InflationProtectionCenter: React.FC<InflationProtectionCenterProps>
                         <p className="text-sm text-gray-600">{strategy.description}</p>
                       </div>
                       <div className="text-right">
-                        <div className="text-lg font-bold text-blue-600">{strategy.allocation}%</div>
+                        <div className="text-lg font-bold text-mpr-interactive">{strategy.allocation}%</div>
                         <div className="text-xs text-gray-500">Allocation</div>
                       </div>
                     </div>
@@ -515,7 +515,7 @@ export const InflationProtectionCenter: React.FC<InflationProtectionCenterProps>
                     </div>
                     <div className="flex items-center gap-6 text-sm">
                       <div className="text-center">
-                        <div className="text-blue-600 font-semibold">
+                        <div className="text-mpr-interactive font-semibold">
                           {projection.nominalValue.toLocaleString()}$
                         </div>
                         <div className="text-xs text-gray-500">Valeur nominale</div>
@@ -560,7 +560,7 @@ export const InflationProtectionCenter: React.FC<InflationProtectionCenterProps>
                 </div>
                 
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                  <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2"></div>
                   <div>
                     <h4 className="font-semibold">Révision Régulière</h4>
                     <p className="text-sm text-gray-600">

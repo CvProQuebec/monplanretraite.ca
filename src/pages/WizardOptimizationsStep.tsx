@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import FeatureGate from '@/components/wizard/FeatureGate';
 import { Button } from '@/components/ui/button';
@@ -487,11 +487,11 @@ const WizardOptimizationsStep: React.FC = () => {
     <>
       <FeatureGate feature="hasTaxOptimization">
       <div className="space-y-6">
-        <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-4">
-          <div className="font-semibold text-blue-900">
+        <div className="bg-mpr-interactive-lt border-2 border-mpr-border rounded-xl p-4">
+          <div className="font-semibold text-mpr-navy">
             {isFr ? 'Optimisations fiscales (Greedy + DP/Beam) — 100% local' : 'Tax optimizations (Greedy + DP/Beam) — 100% local'}
           </div>
-          <div className="text-sm text-blue-800">
+          <div className="text-sm text-mpr-navy">
             {isFr ? 'Mode robuste disponible (scénarios chocs) et export PDF résumé.' : 'Robust mode available (shock scenarios) and PDF summary export.'}
           </div>
         </div>

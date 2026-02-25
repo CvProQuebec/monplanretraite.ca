@@ -1,4 +1,4 @@
-// src/components/ui/RVDAAModule.tsx
+﻿// src/components/ui/RVDAAModule.tsx
 /**
  * MODULE RVDAA - Rente Viagère Différée à un Âge Avancé
  * 
@@ -310,7 +310,7 @@ export const RVDAAModule: React.FC<RVDAAModuleProps> = ({ userPlan, onUpgrade })
                       </div>
                       <div>
                         <Label>Transfert proposé</Label>
-                        <p className={`font-semibold ${calc.isExcess ? 'text-red-600' : 'text-blue-600'}`}>
+                        <p className={`font-semibold ${calc.isExcess ? 'text-red-600' : 'text-mpr-interactive'}`}>
                           {calc.proposedTransfer.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
                         </p>
                       </div>
@@ -350,7 +350,7 @@ export const RVDAAModule: React.FC<RVDAAModuleProps> = ({ userPlan, onUpgrade })
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="p-4 border rounded-lg">
                       <Label>Total des transferts proposés</Label>
-                      <p className="text-2xl font-bold text-blue-600">
+                      <p className="text-2xl font-bold text-mpr-interactive">
                         {optimization.totalProposedTransfers.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
                       </p>
                     </div>
@@ -395,9 +395,9 @@ export const RVDAAModule: React.FC<RVDAAModuleProps> = ({ userPlan, onUpgrade })
                     </Alert>
                   )}
 
-                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                  <div className="p-4 bg-mpr-interactive-lt border border-mpr-border rounded-lg">
                     <Label className="font-semibold">Bénéfice du report d'impôt estimé</Label>
-                    <p className="text-lg font-bold text-blue-600">
+                    <p className="text-lg font-bold text-mpr-interactive">
                       {optimization.taxDeferralBenefit.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })} annuellement
                     </p>
                     <p className="text-sm text-gray-600">

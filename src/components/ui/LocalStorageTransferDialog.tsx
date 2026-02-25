@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Composant UI pour le transfert des données localStorage vers fichier local
  */
 
@@ -137,7 +137,7 @@ const LocalStorageTransferDialog: React.FC<LocalStorageTransferDialogProps> = ({
       <DialogContent className="sm:max-w-2xl max-h-[80vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl">
-            <Database className="h-6 w-6 text-blue-600" />
+            <Database className="h-6 w-6 text-mpr-interactive" />
             Transfert vers fichier local
           </DialogTitle>
         </DialogHeader>
@@ -168,7 +168,7 @@ const LocalStorageTransferDialog: React.FC<LocalStorageTransferDialogProps> = ({
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Info className="h-5 w-5 text-blue-600" />
+                    <Info className="h-5 w-5 text-mpr-interactive" />
                     Données à transférer
                   </div>
                   <Badge variant={dataPreview.hasData ? "default" : "secondary"}>
@@ -181,7 +181,7 @@ const LocalStorageTransferDialog: React.FC<LocalStorageTransferDialogProps> = ({
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div>
-                        <div className="font-medium text-blue-700 mb-1">
+                        <div className="font-medium text-mpr-navy mb-1">
                           Données sécurisées ({dataPreview.secureKeys.length})
                         </div>
                         <div className="space-y-1">

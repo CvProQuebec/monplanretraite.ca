@@ -1,4 +1,4 @@
-// UnifiedRetirementPage.tsx - Page de retraite unifiée bilingue
+﻿// UnifiedRetirementPage.tsx - Page de retraite unifiée bilingue
 // Consolidation intelligente de RetraiteFr.tsx + RetraiteEn.tsx
 
 import React from 'react';
@@ -72,8 +72,8 @@ const UnifiedRetirementPage: React.FC = () => {
   return (
     <div className={`min-h-screen ${
       isFrench 
-        ? 'bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900' 
-        : 'bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100'
+        ? 'bg-gradient-to-br from-mpr-navy via-mpr-navy-mid to-mpr-navy' 
+        : 'bg-gradient-to-br from-slate-50 via-mpr-interactive-lt to-mpr-interactive-lt'
     }`}>
       {/* Navigation Phase 1 Intégrée */}
       <RetirementNavigation />
@@ -87,7 +87,7 @@ const UnifiedRetirementPage: React.FC = () => {
             {t.title}
           </h1>
           <p className={`text-xl max-w-3xl mx-auto ${
-            isFrench ? 'text-blue-100' : 'text-gray-600'
+            isFrench ? 'text-mpr-interactive-lt' : 'text-gray-600'
           }`}>
             {t.subtitle}
           </p>
@@ -100,7 +100,7 @@ const UnifiedRetirementPage: React.FC = () => {
           <Card className="hover:shadow-lg transition-shadow">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Shield className="w-5 h-5 text-blue-600" />
+                <Shield className="w-5 h-5 text-mpr-interactive" />
                 {t.basicPlanning.title}
               </CardTitle>
               <CardDescription>

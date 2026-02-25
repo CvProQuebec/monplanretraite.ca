@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Composant de notification de transparence MVP
  * Affiche les hypothèses IPF 2025 utilisées dans les calculs
  * 
@@ -36,15 +36,15 @@ export default function SimpleTransparencyAlert({
   };
   
   return (
-    <Alert className={`bg-blue-50 border-2 border-blue-200 mb-6 ${className}`}>
-      <Info className="w-6 h-6 text-blue-600" />
-      <AlertDescription className="text-blue-800 text-lg leading-relaxed">
+    <Alert className={`bg-mpr-interactive-lt border-2 border-mpr-border mb-6 ${className}`}>
+      <Info className="w-6 h-6 text-mpr-interactive" />
+      <AlertDescription className="text-mpr-navy text-lg leading-relaxed">
         <div className="flex items-center justify-between">
           <span>{notification.message}</span>
           {showDetailsLink && (
             <button 
               onClick={handleDetailsClick}
-              className="ml-4 text-blue-600 underline hover:text-blue-800 transition-colors font-medium whitespace-nowrap"
+              className="ml-4 text-mpr-interactive underline hover:text-mpr-navy transition-colors font-medium whitespace-nowrap"
             >
               Voir les détails
             </button>
@@ -60,15 +60,15 @@ export default function SimpleTransparencyAlert({
  */
 export function CompactTransparencyAlert({ context }: { context: TransparencyContext }) {
   return (
-    <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-4">
-      <div className="flex items-center gap-2 text-blue-800">
-        <Info className="w-4 h-4 text-blue-600 flex-shrink-0" />
+    <div className="bg-mpr-interactive-lt border border-mpr-border rounded-lg p-3 mb-4">
+      <div className="flex items-center gap-2 text-mpr-navy">
+        <Info className="w-4 h-4 text-mpr-interactive flex-shrink-0" />
         <span className="text-sm">
           Calculs basés sur les normes IPF 2025
         </span>
         <button 
           onClick={() => window.location.href = '/hypotheses'}
-          className="text-blue-600 underline hover:text-blue-800 text-sm ml-auto"
+          className="text-mpr-interactive underline hover:text-mpr-navy text-sm ml-auto"
         >
           Détails
         </button>

@@ -1,4 +1,4 @@
-// Composant de navigation par étapes avec indicateur de progression
+﻿// Composant de navigation par étapes avec indicateur de progression
 import React from 'react';
 import { Check, ChevronRight, Lock, Star } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
@@ -56,9 +56,9 @@ export const StepNavigation: React.FC<StepNavigationProps> = ({
         };
       case 'current':
         return {
-          bg: 'bg-gradient-to-r from-blue-500 to-purple-600',
-          text: 'text-blue-700',
-          border: 'border-blue-300',
+          bg: 'bg-gradient-to-r from-mpr-interactive to-purple-600',
+          text: 'text-mpr-navy',
+          border: 'border-mpr-border',
           shadow: 'shadow-blue-200'
         };
       case 'upcoming':
@@ -113,7 +113,7 @@ export const StepNavigation: React.FC<StepNavigationProps> = ({
             </div>
             <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
               <div 
-                className="h-3 bg-gradient-to-r from-green-500 via-blue-500 to-purple-600 rounded-full transition-all duration-1000 ease-out"
+                className="h-3 bg-gradient-to-r from-green-500 via-mpr-interactive to-purple-600 rounded-full transition-all duration-1000 ease-out"
                 style={{ width: `${calculateProgress()}%` }}
               />
             </div>
@@ -135,10 +135,10 @@ export const StepNavigation: React.FC<StepNavigationProps> = ({
                   disabled={!isClickable}
                   className={`
                     relative flex items-center justify-center w-16 h-16 rounded-full 
-                    transition-all duration-500 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-blue-300/50
+                    transition-all duration-500 hover:scale-110 focus:outline-none focus:ring-4 focus:ring-mpr-interactive/50
                     ${colors.bg} ${colors.text} ${colors.border} ${colors.shadow}
                     ${isClickable ? 'cursor-pointer hover:shadow-lg' : 'cursor-not-allowed opacity-60'}
-                    ${status === 'current' ? 'ring-4 ring-blue-300/50 animate-pulse' : ''}
+                    ${status === 'current' ? 'ring-4 ring-mpr-interactive/50 animate-pulse' : ''}
                     ${status === 'completed' ? 'hover:scale-110 hover:shadow-xl' : ''}
                   `}
                 >
@@ -156,14 +156,14 @@ export const StepNavigation: React.FC<StepNavigationProps> = ({
                     <div className={`
                       w-20 h-1 transition-all duration-500
                       ${index < currentStep 
-                        ? 'bg-gradient-to-r from-green-500 to-blue-500' 
+                        ? 'bg-gradient-to-r from-green-500 to-mpr-interactive' 
                         : 'bg-gray-200'
                       }
                     `} />
                     
                     {/* Indicateur de progression sur le connecteur */}
                     {index < currentStep && (
-                      <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-blue-500 h-1 rounded-full animate-pulse" />
+                      <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-mpr-interactive h-1 rounded-full animate-pulse" />
                     )}
                   </div>
                 )}
@@ -172,7 +172,7 @@ export const StepNavigation: React.FC<StepNavigationProps> = ({
                 <div className="ml-4 max-w-32">
                   <h4 className={`
                     text-sm font-medium mb-1 transition-colors duration-300
-                    ${status === 'current' ? 'text-blue-900' : colors.text}
+                    ${status === 'current' ? 'text-mpr-navy' : colors.text}
                   `}>
                     {step.label}
                   </h4>
@@ -188,7 +188,7 @@ export const StepNavigation: React.FC<StepNavigationProps> = ({
                     <div className={`
                       mt-2 px-2 py-1 rounded-full text-xs font-medium
                       ${step.requiredPlan === 'professional' 
-                        ? 'bg-blue-100 text-blue-700' 
+                        ? 'bg-mpr-interactive-lt text-mpr-navy' 
                         : 'bg-purple-100 text-purple-700'
                       }
                     `}>
@@ -237,7 +237,7 @@ export const MobileStepNavigation: React.FC<StepNavigationProps> = ({
           </div>
           <div className="w-full bg-gray-200 rounded-full h-2">
             <div 
-              className="h-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full transition-all duration-500"
+              className="h-2 bg-gradient-to-r from-mpr-interactive to-purple-600 rounded-full transition-all duration-500"
               style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
             />
           </div>
@@ -256,7 +256,7 @@ export const MobileStepNavigation: React.FC<StepNavigationProps> = ({
                 className={`
                   flex-shrink-0 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300
                   ${isActive 
-                    ? 'bg-blue-600 text-white shadow-lg' 
+                    ? 'bg-mpr-interactive text-white shadow-lg' 
                     : isCompleted 
                       ? 'bg-green-100 text-green-700 border border-green-200' 
                       : 'bg-gray-100 text-gray-600 border border-gray-200'

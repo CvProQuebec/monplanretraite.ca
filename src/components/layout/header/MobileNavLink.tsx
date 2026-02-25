@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
 interface MobileNavLinkProps {
@@ -52,7 +52,7 @@ const MobileNavLink = ({ href, children, onClick, className = "" }: MobileNavLin
   return (
     <Link
       to={routerPath}
-      className={`text-blue-900 hover:text-amber-600 py-2 transition-colors duration-300 w-full text-lg ${className}`}
+      className={`text-mpr-navy hover:text-amber-600 py-2 transition-colors duration-300 w-full text-lg ${className}`}
       onClick={handleClick}
     >
       {children}

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Composant LearningModule - Phase 5 Modules Néophytes
  * Interface d'apprentissage interactive avec contenu progressif et quiz
  * Système éducatif basé sur l'expertise Retraite101
@@ -117,7 +117,7 @@ export const LearningModule: React.FC<LearningModuleProps> = ({
     return (
       <div className="flex items-center justify-center h-64">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-mpr-interactive mx-auto mb-4"></div>
           <p className="text-gray-600">Chargement du module...</p>
         </div>
       </div>
@@ -191,7 +191,7 @@ export const LearningModule: React.FC<LearningModuleProps> = ({
   const getContentIcon = (type: LearningContent['type']) => {
     switch (type) {
       case 'text':
-        return <FileText className="h-5 w-5 text-blue-500" />;
+        return <FileText className="h-5 w-5 text-mpr-interactive" />;
       case 'video':
         return <Video className="h-5 w-5 text-red-500" />;
       case 'interactive':
@@ -218,7 +218,7 @@ export const LearningModule: React.FC<LearningModuleProps> = ({
       case 'interactive':
         return 'border-purple-200 bg-purple-50';
       default:
-        return 'border-blue-200 bg-blue-50';
+        return 'border-mpr-border bg-mpr-interactive-lt';
     }
   };
 
@@ -228,7 +228,7 @@ export const LearningModule: React.FC<LearningModuleProps> = ({
       return (
         <Card className={`w-full max-w-4xl mx-auto ${className}`}>
           <CardHeader className="text-center">
-            <div className="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600">
+            <div className="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center bg-gradient-to-r from-mpr-interactive to-purple-600">
               {moduleState.quizResults.passed ? (
                 <CheckCircle className="h-10 w-10 text-white" />
               ) : (
@@ -547,7 +547,7 @@ const QuestionComponent: React.FC<{
   };
 
   return (
-    <Card className="border-l-4 border-blue-500">
+    <Card className="border-l-4 border-mpr-interactive">
       <CardContent className="pt-4">
         <div className="flex items-start space-x-3">
           <Badge className="mt-1">{questionNumber}</Badge>
@@ -564,7 +564,7 @@ const QuestionComponent: React.FC<{
                       value={option}
                       checked={selectedAnswer === option}
                       onChange={() => handleAnswerChange(option)}
-                      className="text-blue-600"
+                      className="text-mpr-interactive"
                     />
                     <span>{option}</span>
                   </label>
@@ -581,7 +581,7 @@ const QuestionComponent: React.FC<{
                     value="Vrai"
                     checked={selectedAnswer === 'Vrai'}
                     onChange={() => handleAnswerChange('Vrai')}
-                    className="text-blue-600"
+                    className="text-mpr-interactive"
                   />
                   <span>Vrai</span>
                 </label>
@@ -592,7 +592,7 @@ const QuestionComponent: React.FC<{
                     value="Faux"
                     checked={selectedAnswer === 'Faux'}
                     onChange={() => handleAnswerChange('Faux')}
-                    className="text-blue-600"
+                    className="text-mpr-interactive"
                   />
                   <span>Faux</span>
                 </label>

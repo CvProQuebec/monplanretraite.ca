@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Étape d'accueil - Bienvenue sur MonPlanRetraite.ca
  */
 
@@ -20,8 +20,8 @@ export const WelcomeStep: React.FC<WelcomeStepProps> = ({ onComplete, onSkip }) 
       <div className="flex-1 overflow-y-auto space-y-3 pb-4">
         {/* Message de bienvenue principal - Version compacte */}
         <div className="text-center">
-          <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-            <Shield className="h-5 w-5 text-blue-600" />
+          <div className="w-10 h-10 bg-mpr-interactive-lt rounded-full flex items-center justify-center mx-auto mb-2">
+            <Shield className="h-5 w-5 text-mpr-interactive" />
           </div>
           <h2 className="text-lg font-bold text-gray-900 mb-2">
             Bienvenue sur MonPlanRetraite.ca

@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+﻿import React, { useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getAllPosts, BLOG_CATEGORIES, BlogPost } from './utils/content';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
@@ -90,7 +90,7 @@ const BlogIndex: React.FC<Props> = ({ language }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-purple-50">
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
@@ -109,7 +109,7 @@ const BlogIndex: React.FC<Props> = ({ language }) => {
                 <button
                   key={cat}
                   onClick={() => navigate(to)}
-                  className={`px-3 py-1 rounded-full text-sm border ${active ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400'}`}
+                  className={`px-3 py-1 rounded-full text-sm border ${active ? 'bg-mpr-interactive text-white border-mpr-interactive' : 'bg-white text-gray-700 border-gray-300 hover:border-mpr-interactive'}`}
                   title={categoryLabel(cat)}
                 >
                   {categoryLabel(cat)}
@@ -127,7 +127,7 @@ const BlogIndex: React.FC<Props> = ({ language }) => {
                 onClick={() => onOpen(p)}
               >
                 <div className="p-5 flex-1 flex flex-col">
-                  <div className="text-xs text-blue-700 font-semibold mb-2">{categoryLabel(p.category)}</div>
+                  <div className="text-xs text-mpr-navy font-semibold mb-2">{categoryLabel(p.category)}</div>
                   <h2 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{p.title}</h2>
                   <p className="text-sm text-gray-600 mb-4 line-clamp-3">{p.excerpt}</p>
                   {p.keyPoints && p.keyPoints.length > 0 && (
@@ -146,7 +146,7 @@ const BlogIndex: React.FC<Props> = ({ language }) => {
                       <button
                         key={t}
                         onClick={(e) => { e.stopPropagation(); navigate(`${lang === 'en' ? '/en/blog' : '/blog'}?tag=${encodeURIComponent(t)}`); }}
-                        className="px-2 py-0.5 text-xs rounded bg-gray-100 text-gray-700 hover:bg-blue-50 hover:text-blue-700"
+                        className="px-2 py-0.5 text-xs rounded bg-gray-100 text-gray-700 hover:bg-mpr-interactive-lt hover:text-mpr-navy"
                         title={t}
                       >
                         #{t}

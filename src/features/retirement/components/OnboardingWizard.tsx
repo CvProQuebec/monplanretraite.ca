@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -180,8 +180,8 @@ export default function OnboardingWizard({
 
   const renderWelcomeStep = () => (
     <div className="text-center space-y-6">
-      <div className="w-20 h-20 mx-auto bg-blue-100 rounded-full flex items-center justify-center">
-        <Shield className="w-10 h-10 text-blue-600" />
+      <div className="w-20 h-20 mx-auto bg-mpr-interactive-lt rounded-full flex items-center justify-center">
+        <Shield className="w-10 h-10 text-mpr-interactive" />
       </div>
       
       <div>
@@ -206,9 +206,9 @@ export default function OnboardingWizard({
         ))}
       </div>
       
-      <Alert className="max-w-2xl mx-auto border-blue-200 bg-blue-50">
+      <Alert className="max-w-2xl mx-auto border-mpr-border bg-mpr-interactive-lt">
         <Shield className="h-4 w-4" />
-        <AlertDescription className="text-blue-800">
+        <AlertDescription className="text-mpr-navy">
           {t.securityMessage}
         </AlertDescription>
       </Alert>
@@ -229,7 +229,7 @@ export default function OnboardingWizard({
   const renderBasicInfoStep = () => (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <User className="w-12 h-12 mx-auto text-blue-600" />
+        <User className="w-12 h-12 mx-auto text-mpr-interactive" />
         <h2 className="text-2xl font-bold text-gray-800">
           {isFrench ? 'Parlez-nous de vous' : 'Tell Us About Yourself'}
         </h2>
@@ -310,7 +310,7 @@ export default function OnboardingWizard({
   const renderWorkSituationStep = () => (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <Briefcase className="w-12 h-12 mx-auto text-blue-600" />
+        <Briefcase className="w-12 h-12 mx-auto text-mpr-interactive" />
         <h2 className="text-2xl font-bold text-gray-800">
           {isFrench ? 'Votre situation professionnelle' : 'Your Work Situation'}
         </h2>
@@ -337,7 +337,7 @@ export default function OnboardingWizard({
                 key={option.value}
                 className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
                   data.secteur === option.value 
-                    ? 'border-blue-500 bg-blue-50' 
+                    ? 'border-mpr-interactive bg-mpr-interactive-lt' 
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
                 onClick={() => updateData('secteur', option.value)}
@@ -345,7 +345,7 @@ export default function OnboardingWizard({
                 <div className="flex items-center gap-3">
                   <div className={`w-4 h-4 rounded-full border-2 ${
                     data.secteur === option.value 
-                      ? 'bg-blue-500 border-blue-500' 
+                      ? 'bg-mpr-interactive border-mpr-interactive' 
                       : 'border-gray-300'
                   }`} />
                   <span className="font-medium">{option.label}</span>
@@ -401,7 +401,7 @@ export default function OnboardingWizard({
   const renderGovernmentBenefitsStep = () => (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <Calculator className="w-12 h-12 mx-auto text-blue-600" />
+        <Calculator className="w-12 h-12 mx-auto text-mpr-interactive" />
         <h2 className="text-2xl font-bold text-gray-800">
           {isFrench ? 'Vos prestations gouvernementales' : 'Your Government Benefits'}
         </h2>
@@ -416,8 +416,8 @@ export default function OnboardingWizard({
       <div className="max-w-2xl mx-auto space-y-6">
         {data.secteur === 'gouvernement' && (
           <div className="space-y-4">
-            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <h3 className="font-semibold text-blue-800 mb-2">
+            <div className="p-4 bg-mpr-interactive-lt border border-mpr-border rounded-lg">
+              <h3 className="font-semibold text-mpr-navy mb-2">
                 {isFrench ? 'RREGOP - Régime de retraite des employés du gouvernement' : 'RREGOP - Government Employees Pension Plan'}
               </h3>
               <div className="space-y-3">
@@ -506,7 +506,7 @@ export default function OnboardingWizard({
   const renderRetirementGoalsStep = () => (
     <div className="space-y-6">
       <div className="text-center space-y-2">
-        <Target className="w-12 h-12 mx-auto text-blue-600" />
+        <Target className="w-12 h-12 mx-auto text-mpr-interactive" />
         <h2 className="text-2xl font-bold text-gray-800">
           {isFrench ? 'Vos objectifs de retraite' : 'Your Retirement Goals'}
         </h2>
@@ -577,12 +577,12 @@ export default function OnboardingWizard({
           </p>
         </div>
         
-        <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
-          <TrendingUp className="w-5 h-5 text-blue-600 mb-2" />
-          <h4 className="font-semibold text-blue-800 mb-2">
+        <div className="p-4 bg-mpr-interactive-lt border border-mpr-border rounded-lg">
+          <TrendingUp className="w-5 h-5 text-mpr-interactive mb-2" />
+          <h4 className="font-semibold text-mpr-navy mb-2">
             {isFrench ? 'Conseil personnalisé' : 'Personal Advice'}
           </h4>
-          <p className="text-sm text-blue-700">
+          <p className="text-sm text-mpr-navy">
             {data.revenuRetraiteVoulu > data.depensesActuelles * 0.7 ? (
               isFrench 
                 ? 'Objectif ambitieux mais réalisable avec une bonne planification !' 
@@ -703,9 +703,9 @@ export default function OnboardingWizard({
               {isFrench ? 'Recommandations personnalisées' : 'Personalized Recommendations'}
             </h3>
             {recommendations.map((rec, index) => (
-              <Alert key={index} className="border-blue-200 bg-blue-50">
+              <Alert key={index} className="border-mpr-border bg-mpr-interactive-lt">
                 <CheckCircle className="h-4 w-4" />
-                <AlertDescription className="text-blue-800">
+                <AlertDescription className="text-mpr-navy">
                   {rec}
                 </AlertDescription>
               </Alert>

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Gestionnaire de rapports professionnels
  * Interface pour générer des rapports adaptés aux différents professionnels
  */
@@ -47,7 +47,7 @@ const reportTypes: ReportType[] = [
     description: 'Analyse fiscale complète pour votre comptable avec optimisations et projections',
     icon: <Calculator className="w-5 h-5" />,
     recipients: ['comptable'],
-    color: 'bg-blue-500',
+    color: 'bg-mpr-interactive',
     isPremium: true
   },
   {
@@ -188,13 +188,13 @@ export const ProfessionalReportManager: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* En-tête */}
-      <Card className="border-2 border-blue-200 bg-gradient-to-r from-blue-50 to-indigo-50">
+      <Card className="border-2 border-mpr-border bg-gradient-to-r from-mpr-interactive-lt to-mpr-interactive-lt">
         <CardHeader>
-          <CardTitle className="flex items-center text-xl text-blue-900">
+          <CardTitle className="flex items-center text-xl text-mpr-navy">
             <Briefcase className="h-6 w-6 mr-2" />
             {isFrench ? 'Rapports professionnels' : 'Professional Reports'}
           </CardTitle>
-          <CardDescription className="text-blue-700">
+          <CardDescription className="text-mpr-navy">
             {isFrench 
               ? 'Générez des rapports personnalisés pour vos professionnels : comptable, planificateur financier, banquier, avocat, notaire.'
               : 'Generate customized reports for your professionals: accountant, financial planner, banker, lawyer, notary.'
@@ -230,7 +230,7 @@ export const ProfessionalReportManager: React.FC = () => {
                     key={report.id}
                     className={`p-4 border rounded-lg cursor-pointer transition-all ${
                       selectedReportType === report.id
-                        ? 'border-blue-500 bg-blue-50 shadow-md'
+                        ? 'border-mpr-interactive bg-mpr-interactive-lt shadow-md'
                         : 'border-gray-200 hover:border-gray-300 hover:shadow-sm'
                     }`}
                     onClick={() => setSelectedReportType(report.id)}
@@ -361,7 +361,7 @@ export const ProfessionalReportManager: React.FC = () => {
               <Button
                 onClick={generateReport}
                 disabled={isGenerating}
-                className="flex-1 bg-gradient-to-r from-blue-500 to-indigo-500 hover:from-blue-600 hover:to-indigo-600"
+                className="flex-1 bg-gradient-to-r from-mpr-interactive to-mpr-interactive hover:from-mpr-interactive hover:to-mpr-interactive"
               >
                 {isGenerating ? (
                   <>
@@ -446,14 +446,14 @@ export const ProfessionalReportManager: React.FC = () => {
       </Alert>
 
       {/* Guide d'utilisation */}
-      <Card className="border-blue-200 bg-blue-50">
+      <Card className="border-mpr-border bg-mpr-interactive-lt">
         <CardHeader>
-          <CardTitle className="text-blue-900">
+          <CardTitle className="text-mpr-navy">
             {isFrench ? 'Guide d\'utilisation' : 'Usage Guide'}
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-blue-800">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-mpr-navy">
             <div>
               <h4 className="font-semibold mb-2">
                 {isFrench ? '📊 Rapports fiscaux' : '📊 Tax Reports'}

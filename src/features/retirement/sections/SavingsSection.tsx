@@ -1,4 +1,4 @@
-// src/features/retirement/sections/SavingsSection.tsx
+﻿// src/features/retirement/sections/SavingsSection.tsx
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -61,11 +61,11 @@ export const SavingsSection: React.FC<SavingsSectionProps> = ({ data, onUpdate }
   const progressionEpargne = Math.min(100, (totalEpargne / objectifRetraite) * 100);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-mpr-navy text-white">
       {/* Particules de fond visibles */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-mpr-interactive rounded-full animate-bounce"></div>
         <div className="absolute top-60 left-1/4 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
         <div className="absolute top-80 right-1/3 w-1 h-1 bg-red-400 rounded-full animate-pulse"></div>
         <div className="absolute top-96 left-1/2 w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
@@ -124,19 +124,19 @@ export const SavingsSection: React.FC<SavingsSectionProps> = ({ data, onUpdate }
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-blue-600/20 to-blue-500/20 border border-blue-500/30 shadow-2xl backdrop-blur-sm">
+          <Card className="bg-gradient-to-br from-mpr-interactive/20 to-mpr-interactive/20 border border-mpr-interactive/30 shadow-2xl backdrop-blur-sm">
             <CardContent className="pt-6 text-center">
               <div className="space-y-3">
-                <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center mx-auto">
+                <div className="w-12 h-12 bg-mpr-interactive rounded-full flex items-center justify-center mx-auto">
                   <Home className="w-6 h-6 text-white" />
                 </div>
-                <div className="text-2xl font-bold text-blue-400">
+                <div className="text-2xl font-bold text-mpr-interactive">
                   {isFrench ? formatMontantOQLF(valeurNetResidence) : `$${valeurNetResidence.toLocaleString()}`}
                 </div>
-                <div className="text-blue-200 text-sm">
+                <div className="text-mpr-interactive-lt text-sm">
                   {isFrench ? 'Valeur nette résidence' : 'Net Residence Value'}
                 </div>
-                <div className="text-blue-300 text-xs">
+                <div className="text-mpr-interactive text-xs">
                   {isFrench ? 'Valeur - Hypothèque' : 'Value - Mortgage'}
                 </div>
               </div>
@@ -192,21 +192,21 @@ export const SavingsSection: React.FC<SavingsSectionProps> = ({ data, onUpdate }
               <TabsList className="grid w-full grid-cols-3 bg-slate-700/50 p-1 rounded-lg h-12">
                 <TabsTrigger 
                   value="comptes" 
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-0 px-4 py-2 text-sm font-medium transition-all duration-300"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-mpr-interactive data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-0 px-4 py-2 text-sm font-medium transition-all duration-300"
                 >
                   <PiggyBank className="w-4 h-4 mr-2" />
                   {isFrench ? 'Comptes d\'épargne' : 'Savings Accounts'}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="residence"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-0 px-4 py-2 text-sm font-medium transition-all duration-300"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-mpr-interactive data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-0 px-4 py-2 text-sm font-medium transition-all duration-300"
                 >
                   <Home className="w-4 h-4 mr-2" />
                   {isFrench ? 'Résidence principale' : 'Primary Residence'}
                 </TabsTrigger>
                 <TabsTrigger 
                   value="analyse"
-                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-0 px-4 py-2 text-sm font-medium transition-all duration-300"
+                  className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-mpr-interactive data-[state=active]:to-purple-500 data-[state=active]:text-white data-[state=active]:shadow-lg focus:outline-none focus:ring-0 px-4 py-2 text-sm font-medium transition-all duration-300"
                 >
                   <BarChart3 className="w-4 h-4 mr-2" />
                   {isFrench ? 'Analyse et conseils' : 'Analysis and Advice'}
@@ -217,9 +217,9 @@ export const SavingsSection: React.FC<SavingsSectionProps> = ({ data, onUpdate }
               <TabsContent value="comptes" className="mt-6">
                 <div className="space-y-6">
                   {/* Personne 1 */}
-                  <Card className="bg-gradient-to-br from-blue-800/90 to-blue-700/90 border-0 shadow-xl backdrop-blur-sm">
-                    <CardHeader className="border-b border-blue-600 bg-gradient-to-r from-blue-600/20 to-purple-600/20">
-                      <CardTitle className="text-xl font-bold text-blue-300 flex items-center gap-3">
+                  <Card className="bg-gradient-to-br from-mpr-navy-mid/90 to-mpr-interactive-dk/90 border-0 shadow-xl backdrop-blur-sm">
+                    <CardHeader className="border-b border-mpr-interactive bg-gradient-to-r from-mpr-interactive/20 to-purple-600/20">
+                      <CardTitle className="text-xl font-bold text-mpr-interactive flex items-center gap-3">
                         <Users className="w-6 h-6" />
                         {isFrench ? 'Personne 1 - Comptes d\'épargne' : 'Person 1 - Savings Accounts'}
                       </CardTitle>
@@ -247,17 +247,17 @@ export const SavingsSection: React.FC<SavingsSectionProps> = ({ data, onUpdate }
                         {/* CELI */}
                         <div className="space-y-3">
                           <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                            <Zap className="w-4 h-4 text-blue-400" />
+                            <Zap className="w-4 h-4 text-mpr-interactive" />
                             CELI
                           </Label>
                           <Input
                             type="number"
                             value={data.savings?.celi1 || 0}
                             onChange={(e) => handleChange('celi1', Number(e.target.value))}
-                            className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400"
+                            className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-mpr-interactive focus:ring-mpr-interactive"
                             placeholder="0"
                           />
-                          <p className="text-blue-300 text-sm">
+                          <p className="text-mpr-interactive text-sm">
                             {isFrench ? 'Retraits libres d\'impôt' : 'Tax-free withdrawals'}
                           </p>
                         </div>
@@ -350,17 +350,17 @@ export const SavingsSection: React.FC<SavingsSectionProps> = ({ data, onUpdate }
                         {/* CELI */}
                         <div className="space-y-3">
                           <Label className="text-gray-200 font-semibold flex items-center gap-2">
-                            <Zap className="w-4 h-4 text-blue-400" />
+                            <Zap className="w-4 h-4 text-mpr-interactive" />
                             CELI
                           </Label>
                           <Input
                             type="number"
                             value={data.savings?.celi2 || 0}
                             onChange={(e) => handleChange('celi2', Number(e.target.value))}
-                            className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400"
+                            className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-mpr-interactive focus:ring-mpr-interactive"
                             placeholder="0"
                           />
-                          <p className="text-blue-300 text-sm">
+                          <p className="text-mpr-interactive text-sm">
                             {isFrench ? 'Retraits libres d\'impôt' : 'Tax-free withdrawals'}
                           </p>
                         </div>
@@ -426,9 +426,9 @@ export const SavingsSection: React.FC<SavingsSectionProps> = ({ data, onUpdate }
 
           {/* Onglet Résidence principale */}
           <TabsContent value="residence" className="mt-6">
-            <Card className="bg-gradient-to-br from-indigo-800/90 to-indigo-700/90 border-0 shadow-xl backdrop-blur-sm">
-              <CardHeader className="border-b border-indigo-600 bg-gradient-to-r from-indigo-600/20 to-blue-600/20">
-                <CardTitle className="text-xl font-bold text-indigo-300 flex items-center gap-3">
+            <Card className="bg-gradient-to-br from-mpr-navy/90 to-mpr-navy-mid/90 border-0 shadow-xl backdrop-blur-sm">
+              <CardHeader className="border-b border-mpr-interactive bg-gradient-to-r from-mpr-interactive/20 to-mpr-interactive/20">
+                <CardTitle className="text-xl font-bold text-mpr-interactive flex items-center gap-3">
                   <Home className="w-6 h-6" />
                   {isFrench ? 'Résidence principale' : 'Primary Residence'}
                 </CardTitle>
@@ -443,7 +443,7 @@ export const SavingsSection: React.FC<SavingsSectionProps> = ({ data, onUpdate }
                       type="number"
                       value={data.savings?.residenceValeur || 0}
                       onChange={(e) => handleChange('residenceValeur', Number(e.target.value))}
-                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
+                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-mpr-interactive focus:ring-mpr-interactive"
                       placeholder="0"
                     />
                   </div>
@@ -455,7 +455,7 @@ export const SavingsSection: React.FC<SavingsSectionProps> = ({ data, onUpdate }
                       type="number"
                       value={data.savings?.residenceHypotheque || 0}
                       onChange={(e) => handleChange('residenceHypotheque', Number(e.target.value))}
-                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
+                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-mpr-interactive focus:ring-mpr-interactive"
                       placeholder="0"
                     />
                   </div>

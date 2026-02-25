@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Target, TrendingUp, AlertTriangle, FileText, BarChart3, CheckCircle, Clock, DollarSign } from 'lucide-react';
@@ -114,7 +114,7 @@ const ExecutiveSummaryReport: React.FC<ExecutiveSummaryReportProps> = ({
       {/* En-tête du rapport */}
       <div className="text-center border-b pb-6">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-green-600 rounded-xl flex items-center justify-center">
+          <div className="w-12 h-12 bg-gradient-to-br from-mpr-interactive to-green-600 rounded-xl flex items-center justify-center">
             <Target className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900">{tr.title}</h1>
@@ -148,15 +148,15 @@ const ExecutiveSummaryReport: React.FC<ExecutiveSummaryReportProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-blue-600" />
+            <FileText className="w-5 h-5 text-mpr-interactive" />
             {tr.executiveSummary}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="p-4 bg-blue-50 rounded-lg">
-              <h4 className="font-semibold text-blue-900 mb-2">📊 Current Situation</h4>
-              <p className="text-blue-700">
+            <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+              <h4 className="font-semibold text-mpr-navy mb-2">📊 Current Situation</h4>
+              <p className="text-mpr-navy">
                 You are {mockData.age} years old with ${mockData.savings.toLocaleString()} in savings, 
                 targeting retirement at age {mockData.targetAge} with a goal of ${mockData.targetAmount.toLocaleString()}. 
                 You are currently {progressStatus.icon} <strong>{progressStatus.status}</strong> with {mockData.progressPercentage}% progress.
@@ -190,9 +190,9 @@ const ExecutiveSummaryReport: React.FC<ExecutiveSummaryReportProps> = ({
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-3 bg-blue-50 rounded-lg">
+            <div className="text-center p-3 bg-mpr-interactive-lt rounded-lg">
               <p className="text-sm text-gray-600">Savings Rate</p>
-              <p className="text-xl font-bold text-blue-900">{mockData.keyMetrics.savingsRate}%</p>
+              <p className="text-xl font-bold text-mpr-navy">{mockData.keyMetrics.savingsRate}%</p>
             </div>
             <div className="text-center p-3 bg-green-50 rounded-lg">
               <p className="text-sm text-gray-600">Debt/Income</p>
@@ -214,7 +214,7 @@ const ExecutiveSummaryReport: React.FC<ExecutiveSummaryReportProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <CheckCircle className="w-5 h-5 text-blue-600" />
+            <CheckCircle className="w-5 h-5 text-mpr-interactive" />
             {tr.currentStatus}
           </CardTitle>
         </CardHeader>
@@ -302,35 +302,35 @@ const ExecutiveSummaryReport: React.FC<ExecutiveSummaryReportProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Clock className="w-5 h-5 text-blue-600" />
+            <Clock className="w-5 h-5 text-mpr-interactive" />
             {tr.nextSteps}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">1</div>
+              <div className="w-6 h-6 bg-mpr-interactive text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">1</div>
               <div>
                 <p className="font-medium">Immediate (This Month)</p>
                 <p className="text-sm text-gray-600">Increase monthly savings by ${mockData.monthlySavings - mockData.currentMonthlySavings}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">2</div>
+              <div className="w-6 h-6 bg-mpr-interactive text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">2</div>
               <div>
                 <p className="font-medium">Short-term (3 months)</p>
                 <p className="text-sm text-gray-600">Review and optimize investment portfolio allocation</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">3</div>
+              <div className="w-6 h-6 bg-mpr-interactive text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">3</div>
               <div>
                 <p className="font-medium">Medium-term (6 months)</p>
                 <p className="text-sm text-gray-600">Consult with financial advisor for comprehensive review</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">4</div>
+              <div className="w-6 h-6 bg-mpr-interactive text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">4</div>
               <div>
                 <p className="font-medium">Long-term (Annually)</p>
                 <p className="text-sm text-gray-600">Reassess goals and adjust strategy as needed</p>

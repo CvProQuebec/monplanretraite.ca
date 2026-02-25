@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Module Budget pour Travailleurs Saisonniers
  * Adapté aux besoins spécifiques des emplois saisonniers au Québec
  * Guide touristique, paysagiste, déneigeur, étudiant, etc.
@@ -132,12 +132,12 @@ const monthNames = [
 ];
 
 const expenseCategories = [
-  { value: 'logement', label: 'Logement', icon: <Home className="w-4 h-4" />, color: 'bg-blue-500' },
+  { value: 'logement', label: 'Logement', icon: <Home className="w-4 h-4" />, color: 'bg-mpr-interactive' },
   { value: 'transport', label: 'Transport', icon: <Truck className="w-4 h-4" />, color: 'bg-green-500' },
   { value: 'alimentation', label: 'Alimentation', icon: <IceCream className="w-4 h-4" />, color: 'bg-orange-500' },
   { value: 'education', label: 'Éducation', icon: <BookOpen className="w-4 h-4" />, color: 'bg-purple-500' },
   { value: 'loisirs', label: 'Loisirs', icon: <Sun className="w-4 h-4" />, color: 'bg-yellow-500' },
-  { value: 'epargne', label: 'Épargne', icon: <PiggyBank className="w-4 h-4" />, color: 'bg-indigo-500' },
+  { value: 'epargne', label: 'Épargne', icon: <PiggyBank className="w-4 h-4" />, color: 'bg-mpr-interactive' },
   { value: 'autre', label: 'Autre', icon: <Calculator className="w-4 h-4" />, color: 'bg-gray-500' }
 ];
 
@@ -376,13 +376,13 @@ export const SeasonalWorkerBudget: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Card className={`bg-gradient-to-br ${surplus >= 0 ? 'from-blue-100 to-blue-200' : 'from-red-100 to-red-200'}`}>
+        <Card className={`bg-gradient-to-br ${surplus >= 0 ? 'from-mpr-interactive-lt to-mpr-interactive-lt' : 'from-red-100 to-red-200'}`}>
           <CardContent className="p-4 text-center">
-            <Calculator className={`w-6 h-6 mx-auto mb-2 ${surplus >= 0 ? 'text-blue-600' : 'text-red-600'}`} />
-            <div className={`text-lg font-bold ${surplus >= 0 ? 'text-blue-800' : 'text-red-800'}`}>
+            <Calculator className={`w-6 h-6 mx-auto mb-2 ${surplus >= 0 ? 'text-mpr-interactive' : 'text-red-600'}`} />
+            <div className={`text-lg font-bold ${surplus >= 0 ? 'text-mpr-navy' : 'text-red-800'}`}>
               {formatCurrency(surplus)}
             </div>
-            <div className={`text-sm ${surplus >= 0 ? 'text-blue-700' : 'text-red-700'}`}>
+            <div className={`text-sm ${surplus >= 0 ? 'text-mpr-navy' : 'text-red-700'}`}>
               {surplus >= 0 ? 'Surplus annuel' : 'Déficit annuel'}
             </div>
           </CardContent>
@@ -967,7 +967,7 @@ export const SeasonalWorkerBudget: React.FC = () => {
                     key={strategie.value}
                     className={`p-4 border rounded-lg cursor-pointer transition-colors ${
                       budgetData.strategieEpargne === strategie.value
-                        ? 'border-blue-500 bg-blue-50'
+                        ? 'border-mpr-interactive bg-mpr-interactive-lt'
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                     onClick={() => setBudgetData(prev => ({
@@ -990,15 +990,15 @@ export const SeasonalWorkerBudget: React.FC = () => {
       </Tabs>
 
         {/* Conseils spécialisés */}
-      <Card className="border-blue-200 bg-blue-50">
+      <Card className="border-mpr-border bg-mpr-interactive-lt">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-900">
+          <CardTitle className="flex items-center gap-2 text-mpr-navy">
             <CheckCircle className="w-5 h-5" />
             Conseils pour travailleurs saisonniers
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-800">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-mpr-navy">
             <div>
               <h4 className="font-semibold mb-2">💰 Gestion des revenus</h4>
               <ul className="space-y-1">

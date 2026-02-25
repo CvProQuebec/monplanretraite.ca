@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Lock, Crown, Star } from 'lucide-react';
@@ -50,7 +50,7 @@ const hasPlanAccess = (userPlan: SubscriptionPlan, requiredPlan: SubscriptionPla
 const getPlanIcon = (plan: SubscriptionPlan) => {
   switch (plan) {
     case 'professional':
-      return <Star className="w-3 h-3 text-blue-600" />;
+      return <Star className="w-3 h-3 text-mpr-interactive" />;
     case 'ultimate':
       return <Crown className="w-3 h-3 text-purple-600" />;
     default:
@@ -62,7 +62,7 @@ const getPlanIcon = (plan: SubscriptionPlan) => {
 const getPlanColor = (plan: SubscriptionPlan) => {
   switch (plan) {
     case 'professional':
-      return 'text-blue-600';
+      return 'text-mpr-interactive';
     case 'ultimate':
       return 'text-purple-600';
     default:
@@ -150,7 +150,7 @@ export const PlanRestrictedButton: React.FC<PlanRestrictedButtonProps> = ({
               </div>
               <Button 
                 size="sm" 
-                className="w-full mt-2 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                className="w-full mt-2 bg-gradient-to-r from-mpr-interactive to-purple-600 hover:from-mpr-navy-mid hover:to-purple-700"
                 onClick={(e) => {
                   e.stopPropagation();
                   // Rediriger vers la page de tarification
@@ -216,7 +216,7 @@ export const PlanRequirementBadge: React.FC<{ plan: SubscriptionPlan; language?:
     <div className={cn(
       "inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium",
       plan === 'professional' 
-        ? "bg-blue-100 text-blue-800 border border-blue-200"
+        ? "bg-mpr-interactive-lt text-mpr-navy border border-mpr-border"
         : "bg-purple-100 text-purple-800 border border-purple-200"
     )}>
       {getPlanIcon(plan)}

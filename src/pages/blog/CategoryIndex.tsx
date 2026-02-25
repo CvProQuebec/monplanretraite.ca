@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+﻿import React, { useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { getCategoryCounts, slugifyCategory } from './utils/content';
@@ -51,7 +51,7 @@ const CategoryIndex: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
   const backToBlog = () => navigate(lang === 'en' ? '/en/blog' : '/blog');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-purple-50">
       <div className="container mx-auto px-6 py-10">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -77,7 +77,7 @@ const CategoryIndex: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
               >
                 <CardHeader className="pb-2">
                   <div className="flex items-center gap-2">
-                    <div className="p-2 rounded bg-blue-100 text-blue-700">
+                    <div className="p-2 rounded bg-mpr-interactive-lt text-mpr-navy">
                       <FolderOpen className="w-5 h-5" />
                     </div>
                     <CardTitle className="text-lg text-gray-900">{categoryLabel(category)}</CardTitle>

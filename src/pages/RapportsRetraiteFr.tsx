@@ -1,4 +1,4 @@
-// src/pages/RapportsRetraiteFr.tsx
+﻿// src/pages/RapportsRetraiteFr.tsx
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,7 +19,7 @@ const RapportsRetraiteFr: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-mpr-interactive-lt">
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         
         {/* Header avec bouton retour */}
@@ -35,7 +35,7 @@ const RapportsRetraiteFr: React.FC = () => {
           
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 flex items-center justify-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-mpr-interactive rounded-xl flex items-center justify-center">
                 <FileText className="w-6 h-6 text-white" />
               </div>
               Rapports de retraite
@@ -59,8 +59,8 @@ const RapportsRetraiteFr: React.FC = () => {
           <CardContent>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center p-6">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <BarChart3 className="w-8 h-8 text-blue-600" />
+                <div className="w-16 h-16 bg-mpr-interactive-lt rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BarChart3 className="w-8 h-8 text-mpr-interactive" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Analyse complète</h3>
                 <p className="text-sm text-gray-600">
@@ -223,42 +223,42 @@ const RapportsRetraiteFr: React.FC = () => {
             {/* 🔵 RAPPORTS PROFESSIONNELS */}
             <div className="mb-12">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                <div className="w-8 h-8 bg-mpr-interactive rounded-full flex items-center justify-center">
                   <TrendingUp className="w-4 h-4 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-blue-900">🔵 RAPPORTS PROFESSIONNELS</h3>
+                <h3 className="text-2xl font-bold text-mpr-navy">🔵 RAPPORTS PROFESSIONNELS</h3>
               </div>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
 
                 {/* Rapport pour Planificateur Financier */}
-                <div className="border-l-4 border-l-blue-500 bg-blue-50 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="border-l-4 border-l-blue-500 bg-mpr-interactive-lt rounded-lg p-6 hover:shadow-md transition-shadow">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <TrendingUp className="w-6 h-6 text-blue-600" />
+                    <div className="w-12 h-12 bg-mpr-interactive-lt rounded-lg flex items-center justify-center">
+                      <TrendingUp className="w-6 h-6 text-mpr-interactive" />
                     </div>
-                    <Badge className="bg-blue-500 text-white text-xs">Professionnel</Badge>
+                    <Badge className="bg-mpr-interactive text-white text-xs">Professionnel</Badge>
                   </div>
-                  <h4 className="font-semibold text-blue-900 mb-2">Pour planificateur financier</h4>
-                  <p className="text-sm text-blue-800 mb-4">
+                  <h4 className="font-semibold text-mpr-navy mb-2">Pour planificateur financier</h4>
+                  <p className="text-sm text-mpr-navy mb-4">
                     Analyse complète avec tous les modules avancés
                   </p>
                   <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Optimisation FERR/REER/CÉLI</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Stratégies de retrait</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Analyse Monte Carlo</span>
                     </div>
                   </div>
                   <Button
                     onClick={() => handleViewReport('financial-planner')}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                    className="w-full bg-mpr-interactive hover:bg-mpr-interactive-dk text-white"
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     Générer
@@ -266,34 +266,34 @@ const RapportsRetraiteFr: React.FC = () => {
                 </div>
 
                 {/* Rapport pour Comptable */}
-                <div className="border-l-4 border-l-blue-500 bg-blue-50 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="border-l-4 border-l-blue-500 bg-mpr-interactive-lt rounded-lg p-6 hover:shadow-md transition-shadow">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <BarChart3 className="w-6 h-6 text-blue-600" />
+                    <div className="w-12 h-12 bg-mpr-interactive-lt rounded-lg flex items-center justify-center">
+                      <BarChart3 className="w-6 h-6 text-mpr-interactive" />
                     </div>
-                    <Badge className="bg-blue-500 text-white text-xs">Professionnel</Badge>
+                    <Badge className="bg-mpr-interactive text-white text-xs">Professionnel</Badge>
                   </div>
-                  <h4 className="font-semibold text-blue-900 mb-2">Pour comptable</h4>
-                  <p className="text-sm text-blue-800 mb-4">
+                  <h4 className="font-semibold text-mpr-navy mb-2">Pour comptable</h4>
+                  <p className="text-sm text-mpr-navy mb-4">
                     Focus sur optimisation fiscale et stratégies
                   </p>
                   <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Optimisation fiscale multi-sources</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Impact fiscal à 65 ans</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Fractionnement de revenus</span>
                     </div>
                   </div>
                   <Button
                     onClick={() => handleViewReport('accountant')}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                    className="w-full bg-mpr-interactive hover:bg-mpr-interactive-dk text-white"
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     Générer
@@ -301,34 +301,34 @@ const RapportsRetraiteFr: React.FC = () => {
                 </div>
 
                 {/* Rapport pour Banque/Conseiller */}
-                <div className="border-l-4 border-l-blue-500 bg-blue-50 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="border-l-4 border-l-blue-500 bg-mpr-interactive-lt rounded-lg p-6 hover:shadow-md transition-shadow">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <Shield className="w-6 h-6 text-blue-600" />
+                    <div className="w-12 h-12 bg-mpr-interactive-lt rounded-lg flex items-center justify-center">
+                      <Shield className="w-6 h-6 text-mpr-interactive" />
                     </div>
-                    <Badge className="bg-blue-500 text-white text-xs">Professionnel</Badge>
+                    <Badge className="bg-mpr-interactive text-white text-xs">Professionnel</Badge>
                   </div>
-                  <h4 className="font-semibold text-blue-900 mb-2">Pour banque/conseiller</h4>
-                  <p className="text-sm text-blue-800 mb-4">
+                  <h4 className="font-semibold text-mpr-navy mb-2">Pour banque/conseiller</h4>
+                  <p className="text-sm text-mpr-navy mb-4">
                     Analyse de solvabilité et capacité d'emprunt
                   </p>
                   <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Cashflow détaillé</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Actifs et passifs</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Projections de revenus</span>
                     </div>
                   </div>
                   <Button
                     onClick={() => handleViewReport('bank-advisor')}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                    className="w-full bg-mpr-interactive hover:bg-mpr-interactive-dk text-white"
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     Générer
@@ -336,34 +336,34 @@ const RapportsRetraiteFr: React.FC = () => {
                 </div>
 
                 {/* Rapport Conjoint/Famille */}
-                <div className="border-l-4 border-l-blue-500 bg-blue-50 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="border-l-4 border-l-blue-500 bg-mpr-interactive-lt rounded-lg p-6 hover:shadow-md transition-shadow">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <FileText className="w-6 h-6 text-blue-600" />
+                    <div className="w-12 h-12 bg-mpr-interactive-lt rounded-lg flex items-center justify-center">
+                      <FileText className="w-6 h-6 text-mpr-interactive" />
                     </div>
-                    <Badge className="bg-blue-500 text-white text-xs">Professionnel</Badge>
+                    <Badge className="bg-mpr-interactive text-white text-xs">Professionnel</Badge>
                   </div>
-                  <h4 className="font-semibold text-blue-900 mb-2">Pour conjoint/famille</h4>
-                  <p className="text-sm text-blue-800 mb-4">
+                  <h4 className="font-semibold text-mpr-navy mb-2">Pour conjoint/famille</h4>
+                  <p className="text-sm text-mpr-navy mb-4">
                     Résumé accessible de la planification familiale
                   </p>
                   <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Objectifs familiaux</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Stratégies simplifiées</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Actions recommandées</span>
                     </div>
                   </div>
                   <Button
                     onClick={() => handleViewReport('family-spouse')}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                    className="w-full bg-mpr-interactive hover:bg-mpr-interactive-dk text-white"
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     Générer
@@ -371,34 +371,34 @@ const RapportsRetraiteFr: React.FC = () => {
                 </div>
 
                 {/* Rapport RREGOP/SRG Avancé */}
-                <div className="border-l-4 border-l-blue-500 bg-blue-50 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="border-l-4 border-l-blue-500 bg-mpr-interactive-lt rounded-lg p-6 hover:shadow-md transition-shadow">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <TrendingUp className="w-6 h-6 text-blue-600" />
+                    <div className="w-12 h-12 bg-mpr-interactive-lt rounded-lg flex items-center justify-center">
+                      <TrendingUp className="w-6 h-6 text-mpr-interactive" />
                     </div>
-                    <Badge className="bg-blue-500 text-white text-xs">Professionnel</Badge>
+                    <Badge className="bg-mpr-interactive text-white text-xs">Professionnel</Badge>
                   </div>
-                  <h4 className="font-semibold text-blue-900 mb-2">RREGOP/SRG avancé</h4>
-                  <p className="text-sm text-blue-800 mb-4">
+                  <h4 className="font-semibold text-mpr-navy mb-2">RREGOP/SRG avancé</h4>
+                  <p className="text-sm text-mpr-navy mb-4">
                     Analyse complète des régimes gouvernementaux
                   </p>
                   <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Optimisation RREGOP</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Stratégies SRG</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Coordination prestations</span>
                     </div>
                   </div>
                   <Button
                     onClick={() => handleViewReport('rregop-srg-advanced')}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                    className="w-full bg-mpr-interactive hover:bg-mpr-interactive-dk text-white"
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     Générer
@@ -406,34 +406,34 @@ const RapportsRetraiteFr: React.FC = () => {
                 </div>
 
                 {/* Rapport Analyse Rendement */}
-                <div className="border-l-4 border-l-blue-500 bg-blue-50 rounded-lg p-6 hover:shadow-md transition-shadow">
+                <div className="border-l-4 border-l-blue-500 bg-mpr-interactive-lt rounded-lg p-6 hover:shadow-md transition-shadow">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                      <BarChart3 className="w-6 h-6 text-blue-600" />
+                    <div className="w-12 h-12 bg-mpr-interactive-lt rounded-lg flex items-center justify-center">
+                      <BarChart3 className="w-6 h-6 text-mpr-interactive" />
                     </div>
-                    <Badge className="bg-blue-500 text-white text-xs">Professionnel</Badge>
+                    <Badge className="bg-mpr-interactive text-white text-xs">Professionnel</Badge>
                   </div>
-                  <h4 className="font-semibold text-blue-900 mb-2">Analyse de rendement</h4>
-                  <p className="text-sm text-blue-800 mb-4">
+                  <h4 className="font-semibold text-mpr-navy mb-2">Analyse de rendement</h4>
+                  <p className="text-sm text-mpr-navy mb-4">
                     Performance détaillée des investissements
                   </p>
                   <div className="space-y-2 mb-4">
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>IRR, TWR, rendements</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Comparaison benchmarks</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-blue-700">
-                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="flex items-center gap-2 text-xs text-mpr-navy">
+                      <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                       <span>Recommandations</span>
                     </div>
                   </div>
                   <Button
                     onClick={() => handleViewReport('performance-analysis')}
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                    className="w-full bg-mpr-interactive hover:bg-mpr-interactive-dk text-white"
                   >
                     <Eye className="w-4 h-4 mr-2" />
                     Générer
@@ -799,7 +799,7 @@ const RapportsRetraiteFr: React.FC = () => {
                 </p>
                 <Button
                   onClick={() => handleViewReport('custom')}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
+                  className="w-full bg-mpr-interactive hover:bg-mpr-interactive-dk text-white"
                 >
                   <Eye className="w-4 h-4 mr-2" />
                   Consulter
@@ -810,7 +810,7 @@ const RapportsRetraiteFr: React.FC = () => {
         </Card>
 
         {/* Section Nouveaux Modules Inclus */}
-        <Card className="mb-12 bg-gradient-to-r from-green-50 to-blue-50 border-0 shadow-xl">
+        <Card className="mb-12 bg-gradient-to-r from-green-50 to-mpr-interactive-lt border-0 shadow-xl">
           <CardHeader className="text-center pb-8">
             <CardTitle className="text-3xl font-bold text-gray-900 mb-4">
               ✨ Nouveaux modules inclus dans les rapports
@@ -823,14 +823,14 @@ const RapportsRetraiteFr: React.FC = () => {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               
               {/* Modules Professionnels */}
-              <div className="bg-blue-50 border-l-4 border-l-blue-500 rounded-lg p-6">
-                <h4 className="font-semibold text-blue-900 mb-4 flex items-center gap-2">
-                  <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
+              <div className="bg-mpr-interactive-lt border-l-4 border-l-blue-500 rounded-lg p-6">
+                <h4 className="font-semibold text-mpr-navy mb-4 flex items-center gap-2">
+                  <div className="w-6 h-6 bg-mpr-interactive rounded-full flex items-center justify-center">
                     <TrendingUp className="w-3 h-3 text-white" />
                   </div>
                   🔵 Niveau Professionnel
                 </h4>
-                <ul className="space-y-2 text-sm text-blue-800">
+                <ul className="space-y-2 text-sm text-mpr-navy">
                   <li>• Optimisation FERR</li>
                   <li>• Planification CÉLI-APP</li>
                   <li>• Séquence de retrait</li>
@@ -866,7 +866,7 @@ const RapportsRetraiteFr: React.FC = () => {
               </div>
 
               {/* Rapports Professionnels */}
-              <div className="bg-gradient-to-br from-green-50 to-blue-50 border-l-4 border-l-green-500 rounded-lg p-6">
+              <div className="bg-gradient-to-br from-green-50 to-mpr-interactive-lt border-l-4 border-l-green-500 rounded-lg p-6">
                 <h4 className="font-semibold text-gray-900 mb-4 flex items-center gap-2">
                   <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                     <FileText className="w-3 h-3 text-white" />
@@ -964,7 +964,7 @@ const RapportsRetraiteFr: React.FC = () => {
 
         {/* Call to Action */}
         <div className="text-center">
-          <Card className="bg-gradient-to-r from-purple-600 to-blue-600 text-white border-0 shadow-xl">
+          <Card className="bg-gradient-to-r from-purple-600 to-mpr-interactive text-white border-0 shadow-xl">
             <CardContent className="py-12">
               <h2 className="text-3xl font-bold mb-4">Prêt à générer vos rapports ?</h2>
               <p className="text-xl mb-8 opacity-90">

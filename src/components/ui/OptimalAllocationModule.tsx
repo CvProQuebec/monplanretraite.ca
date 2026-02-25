@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Input } from './input';
@@ -167,7 +167,7 @@ export const OptimalAllocationModule: React.FC<OptimalAllocationModuleProps> = (
                 <strong>Économies potentielles:</strong> Jusqu'à 2-3% de rendement annuel supplémentaire
               </p>
             </div>
-            <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
+            <Button className="bg-gradient-to-r from-mpr-interactive to-purple-600 hover:from-mpr-navy-mid hover:to-purple-700">
               Débloquer le Module
             </Button>
           </div>
@@ -362,8 +362,8 @@ export const OptimalAllocationModule: React.FC<OptimalAllocationModuleProps> = (
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <div className="text-2xl font-bold text-blue-600">
+                <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+                  <div className="text-2xl font-bold text-mpr-interactive">
                     {optimalAllocation.stocks}%
                   </div>
                   <div className="text-sm text-gray-600">Actions</div>
@@ -472,7 +472,7 @@ export const OptimalAllocationModule: React.FC<OptimalAllocationModuleProps> = (
                     </div>
                     <div className="flex justify-between items-center">
                       <span className="text-gray-600">Amélioration:</span>
-                      <span className="font-semibold text-blue-600">
+                      <span className="font-semibold text-mpr-interactive">
                         +{potentialImpact.improvementBps} points de base
                       </span>
                     </div>
@@ -485,9 +485,9 @@ export const OptimalAllocationModule: React.FC<OptimalAllocationModuleProps> = (
                         +{potentialImpact.annualImpact.toLocaleString()}$
                       </div>
                     </div>
-                    <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                      <div className="text-sm text-blue-800 mb-1">Impact sur 20 ans:</div>
-                      <div className="text-lg font-bold text-blue-900">
+                    <div className="bg-mpr-interactive-lt border border-mpr-border rounded-lg p-4">
+                      <div className="text-sm text-mpr-navy mb-1">Impact sur 20 ans:</div>
+                      <div className="text-lg font-bold text-mpr-navy">
                         +{potentialImpact.twentyYearImpact.toLocaleString()}$
                       </div>
                     </div>
@@ -518,7 +518,7 @@ export const OptimalAllocationModule: React.FC<OptimalAllocationModuleProps> = (
             <CardContent>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <div className="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                  <div className="w-2 h-2 bg-mpr-interactive rounded-full mt-2"></div>
                   <div>
                     <h4 className="font-semibold">Rééquilibrage Graduel</h4>
                     <p className="text-sm text-gray-600">

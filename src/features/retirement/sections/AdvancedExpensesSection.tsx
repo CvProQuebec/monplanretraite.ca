@@ -1,4 +1,4 @@
-// src/features/retirement/sections/AdvancedExpensesSection.tsx
+﻿// src/features/retirement/sections/AdvancedExpensesSection.tsx
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -200,7 +200,7 @@ const SeasonalExpensesComponent: React.FC<{ data: any; onUpdate: any }> = ({ dat
     { 
       key: 'deneigement', 
       label: t.snowRemoval, 
-      icon: <Snowflake className="w-4 h-4 text-blue-500" />,
+      icon: <Snowflake className="w-4 h-4 text-mpr-interactive" />,
       payments: [
         { key: 'septembre', label: language === 'fr' ? 'Versement septembre' : 'September payment', date: '2024-09-15' },
         { key: 'janvier', label: language === 'fr' ? 'Versement janvier' : 'January payment', date: '2025-01-15' }
@@ -226,7 +226,7 @@ const SeasonalExpensesComponent: React.FC<{ data: any; onUpdate: any }> = ({ dat
     { 
       key: 'vetements', 
       label: t.winterClothing, 
-      icon: <ShoppingCart className="w-4 h-4 text-blue-600" />,
+      icon: <ShoppingCart className="w-4 h-4 text-mpr-interactive" />,
       payments: [
         { key: 'novembre', label: language === 'fr' ? 'Versement novembre' : 'November payment', date: '2024-11-15' }
       ]
@@ -246,7 +246,7 @@ const SeasonalExpensesComponent: React.FC<{ data: any; onUpdate: any }> = ({ dat
     { 
       key: 'climatisation', 
       label: t.airConditioning, 
-      icon: <Zap className="w-4 h-4 text-blue-500" />,
+      icon: <Zap className="w-4 h-4 text-mpr-interactive" />,
       payments: [
         { key: 'juin', label: language === 'fr' ? 'Versement juin' : 'June payment', date: '2024-06-15' }
       ]
@@ -306,14 +306,14 @@ const SeasonalExpensesComponent: React.FC<{ data: any; onUpdate: any }> = ({ dat
       {/* Sélecteur de saison */}
       <div className="flex items-center gap-4">
         <div className="flex items-center gap-2">
-          <Snowflake className="w-5 h-5 text-blue-500" />
+          <Snowflake className="w-5 h-5 text-mpr-interactive" />
           <span className="text-sm font-medium">{t.winter}</span>
         </div>
         <Button
           variant={selectedSeason === 'winter' ? 'default' : 'outline'}
           size="sm"
           onClick={() => setSelectedSeason('winter')}
-          className="bg-blue-500 hover:bg-blue-600"
+          className="bg-mpr-interactive hover:bg-mpr-interactive"
         >
           {t.winter}
         </Button>
@@ -378,12 +378,12 @@ const SeasonalExpensesComponent: React.FC<{ data: any; onUpdate: any }> = ({ dat
                 </div>
 
                 {/* Résumé du versement */}
-                <div className="p-3 bg-blue-50 rounded-lg">
+                <div className="p-3 bg-mpr-interactive-lt rounded-lg">
                   <div className="flex justify-between items-center">
-                    <span className="text-sm font-medium text-blue-800">{t.totalPayments}</span>
-                    <span className="text-lg font-bold text-blue-900">{formatMontantOQLF(totalAmount as number)}</span>
+                    <span className="text-sm font-medium text-mpr-navy">{t.totalPayments}</span>
+                    <span className="text-lg font-bold text-mpr-navy">{formatMontantOQLF(totalAmount as number)}</span>
                   </div>
-                  <div className="mt-2 text-xs text-blue-600">
+                  <div className="mt-2 text-xs text-mpr-interactive">
                     {expense.payments.length > 1 
                       ? `${expense.payments.length} ${t.paymentsScheduled}` 
                       : `1 ${t.payment}`
@@ -397,15 +397,15 @@ const SeasonalExpensesComponent: React.FC<{ data: any; onUpdate: any }> = ({ dat
       </div>
 
       {/* Résumé saisonnier */}
-      <Card className="bg-gradient-to-r from-blue-50 to-orange-50 border-blue-200">
+      <Card className="bg-gradient-to-r from-mpr-interactive-lt to-orange-50 border-mpr-border">
         <CardHeader>
           <CardTitle className="text-lg">{t.seasonalExpensesSummary}</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center">
-              <p className="text-sm text-blue-600">{t.winterExpenses}</p>
-              <p className="text-2xl font-bold text-blue-800">
+              <p className="text-sm text-mpr-interactive">{t.winterExpenses}</p>
+              <p className="text-2xl font-bold text-mpr-navy">
                 {formatMontantOQLF(
                   Object.keys(expensesData)
                     .filter(key => key.includes('Payments'))
@@ -588,7 +588,7 @@ const ComplexBillsComponent: React.FC<{ data: any; onUpdate: any }> = ({ data, o
             <TabsTrigger
               key={bill.key}
               value={bill.key}
-              className="data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-sm focus:outline-none focus:ring-0 px-3 py-1 text-sm font-medium"
+              className="data-[state=active]:bg-mpr-interactive data-[state=active]:text-white data-[state=active]:shadow-sm focus:outline-none focus:ring-0 px-3 py-1 text-sm font-medium"
             >
               <div className="flex items-center gap-2">
                 {bill.icon}
@@ -610,8 +610,8 @@ const ComplexBillsComponent: React.FC<{ data: any; onUpdate: any }> = ({ data, o
                 <h4 className="font-semibold text-sm text-gray-700">{t.scheduledPayments}</h4>
                 
                 {/* Taxes municipales */}
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <h5 className="font-medium text-blue-800 mb-3">{t.municipalTaxes}</h5>
+                <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+                  <h5 className="font-medium text-mpr-navy mb-3">{t.municipalTaxes}</h5>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">{t.firstPayment} {t.generallyMarch}</Label>
@@ -697,10 +697,10 @@ const ComplexBillsComponent: React.FC<{ data: any; onUpdate: any }> = ({ data, o
               </div>
 
               {/* Résumé des taxes */}
-              <div className="p-4 bg-blue-50 rounded-lg">
+              <div className="p-4 bg-mpr-interactive-lt rounded-lg">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-medium text-blue-800">{t.totalAnnualTaxes}</span>
-                  <span className="text-lg font-bold text-blue-900">
+                  <span className="text-sm font-medium text-mpr-navy">{t.totalAnnualTaxes}</span>
+                  <span className="text-lg font-bold text-mpr-navy">
                     {formatMontantOQLF(
                       Object.values(billsData.taxesPayments || {}).reduce((sum: number, payment: any) => {
                         const amount = payment && typeof payment === 'object' && 'amount' in payment ? Number(payment.amount) : 0;
@@ -709,7 +709,7 @@ const ComplexBillsComponent: React.FC<{ data: any; onUpdate: any }> = ({ data, o
                     )}
                   </span>
                 </div>
-                <div className="mt-2 text-xs text-blue-600">
+                <div className="mt-2 text-xs text-mpr-interactive">
                   {t.distributedOver} {Object.keys(billsData.taxesPayments || {}).length} {t.payments}
                 </div>
               </div>
@@ -729,8 +729,8 @@ const ComplexBillsComponent: React.FC<{ data: any; onUpdate: any }> = ({ data, o
                 <h4 className="font-semibold text-sm text-gray-700">{t.scheduledPayments}</h4>
                 
                 {/* Hiver */}
-                <div className="p-4 bg-blue-50 rounded-lg">
-                  <h5 className="font-medium text-blue-800 mb-3">{t.winterPeriod}</h5>
+                <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+                  <h5 className="font-medium text-mpr-navy mb-3">{t.winterPeriod}</h5>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                       <Label className="text-sm font-medium">{t.decemberJanuary}</Label>
@@ -931,7 +931,7 @@ export const AdvancedExpensesSection: React.FC<AdvancedExpensesSectionProps> = (
       {/* En-tête avec aide */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-orange-500 rounded-full flex items-center justify-center">
+          <div className="w-12 h-12 bg-gradient-to-r from-mpr-interactive to-orange-500 rounded-full flex items-center justify-center">
             <Calendar className="w-6 h-6 text-white" />
           </div>
           <div>
@@ -954,9 +954,9 @@ export const AdvancedExpensesSection: React.FC<AdvancedExpensesSectionProps> = (
 
       {/* Message d'aide */}
       {showHelp && (
-        <Alert className="border-blue-200 bg-blue-50">
-          <Info className="h-5 w-5 text-blue-600" />
-          <AlertDescription className="text-blue-800">
+        <Alert className="border-mpr-border bg-mpr-interactive-lt">
+          <Info className="h-5 w-5 text-mpr-interactive" />
+          <AlertDescription className="text-mpr-navy">
             {t.helpText}
           </AlertDescription>
         </Alert>
@@ -969,7 +969,7 @@ export const AdvancedExpensesSection: React.FC<AdvancedExpensesSectionProps> = (
             <TabsList className="grid w-full grid-cols-4 bg-gray-100 p-1 rounded-lg h-10">
               <TabsTrigger 
                 value="seasonal" 
-                className="data-[state=active]:bg-blue-500 data-[state=active]:text-white data-[state=active]:shadow-sm focus:outline-none focus:ring-0 px-3 py-1 text-sm font-medium"
+                className="data-[state=active]:bg-mpr-interactive data-[state=active]:text-white data-[state=active]:shadow-sm focus:outline-none focus:ring-0 px-3 py-1 text-sm font-medium"
               >
                 {t.seasonal}
               </TabsTrigger>

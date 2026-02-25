@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState, Suspense } from 'react';
+﻿import React, { useCallback, useEffect, useMemo, useRef, useState, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { formatTimeOQLF } from '@/utils/localeFormat';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
@@ -129,8 +129,8 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
         <div className="bg-white border-2 border-gray-300 rounded-xl p-4 md:p-6 mb-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-blue-100 border-2 border-blue-300 flex items-center justify-center">
-                <span className="text-blue-700 font-bold">W</span>
+              <div className="w-10 h-10 rounded-full bg-mpr-interactive-lt border-2 border-mpr-border flex items-center justify-center">
+                <span className="text-mpr-navy font-bold">W</span>
               </div>
               <div>
                 <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
@@ -145,13 +145,13 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
               {/* Mode */}
               <div className="flex items-center gap-2 bg-gray-50 border rounded-lg p-2">
                 <button
-                  className={`px-3 py-2 rounded ${mode === 'guide' ? 'bg-blue-600 text-white' : 'text-gray-700'}`}
+                  className={`px-3 py-2 rounded ${mode === 'guide' ? 'bg-mpr-interactive text-white' : 'text-gray-700'}`}
                   onClick={() => onToggleMode('guide')}
                 >
                   {isEnglish ? 'Simple' : 'Simple'}
                 </button>
                 <button
-                  className={`px-3 py-2 rounded ${mode === 'libre' ? 'bg-blue-600 text-white' : 'text-gray-700'}`}
+                  className={`px-3 py-2 rounded ${mode === 'libre' ? 'bg-mpr-interactive text-white' : 'text-gray-700'}`}
                   onClick={() => onToggleMode('libre')}
                 >
                   {isEnglish ? 'Advanced' : 'Avancé'}
@@ -181,7 +181,7 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
           {/* Barre de progression */}
           <div className="mt-4">
             <div className="w-full bg-gray-200 rounded h-3">
-              <div className="bg-blue-600 h-3 rounded" style={{ width: `${currentPercent}%` }} />
+              <div className="bg-mpr-interactive h-3 rounded" style={{ width: `${currentPercent}%` }} />
             </div>
             <div className="mt-2 text-sm text-gray-700">
               {isEnglish ? 'Completion' : 'Achèvement'} : <strong>{currentPercent}%</strong>

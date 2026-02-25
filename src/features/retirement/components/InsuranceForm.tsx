@@ -1,4 +1,4 @@
-// src/features/retirement/components/InsuranceForm.tsx
+﻿// src/features/retirement/components/InsuranceForm.tsx
 // Formulaire pour les assurances
 
 import React, { useState } from 'react';
@@ -36,7 +36,7 @@ interface InsuranceFormProps {
 
 const insuranceTypeOptions = [
   { value: 'vie', label: 'Assurance vie', icon: '❤️', color: 'bg-red-100 text-red-800' },
-  { value: 'invalidite', label: 'Assurance invalidité', icon: '🦽', color: 'bg-blue-100 text-blue-800' },
+  { value: 'invalidite', label: 'Assurance invalidité', icon: '🦽', color: 'bg-mpr-interactive-lt text-mpr-navy' },
   { value: 'maladie_grave', label: 'Assurance maladie grave', icon: '🏥', color: 'bg-purple-100 text-purple-800' },
   { value: 'soins_longue_duree', label: 'Soins de longue durée', icon: '🏠', color: 'bg-green-100 text-green-800' },
   { value: 'autre', label: 'Autre', icon: '🛡️', color: 'bg-gray-100 text-gray-800' }
@@ -240,7 +240,7 @@ export const InsuranceForm: React.FC<InsuranceFormProps> = ({
                   </div>
                   {getTotalPremiums() > 0 && (
                     <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="text-blue-600">
+                      <Badge variant="outline" className="text-mpr-interactive">
                         Primes annuelles: {getTotalPremiums().toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
                       </Badge>
                     </div>
@@ -561,11 +561,11 @@ export const InsuranceForm: React.FC<InsuranceFormProps> = ({
                           )}
                           
                           {insurance.beneficiaires.length > 0 && (
-                            <div className="mt-2 p-2 bg-blue-50 rounded">
-                              <div className="text-blue-800 font-medium text-xs mb-1">Bénéficiaires</div>
+                            <div className="mt-2 p-2 bg-mpr-interactive-lt rounded">
+                              <div className="text-mpr-navy font-medium text-xs mb-1">Bénéficiaires</div>
                               <div className="space-y-1">
                                 {insurance.beneficiaires.map((beneficiary, index) => (
-                                  <div key={index} className="text-blue-700 text-xs">
+                                  <div key={index} className="text-mpr-navy text-xs">
                                     {beneficiary.nom} ({beneficiary.relation}) - {beneficiary.pourcentage}%
                                   </div>
                                 ))}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+﻿import React, { useState, useEffect, lazy, Suspense } from 'react';
 
 /* CSS pour disposition 3 colonnes des dépenses */
 const expenseStyles = `
@@ -289,7 +289,7 @@ const Budget: React.FC = () => {
       value: 'logement',
       label: isFrench ? 'Logement' : 'Housing',
       icon: <Home className="w-4 h-4" />,
-      color: 'bg-blue-500',
+      color: 'bg-mpr-interactive',
       subcategories: [
         'Hypothèque/Loyer', 'Taxes municipales', 'Assurance habitation', 
         'Entretien', 'Réparations', 'Amélioration'
@@ -348,7 +348,7 @@ const Budget: React.FC = () => {
       value: 'epargne',
       label: isFrench ? 'Épargne' : 'Savings',
       icon: <PiggyBank className="w-4 h-4" />,
-      color: 'bg-indigo-500',
+      color: 'bg-mpr-interactive',
       subcategories: [
         'REER', 'CELI', 'Épargne urgence', 'Placements', 'Objectifs', 'Retraite'
       ]
@@ -850,11 +850,11 @@ const Budget: React.FC = () => {
   }
 
   return (
-    <div className="senior-layout min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-gray-900">
+    <div className="senior-layout min-h-screen bg-gradient-to-br from-slate-50 via-mpr-interactive-lt to-mpr-interactive-lt text-gray-900">
       {/* Particules de fond */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 left-10 w-2 h-2 bg-blue-300 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-3 h-3 bg-indigo-300 rounded-full animate-bounce"></div>
+        <div className="absolute top-20 left-10 w-2 h-2 bg-mpr-interactive-lt rounded-full animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-mpr-interactive-lt rounded-full animate-bounce"></div>
         <div className="absolute top-60 left-1/4 w-2 h-2 bg-purple-300 rounded-full animate-ping"></div>
         <div className="absolute top-80 right-1/3 w-1 h-1 bg-cyan-300 rounded-full animate-pulse"></div>
       </div>
@@ -863,7 +863,7 @@ const Budget: React.FC = () => {
 
         {/* En-tête spectaculaire */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent drop-shadow-2xl" style={{fontSize: '3.5rem'}}>
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-mpr-interactive via-mpr-interactive to-purple-400 bg-clip-text text-transparent drop-shadow-2xl" style={{fontSize: '3.5rem'}}>
             💰 {isFrench ? 'Mon budget intelligent' : 'My Smart Budget'}
           </h1>
           <p className="text-xl md:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed" style={{fontSize: '1.375rem'}}>
@@ -900,13 +900,13 @@ const Budget: React.FC = () => {
             </CardContent>
           </Card>
 
-          <Card className="bg-gradient-to-br from-blue-100 to-indigo-100 border-2 border-blue-200 shadow-lg">
+          <Card className="bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt border-2 border-mpr-border shadow-lg">
             <CardContent className="p-6 text-center">
-              <Calculator className="w-8 h-8 text-blue-600 mx-auto mb-2" />
+              <Calculator className="w-8 h-8 text-mpr-interactive mx-auto mb-2" />
               <div className={`text-2xl font-bold ${getAmountColor(netCashFlow)}`}>
                 {formatCurrency(netCashFlow)}
               </div>
-              <div className="text-lg text-blue-600" style={{fontSize: '1.125rem'}}>
+              <div className="text-lg text-mpr-interactive" style={{fontSize: '1.125rem'}}>
                 {isFrench ? 'Flux net mensuel' : 'Net Monthly Flow'}
               </div>
             </CardContent>
@@ -976,7 +976,7 @@ const Budget: React.FC = () => {
               {/* Graphique des catégories */}
               <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 shadow-lg">
                 <CardHeader>
-                  <CardTitle className="text-xl font-bold text-blue-700 flex items-center gap-2" style={{fontSize: '1.25rem'}}>
+                  <CardTitle className="text-xl font-bold text-mpr-navy flex items-center gap-2" style={{fontSize: '1.25rem'}}>
                     <BarChart3 className="w-5 h-5" />
                     {isFrench ? 'Dépenses par catégorie' : 'Expenses by Category'}
                   </CardTitle>
@@ -1051,9 +1051,9 @@ const Budget: React.FC = () => {
               </Card>
 
               {/* Prévisions */}
-              <Card className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 shadow-lg">
+              <Card className="bg-gradient-to-br from-mpr-interactive-lt to-purple-50 border-2 border-mpr-border shadow-lg">
                 <CardHeader>
-                  <CardTitle className="text-xl font-bold text-indigo-700 flex items-center gap-2">
+                  <CardTitle className="text-xl font-bold text-mpr-navy flex items-center gap-2">
                     <Target className="w-5 h-5" />
                     {isFrench ? 'Prévisions financières' : 'Financial Forecasts'}
                   </CardTitle>
@@ -1115,11 +1115,11 @@ const Budget: React.FC = () => {
                 }
               };
               return (
-                <Alert className="border-blue-200 bg-blue-50 text-blue-900">
+                <Alert className="border-mpr-border bg-mpr-interactive-lt text-mpr-navy">
                   <AlertDescription className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
                     <span>{isFrench ? `Synchronisation active: ${linkedCount} poste(s) lié(s) aux Dépenses.` : `Active sync: ${linkedCount} linked item(s) with Expenses.`}</span>
                     <div className="flex gap-2">
-                      <Button onClick={applyAll} className="bg-blue-600 hover:bg-blue-700 text-white">
+                      <Button onClick={applyAll} className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white">
                         {isFrench ? 'Appliquer tout' : 'Apply all'}
                       </Button>
                       <Button onClick={dissociateAll} variant="outline">
@@ -1131,13 +1131,13 @@ const Budget: React.FC = () => {
               );
             })()}
             <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-3">
-              <h2 className="text-2xl font-bold text-blue-700">
+              <h2 className="text-2xl font-bold text-mpr-navy">
                 {isFrench ? 'Gestion des dépenses' : 'Expense Management'}
               </h2>
               <div className="flex gap-2">
                 <Button
                   onClick={importFromCashflow}
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white"
                   title={isFrench ? 'Importer vos dépenses mensuelles depuis la section Dépenses' : 'Import your monthly expenses from the Expenses section'}
                 >
                   <Download className="w-4 h-4 mr-2" />
@@ -1316,7 +1316,7 @@ const Budget: React.FC = () => {
                           <button
                             onClick={() => setEditingExpense(isEditing ? null : expense.id)}
                             title={isEditing ? (isFrench ? 'Arrêter l\'édition' : 'Stop editing') : (isFrench ? 'Modifier cette dépense' : 'Edit this expense')}
-                            className="p-2 text-blue-600 hover:text-blue-500 hover:bg-blue-50 rounded"
+                            className="p-2 text-mpr-interactive hover:text-mpr-interactive hover:bg-mpr-interactive-lt rounded"
                           >
                             <Edit3 className="w-4 h-4" />
                           </button>
@@ -1339,7 +1339,7 @@ const Budget: React.FC = () => {
           {/* Calendrier des paiements */}
           <TabsContent value="calendar" className="space-y-6">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-blue-700">
+              <h2 className="text-2xl font-bold text-mpr-navy">
                 {isFrench ? 'Calendrier des paiements' : 'Payment Calendar'}
               </h2>
               <div className="flex gap-4">
@@ -1373,7 +1373,7 @@ const Budget: React.FC = () => {
             {/* Calendrier mensuel */}
             <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl">
               <CardHeader>
-                <CardTitle className="text-xl font-bold text-blue-700 flex items-center gap-2">
+                <CardTitle className="text-xl font-bold text-mpr-navy flex items-center gap-2">
                   <Calendar className="w-5 h-5" />
                   {new Date(selectedYear, selectedMonth, 1).toLocaleDateString(isFrench ? 'fr-CA' : 'en-CA', { 
                     month: 'long', 
@@ -1409,7 +1409,7 @@ const Budget: React.FC = () => {
                           <>
                             <div className="text-lg font-medium text-gray-900 mb-1">{dayNumber}</div>
                             {dayExpenses.map(expense => (
-                              <div key={expense.id} className="text-sm bg-blue-400 text-white px-1 py-0.5 rounded mb-1 truncate">
+                              <div key={expense.id} className="text-sm bg-mpr-interactive text-white px-1 py-0.5 rounded mb-1 truncate">
                                 {expense.description || expense.subcategory}
                               </div>
                             ))}
@@ -1493,7 +1493,7 @@ const Budget: React.FC = () => {
 
           {/* Objectifs planifiés (sinking funds) */}
           <TabsContent value="sinking" className="space-y-6">
-            <Alert className="border-indigo-200 bg-indigo-50 text-indigo-900">
+            <Alert className="border-mpr-border bg-mpr-interactive-lt text-mpr-navy">
               <AlertDescription>
                 {isFrench
                   ? 'Planifiez vos projets (ex.: taxes, voyage, réparation). Indiquez une échéance et un montant cible — la mensualité requise est calculée automatiquement.'
@@ -1534,7 +1534,7 @@ const Budget: React.FC = () => {
 
           {/* Revenus & Déductions */}
           <TabsContent value="income" className="space-y-6">
-            <Alert className="border-blue-200 bg-blue-50 text-blue-800">
+            <Alert className="border-mpr-border bg-mpr-interactive-lt text-mpr-navy">
               <AlertDescription>
                 {isFrench
                   ? 'Meilleure pratique : saisissez vos revenus dans la section Revenus. Le budget les utilise automatiquement. Cette section vous permet de démarrer rapidement ou d’ajuster au besoin.'
@@ -1660,7 +1660,7 @@ const Budget: React.FC = () => {
             {/* Résumé + snapshots */}
             <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 shadow-lg">
               <CardHeader>
-                <CardTitle className="text-xl font-bold text-blue-700 flex items-center gap-2">
+                <CardTitle className="text-xl font-bold text-mpr-navy flex items-center gap-2">
                   {isFrench ? 'Résumé de la valeur nette' : 'Net worth summary'}
                 </CardTitle>
               </CardHeader>
@@ -1693,11 +1693,11 @@ const Budget: React.FC = () => {
                         </div>
                         <div className="p-4 border rounded bg-white">
                           <div className="text-sm text-gray-600">{isFrench ? 'Valeur nette' : 'Net worth'}</div>
-                          <div className={`text-2xl font-bold ${net >= 0 ? 'text-blue-700' : 'text-red-700'}`}>{formatCurrency(net)}</div>
+                          <div className={`text-2xl font-bold ${net >= 0 ? 'text-mpr-navy' : 'text-red-700'}`}>{formatCurrency(net)}</div>
                         </div>
                       </div>
                       <div className="flex items-center justify-between">
-                        <Button onClick={captureSnapshot} className="bg-blue-600 hover:bg-blue-700 text-white">
+                        <Button onClick={captureSnapshot} className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white">
                           {isFrench ? 'Capturer un instantané' : 'Capture snapshot'}
                         </Button>
                         <div className="text-sm text-gray-600">
@@ -1717,7 +1717,7 @@ const Budget: React.FC = () => {
                               <div className="text-gray-700">{new Date(s.date).toLocaleDateString(isFrench ? 'fr-CA' : 'en-CA')}</div>
                               <div className="text-emerald-700 font-medium">{formatCurrency(s.assets)}</div>
                               <div className="text-rose-700 font-medium">{formatCurrency(s.liabilities)}</div>
-                              <div className={`font-bold ${s.net >= 0 ? 'text-blue-700' : 'text-red-700'}`}>{formatCurrency(s.net)}</div>
+                              <div className={`font-bold ${s.net >= 0 ? 'text-mpr-navy' : 'text-red-700'}`}>{formatCurrency(s.net)}</div>
                             </div>
                           ))}
                         </div>
@@ -1735,7 +1735,7 @@ const Budget: React.FC = () => {
               {/* Solde bancaire */}
               <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl">
                 <CardHeader>
-                  <CardTitle className="text-xl font-bold text-blue-700 flex items-center gap-2">
+                  <CardTitle className="text-xl font-bold text-mpr-navy flex items-center gap-2">
                     <PiggyBank className="w-5 h-5" />
                     {isFrench ? 'Solde bancaire' : 'Bank Balance'}
                   </CardTitle>
@@ -1767,9 +1767,9 @@ const Budget: React.FC = () => {
               </Card>
 
               {/* Objectifs d'épargne */}
-              <Card className="bg-gradient-to-br from-indigo-50 to-purple-50 border-2 border-indigo-200 shadow-lg">
+              <Card className="bg-gradient-to-br from-mpr-interactive-lt to-purple-50 border-2 border-mpr-border shadow-lg">
                 <CardHeader>
-                  <CardTitle className="text-xl font-bold text-indigo-700 flex items-center gap-2">
+                  <CardTitle className="text-xl font-bold text-mpr-navy flex items-center gap-2">
                     <Target className="w-5 h-5" />
                     {isFrench ? 'Objectifs d\'épargne' : 'Savings Goals'}
                   </CardTitle>
@@ -1806,7 +1806,7 @@ const Budget: React.FC = () => {
             {/* SMART goals + Rappels fin de mois */}
             <Card className="bg-gradient-to-br from-slate-50 to-slate-100 border-2 border-slate-200 shadow-lg">
               <CardHeader>
-                <CardTitle className="text-xl font-bold text-blue-700 flex items-center justify-between gap-2">
+                <CardTitle className="text-xl font-bold text-mpr-navy flex items-center justify-between gap-2">
                   <span>{isFrench ? 'Objectifs SMART' : 'SMART Goals'}</span>
                   <Button variant="outline" onClick={scheduleEndOfMonthReminders}>
                     {isFrench ? 'Rappels fin de mois' : 'Month-end reminders'}
@@ -1847,7 +1847,7 @@ const Budget: React.FC = () => {
                   className="bg-white border-slate-300 text-gray-900"
                 />
                 <div className="flex justify-end">
-                  <Button onClick={saveSmartGoal} className="bg-blue-600 hover:bg-blue-700 text-white">
+                  <Button onClick={saveSmartGoal} className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white">
                     {isFrench ? 'Enregistrer l’objectif' : 'Save goal'}
                   </Button>
                 </div>
@@ -1900,7 +1900,7 @@ const Budget: React.FC = () => {
           <Button
             onClick={handleExportPDF}
             size="lg"
-            className="ml-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xl py-6 px-8 border-2 border-blue-200"
+            className="ml-4 bg-mpr-interactive hover:bg-mpr-interactive-dk text-white font-bold text-xl py-6 px-8 border-2 border-mpr-border"
           >
             {isFrench ? '📄 Exporter PDF' : '📄 Export PDF'}
           </Button>

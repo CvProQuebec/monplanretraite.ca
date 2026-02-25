@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+﻿import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -271,7 +271,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
     <div className="max-w-6xl mx-auto p-6 space-y-6">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-2">
-          <Clock className="h-8 w-8 text-blue-600" />
+          <Clock className="h-8 w-8 text-mpr-interactive" />
           <h1 className="text-3xl font-bold text-gray-900">
             Planification de Longévité Financière
           </h1>
@@ -516,14 +516,14 @@ const FinancialLongevityPlanningModule: React.FC = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <Clock className="h-5 w-5 text-blue-600" />
+                  <Clock className="h-5 w-5 text-mpr-interactive" />
                   Résultats de la Projection
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                  <div className="text-center p-4 bg-blue-50 rounded-lg">
-                    <div className="text-2xl font-bold text-blue-600">
+                  <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+                    <div className="text-2xl font-bold text-mpr-interactive">
                       {projection.lifeExpectancy} ans
                     </div>
                     <div className="text-sm text-gray-600">Espérance de Vie Ajustée</div>
@@ -552,8 +552,8 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                   </div>
                 </div>
                 
-                <div className="text-center p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg">
-                  <div className="text-3xl font-bold text-blue-600">
+                <div className="text-center p-4 bg-gradient-to-r from-mpr-interactive-lt to-purple-50 rounded-lg">
+                  <div className="text-3xl font-bold text-mpr-interactive">
                     {formatCurrency(projection.totalRetirementNeeds)}
                   </div>
                   <div className="text-sm text-gray-600">Besoins Totaux de Retraite Estimés</div>
@@ -640,8 +640,8 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                 <CardContent>
                   <div className="space-y-3">
                     {projection.recommendations.map((rec, index) => (
-                      <div key={index} className="flex items-start gap-2 p-3 bg-blue-50 rounded-lg">
-                        <Target className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <div key={index} className="flex items-start gap-2 p-3 bg-mpr-interactive-lt rounded-lg">
+                        <Target className="h-4 w-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                         <span className="text-sm">{rec}</span>
                       </div>
                     ))}
@@ -664,7 +664,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
               <div className="space-y-4">
                 <h4 className="font-semibold text-lg">Données de Statistique Canada</h4>
                 
-                <div className="p-4 bg-blue-50 rounded-lg">
+                <div className="p-4 bg-mpr-interactive-lt rounded-lg">
                   <h5 className="font-medium">Espérance de Vie Actuelle</h5>
                   <p className="text-sm text-gray-600 mt-2">
                     Hommes : 81 ans | Femmes : 85 ans. Ces chiffres continuent d'augmenter 
@@ -702,7 +702,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 border rounded-lg">
-                    <h5 className="font-medium text-blue-600">Rente Viagère</h5>
+                    <h5 className="font-medium text-mpr-interactive">Rente Viagère</h5>
                     <p className="text-sm text-gray-600 mt-2">
                       Garantit un revenu à vie, élimine le risque de longévité. 
                       Considérez pour 25-30% de vos actifs.
@@ -710,7 +710,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                   </div>
                   
                   <div className="p-4 border rounded-lg">
-                    <h5 className="font-medium text-blue-600">Diversification Temporelle</h5>
+                    <h5 className="font-medium text-mpr-interactive">Diversification Temporelle</h5>
                     <p className="text-sm text-gray-600 mt-2">
                       Répartissez vos actifs selon différents horizons : court terme (liquidités), 
                       moyen terme (obligations), long terme (actions).
@@ -718,7 +718,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                   </div>
                   
                   <div className="p-4 border rounded-lg">
-                    <h5 className="font-medium text-blue-600">Assurance Vie</h5>
+                    <h5 className="font-medium text-mpr-interactive">Assurance Vie</h5>
                     <p className="text-sm text-gray-600 mt-2">
                       Protège le conjoint survivant en cas de décès prématuré. 
                       Particulièrement important si un conjoint a une pension réduite.
@@ -726,7 +726,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                   </div>
                   
                   <div className="p-4 border rounded-lg">
-                    <h5 className="font-medium text-blue-600">Flexibilité des Dépenses</h5>
+                    <h5 className="font-medium text-mpr-interactive">Flexibilité des Dépenses</h5>
                     <p className="text-sm text-gray-600 mt-2">
                       Planifiez des dépenses variables : plus élevées en début de retraite, 
                       réduites en fin de vie.

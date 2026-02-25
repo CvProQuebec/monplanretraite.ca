@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { TrendingUp, Target, Calculator, Shield, AlertTriangle, FileText, BarChart3, PieChart } from 'lucide-react';
@@ -59,7 +59,7 @@ const ComprehensiveReport: React.FC<ComprehensiveReportProps> = ({
       {/* En-tête du rapport */}
       <div className="text-center border-b pb-6">
         <div className="flex items-center justify-center gap-3 mb-4">
-          <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center">
+          <div className="w-12 h-12 bg-gradient-to-br from-mpr-interactive to-purple-600 rounded-xl flex items-center justify-center">
             <FileText className="w-6 h-6 text-white" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900">{tr.title}</h1>
@@ -93,15 +93,15 @@ const ComprehensiveReport: React.FC<ComprehensiveReportProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Shield className="w-5 h-5 text-blue-600" />
+            <Shield className="w-5 h-5 text-mpr-interactive" />
             {tr.personalInfo}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-3 bg-blue-50 rounded-lg">
+            <div className="text-center p-3 bg-mpr-interactive-lt rounded-lg">
               <p className="text-sm text-gray-600">{tr.age}</p>
-              <p className="text-xl font-bold text-blue-900">{mockData.age}</p>
+              <p className="text-xl font-bold text-mpr-navy">{mockData.age}</p>
             </div>
             <div className="text-center p-3 bg-green-50 rounded-lg">
               <p className="text-sm text-gray-600">{tr.income}</p>
@@ -155,16 +155,16 @@ const ComprehensiveReport: React.FC<ComprehensiveReportProps> = ({
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="text-center p-6 bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg">
+            <div className="text-center p-6 bg-gradient-to-r from-purple-50 to-mpr-interactive-lt rounded-lg">
               <p className="text-2xl font-bold text-purple-900">
                 ${mockData.targetAmount.toLocaleString()}
               </p>
               <p className="text-gray-600">{tr.targetAmount}</p>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="p-4 bg-blue-50 rounded-lg">
+              <div className="p-4 bg-mpr-interactive-lt rounded-lg">
                 <p className="text-sm text-gray-600">{tr.targetRetirement}</p>
-                <p className="text-xl font-bold text-blue-900">{mockData.targetAge} ans</p>
+                <p className="text-xl font-bold text-mpr-navy">{mockData.targetAge} ans</p>
               </div>
               <div className="p-4 bg-green-50 rounded-lg">
                 <p className="text-sm text-gray-600">{tr.monthlySavings}</p>
@@ -190,9 +190,9 @@ const ComprehensiveReport: React.FC<ComprehensiveReportProps> = ({
                 <p className="text-sm text-gray-600">5 years</p>
                 <p className="text-lg font-bold text-orange-900">$250,000</p>
               </div>
-              <div className="text-center p-4 bg-blue-50 rounded-lg">
+              <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
                 <p className="text-sm text-gray-600">10 years</p>
-                <p className="text-lg font-bold text-blue-900">$450,000</p>
+                <p className="text-lg font-bold text-mpr-navy">$450,000</p>
               </div>
               <div className="text-center p-4 bg-green-50 rounded-lg">
                 <p className="text-sm text-gray-600">20 years</p>
@@ -223,9 +223,9 @@ const ComprehensiveReport: React.FC<ComprehensiveReportProps> = ({
               <h4 className="font-semibold text-green-900 mb-2">{tr.monthlySavings}</h4>
               <p className="text-green-700">Increase monthly savings to ${mockData.monthlySavings} to reach your retirement goal</p>
             </div>
-            <div className="p-4 bg-blue-50 rounded-lg">
-              <h4 className="font-semibold text-blue-900 mb-2">{tr.investmentStrategy}</h4>
-              <p className="text-blue-700">Consider a balanced portfolio with 60% stocks, 30% bonds, and 10% alternatives</p>
+            <div className="p-4 bg-mpr-interactive-lt rounded-lg">
+              <h4 className="font-semibold text-mpr-navy mb-2">{tr.investmentStrategy}</h4>
+              <p className="text-mpr-navy">Consider a balanced portfolio with 60% stocks, 30% bonds, and 10% alternatives</p>
             </div>
             <div className="p-4 bg-purple-50 rounded-lg">
               <h4 className="font-semibold text-purple-900 mb-2">{tr.riskTolerance}</h4>
@@ -265,28 +265,28 @@ const ComprehensiveReport: React.FC<ComprehensiveReportProps> = ({
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <Target className="w-5 h-5 text-blue-600" />
+            <Target className="w-5 h-5 text-mpr-interactive" />
             {tr.nextSteps}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">1</div>
+              <div className="w-6 h-6 bg-mpr-interactive text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">1</div>
               <div>
                 <p className="font-medium">Share this report with a financial advisor of your choice</p>
                 <p className="text-sm text-gray-600">Review this report together and discuss personalized strategies</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">2</div>
+              <div className="w-6 h-6 bg-mpr-interactive text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">2</div>
               <div>
                 <p className="font-medium">Implement monthly savings plan</p>
                 <p className="text-sm text-gray-600">Set up automatic transfers to retirement accounts</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
-              <div className="w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">3</div>
+              <div className="w-6 h-6 bg-mpr-interactive text-white rounded-full flex items-center justify-center text-sm font-bold mt-0.5">3</div>
               <div>
                 <p className="font-medium">Review and adjust annually</p>
                 <p className="text-sm text-gray-600">Monitor progress and update goals as needed</p>

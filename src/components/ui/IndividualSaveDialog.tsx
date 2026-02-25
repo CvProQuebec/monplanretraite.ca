@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Badge } from './badge';
@@ -137,9 +137,9 @@ export function IndividualSaveDialog({
 
         <CardContent className="space-y-6">
           {/* Description */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h3 className="font-semibold text-blue-900 mb-2">Choisissez les profils à sauvegarder</h3>
-            <p className="text-blue-800 text-sm">
+          <div className="bg-mpr-interactive-lt border border-mpr-border rounded-lg p-4">
+            <h3 className="font-semibold text-mpr-navy mb-2">Choisissez les profils à sauvegarder</h3>
+            <p className="text-mpr-navy text-sm">
               Vous pouvez sauvegarder les données de chaque personne individuellement ou
               toutes les données du couple. Les fichiers seront nommés automatiquement.
             </p>
@@ -159,7 +159,7 @@ export function IndividualSaveDialog({
                   key={type}
                   className={`border rounded-lg p-4 cursor-pointer transition-all ${
                     isSelected
-                      ? 'border-blue-500 bg-blue-50'
+                      ? 'border-mpr-interactive bg-mpr-interactive-lt'
                       : 'border-gray-200 hover:border-gray-300'
                   } ${!info.available ? 'opacity-50 cursor-not-allowed' : ''}`}
                   onClick={() => info.available && handleProfileToggle(type)}
@@ -167,7 +167,7 @@ export function IndividualSaveDialog({
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <div className={`p-2 rounded-full ${
-                        isSelected ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'
+                        isSelected ? 'bg-mpr-interactive-lt text-mpr-interactive' : 'bg-gray-100 text-gray-600'
                       }`}>
                         {getProfileIcon(type)}
                       </div>
@@ -191,7 +191,7 @@ export function IndividualSaveDialog({
                       )}
 
                       {isSelected && (
-                        <div className="w-5 h-5 bg-blue-500 rounded-full flex items-center justify-center">
+                        <div className="w-5 h-5 bg-mpr-interactive rounded-full flex items-center justify-center">
                           <CheckCircle className="w-3 h-3 text-white" />
                         </div>
                       )}

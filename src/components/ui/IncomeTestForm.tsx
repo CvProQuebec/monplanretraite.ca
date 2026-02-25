@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -75,7 +75,7 @@ const IncomeTestForm: React.FC<IncomeTestFormProps> = ({ userData, updateUserDat
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Personne 1 */}
           <div className="space-y-3">
-            <h4 className="font-semibold text-blue-800">Personne 1</h4>
+            <h4 className="font-semibold text-mpr-navy">Personne 1</h4>
             <div>
               <Label>Salaire annuel</Label>
               <Input

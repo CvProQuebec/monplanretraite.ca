@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { CustomBirthDateInput } from './CustomBirthDateInput';
 
 export const CustomBirthDateInputTest: React.FC = () => {
@@ -21,7 +21,7 @@ export const CustomBirthDateInputTest: React.FC = () => {
             value={date1}
             onChange={setDate1}
           />
-          <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded">
+          <div className="mt-4 p-3 bg-mpr-interactive-lt border border-mpr-border rounded">
             <strong>Résultat:</strong> {date1}
           </div>
         </div>

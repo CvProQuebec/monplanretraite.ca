@@ -1,4 +1,4 @@
-// src/features/retirement/components/LegalDocumentsForm.tsx
+﻿// src/features/retirement/components/LegalDocumentsForm.tsx
 // Formulaire pour les documents légaux
 
 import React, { useState } from 'react';
@@ -35,7 +35,7 @@ interface LegalDocumentsFormProps {
 }
 
 const documentTypeOptions = [
-  { value: 'testament', label: 'Testament', icon: '📜', color: 'bg-blue-100 text-blue-800', priority: 'high' },
+  { value: 'testament', label: 'Testament', icon: '📜', color: 'bg-mpr-interactive-lt text-mpr-navy', priority: 'high' },
   { value: 'mandat_incapacite', label: 'Mandat d\'inaptitude', icon: '🏥', color: 'bg-red-100 text-red-800', priority: 'high' },
   { value: 'procuration', label: 'Procuration', icon: '✍️', color: 'bg-green-100 text-green-800', priority: 'medium' },
   { value: 'contrat_mariage', label: 'Contrat de mariage', icon: '💍', color: 'bg-purple-100 text-purple-800', priority: 'medium' },
@@ -531,11 +531,11 @@ export const LegalDocumentsForm: React.FC<LegalDocumentsFormProps> = ({
       )}
 
       {/* Conseils */}
-      <Card className="bg-blue-50 border-blue-200">
+      <Card className="bg-mpr-interactive-lt border-mpr-border">
         <CardHeader>
-          <CardTitle className="text-lg text-blue-900">💡 Conseils importants</CardTitle>
+          <CardTitle className="text-lg text-mpr-navy">💡 Conseils importants</CardTitle>
         </CardHeader>
-        <CardContent className="text-sm text-blue-800 space-y-2">
+        <CardContent className="text-sm text-mpr-navy space-y-2">
           <p>• <strong>Testament :</strong> Document essentiel qui détermine la répartition de vos biens</p>
           <p>• <strong>Mandat d'inaptitude :</strong> Désigne qui prendra les décisions si vous devenez inapte</p>
           <p>• <strong>Révision régulière :</strong> Mettez à jour vos documents lors de changements majeurs</p>

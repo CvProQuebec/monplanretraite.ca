@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import DateInput from '@/components/ui/DateInput';
@@ -148,7 +148,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
     switch (priority) {
       case 'high': return 'border-red-400 bg-red-900/20 text-red-200';
       case 'medium': return 'border-yellow-400 bg-yellow-900/20 text-yellow-200';
-      case 'low': return 'border-blue-400 bg-blue-900/20 text-blue-200';
+      case 'low': return 'border-mpr-interactive bg-mpr-navy/20 text-mpr-interactive-lt';
       default: return 'border-gray-400 bg-gray-900/20 text-gray-200';
     }
   };
@@ -319,7 +319,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
               calculateEIDetails();
               setShowCalculations(true);
             }}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-3 px-8"
+            className="bg-gradient-to-r from-mpr-interactive to-purple-600 hover:from-mpr-interactive hover:to-purple-700 text-white font-bold py-3 px-8"
           >
             <Calculator className="w-5 h-5 mr-2" />
             {isFrench ? 'Calculer les projections' : 'Calculate Projections'}
@@ -349,7 +349,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
               
               <Card className="bg-slate-800/50 border-slate-600">
                 <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-blue-400">
+                  <div className="text-2xl font-bold text-mpr-interactive">
                     {formatCurrency(eiData.calculationResult.netWeeklyAmount)}
                   </div>
                   <div className="text-sm text-gray-300">

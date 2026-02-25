@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -54,7 +54,7 @@ const SVAdjustmentManager: React.FC<SVAdjustmentManagerProps> = ({
     { value: 'reduction', label: isFrench ? 'Réduction' : 'Reduction', icon: TrendingDown, color: 'text-red-500' },
     { value: 'augmentation', label: isFrench ? 'Augmentation' : 'Increase', icon: TrendingUp, color: 'text-green-500' },
     { value: 'suspension', label: isFrench ? 'Suspension' : 'Suspension', icon: Pause, color: 'text-orange-500' },
-    { value: 'retablissement', label: isFrench ? 'Rétablissement' : 'Restoration', icon: Play, color: 'text-blue-500' }
+    { value: 'retablissement', label: isFrench ? 'Rétablissement' : 'Restoration', icon: Play, color: 'text-mpr-interactive' }
   ];
 
   const raisonsPredefines = [
@@ -512,8 +512,8 @@ const SVAdjustmentManager: React.FC<SVAdjustmentManagerProps> = ({
 
         {/* Informations sur l'estimateur officiel */}
         {adjustments.length === 0 && !isAddingNew && (
-          <Alert className="border-blue-400 bg-blue-900/20 text-blue-200">
-            <Info className="h-5 w-5 text-blue-400" />
+          <Alert className="border-mpr-interactive bg-mpr-navy/20 text-mpr-interactive-lt">
+            <Info className="h-5 w-5 text-mpr-interactive" />
             <AlertDescription>
               <strong>{isFrench ? 'Utilisez l\'estimateur officiel :' : 'Use the official estimator:'}</strong>
               <br />

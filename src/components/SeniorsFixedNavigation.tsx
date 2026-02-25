@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SeniorsFixedNavigation - Navigation Fixe Zéro Scroll
  * Barre de navigation permanente en bas d'écran pour seniors (50-90 ans)
  * AUCUN SCROLL NÉCESSAIRE | BOUTONS SURDIMENSIONNÉS | FEEDBACK VISUEL
@@ -43,7 +43,7 @@ const seniorsNavStyles = `
     left: 0;
     right: 0;
     background: white;
-    border-top: 3px solid #4c6ef5;
+    border-top: 3px solid #2B5BA8;
     box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.12);
     z-index: 1000;
     padding: 20px 24px;
@@ -110,7 +110,7 @@ const seniorsNavStyles = `
 
   .seniors-progress-fill {
     height: 100%;
-    background: linear-gradient(90deg, #4c6ef5 0%, #6c5ce7 100%);
+    background: linear-gradient(90deg, #2B5BA8 0%, #6c5ce7 100%);
     border-radius: 3px;
     transition: width 0.3s ease;
   }
@@ -129,15 +129,15 @@ const seniorsNavStyles = `
   }
 
   .seniors-nav-btn-primary {
-    background: linear-gradient(135deg, #4c6ef5 0%, #6c5ce7 100%);
+    background: linear-gradient(135deg, #2B5BA8 0%, #6c5ce7 100%);
     color: white;
     border: none;
-    box-shadow: 0 4px 14px rgba(76, 110, 245, 0.3);
+    box-shadow: 0 4px 14px rgba(43, 91, 168, 0.3);
   }
 
   .seniors-nav-btn-primary:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(76, 110, 245, 0.4);
+    box-shadow: 0 6px 20px rgba(43, 91, 168, 0.4);
   }
 
   .seniors-nav-btn-secondary {

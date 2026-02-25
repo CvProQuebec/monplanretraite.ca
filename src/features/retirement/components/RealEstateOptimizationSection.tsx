@@ -1,4 +1,4 @@
-// src/features/retirement/components/RealEstateOptimizationSection.tsx
+﻿// src/features/retirement/components/RealEstateOptimizationSection.tsx
 
 import React, { useState, useMemo } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -170,7 +170,7 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
       {/* En-tête */}
       <div className="text-center">
         <div className="flex justify-center mb-4">
-          <div className="bg-gradient-to-r from-blue-600 to-purple-600 p-4 rounded-full shadow-lg">
+          <div className="bg-gradient-to-r from-mpr-interactive to-purple-600 p-4 rounded-full shadow-lg">
             <Home className="h-12 w-12 text-white" />
           </div>
         </div>
@@ -294,7 +294,7 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
                 <Button 
                   onClick={calculateAll}
                   disabled={isCalculating}
-                  className="bg-blue-600 hover:bg-blue-700"
+                  className="bg-mpr-interactive hover:bg-mpr-interactive-dk"
                 >
                   {isCalculating ? 'Calcul en cours...' : 'Lancer l\'Analyse Complète'}
                 </Button>
@@ -435,7 +435,7 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
                     <h4 className="font-semibold mb-3">Analyse des risques</h4>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-blue-600">
+                        <div className="text-2xl font-bold text-mpr-interactive">
                           {results.scenarioComparison.analyseRisque.liquidite}/10
                         </div>
                         <div className="text-sm text-gray-600">Liquidité</div>
@@ -484,8 +484,8 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
               {results.executionPlan ? (
                 <div className="space-y-6">
                   {/* Timeline */}
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <h4 className="font-semibold text-blue-800 mb-2">⏰ Timeline</h4>
+                  <div className="bg-mpr-interactive-lt border border-mpr-border rounded-lg p-4">
+                    <h4 className="font-semibold text-mpr-navy mb-2">⏰ Timeline</h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
                       <div>
                         <div className="text-sm text-gray-600">Début</div>
@@ -509,7 +509,7 @@ export const RealEstateOptimizationSection: React.FC<RealEstateOptimizationSecti
                       {results.executionPlan.etapes.map((etape, index) => (
                         <div key={index} className="border rounded-lg p-3">
                           <div className="flex items-center gap-3">
-                            <div className="bg-blue-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
+                            <div className="bg-mpr-interactive text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">
                               {etape.ordre}
                             </div>
                             <div className="flex-1">

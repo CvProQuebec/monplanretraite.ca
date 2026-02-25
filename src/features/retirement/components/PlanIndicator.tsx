@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -25,7 +25,7 @@ interface PlanIndicatorProps {
 const getPlanIcon = (plan: SubscriptionPlan) => {
   switch (plan) {
     case 'professional':
-      return <Star className="w-5 h-5 text-blue-600" />;
+      return <Star className="w-5 h-5 text-mpr-interactive" />;
     case 'expert':
       return <Crown className="w-5 h-5 text-purple-600" />;
     default:
@@ -37,7 +37,7 @@ const getPlanIcon = (plan: SubscriptionPlan) => {
 const getPlanColor = (plan: SubscriptionPlan) => {
   switch (plan) {
     case 'professional':
-      return 'text-blue-600';
+      return 'text-mpr-interactive';
     case 'expert':
       return 'text-purple-600';
     default:
@@ -231,7 +231,7 @@ export const PlanIndicator: React.FC<PlanIndicatorProps> = ({ className }) => {
         {currentPlan === 'free' && (
           <div className="mt-4 pt-4 border-t">
             <Button 
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              className="w-full bg-gradient-to-r from-mpr-interactive to-purple-600 hover:from-mpr-navy-mid hover:to-purple-700"
               onClick={() => {
                 // Rediriger vers la page de tarification
                 window.location.href = language === 'fr' ? '/fr/retraite' : '/en/retirement';

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
@@ -188,10 +188,10 @@ const SocioEconomicSection: React.FC<SocioEconomicSectionProps> = ({
 
   return (
     <TooltipProvider>
-      <Card className="bg-white border-2 border-blue-200 shadow-lg">
-        <CardHeader className="border-b-2 border-blue-100 bg-blue-50">
-          <CardTitle className="text-xl font-bold text-blue-800 flex items-center gap-3">
-            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center text-white font-bold">
+      <Card className="bg-white border-2 border-mpr-border shadow-lg">
+        <CardHeader className="border-b-2 border-mpr-border bg-mpr-interactive-lt">
+          <CardTitle className="text-xl font-bold text-mpr-navy flex items-center gap-3">
+            <div className="w-8 h-8 bg-mpr-interactive rounded-full flex items-center justify-center text-white font-bold">
               {personNumber}
             </div>
             <Users className="w-6 h-6" />
@@ -253,7 +253,7 @@ const SocioEconomicSection: React.FC<SocioEconomicSectionProps> = ({
                     <span className="text-sm text-gray-500 ml-2">
                       ({isFrench ? 'Mensuel:' : 'Monthly:'} {formatCurrency(localData.householdIncome / 12, { showCents: false })})
                     </span>
-                    <span className="text-xs text-blue-600 ml-2">
+                    <span className="text-xs text-mpr-interactive ml-2">
                       ({isFrench ? 'Personne 1 + 2' : 'Person 1 + 2'})
                     </span>
                   </>
@@ -434,16 +434,16 @@ const SocioEconomicSection: React.FC<SocioEconomicSectionProps> = ({
 
           {/* Impact Analysis */}
           {showImpactAnalysis && (
-            <Alert className="border-blue-300 bg-blue-50">
-              <Calculator className="h-5 w-5 text-blue-500" />
+            <Alert className="border-mpr-border bg-mpr-interactive-lt">
+              <Calculator className="h-5 w-5 text-mpr-interactive" />
               <AlertDescription className="space-y-2">
-                <h4 className="font-semibold text-blue-800">
+                <h4 className="font-semibold text-mpr-navy">
                   {isFrench ? 'Analyse d\'impact sur la retraite' : 'Retirement Impact Analysis'}
                 </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <strong>{isFrench ? 'Âge de retraite ajusté:' : 'Adjusted retirement age:'}</strong>
-                    <span className="ml-2 text-blue-700">{impact.adjustedRetirementAge} {isFrench ? 'ans' : 'years'}</span>
+                    <span className="ml-2 text-mpr-navy">{impact.adjustedRetirementAge} {isFrench ? 'ans' : 'years'}</span>
                   </div>
                   <div>
                     <strong>{isFrench ? 'Impact du risque:' : 'Risk impact:'}</strong>
@@ -467,7 +467,7 @@ const SocioEconomicSection: React.FC<SocioEconomicSectionProps> = ({
                   </div>
                   <div>
                     <strong>{isFrench ? 'Réduction stress:' : 'Stress reduction:'}</strong>
-                    <span className="ml-2 text-blue-700">{(impact.stressReduction * 100).toFixed(1)}%</span>
+                    <span className="ml-2 text-mpr-navy">{(impact.stressReduction * 100).toFixed(1)}%</span>
                   </div>
                   <div>
                     <strong>{isFrench ? 'Ajustement total:' : 'Total adjustment:'}</strong>

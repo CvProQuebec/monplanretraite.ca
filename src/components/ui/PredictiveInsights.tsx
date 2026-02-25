@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+﻿import React, { useMemo, useState, useEffect } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -257,11 +257,11 @@ export const PredictiveInsights: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
           <Card className="border">
             <CardHeader><CardTitle className="text-base">{t.results.savingsRate}</CardTitle></CardHeader>
-            <CardContent className="text-2xl font-bold text-blue-700">{pct(report.summary.savingsRate)}</CardContent>
+            <CardContent className="text-2xl font-bold text-mpr-navy">{pct(report.summary.savingsRate)}</CardContent>
           </Card>
           <Card className="border">
             <CardHeader><CardTitle className="text-base">{t.results.cashCushion}</CardTitle></CardHeader>
-            <CardContent className="text-2xl font-bold text-indigo-700">{report.summary.cashCushionMonths}</CardContent>
+            <CardContent className="text-2xl font-bold text-mpr-navy">{report.summary.cashCushionMonths}</CardContent>
           </Card>
           <Card className="border">
             <CardHeader><CardTitle className="text-base">{t.results.monthlyCf}</CardTitle></CardHeader>

@@ -1,4 +1,4 @@
-// src/features/retirement/components/FamilyResponsibilitiesForm.tsx
+﻿// src/features/retirement/components/FamilyResponsibilitiesForm.tsx
 // Formulaire pour les responsabilités familiales
 
 import React, { useState } from 'react';
@@ -36,7 +36,7 @@ interface FamilyResponsibilitiesFormProps {
 }
 
 const responsibilityTypeOptions = [
-  { value: 'enfant_mineur', label: 'Enfant mineur', icon: '👶', color: 'bg-blue-100 text-blue-800', priority: 'high' },
+  { value: 'enfant_mineur', label: 'Enfant mineur', icon: '👶', color: 'bg-mpr-interactive-lt text-mpr-navy', priority: 'high' },
   { value: 'parent_dependant', label: 'Parent dépendant', icon: '👴', color: 'bg-purple-100 text-purple-800', priority: 'high' },
   { value: 'conjoint', label: 'Conjoint', icon: '💑', color: 'bg-pink-100 text-pink-800', priority: 'high' },
   { value: 'animal', label: 'Animal de compagnie', icon: '🐕', color: 'bg-green-100 text-green-800', priority: 'medium' },
@@ -267,7 +267,7 @@ export const FamilyResponsibilitiesForm: React.FC<FamilyResponsibilitiesFormProp
                   )}
                   {totalMonthlyCosts > 0 && (
                     <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="text-blue-600">
+                      <Badge variant="outline" className="text-mpr-interactive">
                         Coûts mensuels: {totalMonthlyCosts.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
                       </Badge>
                     </div>
@@ -813,18 +813,18 @@ export const FamilyResponsibilitiesForm: React.FC<FamilyResponsibilitiesFormProp
 
       {/* Résumé des coûts */}
       {totalMonthlyCosts > 0 && (
-        <Card className="bg-blue-50 border-blue-200">
+        <Card className="bg-mpr-interactive-lt border-mpr-border">
           <CardContent className="p-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <DollarSign className="w-5 h-5 text-blue-600" />
+                <DollarSign className="w-5 h-5 text-mpr-interactive" />
                 <span className="font-semibold">Coûts mensuels totaux</span>
               </div>
-              <div className="text-xl font-bold text-blue-600">
+              <div className="text-xl font-bold text-mpr-interactive">
                 {totalMonthlyCosts.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
               </div>
             </div>
-            <p className="text-sm text-blue-600 mt-2">
+            <p className="text-sm text-mpr-interactive mt-2">
               Coût annuel estimé: {(totalMonthlyCosts * 12).toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
             </p>
           </CardContent>

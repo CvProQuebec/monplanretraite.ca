@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Badge } from './badge';
@@ -176,7 +176,7 @@ const TaxImpactAt65Calculator: React.FC = () => {
     <div className="max-w-6xl mx-auto p-6 space-y-8">
       {/* En-tête */}
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-4">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-mpr-interactive bg-clip-text text-transparent mb-4">
           Impact Fiscal à 65 ans
         </h1>
         <p className="text-xl text-gray-600 max-w-4xl mx-auto">
@@ -186,10 +186,10 @@ const TaxImpactAt65Calculator: React.FC = () => {
       </div>
 
       {/* Alerte importante */}
-      <Alert className="border-blue-500 bg-blue-50">
-        <Gift className="h-5 w-5 text-blue-500" />
-        <AlertTitle className="text-blue-800">🎁 CADEAU DU GOUVERNEMENT À 65 ANS</AlertTitle>
-        <AlertDescription className="text-blue-700 text-lg">
+      <Alert className="border-mpr-interactive bg-mpr-interactive-lt">
+        <Gift className="h-5 w-5 text-mpr-interactive" />
+        <AlertTitle className="text-mpr-navy">🎁 CADEAU DU GOUVERNEMENT À 65 ANS</AlertTitle>
+        <AlertDescription className="text-mpr-navy text-lg">
           <strong>Juste en vieillissant, vous payez moins d'impôts !</strong> Les crédits d'âge et de pension 
           peuvent vous faire économiser des milliers de dollars par année. C'est automatique, mais il faut 
           connaître les montants pour bien planifier.
@@ -207,10 +207,10 @@ const TaxImpactAt65Calculator: React.FC = () => {
         <TabsContent value="calculator" className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Formulaire */}
-            <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+            <Card className="bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt border-mpr-border">
               <CardHeader>
                 <CardTitle className="flex items-center gap-3">
-                  <Calculator className="w-6 h-6 text-blue-600" />
+                  <Calculator className="w-6 h-6 text-mpr-interactive" />
                   Vos informations
                 </CardTitle>
                 <CardDescription>
@@ -401,10 +401,10 @@ const TaxImpactAt65Calculator: React.FC = () => {
                     </div>
 
                     {/* Revenus moyens */}
-                    <div className="text-center p-6 bg-blue-50 rounded-lg border border-blue-200">
-                      <h4 className="font-semibold text-blue-800 mb-4">Revenus 60 000$ - 80 000$</h4>
+                    <div className="text-center p-6 bg-mpr-interactive-lt rounded-lg border border-mpr-border">
+                      <h4 className="font-semibold text-mpr-navy mb-4">Revenus 60 000$ - 80 000$</h4>
                       <div className="space-y-2">
-                        <div className="text-2xl font-bold text-blue-600">8-15%</div>
+                        <div className="text-2xl font-bold text-mpr-interactive">8-15%</div>
                         <div className="text-sm text-gray-600">Réduction d'impôts</div>
                         <div className="text-xs text-gray-500">Impact IMPORTANT</div>
                       </div>
@@ -447,7 +447,7 @@ const TaxImpactAt65Calculator: React.FC = () => {
                           </div>
                           <div className="flex justify-between font-semibold border-t pt-1">
                             <span>Économies :</span>
-                            <span className="text-blue-600">~$2 000</span>
+                            <span className="text-mpr-interactive">~$2 000</span>
                           </div>
                         </div>
                       </div>
@@ -465,7 +465,7 @@ const TaxImpactAt65Calculator: React.FC = () => {
                           </div>
                           <div className="flex justify-between font-semibold border-t pt-1">
                             <span>Économies :</span>
-                            <span className="text-blue-600">~$3 600</span>
+                            <span className="text-mpr-interactive">~$3 600</span>
                           </div>
                         </div>
                       </div>

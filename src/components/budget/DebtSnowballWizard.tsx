@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+﻿import React, { useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import MoneyInput from '@/components/ui/MoneyInput';
@@ -202,7 +202,7 @@ const DebtSnowballWizard: React.FC<Props> = ({ language, state, onChange }) => {
             />
           </div>
           <div className="flex items-end justify-end">
-            <Button onClick={addDebt} className="bg-blue-600 hover:bg-blue-700 text-white">
+            <Button onClick={addDebt} className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white">
               <Plus className="w-4 h-4 mr-2" />
               {t('addDebt', language)}
             </Button>
@@ -288,7 +288,7 @@ const DebtSnowballWizard: React.FC<Props> = ({ language, state, onChange }) => {
           </CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="flex items-center gap-2">
-              <TrendingDown className="w-4 h-4 text-blue-600" />
+              <TrendingDown className="w-4 h-4 text-mpr-interactive" />
               <div className="text-gray-800">
                 {t('monthsToDebtFree', language)}: <strong>{months}</strong>
               </div>

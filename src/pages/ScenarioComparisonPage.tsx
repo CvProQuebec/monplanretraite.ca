@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import { ScenarioService, type Scenario } from '@/features/retirement/services/ScenarioService';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -112,11 +112,11 @@ const ScenarioComparisonPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-mpr-interactive-lt">
       <div className="container mx-auto px-6 py-10 space-y-6">
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
-            <h1 className="text-3xl font-bold text-indigo-900">Comparateur de scénarios</h1>
+            <h1 className="text-3xl font-bold text-mpr-navy">Comparateur de scénarios</h1>
             <p className="text-slate-700">
               Sélectionnez deux scénarios ou plus, visualisez les métriques clés et exportez un rapport PDF (lettre US) avec logo en bas de page.
             </p>
@@ -125,7 +125,7 @@ const ScenarioComparisonPage: React.FC = () => {
             <Button variant="outline" onClick={selectAll} title="Tout sélectionner">Tout sélectionner</Button>
             <Button variant="ghost" onClick={clearAll} title="Tout désélectionner">Tout désélectionner</Button>
             <Button
-              className="bg-indigo-600 hover:bg-indigo-700"
+              className="bg-mpr-interactive hover:bg-mpr-interactive-dk"
               disabled={!canCompare || exporting}
               onClick={handleExportPDF}
               title="Exporter PDF"
@@ -142,9 +142,9 @@ const ScenarioComparisonPage: React.FC = () => {
           </Alert>
         )}
 
-        <Card className="border-2 border-indigo-200">
+        <Card className="border-2 border-mpr-border">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-indigo-800">
+            <CardTitle className="flex items-center gap-2 text-mpr-navy">
               <GitBranch className="w-5 h-5" />
               Mes scénarios
             </CardTitle>
@@ -153,7 +153,7 @@ const ScenarioComparisonPage: React.FC = () => {
           <CardContent className="space-y-3">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
               {scenarios.map((s) => (
-                <label key={s.id} className={`flex items-start gap-3 border rounded-md p-3 cursor-pointer hover:bg-slate-50 ${selected[s.id] ? 'border-indigo-300 bg-indigo-50/40' : 'border-slate-200'}`}>
+                <label key={s.id} className={`flex items-start gap-3 border rounded-md p-3 cursor-pointer hover:bg-slate-50 ${selected[s.id] ? 'border-mpr-border bg-mpr-interactive-lt/40' : 'border-slate-200'}`}>
                   <input
                     type="checkbox"
                     className="mt-1"
@@ -184,9 +184,9 @@ const ScenarioComparisonPage: React.FC = () => {
         </Card>
 
         {/* Aperçu métriques clés */}
-        <Card className="border-2 border-indigo-200">
+        <Card className="border-2 border-mpr-border">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-indigo-800">
+            <CardTitle className="flex items-center gap-2 text-mpr-navy">
               <BarChart3 className="w-5 h-5" />
               Aperçu des métriques
             </CardTitle>

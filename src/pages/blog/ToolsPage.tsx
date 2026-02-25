@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -39,7 +39,7 @@ const ToolsPage: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
   const backToBlog = () => navigate(lang === 'en' ? '/en/blog' : '/blog');
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-purple-50">
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -59,7 +59,7 @@ const ToolsPage: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
             <Card className="border-2 border-slate-200 hover:shadow-md transition-shadow">
               <CardHeader>
                 <div className="flex items-center gap-2">
-                  <div className="p-2 rounded bg-blue-100 text-blue-700">
+                  <div className="p-2 rounded bg-mpr-interactive-lt text-mpr-navy">
                     <Calculator className="w-5 h-5" />
                   </div>
                   <CardTitle className="text-lg text-gray-900">{t.coastfireTitle}</CardTitle>
@@ -67,7 +67,7 @@ const ToolsPage: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-gray-600 mb-4">{t.coastfireDesc}</p>
-                <Button onClick={() => openBudgetTab('coastfire')} className="bg-blue-600 hover:bg-blue-700 text-white">
+                <Button onClick={() => openBudgetTab('coastfire')} className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white">
                   {t.open}
                   <ArrowRight className="w-4 h-4 ml-2" />
                 </Button>

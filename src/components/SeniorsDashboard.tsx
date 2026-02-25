@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SeniorsDashboard - Tableau de Bord Statique Zéro Scroll
  * Interface principale pour seniors (50-90 ans) avec règle du 4%
  * GRILLE FIXE | AUCUN SCROLL | ASSISTANT INTÉGRÉ | CALCULS SIMPLIFIÉS
@@ -197,7 +197,7 @@ const seniorsDashboardStyles = `
   }
 
   .seniors-assistant-panel {
-    background: linear-gradient(135deg, #4c6ef5 0%, #6c5ce7 100%);
+    background: linear-gradient(135deg, #2B5BA8 0%, #6c5ce7 100%);
     border-radius: 16px;
     padding: 20px;
     color: white;

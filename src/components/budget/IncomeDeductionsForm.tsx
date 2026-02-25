@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react';
+﻿import React, { useMemo, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
@@ -244,7 +244,7 @@ export const IncomeDeductionsForm: React.FC<Props> = ({ language, value, onChang
           <div className="space-y-2">
           <div className="flex items-center justify-between">
             <Label className="text-base">{t('deductions', language)}</Label>
-            <Button type="button" onClick={addDeduction} className="bg-blue-600 hover:bg-blue-700">
+            <Button type="button" onClick={addDeduction} className="bg-mpr-interactive hover:bg-mpr-interactive-dk">
               {t('add_deduction', language)}
             </Button>
           </div>

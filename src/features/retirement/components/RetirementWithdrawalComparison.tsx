@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -94,7 +94,7 @@ export const RetirementWithdrawalComparison: React.FC = () => {
                       <Badge className="ml-2 bg-green-100 text-green-800 border border-green-200">Plus élevé</Badge>
                     )}
                   </td>
-                  <td className="p-3 font-semibold text-blue-700">
+                  <td className="p-3 font-semibold text-mpr-navy">
                     {formatCurrencyOQLF(r.sustainableSpendingMonthly)}
                   </td>
                   <td className="p-3">{formatCurrencyOQLF(r.sustainableSpendingAnnual)}</td>
@@ -121,11 +121,11 @@ export const RetirementWithdrawalComparison: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-mpr-interactive-lt">
       <div className="container mx-auto px-6 py-10 space-y-8">
-        <Card className="border-2 border-blue-200 shadow-sm">
+        <Card className="border-2 border-mpr-border shadow-sm">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-blue-800">
+            <CardTitle className="flex items-center gap-2 text-mpr-navy">
               <Activity className="w-5 h-5" /> Comparateur de stratégies de retrait
             </CardTitle>
             <CardDescription>
@@ -180,8 +180,8 @@ export const RetirementWithdrawalComparison: React.FC = () => {
           </CardContent>
         </Card>
 
-        <Alert className="border-blue-200 bg-blue-50">
-          <AlertDescription className="text-blue-800">
+        <Alert className="border-mpr-border bg-mpr-interactive-lt">
+          <AlertDescription className="text-mpr-navy">
             <strong>Note:</strong> Ces résultats sont à visée éducative. Vérifiez les paramètres (revenus garantis, dépenses, capital) et
             réévaluez périodiquement. L’ordre fiscal optimal dépend de votre situation (âge, seuils SV, obligations FERR).
           </AlertDescription>

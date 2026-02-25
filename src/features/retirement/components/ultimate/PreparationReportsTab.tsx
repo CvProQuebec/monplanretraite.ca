@@ -1,4 +1,4 @@
-// Onglet des rapports de préparation - Plan Ultimate
+﻿// Onglet des rapports de préparation - Plan Ultimate
 // Gestion des rapports pour notaires, avocats, conseillers et assureurs
 // Respectant la typographie québécoise et les limites professionnelles
 
@@ -264,9 +264,9 @@ export const PreparationReportsTab: React.FC<PreparationReportsTabProps> = ({
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
-              <div className="text-2xl font-bold text-blue-900">{data.preparationReports.length}</div>
-              <div className="text-sm text-blue-700">Total des rapports</div>
+            <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+              <div className="text-2xl font-bold text-mpr-navy">{data.preparationReports.length}</div>
+              <div className="text-sm text-mpr-navy">Total des rapports</div>
             </div>
             <div className="text-center p-4 bg-green-50 rounded-lg">
               <div className="text-2xl font-bold text-green-900">

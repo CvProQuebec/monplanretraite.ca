@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Info, X } from 'lucide-react';
@@ -24,7 +24,7 @@ const SeniorsHelpTooltip: React.FC<SeniorsHelpTooltipProps> = ({
         variant="ghost"
         size="sm"
         onClick={() => setIsOpen(true)}
-        className={`h-8 w-8 p-0 text-blue-600 hover:text-blue-800 hover:bg-blue-50 ${className}`}
+        className={`h-8 w-8 p-0 text-mpr-interactive hover:text-mpr-navy hover:bg-mpr-interactive-lt ${className}`}
         aria-label={title}
       >
         <Info className="h-5 w-5" />
@@ -34,7 +34,7 @@ const SeniorsHelpTooltip: React.FC<SeniorsHelpTooltipProps> = ({
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle className="text-xl font-bold text-gray-800 flex items-center gap-2">
-              <Info className="h-6 w-6 text-blue-600" />
+              <Info className="h-6 w-6 text-mpr-interactive" />
               {title}
             </DialogTitle>
           </DialogHeader>

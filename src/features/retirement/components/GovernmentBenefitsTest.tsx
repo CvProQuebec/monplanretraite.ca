@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Alert, AlertDescription } from '@/components/ui/alert';
@@ -170,7 +170,7 @@ export default function GovernmentBenefitsTest() {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <TestTube className="h-6 w-6 text-blue-600" />
+            <TestTube className="h-6 w-6 text-mpr-interactive" />
             Tests d'Intégration des Services Gouvernementaux
           </CardTitle>
           <CardDescription>
@@ -267,7 +267,7 @@ export default function GovernmentBenefitsTest() {
                     <div className="text-gray-600">Tests échoués</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-2xl font-bold text-blue-600">
+                    <div className="text-2xl font-bold text-mpr-interactive">
                       {Object.keys(testResults).length}
                     </div>
                     <div className="text-gray-600">Total tests</div>

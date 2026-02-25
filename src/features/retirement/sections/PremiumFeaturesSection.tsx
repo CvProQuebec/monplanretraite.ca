@@ -1,4 +1,4 @@
-/* Section wrapper pour les fonctionnalités premium du module CPP
+﻿/* Section wrapper pour les fonctionnalités premium du module CPP
    Phase 3: Modélisation Monte Carlo, Optimisation fiscale, Planification successorale
    Note: Aucune intégration externe ni lien sortant — 100 % local */
 
@@ -188,9 +188,9 @@ export const PremiumFeaturesSection: React.FC<PremiumFeaturesSectionProps> = ({ 
 
         {/* Aperçu des fonctionnalités */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <Card className="border-2 border-blue-200 hover:border-blue-300 transition-colors">
+          <Card className="border-2 border-mpr-border hover:border-mpr-border transition-colors">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-blue-700">
+              <CardTitle className="flex items-center gap-2 text-mpr-navy">
                 <BarChart3 className="w-5 h-5" />
                 {t.features.monteCarlo.title}
               </CardTitle>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../ui/card';
 import { Button } from '../../ui/button';
 import { Alert, AlertDescription } from '../../ui/alert';
@@ -309,7 +309,7 @@ export default function OnboardingIntegrationTest() {
               <Card className="border-l-4 border-l-blue-500">
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
-                    <User className="w-5 h-5 text-blue-600" />
+                    <User className="w-5 h-5 text-mpr-interactive" />
                     Données du Wizard
                   </CardTitle>
                 </CardHeader>

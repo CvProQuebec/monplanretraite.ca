@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { SeniorsDashboard } from '../components/SeniorsDashboard';
 import SeniorsGuidedExperience from '../components/SeniorsGuidedExperience';
@@ -93,7 +93,7 @@ export const AssistantFinancier: React.FC = () => {
           zIndex: 1000,
           maxWidth: '300px'
         }}>
-          <Alert className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+          <Alert className="bg-gradient-to-r from-mpr-interactive-lt to-purple-50 border-mpr-border">
             <Brain className="h-4 w-4" />
             <AlertDescription>
               <strong>Votre Assistant Financier Intelligent</strong>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -146,7 +146,7 @@ export const BeneficiairesForm: React.FC<BeneficiairesFormProps> = ({ beneficiai
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <Users className="h-5 w-5 text-blue-600" />
+              <Users className="h-5 w-5 text-mpr-interactive" />
               <div>
                 <p className="text-sm text-muted-foreground">Bénéficiaires</p>
                 <p className="text-2xl font-bold">{beneficiaires.length}</p>
@@ -408,7 +408,7 @@ export const BeneficiairesForm: React.FC<BeneficiairesFormProps> = ({ beneficiai
                         </h4>
                         <Badge variant="outline">{beneficiaire.relation}</Badge>
                         <Badge className={
-                          beneficiaire.typeLegs === 'universel' ? 'bg-blue-100 text-blue-800' :
+                          beneficiaire.typeLegs === 'universel' ? 'bg-mpr-interactive-lt text-mpr-navy' :
                           beneficiaire.typeLegs === 'particulier' ? 'bg-green-100 text-green-800' :
                           'bg-purple-100 text-purple-800'
                         }>
@@ -456,8 +456,8 @@ export const BeneficiairesForm: React.FC<BeneficiairesFormProps> = ({ beneficiai
                       </div>
                       
                       {beneficiaire.conditions && (
-                        <div className="mt-2 p-2 bg-blue-50 rounded-md">
-                          <p className="text-sm text-blue-800">
+                        <div className="mt-2 p-2 bg-mpr-interactive-lt rounded-md">
+                          <p className="text-sm text-mpr-navy">
                             <strong>Conditions :</strong> {beneficiaire.conditions}
                           </p>
                         </div>

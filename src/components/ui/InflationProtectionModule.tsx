@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Input } from './input';
@@ -330,7 +330,7 @@ const InflationProtectionModule: React.FC = () => {
                             </div>
                             <div className="flex justify-between">
                               <span>Protection recommandée :</span>
-                              <span className="font-semibold text-blue-600">
+                              <span className="font-semibold text-mpr-interactive">
                                 {formatCurrency(analysis.protectionNeeded)}
                               </span>
                             </div>
@@ -359,7 +359,7 @@ const InflationProtectionModule: React.FC = () => {
                     (scenario.rate === 2 ? 'low' : 
                      scenario.rate === 3 ? 'moderate' : 
                      scenario.rate === 5 ? 'high' : 'extreme') 
-                    ? 'ring-2 ring-blue-500' : ''}>
+                    ? 'ring-2 ring-mpr-interactive' : ''}>
                     <CardHeader>
                       <CardTitle className="flex items-center gap-2">
                         <Badge variant={scenario.rate <= 3 ? 'default' : scenario.rate <= 5 ? 'secondary' : 'destructive'}>
@@ -478,7 +478,7 @@ const InflationProtectionModule: React.FC = () => {
                     </p>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="p-4 bg-blue-50 rounded-lg">
+                      <div className="p-4 bg-mpr-interactive-lt rounded-lg">
                         <h4 className="font-semibold">Cible de la Banque du Canada</h4>
                         <p>2% d'inflation annuelle (fourchette de 1% à 3%)</p>
                       </div>
@@ -507,7 +507,7 @@ const InflationProtectionModule: React.FC = () => {
                       <div className="border-l-4 border-green-500 pl-4">
                         <strong>RRQ/RPC :</strong> Indexé annuellement selon l'IPC
                       </div>
-                      <div className="border-l-4 border-blue-500 pl-4">
+                      <div className="border-l-4 border-mpr-interactive pl-4">
                         <strong>Sécurité de la vieillesse :</strong> Ajustée trimestriellement selon l'IPC
                       </div>
                       <div className="border-l-4 border-purple-500 pl-4">
@@ -528,7 +528,7 @@ const InflationProtectionModule: React.FC = () => {
                         </ul>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-blue-700">Protection croissance :</h4>
+                        <h4 className="font-semibold text-mpr-navy">Protection croissance :</h4>
                         <ul className="list-disc list-inside mt-2">
                           <li>Actions de qualité</li>
                           <li>Immobilier</li>

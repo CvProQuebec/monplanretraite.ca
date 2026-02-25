@@ -1,4 +1,4 @@
-// src/features/retirement/sections/DashboardSection.tsx
+﻿// src/features/retirement/sections/DashboardSection.tsx
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -186,11 +186,11 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ data, calculations 
   const userData = data || localData;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-mpr-navy text-white">
       {/* Particules de fond visibles */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-mpr-interactive rounded-full animate-bounce"></div>
         <div className="absolute top-60 left-1/4 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
         <div className="absolute top-80 right-1/3 w-1 h-1 bg-red-400 rounded-full animate-pulse"></div>
         <div className="absolute top-96 left-1/2 w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
@@ -234,12 +234,12 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ data, calculations 
                 </div>
               </div>
 
-              <div className="text-center p-6 bg-gradient-to-br from-blue-600/20 to-blue-500/20 rounded-lg border border-blue-500/30">
-                <Target className="w-12 h-12 text-blue-400 mx-auto mb-4" />
-                <div className="text-3xl font-bold text-blue-300">
+              <div className="text-center p-6 bg-gradient-to-br from-mpr-interactive/20 to-mpr-interactive/20 rounded-lg border border-mpr-interactive/30">
+                <Target className="w-12 h-12 text-mpr-interactive mx-auto mb-4" />
+                <div className="text-3xl font-bold text-mpr-interactive">
                   {userData?.personal?.ageRetraite1 || 65}
                 </div>
-                <div className="text-blue-200">
+                <div className="text-mpr-interactive-lt">
                   {isEnglish ? 'Retirement Age' : 'Âge de Retraite'}
                 </div>
               </div>
@@ -555,9 +555,9 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ data, calculations 
         </Card>
 
         {/* 3. Outils Financiers - Réorganisé selon l'ordre demandé */}
-        <Card className="bg-gradient-to-br from-indigo-800/90 to-blue-800/90 border-0 shadow-2xl backdrop-blur-sm mb-12">
-          <CardHeader className="border-b border-indigo-600 bg-gradient-to-r from-indigo-600/20 to-blue-600/20">
-            <CardTitle className="text-2xl font-bold text-indigo-300 flex items-center gap-3">
+        <Card className="bg-gradient-to-br from-mpr-navy/90 to-mpr-navy-mid/90 border-0 shadow-2xl backdrop-blur-sm mb-12">
+          <CardHeader className="border-b border-mpr-interactive bg-gradient-to-r from-mpr-interactive/20 to-mpr-interactive/20">
+            <CardTitle className="text-2xl font-bold text-mpr-interactive flex items-center gap-3">
               <Zap className="w-8 h-8" />
               {isEnglish ? 'Financial Tools' : 'Outils Financiers'}
             </CardTitle>
@@ -617,13 +617,13 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ data, calculations 
               </Card>
 
               {/* 3. Revenus */}
-              <Card className="bg-gradient-to-br from-blue-600/20 to-blue-500/20 border border-blue-500/30 shadow-lg hover:shadow-xl transition-all duration-300">
+              <Card className="bg-gradient-to-br from-mpr-interactive/20 to-mpr-interactive/20 border border-mpr-interactive/30 shadow-lg hover:shadow-xl transition-all duration-300">
                 <CardContent className="p-4 text-center">
-                  <DollarSign className="w-8 h-8 text-blue-400 mx-auto mb-3" />
-                  <h3 className="text-lg font-bold text-blue-300 mb-2">
+                  <DollarSign className="w-8 h-8 text-mpr-interactive mx-auto mb-3" />
+                  <h3 className="text-lg font-bold text-mpr-interactive mb-2">
                     {isEnglish ? 'Income' : 'Revenus'}
                   </h3>
-                  <p className="text-sm text-blue-200 mb-3">
+                  <p className="text-sm text-mpr-interactive-lt mb-3">
                     {isEnglish ? 'Income sources and employment' : 'Sources de revenus et emploi'}
                   </p>
                   <div className="w-full bg-gray-700 rounded-full h-2 mb-3">
@@ -636,7 +636,7 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ data, calculations 
                   <div className="flex items-center justify-between text-xs mb-3">
                     <Badge variant="destructive" className="text-xs">Verrouillé</Badge>
                   </div>
-                  <Button variant="outline" size="sm" className="w-full text-blue-300 border-blue-500/30 hover:bg-blue-500/20">
+                  <Button variant="outline" size="sm" className="w-full text-mpr-interactive border-mpr-interactive/30 hover:bg-mpr-interactive/20">
                     {isEnglish ? 'Click to access' : 'Cliquez pour accéder'}
                   </Button>
                 </CardContent>
@@ -721,13 +721,13 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ data, calculations 
               </Card>
 
               {/* 7. Prestations gouvernementales */}
-              <Card className="bg-gradient-to-br from-indigo-600/20 to-indigo-500/20 border border-indigo-500/30 shadow-lg hover:shadow-xl transition-all duration-300">
+              <Card className="bg-gradient-to-br from-mpr-interactive/20 to-mpr-interactive/20 border border-mpr-interactive/30 shadow-lg hover:shadow-xl transition-all duration-300">
                 <CardContent className="p-4 text-center">
-                  <FileText className="w-8 h-8 text-indigo-400 mx-auto mb-3" />
-                  <h3 className="text-lg font-bold text-indigo-300 mb-2">
+                  <FileText className="w-8 h-8 text-mpr-interactive mx-auto mb-3" />
+                  <h3 className="text-lg font-bold text-mpr-interactive mb-2">
                     {isEnglish ? 'Government Benefits' : 'Prestations gouvernementales'}
                   </h3>
-                  <p className="text-sm text-indigo-200 mb-3">
+                  <p className="text-sm text-mpr-interactive-lt mb-3">
                     {isEnglish ? 'OAS, CPP, RRQ calculations' : 'Calculs SV, CPP, RRQ'}
                   </p>
                   <div className="w-full bg-gray-700 rounded-full h-2 mb-3">
@@ -740,7 +740,7 @@ const DashboardSection: React.FC<DashboardSectionProps> = ({ data, calculations 
                   <div className="flex items-center justify-between text-xs mb-3">
                     <Badge variant="destructive" className="text-xs">Verrouillé</Badge>
                   </div>
-                  <Button variant="outline" size="sm" className="w-full text-indigo-300 border-indigo-500/30 hover:bg-indigo-500/20">
+                  <Button variant="outline" size="sm" className="w-full text-mpr-interactive border-mpr-interactive/30 hover:bg-mpr-interactive/20">
                     {isEnglish ? 'Click to access' : 'Cliquez pour accéder'}
                   </Button>
                 </CardContent>

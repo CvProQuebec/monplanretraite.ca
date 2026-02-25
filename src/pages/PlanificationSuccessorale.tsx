@@ -1,4 +1,4 @@
-// src/pages/PlanificationSuccessorale.tsx
+﻿// src/pages/PlanificationSuccessorale.tsx
 // Page dédiée à la planification successorale
 
 import React from 'react';
@@ -20,7 +20,7 @@ import {
 
 const PlanificationSuccessorale: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-mpr-interactive-lt to-mpr-interactive-lt">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Introduction */}
         <div className="mb-8">
@@ -36,11 +36,11 @@ const PlanificationSuccessorale: React.FC = () => {
 
           {/* Informations importantes */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <Card className="bg-blue-50 border-blue-200">
+            <Card className="bg-mpr-interactive-lt border-mpr-border">
               <CardContent className="p-4 text-center">
-                <FileText className="w-8 h-8 text-blue-600 mx-auto mb-2" />
-                <h3 className="font-semibold text-blue-900">Testament</h3>
-                <p className="text-sm text-blue-700">Volontés de transmission</p>
+                <FileText className="w-8 h-8 text-mpr-interactive mx-auto mb-2" />
+                <h3 className="font-semibold text-mpr-navy">Testament</h3>
+                <p className="text-sm text-mpr-navy">Volontés de transmission</p>
               </CardContent>
             </Card>
 
@@ -104,7 +104,7 @@ const PlanificationSuccessorale: React.FC = () => {
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-blue-600" />
+                <Users className="w-5 h-5 text-mpr-interactive" />
                 Planification individuelle pour couples
               </CardTitle>
               <CardDescription>
@@ -136,7 +136,7 @@ const PlanificationSuccessorale: React.FC = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-semibold mb-3 text-blue-700">🏠 Particulièrement utile pour :</h4>
+                  <h4 className="font-semibold mb-3 text-mpr-navy">🏠 Particulièrement utile pour :</h4>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <Badge variant="outline" className="text-xs">Familles reconstituées</Badge>
@@ -169,7 +169,7 @@ const PlanificationSuccessorale: React.FC = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Info className="w-5 h-5 text-blue-600" />
+                <Info className="w-5 h-5 text-mpr-interactive" />
                 Conseils et ressources
               </CardTitle>
             </CardHeader>
@@ -190,10 +190,10 @@ const PlanificationSuccessorale: React.FC = () => {
                 <div>
                   <h4 className="font-semibold mb-3">🔗 Ressources utiles :</h4>
                   <ul className="space-y-1 text-sm">
-                    <li>• <a href="https://www.notaires.qc.ca/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Chambre des notaires du Québec</a></li>
-                    <li>• <a href="https://www.quebec.ca/famille-et-soutien-aux-personnes/deces-et-succession" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Guide succession - Québec.ca</a></li>
-                    <li>• <a href="https://www.revenuquebec.ca/fr/citoyens/succession/" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">Revenu Québec - Succession</a></li>
-                    <li>• <a href="https://www.canada.ca/fr/agence-revenu/services/impot/particuliers/sujets-impot-particuliers/deces-personne/succession.html" className="text-blue-600 hover:underline" target="_blank" rel="noopener noreferrer">ARC - Succession et impôts</a></li>
+                    <li>• <a href="https://www.notaires.qc.ca/" className="text-mpr-interactive hover:underline" target="_blank" rel="noopener noreferrer">Chambre des notaires du Québec</a></li>
+                    <li>• <a href="https://www.quebec.ca/famille-et-soutien-aux-personnes/deces-et-succession" className="text-mpr-interactive hover:underline" target="_blank" rel="noopener noreferrer">Guide succession - Québec.ca</a></li>
+                    <li>• <a href="https://www.revenuquebec.ca/fr/citoyens/succession/" className="text-mpr-interactive hover:underline" target="_blank" rel="noopener noreferrer">Revenu Québec - Succession</a></li>
+                    <li>• <a href="https://www.canada.ca/fr/agence-revenu/services/impot/particuliers/sujets-impot-particuliers/deces-personne/succession.html" className="text-mpr-interactive hover:underline" target="_blank" rel="noopener noreferrer">ARC - Succession et impôts</a></li>
                   </ul>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Flag, Calendar, DollarSign, TrendingUp, Info } from 'lucide-react';
 import { formatCurrency } from '@/features/retirement/utils/formatters';
@@ -64,13 +64,13 @@ const RRQSummary: React.FC<RRQSummaryProps> = ({
   const isRecuperation = difference > 0;
 
   return (
-    <Card className="bg-white border-2 border-blue-200 shadow-lg">
-      <CardHeader className="bg-blue-50 border-b-2 border-blue-200">
-        <CardTitle className="text-xl font-bold text-blue-800 flex items-center gap-2">
+    <Card className="bg-white border-2 border-mpr-border shadow-lg">
+      <CardHeader className="bg-mpr-interactive-lt border-b-2 border-mpr-border">
+        <CardTitle className="text-xl font-bold text-mpr-navy flex items-center gap-2">
           <Flag className="w-6 h-6" />
           {isFrench ? 'Résumé RRQ/CPP 2025' : 'RRQ/CPP 2025 Summary'}
         </CardTitle>
-        <p className="text-sm text-blue-600">
+        <p className="text-sm text-mpr-interactive">
           {isFrench 
             ? 'Personne ' + personNumber + ' - Synthèse des montants RRQ'
             : 'Person ' + personNumber + ' - RRQ amounts summary'
@@ -80,17 +80,17 @@ const RRQSummary: React.FC<RRQSummaryProps> = ({
       
       <CardContent className="p-6 space-y-6">
         {/* Montant actuel */}
-        <div className="bg-blue-50 p-4 rounded-lg border border-blue-200">
+        <div className="bg-mpr-interactive-lt p-4 rounded-lg border border-mpr-border">
           <div className="flex items-center gap-2 mb-2">
-            <DollarSign className="w-5 h-5 text-blue-600" />
-            <h3 className="text-lg font-semibold text-blue-800">
+            <DollarSign className="w-5 h-5 text-mpr-interactive" />
+            <h3 className="text-lg font-semibold text-mpr-navy">
               {isFrench ? 'Montant actuel' : 'Current Amount'}
             </h3>
           </div>
-          <p className="text-2xl font-bold text-blue-600">
+          <p className="text-2xl font-bold text-mpr-interactive">
             {formatCurrency(montantActuel)}
           </p>
-          <p className="text-sm text-blue-600 mt-1">
+          <p className="text-sm text-mpr-interactive mt-1">
             {isFrench 
               ? 'Montant reçu à ce jour en 2025'
               : 'Amount received to date in 2025'
@@ -191,12 +191,12 @@ const RRQSummary: React.FC<RRQSummaryProps> = ({
         )}
 
         {/* Total annuel */}
-        <div className="bg-blue-100 p-4 rounded-lg border border-blue-300">
+        <div className="bg-mpr-interactive-lt p-4 rounded-lg border border-mpr-border">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold text-blue-800">
+            <h3 className="text-lg font-semibold text-mpr-navy">
               {isFrench ? 'Total annuel 2025' : 'Total Annual 2025'}
             </h3>
-            <span className="text-2xl font-bold text-blue-600">
+            <span className="text-2xl font-bold text-mpr-interactive">
               {formatCurrency(totalAnnuel)}
             </span>
           </div>

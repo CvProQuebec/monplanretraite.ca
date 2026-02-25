@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+﻿import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -253,7 +253,7 @@ const FinancialConsolidationModule: React.FC = () => {
   const getPerformanceColor = (rating: string): string => {
     switch (rating) {
       case 'excellent': return 'text-green-600';
-      case 'good': return 'text-blue-600';
+      case 'good': return 'text-mpr-interactive';
       case 'fair': return 'text-yellow-600';
       case 'poor': return 'text-red-600';
       default: return 'text-gray-600';
@@ -460,8 +460,8 @@ const FinancialConsolidationModule: React.FC = () => {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div className="text-center p-4 bg-blue-50 rounded-lg">
-                      <div className="text-2xl font-bold text-blue-600">
+                    <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+                      <div className="text-2xl font-bold text-mpr-interactive">
                         {formatCurrency(analysis.totalAssets)}
                       </div>
                       <div className="text-sm text-gray-600">Total des Actifs</div>
@@ -506,7 +506,7 @@ const FinancialConsolidationModule: React.FC = () => {
                     </div>
                   </div>
                   
-                  <div className="text-center p-4 bg-gradient-to-r from-green-50 to-blue-50 rounded-lg">
+                  <div className="text-center p-4 bg-gradient-to-r from-green-50 to-mpr-interactive-lt rounded-lg">
                     <div className="text-3xl font-bold text-green-600">
                       {formatCurrency(analysis.feeSavings * 10)}
                     </div>
@@ -522,8 +522,8 @@ const FinancialConsolidationModule: React.FC = () => {
                 <CardContent>
                   <div className="space-y-3">
                     {analysis.recommendations.map((rec, index) => (
-                      <div key={index} className="flex items-start gap-2 p-3 bg-blue-50 rounded-lg">
-                        <Target className="h-4 w-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <div key={index} className="flex items-start gap-2 p-3 bg-mpr-interactive-lt rounded-lg">
+                        <Target className="h-4 w-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                         <span className="text-sm">{rec}</span>
                       </div>
                     ))}
@@ -616,7 +616,7 @@ const FinancialConsolidationModule: React.FC = () => {
                   </p>
                 </div>
                 
-                <div className="p-4 bg-blue-50 rounded-lg">
+                <div className="p-4 bg-mpr-interactive-lt rounded-lg">
                   <h5 className="font-medium">Gestion Simplifiée</h5>
                   <p className="text-sm text-gray-600 mt-2">
                     Un seul relevé, une seule institution à contacter, une vue d'ensemble claire 

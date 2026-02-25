@@ -1,4 +1,4 @@
-// src/features/retirement/components/MonteCarloSimulator.tsx
+﻿// src/features/retirement/components/MonteCarloSimulator.tsx
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -71,7 +71,7 @@ export function MonteCarloSimulator() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-mpr-interactive-lt">
       <div className="container mx-auto px-6 py-12">
         {/* En-tête */}
         <div className="text-center mb-12">
@@ -192,9 +192,9 @@ export function MonteCarloSimulator() {
               </div>
 
               {scenarioNote && (
-                <Alert className="mt-3 border-blue-200 bg-blue-50">
-                  <Info className="h-5 w-5 text-blue-600" />
-                  <AlertDescription className="text-blue-800">
+                <Alert className="mt-3 border-mpr-border bg-mpr-interactive-lt">
+                  <Info className="h-5 w-5 text-mpr-interactive" />
+                  <AlertDescription className="text-mpr-navy">
                     {scenarioNote}
                   </AlertDescription>
                 </Alert>
@@ -249,7 +249,7 @@ export function MonteCarloSimulator() {
                     </div>
                       <div className="text-center">
                         <div className="text-sm text-gray-600">Valeur médiane fin d’horizon</div>
-                        <div className="text-2xl font-bold text-blue-600">
+                        <div className="text-2xl font-bold text-mpr-interactive">
                           {formatCurrencyOQLF(results.statistics.medianFinalValue || 0)}
                         </div>
                       </div>
@@ -333,7 +333,7 @@ export function MonteCarloSimulator() {
                     <div className="space-y-3">
                       {[
                         { key: 'conservative', label: 'Conservateur (25e pct)', color: 'text-orange-700' },
-                        { key: 'moderate', label: 'Médian (50e pct)', color: 'text-blue-700' },
+                        { key: 'moderate', label: 'Médian (50e pct)', color: 'text-mpr-navy' },
                         { key: 'optimistic', label: 'Optimiste (75e pct)', color: 'text-emerald-700' },
                         { key: 'stressTest', label: 'Stress test (5e pct)', color: 'text-red-700' }
                       ].map((s) => {
@@ -378,9 +378,9 @@ export function MonteCarloSimulator() {
                 </Card>
 
                 {/* Avertissement pédagogique */}
-                <Alert className="border-blue-200 bg-blue-50">
-                  <Info className="h-5 w-5 text-blue-600" />
-                  <AlertDescription className="text-blue-800">
+                <Alert className="border-mpr-border bg-mpr-interactive-lt">
+                  <Info className="h-5 w-5 text-mpr-interactive" />
+                  <AlertDescription className="text-mpr-navy">
                     <strong>Information éducative seulement :</strong> ce test ne prédit pas l’avenir. Il vous aide à décider des actions concrètes — coussin de 3–5 ans, taux de retrait flexible, allocation appropriée et rééquilibrage.
                   </AlertDescription>
                 </Alert>

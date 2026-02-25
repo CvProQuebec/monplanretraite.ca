@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Badge } from './badge';
@@ -82,7 +82,7 @@ const CELISuccessionModule: React.FC = () => {
       case '3':
         return {
           title: 'Bénéficiaire Non-Conjoint',
-          icon: <Info className="w-6 h-6 text-blue-600" />,
+          icon: <Info className="w-6 h-6 text-mpr-interactive" />,
           color: 'blue',
           benefits: [
             'Évite la probate',
@@ -136,7 +136,7 @@ const CELISuccessionModule: React.FC = () => {
     <div className="max-w-6xl mx-auto p-6 space-y-8">
       {/* En-tête */}
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-mpr-interactive to-purple-600 bg-clip-text text-transparent mb-4">
           CELI et Succession
         </h1>
         <p className="text-xl text-gray-600 max-w-4xl mx-auto">
@@ -157,10 +157,10 @@ const CELISuccessionModule: React.FC = () => {
       </Alert>
 
       {/* Calculateur personnel */}
-      <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+      <Card className="bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt border-mpr-border">
         <CardHeader>
           <CardTitle className="flex items-center gap-3">
-            <Calculator className="w-6 h-6 text-blue-600" />
+            <Calculator className="w-6 h-6 text-mpr-interactive" />
             Votre situation personnelle
           </CardTitle>
           <CardDescription>
@@ -232,7 +232,7 @@ const CELISuccessionModule: React.FC = () => {
                   </div>
                   <div className="flex justify-between">
                     <span>Espace CELI doublé potentiel :</span>
-                    <span className="font-bold text-blue-600">${savings.doubleRoomBenefit.toLocaleString()}</span>
+                    <span className="font-bold text-mpr-interactive">${savings.doubleRoomBenefit.toLocaleString()}</span>
                   </div>
                   <div className="border-t pt-2 flex justify-between">
                     <span className="font-semibold">Valeur totale protégée :</span>
@@ -357,7 +357,7 @@ const CELISuccessionModule: React.FC = () => {
       </Card>
 
       {/* Guide d'action */}
-      <Card className="bg-gradient-to-br from-purple-50 to-blue-50 border-purple-200">
+      <Card className="bg-gradient-to-br from-purple-50 to-mpr-interactive-lt border-purple-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-3">
             <Shield className="w-6 h-6 text-purple-600" />
@@ -438,7 +438,7 @@ const CELISuccessionModule: React.FC = () => {
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-3">
-            <ExternalLink className="w-6 h-6 text-blue-600" />
+            <ExternalLink className="w-6 h-6 text-mpr-interactive" />
             Ressources officielles
           </CardTitle>
         </CardHeader>
@@ -449,7 +449,7 @@ const CELISuccessionModule: React.FC = () => {
               <ul className="space-y-2 text-sm">
                 <li>
                   <a href="https://www.canada.ca/fr/agence-revenu/services/formulaires-publications/formulaires/rc240.html" 
-                     className="text-blue-600 hover:underline flex items-center gap-2" 
+                     className="text-mpr-interactive hover:underline flex items-center gap-2" 
                      target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-3 h-3" />
                     Formulaire RC240 (ARC)
@@ -457,7 +457,7 @@ const CELISuccessionModule: React.FC = () => {
                 </li>
                 <li>
                   <a href="https://www.canada.ca/fr/agence-revenu/services/impot/particuliers/sujets-impot-particuliers/compte-epargne-libre-impot-celi.html" 
-                     className="text-blue-600 hover:underline flex items-center gap-2" 
+                     className="text-mpr-interactive hover:underline flex items-center gap-2" 
                      target="_blank" rel="noopener noreferrer">
                     <ExternalLink className="w-3 h-3" />
                     Guide CELI officiel

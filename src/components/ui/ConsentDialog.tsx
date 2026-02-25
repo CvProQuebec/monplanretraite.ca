@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -71,7 +71,7 @@ const ConsentDialog: React.FC<ConsentDialogProps> = ({
             
             <div className="space-y-4">
               <div className="flex items-start gap-3">
-                <Shield className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                <Shield className="w-5 h-5 text-mpr-interactive mt-0.5 flex-shrink-0" />
                 <p className="text-gray-700">
                   {isFrench 
                     ? 'Consulter un planificateur financier autorisé pour les décisions importantes'
@@ -115,7 +115,7 @@ const ConsentDialog: React.FC<ConsentDialogProps> = ({
           </Alert>
 
           {/* Consent Checkbox */}
-          <div className="flex items-start space-x-3 p-4 bg-blue-50 rounded-lg border border-blue-200">
+          <div className="flex items-start space-x-3 p-4 bg-mpr-interactive-lt rounded-lg border border-mpr-border">
             <Checkbox
               id="consent"
               checked={hasConsented}
@@ -124,7 +124,7 @@ const ConsentDialog: React.FC<ConsentDialogProps> = ({
             />
             <label
               htmlFor="consent"
-              className="text-sm font-medium text-blue-900 cursor-pointer leading-relaxed"
+              className="text-sm font-medium text-mpr-navy cursor-pointer leading-relaxed"
             >
               {isFrench 
                 ? 'J\'ai lu, compris et j\'accepte ces conditions. Je reconnais que cette plateforme est un outil éducatif et que je dois consulter des professionnels qualifiés pour mes décisions financières importantes.'
@@ -145,7 +145,7 @@ const ConsentDialog: React.FC<ConsentDialogProps> = ({
             <Button
               onClick={handleConsent}
               disabled={!hasConsented}
-              className="px-6 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-6 bg-mpr-interactive hover:bg-mpr-interactive-dk disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isFrench ? 'J\'accepte et continuer' : 'I Accept and Continue'}
             </Button>

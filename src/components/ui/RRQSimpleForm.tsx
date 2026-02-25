@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -65,13 +65,13 @@ const RRQSimpleForm: React.FC<RRQSimpleFormProps> = ({
   };
 
   return (
-    <Card className="bg-white border-2 border-blue-200 shadow-lg">
-      <CardHeader className="bg-blue-50 border-b-2 border-blue-200">
-        <CardTitle className="text-xl font-bold text-blue-800 flex items-center gap-2">
+    <Card className="bg-white border-2 border-mpr-border shadow-lg">
+      <CardHeader className="bg-mpr-interactive-lt border-b-2 border-mpr-border">
+        <CardTitle className="text-xl font-bold text-mpr-navy flex items-center gap-2">
           <Flag className="w-6 h-6" />
           {isFrench ? 'RRQ/CPP - Régime de rentes du Québec' : 'QPP/CPP - Quebec Pension Plan'}
         </CardTitle>
-        <p className="text-sm text-blue-600">
+        <p className="text-sm text-mpr-interactive">
           {isFrench 
             ? `Saisissez vos montants RRQ/CPP pour Personne ${personNumber} et Personne 2`
             : `Enter your QPP/CPP amounts for Person ${personNumber} and Person 2`

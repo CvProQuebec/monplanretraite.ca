@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -170,7 +170,7 @@ const CashWedgeBucketModule: React.FC = () => {
     <div className="w-full max-w-6xl mx-auto p-6 space-y-6">
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-3">
-          <Layers className="h-8 w-8 text-blue-600" />
+          <Layers className="h-8 w-8 text-mpr-interactive" />
           <h1 className="text-3xl font-bold text-gray-900">
             Stratégie Cash Wedge & Buckets
           </h1>

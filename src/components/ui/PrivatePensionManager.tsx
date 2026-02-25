@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -241,7 +241,7 @@ const PrivatePensionManager: React.FC<PrivatePensionManagerProps> = React.memo((
                       variant="outline"
                       size="sm"
                       onClick={() => handleToggleActive(pension.id)}
-                      className="text-blue-600 hover:text-blue-800"
+                      className="text-mpr-interactive hover:text-mpr-navy"
                     >
                       {pension.isActive ? 'Désactiver' : 'Activer'}
                     </Button>

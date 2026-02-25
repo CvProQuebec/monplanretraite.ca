@@ -1,4 +1,4 @@
-// Onglet de succession et préférences funéraires
+﻿// Onglet de succession et préférences funéraires
 // Plan Professional - Gestion avancée de la succession
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -210,7 +210,7 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <FileText className="h-5 w-5 text-blue-600" />
+              <FileText className="h-5 w-5 text-mpr-interactive" />
               <div>
                 <p className="text-sm text-muted-foreground">{isEnglish ? 'Will' : 'Testament'}</p>
                 <p className="text-2xl font-bold">
@@ -257,8 +257,8 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
       )}
 
       {!data.funeralPreferences.hasFuneralPreferences && (
-        <Alert className="border-blue-200 bg-blue-50">
-          <Info className="h-4 w-4 text-blue-600" />
+        <Alert className="border-mpr-border bg-mpr-interactive-lt">
+          <Info className="h-4 w-4 text-mpr-interactive" />
           <AlertDescription>
             <strong>{isEnglish ? 'Information:' : 'Information :'}</strong> {isEnglish ? 'You have not yet expressed your funeral preferences. This can help your loved ones make difficult decisions.' : 'Vous n\'avez pas encore exprimé vos préférences funéraires. Cela peut aider vos proches à prendre des décisions difficiles.'}
           </AlertDescription>
@@ -413,7 +413,7 @@ export const SuccessionTab: React.FC<SuccessionTabProps> = ({ data, onUpdate }) 
             <CardContent className="p-6">
               <div className="space-y-4">
                 <div className="flex items-center space-x-2">
-                  <FileText className="h-5 w-5 text-blue-600" />
+                  <FileText className="h-5 w-5 text-mpr-interactive" />
                   <h4 className="text-lg font-semibold">État du testament</h4>
                   <Badge className={data.willAndSuccession.hasWill ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}>
                     {data.willAndSuccession.hasWill ? 'Présent' : 'Absent'}

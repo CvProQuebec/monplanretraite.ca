@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -135,7 +135,7 @@ const IncomeCalculationTest: React.FC<IncomeCalculationTestProps> = ({ isFrench 
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-white p-4 rounded-lg border">
-                <h5 className="font-semibold text-blue-800 mb-2">Salaires</h5>
+                <h5 className="font-semibold text-mpr-navy mb-2">Salaires</h5>
                 <div className="text-sm space-y-1">
                   <div><strong>Total:</strong> ${results.totalSalary.toLocaleString()}</div>
                   {results.details.salary.map((detail: any, idx: number) => (
@@ -175,8 +175,8 @@ const IncomeCalculationTest: React.FC<IncomeCalculationTestProps> = ({ isFrench 
         )}
 
         {/* Exemple avec vos données */}
-        <div className="bg-blue-50 p-4 rounded-lg">
-          <h4 className="font-semibold text-blue-800 mb-2">Exemple avec vos données</h4>
+        <div className="bg-mpr-interactive-lt p-4 rounded-lg">
+          <h4 className="font-semibold text-mpr-navy mb-2">Exemple avec vos données</h4>
           <div className="text-sm text-gray-700 space-y-1">
             <div><strong>Salaire:</strong> 1er janvier au 4 avril (3 mois) - Aux 2 semaines</div>
             <div><strong>Chômage:</strong> 6 avril au 6 décembre (8 mois) - Hebdomadaire</div>

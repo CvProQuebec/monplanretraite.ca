@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../../components/ui/card';
 import { Button } from '../../../components/ui/button';
 import { Input } from '../../../components/ui/input';
@@ -274,13 +274,13 @@ export const ExpenseScenarioPlanner: React.FC<ExpenseScenarioPlannerProps> = ({
                     monthlyExpenses
                   );
                   return (
-                    <div className="bg-blue-50 p-3 rounded-lg">
+                    <div className="bg-mpr-interactive-lt p-3 rounded-lg">
                       <div className="flex items-center mb-2">
-                        <Calendar className="h-4 w-4 text-blue-600 mr-2" />
-                        <Label className="text-sm font-medium text-blue-800">Moment optimal</Label>
+                        <Calendar className="h-4 w-4 text-mpr-interactive mr-2" />
+                        <Label className="text-sm font-medium text-mpr-navy">Moment optimal</Label>
                       </div>
-                      <p className="text-sm text-blue-700">{timing.reasoning}</p>
-                      <p className="text-xs text-blue-600 mt-1">
+                      <p className="text-sm text-mpr-navy">{timing.reasoning}</p>
+                      <p className="text-xs text-mpr-interactive mt-1">
                         Date recommandée: {timing.optimalDate.toLocaleDateString('fr-CA')}
                       </p>
                     </div>
@@ -331,7 +331,7 @@ export const ExpenseScenarioPlanner: React.FC<ExpenseScenarioPlannerProps> = ({
                 <p className="text-sm text-gray-500">Revenus mensuels</p>
                 <p className="text-xl font-bold">{formatCurrency(monthlyIncome)}</p>
               </div>
-              <TrendingUp className="h-8 w-8 text-blue-600" />
+              <TrendingUp className="h-8 w-8 text-mpr-interactive" />
             </div>
           </CardContent>
         </Card>

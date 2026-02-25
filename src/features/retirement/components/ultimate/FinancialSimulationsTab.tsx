@@ -1,4 +1,4 @@
-// Onglet des simulations financières - Plan Ultimate
+﻿// Onglet des simulations financières - Plan Ultimate
 // Simulations avancées avec scénarios multiples et analyses de sensibilité
 // Respectant la typographie québécoise et les limites professionnelles
 
@@ -192,11 +192,11 @@ export const FinancialSimulationsTab: React.FC<FinancialSimulationsTabProps> = (
               <div className="text-2xl font-bold text-green-900">{data.financialSimulations.length}</div>
               <div className="text-sm text-green-700">Total des simulations</div>
             </div>
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
-              <div className="text-2xl font-bold text-blue-900">
+            <div className="text-center p-4 bg-mpr-interactive-lt rounded-lg">
+              <div className="text-2xl font-bold text-mpr-navy">
                 {data.financialSimulations.filter(s => s.parameters.realisticScenario).length}
               </div>
-              <div className="text-sm text-blue-700">Scénarios réalistes</div>
+              <div className="text-sm text-mpr-navy">Scénarios réalistes</div>
             </div>
             <div className="text-center p-4 bg-orange-50 rounded-lg">
               <div className="text-2xl font-bold text-orange-900">
@@ -301,7 +301,7 @@ export const FinancialSimulationsTab: React.FC<FinancialSimulationsTabProps> = (
                           </div>
                           <div className="text-center">
                             <div className="text-sm font-medium text-gray-600">Ratio dette</div>
-                            <div className="text-lg font-bold text-blue-600">
+                            <div className="text-lg font-bold text-mpr-interactive">
                               {simulation.results.keyMetrics.debtToAssetRatio.toFixed(2)}
                             </div>
                           </div>
@@ -543,9 +543,9 @@ export const FinancialSimulationsTab: React.FC<FinancialSimulationsTabProps> = (
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="text-center p-3 bg-blue-50 rounded-lg">
-                      <div className="text-sm text-blue-600">Horizon temporel</div>
-                      <div className="text-xl font-bold text-blue-900">{selectedSimulation.parameters.timeHorizon} ans</div>
+                    <div className="text-center p-3 bg-mpr-interactive-lt rounded-lg">
+                      <div className="text-sm text-mpr-interactive">Horizon temporel</div>
+                      <div className="text-xl font-bold text-mpr-navy">{selectedSimulation.parameters.timeHorizon} ans</div>
                     </div>
                     <div className="text-center p-3 bg-green-50 rounded-lg">
                       <div className="text-sm text-green-600">Taux d'inflation</div>

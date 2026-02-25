@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+﻿import React, { useState, useMemo, useCallback } from 'react';
 import {
   LineChart,
   Line,
@@ -311,7 +311,7 @@ const LongevitySimulator: React.FC<LongevitySimulatorProps> = ({
                 key={scenario.id}
                 className={`p-4 border rounded-lg cursor-pointer transition-all ${
                   selectedScenario === scenario.id
-                    ? 'border-blue-500 bg-blue-50'
+                    ? 'border-mpr-interactive bg-mpr-interactive-lt'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
                 onClick={() => setSelectedScenario(scenario.id)}
@@ -319,7 +319,7 @@ const LongevitySimulator: React.FC<LongevitySimulatorProps> = ({
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-medium">{scenario.name}</h4>
                   {selectedScenario === scenario.id && (
-                    <Target className="w-4 h-4 text-blue-500" />
+                    <Target className="w-4 h-4 text-mpr-interactive" />
                   )}
                 </div>
                 <p className="text-sm text-gray-600 mb-2">{scenario.description}</p>
@@ -339,7 +339,7 @@ const LongevitySimulator: React.FC<LongevitySimulatorProps> = ({
       </Card>
 
       {/* Scenario Results */}
-      <Card className="bg-gradient-to-r from-green-50 to-blue-50">
+      <Card className="bg-gradient-to-r from-green-50 to-mpr-interactive-lt">
         <CardHeader>
           <CardTitle className="text-lg text-green-800 flex items-center gap-2">
             <TrendingUp className="w-5 h-5" />
@@ -349,7 +349,7 @@ const LongevitySimulator: React.FC<LongevitySimulatorProps> = ({
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-700 mb-2">
+              <div className="text-2xl font-bold text-mpr-navy mb-2">
                 {selectedScenarioData.projectedLifeExpectancy.toFixed(1)}
               </div>
               <div className="text-sm text-gray-600">
@@ -495,17 +495,17 @@ const LongevitySimulator: React.FC<LongevitySimulatorProps> = ({
 
             {/* Results */}
             <div className="space-y-4">
-              <div className="p-4 bg-blue-50 rounded-lg">
+              <div className="p-4 bg-mpr-interactive-lt rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <Heart className="w-4 h-4 text-blue-600" />
-                  <span className="font-medium text-blue-800">
+                  <Heart className="w-4 h-4 text-mpr-interactive" />
+                  <span className="font-medium text-mpr-navy">
                     {isFrench ? 'Espérance de Vie' : 'Life Expectancy'}
                   </span>
                 </div>
-                <div className="text-2xl font-bold text-blue-700">
+                <div className="text-2xl font-bold text-mpr-navy">
                   {customSimulation.projectedLifeExpectancy.toFixed(1)} {isFrench ? 'ans' : 'years'}
                 </div>
-                <div className="text-sm text-blue-600">
+                <div className="text-sm text-mpr-interactive">
                   {customSimulation.yearsGained >= 0 ? '+' : ''}{customSimulation.yearsGained.toFixed(1)} {isFrench ? 'ans' : 'years'}
                 </div>
               </div>
@@ -621,13 +621,13 @@ const LongevitySimulator: React.FC<LongevitySimulatorProps> = ({
             )}
 
             {customSimulation.costSavings > 0 && (
-              <div className="flex items-start gap-3 p-3 bg-blue-50 rounded-lg">
-                <DollarSign className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+              <div className="flex items-start gap-3 p-3 bg-mpr-interactive-lt rounded-lg">
+                <DollarSign className="w-5 h-5 text-mpr-interactive mt-0.5 flex-shrink-0" />
                 <div>
-                  <div className="font-medium text-blue-800">
+                  <div className="font-medium text-mpr-navy">
                     {isFrench ? 'Avantages Financiers' : 'Financial Benefits'}
                   </div>
-                  <div className="text-sm text-blue-700 mt-1">
+                  <div className="text-sm text-mpr-navy mt-1">
                     {isFrench
                       ? `Économies potentielles de $${customSimulation.costSavings.toLocaleString()} par année.`
                       : `Potential savings of $${customSimulation.costSavings.toLocaleString()} per year.`

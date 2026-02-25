@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+﻿import React, { useMemo } from 'react';
 import {
   BarChart,
   Bar,
@@ -269,16 +269,16 @@ const LongevityImpactCharts: React.FC<LongevityImpactChartsProps> = ({
       </Card>
 
       {/* Summary Statistics */}
-      <Card className="bg-gradient-to-r from-blue-50 to-purple-50">
+      <Card className="bg-gradient-to-r from-mpr-interactive-lt to-purple-50">
         <CardHeader>
-          <CardTitle className="text-lg text-blue-800">
+          <CardTitle className="text-lg text-mpr-navy">
             {isFrench ? 'Résumé des Métriques' : 'Metrics Summary'}
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center">
-              <div className="text-2xl font-bold text-blue-700">
+              <div className="text-2xl font-bold text-mpr-navy">
                 {longevityData.healthFactors.reduce((sum, factor) => sum + Math.abs(factor.impact), 0).toFixed(1)}
               </div>
               <div className="text-sm text-gray-600">

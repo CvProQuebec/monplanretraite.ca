@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from 'react';
+﻿import React, { useMemo, useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import MoneyInput from '@/components/ui/MoneyInput';
@@ -120,18 +120,18 @@ const SinkingFundsManager: React.FC<Props> = ({ language, funds, onChange }) => 
     <Card className="bg-white border-2 border-gray-300">
       <CardHeader>
         <CardTitle className="text-xl text-gray-900 flex items-center gap-2">
-          <Target className="w-5 h-5 text-indigo-600" />
+          <Target className="w-5 h-5 text-mpr-interactive" />
           {t('title', language)}
         </CardTitle>
         <CardDescription>{t('subtitle', language)}</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        <Alert className="border-indigo-200 bg-indigo-50 text-indigo-900">
+        <Alert className="border-mpr-border bg-mpr-interactive-lt text-mpr-navy">
           <AlertDescription>{t('helper', language)}</AlertDescription>
         </Alert>
 
         <div className="flex justify-end">
-          <Button onClick={addFund} className="bg-blue-600 hover:bg-blue-700 text-white">
+          <Button onClick={addFund} className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white">
             <Plus className="w-4 h-4 mr-2" />
             {t('add', language)}
           </Button>
@@ -174,7 +174,7 @@ const SinkingFundsManager: React.FC<Props> = ({ language, funds, onChange }) => 
               </div>
               <div className="col-span-2">
                 <Label className="text-gray-800">{t('monthly', language)}</Label>
-                <div className="font-semibold text-indigo-700">
+                <div className="font-semibold text-mpr-navy">
                   {formatCurrencyLocale(f.monthlyRequired || 0, language)}
                 </div>
               </div>

@@ -1,4 +1,4 @@
-// src/features/retirement/sections/PersonalDataSection.tsx
+﻿// src/features/retirement/sections/PersonalDataSection.tsx
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -68,11 +68,11 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-mpr-navy text-white">
       {/* Particules de fond visibles */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-2 h-2 bg-yellow-400 rounded-full animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-3 h-3 bg-blue-400 rounded-full animate-bounce"></div>
+        <div className="absolute top-40 right-20 w-3 h-3 bg-mpr-interactive rounded-full animate-bounce"></div>
         <div className="absolute top-60 left-1/4 w-2 h-2 bg-green-400 rounded-full animate-ping"></div>
         <div className="absolute top-80 right-1/3 w-1 h-1 bg-red-400 rounded-full animate-pulse"></div>
         <div className="absolute top-96 left-1/2 w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
@@ -112,9 +112,9 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
           {/* Personne 1 */}
           <Card className="bg-gradient-to-br from-slate-800/90 to-slate-700/90 border-0 shadow-2xl backdrop-blur-sm">
-            <CardHeader className="border-b border-slate-600 bg-gradient-to-r from-blue-600/20 to-purple-600/20">
-              <CardTitle className="text-2xl font-bold text-blue-300 flex items-center gap-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+            <CardHeader className="border-b border-slate-600 bg-gradient-to-r from-mpr-interactive/20 to-purple-600/20">
+              <CardTitle className="text-2xl font-bold text-mpr-interactive flex items-center gap-3">
+                <div className="w-8 h-8 bg-gradient-to-r from-mpr-interactive to-purple-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
                   1
                 </div>
                 {isFrench ? 'Personne 1' : 'Person 1'}
@@ -130,7 +130,7 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
                     type="text"
                     value={data.personal?.prenom1 || ''}
                     onChange={(e) => handleChange('prenom1', e.target.value)}
-                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400"
+                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-mpr-interactive focus:ring-mpr-interactive"
                     placeholder={isFrench ? 'Prénom' : 'First Name'}
                   />
                 </div>
@@ -195,7 +195,7 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
                       type="text"
                       value={formatSalaryInput(data.personal?.salaire1 || 0)}
                       onChange={(e) => handleSalaryChange('1', e.target.value)}
-                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 pl-8 focus:border-blue-400 focus:ring-blue-400"
+                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 pl-8 focus:border-mpr-interactive focus:ring-mpr-interactive"
                       placeholder="0"
                     />
                   </div>
@@ -209,7 +209,7 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
                     type="number"
                     value={data.personal?.ageRetraiteSouhaite1 || 65}
                     onChange={(e) => handleChange('ageRetraiteSouhaite1', Number(e.target.value))}
-                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-blue-400"
+                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-mpr-interactive focus:ring-mpr-interactive"
                     min="50"
                     max="100"
                   />
@@ -219,10 +219,10 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
           </Card>
 
           {/* Personne 2 */}
-          <Card className="bg-gradient-to-br from-indigo-800/90 to-purple-800/90 border-0 shadow-2xl backdrop-blur-sm">
-            <CardHeader className="border-b border-indigo-600 bg-gradient-to-r from-indigo-600/20 to-purple-600/20">
-              <CardTitle className="text-2xl font-bold text-indigo-300 flex items-center gap-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
+          <Card className="bg-gradient-to-br from-mpr-navy/90 to-purple-800/90 border-0 shadow-2xl backdrop-blur-sm">
+            <CardHeader className="border-b border-mpr-interactive bg-gradient-to-r from-mpr-interactive/20 to-purple-600/20">
+              <CardTitle className="text-2xl font-bold text-mpr-interactive flex items-center gap-3">
+                <div className="w-8 h-8 bg-gradient-to-r from-mpr-interactive to-purple-500 rounded-full flex items-center justify-center text-white font-bold shadow-lg">
                   2
                 </div>
                 {isFrench ? 'Personne 2' : 'Person 2'}
@@ -238,7 +238,7 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
                     type="text"
                     value={data.personal?.prenom2 || ''}
                     onChange={(e) => handleChange('prenom2', e.target.value)}
-                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
+                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-mpr-interactive focus:ring-mpr-interactive"
                     placeholder={isFrench ? 'Prénom (optionnel)' : 'First Name (optional)'}
                   />
                 </div>
@@ -303,7 +303,7 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
                       type="text"
                       value={formatSalaryInput(data.personal?.salaire2 || 0)}
                       onChange={(e) => handleSalaryChange('2', e.target.value)}
-                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 pl-8 focus:border-indigo-400 focus:ring-indigo-400"
+                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 pl-8 focus:border-mpr-interactive focus:ring-mpr-interactive"
                       placeholder="0"
                     />
                   </div>
@@ -317,7 +317,7 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
                     type="number"
                     value={data.personal?.ageRetraiteSouhaite2 || 65}
                     onChange={(e) => handleChange('ageRetraiteSouhaite2', Number(e.target.value))}
-                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-indigo-400 focus:ring-indigo-400"
+                    className="bg-slate-700 border-slate-600 text-white placeholder-gray-400 focus:border-mpr-interactive focus:ring-mpr-interactive"
                     min="50"
                     max="100"
                   />
@@ -401,7 +401,7 @@ export const PersonalDataSection: React.FC<PersonalDataSectionProps> = ({
                   )}
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl font-bold text-blue-400">
+                  <div className="text-2xl font-bold text-mpr-interactive">
                     ${(data.personal?.depensesAnnuelles || 0).toLocaleString()}
                   </div>
                   <div className="text-sm text-gray-300">

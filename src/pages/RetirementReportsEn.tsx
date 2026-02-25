@@ -1,4 +1,4 @@
-// src/pages/RetirementReportsEn.tsx
+﻿// src/pages/RetirementReportsEn.tsx
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,7 +19,7 @@ const RetirementReportsEn: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-mpr-interactive-lt">
       <div className="container mx-auto px-4 py-12 max-w-6xl">
         
         {/* Header with back button */}
@@ -35,7 +35,7 @@ const RetirementReportsEn: React.FC = () => {
           
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 flex items-center justify-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-xl flex items-center justify-center">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-mpr-interactive rounded-xl flex items-center justify-center">
                 <FileText className="w-6 h-6 text-white" />
               </div>
               Retirement Reports
@@ -59,8 +59,8 @@ const RetirementReportsEn: React.FC = () => {
           <CardContent>
             <div className="grid md:grid-cols-3 gap-6">
               <div className="text-center p-6">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <BarChart3 className="w-8 h-8 text-blue-600" />
+                <div className="w-16 h-16 bg-mpr-interactive-lt rounded-full flex items-center justify-center mx-auto mb-4">
+                  <BarChart3 className="w-8 h-8 text-mpr-interactive" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">Complete analysis</h3>
                 <p className="text-sm text-gray-600">
@@ -106,8 +106,8 @@ const RetirementReportsEn: React.FC = () => {
               {/* Executive Report */}
               <div className="border rounded-lg p-6 hover:shadow-md transition-shadow">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <FileText className="w-6 h-6 text-blue-600" />
+                  <div className="w-12 h-12 bg-mpr-interactive-lt rounded-lg flex items-center justify-center">
+                    <FileText className="w-6 h-6 text-mpr-interactive" />
                   </div>
                   <Badge variant="outline" className="text-xs">Professional+</Badge>
                 </div>
@@ -117,21 +117,21 @@ const RetirementReportsEn: React.FC = () => {
                 </p>
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center gap-2 text-xs text-gray-500">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                     <span>Asset overview</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-gray-500">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                     <span>Objectives and projections</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-gray-500">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                     <span>Priority recommendations</span>
                   </div>
                 </div>
                 <Button
                   onClick={() => handleViewReport('executive')}
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                  className="w-full bg-mpr-interactive hover:bg-mpr-interactive-dk text-white"
                 >
                   <Eye className="w-4 h-4 mr-2" />
                   View
@@ -281,8 +281,8 @@ const RetirementReportsEn: React.FC = () => {
               {/* Custom Report */}
               <div className="border rounded-lg p-6 hover:shadow-md transition-shadow">
                 <div className="flex items-center justify-between mb-4">
-                  <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center">
-                    <FileText className="w-6 h-6 text-indigo-600" />
+                  <div className="w-12 h-12 bg-mpr-interactive-lt rounded-lg flex items-center justify-center">
+                    <FileText className="w-6 h-6 text-mpr-interactive" />
                   </div>
                   <Badge variant="secondary" className="text-xs">Custom</Badge>
                 </div>
@@ -292,21 +292,21 @@ const RetirementReportsEn: React.FC = () => {
                 </p>
                 <div className="space-y-2 mb-4">
                   <div className="flex items-center gap-2 text-xs text-gray-500">
-                    <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                     <span>Custom content</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-gray-500">
-                    <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                     <span>Adapted format</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-gray-500">
-                    <div className="w-2 h-2 bg-indigo-500 rounded-full"></div>
+                    <div className="w-2 h-2 bg-mpr-interactive rounded-full"></div>
                     <span>Contact us</span>
                   </div>
                 </div>
                 <Button
                   onClick={() => handleViewReport('custom')}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
+                  className="w-full bg-mpr-interactive hover:bg-mpr-interactive-dk text-white"
                 >
                   <Eye className="w-4 h-4 mr-2" />
                   View
@@ -393,7 +393,7 @@ const RetirementReportsEn: React.FC = () => {
 
         {/* Call to Action */}
         <div className="text-center">
-          <Card className="bg-gradient-to-r from-purple-600 to-blue-600 text-white border-0 shadow-xl">
+          <Card className="bg-gradient-to-r from-purple-600 to-mpr-interactive text-white border-0 shadow-xl">
             <CardContent className="py-12">
               <h2 className="text-3xl font-bold mb-4">Ready to generate your reports?</h2>
               <p className="text-xl mb-8 opacity-90">

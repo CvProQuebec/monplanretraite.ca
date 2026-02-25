@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -166,12 +166,12 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-mpr-interactive-lt">
       <div className="container mx-auto px-6 py-12">
         {/* En-tête */}
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <Building2 className="w-12 h-12 text-blue-600" />
+            <Building2 className="w-12 h-12 text-mpr-interactive" />
             <h1 className="text-4xl font-bold text-gray-900">
               {t.title}
             </h1>
@@ -183,9 +183,9 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Formulaire de saisie */}
-          <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200 shadow-lg">
+          <Card className="bg-white/80 backdrop-blur-sm border-2 border-mpr-border shadow-lg">
             <CardHeader>
-              <CardTitle className="flex items-center gap-3 text-blue-800">
+              <CardTitle className="flex items-center gap-3 text-mpr-navy">
                 <Calculator className="w-6 h-6" />
                 {t.rregopData}
               </CardTitle>
@@ -269,7 +269,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
               <Button 
                 onClick={handleCalculate}
                 disabled={isCalculating}
-                className="w-full bg-blue-600 hover:bg-blue-700"
+                className="w-full bg-mpr-interactive hover:bg-mpr-interactive-dk"
               >
                 {isCalculating ? t.calculating : t.calculate}
               </Button>
@@ -297,7 +297,7 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                         <div className="text-sm text-gray-600">{t.annualPension}</div>
                       </div>
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-blue-600">
+                        <div className="text-2xl font-bold text-mpr-interactive">
                           {Math.round(results.montantFinal / 12).toLocaleString()} $
                         </div>
                         <div className="text-sm text-gray-600">{t.monthlyPension}</div>
@@ -316,9 +316,9 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                 </Card>
 
                 {/* Scénarios */}
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200">
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-mpr-border">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-blue-800">
+                    <CardTitle className="flex items-center gap-3 text-mpr-navy">
                       <TrendingUp className="w-6 h-6" />
                       {t.retirementScenarios}
                     </CardTitle>
@@ -360,9 +360,9 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
 
                 {/* Recommandations */}
                 {results.recommandations.length > 0 && (
-                  <Card className="bg-blue-50 border-2 border-blue-200">
+                  <Card className="bg-mpr-interactive-lt border-2 border-mpr-border">
                     <CardHeader>
-                      <CardTitle className="flex items-center gap-3 text-blue-800">
+                      <CardTitle className="flex items-center gap-3 text-mpr-navy">
                         <Info className="w-6 h-6" />
                         {t.recommendations}
                       </CardTitle>
@@ -370,8 +370,8 @@ export default function RREGOPAnalysisSection({ userPlan }: RREGOPAnalysisSectio
                     <CardContent>
                       <div className="space-y-3">
                         {results.recommandations.map((recommandation: any, index: number) => (
-                          <div key={index} className="border-l-4 border-blue-500 pl-4">
-                            <h4 className="font-semibold text-blue-800">{recommandation.titre}</h4>
+                          <div key={index} className="border-l-4 border-mpr-interactive pl-4">
+                            <h4 className="font-semibold text-mpr-navy">{recommandation.titre}</h4>
                             <p className="text-sm text-gray-700 mb-2">{recommandation.description}</p>
                             <div className="text-xs text-gray-600">
                               <strong>{t.impact}</strong> {recommandation.impact}

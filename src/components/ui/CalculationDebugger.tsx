@@ -1,4 +1,4 @@
-// src/components/ui/CalculationDebugger.tsx
+﻿// src/components/ui/CalculationDebugger.tsx
 // Composant pour déboguer les calculs de revenus
 
 import React, { useState, useEffect } from 'react';
@@ -184,7 +184,7 @@ export const CalculationDebugger: React.FC<CalculationDebuggerProps> = ({
       <div className="fixed bottom-4 right-4 z-50">
         <button
           onClick={() => setShowDebugger(true)}
-          className="bg-blue-600 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-blue-700 transition-colors"
+          className="bg-mpr-interactive text-white px-4 py-2 rounded-lg shadow-lg hover:bg-mpr-interactive-dk transition-colors"
         >
           🐛 Debug Calculs
         </button>
@@ -215,7 +215,7 @@ export const CalculationDebugger: React.FC<CalculationDebuggerProps> = ({
               <p><strong>Nombre d'entrées:</strong> {debugInfo?.entries?.length || 0}</p>
             </div>
 
-            <div className="bg-blue-50 p-4 rounded-lg">
+            <div className="bg-mpr-interactive-lt p-4 rounded-lg">
               <h3 className="font-semibold mb-2">Données utilisateur (RRQ/SV)</h3>
               <div className="grid grid-cols-2 gap-4">
                 <div>
@@ -316,7 +316,7 @@ export const CalculationDebugger: React.FC<CalculationDebuggerProps> = ({
                 onClick={() => {
                   console.log('📊 Debug Info:', debugInfo);
                 }}
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+                className="bg-mpr-interactive text-white px-4 py-2 rounded-lg hover:bg-mpr-interactive-dk transition-colors"
               >
                 📋 Log dans la console
               </button>

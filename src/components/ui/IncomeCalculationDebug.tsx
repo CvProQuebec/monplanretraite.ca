@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { UserData } from '@/types';
 import { calculateIncomeFromPeriods } from '@/utils/incomeCalculationUtils';
@@ -31,7 +31,7 @@ const IncomeCalculationDebug: React.FC<IncomeCalculationDebugProps> = ({ userDat
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Personne 1 */}
           <div className="bg-white p-4 rounded-lg border">
-            <h4 className="font-semibold text-blue-800 mb-2">Personne 1</h4>
+            <h4 className="font-semibold text-mpr-navy mb-2">Personne 1</h4>
             <div className="space-y-2 text-sm">
               <div><strong>Salaire:</strong> ${income1Result.totalSalary.toLocaleString()}</div>
               <div><strong>Pensions:</strong> ${income1Result.totalPensions.toLocaleString()}</div>
@@ -43,7 +43,7 @@ const IncomeCalculationDebug: React.FC<IncomeCalculationDebugProps> = ({ userDat
               
               {/* Détails des calculs */}
               {income1Result.details.salary.length > 0 && (
-                <div className="mt-3 p-2 bg-blue-50 rounded text-xs">
+                <div className="mt-3 p-2 bg-mpr-interactive-lt rounded text-xs">
                   <strong>Détails Salaires:</strong>
                   {income1Result.details.salary.map((detail, idx) => (
                     <div key={idx} className="ml-2">
@@ -80,7 +80,7 @@ const IncomeCalculationDebug: React.FC<IncomeCalculationDebugProps> = ({ userDat
               
               {/* Détails des calculs */}
               {income2Result.details.salary.length > 0 && (
-                <div className="mt-3 p-2 bg-blue-50 rounded text-xs">
+                <div className="mt-3 p-2 bg-mpr-interactive-lt rounded text-xs">
                   <strong>Détails Salaires:</strong>
                   {income2Result.details.salary.map((detail, idx) => (
                     <div key={idx} className="ml-2">
@@ -113,8 +113,8 @@ const IncomeCalculationDebug: React.FC<IncomeCalculationDebugProps> = ({ userDat
         </div>
         
         {/* Données brutes pour debug */}
-        <div className="bg-blue-50 p-4 rounded-lg">
-          <h4 className="font-semibold text-blue-800 mb-2">Données Brutes (Debug)</h4>
+        <div className="bg-mpr-interactive-lt p-4 rounded-lg">
+          <h4 className="font-semibold text-mpr-navy mb-2">Données Brutes (Debug)</h4>
           <div className="text-xs text-gray-600 overflow-auto max-h-32">
             <pre>{JSON.stringify({
               unifiedIncome1: unifiedIncome1,

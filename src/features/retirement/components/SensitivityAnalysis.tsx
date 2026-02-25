@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -138,7 +138,7 @@ export function SensitivityAnalysis() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-mpr-interactive-lt">
       <div className="container mx-auto px-6 py-12">
         {/* En-tête */}
         <div className="text-center mb-12">
@@ -239,16 +239,16 @@ export function SensitivityAnalysis() {
             {results && (
               <>
                 {/* Résumé principal */}
-                <Card className="bg-blue-50 border-2 border-blue-200">
+                <Card className="bg-mpr-interactive-lt border-2 border-mpr-border">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-blue-800">
+                    <CardTitle className="flex items-center gap-3 text-mpr-navy">
                       <CheckCircle className="w-6 h-6" />
                       Scénario de Référence
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
                     <div className="text-center">
-                      <div className="text-3xl font-bold text-blue-600 mb-2">
+                      <div className="text-3xl font-bold text-mpr-interactive mb-2">
                         {results.montantBase.toLocaleString()} $
                       </div>
                       <div className="text-sm text-gray-600">
@@ -291,9 +291,9 @@ export function SensitivityAnalysis() {
                 </Card>
 
                 {/* Sensibilité aux contributions */}
-                <Card className="bg-white/80 backdrop-blur-sm border-2 border-blue-200">
+                <Card className="bg-white/80 backdrop-blur-sm border-2 border-mpr-border">
                   <CardHeader>
-                    <CardTitle className="flex items-center gap-3 text-blue-800">
+                    <CardTitle className="flex items-center gap-3 text-mpr-navy">
                       <Calculator className="w-6 h-6" />
                       Sensibilité aux Contributions
                     </CardTitle>

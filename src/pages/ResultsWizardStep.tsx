@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+﻿import React, { useEffect, useMemo, useState } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { wizardService } from '@/services/WizardService';
 import { RetirementHelpers } from '@/domain/retirement/RetirementDomainAdapter';
@@ -343,14 +343,14 @@ const ResultsWizardStep: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Bandeau état */}
-      <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-4 flex items-center justify-between">
-        <div className="flex items-center gap-3 text-blue-900">
+      <div className="bg-mpr-interactive-lt border-2 border-mpr-border rounded-xl p-4 flex items-center justify-between">
+        <div className="flex items-center gap-3 text-mpr-navy">
           <CheckCircle className="w-5 h-5" />
           <span className="font-semibold">
             {isFrench ? 'Résultats & Plan d’action' : 'Results & Action Plan'}
           </span>
         </div>
-        <div className="text-sm text-blue-800">
+        <div className="text-sm text-mpr-navy">
           {isFrench ? 'Dernière sauvegarde' : 'Last saved'}: <strong>{lastSavedAt ? formatTimeOQLF(lastSavedAt) : '—'}</strong>
         </div>
       </div>
@@ -483,7 +483,7 @@ const ResultsWizardStep: React.FC = () => {
       {/* Rappels */}
       <div className="bg-white border-2 border-gray-300 rounded-xl p-6">
         <div className="flex items-center gap-3 mb-4">
-          <Bell className="w-6 h-6 text-blue-600" />
+          <Bell className="w-6 h-6 text-mpr-interactive" />
           <h2 className="text-xl font-bold text-gray-900">
             {isFrench ? 'Planifier des rappels' : 'Schedule reminders'}
           </h2>

@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Étape des bases du budget
  */
 
@@ -25,11 +25,11 @@ export const BudgetBasicsStep: React.FC<BudgetBasicsStepProps> = ({ onComplete, 
           <p className="text-gray-700">
             Un budget est un plan qui vous aide à gérer votre argent en comparant vos revenus et vos dépenses.
           </p>
-          <Card className="border-blue-200 bg-blue-50">
+          <Card className="border-mpr-border bg-mpr-interactive-lt">
             <CardContent className="p-4">
               <div className="flex items-center mb-3">
-                <Calculator className="h-5 w-5 text-blue-600 mr-2" />
-                <h4 className="font-semibold text-blue-800">Formule simple</h4>
+                <Calculator className="h-5 w-5 text-mpr-interactive mr-2" />
+                <h4 className="font-semibold text-mpr-navy">Formule simple</h4>
               </div>
               <div className="text-center text-lg font-mono bg-white p-3 rounded border">
                 Revenus - Dépenses = Surplus (ou Déficit)
@@ -93,7 +93,7 @@ export const BudgetBasicsStep: React.FC<BudgetBasicsStepProps> = ({ onComplete, 
               </div>
             </div>
             <div className="flex items-center">
-              <div className="w-12 h-8 bg-blue-500 rounded mr-3"></div>
+              <div className="w-12 h-8 bg-mpr-interactive rounded mr-3"></div>
               <div className="flex-1">
                 <div className="font-semibold">30% - Désirs et loisirs</div>
                 <div className="text-sm text-gray-600">Restaurants, divertissement, achats non-essentiels</div>
@@ -136,7 +136,7 @@ export const BudgetBasicsStep: React.FC<BudgetBasicsStepProps> = ({ onComplete, 
                       value={option.id}
                       checked={answers.netflix === option.id}
                       onChange={(e) => setAnswers(prev => ({ ...prev, netflix: e.target.value }))}
-                      className="text-blue-600"
+                      className="text-mpr-interactive"
                     />
                     <span>{option.label}</span>
                   </label>
@@ -203,7 +203,7 @@ export const BudgetBasicsStep: React.FC<BudgetBasicsStepProps> = ({ onComplete, 
       {/* Contenu de la section courante - Scrollable */}
       <Card className="flex-1 flex flex-col">
         <CardContent className="p-4 flex-1 flex flex-col">
-          <h3 className="text-base font-semibold mb-3 text-blue-800">
+          <h3 className="text-base font-semibold mb-3 text-mpr-navy">
             {sections[currentSection].title}
           </h3>
           <div className="flex-1 overflow-y-auto">

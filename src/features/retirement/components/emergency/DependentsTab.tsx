@@ -1,4 +1,4 @@
-// Onglet des personnes à charge
+﻿// Onglet des personnes à charge
 // Composant de base pour la version gratuite
 
 import React from 'react';
@@ -45,13 +45,13 @@ export const DependentsTab: React.FC<DependentsTabProps> = ({ data, onUpdate }) 
 
   return (
     <div className="space-y-6">
-      <Card className="border-blue-200 bg-blue-50">
+      <Card className="border-mpr-border bg-mpr-interactive-lt">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-blue-900">
+          <CardTitle className="flex items-center gap-2 text-mpr-navy">
             <Users className="w-5 h-5" />
             Personnes à charge
           </CardTitle>
-          <CardDescription className="text-blue-700">
+          <CardDescription className="text-mpr-navy">
             Informations sur les personnes qui dépendent de vous financièrement ou autrement.
           </CardDescription>
         </CardHeader>
@@ -126,9 +126,9 @@ export const DependentsTab: React.FC<DependentsTabProps> = ({ data, onUpdate }) 
       )}
 
       {data.length >= 4 && (
-        <Card className="border-blue-200 bg-blue-50">
+        <Card className="border-mpr-border bg-mpr-interactive-lt">
           <CardContent className="pt-6">
-            <div className="flex items-center gap-2 text-blue-800">
+            <div className="flex items-center gap-2 text-mpr-navy">
               <Info className="w-5 h-5" />
               <span className="text-sm">
                 <strong>Limite de la version gratuite :</strong> Maximum 4 personnes à charge. 

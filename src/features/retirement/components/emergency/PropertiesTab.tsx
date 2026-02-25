@@ -1,4 +1,4 @@
-// Onglet des propriétés et biens entreposés
+﻿// Onglet des propriétés et biens entreposés
 // Plan Professional - Gestion avancée des biens
 import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -262,7 +262,7 @@ export const PropertiesTab: React.FC<PropertiesTabProps> = ({ data, onUpdate }) 
 
   const getPropertyTypeColor = (type: string) => {
     const colors: Record<string, string> = {
-      residential: 'bg-blue-100 text-blue-800',
+      residential: 'bg-mpr-interactive-lt text-mpr-navy',
       commercial: 'bg-green-100 text-green-800',
       vacation: 'bg-yellow-100 text-yellow-800',
       investment: 'bg-purple-100 text-purple-800',
@@ -275,7 +275,7 @@ export const PropertiesTab: React.FC<PropertiesTabProps> = ({ data, onUpdate }) 
   const getGoodsCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
       furniture: 'bg-brown-100 text-brown-800',
-      electronics: 'bg-blue-100 text-blue-800',
+      electronics: 'bg-mpr-interactive-lt text-mpr-navy',
       jewelry: 'bg-yellow-100 text-yellow-800',
       art: 'bg-purple-100 text-purple-800',
       collectibles: 'bg-red-100 text-red-800',
@@ -290,7 +290,7 @@ export const PropertiesTab: React.FC<PropertiesTabProps> = ({ data, onUpdate }) 
   const getConditionColor = (condition: string) => {
     const colors: Record<string, string> = {
       excellent: 'bg-green-100 text-green-800',
-      good: 'bg-blue-100 text-blue-800',
+      good: 'bg-mpr-interactive-lt text-mpr-navy',
       fair: 'bg-yellow-100 text-yellow-800',
       poor: 'bg-orange-100 text-orange-800',
       damaged: 'bg-red-100 text-red-800'
@@ -315,7 +315,7 @@ export const PropertiesTab: React.FC<PropertiesTabProps> = ({ data, onUpdate }) 
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center space-x-2">
-              <Building className="h-5 w-5 text-blue-600" />
+              <Building className="h-5 w-5 text-mpr-interactive" />
               <div>
                 <p className="text-sm text-muted-foreground">Propriétés</p>
                 <p className="text-2xl font-bold">{data.properties.length}</p>

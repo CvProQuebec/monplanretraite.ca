@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Star, TrendingUp, DollarSign, Users, Shield, BarChart3 } from 'lucide-react';
@@ -223,7 +223,7 @@ const PersonalizedLongevityAnalysis: React.FC<PersonalizedLongevityAnalysisProps
       {/* Métriques principales */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
         <div className="text-center">
-          <div className="text-2xl font-bold text-blue-700">
+          <div className="text-2xl font-bold text-mpr-navy">
             {remainingYears.toFixed(1)} {isFrench ? 'ans' : 'years'}
           </div>
           <div className="text-sm text-gray-600">
@@ -294,7 +294,7 @@ const PersonalizedLongevityAnalysis: React.FC<PersonalizedLongevityAnalysisProps
       </div>
 
       {/* Impact des revenus synchronisés */}
-      <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-3">
+      <div className="bg-gradient-to-r from-green-50 to-mpr-interactive-lt rounded-lg p-3">
         <h5 className="font-semibold text-green-800 mb-2 text-sm flex items-center gap-1">
           <DollarSign className="w-4 h-4" />
           {isFrench ? 'Impact des Revenus Synchronisés:' : 'Synchronized Income Impact:'}
@@ -308,7 +308,7 @@ const PersonalizedLongevityAnalysis: React.FC<PersonalizedLongevityAnalysisProps
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">{isFrench ? 'Multiplicateur santé:' : 'Health multiplier:'}</span>
-            <span className="font-medium text-blue-700">
+            <span className="font-medium text-mpr-navy">
               {incomeImpact.healthMultiplier.toFixed(2)}x
             </span>
           </div>

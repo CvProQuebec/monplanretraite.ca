@@ -1,4 +1,4 @@
-// Composant de démonstration des nouveaux composants de navigation
+﻿// Composant de démonstration des nouveaux composants de navigation
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TabbedNavigation } from './TabbedNavigation';
@@ -238,8 +238,8 @@ export const NavigationDemo: React.FC = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
               <div className="text-center">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
-                  <BarChart3 className="w-6 h-6 text-blue-600" />
+                <div className="w-12 h-12 bg-mpr-interactive-lt rounded-lg flex items-center justify-center mx-auto mb-3">
+                  <BarChart3 className="w-6 h-6 text-mpr-interactive" />
                 </div>
                 <h4 className="font-semibold text-gray-900 mb-2">
                   {language === 'fr' ? 'Navigation par onglets' : 'Tab Navigation'}
@@ -287,12 +287,12 @@ export const NavigationDemo: React.FC = () => {
 
         {/* Section des nouvelles fonctionnalités */}
         <div className="mt-16">
-          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl p-8 border border-blue-200">
+          <div className="bg-gradient-to-r from-mpr-interactive-lt to-mpr-interactive-lt rounded-2xl p-8 border border-mpr-border">
             <div className="text-center mb-8">
-              <h3 className="text-2xl font-bold text-blue-900 mb-4">
+              <h3 className="text-2xl font-bold text-mpr-navy mb-4">
                 🆕 {language === 'fr' ? 'Nouvelles fonctionnalités ajoutées' : 'New features added'}
               </h3>
-              <p className="text-blue-700 max-w-3xl mx-auto">
+              <p className="text-mpr-navy max-w-3xl mx-auto">
                 {language === 'fr'
                   ? 'Découvrez nos dernières améliorations pour une expérience complète et sécurisée'
                   : 'Discover our latest improvements for a complete and secure experience'
@@ -301,7 +301,7 @@ export const NavigationDemo: React.FC = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="bg-white rounded-xl p-6 shadow-md border border-blue-200">
+              <div className="bg-white rounded-xl p-6 shadow-md border border-mpr-border">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
                     <AlertTriangle className="w-5 h-5 text-red-600" />
@@ -321,10 +321,10 @@ export const NavigationDemo: React.FC = () => {
                 </div>
               </div>
               
-              <div className="bg-white rounded-xl p-6 shadow-md border border-blue-200">
+              <div className="bg-white rounded-xl p-6 shadow-md border border-mpr-border">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                    <FileText className="w-5 h-5 text-blue-600" />
+                  <div className="w-10 h-10 bg-mpr-interactive-lt rounded-lg flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-mpr-interactive" />
                   </div>
                   <h4 className="font-semibold text-gray-900">
                     {language === 'fr' ? 'Rapports détaillés' : 'Detailed Reports'}
@@ -341,7 +341,7 @@ export const NavigationDemo: React.FC = () => {
                 </div>
               </div>
               
-              <div className="bg-white rounded-xl p-6 shadow-md border border-blue-200">
+              <div className="bg-white rounded-xl p-6 shadow-md border border-mpr-border">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
                     <Database className="w-5 h-5 text-green-600" />

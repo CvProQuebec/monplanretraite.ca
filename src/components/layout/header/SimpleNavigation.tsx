@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { useAuth } from '@/hooks/useAuth';
@@ -51,7 +51,7 @@ export const SimpleNavigation: React.FC = () => {
   };
 
   return (
-    <nav className="retirement-navigation bg-gradient-to-r from-blue-800 to-blue-900 border-b-0 shadow-xl">
+    <nav className="retirement-navigation bg-gradient-to-r from-mpr-navy-mid to-mpr-navy border-b-0 shadow-xl">
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between py-4">
           {/* Logo et titre - FORCÉ avec timestamp */}
@@ -102,7 +102,7 @@ export const SimpleNavigation: React.FC = () => {
             ) : (
               <button
                 onClick={() => navigate('/')}
-                className="btn-secondary bg-gradient-to-r from-blue-500 to-blue-600 px-6 py-3 text-sm font-semibold text-white rounded-xl hover:from-blue-600 hover:to-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg"
+                className="btn-secondary bg-gradient-to-r from-mpr-interactive to-mpr-interactive px-6 py-3 text-sm font-semibold text-white rounded-xl hover:from-mpr-interactive hover:to-mpr-interactive-dk transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 {language === 'fr' ? 'Se connecter' : 'Sign In'}
               </button>

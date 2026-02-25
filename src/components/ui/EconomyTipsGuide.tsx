@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Guide "99 trucs pour économiser sans trop se priver"
  * Basé sur l'expertise Retraite101 pour optimiser les dépenses
  * Organisé par catégories avec système de recherche et favoris
@@ -422,12 +422,12 @@ export const EconomyTipsGuide: React.FC = () => {
 
       {/* Statistiques personnelles */}
       {implemented.length > 0 && (
-        <Card className="border-blue-200 bg-blue-50">
+        <Card className="border-mpr-border bg-mpr-interactive-lt">
           <CardContent className="pt-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
               <div>
-                <div className="text-2xl font-bold text-blue-600">{implemented.length}</div>
-                <div className="text-sm text-blue-700">Trucs implémentés</div>
+                <div className="text-2xl font-bold text-mpr-interactive">{implemented.length}</div>
+                <div className="text-sm text-mpr-navy">Trucs implémentés</div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-green-600">{calculateTotalSavings()}$</div>
@@ -538,7 +538,7 @@ export const EconomyTipsGuide: React.FC = () => {
                   </div>
                   <div className="flex justify-between text-xs">
                     <span className="font-medium">Temps:</span>
-                    <span className="text-blue-600">{tip.timeToImplement}</span>
+                    <span className="text-mpr-interactive">{tip.timeToImplement}</span>
                   </div>
                 </div>
                 

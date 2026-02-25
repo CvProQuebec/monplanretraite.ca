@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+﻿import React, { useMemo, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import {
@@ -27,7 +27,7 @@ const CategoryTile: React.FC<{
     title={label}
   >
     <CardContent className="p-4">
-      <div className="text-sm text-blue-700 font-semibold">{label}</div>
+      <div className="text-sm text-mpr-navy font-semibold">{label}</div>
       <div className="text-xs text-slate-500">{count} {lang === 'fr' ? 'articles' : 'posts'}</div>
     </CardContent>
   </Card>
@@ -197,13 +197,13 @@ const BlogHome: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
   const openCategory = (label: string) => navigate(`${lang === 'en' ? '/en/blog/category' : '/blog/categorie'}/${slugifyCategory(label)}`);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-mpr-interactive-lt via-white to-purple-50">
       <div className="container mx-auto px-6 py-10">
         {/* Hero amélioré */}
         <div className="max-w-6xl mx-auto">
           <div className="blog-hero">
             <div className="hero-content">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 border border-blue-200 text-blue-800 text-sm">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-mpr-interactive-lt border border-mpr-border text-mpr-navy text-sm">
                 <BookOpen className="w-4 h-4" />
                 <span>{lang === 'fr' ? 'Blog MonPlanRetraite.ca' : 'MonPlanRetraite.ca Blog'}</span>
               </div>
@@ -290,7 +290,7 @@ const BlogHome: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
                       <CardTitle className="text-base line-clamp-2">{p.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="text-xs text-blue-700 font-semibold mb-2">{categoryLabel(p.category)}</div>
+                      <div className="text-xs text-mpr-navy font-semibold mb-2">{categoryLabel(p.category)}</div>
                       <p className="text-sm text-gray-600 line-clamp-3">{p.excerpt}</p>
                       <div className="mt-3 text-xs text-gray-500">
                         {new Date(p.date + 'T00:00:00').toLocaleDateString(

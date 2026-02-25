@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { 
   Calculator, 
   BarChart3, 
@@ -480,7 +480,7 @@ export const CombinedPensionPlanner: React.FC<CombinedPensionPlannerProps> = ({ 
                   <div className="space-y-2">
                     {combinedResults.recommendations.map((rec, index) => (
                       <div key={index} className="flex items-start gap-2">
-                        <Info className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                        <Info className="h-4 w-4 text-mpr-interactive mt-0.5 flex-shrink-0" />
                         <span className="text-sm">{rec}</span>
                       </div>
                     ))}
@@ -551,7 +551,7 @@ export const CombinedPensionPlanner: React.FC<CombinedPensionPlannerProps> = ({ 
             {isMonteCarloRunning ? (
               <Card>
                 <CardContent className="py-8 text-center">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-mpr-interactive mx-auto mb-4"></div>
                   <p className="text-lg font-medium">{t.monteCarloRunning}</p>
                   <p className="text-sm text-gray-500">Veuillez patienter...</p>
                 </CardContent>
@@ -571,7 +571,7 @@ export const CombinedPensionPlanner: React.FC<CombinedPensionPlannerProps> = ({ 
                   <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                       <div className="text-center">
-                        <div className="text-2xl font-bold text-blue-600">
+                        <div className="text-2xl font-bold text-mpr-interactive">
                           ${monteCarloResults.statistiques.revenuMoyen.toFixed(0)}
                         </div>
                         <div className="text-sm text-gray-500">{t.averageIncome}</div>

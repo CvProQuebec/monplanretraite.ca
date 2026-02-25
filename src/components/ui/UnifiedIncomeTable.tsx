@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import DateInput from '@/components/ui/DateInput';
@@ -165,7 +165,7 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
       label: isFrench ? 'Salaire' : 'Salary',
       frequency: 'annual',
       showToDate: false,
-      color: 'bg-blue-500'
+      color: 'bg-mpr-interactive'
     },
     { 
       value: 'rentes', 
@@ -200,7 +200,7 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
       label: isFrench ? 'Travail autonome' : 'Self-Employment',
       frequency: 'annual',
       showToDate: false,
-      color: 'bg-indigo-500'
+      color: 'bg-mpr-interactive'
     },
     { 
       value: 'autres', 
@@ -869,7 +869,7 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
                   <button
                     onClick={() => setEditingId(isEditing ? null : entry.id)}
                     title={isEditing ? (isFrench ? 'Arrêter l\'édition' : 'Stop editing') : (isFrench ? 'Modifier ce revenu' : 'Edit this income')}
-                    className="p-1 text-blue-400 hover:text-blue-300 hover:bg-blue-900/20 rounded"
+                    className="p-1 text-mpr-interactive hover:text-mpr-interactive hover:bg-mpr-navy/20 rounded"
                   >
                     <Edit3 className="w-4 h-4" />
                   </button>
@@ -899,16 +899,16 @@ const UnifiedIncomeTable: React.FC<UnifiedIncomeTableProps> = ({
         </div>
         
         {/* Résumé des totaux */}
-        <Card className="bg-gradient-to-r from-blue-900/50 to-indigo-900/50 border border-blue-500/30">
+        <Card className="bg-gradient-to-r from-mpr-navy/50 to-mpr-navy/50 border border-mpr-interactive/30">
           <CardContent className="p-4">
-            <h4 className="text-lg font-bold text-blue-300 mb-4 flex items-center gap-2">
+            <h4 className="text-lg font-bold text-mpr-interactive mb-4 flex items-center gap-2">
               <Calculator className="w-5 h-5" />
               {isFrench ? 'Résumé des revenus' : 'Income Summary'}
             </h4>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
               <div>
-                <div className="text-2xl font-bold text-blue-400">
+                <div className="text-2xl font-bold text-mpr-interactive">
                   {formatCurrency(incomeTypeTotals.salaire)}
                 </div>
                 <div className="text-sm text-gray-300">
