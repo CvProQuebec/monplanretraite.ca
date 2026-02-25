@@ -2,47 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --primary-color: #2B4C8C;
-  --secondary-color: #E8F4F8;
-  --accent-color: #FF6B35;
-  
-  /* === VARIABLES CSS SENIOR === */
-  /* Couleurs principales (douces) */
-  --senior-primary: #4c6ef5;
-  --senior-secondary: #51cf66;
-  --senior-warning: #ffd43b;
-  --senior-success: #51cf66;
-  --senior-danger: #ff8787;
-  
-  /* Arrière-plans */
-  --senior-bg-primary: #ffffff;
-  --senior-bg-card: #ffffff;
-  --senior-bg-accent: #e3f2fd;
-  --senior-bg-muted: #f8fafc;
-  
-  /* Textes */
-  --senior-text-primary: #1a365d;
-  --senior-text-secondary: #4a5568;
-  --senior-text-muted: #718096;
-  
-  /* Bordures */
-  --senior-border: #e2e8f0;
-  --senior-border-muted: #f1f5f9;
-  
-  /* Rayons */
-  --senior-radius: 8px;
-  --senior-radius-lg: 12px;
-  --senior-radius-xl: 16px;
-  
-  /* Ombres */
-  --senior-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --senior-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-  --senior-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-}
+/* ===================================================== */
+/* === POLICE GLOBALE — Inter (corps) + Poppins (titres) */
+/* ===================================================== */
 
 body {
-  /* Add explicit color-emoji fallbacks so emojis like 🎯 💰 ⚠️ render everywhere (Windows/macOS/Linux) */
   font-family:
     'Inter',
     -apple-system,
@@ -54,62 +18,94 @@ body {
     'Segoe UI Symbol',
     'Noto Color Emoji',
     sans-serif;
+  color: #1a2744;
 }
 
-.retirement-primary {
-  color: var(--primary-color);
+/* ===================================================== */
+/* === VARIABLES SENIORS (alias vers le système MPR)  === */
+/* Maintenues pour compatibilité avec les composants    */
+/* existants qui les référencent encore                 */
+/* ===================================================== */
+
+:root {
+  /* Couleurs primaires — alignées avec la palette MPR */
+  --primary-color:   #1B3868;   /* Marine logo (ex: #2B4C8C) */
+  --secondary-color: #EBF0FA;   /* Marine très clair */
+  --accent-color:    #C8922A;   /* Or MPR (ex: #FF6B35) */
+
+  /* Alias seniors — mappent vers la palette MPR */
+  --senior-primary:          #2B5BA8;   /* Bleu interactif MPR */
+  --senior-secondary:        #16a34a;   /* Vert succès */
+  --senior-warning:          #C8922A;   /* Or MPR */
+  --senior-success:          #16a34a;
+  --senior-danger:           #dc2626;
+
+  /* Arrière-plans */
+  --senior-bg-primary:       #ffffff;
+  --senior-bg-card:          #ffffff;
+  --senior-bg-accent:        #EBF0FA;   /* Marine très clair */
+  --senior-bg-muted:         #f8fafc;
+
+  /* Textes */
+  --senior-text-primary:     #1a2744;   /* Marine texte */
+  --senior-text-secondary:   #4A5568;
+  --senior-text-muted:       #718096;
+
+  /* Bordures */
+  --senior-border:           #e2e8f0;
+  --senior-border-muted:     #f1f5f9;
+
+  /* Rayons */
+  --senior-radius:           8px;
+  --senior-radius-lg:        12px;
+  --senior-radius-xl:        16px;
+
+  /* Ombres teintées marine */
+  --senior-shadow-sm:  0 1px 3px rgba(27, 56, 104, 0.08);
+  --senior-shadow:     0 2px 6px rgba(27, 56, 104, 0.10);
+  --senior-shadow-lg:  0 8px 24px rgba(27, 56, 104, 0.14);
 }
 
-.retirement-bg {
-  background-color: var(--secondary-color);
-}
+/* Classes utilitaires héritage */
+.retirement-primary { color: var(--primary-color); }
+.retirement-bg      { background-color: var(--secondary-color); }
 
-/* RRQ periods: hide native calendar icons and slightly emphasize values */
+/* ===================================================== */
+/* === INPUTS DATE (masquer icônes navigateur)        === */
+/* ===================================================== */
+
 .rrq-periods input[type="date"] {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: textfield;
-  font-weight: 600; /* slightly bolder values */
+  font-weight: 600;
 }
 
-.rrq-periods input[type="date"]::-webkit-calendar-picker-indicator {
-  display: none;
-}
-
+.rrq-periods input[type="date"]::-webkit-calendar-picker-indicator,
 .rrq-periods input[type="date"]::-webkit-inner-spin-button,
 .rrq-periods input[type="date"]::-webkit-clear-button {
   display: none;
 }
 
-/* Also slightly emphasize the amount field */
-.rrq-periods input[type="text"] {
-  font-weight: 600;
-}
+.rrq-periods input[type="text"],
+.investments-compact input { font-weight: 600; }
 
-/* Investments (compact) */
-.investments-compact input {
-  font-weight: 600; /* emphasize values */
-}
-
-/* Hide native calendar icon where applicable */
 .investments-compact input[type="date"] {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: textfield;
 }
 
-.investments-compact input[type="date"]::-webkit-calendar-picker-indicator {
-  display: none;
-}
-
+.investments-compact input[type="date"]::-webkit-calendar-picker-indicator,
 .investments-compact input[type="date"]::-webkit-inner-spin-button,
 .investments-compact input[type="date"]::-webkit-clear-button {
   display: none;
 }
 
-/* === STYLES MULTI-COLONNES SENIOR === */
+/* ===================================================== */
+/* === MULTI-COLONNES SENIORS                         === */
+/* ===================================================== */
 
-/* === CONTENEURS MULTI-COLONNES === */
 .senior-form-row-triple {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -142,17 +138,16 @@ body {
   border: 1px solid var(--senior-border, #e2e8f0);
 }
 
-/* === CHAMPS INDIVIDUELS === */
-.senior-form-field {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
+/* ===================================================== */
+/* === CHAMPS INDIVIDUELS                             === */
+/* ===================================================== */
+
+.senior-form-field { display: flex; flex-direction: column; gap: 8px; }
 
 .senior-form-label {
   font-size: 16px;
   font-weight: 600;
-  color: var(--senior-text-primary, #1a365d);
+  color: var(--senior-text-primary, #1a2744);
   line-height: 1.3;
 }
 
@@ -163,19 +158,22 @@ body {
   border: 2px solid var(--senior-border, #e2e8f0);
   border-radius: var(--senior-radius, 8px);
   background: var(--senior-bg-primary, #ffffff);
-  color: var(--senior-text-primary, #1a365d);
+  color: var(--senior-text-primary, #1a2744);
 }
 
 .senior-form-input:focus {
-  border-color: var(--senior-primary, #4c6ef5);
-  box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.1);
+  border-color: var(--senior-primary, #2B5BA8);
+  box-shadow: 0 0 0 3px rgba(43, 91, 168, 0.12);
   outline: none;
 }
 
-/* === CARTES DE RÉSULTATS === */
+/* ===================================================== */
+/* === CARTES DE RÉSULTATS                            === */
+/* ===================================================== */
+
 .senior-result-card {
-  background: var(--senior-bg-accent, #e3f2fd);
-  border: 1px solid var(--senior-primary, #4c6ef5);
+  background: var(--senior-bg-accent, #EBF0FA);
+  border: 1px solid var(--senior-primary, #2B5BA8);
   border-radius: var(--senior-radius-lg, 12px);
   padding: 20px;
   margin-bottom: 20px;
@@ -191,123 +189,88 @@ body {
   background: var(--senior-bg-primary, #ffffff);
   padding: 16px;
   border-radius: var(--senior-radius, 8px);
-  border-left: 4px solid var(--senior-success, #51cf66);
+  border-left: 4px solid var(--senior-success, #16a34a);
 }
 
 .senior-result-amount {
   font-size: 24px;
   font-weight: 700;
-  color: var(--senior-primary, #4c6ef5);
+  color: var(--senior-primary, #2B5BA8);
   margin-bottom: 4px;
 }
 
 .senior-result-label {
   font-size: 14px;
-  color: var(--senior-text-secondary, #4a5568);
+  color: var(--senior-text-secondary, #4A5568);
 }
 
-/* === ALERTES COLORÉES === */
+/* ===================================================== */
+/* === ALERTES                                        === */
+/* ===================================================== */
+
 .senior-alert-warning {
-  background: rgba(255, 212, 59, 0.1);
-  border: 1px solid var(--senior-warning, #ffd43b);
+  background: #FDF6E3;
+  border: 1px solid #C8922A;
   border-radius: var(--senior-radius, 8px);
   padding: 16px;
   margin-bottom: 20px;
 }
 
 .senior-alert-info {
-  background: rgba(76, 110, 245, 0.1);
-  border: 1px solid var(--senior-primary, #4c6ef5);
+  background: #EBF0FA;
+  border: 1px solid var(--senior-primary, #2B5BA8);
   border-radius: var(--senior-radius, 8px);
   padding: 16px;
   margin-bottom: 20px;
 }
 
-/* === SECTIONS COMPACTES ULTRA-CONDENSÉES === */
+/* ===================================================== */
+/* === SECTIONS COMPACTES                             === */
+/* ===================================================== */
+
 .senior-compact-section {
   background: white;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
   padding: 16px;
   margin-bottom: 16px;
-  max-height: 280px; /* HAUTEUR MAXIMUM FORCÉE */
+  max-height: 280px;
 }
 
 .senior-compact-section h3 {
   font-size: 18px;
   margin: 0 0 12px 0;
-  color: #1a365d;
+  color: #1B3868;
 }
 
-/* === GRILLES INLINE === */
-.senior-inline-grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 12px;
-}
+/* ===================================================== */
+/* === GRILLES INLINE                                 === */
+/* ===================================================== */
 
-.senior-inline-grid-3 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 12px;
-}
+.senior-inline-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.senior-inline-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.senior-inline-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 8px; margin-bottom: 12px; }
 
-.senior-inline-grid-4 {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 12px;
-}
+/* ===================================================== */
+/* === CHAMPS INLINE                                  === */
+/* ===================================================== */
 
-/* === CHAMPS INLINE === */
-.senior-field-inline {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.senior-field-inline label {
-  font-size: 14px;
-  font-weight: 600;
-  min-width: 80px;
-  flex-shrink: 0;
-}
-
+.senior-field-inline { display: flex; align-items: center; gap: 8px; }
+.senior-field-inline label { font-size: 14px; font-weight: 600; min-width: 80px; flex-shrink: 0; }
 .senior-field-inline input,
-.senior-field-inline select {
-  flex: 1;
-  height: 36px;
-  padding: 6px 8px;
-  font-size: 16px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-}
+.senior-field-inline select { flex: 1; height: 36px; padding: 6px 8px; font-size: 16px; border: 1px solid #d1d5db; border-radius: 4px; }
 
-.senior-field-mini {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.senior-field-mini label {
-  font-size: 12px;
-  font-weight: 600;
-}
-
+.senior-field-mini { display: flex; flex-direction: column; gap: 4px; }
+.senior-field-mini label { font-size: 12px; font-weight: 600; }
 .senior-field-mini input,
-.senior-field-mini select {
-  height: 32px;
-  padding: 4px 6px;
-  font-size: 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-}
+.senior-field-mini select { height: 32px; padding: 4px 6px; font-size: 14px; border: 1px solid #d1d5db; border-radius: 4px; }
 
-/* === CARTES PÉRIODE === */
+/* ===================================================== */
+/* === CARTES PÉRIODE                                 === */
+/* ===================================================== */
+
 .senior-period-card {
-  background: #f0f9ff;
+  background: #EBF0FA;
   padding: 8px 12px;
   border-radius: 6px;
   display: flex;
@@ -316,18 +279,13 @@ body {
   gap: 4px;
 }
 
-.period-label {
-  font-size: 12px;
-  color: #64748b;
-}
+.period-label { font-size: 12px; color: #4A5568; }
+.amount { font-size: 18px; font-weight: 700; color: #1B3868; }
 
-.amount {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1e40af;
-}
+/* ===================================================== */
+/* === RÉSULTATS INLINE                               === */
+/* ===================================================== */
 
-/* === RÉSULTATS INLINE === */
 .senior-results-inline {
   display: flex;
   gap: 16px;
@@ -337,38 +295,17 @@ body {
   border-radius: 6px;
 }
 
-.result-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 2px;
-}
+.result-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.result-item .period { font-size: 12px; color: #4A5568; }
+.result-item .amount { font-size: 16px; font-weight: 600; color: #16a34a; }
+.result-total { margin-left: auto; font-size: 16px; font-weight: 700; color: #1B3868; }
 
-.result-item .period {
-  font-size: 12px;
-  color: #64748b;
-}
-
-.result-item .amount {
-  font-size: 16px;
-  font-weight: 600;
-  color: #059669;
-}
-
-.result-total {
-  margin-left: auto;
-  font-size: 16px;
-  font-weight: 700;
-  color: #1e40af;
-}
-
-/* === LIGNE D'INFO === */
 .senior-info-line {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 8px;
-  background: #fffbeb;
+  background: #FDF6E3;
   border-radius: 4px;
   font-size: 14px;
 }
@@ -378,56 +315,40 @@ body {
   align-items: center;
   gap: 12px;
   padding: 8px;
-  background: #f0f9ff;
+  background: #EBF0FA;
   border-radius: 4px;
 }
 
-.result-label {
-  font-size: 14px;
-  color: #374151;
-}
+.result-label { font-size: 14px; color: #374151; }
+.result-amount { font-size: 18px; font-weight: 700; color: #1B3868; }
 
-.result-amount {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1e40af;
-}
+/* ===================================================== */
+/* === BOUTONS MINI                                   === */
+/* ===================================================== */
 
-/* === BOUTONS MINI === */
 .senior-btn-mini {
   padding: 4px 12px;
   font-size: 12px;
-  background: #3b82f6;
+  background: #2B5BA8;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
 }
 
-/* === RESPONSIVE === */
+/* ===================================================== */
+/* === RESPONSIVE                                     === */
+/* ===================================================== */
+
 @media (max-width: 1024px) {
-  .senior-form-row-triple {
-    grid-template-columns: 1fr 1fr;
-  }
+  .senior-form-row-triple { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 768px) {
   .senior-form-row-triple,
-  .senior-form-row-double {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  
-  .senior-result-grid {
-    grid-template-columns: 1fr;
-  }
-  
+  .senior-form-row-double { grid-template-columns: 1fr; gap: 16px; }
+  .senior-result-grid { grid-template-columns: 1fr; }
   .senior-inline-grid-3,
-  .senior-inline-grid-4 {
-    grid-template-columns: 1fr 1fr;
-  }
-  
-  .senior-inline-grid-2 {
-    grid-template-columns: 1fr;
-  }
+  .senior-inline-grid-4 { grid-template-columns: 1fr 1fr; }
+  .senior-inline-grid-2 { grid-template-columns: 1fr; }
 }

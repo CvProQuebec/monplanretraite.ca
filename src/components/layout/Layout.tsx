@@ -27,7 +27,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   
 
   return (
-    <div className="seniors-mode high-contrast min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 font-sans">
+    <div className="seniors-mode high-contrast min-h-screen bg-mpr-bg-section font-sans">
       <style>{`
         /* Global policy: permanently disable quick navigation popups site-wide */
         .seniors-fixed-nav,

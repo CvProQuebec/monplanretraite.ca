@@ -18,19 +18,19 @@
   --line-height-relaxed: 1.8;
   --line-height-loose: 2.0;
   
-  /* Couleurs à contraste élevé */
-  --text-primary: #1a1a1a;           /* Noir très foncé */
-  --text-secondary: #2d2d2d;         /* Gris très foncé */
-  --text-muted: #404040;             /* Gris moyen foncé */
-  --background-primary: #ffffff;      /* Blanc pur */
-  --background-secondary: #f8f9fa;    /* Gris très clair */
-  --background-accent: #e3f2fd;      /* Bleu très clair */
-  
-  /* Couleurs d'accent avec bon contraste */
-  --accent-primary: #1565c0;         /* Bleu foncé */
-  --accent-secondary: #2e7d32;       /* Vert foncé */
-  --accent-warning: #ef6c00;         /* Orange foncé */
-  --accent-error: #c62828;           /* Rouge foncé */
+  /* Couleurs à contraste élevé — alignées avec la palette MPR */
+  --text-primary:        #1a2744;   /* = --mpr-text (marine foncé, AAA) */
+  --text-secondary:      #4A5568;   /* = --mpr-text-muted */
+  --text-muted:          #718096;
+  --background-primary:  #ffffff;
+  --background-secondary:#f8fafc;   /* = --mpr-bg-section */
+  --background-accent:   #EBF0FA;   /* = --mpr-bg-accent (marine très clair) */
+
+  /* Couleurs d'accent — palette MPR officielle */
+  --accent-primary:   #2B5BA8;   /* = --mpr-primary (bleu interactif) */
+  --accent-secondary: #16a34a;   /* = --mpr-success */
+  --accent-warning:   #C8922A;   /* = --mpr-gold (or MPR) */
+  --accent-error:     #dc2626;   /* = --mpr-error */
   
   /* Espacements augmentés */
   --spacing-xs: 8px;
@@ -53,11 +53,11 @@
 
 /* ===== CLASSE PRINCIPALE POUR ACTIVER LE MODE SENIORS ===== */
 .seniors-mode {
-  /* Police plus lisible */
-  font-family: 'Segoe UI', 'Arial', sans-serif;
+  /* Police — Inter (corps) avec Poppins disponible pour les titres via var(--mpr-font-display) */
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   font-size: var(--font-size-base);
   line-height: var(--line-height-normal);
-  color: var(--text-primary);
+  color: #1a2744;   /* --mpr-text */
   background-color: var(--background-primary);
 }
 

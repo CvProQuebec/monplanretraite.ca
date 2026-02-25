@@ -1,27 +1,22 @@
-/* unified-styles.css - Consolidation intelligente de tous les styles CSS */
-/* Combine: accessibility-seniors.css + mobile-optimization.css + mobile-reflow-fix.css + modern-retirement.css + retirement-module.css */
+/* unified-styles.css — Classes utilitaires supplémentaires */
+/* Les variables de couleurs et de design sont définies dans mpr-unified.css */
+/* Ne PAS redéfinir de variables :root ici — utiliser mpr-unified.css       */
 
-/* ===== IMPORT DU NOUVEAU SYSTÈME MPR UNIFIÉ ===== */
+/* ===== IMPORT DU SYSTÈME MPR UNIFIÉ (SOURCE DE VÉRITÉ) ===== */
 @import "mpr-unified.css";
 
-/* ===== BASE STYLES ET VARIABLES ===== */
+/* ===== VARIABLES UTILITAIRES (compatibilité uniquement) ===== */
 :root {
-  /* Couleurs principales */
-  --primary-blue: #2563eb;
-  --primary-blue-dark: #1d4ed8;
-  --primary-blue-light: #3b82f6;
-  
-  /* Couleurs séniors-friendly */
-  --senior-text: #1f2937;
-  --senior-text-light: #4b5563;
-  --senior-bg: #f9fafb;
-  --senior-border: #d1d5db;
-  
-  /* Couleurs de statut */
-  --success: #10b981;
-  --warning: #f59e0b;
-  --error: #ef4444;
-  --info: #3b82f6;
+  /* Alias de compatibilité — pointent vers la palette MPR */
+  --primary-blue:       #2B5BA8;   /* = --mpr-primary */
+  --primary-blue-dark:  #1F4A8F;   /* = --mpr-primary-hover */
+  --primary-blue-light: #EBF0FA;   /* = --mpr-primary-light */
+
+  /* Statuts — alignés avec mpr-unified.css */
+  --success: #16a34a;
+  --warning: #C8922A;
+  --error:   #dc2626;
+  --info:    #2B5BA8;
   
   /* Espacements */
   --spacing-xs: 0.25rem;

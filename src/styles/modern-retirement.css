@@ -1,34 +1,17 @@
-/* ===== STYLES MODERNES ET DYNAMIQUES POUR MONPLANRETRAITE.CA ===== */
+/* ===== STYLES COMPOSANTS RETIREMENT — MONPLANRETRAITE.CA ===== */
+/* Les variables de couleur sont définies dans mpr-unified.css   */
+/* Ce fichier contient uniquement les styles de composants       */
 
+/* Gradients MPR officiels */
 :root {
-  /* Palette de couleurs VIVANTE et MODERNE */
-  --primary: #11335C;        /* Bleu royal profond et sophistiqué */
-  --primary-light: #1E4A8C;  /* Bleu royal plus clair */
-  --secondary: #4ECDC4;      /* Turquoise moderne */
-  --secondary-light: #81C784; /* Vert-turquoise doux */
-  --accent: #FFE66D;         /* Jaune soleil */
-  --accent-dark: #FFC107;    /* Jaune doré */
-  --success: #2ECC71;        /* Vert émeraude */
-  --warning: #F39C12;        /* Orange-jaune */
-  --info: #3498DB;           /* Bleu moderne */
-  --danger: #E74C3C;         /* Rouge vif */
-  
-  /* Gradients modernes */
-  --gradient-primary: linear-gradient(135deg, #11335C 0%, #1E4A8C 100%);
-  --gradient-secondary: linear-gradient(135deg, #4ECDC4 0%, #44A08D 100%);
-  --gradient-accent: linear-gradient(135deg, #FFE66D 0%, #FFC107 100%);
-  --gradient-success: linear-gradient(135deg, #2ECC71 0%, #27AE60 100%);
-  
-  /* Ombres modernes */
-  --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
-  --shadow-md: 0 4px 8px rgba(0,0,0,0.12);
-  --shadow-lg: 0 8px 16px rgba(0,0,0,0.15);
-  --shadow-xl: 0 12px 24px rgba(0,0,0,0.18);
-  
-  /* Transitions fluides */
-  --transition-fast: 0.2s ease-in-out;
+  --gradient-primary:  linear-gradient(135deg, #1B3868 0%, #243F80 100%);
+  --gradient-gold:     linear-gradient(135deg, #C8922A 0%, #A87620 100%);
+  --gradient-section:  linear-gradient(135deg, #EBF0FA 0%, #f8fafc 100%);
+
+  /* Transitions */
+  --transition-fast:   0.2s ease-in-out;
   --transition-normal: 0.3s ease-in-out;
-  --transition-slow: 0.5s ease-in-out;
+  --transition-slow:   0.5s ease-in-out;
 }
 
 /* ===== NAVIGATION PRINCIPALE ===== */

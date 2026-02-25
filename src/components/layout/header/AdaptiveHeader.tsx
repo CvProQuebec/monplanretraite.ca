@@ -110,7 +110,7 @@ export const AdaptiveHeader: React.FC<AdaptiveHeaderProps> = ({ isEnglish }) => 
               </span>
               <button
                 onClick={handleSignOut}
-                className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors"
+                className="px-3 py-1 bg-mpr-interactive text-white rounded hover:bg-mpr-interactive-dk transition-colors font-medium"
               >
                 {language === 'fr' ? 'Déconnexion' : 'Sign Out'}
               </button>

@@ -69,54 +69,61 @@ MonPlanRetraite.ca est une **application React + TypeScript + Vite** de planific
 
 ## Palette de Couleurs (Système MPR)
 
-Le design system officiel est défini dans `/src/styles/mpr-unified.css`. **Utiliser exclusivement ces valeurs :**
+La palette est **ancrée dans le logo** (fleur de lis marine + flèche dorée). Source de vérité unique : `src/styles/mpr-unified.css`.
 
-### Couleurs primaires
-| Rôle | Variable CSS | Hex | Usage |
-|------|-------------|-----|-------|
-| Primaire | `--mpr-primary` | `#4c6ef5` | Boutons, liens, focus, résultats |
-| Primaire hover | `--mpr-primary-hover` | `#364fc7` | État survol des éléments primaires |
-| Accent orange | `--accent` | `#FF6B35` | Appels à l'action secondaires |
-| Texte principal | `--mpr-text` | `#1a365d` | Corps de texte, labels |
-| Texte discret | `--mpr-text-muted` | `#64748b` | Aide, sous-texte |
+### Bleu marine — couleur maîtresse (logo, titres, header)
+| Variable CSS | Classe Tailwind | Hex | Usage |
+|-------------|-----------------|-----|-------|
+| `--mpr-navy` | `mpr-navy` | `#1B3868` | Logo pur — H1, header, éléments institutionnels |
+| `--mpr-navy-dark` | `mpr-navy-dark` | `#142B52` | Hover marine |
+| `--mpr-navy-mid` | `mpr-navy-mid` | `#243F80` | H2, éléments forts |
 
-### Couleurs d'en-têtes
+### Bleu interactif — boutons / liens / focus
+| Variable CSS | Classe Tailwind | Hex | Usage |
+|-------------|-----------------|-----|-------|
+| `--mpr-primary` | `mpr-interactive` | `#2B5BA8` | Boutons primaires, liens |
+| `--mpr-primary-hover` | `mpr-interactive-dk` | `#1F4A8F` | Hover des boutons |
+| `--mpr-primary-light` | `mpr-interactive-lt` | `#EBF0FA` | Fonds actifs, hover discrets |
+
+### Or MPR — accent (flèche logo, CTA)
+| Variable CSS | Classe Tailwind | Hex | Usage |
+|-------------|-----------------|-----|-------|
+| `--mpr-gold` | `mpr-gold` | `#C8922A` | CTA principaux, badges, progression |
+| `--mpr-gold-hover` | `mpr-gold-dark` | `#A87620` | Hover gold |
+| `--mpr-gold-light` | `mpr-gold-light` | `#F5D89B` | Fonds dorés |
+| `--mpr-gold-faint` | `mpr-gold-faint` | `#FDF6E3` | Alertes positives |
+
+### Texte, fonds, statuts
+| Variable CSS | Hex | Usage |
+|-------------|-----|-------|
+| `--mpr-text` | `#1a2744` | Corps de texte (AAA) |
+| `--mpr-text-muted` | `#4A5568` | Aide, sous-texte |
+| `--mpr-bg-section` | `#f8fafc` | Sections alternées |
+| `--mpr-bg-accent` | `#EBF0FA` | Fond accent marine clair |
+| `--mpr-border` | `#e2e8f0` | Bordures standard |
+| `--mpr-success` | `#16a34a` | Succès |
+| `--mpr-warning` | `#C8922A` | Avertissements (or MPR) |
+| `--mpr-error` | `#dc2626` | Erreurs |
+
+### Titres (hiérarchie marine → interactif)
 | Niveau | Hex |
 |--------|-----|
-| H1 | `#0f172a` |
-| H2 | `#1a365d` |
-| H3 | `#1e3a8a` |
-| H4 | `#1f2937` |
+| H1 | `#1B3868` (marine logo) |
+| H2 | `#243F80` (marine mid) |
+| H3 | `#2B5BA8` (interactif) |
+| H4 | `#1f2937` (gris foncé) |
 
-### Couleurs de fond
-| Rôle | Hex |
-|------|-----|
-| Fond principal | `#ffffff` |
-| Fond section | `#f8fafc` |
-| Fond carte résultat | `#f0f9ff` |
-| Fond accent clair | `#e3f2fd` |
-
-### Couleurs de bordure & état
-| Rôle | Hex |
-|------|-----|
-| Bordure standard | `#e2e8f0` |
-| Bordure focus | `#4c6ef5` |
-| Succès | `#16a34a` |
-| Avertissement | `#d97706` |
-| Erreur | `#dc2626` |
-
-### Accent navigation
-- Soulignement hover des liens nav : **`#d97706`** (amber-600)
-
-**Ne jamais utiliser :** indigo-500, blue-600 ou toute autre couleur Tailwind par défaut comme couleur primaire.
+**Ne jamais utiliser :** `#4c6ef5`, `#2B4C8C`, `#FF6B35`, `#364fc7`, ou tout bleu Tailwind par défaut (indigo-500, blue-600). Ces couleurs sont des anciens résidus supprimés.
 
 ---
 
 ## Typographie
 
-### Police
-- **Une seule famille :** `Inter` (sans-serif), pas de pairing avec une serif
-- Stack complète : `'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif`
+### Polices (deux familles complémentaires)
+- **Affichage / titres héros :** `Poppins` 700/800 — grands titres, accroches (écho au logo)
+- **Corps / UI :** `Inter` 400/500/600/700 — formulaires, texte courant, labels
+- Stack corps : `'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif`
+- Chargement : Google Fonts importé dans `mpr-unified.css`
 
 ### Tailles (optimisées seniors — accessibilité prioritaire)
 | Variable | Valeur | Usage |
@@ -129,12 +136,12 @@ Le design system officiel est défini dans `/src/styles/mpr-unified.css`. **Util
 | `--mpr-text-3xl` | `32px` | En-tête principal |
 
 ### Hiérarchie typographique
-- **H1 :** 32px, `#0f172a`, bold, letter-spacing 0.3px
-- **H2 :** 28px, `#1a365d`, semibold
-- **H3 :** 24px, `#1e3a8a`, semibold
-- **H4 :** 20px, `#1f2937`, semibold
-- **Corps :** 16–18px, `#1a365d`, regular, line-height 1.6–1.7
-- **Discret :** 14px, `#4a5568`
+- **H1 :** Poppins 800, 32–40px, `#1B3868`, line-height 1.25
+- **H2 :** Poppins 700, 28px, `#243F80`, line-height 1.3
+- **H3 :** Inter 600, 24px, `#2B5BA8`, line-height 1.4
+- **H4 :** Inter 600, 20px, `#1f2937`, line-height 1.45
+- **Corps :** Inter 400/500, 17–18px, `#1a2744`, line-height 1.7
+- **Discret :** Inter 400, 14–16px, `#4A5568`
 
 ### Règles typographiques
 - `letter-spacing: 0.025em–0.03em` pour clarté (public senior)

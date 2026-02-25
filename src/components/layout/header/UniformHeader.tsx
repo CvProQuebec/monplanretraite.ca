@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { 
-  Menu, 
-  X, 
-  Home, 
-  Calculator, 
-  FileText, 
+import {
+  Menu,
+  X,
+  Home,
+  Calculator,
+  FileText,
   ChevronDown,
   Database,
   TrendingUp,
@@ -123,7 +123,7 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           path: isEnglish ? '/expense-planning' : '/planification-depenses',
           planLevel: 'free'
         },
-        
+
         // 🔵 OUTILS PROFESSIONNELS
         {
           id: 'professional-tools-header',
@@ -268,7 +268,7 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           path: '/module-coussin-liquidites',
           planLevel: 'professional'
         },
-        
+
         // 🟣 OUTILS EXPERTS
         {
           id: 'expert-tools-header',
@@ -346,86 +346,95 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
     return location.pathname === path || location.pathname.startsWith(path + '/');
   };
 
+  // Couleurs des niveaux de plan — alignées avec la palette MPR
+  const planLevelColors = {
+    free:         'hover:bg-green-50 hover:text-green-700 border-l-2 border-l-green-500',
+    professional: 'hover:bg-mpr-interactive-lt hover:text-mpr-navy border-l-2 border-l-mpr-interactive',
+    expert:       'hover:bg-purple-50 hover:text-purple-700 border-l-2 border-l-purple-500'
+  };
+
+  const planLevelColorsMobile = {
+    free:         'hover:bg-green-50 hover:text-green-700 border-l-4 border-l-green-500',
+    professional: 'hover:bg-mpr-interactive-lt hover:text-mpr-navy border-l-4 border-l-mpr-interactive',
+    expert:       'hover:bg-purple-50 hover:text-purple-700 border-l-4 border-l-purple-500'
+  };
+
   return (
-    <header className="bg-white shadow-lg border-b-2 border-blue-100 sticky top-0 z-50">
+    <header className="bg-white shadow-md border-b-2 border-mpr-border sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14">
           {/* Logo */}
           <div className="flex items-center">
-          <button
+            <button
               onClick={() => handleNavigation(isEnglish ? '/en' : '/fr')}
-            className="flex items-center hover:opacity-80 transition-opacity"
-          >
-            <img
-              src="/logo-planretraite.png"
-              alt="MonPlanRetraite.ca Logo"
-              className="h-9 w-auto"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-              }}
-            />
+              className="flex items-center hover:opacity-80 transition-opacity"
+            >
+              <img
+                src="/logo-planretraite.png"
+                alt="MonPlanRetraite.ca Logo"
+                className="h-9 w-auto"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                }}
+              />
             </button>
           </div>
 
-                           {/* Desktop Navigation */}
-                 <nav className="hidden md:flex items-center space-x-0.5 submenu-container header-nav-compact">
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-0.5 submenu-container header-nav-compact">
             {navigationItems.map((item) => (
               <div key={item.id} className="relative submenu-container mr-0">
                 <button
                   onClick={() => handleMenuClick(item)}
-                  className={`flex items-center space-x-0.5 px-0 py-1 rounded-md text-xs font-medium transition-all duration-200 ${
+                  className={`flex items-center space-x-0.5 px-2 py-1.5 rounded-md text-xs font-medium transition-colors duration-200 ${
                     isActivePath(item.path)
-                      ? 'bg-blue-100 text-blue-700 shadow-sm'
-                      : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+                      ? 'bg-mpr-interactive-lt text-mpr-navy font-semibold shadow-sm'
+                      : 'text-mpr-text-muted hover:text-mpr-navy hover:bg-mpr-interactive-lt'
                   }`}
                 >
-                                      <item.icon className="w-3 h-3 flex-shrink-0" />
-                    <span className="whitespace-nowrap text-xs">{item.label}</span>
+                  <item.icon className="w-3 h-3 flex-shrink-0" />
+                  <span className="whitespace-nowrap text-xs">{item.label}</span>
                   {item.hasSubmenu && (
                     <ChevronDown className={`w-3 h-3 flex-shrink-0 transition-transform ${openSubmenu === item.id ? 'rotate-180' : ''}`} />
                   )}
-          </button>
+                </button>
 
-                                 {/* Sous-menu déroulant */}
-                 {item.hasSubmenu && openSubmenu === item.id && (
-                   <div className="absolute top-full left-0 mt-0.5 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-[9999] max-h-96 overflow-y-auto">
-                     {item.submenu?.map((subItem, index) => {
-                       if (subItem.isHeader) {
-                         return (
-                           <div
-                             key={subItem.id}
-                             className={`px-3 py-1.5 text-xs font-bold text-gray-500 bg-gray-50 border-b border-gray-100 ${
-                               index === 0 ? 'rounded-t-lg' : ''
-                             }`}
-                           >
-                             {subItem.label}
-                           </div>
-                         );
-                       }
-                       
-                       const planLevelColors = {
-                         free: 'hover:bg-green-50 hover:text-green-700 border-l-2 border-l-green-400',
-                         professional: 'hover:bg-blue-50 hover:text-blue-700 border-l-2 border-l-blue-400',
-                         expert: 'hover:bg-purple-50 hover:text-purple-700 border-l-2 border-l-purple-400'
-                       };
-                       
-                       const planLevelColor = subItem.planLevel ? planLevelColors[subItem.planLevel] : 'hover:bg-gray-50 hover:text-gray-700';
-                       
-                       return (
-                         <button
-                           key={subItem.id}
-                           onClick={() => handleSubmenuClick(subItem.path)}
-                           className={`w-full text-left px-3 py-1.5 text-sm text-gray-700 transition-colors ${planLevelColor} ${
-                             index === item.submenu.length - 1 ? 'rounded-b-lg' : ''
-                           }`}
-                         >
-                           {subItem.label}
-                         </button>
-                       );
-                     })}
-                   </div>
-                 )}
+                {/* Sous-menu déroulant */}
+                {item.hasSubmenu && openSubmenu === item.id && (
+                  <div className="absolute top-full left-0 mt-0.5 w-72 bg-white border border-mpr-border rounded-lg shadow-lg z-[9999] max-h-96 overflow-y-auto">
+                    {item.submenu?.map((subItem, index) => {
+                      if (subItem.isHeader) {
+                        return (
+                          <div
+                            key={subItem.id}
+                            className={`px-3 py-1.5 text-xs font-bold text-mpr-text-muted bg-mpr-bg-section border-b border-mpr-border ${
+                              index === 0 ? 'rounded-t-lg' : ''
+                            }`}
+                          >
+                            {subItem.label}
+                          </div>
+                        );
+                      }
+
+                      const planLevelColor = subItem.planLevel
+                        ? planLevelColors[subItem.planLevel as keyof typeof planLevelColors]
+                        : 'hover:bg-gray-50 hover:text-gray-700';
+
+                      return (
+                        <button
+                          key={subItem.id}
+                          onClick={() => handleSubmenuClick(subItem.path)}
+                          className={`w-full text-left px-3 py-1.5 text-sm text-mpr-text transition-colors ${planLevelColor} ${
+                            index === item.submenu.length - 1 ? 'rounded-b-lg' : ''
+                          }`}
+                        >
+                          {subItem.label}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             ))}
           </nav>
@@ -433,12 +442,12 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           {/* Language Selector & Mobile Menu Button */}
           <div className="flex items-center space-x-3">
             <div className="block">
-          <LanguageSelector isEnglish={isEnglish} />
-        </div>
+              <LanguageSelector isEnglish={isEnglish} />
+            </div>
 
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+              className="md:hidden p-2 rounded-lg text-mpr-text-muted hover:text-mpr-navy hover:bg-mpr-interactive-lt transition-colors"
             >
               {isMobileMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -449,18 +458,18 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           </div>
         </div>
 
-                 {/* Mobile Navigation Menu */}
-         {isMobileMenuOpen && (
-           <div className="md:hidden border-t border-gray-200 py-2">
-             <div className="space-y-1">
+        {/* Mobile Navigation Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t border-mpr-border py-2">
+            <div className="space-y-1">
               {navigationItems.map((item) => (
                 <div key={item.id}>
                   <button
                     onClick={() => handleMenuClick(item)}
                     className={`flex items-center justify-between w-full px-4 py-2 rounded-lg text-left transition-all duration-200 ${
                       isActivePath(item.path)
-                        ? 'bg-blue-100 text-blue-700'
-                        : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
+                        ? 'bg-mpr-interactive-lt text-mpr-navy font-semibold'
+                        : 'text-mpr-text-muted hover:text-mpr-navy hover:bg-mpr-interactive-lt'
                     }`}
                   >
                     <div className="flex items-center space-x-3">
@@ -471,45 +480,41 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
                       <ChevronDown className={`w-4 h-4 transition-transform ${openSubmenu === item.id ? 'rotate-180' : ''}`} />
                     )}
                   </button>
-                  
-                                     {/* Sous-menu mobile */}
-                   {item.hasSubmenu && openSubmenu === item.id && (
-                     <div className="ml-4 mt-1 space-y-0.5 max-h-80 overflow-y-auto">
-                       {item.submenu?.map((subItem) => {
-                         if (subItem.isHeader) {
-                           return (
-                             <div
-                               key={subItem.id}
-                               className="px-3 py-1.5 text-xs font-bold text-gray-500 bg-gray-50 rounded-lg border border-gray-200"
-                             >
-                               {subItem.label}
-                             </div>
-                           );
-                         }
-                         
-                         const planLevelColors = {
-                           free: 'hover:bg-green-50 hover:text-green-700 border-l-4 border-l-green-400',
-                           professional: 'hover:bg-blue-50 hover:text-blue-700 border-l-4 border-l-blue-400',
-                           expert: 'hover:bg-purple-50 hover:text-purple-700 border-l-4 border-l-purple-400'
-                         };
-                         
-                         const planLevelColor = subItem.planLevel ? planLevelColors[subItem.planLevel] : 'hover:bg-gray-50 hover:text-gray-700';
-                         
-                         return (
-                           <button
-                             key={subItem.id}
-                             onClick={() => handleSubmenuClick(subItem.path)}
-                             className={`w-full text-left px-3 py-1.5 text-sm text-gray-600 rounded-lg transition-colors ${planLevelColor}`}
-                           >
-                             {subItem.label}
-                           </button>
-                         );
-                       })}
-                     </div>
-                   )}
+
+                  {/* Sous-menu mobile */}
+                  {item.hasSubmenu && openSubmenu === item.id && (
+                    <div className="ml-4 mt-1 space-y-0.5 max-h-80 overflow-y-auto">
+                      {item.submenu?.map((subItem) => {
+                        if (subItem.isHeader) {
+                          return (
+                            <div
+                              key={subItem.id}
+                              className="px-3 py-1.5 text-xs font-bold text-mpr-text-muted bg-mpr-bg-section rounded-lg border border-mpr-border"
+                            >
+                              {subItem.label}
+                            </div>
+                          );
+                        }
+
+                        const planLevelColor = subItem.planLevel
+                          ? planLevelColorsMobile[subItem.planLevel as keyof typeof planLevelColorsMobile]
+                          : 'hover:bg-gray-50 hover:text-gray-700';
+
+                        return (
+                          <button
+                            key={subItem.id}
+                            onClick={() => handleSubmenuClick(subItem.path)}
+                            className={`w-full text-left px-3 py-1.5 text-sm text-mpr-text rounded-lg transition-colors ${planLevelColor}`}
+                          >
+                            {subItem.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               ))}
-        </div>
+            </div>
           </div>
         )}
       </div>
