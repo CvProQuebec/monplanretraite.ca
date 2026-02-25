@@ -36,10 +36,34 @@ MonPlanRetraite.ca est une **application React + TypeScript + Vite** de planific
 
 ## Serveur Local
 
-- **Commande de démarrage :** `npm run dev` (Vite sur port 5173)
 - **URL :** `http://localhost:5173`
 - Ne jamais screenshooter depuis `file:///`
 - Si le serveur tourne déjà, ne pas démarrer une deuxième instance
+
+### Démarrage via `preview_start` (méthode recommandée)
+
+Fichier `.claude/launch.json` dans le worktree :
+```json
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dev",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["H:/monplanretraite.ca/node_modules/vite/bin/vite.js", "--port", "5173"],
+      "port": 5173
+    }
+  ]
+}
+```
+
+> **⚠️ Windows spécifique :** `npm.cmd` et `npx` lèvent `spawn EINVAL` / `ENOENT` avec `preview_start` — **ne pas les utiliser**.
+> Utiliser `node` + chemin absolu vers `vite.js` dans le **dépôt principal** (le worktree n'a pas son propre `node_modules`).
+
+### Démarrage manuel (fallback)
+```bash
+node H:/monplanretraite.ca/node_modules/vite/bin/vite.js --port 5173
+```
 
 ---
 
@@ -161,7 +185,7 @@ L'audience cible est 50–90 ans. Ces règles sont non-négociables :
 - **Labels :** Jamais ambigus — toujours descriptifs et visibles
 - **États visuels clairs :** Hover, focus-visible et active obligatoires sur chaque élément interactif
 - **Pas d'icônes seules :** Toujours accompagnées d'un libellé texte
-- **Focus visible :** `box-shadow: 0 0 0 3px rgba(76, 110, 245, 0.15)` sur focus
+- **Focus visible :** `box-shadow: 0 0 0 3px rgba(43, 91, 168, 0.15)` sur focus
 - **Pas de sélecteur de calendrier natif** (masquer avec `appearance: none`)
 - **Feedback immédiat** sur toute action (confirmation, animation légère)
 
@@ -198,7 +222,7 @@ L'audience cible est 50–90 ans. Ces règles sont non-négociables :
 ### Boutons
 ```css
 .mpr-btn-primary {
-  background: #4c6ef5;
+  background: #2B5BA8;   /* mpr-interactive */
   color: white;
   min-height: 56px;
   min-width: 120px;
@@ -207,12 +231,12 @@ L'audience cible est 50–90 ans. Ces règles sont non-négociables :
   font-weight: 600;
   border-radius: 8px;
 }
-.mpr-btn-primary:hover { background: #364fc7; transform: translateY(-1px); }
+.mpr-btn-primary:hover { background: #1F4A8F; transform: translateY(-1px); } /* mpr-interactive-dk */
 
 .mpr-btn-secondary {
   background: #ffffff;
-  color: #4c6ef5;
-  border: 2px solid #4c6ef5;
+  color: #2B5BA8;        /* mpr-interactive */
+  border: 2px solid #2B5BA8;
 }
 ```
 
@@ -225,8 +249,8 @@ border-radius: 8px;
 font-size: 18px;
 font-weight: 600;       /* Valeurs en gras pour clarté */
 /* Focus: */
-border-color: #4c6ef5;
-box-shadow: 0 0 0 3px rgba(76,110,245,0.15);
+border-color: #2B5BA8;  /* mpr-interactive */
+box-shadow: 0 0 0 3px rgba(43, 91, 168, 0.15);
 ```
 
 ### Grille de formulaire
@@ -237,8 +261,8 @@ box-shadow: 0 0 0 3px rgba(76,110,245,0.15);
 ### Cartes de résultat
 ```css
 .mpr-result-card {
-  background: #f0f9ff;
-  border: 1px solid #4c6ef5;
+  background: #EBF0FA;   /* mpr-interactive-lt */
+  border: 1px solid #2B5BA8; /* mpr-interactive */
   border-radius: 8px;
   padding: 8px;
   text-align: center;
@@ -246,7 +270,7 @@ box-shadow: 0 0 0 3px rgba(76,110,245,0.15);
 .mpr-result-amount {
   font-size: 24px;
   font-weight: 700;
-  color: #4c6ef5;
+  color: #2B5BA8;        /* mpr-interactive */
 }
 ```
 
@@ -254,6 +278,33 @@ box-shadow: 0 0 0 3px rgba(76,110,245,0.15);
 - Couleur : `#d97706` (amber-600)
 - Animation : `scale-x` de `0` → `1` au hover (origin droite → gauche)
 - Transition : `300ms ease`
+
+---
+
+## Architecture CSS — Règles de Priorité
+
+### Problème de spécificité `.seniors-mode`
+
+**Contexte :** `Layout.tsx` enveloppe toutes les pages dans `.seniors-mode`. Cela crée un conflit de spécificité avec les classes utilitaires Tailwind.
+
+| Sélecteur | Spécificité | Exemple |
+|-----------|-------------|---------|
+| `.seniors-mode h2` (dans `accessibility-seniors.css`) | 0-1-1 | **Gagne** sur Tailwind |
+| `text-mpr-navy` (Tailwind utilitaire) | 0-1-0 | **Perd** contre `.seniors-mode h2` |
+
+**Solution appliquée :** La propriété `color` a été **retirée** des règles `.seniors-mode h1/h2/h3/h4/p` dans `accessibility-seniors.css`, de sorte que les classes Tailwind (`text-white`, `text-mpr-navy`, etc.) s'appliquent normalement.
+
+**Règle de secours** dans `mpr-unified.css` pour les titres sur fonds sombres :
+```css
+.seniors-mode [class*="from-mpr-navy"] h1,
+.seniors-mode [class*="from-mpr-navy"] h2,
+.seniors-mode [class*="from-mpr-navy"] h3,
+.seniors-mode [class*="from-mpr-navy"] h4 {
+  color: white !important;
+}
+```
+
+**Règle à retenir :** Ne jamais mettre `color` sur les éléments HTML nus dans les CSS globaux — toujours laisser les classes Tailwind contrôler la couleur.
 
 ---
 
