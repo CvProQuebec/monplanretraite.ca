@@ -247,12 +247,12 @@ const PlansSection: React.FC<PlansSectionProps> = ({ onStartFree, onSelectPlan }
     <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-16 rounded-2xl mb-10">
       <div className="text-center mb-4 px-4">
         <h2 className="text-4xl font-bold text-white mb-3">
-          {isFrench ? 'Choisissez votre niveau de protection' : 'Choose your level of protection'}
+          {isFrench ? 'Allez plus loin avec la planification financière complète' : 'Go further with complete financial planning'}
         </h2>
         <p className="text-xl text-blue-100">
           {isFrench
-            ? 'De la protection gratuite \u00E0 la planification compl\u00E8te avec IA'
-            : 'From free protection to complete AI-powered planning'}
+            ? 'De la protection de base à la planification complète avec IA'
+            : 'From basic protection to complete AI-powered planning'}
         </p>
       </div>
 
