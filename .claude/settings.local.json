@@ -35,7 +35,9 @@
       "Bash(python3 -c \":*)",
       "Bash(python3 /tmp/write_ps1.py)",
       "Bash(node /tmp/gen_ps1.mjs)",
-      "Bash(powershell -File \"H:/monplanretraite.ca/.claude/worktrees/eager-diffie/mpr_brand_normalize.ps1\")"
+      "Bash(powershell -File \"H:/monplanretraite.ca/.claude/worktrees/eager-diffie/mpr_brand_normalize.ps1\")",
+      "Bash(git add CLAUDE.md)",
+      "Bash(git add .claude/settings.local.json)"
     ]
   }
 }
