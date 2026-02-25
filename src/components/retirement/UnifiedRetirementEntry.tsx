@@ -90,20 +90,20 @@ const UnifiedRetirementEntry: React.FC<UnifiedRetirementEntryProps> = ({
       <SimpleNavigation />
       
       {/* Hero Section with premium theme */}
-      <div className="min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-700 text-white">
+      <div className="min-h-screen bg-gradient-to-br from-mpr-navy via-mpr-navy-dark to-mpr-interactive text-white">
         <div className="container mx-auto px-6 py-16">
           <div className="text-center mb-16">
             <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg">
               {t.title}
             </h1>
-            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto drop-shadow-md">
+            <p className="text-xl md:text-2xl text-white/80 max-w-3xl mx-auto drop-shadow-md">
               {t.subtitle}
             </p>
           </div>
 
           {/* Complete Financial Planning Section */}
           <div className="bg-white rounded-2xl p-8 md:p-12 mb-16 shadow-2xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-6 text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-mpr-navy mb-6 text-center">
               {t.completePlanning}
             </h2>
             <p className="text-lg text-gray-700 text-center mb-8 max-w-4xl mx-auto">
@@ -113,16 +113,16 @@ const UnifiedRetirementEntry: React.FC<UnifiedRetirementEntryProps> = ({
             {/* Feature Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Cashflow Management */}
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-300">
-                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4 mx-auto">
+              <div className="bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt p-6 rounded-xl border border-mpr-border hover:shadow-lg transition-all duration-300">
+                <div className="w-12 h-12 bg-mpr-interactive rounded-lg flex items-center justify-center mb-4 mx-auto">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-blue-900 mb-2 text-center">
+                <h3 className="text-lg font-semibold text-mpr-navy mb-2 text-center">
                   {t.cashflowTitle}
                 </h3>
-                <p className="text-blue-700 text-center text-sm">
+                <p className="text-mpr-navy text-center text-sm">
                   {t.cashflowDesc}
                 </p>
               </div>
@@ -158,16 +158,16 @@ const UnifiedRetirementEntry: React.FC<UnifiedRetirementEntryProps> = ({
               </div>
 
               {/* Tax Optimization */}
-              <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-300">
-                <div className="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mb-4 mx-auto">
+              <div className="bg-gradient-to-br from-mpr-interactive-lt to-mpr-interactive-lt p-6 rounded-xl border border-mpr-border hover:shadow-lg transition-all duration-300">
+                <div className="w-12 h-12 bg-mpr-interactive rounded-lg flex items-center justify-center mb-4 mx-auto">
                   <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-blue-900 mb-2 text-center">
+                <h3 className="text-lg font-semibold text-mpr-navy mb-2 text-center">
                   {t.taxTitle}
                 </h3>
-                <p className="text-blue-700 text-center text-sm">
+                <p className="text-mpr-navy text-center text-sm">
                   {t.taxDesc}
                 </p>
               </div>

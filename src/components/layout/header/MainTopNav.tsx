@@ -28,7 +28,7 @@ interface MainTopNavProps {
 }
 
 const linkClasses =
-  'flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-blue-700 hover:bg-blue-50 transition-colors';
+  'flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-mpr-interactive hover:bg-mpr-interactive-lt transition-colors';
 
 export const MainTopNav: React.FC<MainTopNavProps> = ({ isEnglish = false }) => {
   const reportsPath = isEnglish ? '/en/retirement-reports' : '/fr/rapports-retraite';
@@ -78,7 +78,7 @@ export const MainTopNav: React.FC<MainTopNavProps> = ({ isEnglish = false }) => 
         {/* Gouvernement (Dropdown) */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-700 hover:bg-blue-50">
+            <Button variant="ghost" className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-mpr-interactive hover:bg-mpr-interactive-lt">
               <Landmark className="w-4 h-4 mr-2" />
               {isEnglish ? 'Government' : 'Gouvernement'} ▾
             </Button>
@@ -105,7 +105,7 @@ export const MainTopNav: React.FC<MainTopNavProps> = ({ isEnglish = false }) => 
         {/* Outils (Dropdown) */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-blue-700 hover:bg-blue-50">
+            <Button variant="ghost" className="px-3 py-2 text-sm font-medium text-gray-700 hover:text-mpr-interactive hover:bg-mpr-interactive-lt">
               <Wrench className="w-4 h-4 mr-2" />
               {isEnglish ? 'Tools' : 'Outils'} ▾
             </Button>

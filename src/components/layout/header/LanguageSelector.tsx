@@ -143,9 +143,9 @@ const LanguageSelector = ({ isEnglish }: LanguageSelectorProps) => {
       onClick={handleLanguageToggle}
       className={cn(
         "flex items-center gap-2 px-3 py-2 rounded-lg transition-all duration-200",
-        "bg-gradient-to-r from-blue-50 to-blue-100 hover:from-blue-100 hover:to-blue-200",
-        "border border-blue-200 hover:border-blue-300",
-        "text-blue-900 hover:text-blue-700",
+        "bg-gradient-to-r from-mpr-interactive-lt to-mpr-interactive-lt hover:from-mpr-interactive-lt hover:to-mpr-interactive-lt",
+        "border border-mpr-border hover:border-mpr-interactive",
+        "text-mpr-navy hover:text-mpr-interactive",
         "shadow-sm hover:shadow-md",
         "transform hover:scale-105 active:scale-95"
       )}

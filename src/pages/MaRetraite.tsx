@@ -55,7 +55,7 @@ const pageLocalStyles = `
   cursor: pointer;
   transition: all 0.2s ease;
 }
-.mode-option:hover { border-color: #4c6ef5; box-shadow: 0 4px 12px rgba(76,110,245,0.1); }
+.mode-option:hover { border-color: #2B5BA8; box-shadow: 0 4px 12px rgba(43,91,168,0.1); }
 .mode-option.selected { border-color: #10b981; box-shadow: 0 0 0 2px #10b98122; }
 .result-metric { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 12px; }
 .result-value { font-size: 32px; font-weight: 700; color: #0c4a6e; }
@@ -67,8 +67,8 @@ const pageLocalStyles = `
 .impact-negative { background: #fee2e2; color: #dc2626; }
 .impact-neutral { background: #f3f4f6; color: #374151; }
 .senior-btn { font-size: 18px; font-weight: 700; padding: 12px 20px; border-radius: 8px; border: 2px solid transparent; min-height: 48px; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 8px; }
-.senior-btn-primary { background: #4c6ef5; color: white; border-color: #4c6ef5; }
-.senior-btn-primary:hover { background: #364fc7; border-color: #364fc7; }
+.senior-btn-primary { background: #2B5BA8; color: white; border-color: #2B5BA8; }
+.senior-btn-primary:hover { background: #1F4A8F; border-color: #1F4A8F; }
 @media (max-width: 768px) { .senior-inline-grid-2, .senior-inline-grid-3 { grid-template-columns: 1fr; } }
 `;
 
@@ -390,7 +390,7 @@ const MaRetraite: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-gray-900 mb-4 flex items-center justify-center gap-3">
-            <User className="w-10 h-10 text-blue-600" />
+            <User className="w-10 h-10 text-mpr-interactive" />
             {isFrench ? 'Mon profil de retraite' : 'My Retirement Profile'}
           </h1>
           <p className="text-xl text-gray-600">
@@ -416,7 +416,7 @@ const MaRetraite: React.FC = () => {
         {/* SECTION 1: Informations de base */}
         <div className="senior-compact-section" style={{ marginBottom: '32px', paddingBottom: '32px', minHeight: '600px' }}>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-blue-800 flex items-center gap-2">
+            <h2 className="text-xl font-bold text-mpr-navy flex items-center gap-2">
               <Users className="w-6 h-6" />
               {isFrench ? 'Informations de base' : 'Basic Information'}
             </h2>
@@ -430,8 +430,8 @@ const MaRetraite: React.FC = () => {
             {/* Person 1 - GAUCHE */}
             <div className="space-y-3">
               <div className="flex items-center gap-2 mb-2">
-                <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-white text-xs font-bold">1</div>
-                <span className="font-semibold text-blue-800">{isFrench ? 'Personne 1' : 'Person 1'}</span>
+                <div className="w-6 h-6 bg-mpr-interactive rounded-full flex items-center justify-center text-white text-xs font-bold">1</div>
+                <span className="font-semibold text-mpr-navy">{isFrench ? 'Personne 1' : 'Person 1'}</span>
                 {p1Valid && <CheckCircle className="w-4 h-4 text-green-500" />}
               </div>
 
@@ -738,7 +738,7 @@ const MaRetraite: React.FC = () => {
             </div>
 
             {p2Result && (
-              <div className="mpr-result-grid mt-6 pt-6 border-t border-blue-200">
+              <div className="mpr-result-grid mt-6 pt-6 border-t border-mpr-border">
                 <div className="result-metric">
                   <div className="result-value">{p2Result.currentAge} {isFrench ? 'ans' : 'years'}</div>
                   <div className="result-label">{isFrench ? 'Âge actuel - Personne 2' : 'Current Age - Person 2'}</div>
@@ -763,7 +763,7 @@ const MaRetraite: React.FC = () => {
             )}
 
             {longevityMode === 'advanced' && (p1Result as any).adjustments && (
-              <div className="mt-6 pt-6 border-t border-blue-200">
+              <div className="mt-6 pt-6 border-t border-mpr-border">
                 <h3 className="text-lg font-semibold mb-4">{isFrench ? 'Impact des facteurs personnalisés' : 'Personalized Factors Impact'}</h3>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                   {Object.entries(((p1Result as any).adjustments as Record<string, number>)).map(([k, v]) => {

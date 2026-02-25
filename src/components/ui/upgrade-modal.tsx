@@ -95,14 +95,14 @@ const UpgradeModal: React.FC<UpgradeModalProps> = ({
 
         <div className="space-y-6">
           {/* Feature that triggered the upgrade */}
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+          <div className="bg-mpr-interactive-lt border border-mpr-border rounded-lg p-4">
             <div className="flex items-center gap-3">
               {getFeatureIcon(featureName as keyof PlanLimits['features'])}
               <div>
-                <h3 className="font-semibold text-blue-900">
+                <h3 className="font-semibold text-mpr-navy">
                   Feature Locked: {getFeatureName(featureName as keyof PlanLimits['features'])}
                 </h3>
-                <p className="text-blue-700 text-sm">
+                <p className="text-mpr-navy text-sm">
                   This feature requires the {requiredPlanInfo.badge} plan
                 </p>
               </div>

@@ -106,10 +106,10 @@ export function SeniorsCompetitiveComparison({ userProfile, showDetails = false 
         <h3 className="text-2xl font-bold text-gray-900 mb-6">Votre avantage avec nos calculs précis</h3>
 
         {advantages.map((advantage, index) => (
-          <div key={index} className="advantage-card bg-blue-50 border-2 border-blue-200 rounded-lg p-6 mb-4">
+          <div key={index} className="advantage-card bg-mpr-interactive-lt border-2 border-mpr-border rounded-lg p-6 mb-4">
             <div className="advantage-header mb-3">
-              <h4 className="text-xl font-bold text-blue-800">{advantage.category}</h4>
-              <div className="advantage-amount text-3xl font-bold text-blue-600">
+              <h4 className="text-xl font-bold text-mpr-navy">{advantage.category}</h4>
+              <div className="advantage-amount text-3xl font-bold text-mpr-interactive">
                 {!isYearsAdvantage(advantage)
                   ? formatMontantOQLF(advantage.advantage)
                   : `${advantage.advantage.toFixed(1)} années`}
@@ -121,10 +121,10 @@ export function SeniorsCompetitiveComparison({ userProfile, showDetails = false 
               </div>
             </div>
 
-            <p className="advantage-message text-lg text-blue-700 mb-3">{advantage.message}</p>
+            <p className="advantage-message text-lg text-mpr-navy mb-3">{advantage.message}</p>
 
             {showDetails && (
-              <p className="advantage-explanation text-base text-blue-600">{advantage.explanation}</p>
+              <p className="advantage-explanation text-base text-mpr-interactive">{advantage.explanation}</p>
             )}
           </div>
         ))}
@@ -147,7 +147,7 @@ export function SeniorsCompetitiveComparison({ userProfile, showDetails = false 
 
       {/* Call-to-action pour seniors */}
       <div className="cta-section mt-8 text-center">
-        <button className="cta-button bg-blue-600 text-white text-xl font-bold py-4 px-8 rounded-lg hover:bg-blue-700 transition-colors">
+        <button className="cta-button bg-mpr-interactive text-white text-xl font-bold py-4 px-8 rounded-lg hover:bg-mpr-interactive-dk transition-colors">
           Voir ma projection précise maintenant
         </button>
         <p className="cta-subtext text-lg text-gray-600 mt-3">

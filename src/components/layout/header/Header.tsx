@@ -137,7 +137,7 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <header className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 border-b-4 border-blue-400 shadow-2xl">
+    <header className="bg-gradient-to-r from-mpr-navy via-mpr-navy-mid to-mpr-interactive border-b-4 border-mpr-navy-dark shadow-2xl">
       <div className="container mx-auto px-6">
         <div className="py-6 space-y-6">
           {/* Titre principal */}
@@ -153,14 +153,14 @@ export const Header: React.FC = () => {
                   target.nextElementSibling?.classList.remove('hidden');
                 }}
               />
-              <div className="hidden text-2xl font-bold text-white bg-blue-600 px-4 py-2 rounded-lg">
+              <div className="hidden text-2xl font-bold text-white bg-mpr-interactive px-4 py-2 rounded-lg">
                 MonPlanRetraite.ca
               </div>
             </div>
             <h1 className="text-3xl font-bold text-white mb-2 drop-shadow-lg">
               {language === 'fr' ? 'MonPlanRetraite.ca' : 'MonPlanRetraite.ca'}
             </h1>
-            <p className="text-blue-100 text-lg">
+            <p className="text-white/80 text-lg">
               {language === 'fr' 
                 ? 'Planifiez votre avenir financier avec nos outils professionnels'
                 : 'Plan your financial future with our professional tools'
@@ -172,7 +172,7 @@ export const Header: React.FC = () => {
           <div className="hidden md:block space-y-4">
             {sectionGroups.map((group, groupIndex) => (
               <div key={groupIndex} className="space-y-3">
-                <h3 className="text-sm font-bold text-blue-100 uppercase tracking-wide px-2 bg-blue-500/30 rounded-lg py-1 inline-block">
+                <h3 className="text-sm font-bold text-white/80 uppercase tracking-wide px-2 bg-white/20 rounded-lg py-1 inline-block">
                   {group.title}
                 </h3>
                 <div className="flex flex-wrap gap-2">
@@ -180,7 +180,7 @@ export const Header: React.FC = () => {
                     <button
                       key={section.id}
                       onClick={() => handleSectionClick(section)}
-                      className="flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105 shadow-lg bg-white/90 text-gray-700 border-2 border-white/50 hover:bg-white hover:border-blue-300 hover:shadow-xl"
+                      className="flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition-all duration-200 hover:scale-105 shadow-lg bg-white/90 text-gray-700 border-2 border-white/50 hover:bg-white hover:border-mpr-interactive/50 hover:shadow-xl"
                     >
                       <section.icon className="w-4 h-4" />
                       {section.label}
@@ -205,7 +205,7 @@ export const Header: React.FC = () => {
               <div className="mt-4 bg-white/95 rounded-lg p-4 space-y-4 max-h-96 overflow-y-auto">
                 {sectionGroups.map((group, groupIndex) => (
                   <div key={groupIndex} className="space-y-2">
-                    <h3 className="text-sm font-bold text-blue-600 uppercase tracking-wide">
+                    <h3 className="text-sm font-bold text-mpr-interactive uppercase tracking-wide">
                       {group.title}
                     </h3>
                     <div className="space-y-2">
@@ -213,7 +213,7 @@ export const Header: React.FC = () => {
                         <button
                           key={section.id}
                           onClick={() => handleSectionClick(section)}
-                          className="w-full text-left px-3 py-2 rounded-lg text-gray-700 hover:bg-blue-50 transition-colors"
+                          className="w-full text-left px-3 py-2 rounded-lg text-gray-700 hover:bg-mpr-interactive-lt transition-colors"
                         >
                           <div className="flex items-center gap-2">
                             <section.icon className="w-4 h-4" />
@@ -251,7 +251,7 @@ export const Header: React.FC = () => {
             ) : (
               <button
                 onClick={() => navigate('/')}
-                className="px-6 py-3 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors"
+                className="px-6 py-3 bg-white text-blue-600 rounded-lg font-medium hover:bg-mpr-interactive-lt transition-colors"
               >
                 {language === 'fr' ? 'Se connecter' : 'Sign In'}
               </button>

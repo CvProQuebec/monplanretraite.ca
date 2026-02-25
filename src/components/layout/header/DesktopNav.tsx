@@ -20,7 +20,7 @@ const DesktopNav = ({ isEnglish, isHomePage }: DesktopNavProps) => {
   // Base classes for navigation links
   const getNavLinkClasses = (path?: string) => {
     const isActive = path ? isActivePage(path) : false;
-    const baseColor = "text-blue-900";
+    const baseColor = "text-mpr-navy";
     const hoverColor = "hover:text-amber-600";
     const activeColor = "text-amber-600";
     const afterBg = "after:bg-amber-600";
@@ -36,7 +36,7 @@ const DesktopNav = ({ isEnglish, isHomePage }: DesktopNavProps) => {
     <div className="hidden md:flex items-center space-x-2">
       <ScrollArea className="max-w-4xl">
         <nav className="flex items-center space-x-6 pb-2">
-          <NavLink href={isEnglish ? (isHomePage ? "#" : "/en") : (isHomePage ? "#" : "/fr")} className={"text-blue-900 hover:text-amber-600"}>
+          <NavLink href={isEnglish ? (isHomePage ? "#" : "/en") : (isHomePage ? "#" : "/fr")} className={"text-mpr-navy hover:text-amber-600"}>
             {isEnglish ? "Home" : "Accueil"}
           </NavLink>
           

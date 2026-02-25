@@ -243,14 +243,14 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
         <div className="space-y-6">
           {/* Feature that triggered the upgrade */}
           {featureName !== 'plan_upgrade' && (
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div className="bg-mpr-interactive-lt border border-mpr-border rounded-lg p-4">
               <div className="flex items-center gap-3">
                 {getFeatureIcon(featureName as keyof PlanLimits['features'])}
                 <div>
-                  <h3 className="font-semibold text-blue-900">
+                  <h3 className="font-semibold text-mpr-navy">
                     {isFrench ? 'Fonctionnalité verrouillée :' : 'Locked feature:'} {getFeatureName(featureName as keyof PlanLimits['features'])}
                   </h3>
-                  <p className="text-blue-700 text-sm">
+                  <p className="text-mpr-navy text-sm">
                     {isFrench 
                       ? `Cette fonctionnalité nécessite le forfait ${requiredPlanInfo.badge}`
                       : `This feature requires the ${requiredPlanInfo.badge} plan`
@@ -273,10 +273,10 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
           {/* Grille complète des 3 plans */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Plan Gratuit */}
-            <Card className={`border-2 relative ${currentPlan === 'free' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}>
+            <Card className={`border-2 relative ${currentPlan === 'free' ? 'border-mpr-interactive bg-mpr-interactive-lt' : 'border-gray-200'}`}>
               {currentPlan === 'free' && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-blue-100 text-blue-800 border border-blue-200">
+                  <Badge className="bg-mpr-interactive-lt text-mpr-navy border border-mpr-border">
                     {isFrench ? 'Plan Actuel' : 'Current Plan'}
                   </Badge>
                 </div>
@@ -334,10 +334,10 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
             </Card>
 
             {/* Plan Professionnel */}
-            <Card className={`border-2 relative ${currentPlan === 'professional' ? 'border-blue-500 bg-blue-50' : 'border-purple-500'}`}>
+            <Card className={`border-2 relative ${currentPlan === 'professional' ? 'border-mpr-interactive bg-mpr-interactive-lt' : 'border-purple-500'}`}>
               {currentPlan === 'professional' ? (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-blue-100 text-blue-800 border border-blue-200">
+                  <Badge className="bg-mpr-interactive-lt text-mpr-navy border border-mpr-border">
                     {isFrench ? 'Plan Actuel' : 'Current Plan'}
                   </Badge>
                 </div>
@@ -349,8 +349,8 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
                 </div>
               )}
               <CardHeader className="text-center pb-3">
-                <div className="w-12 h-12 mx-auto mb-2 bg-blue-100 rounded-full flex items-center justify-center">
-                  <Star className="h-6 w-6 text-blue-600" />
+                <div className="w-12 h-12 mx-auto mb-2 bg-mpr-interactive-lt rounded-full flex items-center justify-center">
+                  <Star className="h-6 w-6 text-mpr-interactive" />
                 </div>
                 <CardTitle className="text-lg text-purple-900">{PLAN_CONFIG.professional.badge}</CardTitle>
                 <CardDescription className="text-3xl font-bold text-purple-900">
@@ -359,12 +359,12 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
                 <div className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
                   {isFrench ? '80 % moins cher que la concurrence' : '80% cheaper than competition'}
                 </div>
-                <div className="text-xs text-blue-600">
+                <div className="text-xs text-mpr-interactive">
                   {isFrench ? 'Économie de 94 %' : 'Save 94%'}
                 </div>
               </CardHeader>
               <CardContent className="space-y-2">
-                <div className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full mb-2">
+                <div className="bg-mpr-interactive-lt text-mpr-navy text-xs px-2 py-1 rounded-full mb-2">
                   {isFrench ? `VALEUR : 5 000 $ pour 297 $` : `VALUE: 5000$+ for 297 $`}
                 </div>
                 <div className="flex items-center gap-2 text-sm">
@@ -393,7 +393,7 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
                 </div>
                 {currentPlan !== 'professional' && currentPlan !== 'expert' && (
                   <Button 
-                    className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white"
+                    className="w-full mt-4 bg-mpr-interactive hover:bg-mpr-interactive-dk text-white"
                     onClick={() => handleUpgrade('professional')}
                     disabled={isProcessing}
                   >
@@ -411,10 +411,10 @@ const AdvancedUpgradeModal: React.FC<AdvancedUpgradeModalProps> = ({
             </Card>
 
             {/* Plan Expert */}
-            <Card className={`border-2 relative ${currentPlan === 'expert' ? 'border-blue-500 bg-blue-50' : 'border-gray-200'}`}>
+            <Card className={`border-2 relative ${currentPlan === 'expert' ? 'border-mpr-interactive bg-mpr-interactive-lt' : 'border-gray-200'}`}>
               {currentPlan === 'expert' && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-                  <Badge className="bg-blue-100 text-blue-800 border border-blue-200">
+                  <Badge className="bg-mpr-interactive-lt text-mpr-navy border border-mpr-border">
                     {isFrench ? 'Plan actuel' : 'Current Plan'}
                   </Badge>
                 </div>

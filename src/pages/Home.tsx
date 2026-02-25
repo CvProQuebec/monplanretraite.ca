@@ -347,7 +347,7 @@ const Home: React.FC = () => {
                 </p>
                 <Button
                   onClick={() => navigate(isFrench ? '/ma-retraite' : '/my-retirement')}
-                  className="bg-white text-blue-700 hover:bg-gray-100 font-bold px-8 py-3"
+                  className="bg-white text-mpr-navy hover:bg-gray-100 font-bold px-8 py-3"
                 >
                   {isFrench ? '👉 Découvrir les outils de planification →' : '👉 Discover the planning tools →'}
                 </Button>

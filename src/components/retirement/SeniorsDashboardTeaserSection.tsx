@@ -98,7 +98,7 @@ const SeniorsDashboardTeaserSection: React.FC = () => {
 
             {/* Épargnes totales et taux */}
             <div className="flex items-center gap-3 border rounded-md p-3">
-              <PiggyBank className="w-5 h-5 text-indigo-600" />
+              <PiggyBank className="w-5 h-5 text-mpr-interactive" />
               <div>
                 <div className="text-xs text-slate-500">
                   {isFrench ? 'Épargnes totales' : 'Total Savings'}
