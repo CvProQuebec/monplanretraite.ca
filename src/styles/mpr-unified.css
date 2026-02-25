@@ -135,6 +135,14 @@ h4, .h4 {
   margin-bottom: var(--mpr-gap-sm);
 }
 
+/* Headings inside dark gradient backgrounds stay white — !important to beat .seniors-mode h2 specificity */
+.seniors-mode [class*="from-mpr-navy"] h1,
+.seniors-mode [class*="from-mpr-navy"] h2,
+.seniors-mode [class*="from-mpr-navy"] h3,
+.seniors-mode [class*="from-mpr-navy"] h4 {
+  color: white !important;
+}
+
 /* ===================================================== */
 /* === SYSTÈME DE GRILLE FORMULAIRES                  === */
 /* ===================================================== */

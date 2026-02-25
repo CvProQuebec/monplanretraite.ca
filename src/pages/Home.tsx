@@ -134,7 +134,7 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <div className="min-h-screen bg-mpr-bg-section">
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-6xl mx-auto">
           {/* Hero */}
@@ -176,8 +176,8 @@ const Home: React.FC = () => {
                     ? "Avant de planifier votre retraite, il y a une étape que presque tout le monde reporte — et qui peut changer le cours des choses en quelques heures critiques. Rassembler les bonnes informations, au bon endroit, pour les bonnes personnes. C'est exactement ce que fait la Trousse de protection familiale et successorale de MonPlanRetraite.ca."
                     : 'Before planning your retirement, there is a step almost everyone postpones — one that can change everything in a few critical hours. Gathering the right information, in the right place, for the right people. That is exactly what the MonPlanRetraite.ca Family and Estate Protection Kit does.'}
                 </p>
-                <div className="bg-blue-50 border-l-4 border-blue-500 p-6 rounded-r-xl">
-                  <h3 className="text-xl font-bold text-blue-900 mb-3">
+                <div className="bg-mpr-interactive-lt border-l-4 border-mpr-interactive p-6 rounded-r-xl">
+                  <h3 className="text-xl font-bold text-mpr-navy mb-3">
                     {isFrench ? '💡 La planification de retraite commence ici.' : '💡 Retirement planning starts here.'}
                   </h3>
                   <p className="text-gray-700 leading-relaxed">
@@ -222,8 +222,8 @@ const Home: React.FC = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex gap-4 p-5 bg-blue-50 rounded-xl border border-blue-200">
-                    <FileText className="w-10 h-10 text-blue-500 flex-shrink-0 mt-1" />
+                  <div className="flex gap-4 p-5 bg-mpr-interactive-lt rounded-xl border border-mpr-border">
+                    <FileText className="w-10 h-10 text-mpr-interactive flex-shrink-0 mt-1" />
                     <div>
                       <h4 className="font-bold text-gray-900 mb-2">
                         {isFrench ? '🗂️ Formulaire C — Dossier complet du liquidateur' : '🗂️ Form C — Complete liquidator file'}
@@ -328,19 +328,19 @@ const Home: React.FC = () => {
             </div>
 
             {/* Bloc de transition */}
-            <Card className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white shadow-xl border-0">
+            <Card className="bg-gradient-to-r from-mpr-navy to-mpr-interactive text-white shadow-xl border-0">
               <CardContent className="p-8 text-center">
                 <h3 className="text-2xl font-bold mb-3">
                   {isFrench
                     ? "Vous avez complété votre dossier familial ? Vous venez de faire ce que 80 % des Canadiens n'ont jamais fait."
                     : "You completed your family file? You just did what 80% of Canadians have never done."}
                 </h3>
-                <p className="text-blue-100 text-xl mb-4">
+                <p className="text-white/80 text-xl mb-4">
                   {isFrench
                     ? "L'étape suivante : planifiez votre retraite avec les bons outils."
                     : 'The next step: plan your retirement with the right tools.'}
                 </p>
-                <p className="text-blue-100 mb-6">
+                <p className="text-white/80 mb-6">
                   {isFrench
                     ? 'MonPlanRetraite.ca est la seule plateforme au Québec qui vous permet de calculer, simuler et optimiser votre retraite — gratuitement pour commencer.'
                     : 'MonPlanRetraite.ca is the only platform in Quebec that lets you calculate, simulate and optimize your retirement — free to start.'}
@@ -418,7 +418,7 @@ const Home: React.FC = () => {
                   : 'Free access to our library to get ready for retirement.'}
               </p>
               <div className="mt-4">
-                <Button onClick={() => navigate(isFrench ? '/blog' : '/en/blog')} className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-8 py-3 rounded-xl">
+                <Button onClick={() => navigate(isFrench ? '/blog' : '/en/blog')} className="bg-mpr-interactive hover:bg-mpr-interactive-dk text-white font-bold px-8 py-3 rounded-xl">
                   {isFrench ? 'Voir la bibliothèque complète' : 'Browse the full library'}
                 </Button>
               </div>
@@ -426,8 +426,8 @@ const Home: React.FC = () => {
           </Card>
 
           {/* Differences */}
-          <Card className="bg-white/90 backdrop-blur-sm border-2 border-blue-200 shadow-xl mb-16">
-            <CardHeader className="text-center pb-6"><CardTitle className="text-3xl font-bold text-blue-900">{isFrench ? 'Ce qui nous rend différents' : 'What makes us different'}</CardTitle></CardHeader>
+          <Card className="bg-white/90 backdrop-blur-sm border-2 border-mpr-border shadow-xl mb-16">
+            <CardHeader className="text-center pb-6"><CardTitle className="text-3xl font-bold text-mpr-navy">{isFrench ? 'Ce qui nous rend différents' : 'What makes us different'}</CardTitle></CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="text-center">
@@ -443,12 +443,12 @@ const Home: React.FC = () => {
                   </p>
                 </div>
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Sparkles className="w-8 h-8 text-blue-600" />
+                  <div className="w-16 h-16 bg-mpr-interactive-lt rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Sparkles className="w-8 h-8 text-mpr-interactive" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-3">{isFrench ? 'Assistant IA exclusif' : 'Exclusive AI assistant'}</h3>
                   <p className="text-gray-700 leading-relaxed">
-                    {isFrench 
+                    {isFrench
                       ? "Le premier assistant qui évite les catastrophes financières avant qu'elles arrivent"
                       : 'The first assistant that prevents financial disasters before they happen'
                     }
@@ -500,7 +500,7 @@ const Home: React.FC = () => {
               <Accordion type="single" collapsible className="divide-y divide-gray-100">
                 {faqItems.map((item, index) => (
                   <AccordionItem key={item.question} value={`faq-${index}`}>
-                    <AccordionTrigger className="px-8 py-6 text-left text-xl font-bold text-gray-900 hover:text-blue-700 leading-relaxed">
+                    <AccordionTrigger className="px-8 py-6 text-left text-xl font-bold text-gray-900 hover:text-mpr-interactive leading-relaxed">
                       {item.question}
                     </AccordionTrigger>
                     <AccordionContent className="px-8 pb-6 pt-2 text-lg text-gray-700 leading-relaxed">{item.answer}</AccordionContent>

@@ -98,21 +98,21 @@ const plans: PlanConfig[] = [
     priceEn: '$297',
     priceNoteFr: '/an',
     priceNoteEn: '/year',
-    badge: { textFr: 'RECOMMAND\u00C9', textEn: 'RECOMMENDED', bgClass: 'bg-blue-500 text-white' },
+    badge: { textFr: 'RECOMMAND\u00C9', textEn: 'RECOMMENDED', bgClass: 'bg-mpr-interactive text-white' },
     colors: {
-      icon: 'text-blue-600',
-      title: 'text-blue-900',
-      price: 'text-blue-600',
-      note: 'text-blue-600',
-      feature: 'text-blue-500',
+      icon: 'text-mpr-interactive',
+      title: 'text-mpr-navy',
+      price: 'text-mpr-interactive',
+      note: 'text-mpr-interactive',
+      feature: 'text-mpr-interactive',
     },
     value: {
       titleFr: 'VALEUR : 5 000 $ pour 297 $',
       titleEn: 'VALUE: $5,000 for $297',
       subtitleFr: '\u00C9conomie de 94 %',
       subtitleEn: '94% savings',
-      bgClass: 'bg-blue-50',
-      textClass: 'text-blue-900',
+      bgClass: 'bg-mpr-interactive-lt',
+      textClass: 'text-mpr-navy',
     },
     features: [
       { key: 'pro-everything-plus', textFr: 'Tout du plan Gratuit + fonctionnalit\u00E9s avanc\u00E9es (born\u00E9es)', textEn: 'Everything from Free + advanced features (limited)' },
@@ -126,7 +126,7 @@ const plans: PlanConfig[] = [
       kind: 'professional',
       labelFr: 'Choisir Professionnel',
       labelEn: 'Choose Professional',
-      buttonClass: 'bg-blue-600 hover:bg-blue-700 text-white',
+      buttonClass: 'bg-mpr-interactive hover:bg-mpr-interactive-dk text-white',
     },
   },
   {
@@ -244,12 +244,12 @@ const PlansSection: React.FC<PlansSectionProps> = ({ onStartFree, onSelectPlan }
   };
 
   return (
-    <div className="bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 py-16 rounded-2xl mb-10">
+    <div className="bg-gradient-to-br from-mpr-navy via-mpr-navy-mid to-mpr-interactive py-16 rounded-2xl mb-10">
       <div className="text-center mb-4 px-4">
         <h2 className="text-4xl font-bold text-white mb-3">
           {isFrench ? 'Allez plus loin avec la planification financière complète' : 'Go further with complete financial planning'}
         </h2>
-        <p className="text-xl text-blue-100">
+        <p className="text-xl text-white/80">
           {isFrench
             ? 'De la protection de base à la planification complète avec IA'
             : 'From basic protection to complete AI-powered planning'}
@@ -321,7 +321,7 @@ const PlansSection: React.FC<PlansSectionProps> = ({ onStartFree, onSelectPlan }
       </div>
 
       <div className="flex justify-center mt-8 px-4">
-        <Button onClick={toggleComparison} className="bg-white text-blue-800 hover:bg-gray-100 font-bold px-8 py-3 rounded-xl shadow-md">
+        <Button onClick={toggleComparison} className="bg-white text-mpr-navy hover:bg-mpr-interactive-lt font-bold px-8 py-3 rounded-xl shadow-md">
           {isFrench ? (showComparison ? 'Masquer la comparaison' : 'Comparer les plans') : (showComparison ? 'Hide comparison' : 'Compare plans')}
         </Button>
       </div>

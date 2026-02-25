@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export function ComparisonTeaser({ className = '' }: { className?: string }) {
   return (
-    <div className={`comparison-teaser bg-gradient-to-r from-blue-50 to-green-50 rounded-lg p-8 border-2 border-blue-200 ${className}`}>
+    <div className={`comparison-teaser bg-mpr-interactive-lt rounded-lg p-8 border-2 border-mpr-border ${className}`}>
       <div className="teaser-content text-center">
         <h2 className="text-3xl font-bold text-gray-900 mb-4">Nos calculs vs autres calculateurs</h2>
 
@@ -29,7 +29,7 @@ export function ComparisonTeaser({ className = '' }: { className?: string }) {
 
         <Link
           to="/comparaison"
-          className="cta-button inline-block bg-blue-600 text-white text-xl font-bold py-4 px-8 rounded-lg hover:bg-blue-700 transition-colors"
+          className="cta-button inline-block bg-mpr-interactive text-white text-xl font-bold py-4 px-8 rounded-lg hover:bg-mpr-interactive-dk transition-colors"
         >
           Voir la comparaison détaillée
         </Link>
