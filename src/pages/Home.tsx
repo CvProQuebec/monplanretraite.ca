@@ -987,30 +987,6 @@ const Home: React.FC = () => {
                 />
               </div>
 
-              {/* Floating info badge */}
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '32px',
-                  left: '-24px',
-                  backgroundColor: '#ffffff',
-                  borderRadius: '16px',
-                  padding: '18px 22px',
-                  boxShadow: '0 12px 40px -4px rgba(0,0,0,0.16)',
-                  border: '1px solid #e2e8f0',
-                }}
-              >
-                <div style={{ fontSize: '13px', color: '#64748b', marginBottom: '4px' }}>
-                  {isFr ? 'Déjà utilisé par' : 'Already used by'}
-                </div>
-                <div style={{ fontSize: '26px', fontWeight: 800, color: '#0f172a', lineHeight: 1 }}>
-                  10 000+
-                </div>
-                <div style={{ fontSize: '13px', color: '#64748b', marginTop: '4px' }}>
-                  {isFr ? 'Canadiens de 50 à 90 ans' : 'Canadians aged 50–90'}
-                </div>
-              </div>
-
               {/* Gold accent dot */}
               <div
                 style={{
