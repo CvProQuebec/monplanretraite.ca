@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -132,6 +132,18 @@ const Home: React.FC = () => {
     setShowOnboardingWizard(false);
     navigate(isFrench ? '/ma-retraite' : '/my-retirement');
   };
+
+  // Chargement unique du script DPDcart
+  useEffect(() => {
+    const scriptId = 'dpd-cart-script';
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement('script');
+      script.id = scriptId;
+      script.src = 'https://monplanretraite-ca.dpdcart.com/dpd.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -270,13 +282,23 @@ const Home: React.FC = () => {
                     <p className="text-gray-500 text-sm mb-6">
                       {isFrench ? 'Idéal pour un premier pas immédiat' : 'Ideal for an immediate first step'}
                     </p>
-                    <Button
-                      onClick={() => navigate(isFrench ? '/planification-urgence' : '/emergency-planning')}
-                      variant="outline"
-                      className="w-full font-bold border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white py-3"
+                    {/* Bouton DPDcart — Trousse de base (Formulaire A, 17 $) */}
+                    <a
+                      data-dpd-type="button"
+                      data-text={isFrench ? 'Achetez maintenant' : 'Buy now'}
+                      data-variant="price-right"
+                      data-button-size="dpd-large"
+                      data-bg-color="469d3d"
+                      data-bg-color-hover="5cc052"
+                      data-text-color="ffffff"
+                      data-pr-bg-color="ffffff"
+                      data-pr-color="000000"
+                      data-lightbox="1"
+                      href="https://monplanretraite-ca.dpdcart.com/cart/add?product_id=249036&method_id=272002&return=1"
+                      className="block w-full"
                     >
-                      {isFrench ? 'Obtenir le Formulaire A →' : 'Get Form A →'}
-                    </Button>
+                      {isFrench ? 'Achetez maintenant' : 'Buy now'}
+                    </a>
                   </div>
                   <div className="border-2 border-emerald-500 rounded-2xl p-6 text-center relative bg-emerald-50">
                     <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-emerald-500 text-white text-sm font-bold px-4 py-1 rounded-full">
@@ -292,12 +314,22 @@ const Home: React.FC = () => {
                     <p className="text-gray-500 text-sm mb-6">
                       {isFrench ? 'Protection familiale complète' : 'Complete family protection'}
                     </p>
-                    <Button
-                      onClick={() => navigate(isFrench ? '/planification-urgence' : '/emergency-planning')}
-                      className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3"
+                    {/* Bouton DPDcart — Trousse complète (Formulaires A+B+C, 57 $) */}
+                    <a
+                      data-dpd-type="button"
+                      data-text={isFrench ? 'Achetez maintenant' : 'Buy now'}
+                      data-variant="price-right"
+                      data-button-size="dpd-large"
+                      data-bg-color="469d3d"
+                      data-bg-color-hover="5cc052"
+                      data-text-color="ffffff"
+                      data-pr-bg-color="ffffff"
+                      data-pr-color="000000"
+                      href="https://monplanretraite-ca.dpdcart.com/cart/add?product_id=249037&method_id=272003&return=1"
+                      className="block w-full"
                     >
-                      {isFrench ? 'Obtenir la trousse complète →' : 'Get the complete kit →'}
-                    </Button>
+                      {isFrench ? 'Achetez maintenant' : 'Buy now'}
+                    </a>
                   </div>
                 </div>
                 <p className="text-center text-gray-500 text-sm">
@@ -434,11 +466,11 @@ const Home: React.FC = () => {
                   <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     <CheckCircle className="w-8 h-8 text-green-600" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-3">{isFrench ? 'Seule solution gratuite' : 'Only free solution'}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 mb-3">{isFrench ? 'Gratuit pour commencer' : 'Free to get started'}</h3>
                   <p className="text-gray-700 leading-relaxed">
-                    {isFrench 
-                      ? "Module d'urgence professionnel offert gratuitement - une première au Québec"
-                      : 'Professional emergency module offered for free - a first in Quebec'
+                    {isFrench
+                      ? "Planification de retraite structurée, calculatrices et simulations — sans frais et sans inscription."
+                      : 'Structured retirement planning, calculators and simulations — free, no account required.'
                     }
                   </p>
                 </div>
