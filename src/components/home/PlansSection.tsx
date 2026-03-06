@@ -71,7 +71,6 @@ const plans: PlanConfig[] = [
       textClass: 'text-emerald-800',
     },
     features: [
-      { key: 'free-emergency', textFr: "Module d'urgence professionnel (8 sections)", textEn: 'Professional emergency module (8 sections)' },
       { key: 'free-budget', textFr: 'Planification budget/d\u00E9penses (lite)', textEn: 'Budget/expenses planning (lite)' },
       { key: 'free-calculators-return', textFr: 'Calculatrice de rendement simple', textEn: 'Simple return calculator' },
       { key: 'free-calculators-options', textFr: "Comparateur d'options d'achat", textEn: 'Purchase options comparator' },
@@ -155,7 +154,6 @@ const plans: PlanConfig[] = [
     },
     features: [
       { key: 'expert-suite', textFr: 'Suite compl\u00E8te : 75+ fonctionnalit\u00E9s', textEn: 'Complete suite: 75+ features' },
-      { key: 'expert-estate', icon: 'users', textFr: 'Planification successorale compl\u00E8te', textEn: 'Complete estate planning' },
       { key: 'expert-montecarlo', textFr: 'Monte Carlo 2000 it\u00E9rations \u2014 IA pr\u00E9dictive', textEn: 'Monte Carlo 2000 iterations \u2014 Predictive AI' },
       { key: 'expert-realestate', textFr: 'Optimisation immobili\u00E8re avanc\u00E9e', textEn: 'Advanced real-estate optimization' },
       { key: 'expert-reports', textFr: 'Rapports niveau consultant \u2014 Export PDF + CSV', textEn: 'Consultant-level reports \u2014 PDF + CSV' },

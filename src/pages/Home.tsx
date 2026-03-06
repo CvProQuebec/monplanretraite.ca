@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import { Button } from '@/components/ui/button';
@@ -73,6 +73,18 @@ const Home: React.FC = () => {
     navigate(isFr ? '/ma-retraite' : '/my-retirement');
   };
 
+  // Chargement unique du script DPDcart
+  useEffect(() => {
+    const scriptId = 'dpd-cart-script';
+    if (!document.getElementById(scriptId)) {
+      const script = document.createElement('script');
+      script.id = scriptId;
+      script.src = 'https://monplanretraite-ca.dpdcart.com/dpd.js';
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
   /* ── Data ── */
   const pillars = [
     {
@@ -111,9 +123,9 @@ const Home: React.FC = () => {
     {
       icon: CheckCircle,
       titleFr: 'Gratuit pour commencer',
-      titleEn: 'Free to start',
-      descFr: 'Module d\'urgence professionnel offert gratuitement — une première au Québec.',
-      descEn: 'Professional emergency module for free — a first in Quebec.',
+      titleEn: 'Free to get started',
+      descFr: 'Planification de retraite structurée, calculatrices et simulations — sans frais et sans inscription.',
+      descEn: 'Structured retirement planning, calculators and simulations — free, no account required.',
       color: '#16a34a',
     },
     {
@@ -777,35 +789,40 @@ const Home: React.FC = () => {
                 </div>
               </div>
 
-              <button
-                onClick={() => navigate(isFr ? '/planification-urgence' : '/emergency-planning')}
-                style={{
-                  backgroundColor: '#d97706',
-                  color: '#ffffff',
-                  border: 'none',
-                  borderRadius: '8px',
-                  padding: '15px 28px',
-                  fontSize: '17px',
-                  fontWeight: 700,
-                  cursor: 'pointer',
-                  minHeight: '54px',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '10px',
-                  transition: 'background-color 0.2s, transform 0.2s',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = '#b45309';
-                  e.currentTarget.style.transform = 'translateY(-2px)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = '#d97706';
-                  e.currentTarget.style.transform = 'translateY(0)';
-                }}
-              >
-                {isFr ? 'Découvrir la Trousse' : 'Discover the Kit'}
-                <ArrowRight size={18} />
-              </button>
+              {/* Boutons DPDcart */}
+              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+                {/* Formulaire A seul — 17 $ */}
+                <a
+                  data-dpd-type="button"
+                  data-text={isFr ? 'Formulaire A — 17 $' : 'Form A — $17'}
+                  data-variant="price-right"
+                  data-button-size="dpd-large"
+                  data-bg-color="469d3d"
+                  data-bg-color-hover="5cc052"
+                  data-text-color="ffffff"
+                  data-pr-bg-color="ffffff"
+                  data-pr-color="000000"
+                  data-lightbox="1"
+                  href="https://monplanretraite-ca.dpdcart.com/cart/add?product_id=249036&method_id=272002&return=1"
+                >
+                  {isFr ? 'Formulaire A — 17 $' : 'Form A — $17'}
+                </a>
+                {/* Trousse complète — 57 $ */}
+                <a
+                  data-dpd-type="button"
+                  data-text={isFr ? 'Trousse complète — 57 $' : 'Complete kit — $57'}
+                  data-variant="price-right"
+                  data-button-size="dpd-large"
+                  data-bg-color="d97706"
+                  data-bg-color-hover="b45309"
+                  data-text-color="ffffff"
+                  data-pr-bg-color="ffffff"
+                  data-pr-color="000000"
+                  href="https://monplanretraite-ca.dpdcart.com/cart/add?product_id=249037&method_id=272003&return=1"
+                >
+                  {isFr ? 'Trousse complète — 57 $' : 'Complete kit — $57'}
+                </a>
+              </div>
             </motion.div>
 
             {/* Right — kit contents */}
