@@ -18,7 +18,7 @@ import {
   BookOpen,
   ChevronDown,
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { getAllPosts } from '@/pages/blog/utils/content';
@@ -757,72 +757,28 @@ const Home: React.FC = () => {
                   : 'Gather the right information, in the right place, for the right people. Designed specifically for the Quebec context.'}
               </p>
 
-              {/* Pricing chips */}
-              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', marginBottom: '36px' }}>
-                <div
-                  style={{
-                    textAlign: 'center',
-                    backgroundColor: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '12px',
-                    padding: '20px 28px',
-                  }}
-                >
-                  <div style={{ fontSize: '30px', fontWeight: 800, color: '#fbbf24', marginBottom: '4px' }}>17 $</div>
-                  <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.55)' }}>
-                    {isFr ? 'Formulaire A seul' : 'Form A only'}
-                  </div>
-                </div>
-                <div
-                  style={{
-                    textAlign: 'center',
-                    backgroundColor: 'rgba(217,119,6,0.14)',
-                    border: '1px solid rgba(217,119,6,0.32)',
-                    borderRadius: '12px',
-                    padding: '20px 28px',
-                  }}
-                >
-                  <div style={{ fontSize: '30px', fontWeight: 800, color: '#fbbf24', marginBottom: '4px' }}>57 $</div>
-                  <div style={{ fontSize: '13px', color: 'rgba(255,255,255,0.55)' }}>
-                    {isFr ? 'Trousse complète' : 'Complete kit'}
-                  </div>
-                </div>
-              </div>
-
-              {/* Boutons DPDcart */}
-              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-                {/* Formulaire A seul — 17 $ */}
-                <a
-                  data-dpd-type="button"
-                  data-text={isFr ? 'Formulaire A — 17 $' : 'Form A — $17'}
-                  data-variant="price-right"
-                  data-button-size="dpd-large"
-                  data-bg-color="469d3d"
-                  data-bg-color-hover="5cc052"
-                  data-text-color="ffffff"
-                  data-pr-bg-color="ffffff"
-                  data-pr-color="000000"
-                  data-lightbox="1"
-                  href="https://monplanretraite-ca.dpdcart.com/cart/add?product_id=249036&method_id=272002&return=1"
-                >
-                  {isFr ? 'Formulaire A — 17 $' : 'Form A — $17'}
-                </a>
-                {/* Trousse complète — 57 $ */}
-                <a
-                  data-dpd-type="button"
-                  data-text={isFr ? 'Trousse complète — 57 $' : 'Complete kit — $57'}
-                  data-variant="price-right"
-                  data-button-size="dpd-large"
-                  data-bg-color="d97706"
-                  data-bg-color-hover="b45309"
-                  data-text-color="ffffff"
-                  data-pr-bg-color="ffffff"
-                  data-pr-color="000000"
-                  href="https://monplanretraite-ca.dpdcart.com/cart/add?product_id=249037&method_id=272003&return=1"
-                >
-                  {isFr ? 'Trousse complète — 57 $' : 'Complete kit — $57'}
-                </a>
-              </div>
+              {/* Bouton principal vers la page dédiée */}
+              <Link
+                to="/trousse"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '8px',
+                  backgroundColor: '#C8872A',
+                  color: '#ffffff',
+                  fontWeight: 700,
+                  fontSize: '16px',
+                  padding: '14px 28px',
+                  borderRadius: '8px',
+                  textDecoration: 'none',
+                  minHeight: '56px',
+                  transition: 'filter 0.2s ease',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.filter = 'brightness(0.88)')}
+                onMouseLeave={e => (e.currentTarget.style.filter = 'brightness(1)')}
+              >
+                {isFr ? 'Protéger ma famille →' : 'Protect my family →'}
+              </Link>
             </motion.div>
 
             {/* Right — kit contents */}
@@ -1004,29 +960,6 @@ const Home: React.FC = () => {
                 />
               </div>
 
-              {/* Floating info badge */}
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '32px',
-                  left: '-24px',
-                  backgroundColor: '#ffffff',
-                  borderRadius: '16px',
-                  padding: '18px 22px',
-                  boxShadow: '0 12px 40px -4px rgba(0,0,0,0.16)',
-                  border: '1px solid #e2e8f0',
-                }}
-              >
-                <div style={{ fontSize: '13px', color: '#64748b', marginBottom: '4px' }}>
-                  {isFr ? 'Déjà utilisé par' : 'Already used by'}
-                </div>
-                <div style={{ fontSize: '26px', fontWeight: 800, color: '#0f172a', lineHeight: 1 }}>
-                  10 000+
-                </div>
-                <div style={{ fontSize: '13px', color: '#64748b', marginTop: '4px' }}>
-                  {isFr ? 'Canadiens de 50 à 90 ans' : 'Canadians aged 50–90'}
-                </div>
-              </div>
 
               {/* Gold accent dot */}
               <div

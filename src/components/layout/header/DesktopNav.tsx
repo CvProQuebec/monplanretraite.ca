@@ -116,6 +116,14 @@ const DesktopNav = ({ isEnglish, isHomePage }: DesktopNavProps) => {
           >
             {isEnglish ? "Retirement" : "Retraite"}
           </Link>
+
+          {/* Trousse de protection familiale */}
+          <Link
+            to="/trousse"
+            className={getNavLinkClasses("/trousse")}
+          >
+            Trousse
+          </Link>
         </nav>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>

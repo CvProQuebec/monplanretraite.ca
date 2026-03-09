@@ -5,6 +5,7 @@ import { useFlags } from '@/hooks/useFlags';
 import PlaceholderInfoPage from '@/pages/placeholder/PlaceholderInfoPage';
 import { FourPercentRuleModule } from '@/components/ui/FourPercentRuleModule';
 import FourPercentRuleModuleEn from '@/components/ui/FourPercentRuleModuleEn';
+import TroussePage from '@/pages/TroussePage';
 
 /**
  * MarketingExtrasRoutes
@@ -28,6 +29,9 @@ export function MarketingExtrasRoutes() {
 
   return (
     <>
+      {/* Trousse de protection familiale et successorale */}
+      <Route path="/trousse" element={<TroussePage />} />
+
       {/* Règle du 4 % — FR/EN + alias */}
       {LocalizedRoute({
         fr: "/regle-4-pourcent",
