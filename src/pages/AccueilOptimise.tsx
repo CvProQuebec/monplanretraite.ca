@@ -156,37 +156,11 @@ const AccueilOptimise: React.FC = () => {
               </p>
               <img
                 src="/articles.png"
-                alt={isFrench ? 'Aper\u00E7u RRQ/CPP \u2014 montants et impact' : 'RRQ/CPP preview — amounts and impact'}</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? 'Calculatrice de rendement simple' : 'Simple return calculator'}</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? "Comparateur d'options d'achat" : 'Purchase options comparator'}</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? 'Estimateur de budget mensuel (lite)' : 'Monthly budget estimator (lite)'}</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? 'Aperçu RRQ/CPP — montants et impact' : 'RRQ/CPP preview — amounts and impact'}</span>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <CheckCircle className="w-5 h-5 text-emerald-500" />
-                        <span className="text-sm">{isFrench ? 'Conseils essentiels (aperçu)' : 'Essential tips (preview)'}</span>
-                      </div>
-                    </div>
-                    <Button 
-                      onClick={() => setShowOnboardingWizard(true)}
-                      className="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3"
-                    >
-                      {isFrench ? 'Commencer GRATUITEMENT' : 'Start FREE'}
-                    </Button>
-                  </CardContent>
-                </Card>
+                alt={isFrench ? 'Aperçu RRQ/CPP — montants et impact' : 'RRQ/CPP preview — amounts and impact'}
+                className="w-full rounded-lg shadow-lg"
+              />
+            </CardContent>
+          </Card>
 
                 {/* PLAN PROFESSIONNEL - Simplifié */}
                 <Card className="bg-white border-4 border-blue-400 shadow-2xl relative">
