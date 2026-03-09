@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"h:/monplanretraite.ca\" diff HEAD -- dist/index.html)",
+      "Bash(python3 -c \":*)"
+    ]
+  }
+}

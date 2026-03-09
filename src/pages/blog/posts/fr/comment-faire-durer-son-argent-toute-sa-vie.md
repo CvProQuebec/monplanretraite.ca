@@ -2,6 +2,7 @@
 title: Comment faire durer son argent toute sa vie
 slug: comment-faire-durer-son-argent-toute-sa-vie
 date: '2025-09-19'
+lastUpdated: '2026-03-01'
 excerpt: >-
   Vous vous inquiétez de manquer d'argent à la retraite? Cette peur est normale
   et partagée par beaucoup de personnes. Avec l'espérance de vie qui augmente,
@@ -11,12 +12,14 @@ tags:
 category: Gérer son épargne et ses placements
 language: fr
 status: published
-readingTime: 7
+readingTime: 8
 oqlfChecked: false
 relatedSlugFr: comment-faire-durer-son-argent-toute-sa-vie
 relatedSlugEn: make-money-last-lifetime
 ---
 # Comment faire durer son argent toute sa vie
+
+*Mis à jour le 1er mars 2026 | Temps de lecture : 8 minutes*
 
 Vous vous inquiétez de manquer d'argent à la retraite? Cette peur est normale et partagée par beaucoup de personnes. Avec l'espérance de vie qui augmente, nos épargnes doivent maintenant durer plus longtemps qu'avant.
 
@@ -107,21 +110,23 @@ Les revenus garantis vous protègent contre le risque de vivre trop longtemps. M
 
 ### Vos sources de revenus garantis
 
-**1. Pension de la Sécurité de la vieillesse (PSV)**
-- Maximum 800,44 $ par mois à 75 ans (en 2025)
-- **Stratégie :** Reportez-la jusqu'à 70 ans pour 36 % de plus à vie
+**1. Sécurité de la vieillesse (SV)**
+- Montant 2026 : environ **727 $/mois** (65–74 ans) | **800 $/mois** (75+)
+- **Stratégie :** Reportez-la jusqu'à 70 ans pour +36 % à vie
+- **Attention :** La SV est récupérée à 15 % si vos revenus dépassent **95 323 $** en 2026 — planifiez vos retraits FERR en conséquence
 
 **2. Régime de rentes du Québec (RRQ)**
-- Maximum 1 433,00 $ par mois à 65 ans (en 2025)
-- **Stratégie :** Reportez jusqu'à 72 ans pour 58,8 % de plus à vie
+- Maximum 2026 : environ **1 433 $/mois** à 65 ans (cotisation maximale)
+- Maximum RPC (hors Québec) : environ **1 395 $/mois**
+- **Stratégie :** Reportez jusqu'à 72 ans pour +58,8 % à vie (RRQ)
 
 ### Exemple de report stratégique
 
 Marie peut recevoir :
-- **À 65 ans :** PSV de 728,00 $ + RRQ de 1 200,00 $ = 1 928,00 $ par mois
-- **En reportant à 70 ans (PSV) et 72 ans (RRQ) :** PSV de 990,00 $ + RRQ de 1 905,00 $ = 2 895,00 $ par mois
+- **À 65 ans :** SV d'environ 727 $ + RRQ de 1 200 $ = **1 927 $/mois**
+- **En reportant à 70 ans (SV) et 72 ans (RRQ) :** SV d'environ 990 $ + RRQ de 1 905 $ = **2 895 $/mois**
 
-**Différence :** 967,00 $ de plus par mois, à vie!
+**Différence :** ~968 $ de plus par mois, à vie!
 
 ## Stratégie 4 : Préparez votre plan de décaissement
 

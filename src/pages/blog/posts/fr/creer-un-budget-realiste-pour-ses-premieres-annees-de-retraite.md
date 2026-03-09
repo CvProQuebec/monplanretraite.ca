@@ -2,6 +2,7 @@
 title: Créer un budget réaliste pour ses premières années de retraite
 slug: creer-un-budget-realiste-pour-ses-premieres-annees-de-retraite
 date: '2025-09-19'
+lastUpdated: '2026-03-01'
 excerpt: >-
   Vous approchez de la retraite et vous vous demandez comment bien planifier
   votre budget? Vous avez raison de vous poser cette question! Les premières
@@ -18,8 +19,11 @@ status: published
 readingTime: 9
 oqlfChecked: false
 relatedSlugFr: creer-un-budget-realiste-pour-ses-premieres-annees-de-retraite
+relatedSlugEn: creating-realistic-budget-first-years-retirement
 ---
 # Créer un budget réaliste pour ses premières années de retraite
+
+*Mis à jour le 1er mars 2026*
 
 Vous approchez de la retraite et vous vous demandez comment bien planifier votre budget? Vous avez raison de vous poser cette question! Les premières années de retraite sont spéciales : c'est là que vous réalisez vos rêves tout en apprenant à vivre avec un nouveau mode de vie. Voici comment créer un budget réaliste qui vous permettra de profiter pleinement de cette belle étape.
 
@@ -70,9 +74,9 @@ Avant de faire votre budget, vous devez savoir combien d'argent va rentrer chaqu
 ### Vos sources de revenus
 
 **Les programmes du gouvernement :**
-- **Régime de rentes du Québec (RRQ)** : Environ 25 % à 33 % de votre ancien salaire
-- **Pension de la Sécurité de la vieillesse** : Montant fixe pour tous les Canadiens de 65 ans et plus
-- **Supplément de revenu garanti** : Si vos revenus sont bas
+- **Régime de rentes du Québec (RRQ)** : Environ 25 % à 33 % de votre ancien salaire. Maximum 2026 : environ **1 433 $/mois** à 65 ans
+- **Pension de la Sécurité de la vieillesse (SV)** : Environ **727 $/mois** (65–74 ans) | **800 $/mois** (75 ans et plus) en 2026. *Attention :* récupérée si vos revenus dépassent **95 323 $**
+- **Supplément de revenu garanti (SRG)** : Si vos revenus sont bas. Maximum 2026 : environ **1 100 $/mois** (non imposable)
 
 **Votre épargne personnelle :**
 - **REER transformé en FERR** : Retraits obligatoires selon votre âge
@@ -216,10 +220,10 @@ Voici un exemple concret pour vous inspirer :
 ### Couple de retraités, 65 ans, ancien salaire combiné de 80 000 $
 
 **Revenus mensuels :**
-- RRQ (les deux) : 2 000 $
-- Sécurité de la vieillesse : 1 400 $
+- RRQ (les deux, chiffres approximatifs) : 2 000 $
+- Sécurité de la vieillesse (les deux, ~727 $/mois chacun) : 1 454 $
 - FERR : 1 200 $
-- **Total : 4 600 $ par mois**
+- **Total : environ 4 654 $ par mois**
 
 **Dépenses mensuelles :**
 

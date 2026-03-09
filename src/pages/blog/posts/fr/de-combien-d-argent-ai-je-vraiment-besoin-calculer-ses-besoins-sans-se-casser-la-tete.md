@@ -5,6 +5,7 @@ title: >-
 slug: >-
   de-combien-d-argent-ai-je-vraiment-besoin-calculer-ses-besoins-sans-se-casser-la-tete
 date: '2025-09-19'
+lastUpdated: '2026-03-01'
 excerpt: >-
   « Un million de dollars! » Voilà souvent la première réponse qui nous vient en
   tête quand on pense au montant nécessaire pour une retraite confortable. Mais
@@ -22,6 +23,8 @@ relatedSlugFr: >-
 relatedSlugEn: retirement-money-needs
 ---
 # De combien d'argent ai-je vraiment besoin? - Calculer ses besoins sans se casser la tête
+
+*Mis à jour le 1er mars 2026*
 
 « Un million de dollars! » Voilà souvent la première réponse qui nous vient en tête quand on pense au montant nécessaire pour une retraite confortable. Mais cette réponse magique est-elle vraiment adaptée à votre situation? Spoiler : probablement pas.
 
@@ -248,4 +251,4 @@ Comme le disent les experts : « Le meilleur moment pour commencer était il y a
 
 ---
 
-*Sources : ÉducÉpargne, Retraite Québec, guides de planification financière, analyses d'experts en retraite*
+*Mis à jour le 1er mars 2026. Sources : ÉducÉpargne, Retraite Québec, guides de planification financière, analyses d'experts en retraite. Les montants gouvernementaux (RRQ, SV) sont des références approximatives 2026.*

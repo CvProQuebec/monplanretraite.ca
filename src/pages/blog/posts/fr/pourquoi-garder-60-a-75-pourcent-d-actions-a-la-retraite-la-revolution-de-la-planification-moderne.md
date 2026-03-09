@@ -5,6 +5,7 @@ title: >-
 slug: >-
   pourquoi-garder-60-a-75-pourcent-d-actions-a-la-retraite-la-revolution-de-la-planification-moderne
 date: '2025-09-18'
+lastUpdated: '2026-03-01'
 excerpt: >-
   Vous pensiez qu'à la retraite, il fallait vendre toutes ses actions pour
   acheter des obligations « sécuritaires »? Cette stratégie d'un autre âge
@@ -24,7 +25,7 @@ relatedSlugEn: >-
 ---
 # Pourquoi garder 60 à 75 % d'actions à la retraite : la révolution de la planification moderne
 
-*Publié le 18 septembre 2025 | Lecture : 8 minutes*
+*Mis à jour le 1er mars 2026 | Lecture : 9 minutes*
 
 **Vous pensiez qu'à la retraite, il fallait vendre toutes ses actions pour acheter des obligations « sécuritaires »? Cette stratégie d'un autre âge pourrait ruiner votre retraite. Découvrez pourquoi les experts recommandent maintenant de conserver 60 à 75 % d'actions même à 70 ans.**
 
@@ -90,7 +91,7 @@ L'étude a testé les départs à la retraite pendant **toutes les pires crises*
 
 ## 🎯 **La nouvelle stratégie gagnante : 60-75 % d'actions**
 
-### **Allocation recommandée par âge - Version 2025**
+### **Allocation recommandée par âge — Version 2026**
 
 | **Âge** | **% Actions** | **% Obligations** | **Logique** |
 |---------|---------------|-------------------|-------------|
@@ -292,4 +293,4 @@ La planification de retraite moderne n'est **pas** une question de chance ou d'i
 
 *Cet article reflète les meilleures pratiques actuelles en planification de retraite, basées sur les recherches les plus récentes et les normes de l'Institut de planification financière du Canada. Les exemples sont fictifs et à titre illustratif seulement.*
 
-**Sources** : Étude Trinity mise à jour (William Bengen), RBC Gestion mondiale d'actifs, Statistiques Canada, Normes IPF 2025.
+**Sources** : Étude Trinity mise à jour (William Bengen), RBC Gestion mondiale d'actifs, Statistiques Canada, Normes IPF 2026.

@@ -3,6 +3,7 @@ title: 'Why Keep 60 to 75% in Stocks During Retirement: The Modern Planning Revo
 slug: >-
   why-keep-60-to-75-pourcent-in-stocks-during-retirement-the-modern-planning-revolution
 date: '2025-09-19'
+lastUpdated: '2026-03-01'
 excerpt: >-
   Did you think that in retirement you had to sell all your stocks to buy “safe”
   bonds? That old-fashioned strategy could ruin your retirement. Discover why
@@ -21,7 +22,7 @@ relatedSlugEn: >-
 ---
 # Why Keep 60 to 75% in Stocks During Retirement: The Modern Planning Revolution
 
-*Published September 18, 2025 | Reading time: 8 minutes*
+*Updated March 1, 2026 | Reading time: 9 minutes*
 
 **Did you think that in retirement you had to sell all your stocks to buy “safe” bonds? That old-fashioned strategy could ruin your retirement. Discover why experts now recommend keeping 60 to 75% in stocks—even at age 70.**
 
@@ -90,7 +91,7 @@ At 3% annual inflation (Canada’s historical average):
 
 ## 🎯 **The Winning New Strategy: 60–75% Stocks**
 
-### **Recommended Allocation by Age – 2025 Version**
+### **Recommended Allocation by Age — 2026 Version**
 
 | **Age**   | **% Stocks** | **% Bonds** | **Logic**                                  |
 | --------- | ------------ | ----------- | ------------------------------------------ |
@@ -310,8 +311,4 @@ Modern retirement planning is **not** about luck or intuition. It’s a science 
 
 *This article reflects the latest best practices in retirement planning, based on recent research and the standards of the Canadian Financial Planning Institute. Examples are fictional and for illustration purposes only.*
 
-**Sources**: Updated Trinity Study (William Bengen), RBC Global Asset Management, Statistics Canada, FP Standards 2025.
-
----
-
-Veux-tu que je mette cette traduction en **fichier Word ou PDF bilingue (FR/EN côte à côte)** pour ton blog, ou tu préfères garder le texte brut en anglais seulement?
+**Sources**: Updated Trinity Study (William Bengen), RBC Global Asset Management, Statistics Canada, FP Standards 2026.

@@ -2,314 +2,241 @@
 title: Le fractionnement de revenus expliqué simplement
 slug: le-fractionnement-de-revenus-explique-simplement
 date: '2025-09-19'
+lastUpdated: '2026-03-01'
 excerpt: >-
-  Le fractionnement de revenus, c'est une façon légale de partager vos revenus
-  avec votre conjoint pour payer moins d'impôt au total. C'est comme si vous
-  redistribuiez l'argent entre vous deux pour que chacun paie moins d'impôt.
+  Le fractionnement de revenus peut vous faire économiser 3 000 $ à 10 000 $
+  par année — légalement et simplement. Découvrez le formulaire T1032, le
+  partage de rente CPP/RRQ, le micro-FERR à 65 ans et comment protéger votre
+  PSV grâce à cette stratégie souvent ignorée.
 tags:
   - fiscalité
+  - fractionnement
+  - retraite
+  - PSV
+  - FERR
 category: Fiscalité simplifiée
 language: fr
 status: published
-readingTime: 8
+readingTime: 10
 oqlfChecked: false
 relatedSlugFr: le-fractionnement-de-revenus-explique-simplement
 relatedSlugEn: income-splitting-simple
 ---
 # Le fractionnement de revenus expliqué simplement
 
-## Qu'est-ce que le fractionnement de revenus?
+*Mis à jour le 1er mars 2026 | Temps de lecture : 10 minutes*
 
-Le fractionnement de revenus, c'est une façon légale de partager vos revenus avec votre conjoint pour payer moins d'impôt au total. C'est comme si vous redistribuiez l'argent entre vous deux pour que chacun paie moins d'impôt.
-
-**La règle d'or :** Deux revenus faibles valent mieux qu'un seul revenu important!
-
-## Pourquoi ça marche?
-
-### Notre système d'impôt fonctionne par paliers
-
-Au Canada et au Québec, plus vous gagnez d'argent, plus le taux d'impôt augmente sur les derniers dollars gagnés.
-
-**Voici comment ça marche avec des exemples concrets :**
-
-**Exemple 1 : Un couple avec revenus déséquilibrés**
-- Pierre gagne 40 000 $ → Il paie environ 5 991 $ d'impôt
-- Marie gagne 0 $ → Elle ne paie pas d'impôt
-- **Total d'impôt du couple : 5 991 $**
-
-**Exemple 2 : Le même couple avec revenus équilibrés**
-- Pierre gagne 20 000 $ → Il paie environ 685 $ d'impôt
-- Marie gagne 20 000 $ → Elle paie environ 685 $ d'impôt  
-- **Total d'impôt du couple : 1 370 $**
-
-**Économie avec le fractionnement : 4 621 $ par année!**
-
-C'est exactement ce que le fractionnement de revenus peut vous faire économiser.
-
-## Les types de fractionnement de revenus
-
-### 1. Le fractionnement des revenus de pension (le plus courant)
-
-**Ce que vous pouvez fractionner :**
-
-**À partir de 65 ans :**
-- Vos retraits de FERR (fonds enregistré de revenu de retraite)
-- Vos pensions d'employeur
-- Vos rentes viagères
-
-**À tout âge :**
-- Certaines pensions d'invalidité
-- Prestations d'un régime de pension agréé
-
-**Comment ça marche :**
-- Vous pouvez transférer jusqu'à 50 % de ces revenus à votre conjoint
-- Votre conjoint paiera l'impôt sur cette partie
-- Vous payez l'impôt sur le reste
-
-**Comment faire :**
-Remplissez le formulaire T1032 avec vos déclarations d'impôt. C'est gratuit et ça se fait une fois par année.
-
-### 2. La division de rente du RRQ (Régime de rentes du Québec)
-
-**Une stratégie souvent oubliée!**
-
-Vous et votre conjoint pouvez demander à Retraite Québec de partager vos rentes du RRQ entre vous deux.
-
-**Les conditions :**
-- Vous devez être mariés ou conjoints de fait depuis au moins 3 ans
-- Vous devez tous les deux avoir 60 ans et plus
-- Au moins un de vous deux doit recevoir sa rente du RRQ
-
-**L'économie possible :**
-Si un conjoint reçoit le maximum (1 433 $ par mois) et l'autre ne reçoit rien, l'économie peut aller jusqu'à **4 583 $ par année**!
-
-**Comment faire :**
-Contactez Retraite Québec et demandez la division de rente. C'est gratuit et permanent une fois approuvé.
-
-**Important à savoir :**
-- Ce n'est pas nécessairement moitié-moitié
-- Le calcul tient compte de vos années de mariage et de cotisation
-- Pour partager, vous devez tous les deux échanger : impossible de donner sans recevoir
-
-### 3. Les REER du conjoint (à planifier pendant que vous travaillez)
-
-**Attention : Il faut s'y prendre à l'avance!**
-
-Pendant que vous travaillez, le conjoint qui gagne plus peut cotiser au REER de l'autre conjoint.
-
-**L'avantage :**
-- Le cotisant obtient la déduction d'impôt
-- L'autre conjoint paiera moins d'impôt au moment des retraits
-
-**La règle des 2 ans :**
-Si vous retirez de l'argent d'un REER de conjoint dans les 2 années civiles complètes après la cotisation, c'est le cotisant qui paie l'impôt.
-
-**Trop tard à la retraite :**
-Si vous n'avez pas fait de REER de conjoint pendant que vous travailliez, il est trop tard maintenant. Mais vous pouvez utiliser les autres types de fractionnement!
-
-## Qui peut en bénéficier?
-
-### Le fractionnement fonctionne seulement si :
-
-**1. Il y a une différence de revenus entre conjoints**
-- Si vous avez tous les deux les mêmes revenus, ça ne sert à rien
-- Plus la différence est grande, plus l'économie est importante
-
-**2. Vous êtes conjoints reconnus**
-- Mariés
-- Unis civilement  
-- Conjoints de fait (selon les règles de chaque programme)
-
-**3. Vous avez des revenus admissibles**
-- Pas tous les revenus peuvent être fractionnés
-- Vérifiez la liste des revenus admissibles
-
-## Calcul simple : Est-ce que ça vaut la peine?
-
-### Exemple concret : Couple à la retraite
-
-**Situation actuelle :**
-- Robert, 67 ans : 35 000 $ de revenus (pension d'employeur + RRQ)
-- Sylvie, 65 ans : 15 000 $ de revenus (RRQ seulement)
-
-**Sans fractionnement :**
-- Robert paie environ 4 200 $ d'impôt
-- Sylvie paie environ 200 $ d'impôt
-- **Total : 4 400 $**
-
-**Avec fractionnement (Robert transfère 10 000 $ à Sylvie) :**
-- Robert : 25 000 $ → paie environ 2 100 $ d'impôt
-- Sylvie : 25 000 $ → paie environ 2 100 $ d'impôt
-- **Total : 4 200 $**
-
-**Économie annuelle : 200 $**
-
-Plus la différence de revenus est grande, plus l'économie est importante!
-
-## Les autres méthodes de fractionnement
-
-### Pour les couples qui planifient encore
-
-**1. Payer les dépenses du conjoint**
-- Le conjoint qui gagne plus paie toutes les dépenses du couple
-- L'autre conjoint peut épargner tout son revenu
-- L'épargne accumulée lui appartient
-
-**2. Prêt au taux prescrit**
-- Le conjoint riche prête de l'argent au conjoint moins riche
-- Au taux prescrit par le gouvernement (très bas)
-- L'autre conjoint investit cet argent et garde les gains
-
-**3. Don pour le CELI**
-- Donner de l'argent à son conjoint pour qu'il cotise à son CELI
-- Les revenus du CELI appartiennent au conjoint qui a reçu le don
-- Aucune règle d'attribution ne s'applique
-
-### Pour les familles avec enfants
-
-**1. Don aux enfants majeurs pour leur CELI**
-- Vous pouvez donner de l'argent à vos enfants majeurs
-- Ils cotisent à leur CELI avec cet argent
-- Les revenus du CELI leur appartiennent
-
-**2. Régime enregistré d'épargne-études (REEE)**
-- Permet un certain fractionnement avec les enfants
-- Les retraits imposables sont faits au nom de l'enfant (taux d'impôt plus bas)
-
-## Comment commencer
-
-### Étape 1 : Évaluez votre situation
-
-**Questions à vous poser :**
-1. Y a-t-il une grosse différence entre vos revenus et ceux de votre conjoint?
-2. Avez-vous des revenus admissibles au fractionnement?
-3. Êtes-vous mariés, unis civilement ou conjoints de fait reconnus?
-
-### Étape 2 : Calculez l'économie potentielle
-
-**Calcul rapide :**
-- Additionnez vos revenus imposables
-- Divisez par 2
-- Regardez si cette répartition vous ferait payer moins d'impôt au total
-
-**Outil gratuit :**
-Utilisez le calculateur du ministère des Finances du Québec pour estimer vos impôts dans différents scénarios.
-
-### Étape 3 : Remplissez les formulaires
-
-**Pour le fractionnement de pension :**
-- Formulaire T1032 (fédéral)
-- Formulaire TP-1029.8.R-V (Québec)
-- À remplir chaque année avec vos déclarations
-
-**Pour la division de rente RRQ :**
-- Contactez Retraite Québec
-- Remplissez leur formulaire de demande
-- C'est permanent une fois approuvé
-
-### Étape 4 : Planifiez pour l'avenir
-
-**Si vous n'êtes pas encore à la retraite :**
-- Pensez aux REER de conjoint
-- Planifiez vos revenus de retraite pour maximiser le fractionnement
-- Consultez un planificateur financier
-
-## Les pièges à éviter
-
-### 1. Les règles d'attribution
-
-**Attention aux dons entre conjoints!**
-- Si vous donnez de l'argent à votre conjoint pour qu'il l'investisse, les revenus vous reviennent fiscalement
-- Exception : les dons pour cotiser au CELI
-
-### 2. Les conséquences en cas de séparation
-
-**Le fractionnement de pension est moins risqué :**
-- Contrairement aux REER de conjoint, le fractionnement de pension ne crée pas de propriété
-- En cas de séparation, chacun garde sa pension
-
-### 3. Oublier de renouveler chaque année
-
-**Le fractionnement de pension n'est pas automatique :**
-- Vous devez remplir les formulaires chaque année
-- Si vous oubliez, vous perdez l'économie pour cette année-là
-
-### 4. Fractionner quand ce n'est pas avantageux
-
-**Ça ne fonctionne pas si :**
-- Vous avez déjà des revenus équilibrés
-- Le conjoint qui recevrait le revenu perdrait des crédits d'impôt importants
-- Cela ferait perdre des prestations gouvernementales
-
-## Quand demander de l'aide
-
-### Consultez un professionnel si :
-
-**1. Votre situation est complexe**
-- Plusieurs sources de revenus
-- Revenus variables d'année en année
-- Situation familiale compliquée
-
-**2. Les montants sont importants**
-- Si vous pouvez économiser plus de 1 000 $ par année
-- Les frais de consultation se paient souvent d'eux-mêmes
-
-**3. Vous planifiez votre retraite**
-- Pour optimiser vos revenus futurs
-- Pour choisir les meilleurs véhicules d'épargne
-
-## Votre plan d'action en 5 étapes
-
-### Cette semaine
-1. **Calculez vos revenus imposables actuels** (vous et votre conjoint)
-2. **Identifiez quels revenus sont admissibles** au fractionnement
-3. **Estimez l'économie potentielle** avec un calculateur d'impôt
-
-### Ce mois-ci
-1. **Demandez la division de rente RRQ** si vous êtes admissibles
-2. **Préparez les formulaires** de fractionnement de pension pour vos déclarations
-
-### Cette année
-1. **Remplissez les formulaires** de fractionnement avec vos déclarations d'impôt
-2. **Calculez vos économies réelles** après avoir reçu vos avis de cotisation
-3. **Planifiez pour optimiser** le fractionnement pour les années futures
-
-## Le message important à retenir
-
-### Le fractionnement, c'est légal et encouragé!
-
-Le gouvernement a créé ces règles pour permettre aux couples de payer moins d'impôt. Ce n'est pas de la "planification fiscale agressive" - c'est utiliser les règles comme elles ont été conçues.
-
-### Chaque dollar compte
-
-À la retraite, vos revenus sont souvent fixes. Chaque dollar d'impôt économisé grâce au fractionnement, c'est un dollar de plus pour :
-- Vos loisirs et voyages
-- Votre sécurité financière
-- Les cadeaux à vos enfants et petits-enfants
-
-### Commencez maintenant
-
-Plus vous commencez tôt à fractionner vos revenus, plus vous économiserez au total. Même si l'économie semble petite la première année, elle s'accumule année après année.
-
-### Un exemple inspirant
-
-**Claude et Denise, retraités de 68 ans :**
-- Ont commencé le fractionnement il y a 5 ans
-- Économisent 1 800 $ par année
-- Total économisé : 9 000 $ en 5 ans
-- Ont utilisé cet argent pour un voyage en Europe!
-
-## En résumé
-
-Le fractionnement de revenus, c'est :
-- **Simple** : quelques formulaires à remplir
-- **Légal** : encouragé par le gouvernement  
-- **Profitable** : peut vous faire économiser des milliers de dollars
-- **Accessible** : disponible pour la plupart des couples
-- **Permanent** : les économies s'accumulent année après année
-
-N'attendez pas! Commencez dès maintenant à planifier votre fractionnement de revenus. Votre portefeuille vous remerciera!
+**Le fractionnement de revenus est l'une des stratégies fiscales les plus puissantes disponibles aux couples canadiens à la retraite. Pourtant, des milliers de couples ne remplissent jamais le formulaire T1032 — et laissent ainsi 3 000 $ à 10 000 $ sur la table chaque année. Voici comment ne pas faire cette erreur.**
 
 ---
 
-*Cet article présente des informations générales. Chaque situation est unique. Consultez un planificateur financier ou un fiscaliste pour des conseils adaptés à votre situation personnelle.*
+## 💡 Pourquoi ça marche : la logique des paliers fiscaux
+
+Au Canada et au Québec, l'impôt fonctionne par **paliers progressifs** : plus vous gagnez, plus le taux sur les derniers dollars augmente. Deux revenus modérés sont fiscalement plus efficaces qu'un seul revenu élevé.
+
+**La règle d'or :** Deux revenus faibles valent mieux qu'un seul revenu important.
+
+**Exemple concret — Andrew (90 000 $) et Louise (30 000 $) :**
+
+| Scénario | Impôt Andrew | Impôt Louise | Total couple |
+|----------|-------------|-------------|--------------|
+| Sans fractionnement | ~14 000 $ | ~4 500 $ | **18 500 $** |
+| Avec fractionnement optimal (~60 000 $ chacun) | ~9 000 $ | ~4 800 $ | **13 800 $** |
+| **Économie annuelle** | | | **4 700 $** |
+
+**Sur 15 ans de retraite : 70 500 $ d'économie** — en remplissant un formulaire chaque année.
+
+---
+
+## 🗓️ Chiffres clés 2026
+
+| Paramètre | Valeur 2026 |
+|-----------|-------------|
+| Montant personnel de base (fédéral) | **16 452 $** |
+| Montant personnel de base (Québec) | **17 183 $** |
+| Premier palier fédéral (revenus ≤ 57 375 $) | **14 %** (réduit de 15 %) |
+| Seuil de récupération PSV | **95 323 $** |
+| Taux de récupération PSV | 15 cents par dollar au-dessus du seuil |
+
+---
+
+## 📋 Les 4 grandes stratégies de fractionnement
+
+### Stratégie 1 — Fractionnement de revenus de pension (formulaire T1032)
+
+**La méthode la plus courante et la plus accessible — et elle ne coûte rien.**
+
+**Revenus admissibles au fractionnement à 65 ans et plus :**
+- Retraits d'un FERR ✓
+- Pensions d'employeur à prestations déterminées ✓
+- Rentes viagères d'un régime enregistré ✓
+
+**Revenus NON admissibles (à noter) :**
+- CPP/RRQ ✗ (stratégie distincte — voir ci-dessous)
+- Revenus d'intérêts ou de dividendes ✗
+- PSV ✗
+
+**Limite :** Jusqu'à **50 % des revenus de pension admissibles** peuvent être transférés au conjoint.
+
+**Comment faire :** Remplissez le **formulaire T1032** (fédéral) et **TP-1029.8.R-V** (Québec) avec votre déclaration de revenus. À refaire chaque année — le fractionnement n'est pas automatique et ne se renouvelle pas seul.
+
+**Exemple pratique — Michel (85 000 $) et Claire (25 000 $) :**
+
+Michel reçoit : pension d'employeur 50 000 $ + FERR 20 000 $ + CPP 15 000 $ = 85 000 $
+Claire reçoit : CPP 16 000 $ + PSV 9 000 $ = 25 000 $
+
+Michel peut transférer jusqu'à 50 % de (50 000 $ + 20 000 $) = **35 000 $** à Claire.
+
+En transférant 20 000 $ → Michel déclare 65 000 $, Claire déclare 45 000 $.
+
+Économie totale : ~4 200 $/an.
+
+---
+
+### Stratégie 2 — Le micro-FERR à 65 ans : doubler le crédit pour revenu de pension
+
+Voici une astuce méconnue et très efficace, surtout pour les couples dont l'un n'a pas de pension d'employeur.
+
+**Le crédit pour revenu de pension** s'applique aux premiers 2 000 $ de revenus de pension admissibles — valeur du crédit : environ **600 $** en impôt combiné fédéral/provincial.
+
+**Ce que beaucoup ignorent :** Les retraits d'un FERR *après 65 ans* se qualifient comme revenus de pension admissibles. Un REER, lui, ne se qualifie pas.
+
+**La stratégie :**
+1. Convertir 20 000 $–30 000 $ du REER en FERR à 65 ans (avant l'obligation à 71 ans)
+2. Retirer ~12 000 $/an du FERR
+3. Fractionner 50 % avec votre conjoint → chacun déclare 6 000 $
+4. **Les deux réclament le crédit pour revenu de pension**
+5. Résultat : deux crédits de ~600 $ = **économie de ~1 200 $** au lieu de 600 $
+
+---
+
+### Stratégie 3 — Partage de rente CPP/RRQ
+
+**Une stratégie souvent oubliée mais très puissante.**
+
+Vous pouvez demander à Service Canada (CPP) ou à Retraite Québec (RRQ) de partager vos rentes entre conjoints. La rente n'est pas «donnée» — elle est recalculée et divisée selon les années de vie commune.
+
+**Conditions CPP (Service Canada) :**
+- Conjoints de fait ou mariés depuis au moins 1 an
+- Les deux ont 60 ans ou plus et reçoivent (ou peuvent recevoir) leur CPP
+
+**Conditions RRQ (Retraite Québec) :**
+- Mariés, unis civilement ou conjoints de fait depuis au moins 3 ans
+- Les deux ont 60 ans ou plus
+
+**Économie possible :**
+Si un conjoint reçoit le maximum (~1 433 $/mois) et l'autre reçoit 0, le partage peut générer jusqu'à **4 583 $/an** d'économie d'impôt selon les taux marginaux respectifs.
+
+**Important :** Ce partage est **permanent une fois approuvé**. Analysez soigneusement les impacts à long terme avant de faire la demande.
+
+---
+
+### Stratégie 4 — REER de conjoint (à planifier pendant que vous travaillez)
+
+Si vous avez encore des droits de cotisation REER et êtes âgé de moins de 71 ans, le conjoint à revenu élevé peut cotiser dans le REER de son partenaire.
+
+À la retraite, c'est le conjoint (au taux d'imposition plus bas) qui retire — et qui paie l'impôt à son taux plus avantageux.
+
+**La règle des 2 années civiles complètes :**
+Si le conjoint retire les fonds dans les 2 années civiles *complètes* suivant l'année de la cotisation, c'est le cotisant qui paie l'impôt.
+
+**Exemple :** Cotisation faite en 2026 → retrait sans attribution possible dès le 1er janvier **2029** (2027 et 2028 sont les deux années civiles complètes requises).
+
+---
+
+## 🛡️ Fractionnement + protection de la PSV : la combinaison gagnante
+
+Le fractionnement ne réduit pas seulement l'impôt — il protège aussi votre **Pension de la Sécurité de la vieillesse (PSV)**.
+
+En 2026, si votre revenu dépasse **95 323 $**, vous perdez 15 cents de PSV pour chaque dollar au-dessus du seuil. La PSV complète représente environ **8 808 $/an** à 65–74 ans et **9 684 $/an** à 75 ans et plus (avec la bonification de 10 %).
+
+En fractionnant vos revenus de pension, vous réduisez votre revenu imposable individuel et évitez cette récupération.
+
+**Exemple :**
+- Marc, 71 ans : revenus totaux 100 000 $ → récupération PSV : (100 000 $ – 95 323 $) × 15 % = **701 $/an** perdus
+- Marc transfère 15 000 $ à sa conjointe Sylvie via T1032 → revenus de Marc : 85 000 $
+- **Récupération PSV pour Marc : 0 $**
+- Économie combinée (impôt + PSV retrouvée) : **2 500 $–4 000 $/an**
+
+---
+
+## 📊 Autres méthodes de fractionnement
+
+### Prêt au taux prescrit
+
+Le conjoint à revenu élevé prête de l'argent au conjoint à revenu faible au **taux prescrit par le gouvernement** (révisé trimestriellement). Le conjoint à revenu faible investit la somme — les revenus au-delà des intérêts payés lui appartiennent fiscalement.
+
+**Conditions essentielles :** Le prêt doit être documenté par écrit, et les intérêts doivent être effectivement payés avant le 30 janvier de l'année suivante, chaque année.
+
+### Don au CELI du conjoint
+
+Donner de l'argent à votre conjoint pour qu'il cotise à son CELI est **entièrement libre de règles d'attribution**. Les revenus dans le CELI lui appartiennent — et il n'y a aucun impôt sur les retraits. C'est la méthode de fractionnement la plus simple.
+
+### Don au CELI des enfants adultes
+
+Vous pouvez donner de l'argent à vos enfants majeurs pour qu'ils cotisent à leur CELI. Aucune règle d'attribution ne s'applique aux dons aux enfants adultes.
+
+---
+
+## ❌ Les pièges à éviter
+
+### Piège 1 : Les règles d'attribution sur les dons hors CELI
+
+Si vous donnez de l'argent à votre conjoint pour qu'il l'investisse dans un compte non enregistré, **les revenus de placement vous reviennent fiscalement** (règle d'attribution). Exception : le CELI.
+
+### Piège 2 : Fractionner sans calculer l'impact sur le conjoint receveur
+
+Si votre conjoint bénéficie du SRG (Supplément de revenu garanti) ou d'autres prestations basées sur le revenu, lui attribuer plus de revenus pourrait réduire ses prestations gouvernementales. Simulez avant de décider.
+
+### Piège 3 : Oublier le formulaire chaque année
+
+Le fractionnement de pension (T1032) n'est **pas automatique**. Vous devez le remplir chaque année au moment de votre déclaration. Si vous oubliez, l'économie est perdue pour cette année.
+
+### Piège 4 : Retirer trop tôt d'un REER de conjoint
+
+Respectez la règle des 2 années civiles complètes — sinon l'impôt revient au cotisant, annulant tout avantage.
+
+---
+
+## ✅ Votre plan d'action
+
+### Cette semaine
+1. Comparez les revenus imposables de vous et votre conjoint pour 2026
+2. Identifiez si vous avez des revenus de pension admissibles au fractionnement (FERR, pension d'employeur)
+3. Estimez l'économie potentielle : calculez l'impôt sur vos revenus actuels vs un scénario équilibré
+
+### Ce mois-ci
+1. Si l'écart de revenus CPP/RRQ est important : renseignez-vous sur le partage de rente
+2. Si vous avez 65 ans+ et un REER : évaluez le micro-FERR pour doubler le crédit pour revenu de pension
+3. Si vous approchez 71 ans : vérifiez si un REER de conjoint est encore possible avant la conversion obligatoire
+
+### Au moment de votre déclaration (chaque année)
+1. Remplissez le formulaire T1032 (fédéral) et TP-1029.8.R-V (Québec)
+2. Testez différents montants de fractionnement (0 %, 25 %, 50 %) pour trouver le point optimal
+3. Calculez l'impact combiné : impôt + récupération PSV + crédits d'âge
+
+---
+
+## ❓ Questions fréquentes
+
+### « On a à peu près les mêmes revenus — est-ce utile? »
+
+Non, le fractionnement n'est avantageux que si l'un des deux a un revenu significativement plus élevé. Avec des revenus équilibrés, l'économie est nulle.
+
+### « Est-ce que le partage de rente CPP/RRQ peut être annulé? »
+
+Oui, en cas de séparation, divorce ou décès. Pour les couples stables, c'est une décision pratiquement permanente. Analysez-la attentivement.
+
+### « Qu'arrive-t-il en cas de séparation? »
+
+Le fractionnement via T1032 n'a aucune conséquence sur la propriété — chacun garde sa pension. Le REER de conjoint, en revanche, appartient au conjoint détenteur. La séparation peut entraîner des droits de partage selon votre province.
+
+### « Puis-je fractionner mes revenus de CELI? »
+
+Non — les retraits CELI ne sont pas imposables. Il n'y a rien à fractionner, et c'est précisément l'avantage du CELI.
+
+---
+
+*Les stratégies et chiffres présentés reflètent les règles fiscales fédérales et provinciales pour 2026. Chaque situation est unique — consultez un planificateur financier certifié ou un fiscaliste pour des conseils personnalisés.*
+
+**Sources :** ARC, Revenu Québec, transcriptions d'experts (Trans Canada Wealth, Ferguson Financial Planning, Danny Pero WealthPoint, Michael Kim CPA, Joe Macek, Parallel Wealth).

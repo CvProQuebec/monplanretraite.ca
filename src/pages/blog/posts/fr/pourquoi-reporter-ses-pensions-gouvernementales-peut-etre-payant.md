@@ -2,135 +2,181 @@
 title: Pourquoi reporter ses pensions gouvernementales peut être payant
 slug: pourquoi-reporter-ses-pensions-gouvernementales-peut-etre-payant
 date: '2025-09-19'
+lastUpdated: '2026-03-01'
 excerpt: >-
-  Vous approchez de la retraite et vous vous demandez quand commencer à recevoir
-  vos pensions du gouvernement? Plusieurs personnes pensent qu'il faut demander
-  ses rentes dès que possible pour ne pas « laisser d'argent sur la table ».
-  Pourtant, attendre quelques années peut vous rapporter beaucoup plus d'argent
-  à long terme.
+  Reporter votre RRQ/RPC et votre PSV n'est pas seulement une question de
+  montant mensuel plus élevé — c'est une stratégie fiscale complète. Découvrez
+  pourquoi les retraités en bonne santé avec d'autres revenus ont presque
+  toujours avantage à attendre, et comment financer la période d'attente.
 tags:
+  - RRQ
+  - RPC
+  - PSV
   - retraite
+  - fiscalité
 category: Comprendre les régimes gouvernementaux
 language: fr
 status: published
-readingTime: 5
+readingTime: 8
 oqlfChecked: false
 relatedSlugFr: pourquoi-reporter-ses-pensions-gouvernementales-peut-etre-payant
 relatedSlugEn: delaying-government-pensions-why-it-can-pay-off
 ---
 # Pourquoi reporter ses pensions gouvernementales peut être payant
 
-Vous approchez de la retraite et vous vous demandez quand commencer à recevoir vos pensions du gouvernement? Plusieurs personnes pensent qu'il faut demander ses rentes dès que possible pour ne pas « laisser d'argent sur la table ». Pourtant, attendre quelques années peut vous rapporter beaucoup plus d'argent à long terme.
+*Mis à jour le 1er mars 2026 | Temps de lecture : 8 minutes*
 
-## Qu'est-ce que les pensions gouvernementales?
-
-Au Canada, nous avons deux principales pensions du gouvernement :
-
-**La Pension de la Sécurité de la vieillesse (PSV)** : C'est un montant que tous les Canadiens de 65 ans et plus peuvent recevoir. En 2025, le montant maximum est de 727,67 $ par mois. À 75 ans, vous recevez automatiquement 10 % de plus, soit 800,44 $ par mois.
-
-**Le Régime de rentes du Québec (RRQ)** : Cette pension dépend de l'argent que vous avez cotisé pendant que vous travailliez. En 2025, le montant maximum est de 1 433,00 $ par mois à 65 ans.
-
-## À quel âge pouvez-vous demander ces pensions?
-
-**Pour la PSV :**
-- Vous pouvez la demander à partir de 65 ans
-- Vous pouvez attendre jusqu'à 70 ans maximum
-
-**Pour le RRQ :**
-- Vous pouvez le demander dès 60 ans (mais avec une réduction)
-- L'âge « normal » est 65 ans
-- Vous pouvez attendre jusqu'à 72 ans maximum
-
-## Pourquoi attendre peut être payant?
-
-### Les bonifications : plus vous attendez, plus vous recevez!
-
-Quand vous reportez vos pensions, le gouvernement vous donne une « bonification » - c'est comme un bonus qui dure toute votre vie.
-
-**Pour la PSV :**
-- Chaque mois d'attente après 65 ans = 0,6 % de plus à vie
-- Cela représente 7,2 % de plus par année
-- Si vous attendez jusqu'à 70 ans : 36 % de plus pour le reste de votre vie!
-
-**Pour le RRQ :**
-- Chaque mois d'attente après 65 ans = 0,7 % de plus à vie  
-- Cela représente 8,4 % de plus par année
-- Si vous attendez jusqu'à 72 ans : 58,8 % de plus pour le reste de votre vie!
-
-### Exemple concret avec des vrais chiffres
-
-Prenons l'exemple de Marie, qui devrait recevoir 1 365,00 $ par mois de RRQ à 65 ans :
-
-- **À 60 ans :** 873,00 $ par mois (réduction de 36 %)
-- **À 65 ans :** 1 365,00 $ par mois (montant de base)
-- **À 70 ans :** 1 981,00 $ par mois (bonification de 36 %)
-- **À 72 ans :** 2 167,00 $ par mois (bonification de 58,8 %)
-
-La différence entre prendre sa rente à 60 ans ou à 72 ans? C'est 1 294,00 $ de plus chaque mois!
-
-### À quel âge devient-ce vraiment payant?
-
-Les experts ont calculé que si vous vivez :
-- **Plus de 81 ans** : reporter la PSV sera payant
-- **Plus de 84 ans** : reporter le RRQ sera payant
-
-Bonne nouvelle : l'espérance de vie aujourd'hui est de 86 ans pour les hommes et 89 ans pour les femmes. Près de la moitié d'entre nous vivrons au-delà de 90 ans!
-
-## Combien pouvez-vous gagner en plus?
-
-Si vous vivez jusqu'à 90 ans, voici ce que vous pourriez gagner en reportant vos pensions :
-
-- **Reporter le RRQ de 60 ans à 65 ans :** environ 88 000,00 $ de plus au total
-- **Reporter le RRQ de 65 ans à 70 ans :** environ 40 000,00 $ de plus au total
-- **Les deux ensemble :** jusqu'à 85 000,00 $ de différence!
-
-## Quand NE PAS reporter ses pensions?
-
-Attendre n'est pas toujours la bonne solution. Vous devriez demander vos pensions sans attendre si :
-
-- Vous avez besoin de cet argent pour payer vos dépenses de base
-- Vous n'avez pas d'autres sources de revenus (épargne, fonds de pension)
-- Votre état de santé fait que vous ne pensez pas vivre longtemps
-- Vous n'avez pas les moyens de vivre sans ces revenus
-
-## Les avantages supplémentaires du report
-
-Reporter vos pensions, c'est comme avoir une assurance contre plusieurs risques :
-
-1. **Protection contre la longévité :** Plus vous vivez longtemps, plus vous gagnez
-2. **Protection contre l'inflation :** Les pensions sont ajustées chaque année selon l'augmentation du coût de la vie
-3. **Simplicité :** Une fois démarrées, les pensions se paient automatiquement, sans que vous ayez à prendre d'autres décisions
-
-## Comment prendre la bonne décision?
-
-Voici les questions à vous poser :
-
-1. **Ai-je assez d'épargne pour vivre quelques années sans ces pensions?**
-2. **Mon état de santé me permet-il d'espérer vivre au-delà de 81-84 ans?**
-3. **Ai-je d'autres sources de revenus (fonds de pension, REER, etc.)?**
-4. **Puis-je me permettre d'attendre financièrement?**
-
-Si vous répondez « oui » à ces questions, reporter vos pensions pourrait vous faire gagner beaucoup d'argent.
-
-## Bonne nouvelle : vous n'êtes pas obligé de décider tout de suite!
-
-Vous n'avez pas besoin de prendre cette décision dès maintenant. Les pensions peuvent être demandées n'importe quel mois. Vous pouvez donc :
-
-- Évaluer votre situation chaque année
-- Ajuster selon vos besoins du moment
-- Commencer quand vous en avez vraiment besoin
-
-## En résumé
-
-Reporter ses pensions gouvernementales peut être très payant si vous :
-- Avez les moyens d'attendre
-- Êtes en bonne santé
-- Avez d'autres sources de revenus pour quelques années
-
-La bonification que vous recevrez durera toute votre vie et peut représenter des dizaines de milliers de dollars supplémentaires.
-
-**Important :** Cette décision est très personnelle et dépend de votre situation. N'hésitez pas à consulter un conseiller financier pour vous aider à faire le bon choix selon votre réalité.
+**Reporter vos pensions gouvernementales (RRQ/RPC et PSV) est souvent présentée comme un simple arbitrage de montant mensuel. C'est en réalité une stratégie fiscale complète qui peut valoir 60 000 $ à 120 000 $ sur votre retraite — si vous êtes en bonne santé et avez d'autres revenus pour couvrir l'attente.**
 
 ---
 
-*Les montants mentionnés dans cet article sont ceux de 2025 et sont ajustés chaque année selon l'inflation. Consultez les sites officiels du gouvernement pour les montants les plus récents.*
+## 🏛️ Rappel : les bonifications permanentes
+
+Chaque mois que vous attendez, le gouvernement augmente votre pension de façon permanente et indexée.
+
+| Pension | Avant 65 ans | Après 65 ans | Maximum |
+|---------|-------------|-------------|---------|
+| **RRQ/RPC** | −0,6 %/mois | +0,7 %/mois | +58,8 % à 72 ans (RRQ) / +42 % à 70 ans (RPC) |
+| **PSV** | — (pas avant 65) | +0,6 %/mois | +36 % à 70 ans |
+
+Ces bonifications sont **permanentes** — vous les conservez toute votre vie — et **indexées** — elles augmentent avec l'inflation chaque année.
+
+**Montants de référence 2026 :**
+
+| Pension | Montant à 65 ans | Montant à 70 ans |
+|---------|-----------------|-----------------|
+| RRQ (max) | ~1 433 $/mois | ~2 035 $/mois |
+| RPC (max) | ~1 395 $/mois | ~1 981 $/mois |
+| PSV | ~727 $/mois | ~988 $/mois (+36 %) |
+| PSV à 75+ | ~800 $/mois (automatique) | — |
+
+---
+
+## 📊 5 raisons pour lesquelles attendre peut être payant
+
+### Raison 1 : Un revenu garanti plus grand pour toute la vie
+
+Une pension gouvernementale, c'est de l'argent que vous recevrez chaque mois, qu'il pleuve ou vente, que les marchés montent ou descendent. Plus elle est grande, meilleure est votre sécurité.
+
+Un retraité qui prend son RRQ à 70 ans plutôt qu'à 65 ans reçoit **602 $/mois de plus** pour le reste de sa vie. Avec l'indexation, cet écart ne cesse de croître avec les années.
+
+### Raison 2 : Protection contre la longévité
+
+C'est la garantie que vous ne « dépenserez » jamais. Si vous vivez jusqu'à 92 ans, une pension de 2 035 $ vaut beaucoup plus sur 22 ans qu'une pension de 1 433 $ sur 27 ans.
+
+**Calcul simple :**
+- RRQ à 65 ans jusqu'à 92 ans = 1 433 $ × 324 mois = **464 292 $**
+- RRQ à 70 ans jusqu'à 92 ans = 2 035 $ × 264 mois = **537 240 $**
+- **Différence : 72 948 $** (avant indexation, qui creuse encore davantage l'écart)
+
+### Raison 3 : Protection contre l'inflation
+
+Les pensions gouvernementales sont indexées à l'inflation (IPC). Une pension plus élevée vous protège mieux contre la hausse du coût de la vie.
+
+Si l'inflation est de 3 % par an, une pension de 2 035 $ augmente de 61 $ la première année. Une pension de 1 433 $ n'augmente que de 43 $. L'écart s'élargit chaque année.
+
+### Raison 4 : Optimisation fiscale — la raison la plus sous-estimée
+
+Entre 60 et 70 ans, pendant que vous attendez votre rente, vos revenus imposables sont souvent plus faibles. C'est la fenêtre idéale pour **dégeler votre REER** dans les paliers fiscaux bas.
+
+En retirant graduellement de votre REER (12 000 $–20 000 $/an) pendant cette période, vous :
+- Réduisez les retraits minimums obligatoires du FERR à 72 ans
+- Réduisez le risque de récupération de la PSV (seuil 2026 : **95 323 $**)
+- Restez dans des paliers fiscaux favorables même quand la RRQ/RPC et la PSV s'ajoutent
+
+**Voir la stratégie complète :** [L'ordre intelligent pour retirer son argent à la retraite](/posts/fr/l-ordre-intelligent-pour-retirer-son-argent-a-la-retraite)
+
+### Raison 5 : Protection du conjoint survivant
+
+À votre décès, votre conjoint recevra une rente de survivant. Plus votre propre rente est élevée pendant votre vie, plus votre conjoint bénéficie d'une sécurité accrue s'il vous survit — particulièrement important si vous êtes le principal gagne-pain.
+
+---
+
+## ⚖️ Les points d'équilibre réels
+
+| Décision | Seuil de rentabilité | Espérance de vie actuelle |
+|----------|---------------------|--------------------------|
+| RRQ/RPC : attendre de 60 à 65 ans | **~74 ans** | Homme 87 ans / Femme 89 ans |
+| RRQ/RPC : attendre de 65 à 70 ans | **~82 ans** | Homme 87 ans / Femme 89 ans |
+| PSV : attendre de 65 à 70 ans | **~81 ans** | Homme 87 ans / Femme 89 ans |
+
+Pour un Canadien de 65 ans en bonne santé, environ **la moitié** vivra au-delà de 90 ans. Les probabilités favorisent nettement le report pour ceux qui ont les moyens d'attendre.
+
+---
+
+## 💡 Comment financer la période d'attente?
+
+C'est la vraie question pratique. Voici les sources à considérer pour couvrir vos revenus entre 60 et 70 ans :
+
+**Sources à prioriser (du plus avantageux fiscalement au moins) :**
+
+1. **Travail à temps partiel** — si vous le souhaitez et le pouvez
+2. **CELI** — retraits sans impact fiscal, idéaux pour combler les écarts
+3. **Retraits REER graduels** — profiter des paliers bas (dégel REER)
+4. **Placements non enregistrés** — revenus partiellement imposables selon le type
+5. **Pension d'employeur** — si vous en avez une, elle peut couvrir une grande partie
+
+**Ce qu'il faut éviter :**
+- Prendre votre RRQ/RPC et PSV tôt juste pour éviter de toucher à vos épargnes, alors que ces épargnes seront de toute façon imposées à des taux plus élevés plus tard
+
+---
+
+## 🚫 Quand reporter n'est PAS la bonne solution
+
+Reporter n'est pas universel. Voici quand il vaut mieux prendre ses pensions sans attendre :
+
+| Situation | Recommandation |
+|-----------|---------------|
+| Santé précaire, espérance de vie réduite | Prenez dès que possible |
+| Pas d'autres revenus, besoin d'argent maintenant | Prenez à 60–65 ans |
+| Moins de 150 000 $ en épargne totale | Prenez à 65 ans |
+| Conjoint déjà décédé, seul avec revenus faibles | Évaluez la PSV à 65 ans |
+
+---
+
+## 🎯 Stratégie pratique en 3 étapes
+
+### Étape 1 : Calculez vos revenus de 60 à 70 ans sans les pensions gouvernementales
+
+Faites la liste de ce que vous aurez comme revenus si vous attendez :
+- Pension d'employeur (si applicable)
+- Retraits REER/CELI planifiés
+- Revenus de placements
+- Travail à temps partiel
+
+Si la somme couvre vos besoins avec un coussin raisonnable, vous pouvez attendre.
+
+### Étape 2 : Estimez l'impact fiscal à 72 ans
+
+Projettez vos revenus à 72 ans avec les retraits obligatoires du FERR, votre pension d'employeur, votre RRQ/RPC et la PSV.
+
+Si votre revenu projeté dépasse 85 000 $–90 000 $, le dégel REER + report des pensions est presque certainement la bonne stratégie.
+
+### Étape 3 : Consultez votre relevé officiel
+
+Avant de décider, vérifiez votre rente personnelle estimée :
+- **RRQ :** Mon dossier sur retraitequebec.gouv.qc.ca
+- **RPC :** Mon dossier Service Canada (canada.ca)
+
+Votre montant réel peut être très différent du maximum selon votre historique de cotisation.
+
+---
+
+## ✅ L'essentiel à retenir
+
+Reporter ses pensions gouvernementales, c'est :
+
+**✓ Plus d'argent** — une bonification permanente et indexée
+**✓ Moins d'impôt** — la fenêtre pour dégeler le REER à taux bas
+**✓ Plus de sécurité** — protection contre la longévité et l'inflation
+**✓ Meilleure protection pour le conjoint** — rente de survivant plus solide
+
+Et ce n'est pas réservé aux plus riches : même avec une épargne modeste, bien orchestrer la séquence de retraits peut faire une différence significative.
+
+> **Pour aller plus loin :** [RRQ et RPC : quand les demander pour en avoir le maximum](/posts/fr/rrq-et-rpc-quand-les-demander-pour-en-avoir-le-maximum)
+
+---
+
+*Les montants de référence reflètent les maximums 2026. Votre rente personnelle dépend de votre historique de cotisation. Pour des conseils personnalisés, consultez un planificateur financier certifié.*
+
+**Sources :** Retraite Québec, Service Canada, ARC, transcriptions d'experts (Parallel Wealth, Trans Canada Wealth, Ferguson Financial Planning).

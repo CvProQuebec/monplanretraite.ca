@@ -2,6 +2,7 @@
 title: 'Retirement Budget: What Really Changes'
 slug: retirement-budget-what-really-changes
 date: '2025-09-18'
+lastUpdated: '2026-03-01'
 excerpt: >-
   Planning your retirement budget doesn’t have to be a source of anxiety.
   Contrary to popular belief, creating a realistic budget for your golden years
@@ -20,7 +21,7 @@ relatedSlugEn: retirement-budget-what-really-changes
 ---
 # Retirement Budget: What Really Changes
 
-*Published September 18, 2025*
+*Updated March 1, 2026*
 
 Planning your retirement budget doesn’t have to be a source of anxiety. Contrary to popular belief, creating a realistic budget for your golden years can be simple and reassuring. Here’s what really changes in your budget when you retire in Quebec.
 
@@ -77,13 +78,13 @@ In retirement, some expenses disappear while others appear or increase.
 In Quebec, three government programs form the foundation of your retirement income:
 
 **Old Age Security (OAS)**
-Available at 65 for those who have lived at least 10 years in Canada after age 18.
+Available at 65 for those who have lived at least 10 years in Canada after age 18. 2026 amount: approximately **$727/month** (ages 65–74) | **$800/month** (age 75+). *Note:* clawed back at 15% if your net income exceeds **$95,323** in 2026.
 
-**Quebec Pension Plan (QPP)**
-Based on your lifetime contributions during your working years.
+**Quebec Pension Plan (QPP) / Canada Pension Plan (CPP)**
+Based on your lifetime contributions during your working years. 2026 maximum: approximately **$1,433/month** (QPP) | **$1,395/month** (CPP) at age 65 with maximum contributions.
 
 **Guaranteed Income Supplement (GIS)**
-For retirees with modest incomes.
+For retirees with modest incomes. 2026 maximum: approximately **$1,100/month** (single person) — tax-free.
 
 **Important:** These three sources generally aren’t enough to maintain the standard of living of an average-income worker. They represent about 40% of the required income.
 

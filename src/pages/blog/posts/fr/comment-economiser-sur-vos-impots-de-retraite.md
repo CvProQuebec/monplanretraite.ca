@@ -2,359 +2,328 @@
 title: Comment économiser sur vos impôts de retraité
 slug: comment-economiser-sur-vos-impots-de-retraite
 date: '2025-09-19'
+lastUpdated: '2026-03-01'
 excerpt: >-
-  Bonne nouvelle : être retraité ne veut pas dire payer plus d'impôt! En fait,
-  avec les bonnes stratégies, vous pouvez souvent payer moins d'impôt qu'avant.
-  Il y a plusieurs trucs que vous pouvez utiliser pour garder plus d'argent dans
-  vos poches.
+  À la retraite, vous avez plus de contrôle fiscal qu'à n'importe quel autre
+  moment de votre vie. Découvrez les 7 stratégies expertes — emplacement des
+  placements, micro-FERR à 65 ans, dons de titres, éviter la récupération SV
+  95 323 $ — pour garder des dizaines de milliers de dollars de plus.
 tags:
   - CELI
   - fiscalité
   - retraite
+  - FERR
+  - fractionnement
 category: Fiscalité simplifiée
 language: fr
 status: published
-readingTime: 10
+readingTime: 13
 oqlfChecked: false
 relatedSlugFr: comment-economiser-sur-vos-impots-de-retraite
 relatedSlugEn: saving-taxes-retirement
 ---
 # Comment économiser sur vos impôts de retraité
 
-## L'impôt à la retraite : vous pouvez économiser!
+*Mis à jour le 1er mars 2026 | Lecture : 13 minutes*
 
-Bonne nouvelle : être retraité ne veut pas dire payer plus d'impôt! En fait, avec les bonnes stratégies, vous pouvez souvent payer moins d'impôt qu'avant. Il y a plusieurs trucs que vous pouvez utiliser pour garder plus d'argent dans vos poches.
-
-## Votre meilleur ami : le compte d'épargne libre d'impôt (CELI)
-
-### Pourquoi le CELI est parfait à la retraite
-
-Le CELI est probablement l'outil le plus puissant pour économiser de l'impôt quand vous êtes retraité. Voici pourquoi :
-
-**Les avantages du CELI :**
-- L'argent que vous retirez n'est jamais imposable
-- Il ne compte pas dans le calcul de vos autres prestations
-- Vos placements peuvent continuer à grandir sans impôt
-- Vous pouvez remettre l'argent retiré l'année suivante
-
-**Vos droits de cotisation en 2025 :**
-- 7 000 $ pour cette année
-- Plus tous vos droits non utilisés depuis 2009
-- Si vous n'avez jamais cotisé, vous pourriez avoir plus de 95 000 $ de droits!
-
-### La stratégie du surplus de FERR
-
-**Voici un truc que peu de gens connaissent :**
-
-Quand vous avez un FERR, vous devez retirer un montant minimum chaque année. Mais si vous n'avez pas besoin de tout cet argent, voici ce que vous pouvez faire :
-
-1. **Retirez votre minimum obligatoire du FERR**
-2. **Utilisez seulement ce dont vous avez besoin**
-3. **Mettez le reste dans votre CELI**
-
-**Exemple concret :**
-Jacques a 72 ans et 50 000 $ dans son FERR. Il doit retirer au minimum 2 700 $ cette année. Mais il n'a besoin que de 1 500 $. Il met donc 1 200 $ dans son CELI. Cet argent continue de fructifier sans impôt!
-
-### Investir dans le CELI de votre famille
-
-**Une stratégie peu connue :**
-
-Si vous avez utilisé tous vos droits de CELI, vous pouvez donner de l'argent à votre conjoint ou vos enfants majeurs pour qu'ils cotisent à leur CELI. 
-
-**Les avantages :**
-- Vous avez plus de placements non imposables dans la famille
-- Il n'y a aucune conséquence fiscale pour vous
-- L'argent appartient à la personne qui reçoit le don
-
-## Optimisez vos retraits de FERR
-
-### Utilisez l'âge de votre conjoint
-
-**Si votre conjoint est plus jeune que vous :**
-
-Vous pouvez calculer vos retraits minimums de FERR en utilisant l'âge de votre conjoint au lieu du vôtre.
-
-**L'économie :**
-- Vos retraits obligatoires seront plus petits
-- Plus d'argent reste à l'abri de l'impôt plus longtemps
-- Vous payez moins d'impôt chaque année
-
-**Exemple :**
-- Si vous avez 75 ans : retrait minimum de 5,82 %
-- Si votre conjoint a 70 ans : retrait minimum de 5,00 %
-- Sur 100 000 $, c'est une différence de 820 $ par année!
-
-### Planifiez le timing de vos gros retraits
-
-**Ne faites pas cette erreur courante :**
-
-Beaucoup de gens retirent de gros montants de leurs REER ou FERR en une seule année. Cela peut les faire sauter dans une tranche d'impôt plus élevée.
-
-**La meilleure stratégie :**
-Étalez vos gros retraits sur deux années fiscales différentes.
-
-**Exemple :**
-Au lieu de retirer 20 000 $ en 2025, retirez 10 000 $ en décembre 2025 et 10 000 $ en janvier 2026. Vous pourriez économiser des centaines de dollars d'impôt!
-
-## Le fractionnement de revenus : diviser pour économiser
-
-### Comment ça marche
-
-Notre système d'impôt fonctionne par paliers. Plus vous gagnez, plus vous payez d'impôt. Si vous pouvez partager vos revenus avec votre conjoint, vous payez moins d'impôt au total.
-
-**Les revenus que vous pouvez fractionner :**
-
-**À partir de 65 ans :**
-- Vos retraits de FERR
-- Vos pensions d'employeur  
-- Vos rentes viagères
-
-**À tout âge :**
-- Certaines pensions d'invalidité
-- Rentes d'assurance spécifiques
-
-**Comment procéder :**
-Remplissez le formulaire T1032 avec vos déclarations d'impôt. Vous pouvez transférer jusqu'à 50 % de ces revenus à votre conjoint.
-
-**L'économie possible :**
-Un couple peut économiser plusieurs milliers de dollars par année avec cette stratégie!
-
-### Diviser votre rente du RRQ
-
-**Une stratégie souvent oubliée :**
-
-Vous et votre conjoint pouvez demander à Retraite Québec de partager vos rentes du RRQ.
-
-**Les conditions :**
-- Vous devez être mariés ou conjoints de fait depuis au moins 3 ans
-- Vous devez tous les deux avoir 60 ans et plus
-- Au moins un de vous deux doit recevoir sa rente du RRQ
-
-**Comment faire :**
-Contactez Retraite Québec et demandez la division de rente. Le calcul tient compte de vos années de cotisation communes.
-
-## Évitez la récupération de la Sécurité de la vieillesse
-
-### Le piège à éviter
-
-Si vos revenus dépassent environ 86 912 $ en 2025, le gouvernement va récupérer une partie de votre pension de la Sécurité de la vieillesse. Cette récupération peut aller jusqu'à 100 % de votre pension!
-
-### Les stratégies pour l'éviter
-
-**1. Utilisez votre CELI plutôt que vos FERR**
-L'argent retiré du CELI ne compte pas dans vos revenus imposables.
-
-**2. Fractionnez vos revenus avec votre conjoint**
-Si vous transférez 50 % de votre pension à votre conjoint, vos revenus individuels baissent.
-
-**3. Planifiez vos retraits de FERR**
-Ne retirez que ce dont vous avez besoin. Le surplus va dans votre CELI.
-
-**4. Reportez vos pensions gouvernementales**
-Si vous n'en avez pas besoin tout de suite, retardez-les. Elles augmenteront, mais vous éviterez la récupération pendant quelques années.
-
-## Maximisez vos crédits d'impôt spéciaux
-
-### Les crédits auxquels vous avez droit
-
-**Le crédit en raison de l'âge :**
-- Disponible à partir de 65 ans
-- Peut réduire votre impôt de plusieurs centaines de dollars
-- Se réduit si vos revenus sont trop élevés
-
-**Le crédit pour revenus de pension :**
-- S'applique à vos pensions d'employeur et vos FERR (à partir de 65 ans)
-- Maximum de 2 000 $ de revenus de pension admissibles
-- Peut vous faire économiser environ 600 $ d'impôt par année
-
-**Autres crédits possibles :**
-- Crédit pour aidants naturels (si vous aidez un proche)
-- Crédit pour soutien à domicile (pour certains services)
-- Crédit pour frais médicaux (plus généreux pour les aînés)
-
-### Optimisez ces crédits
-
-**Conseil important :**
-Si vous n'avez pas assez de revenus de pension pour maximiser votre crédit, pensez à convertir une partie de vos REER en FERR avant 71 ans.
-
-## Les stratégies de placement intelligentes
-
-### Choisissez les bons types de revenus
-
-Différents types de revenus sont imposés différemment :
-
-**Revenus d'intérêts :** Imposés à 100 %
-**Dividendes canadiens :** Traitement fiscal avantageux
-**Gains en capital :** Seulement 50 % d'imposable
-
-**La stratégie :**
-- Gardez les placements qui génèrent des intérêts dans vos REER/FERR
-- Mettez les actions qui paient des dividendes dans vos comptes non enregistrés
-- Utilisez vos CELI pour les placements à fort potentiel de croissance
-
-### Le bon timing pour vos pensions gouvernementales
-
-**La Sécurité de la vieillesse :**
-- Vous pouvez la reporter jusqu'à 70 ans
-- Elle augmente de 0,6 % par mois (7,2 % par année)
-- Si vous n'en avez pas besoin, attendez!
-
-**Le RRQ :**
-- Même principe : il augmente de 0,7 % par mois après 65 ans
-- Il peut augmenter jusqu'à 42 % si vous attendez à 70 ans
-
-**La décision :**
-Faire le calcul avec un planificateur financier. Parfois, il vaut mieux prendre les pensions tout de suite et investir l'argent.
-
-## Vos actions concrètes pour économiser
-
-### Cette année
-
-**1. Évaluez vos droits de cotisation CELI**
-- Vérifiez sur le site de l'Agence du revenu du Canada
-- Utilisez tous vos droits disponibles
-- Transférez vos surplus de FERR dans votre CELI
-
-**2. Planifiez vos retraits de FERR**
-- Calculez vos besoins réels
-- Si votre conjoint est plus jeune, utilisez son âge
-- Étalez les gros retraits sur deux années
-
-**3. Explorez le fractionnement de revenus**
-- Calculez l'économie possible avec votre conjoint
-- Remplissez les formulaires nécessaires
-- Demandez la division de rente du RRQ si applicable
-
-### Chaque année
-
-**1. Révisez votre stratégie de retraits**
-- Vos besoins ont-ils changé?
-- Pouvez-vous mettre plus d'argent dans votre CELI?
-- Risquez-vous la récupération de la Sécurité de la vieillesse?
-
-**2. Optimisez vos crédits d'impôt**
-- Assurez-vous d'utiliser tous vos crédits
-- Conservez vos reçus médicaux
-- Documentez vos frais d'aide à domicile
-
-**3. Rééquilibrez vos placements**
-- Gardez les bons types de revenus aux bons endroits
-- Maximisez l'utilisation de vos CELI
-- Considérez les implications fiscales de vos décisions de placement
-
-## Les erreurs coûteuses à éviter
-
-### 1. Ignorer le CELI
-
-**L'erreur :** Laisser dormir vos droits de CELI
-**Le coût :** Des milliers de dollars d'impôt en trop chaque année
-
-### 2. Retirer trop de vos FERR
-
-**L'erreur :** Retirer plus que nécessaire de votre FERR
-**Le coût :** Impôt inutile et perte de croissance à l'abri de l'impôt
-
-### 3. Ne pas fractionner les revenus
-
-**L'erreur :** Ne pas utiliser le fractionnement de revenus avec votre conjoint
-**Le coût :** Plusieurs milliers de dollars d'économie ratées par année
-
-### 4. Mauvais timing pour les pensions
-
-**L'erreur :** Prendre toutes vos pensions en même temps sans planifier
-**Le coût :** Récupération inutile de la Sécurité de la vieillesse
-
-### 5. Négliger les types de revenus
-
-**L'erreur :** Ne pas optimiser où vous gardez vos différents placements
-**Le coût :** Payer plus d'impôt que nécessaire sur vos revenus de placement
-
-## Calculez vos économies potentielles
-
-### Exemple concret : Couple de retraités
-
-**Situation :**
-- Jean, 70 ans, FERR de 200 000 $
-- Marie, 67 ans, FERR de 150 000 $
-- Aucun CELI utilisé
-
-**Sans optimisation :**
-- Retraits de FERR : Jean 10 000 $, Marie 8 100 $
-- Aucun fractionnement
-- Impôt total estimé : 4 500 $
-
-**Avec optimisation :**
-- Retraits minimums seulement
-- Surplus dans les CELI
-- Fractionnement de 50 % des revenus
-- Utilisation de l'âge de Marie pour Jean
-- Impôt total estimé : 2 800 $
-
-**Économie annuelle : 1 700 $!**
-
-## Quand demander de l'aide
-
-### Les situations complexes
-
-**Consultez un planificateur financier si :**
-- Vous avez des revenus élevés (risque de récupération)
-- Votre situation familiale est complexe
-- Vous avez plusieurs types de placements
-- Vous voulez optimiser le timing de vos pensions
-
-### Ce qu'un professionnel peut faire pour vous
-
-**Services utiles :**
-- Calcul précis de vos économies potentielles
-- Stratégie de décaissement personnalisée
-- Optimisation de votre répartition d'actifs
-- Planification fiscale à long terme
-
-**L'investissement en vaut la peine :**
-Les frais de consultation se paient souvent d'eux-mêmes en économies d'impôt la première année!
-
-## Le message important à retenir
-
-### Vous avez du contrôle!
-
-À la retraite, vous avez plus de contrôle sur vos impôts qu'avant. Contrairement à quand vous travailliez, vous pouvez décider :
-
-- Combien retirer et quand
-- Comment répartir vos revenus avec votre conjoint  
-- Où garder vos différents types de placements
-- Quand commencer vos pensions gouvernementales
-
-### Chaque dollar économisé compte
-
-À la retraite, vos revenus sont souvent fixes. Chaque dollar d'impôt économisé, c'est un dollar de plus pour :
-- Vos loisirs et voyages
-- Votre sécurité financière
-- L'héritage que vous voulez laisser
-- Votre tranquillité d'esprit
-
-### Commencez maintenant
-
-Plus vous commencez tôt à optimiser vos impôts de retraité, plus vous économiserez. Même de petites optimisations, répétées année après année, peuvent vous faire économiser des dizaines de milliers de dollars sur toute votre retraite.
-
-## Votre plan d'action en 3 étapes
-
-### Étape 1 : Évaluez votre situation (cette semaine)
-1. Calculez vos droits de CELI non utilisés
-2. Estimez vos retraits de FERR pour les prochaines années
-3. Vérifiez si vous risquez la récupération de la Sécurité de la vieillesse
-
-### Étape 2 : Optimisez (ce mois-ci)
-1. Maximisez vos cotisations CELI
-2. Planifiez vos retraits de FERR avec votre conjoint
-3. Explorez le fractionnement de revenus
-
-### Étape 3 : Maintenez et ajustez (chaque année)
-1. Révisez votre stratégie annuellement
-2. Ajustez selon les changements dans votre vie
-3. Restez informé des nouvelles règles fiscales
-
-Votre retraite, c'est le temps de profiter de votre argent. Avec ces stratégies, vous garderez plus d'argent dans vos poches et moins dans celles du gouvernement!
+**Bonne nouvelle : à la retraite, vous avez plus de contrôle sur votre facture fiscale qu'à n'importe quel autre moment de votre vie. Quand vous étiez salarié, l'impôt était retenu à la source — vous n'aviez aucun choix. Maintenant, *vous* décidez combien retirer, de quelle source, et quand. Ce contrôle vaut des dizaines de milliers de dollars si vous l'utilisez intelligemment.**
 
 ---
 
-*Cet article présente des stratégies générales. Votre situation est unique. Consultez toujours un planificateur financier qualifié pour des conseils adaptés à votre situation personnelle.*
+## 💡 **La règle d'or : la source compte autant que le montant**
+
+Voici une réalité que beaucoup de retraités ne connaissent pas :
+
+**60 000 $ de revenus de dividendes admissibles canadiens** → impôt proche de **0 $**
+**60 000 $ de revenus d'intérêts** → impôt d'environ **18 000 $**
+
+Même montant, même personne. La différence? La *source* du revenu.
+
+À la retraite, vous pouvez souvent choisir d'où vient votre revenu — et ce choix est l'une des décisions fiscales les plus puissantes que vous puissiez faire.
+
+---
+
+## 📊 **Les 4 types de revenus et leur imposition**
+
+| Type de revenu | Imposition | Exemples |
+|----------------|------------|---------|
+| **Entièrement imposable** | 100 % | FERR, REER, RRQ, SV, pensions d'employeur, revenus d'intérêts, revenus de location |
+| **Partiellement imposable** | 50 % du gain | Gains en capital (vente d'actions, immobilier) |
+| **Fiscalement avantageux** | Taux réduit (crédit de dividende) | Dividendes admissibles canadiens (RBC, TD, Bell, etc.) |
+| **Entièrement non imposable** | 0 % | Retraits CELI, dons reçus, succession reçue, vente de résidence principale |
+
+**Priorité fiscale pour vos retraits** :
+1. CELI en premier (0 % d'impôt, ne compte pas dans vos revenus)
+2. Comptes non enregistrés avec gains en capital ou dividendes (traitement favorable)
+3. FERR/REER en dernier ou de façon stratégique (voir article sur l'ordre des retraits)
+
+---
+
+## 🗓️ **Chiffres clés 2026 à connaître**
+
+| Paramètre | Valeur 2026 |
+|-----------|-------------|
+| Seuil récupération SV | **95 323 $** |
+| Plafond CELI annuel | **7 000 $** |
+| Droits CELI cumulatifs (depuis 2009) | **109 000 $** |
+| Montant personnel de base (fédéral) | **16 452 $** |
+| Premier palier fédéral (revenu ≤ 57 375 $) | **14 %** (réduit de 15 %) |
+| OAS mensuelle (65–74 ans) | ~734 $/mois |
+| OAS mensuelle (75 ans et plus) | ~807 $/mois (bonification de 10 %) |
+
+---
+
+## 🏆 **Stratégie #1 : Le CELI — votre outil de contrôle #1**
+
+### Pourquoi le CELI est irremplaçable à la retraite
+
+Le CELI n'est pas qu'un simple compte d'épargne — c'est votre **robinet de revenu non imposable**. Chaque dollar retiré du CELI :
+- N'apparaît **pas** dans votre revenu imposable
+- Ne **déclenche pas** la récupération SV
+- Ne **réduit pas** votre SRG ni vos crédits d'impôt
+- Ne **compte pas** pour vos allocations de logement ou médicaments subventionnés (selon la province)
+
+En 2026, si vous avez eu 18 ans ou plus et étiez résident canadien depuis 2009, vos droits cumulatifs sont de **109 000 $**. Si vous n'avez jamais cotisé, c'est un trésor inexploité.
+
+### La stratégie du surplus de FERR → CELI
+
+Quand vous devez prendre votre retrait minimum du FERR mais que vous n'en avez pas besoin immédiatement :
+1. Retirez votre minimum obligatoire du FERR (imposable, mais inévitable)
+2. Utilisez ce dont vous avez besoin pour vivre
+3. **Déposez le surplus dans votre CELI** — il y croîtra désormais sans impôt
+
+**Exemple : Jacques, 72 ans**
+- Solde FERR : 50 000 $ → retrait minimum obligatoire : 2 700 $
+- Besoin mensuel réel : 1 500 $
+- Surplus : 1 200 $ → versés au CELI
+- Impact : cet argent croît maintenant à l'abri de l'impôt pour toujours
+
+### Investissez dans les CELI de votre famille
+
+Si vous avez épuisé vos droits, vous pouvez donner de l'argent à votre conjoint(e) ou à vos enfants majeurs pour qu'ils cotisent à leur propre CELI. Il n'y a aucune conséquence fiscale pour vous, et l'argent reste libre d'impôt dans leurs comptes.
+
+---
+
+## 🏠 **Stratégie #2 : L'emplacement des placements (tax location)**
+
+L'endroit où vous *détenez* vos placements peut être aussi important que ce que vous détenez. Chaque type de revenu a un compte idéal :
+
+| Type de revenu | Compte idéal | Pourquoi |
+|----------------|--------------|---------|
+| **Revenus d'intérêts** (CPG, obligations) | REER/FERR | 100 % imposable → mieux abrité |
+| **Dividendes admissibles canadiens** | Compte non enregistré | Crédit de dividende offre un traitement fiscal avantageux |
+| **Croissance et gains en capital** | CELI en priorité | Croissance entièrement libre d'impôt |
+| **Actions étrangères à dividendes** | REER/FERR | Retenue à la source étrangère souvent récupérable |
+
+**Exemple d'économie annuelle** : Un portefeuille de 400 000 $ avec les bons placements dans les bons comptes peut générer **5 000 $ à 15 000 $** d'économies fiscales annuelles supplémentaires — sans changer les investissements eux-mêmes.
+
+---
+
+## 👫 **Stratégie #3 : Le fractionnement de revenus**
+
+Notre système fiscal est progressif : plus vous gagnez, plus votre *taux marginal* est élevé. Si deux conjoints ont des revenus très déséquilibrés, l'optimisation familiale peut générer des économies substantielles.
+
+### A) Le fractionnement du revenu de pension (65 ans et plus)
+
+À partir de 65 ans, vous pouvez transférer **jusqu'à 50 %** de vos revenus de pension admissibles à votre conjoint(e) via le formulaire T1032 :
+- Retraits FERR ✓
+- Pensions d'employeur à prestations déterminées ✓
+- Rentes viagères ✓
+
+**Exemple : André (90 000 $) et Louise (30 000 $)**
+- Sans fractionnement : impôt total ≈ 18 500 $/an
+- Avec 50 % de fractionnement : impôt total ≈ 13 800 $/an
+- **Économie : 4 700 $/an → 70 500 $ sur 15 ans**
+
+### B) Le « micro-FERR à 65 ans » — la stratégie des deux crédits
+
+Même si vous n'avez pas encore besoin de toucher à votre REER, convertissez une petite portion en FERR dès 65 ans.
+
+**Pourquoi?** Les retraits FERR après 65 ans constituent un « revenu de pension admissible » donnant droit au **crédit pour revenu de pension** — jusqu'à 2 000 $ de revenu admissible, soit environ **600 $ d'économie d'impôt fédérale + provinciale**.
+
+**La stratégie** :
+1. Convertissez 20 000 $ à 30 000 $ de REER en FERR à 65 ans
+2. Retirez ~12 000 $/an du FERR
+3. Fractionnez 50 % avec votre conjoint(e) → chacun déclare 6 000 $
+4. Chacun réclame le crédit pour revenu de pension
+5. Résultat : **deux crédits** au lieu d'un → économie doublée
+
+### C) La division de la rente du RRQ
+
+Vous et votre conjoint(e) pouvez demander à Retraite Québec de partager vos rentes du RRQ.
+
+**Conditions** :
+- Mariage ou union de fait depuis au moins 3 ans
+- Les deux doivent avoir 60 ans et plus
+- Au moins l'un des deux doit recevoir sa rente du RRQ
+
+Contactez directement Retraite Québec pour faire la demande.
+
+### D) Le REER conjugal (avant 71 ans)
+
+Si vous n'avez pas encore 71 ans et avez encore des droits de cotisation REER, cotiser au REER de votre conjoint(e) à revenus plus bas est une stratégie puissante : la déduction est la vôtre, mais le retrait à la retraite est imposé dans ses mains, à son taux inférieur. Respectez la règle des 3 ans avant tout retrait (règle d'attribution).
+
+---
+
+## 🚨 **Stratégie #4 : Éviter la récupération de la Sécurité de la vieillesse**
+
+Le seuil de récupération SV est souvent mal connu — et coûte cher à ceux qui le franchissent.
+
+**Seuil 2026 : 95 323 $** (↑ de 86 912 $ en 2025)
+**Taux** : 15 ¢ perdu pour chaque dollar au-delà du seuil
+
+Ce qui compte dans vos revenus (et peut déclencher la récupération) :
+- Retraits FERR ✓ | RRQ/RPC ✓ | SV elle-même ✓
+- Revenus de placements non enregistrés ✓ | Revenus de location ✓
+
+Ce qui **ne compte pas** :
+- Retraits CELI ✗ | Remboursement de capital ✗ | Produits d'assurance-vie ✗
+
+**Vos 4 boucliers contre la récupération SV** :
+
+1. **CELI avant FERR** : Chaque dollar retiré du CELI évite 15 ¢ de récupération SV
+2. **Fractionnement** : Transférer 50 % de votre revenu de pension à votre conjoint réduit votre revenu individuel
+3. **Planification des retraits** : Ne retirer que le minimum obligatoire du FERR; mettre le surplus dans le CELI
+4. **Dégel REER avant 71 ans** : Réduire le solde FERR avant la conversion limite les retraits obligatoires futurs (voir article sur l'ordre des retraits)
+
+---
+
+## 📈 **Stratégie #5 : Optimiser le timing du RRQ et de la SV**
+
+Le report du RRQ et de la SV génère des augmentations permanentes et indexées à l'inflation :
+
+| Âge de début | Impact sur RRQ | Impact sur SV |
+|---|---|---|
+| 60 ans | -36 % (vs 65 ans) | N/A |
+| 65 ans | Montant de base | Montant de base |
+| 70 ans | **+42 %** | **+36 %** |
+
+Pour une personne dont le RRQ serait de 1 000 $/mois à 65 ans, attendre jusqu'à 70 ans donne **1 420 $/mois** — à vie. Le point d'équilibre (break-even) se situe généralement autour de 78–79 ans.
+
+**La synergie avec le dégel REER** : Reporter le RRQ et la SV libère de l'espace fiscal pour des retraits REER à faible taux entre 60 et 70 ans. Les deux stratégies se renforcent mutuellement (voir l'article sur l'ordre intelligent des retraits pour les détails).
+
+---
+
+## 🎁 **Stratégie #6 : Maximiser vos crédits d'impôt spéciaux**
+
+### Crédit en raison de l'âge (65 ans et plus)
+
+Ce crédit fédéral et provincial peut réduire votre impôt de **plusieurs centaines de dollars par année**. Il diminue graduellement à mesure que votre revenu augmente — une raison de plus de maintenir un revenu modéré.
+
+### Crédit pour revenu de pension
+
+- S'applique aux pensions d'employeur et aux retraits FERR **à partir de 65 ans**
+- Maximum : **2 000 $** de revenu de pension admissible
+- Économie : environ **600 $** d'impôt (fédéral + provincial combinés)
+- **Accessible aux deux conjoints** si chacun reçoit un revenu de pension admissible (d'où la stratégie du micro-FERR à 65 ans)
+
+### Autres crédits pour aînés
+
+- **Crédit pour frais médicaux** : plus généreux que vous ne le croyez — médicaments sur ordonnance, soins dentaires, lunettes, primes d'assurance santé privée, certains travaux de rénovation pour accessibilité
+- **Crédit pour aidants naturels** : si vous prenez soin d'un proche
+- **Crédit pour soutien à domicile** (Québec) : aide à domicile, adaptations, gardiennage
+
+**Conseil** : Conservez *tous* vos reçus médicaux tout au long de l'année. Beaucoup de retraités laissent ce crédit sur la table faute de documentation.
+
+---
+
+## 💝 **Stratégie #7 : Dons de bienfaisance — donnez des titres, pas de l'argent**
+
+Si vous êtes philanthrope, cette stratégie peu connue est particulièrement puissante.
+
+**La méthode habituelle (moins efficace)** :
+1. Vendre vos actions (déclenche l'impôt sur le gain en capital)
+2. Payer l'impôt
+3. Donner le montant net à l'organisme → reçu fiscal basé sur le montant réduit
+
+**La méthode optimale — don de titres en nature** :
+1. Donner directement les actions à l'organisme (sans les vendre)
+2. Vous recevez un reçu fiscal pour la **valeur marchande totale**
+3. **Le gain en capital est exonéré** — vous ne payez aucun impôt sur la plus-value
+
+**Exemple** :
+- Actions achetées à 6 000 $, valeur actuelle 10 000 $ (gain 4 000 $)
+- Don en espèces : vendez d'abord → payez ~600 $ d'impôt → donnez 9 400 $ → reçu de 9 400 $
+- Don en nature : donnez les actions → **0 $** d'impôt → reçu de **10 000 $** → économie de 3 000 à 4 000 $ en crédits
+
+En année de revenus élevés (retraits importants, vente d'actifs), un don stratégique en titres peut réduire significativement votre facture fiscale et vos risques de récupération SV.
+
+---
+
+## 💰 **Exemple concret : Jean et Marie, couple retraité**
+
+**Situation :**
+- Jean, 70 ans, FERR de 200 000 $, revenus fixes 40 000 $/an
+- Marie, 67 ans, revenus fixes 25 000 $/an
+- Aucun CELI utilisé jusqu'ici, droits cumulatifs 109 000 $ chacun
+
+**Sans optimisation :**
+- Jean retire 10 800 $ du FERR (minimum obligatoire)
+- Revenu de Jean : 50 800 $ → impôt estimé : ~11 000 $
+- Revenu de Marie : 25 000 $ → impôt estimé : ~3 500 $
+- Impôt du ménage : **14 500 $**
+
+**Avec les stratégies 2026 :**
+1. Jean retire le minimum FERR (10 800 $), fractionne 50 % avec Marie → chacun déclare 5 400 $
+2. Jean réclame crédit pour revenu de pension + Marie aussi (via fractionnement)
+3. Surplus FERR (ce qui n'est pas nécessaire) → CELI de Jean
+4. Marie utilise son CELI pour couvrir ses dépenses discrétionnaires
+5. Placement des CPG dans FERR; actions dividendes dans comptes non enregistrés
+
+- Revenu imposable de Jean (après fractionnement) : ~45 400 $ → impôt : ~8 200 $
+- Revenu imposable de Marie (après fractionnement) : ~30 400 $ → impôt : ~4 600 $
+- Impôt du ménage : **12 800 $**
+- **Économie annuelle : 1 700 $** → **25 500 $ sur 15 ans**
+
+Et si Marie utilisait son CELI pour ses retraits supplémentaires au lieu du compte non enregistré, l'économie additionnelle pourrait doubler sur la durée de la retraite.
+
+---
+
+## 🚫 **Les 5 erreurs coûteuses à éviter**
+
+### Erreur #1 : Laisser dormir vos droits CELI
+
+109 000 $ de droits inutilisés, c'est un outil fiscal énorme laissé sur la table. Même si vous n'avez pas d'argent frais, le surplus de FERR peut alimenter le CELI chaque année.
+
+### Erreur #2 : Ne pas fractionner le revenu de pension
+
+Des milliers de couples ne remplissent jamais le T1032. Pourtant, pour un couple avec des revenus déséquilibrés, cette seule mesure peut économiser 3 000 à 8 000 $/an.
+
+### Erreur #3 : Ignorer l'emplacement des placements
+
+Mettre des CPG dans un CELI (rendement déjà protégé) alors que des actions de croissance traînent dans un FERR (où elles seront imposées à 100 % au retrait) coûte des milliers de dollars d'impôt évitables.
+
+### Erreur #4 : Prendre toutes les pensions gouvernementales trop tôt
+
+Prendre le RRQ à 60 ans et la SV à 65 ans sans évaluation peut coûter des dizaines de milliers de dollars en revenus permanents perdus et en récupération SV inutile.
+
+### Erreur #5 : Oublier de réviser sa stratégie chaque année
+
+Les seuils fiscaux changent (le seuil SV a augmenté de plus de 8 000 $ en un an!), vos soldes de comptes évoluent, et votre situation familiale peut changer. Une révision annuelle en automne — avant la fin de l'année fiscale — peut générer des économies significatives.
+
+---
+
+## ✅ **Votre plan d'action en 3 étapes**
+
+### Cette semaine
+1. Vérifiez vos droits CELI disponibles dans Mon dossier ARC
+2. Estimez votre revenu imposable total pour cette année
+3. Comparez avec le seuil SV de 95 323 $ — y a-t-il un risque?
+
+### Ce mois-ci
+1. Maximisez vos cotisations CELI
+2. Planifiez vos retraits FERR avec votre conjoint(e)
+3. Évaluez le fractionnement de revenu de pension (formulaire T1032)
+4. Demandez la division de rente du RRQ si applicable
+
+### Chaque automne (révision annuelle)
+1. Révisez votre stratégie pour l'année fiscale en cours
+2. Planifiez les retraits de décembre vs janvier pour l'optimisation entre deux années
+3. Documentez vos frais médicaux pour le crédit annuel
+4. Évaluez si un don de titres en fin d'année pourrait réduire votre impôt
+
+---
+
+*Les stratégies et chiffres présentés reflètent la fiscalité fédérale et québécoise de 2026. Chaque situation est unique — consultez un planificateur financier agréé pour un plan personnalisé.*
+
+**Sources** : ARC, Revenu Québec, transcriptions d'experts (Trans Canada Wealth, Ferguson Financial Planning, Danny Pero WealthPoint, Michael Kim CPA, Joe Macek).

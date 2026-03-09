@@ -1,8 +1,26 @@
 ---
+title: How to Make Your Money Last Your Whole Life
+slug: make-money-last-lifetime
+date: '2025-09-19'
+lastUpdated: '2026-03-01'
+excerpt: >-
+  Worried about running out of money in retirement? With increasing life
+  expectancy, your savings now need to last 25 to 30 years. Here are the most
+  effective strategies to ensure your money accompanies you until the end of
+  your days.
+tags:
+  - retirement
 category: Manage savings and investments
+language: en
+status: published
+readingTime: 8
+oqlfChecked: false
 relatedSlugFr: comment-faire-durer-son-argent-toute-sa-vie
+relatedSlugEn: make-money-last-lifetime
 ---
 # How to Make Your Money Last Your Whole Life
+
+*Updated March 1, 2026 | Reading time: 8 minutes*
 
 Are you worried about running out of money in retirement? This fear is normal and shared by many people. With increasing life expectancy, our savings now need to last longer than before.
 
@@ -24,7 +42,7 @@ This means your retirement could last 25 to 30 years! That's almost as long as a
 Many people think they'll spend less as they age. **This is a mistake!**
 
 Your expenses change, but don't necessarily decrease:
-- **65-75 years:** More travel, leisure, projects
+- **65–75 years:** More travel, leisure, projects
 - **75+ years:** More healthcare, home help, adapted transportation
 
 Expenses remain high, but for other reasons.
@@ -61,17 +79,17 @@ For this to work, your investments must earn an average of 7% per year:
 Many people think: "I'm retired, I must put everything in safe investments."
 
 **This is wrong!** You have several time horizons:
-- **Short term (1-5 years):** Money for your immediate needs
-- **Medium term (5-15 years):** Money for later
+- **Short term (1–5 years):** Money for your immediate needs
+- **Medium term (5–15 years):** Money for later
 - **Long term (15+ years):** Money for your old age
 
 ### The Bucket Strategy
 
-**Bucket 1 - Immediate needs (1-5 years):**
+**Bucket 1 - Immediate needs (1–5 years):**
 - Keep 5 years of expenses in safe investments
 - Savings accounts, bonds, investment certificates
 
-**Bucket 2 - Medium term (5-15 years):**
+**Bucket 2 - Medium term (5–15 years):**
 - Balanced mix of stocks and bonds
 - Balanced funds, diversified ETFs
 
@@ -94,20 +112,22 @@ Guaranteed income protects you against the risk of living too long. Even if your
 ### Your Guaranteed Income Sources
 
 **1. Old Age Security (OAS)**
-- Maximum $800.44 per month at 75 (in 2025)
-- **Strategy:** Delay it until 70 for 36% more for life
+- 2026 amount: approximately **$727/month** (ages 65–74) | approximately **$800/month** (age 75+)
+- **Strategy:** Delay it until 70 for +36% more for life
+- **Important:** OAS is clawed back at 15% if your net income exceeds **$95,323** in 2026 — plan your RRIF withdrawals accordingly
 
-**2. Quebec Pension Plan (QPP)**
-- Maximum $1,433.00 per month at 65 (in 2025)
-- **Strategy:** Delay until 72 for 58.8% more for life
+**2. Quebec Pension Plan (QPP) / Canada Pension Plan (CPP)**
+- QPP maximum 2026: approximately **$1,433/month** at 65 (with maximum contributions)
+- CPP maximum 2026: approximately **$1,395/month** at 65 (with maximum contributions)
+- **Strategy:** Delay QPP until 72 for +58.8% more for life
 
 ### Example of Strategic Delay
 
 Marie can receive:
-- **At 65:** OAS of $728 + QPP of $1,200 = $1,928 per month
-- **By delaying to 70 (OAS) and 72 (QPP):** OAS of $990 + QPP of $1,905 = $2,895 per month
+- **At 65:** OAS of approximately $727 + QPP of $1,200 = **$1,927/month**
+- **By delaying to 70 (OAS) and 72 (QPP):** OAS of approximately $990 + QPP of $1,905 = **$2,895/month**
 
-**Difference:** $967 more per month, for life!
+**Difference:** ~$968 more per month, for life!
 
 ## Strategy 4: Prepare Your Withdrawal Plan
 
@@ -174,14 +194,14 @@ Your plan must adapt:
 
 ## Concrete Action Plan by Age
 
-### If You're 50-60 Years Old
+### If You're 50–60 Years Old
 
 1. **Calculate how much you'll need** (25 times your planned annual expenses)
 2. **Maximize your RRSP/TFSA contributions** now
 3. **Start planning your withdrawal** with a financial planner
 4. **Consider delaying your pensions** if you have enough savings
 
-### If You're 60-70 Years Old
+### If You're 60–70 Years Old
 
 1. **Finalize your withdrawal plan** before retirement
 2. **Evaluate delaying your government pensions**
@@ -199,7 +219,7 @@ Your plan must adapt:
 
 ### ❌ Mistake 1: Putting Everything in "Safe" Investments
 
-**Why it's dangerous:** Inflation will erode your purchasing power over 20-30 years.
+**Why it's dangerous:** Inflation will erode your purchasing power over 20–30 years.
 
 **Solution:** Keep part in stocks even in retirement.
 
@@ -233,7 +253,7 @@ Your plan must adapt:
 
 ✅ **Plan your withdrawal** - The order of withdrawals matters for taxes
 
-✅ **Keep an emergency fund** - 3-6 months of accessible expenses
+✅ **Keep an emergency fund** - 3–6 months of accessible expenses
 
 ✅ **Review annually** - Adjust according to reality
 
@@ -255,4 +275,4 @@ Remember: making your money last your whole life isn't luck, it's planning. The 
 
 ---
 
-*This article presents general strategies. Since each situation is unique, consult a financial planner for a plan adapted to your specific needs.*
+*Updated March 1, 2026. This article presents general strategies. Since each situation is unique, consult a financial planner for a plan adapted to your specific needs. Government benefit amounts are approximate 2026 figures.*

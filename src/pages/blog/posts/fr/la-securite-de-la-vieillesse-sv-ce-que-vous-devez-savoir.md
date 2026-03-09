@@ -2,28 +2,31 @@
 title: 'La Sécurité de la vieillesse (SV) : ce que vous devez savoir'
 slug: la-securite-de-la-vieillesse-sv-ce-que-vous-devez-savoir
 date: '2025-09-19'
+lastUpdated: '2026-03-01'
 excerpt: >-
-  La pension de la Sécurité de la vieillesse, qu'on appelle simplement la SV,
-  c'est votre argent. Vous y avez droit simplement parce que vous vivez au
-  Canada depuis assez longtemps. Pas besoin d'avoir travaillé. Pas besoin
-  d'avoir cotisé quelque part.
+  La pension de la Sécurité de la vieillesse, c'est votre droit — pas besoin
+  d'avoir travaillé, juste d'avoir vécu au Canada. Mais mal la gérer peut vous
+  coûter des milliers de dollars. Voici tout ce qu'il faut savoir pour 2026.
 tags:
   - SV
+  - PSV
+  - retraite
+  - fiscalité
 category: Comprendre les régimes gouvernementaux
 language: fr
 status: published
-readingTime: 7
+readingTime: 9
 oqlfChecked: false
 relatedSlugFr: la-securite-de-la-vieillesse-sv-ce-que-vous-devez-savoir
 relatedSlugEn: old-age-security-what-you-need-to-know
 ---
 # La Sécurité de la vieillesse (SV) : ce que vous devez savoir
 
-## Votre argent garanti du gouvernement à 65 ans
+*Mis à jour le 1er mars 2026 | Temps de lecture : 9 minutes*
 
-La pension de la Sécurité de la vieillesse, qu'on appelle simplement la SV, c'est votre argent. Vous y avez droit simplement parce que vous vivez au Canada depuis assez longtemps. Pas besoin d'avoir travaillé. Pas besoin d'avoir cotisé quelque part.
+**La pension de la Sécurité de la vieillesse, c'est votre droit — pas besoin d'avoir travaillé, juste d'avoir vécu au Canada. Mais la récupération de la SV est l'une des erreurs les plus coûteuses à la retraite. Voici tout ce qu'il faut savoir pour protéger votre SV en 2026.**
 
-Voici tout ce que vous devez savoir pour ne rien perdre.
+---
 
 ## Qu'est-ce que la Sécurité de la vieillesse?
 
@@ -31,173 +34,192 @@ Voici tout ce que vous devez savoir pour ne rien perdre.
 
 La SV, c'est un chèque mensuel que le gouvernement du Canada vous envoie quand vous avez 65 ans. C'est votre droit. Vous l'avez mérité en vivant ici.
 
-**Combien recevez-vous?**
-- **65 à 74 ans :** jusqu'à 734,95 $ par mois (en 2025)
-- **75 ans et plus :** jusqu'à 808,45 $ par mois (en 2025)
+**Montants de référence 2026 :**
 
-Le gouvernement augmente ces montants 4 fois par année pour suivre le coût de la vie.
+| Âge | Montant mensuel approx. | Montant annuel approx. |
+|-----|------------------------|------------------------|
+| 65 à 74 ans | ~727 $ | ~8 724 $ |
+| 75 ans et plus | ~800 $ (+10 % automatique) | ~9 600 $ |
+
+Le gouvernement ajuste ces montants **4 fois par année** selon le coût de la vie. Si l'inflation monte, votre SV monte aussi.
+
+### Le bonus automatique à 75 ans
+
+À vos 75 ans, votre SV augmente automatiquement de **10 %** — aucune démarche requise. C'est une bonification permanente qui s'indexe pour le reste de votre vie.
+
+---
 
 ## Qui a droit à la SV?
 
 ### Les 3 conditions simples
 
-Pour recevoir votre SV, vous devez :
-
 1. **Avoir 65 ans ou plus**
 2. **Être citoyen canadien ou résident légal**
 3. **Avoir vécu au Canada au moins 10 ans depuis l'âge de 18 ans**
 
-C'est tout! Pas d'autres conditions compliquées.
+C'est tout! Pas besoin d'avoir travaillé, pas besoin d'avoir cotisé.
 
 ### Combien allez-vous recevoir?
 
-Le montant dépend de combien d'années vous avez vécu au Canada :
+Le montant dépend de vos années de résidence au Canada :
+- **40 ans ou plus au Canada :** montant complet
+- **Moins de 40 ans :** votre montant est réduit proportionnellement
 
-- **40 ans ou plus au Canada :** Vous recevez le montant complet
-- **Moins de 40 ans :** Votre montant sera réduit
+**Exemple :** Si vous avez vécu 30 ans au Canada, vous recevez 30/40 = 75 % du montant maximal.
 
-**Exemple simple :** Si vous avez vécu 30 ans au Canada, vous recevez 30/40 = 75 % du montant maximal.
+---
 
-## Attention : la récupération de la SV
+## ⚠️ CRITIQUE : la récupération de la SV (mise à jour 2026)
 
 ### Quand le gouvernement reprend votre argent
 
-Si vous gagnez trop d'argent, le gouvernement va récupérer une partie ou même toute votre pension de SV. C'est ce qu'on appelle la « récupération » ou « clawback » en anglais.
+Si vos revenus sont trop élevés, le gouvernement récupère une partie ou toute votre SV. C'est le « clawback ».
 
-**Les seuils dangereux (2025) :**
+**Seuils 2026 :**
 
-- **90 997 $ de revenu :** Le gouvernement commence à reprendre votre SV
-- **148 451 $ de revenu (65-74 ans) :** Vous perdez toute votre SV
-- **154 196 $ de revenu (75 ans et plus) :** Vous perdez toute votre SV
+- **Récupération commence à : 95 323 $** de revenu net
+- **Taux : 15 ¢ par dollar** au-dessus du seuil
+- **Récupération complète vers** : ~153 000 $ (65–74 ans)
 
-### Comment ça marche?
+> ⚠️ **Attention** : Le seuil a été mis à jour en 2026. D'anciens guides indiquent encore des montants comme $86 912 $ ou $90 997 $ — ces chiffres ne sont plus à jour.
 
-Pour chaque dollar de revenu au-dessus de 90 997 $, le gouvernement reprend 15 cents de votre SV.
-
-**Exemple concret :**
+**Exemple concret 2026 :**
 - Votre revenu : 100 000 $
-- Montant au-dessus du seuil : 100 000 $ - 90 997 $ = 3 003 $
-- Récupération : 3 003 $ × 15 % = 450,45 $
-- Vous perdez 450,45 $ de votre SV pour l'année
+- Montant au-dessus du seuil : 100 000 $ − 95 323 $ = **4 677 $**
+- Récupération : 4 677 $ × 15 % = **701 $/an**
+
+Vous perdez 701 $ de PSV pour cette année-là.
+
+**Exemple à haut revenu :**
+- Revenu de 110 000 $
+- Montant au-dessus du seuil : 14 677 $
+- Récupération : 14 677 $ × 15 % = **2 202 $/an** — soit presque toute la PSV!
+
+---
 
 ## Stratégies pour protéger votre SV
 
 ### 1. Surveillez vos retraits de FERR
 
-Vos retraits de FERR comptent comme du revenu. Plus vous retirez, plus vous risquez de perdre votre SV.
+Vos retraits de FERR comptent intégralement comme du revenu. Plus vous retirez, plus vous risquez de dépasser 95 323 $.
 
-**Conseil :** Retirez seulement le minimum obligatoire si possible.
+**Conseil :** Retirez seulement le minimum obligatoire si vos autres revenus sont déjà élevés. Et si vous pouvez, convertissez une partie du REER en CELI pendant les années de faibles revenus.
 
 ### 2. Utilisez votre CELI intelligemment
 
-L'argent que vous retirez de votre CELI ne compte **pas** comme du revenu. C'est votre meilleure arme!
+L'argent que vous retirez de votre CELI ne compte **pas** comme du revenu. C'est votre meilleure arme contre la récupération.
 
-**Stratégie :** Si vos retraits de FERR vous font dépasser 90 997 $, utilisez plutôt votre CELI pour vos dépenses extra.
+**Stratégie :** Si vos retraits de FERR risquent de vous faire dépasser 95 323 $, utilisez votre CELI pour combler vos dépenses supplémentaires.
 
-### 3. Planifiez vos ventes de placements
+### 3. La stratégie du dégel REER (entre 60 et 70 ans)
 
-Quand vous vendez des actions ou des fonds, les gains en capital comptent dans votre revenu.
+C'est la stratégie la plus puissante pour protéger votre PSV à long terme.
 
-**Conseil :** Étalez vos ventes sur plusieurs années pour éviter une grosse année de revenus.
+**Principe :** Entre 60 et 70 ans, avant que vos pensions gouvernementales s'ajoutent, vos revenus imposables sont souvent dans les paliers bas. C'est le moment idéal pour retirer graduellement du REER (~12 000 $–20 000 $/an).
+
+**Résultat à 72 ans :** Votre FERR est plus petit → vos retraits obligatoires sont plus petits → vos revenus totaux restent sous le seuil de récupération PSV de 95 323 $.
+
+> Pour la stratégie complète : [L'ordre intelligent pour retirer son argent à la retraite](/posts/fr/l-ordre-intelligent-pour-retirer-son-argent-a-la-retraite)
 
 ### 4. Retardez votre SV si vous en avez les moyens
 
-Vous pouvez attendre jusqu'à 70 ans pour commencer votre SV. Chaque mois d'attente augmente votre pension de 0,6 %.
+Vous pouvez attendre jusqu'à 70 ans pour commencer votre SV. Chaque mois d'attente après 65 ans augmente votre pension de **0,6 %**.
 
-**Avantage :** Si vous attendez 5 ans (jusqu'à 70 ans), votre SV augmente de 36 % à vie!
+**Si vous attendez 5 ans (jusqu'à 70 ans) : +36 % à vie!**
+- 727 $ → 988 $/mois (à vie, indexé)
+
+Cette stratégie est particulièrement avantageuse si vos revenus entre 65 et 70 ans sont déjà élevés (risque de récupération). Vous prenez la SV bonifiée à 70 ans quand vos autres revenus imposables peuvent être mieux gérés.
+
+### 5. Planifiez la réalisation de vos gains en capital
+
+Les gains en capital comptent dans votre revenu imposable. Étalez vos ventes de placements sur plusieurs années pour éviter une grande année de revenus qui déclencherait la récupération.
+
+---
 
 ## Le Supplément de revenu garanti (SRG)
 
-### De l'argent en plus pour les petits revenus
+### De l'argent supplémentaire pour les petits revenus
 
-Si vos revenus sont bas, vous pourriez aussi recevoir le SRG en plus de votre SV.
+Si vos revenus sont bas, vous pourriez recevoir le SRG en plus de votre SV.
 
-**Qui y a droit :**
-- Vous recevez déjà la SV
-- Votre revenu annuel (sans compter la SV) est sous 22 272 $ (célibataire) ou 29 424 $ (couple)
+**Conditions d'admissibilité 2026 (environ) :**
 
-**Combien :** Jusqu'à 1 097,75 $ par mois en plus de votre SV!
+| Situation | Revenu annuel maximal (hors SV) |
+|-----------|-------------------------------|
+| Célibataire | ~22 800 $ |
+| Couple (les deux reçoivent la SV) | ~29 808 $ |
+| Couple (un seul reçoit la SV) | ~54 500 $ |
 
-**Important :** Le SRG n'est **pas** imposable. C'est de l'argent net dans vos poches.
+**Montants maximaux 2026 (environ) :**
+- Personne seule : **~1 100 $/mois** (non imposable!)
+- Couple (chacun) : **~660 $/mois** (non imposable!)
 
-## L'allocation et l'allocation au survivant
+> Pour les détails complets : [Le Supplément de revenu garanti : êtes-vous admissible?](/posts/fr/le-supplement-de-revenu-garanti-etes-vous-admissible)
 
-### Pour les 60-64 ans
+---
 
-Si vous avez entre 60 et 64 ans et que votre conjoint reçoit la SV, vous pourriez avoir droit à l'Allocation.
+## L'Allocation et l'Allocation au survivant (60–64 ans)
 
-Si vous êtes veuf ou veuve entre 60 et 64 ans, vous pourriez avoir droit à l'Allocation au survivant.
+Si vous avez entre 60 et 64 ans et que votre conjoint reçoit la SV, vous pourriez avoir droit à l'**Allocation**.
 
-**Montants maximaux :**
-- **Allocation :** 1 395,73 $ par mois
-- **Allocation au survivant :** 1 663,81 $ par mois
+Si vous êtes veuf ou veuve entre 60 et 64 ans, vous pourriez avoir droit à l'**Allocation au survivant**.
+
+**Montants approximatifs 2026 :**
+- Allocation : ~1 430 $/mois
+- Allocation au survivant : ~1 700 $/mois
+
+---
 
 ## Comment faire votre demande?
 
-### Démarches simples
-
 **Pour la SV :**
-1. Faites votre demande 6 mois avant vos 65 ans
-2. Appelez Service Canada ou allez sur leur site web
-3. Préparez vos documents : certificat de naissance, preuve de résidence
+1. Faites votre demande **6 mois avant** vos 65 ans
+2. En ligne sur Mon dossier Service Canada ou par téléphone
+3. Documents : certificat de naissance, preuve de résidence
 
-**Inscription automatique :** Si vous recevez déjà le RPC ou RRQ, Service Canada pourrait vous inscrire automatiquement à la SV.
+**Inscription automatique :** Si vous recevez déjà le RPC ou le RRQ, Service Canada pourrait vous inscrire automatiquement à la SV. Mais ne prenez pas ce risque — confirmez auprès de Service Canada.
 
-### Documents importants à garder
-
-- Tous vos relevés d'impôts
-- Preuves de résidence au Canada
-- Certificats de naissance et de citoyenneté
-- Papiers d'immigration si applicable
-
-## Erreurs à éviter absolument
-
-### 1. Oublier de faire sa demande
-
-La SV n'est **pas** automatique! Vous devez faire une demande.
-
-### 2. Ne pas surveiller ses revenus
-
-Beaucoup de gens perdent leur SV sans s'en rendre compte parce qu'ils dépassent les seuils de récupération.
-
-### 3. Mélanger SV et RRQ
-
-Ce sont deux programmes différents :
-- **SV :** Basée sur vos années de résidence au Canada
-- **RRQ :** Basé sur vos cotisations au travail
-
-### 4. Négliger les demandes de SRG
-
-Si vos revenus sont bas, n'oubliez pas de demander aussi le SRG. C'est de l'argent gratuit!
+---
 
 ## Planification fiscale avec la SV
 
 ### La SV est imposable
 
-Contrairement au SRG, votre pension de SV est imposable. Le gouvernement retient l'impôt à la source si vous le demandez.
+Contrairement au SRG, votre pension de SV est **imposable**. Elle s'additionne à vos autres revenus.
 
-### Fractionnement avec votre conjoint
+### Vous ne pouvez pas fractionner votre SV
 
-Vous **ne pouvez pas** fractionner votre SV avec votre conjoint comme vous pouvez le faire avec votre RRQ.
+Contrairement à certains revenus de retraite, vous **ne pouvez pas** fractionner votre SV avec votre conjoint.
 
 ### Impact sur vos autres prestations
 
-Votre SV peut affecter :
-- Vos crédits d'impôt pour personnes âgées
-- Certains programmes provinciaux
-- Vos prestations d'assurance-médicaments
+Votre SV peut affecter certains programmes provinciaux et vos crédits d'impôt pour personnes âgées.
+
+---
 
 ## Cas particuliers
 
 ### Si vous avez vécu à l'étranger
 
-Le Canada a des ententes avec plusieurs pays. Vos années vécues dans ces pays pourraient compter pour votre SV.
-
-**Pays avec ententes :** France, États-Unis, Royaume-Uni, Allemagne, et plusieurs autres.
+Le Canada a des ententes avec plus de 50 pays (France, États-Unis, Royaume-Uni, Allemagne, etc.). Vos années vécues dans ces pays pourraient compter pour votre SV. Consultez Service Canada.
 
 ### Si vous vivez à l'étranger
 
-Vous pouvez généralement garder votre SV si vous vivez à l'étranger, mais il y a des règles spéciales.
+Vous pouvez généralement garder votre SV si vous vivez à l'étranger, mais des règles spéciales s'appliquent selon votre pays de résidence.
+
+---
+
+## Les 5 erreurs à éviter
+
+| Erreur | Impact |
+|--------|--------|
+| Oublier de faire la demande | Vous perdez des mois de prestations |
+| Utiliser l'ancien seuil ($86 912 $) | Mauvaise planification fiscale |
+| Ignorer le CELI comme outil anti-récupération | Des centaines à des milliers $ perdus/an |
+| Ne pas dégeler le REER entre 60 et 70 ans | FERR trop élevé à 72 ans → récupération PSV |
+| Oublier de demander le SRG si revenus faibles | Jusqu'à 1 100 $/mois laissé sur la table |
+
+---
 
 ## Questions fréquentes
 
@@ -205,46 +227,29 @@ Vous pouvez généralement garder votre SV si vous vivez à l'étranger, mais il
 R : Oui! Il n'y a pas d'obligation de prendre sa retraite pour recevoir la SV.
 
 **Q : Ma SV va-t-elle augmenter avec l'inflation?**
-R : Oui, le gouvernement ajuste les montants 4 fois par année selon l'inflation.
+R : Oui, le gouvernement l'ajuste 4 fois par année selon l'IPC.
 
 **Q : Que se passe-t-il si je déménage de province?**
 R : Rien! La SV est un programme fédéral, peu importe où vous vivez au Canada.
 
-**Q : Puis-je recevoir la SV et continuer à cotiser à mon REER?**
-R : Oui, tant que vous avez des revenus gagnés et des droits de cotisation.
-
-## Conseils pour maximiser votre SV
-
-### 1. Restez au Canada
-
-Chaque année de résidence compte. Si vous pensez déménager à l'étranger, attendez d'avoir vos 40 années complètes si possible.
-
-### 2. Gardez vos revenus sous contrôle
-
-Planifiez vos retraits de REER/FERR pour éviter la récupération de SV.
-
-### 3. Utilisez un conseiller financier
-
-Un bon planificateur peut vous aider à structurer vos revenus pour garder votre SV au maximum.
-
-### 4. Restez informé
-
-Les règles changent parfois. Suivez les nouvelles ou demandez à votre conseiller de vous tenir au courant.
-
-## Conclusion
-
-La Sécurité de la vieillesse, c'est votre filet de sécurité pour la retraite. C'est un droit que vous avez gagné en vivant au Canada.
-
-**Points clés à retenir :**
-- Faites votre demande 6 mois avant vos 65 ans
-- Surveillez vos revenus pour éviter la récupération
-- Demandez le SRG si vos revenus sont bas
-- Planifiez avec un conseiller si vous avez des revenus élevés
-
-Vous avez travaillé dur ou vécu longtemps au Canada. Cette pension, c'est votre droit. Ne laissez personne vous dire le contraire!
+**Q : La SV est-elle indexée à vie?**
+R : Oui — y compris le bonus de 10 % à 75 ans.
 
 ---
 
-**Important :** Ce guide donne des informations générales seulement. Les montants et règles peuvent changer. Consultez toujours Service Canada ou un conseiller financier qualifié pour votre situation personnelle.
+## Conclusion
 
-**Pour plus d'infos :** Visitez canada.ca ou appelez Service Canada au 1-800-277-9914.
+La Sécurité de la vieillesse, c'est votre filet de sécurité. Mais pour en profiter pleinement, il faut la **protéger** de la récupération et la **coordonner** avec vos autres revenus.
+
+**Points clés 2026 :**
+- Faites votre demande 6 mois avant vos 65 ans
+- Seuil de récupération 2026 : **95 323 $** (pas $86 912 $!)
+- Le CELI est votre meilleure arme contre la récupération
+- Le dégel REER entre 60 et 70 ans protège votre SV à 72 ans
+- Le bonus de 10 % à 75 ans est automatique — aucune démarche requise
+
+---
+
+*Les montants indiqués sont des références 2026 approximatives, indexées trimestriellement. Consultez Service Canada ou un planificateur financier certifié pour votre situation personnelle.*
+
+**Pour plus d'infos :** canada.ca ou Service Canada au 1-800-277-9914.

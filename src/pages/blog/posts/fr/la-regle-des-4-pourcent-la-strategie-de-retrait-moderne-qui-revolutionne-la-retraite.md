@@ -5,6 +5,7 @@ title: >-
 slug: >-
   la-regle-des-4-pourcent-la-strategie-de-retrait-moderne-qui-revolutionne-la-retraite
 date: '2025-09-18'
+lastUpdated: '2026-03-01'
 excerpt: >-
   Depuis 30 ans, une règle simple guide les retraités du monde entier : retirer
   4 % de son capital la première année, puis ajuster selon l'inflation. Cette
@@ -24,7 +25,7 @@ relatedSlugEn: >-
 ---
 # La règle des 4 % : la stratégie de retrait moderne qui révolutionne la retraite
 
-*Publié le 18 septembre 2025 | Lecture : 10 minutes*
+*Mis à jour le 1er mars 2026 | Lecture : 11 minutes*
 
 **Depuis 30 ans, une règle simple guide les retraités du monde entier : retirer 4 % de son capital la première année, puis ajuster selon l'inflation. Cette stratégie a survécu à toutes les crises financières depuis 1928. Découvrez comment l'appliquer pour sécuriser votre retraite.**
 
@@ -64,7 +65,7 @@ Il analyse **tous les départs à la retraite possibles de 1926 à 1976** avec u
 
 L'université Trinity valide les résultats avec des données encore plus complètes. La règle des 4 % devient **le standard mondial** pour les retraités.
 
-### **2024-2025 : Mise à jour moderne**
+### **2026 : Mise à jour moderne**
 
 Les experts revisitent la règle avec 30 années de données supplémentaires, incluant :
 - Crise de 2000-2002 (bulle Internet)
@@ -101,12 +102,12 @@ La règle fonctionne parce qu'elle équilibre parfaitement :
 
 ---
 
-## ⚡ **Version 2025 : Les améliorations modernes**
+## ⚡ **Version 2026 : Les améliorations modernes**
 
 ### **Amélioration #1 : Allocation optimisée**
 
-**Ancienne version (Bengen 1994)** : 50 % actions US / 50 % obligations US  
-**Version moderne 2025** : Diversification mondiale avancée
+**Ancienne version (Bengen 1994)** : 50 % actions US / 50 % obligations US
+**Version moderne 2026** : Diversification mondiale avancée
 
 | **Catégorie d'actifs** | **% Recommandé** | **Justification** |
 |------------------------|------------------|-------------------|
@@ -244,10 +245,11 @@ Répartissez selon le modèle moderne :
 
 ### **Différences importantes vs États-Unis**
 
-**Prestations gouvernementales plus généreuses**
-- RRQ/RPC : Jusqu'à 1 300 $ par mois
-- SV + SRG : Jusqu'à 1 100 $ par mois combinés
-- **Impact** : Réduisent les besoins de capital privé
+**Prestations gouvernementales plus généreuses (2026)**
+- RRQ : Jusqu'à ~1 433 $/mois (à 65 ans) | RPC : ~1 395 $/mois
+- SV : ~727 $/mois (65–74 ans) | ~800 $/mois (75+)
+- SV + SRG : Jusqu'à ~1 100 $/mois combinés pour revenus modestes
+- **Impact** : Réduisent les besoins de capital privé — et protègent la SV si vos revenus restent sous **95 323 $**
 
 **Fiscalité différente**
 - Fractionnement de revenu de pension à 65 ans
@@ -318,7 +320,7 @@ Répartissez selon le modèle moderne :
 - [ ] Vérifiez la faisabilité : Capital ÷ Besoins ≥ 25
 
 ### **Semaine 2 : Optimisation allocation**
-- [ ] Rééquilibrez selon le modèle 2025 (60-70 % actions diversifiées)
+- [ ] Rééquilibrez selon le modèle 2026 (60-70 % actions diversifiées)
 - [ ] Constituez votre échelle de liquidités (2 ans de dépenses)
 - [ ] Organisez vos comptes par ordre de retrait optimisé
 
@@ -364,4 +366,4 @@ La règle des 4 % n'est pas magique - c'est de la **science actuarielle appliqu�
 
 *La règle des 4 % représente la sagesse collective de décennies de recherche en planification de retraite. Les exemples et calculs présentés sont à des fins éducatives et ne constituent pas des conseils financiers personnalisés.*
 
-**Sources** : William Bengen (1994), Trinity Study (1998), Mise à jour RBC 2024, Normes IPF 2025, Statistique Canada.
+**Sources** : William Bengen (1994), Trinity Study (1998), Mise à jour RBC 2025, Normes IPF 2026, Statistique Canada.

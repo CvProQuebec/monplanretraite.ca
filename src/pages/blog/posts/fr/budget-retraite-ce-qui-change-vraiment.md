@@ -2,6 +2,7 @@
 title: 'Budget retraite : ce qui change vraiment'
 slug: budget-retraite-ce-qui-change-vraiment
 date: '2025-09-18'
+lastUpdated: '2026-03-01'
 excerpt: >-
   Planifier son budget de retraite n'a pas à être une source d'anxiété.
   Contrairement aux idées reçues, établir un budget réaliste pour ses années
@@ -20,7 +21,7 @@ relatedSlugEn: retirement-budget-what-really-changes
 ---
 # Budget retraite : ce qui change vraiment
 
-*Publié le 18 septembre 2025*
+*Mis à jour le 1er mars 2026*
 
 Planifier son budget de retraite n'a pas à être une source d'anxiété. Contrairement aux idées reçues, établir un budget réaliste pour ses années dorées peut être simple et rassurant. Voici ce qui change vraiment dans votre budget lorsque vous prenez votre retraite au Québec.
 
@@ -66,13 +67,13 @@ Nasser Mama, planificateur financier et conseiller en épargne collective FlexiF
 Au Québec, trois programmes gouvernementaux forment la base de votre revenu de retraite :
 
 **Pension de la Sécurité de la vieillesse (SV)**
-Accessible à 65 ans pour ceux ayant vécu au moins 10 ans au Canada après 18 ans.
+Accessible à 65 ans pour ceux ayant vécu au moins 10 ans au Canada après 18 ans. Montant 2026 : environ **727 $/mois** (65–74 ans) | **800 $/mois** (75 ans et plus). *Attention :* récupérée à 15 % si votre revenu net dépasse **95 323 $** en 2026.
 
 **Régime de rentes du Québec (RRQ)**
-Basé sur vos cotisations durant votre vie active.
+Basé sur vos cotisations durant votre vie active. Maximum 2026 : environ **1 433 $/mois** à 65 ans (cotisations maximales).
 
 **Supplément de revenu garanti (SRG)**
-Pour les retraités aux revenus modestes.
+Pour les retraités aux revenus modestes. Maximum 2026 : environ **1 100 $/mois** (célibataire) — non imposable.
 
 **Important :** Ces trois sources ne suffisent généralement pas à maintenir le niveau de vie d'un travailleur aux revenus moyens. Elles représentent environ 40 % des revenus nécessaires.
 

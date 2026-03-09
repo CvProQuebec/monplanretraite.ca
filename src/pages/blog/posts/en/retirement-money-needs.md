@@ -1,9 +1,29 @@
 ---
+title: >-
+  How Much Money Do I Really Need? - Calculating Your Retirement Needs Without
+  the Headache
+slug: retirement-money-needs
+date: '2025-09-19'
+lastUpdated: '2026-03-01'
+excerpt: >-
+  "One million dollars!" That's often the first answer that comes to mind for a
+  comfortable retirement. But is that magic number right for you? Spoiler:
+  probably not. Here's how to calculate your real retirement needs — simply and
+  realistically.
+tags:
+  - retirement
 category: Retirement basics
+language: en
+status: published
+readingTime: 10
+oqlfChecked: false
 relatedSlugFr: >-
   de-combien-d-argent-ai-je-vraiment-besoin-calculer-ses-besoins-sans-se-casser-la-tete
+relatedSlugEn: retirement-money-needs
 ---
-# How Much Money Do I Really Need? - Calculating Your Needs Without Breaking Your Head
+# How Much Money Do I Really Need? - Calculating Your Retirement Needs Without the Headache
+
+*Updated March 1, 2026*
 
 "One million dollars!" That's often the first answer that comes to mind when we think about the amount needed for a comfortable retirement. But is this magic answer really suited to your situation? Spoiler: probably not.
 
@@ -80,7 +100,7 @@ The formula is simple: you need to accumulate 25 times your annual expenses in i
 
 This rule works well but has its limits:
 - It includes inflation adjustment
-- It's better suited for 30-35 year retirements
+- It's better suited for 30–35 year retirements
 - For very early retirements (before 40), use 3.25% instead (30 times expenses)
 - It assumes a balanced portfolio between stocks and bonds
 
@@ -230,4 +250,4 @@ As experts say: "The best time to start was 20 years ago. The second best time i
 
 ---
 
-*Sources: ÉducÉpargne, Retraite Québec, financial planning guides, retirement expert analyses*
+*Updated March 1, 2026. Sources: ÉducÉpargne, Retraite Québec, financial planning guides, retirement expert analyses. Government benefit amounts are approximate 2026 references.*

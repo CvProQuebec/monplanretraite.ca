@@ -3,6 +3,7 @@ title: 'The 4% Rule: The Modern Withdrawal Strategy That Revolutionizes Retireme
 slug: >-
   the-4-pourcent-rule-the-modern-withdrawal-strategy-that-revolutionizes-retirement
 date: '2025-09-19'
+lastUpdated: '2026-03-01'
 excerpt: >-
   For 30 years, a simple rule has guided retirees around the world: withdraw 4%
   of your savings the first year, then adjust for inflation. This strategy has
@@ -22,7 +23,7 @@ relatedSlugEn: >-
 ---
 # The 4% Rule: The Modern Withdrawal Strategy That Revolutionizes Retirement
 
-*Published September 18, 2025 | Reading time: 10 minutes*
+*Updated March 1, 2026 | Reading time: 11 minutes*
 
 **For 30 years, a simple rule has guided retirees around the world: withdraw 4% of your savings the first year, then adjust for inflation. This strategy has survived every financial crisis since 1928. Discover how to apply it to secure your retirement.**
 
@@ -63,7 +64,7 @@ He analyzed **all possible retirements from 1926 to 1976** with a 50/50 U.S. sto
 
 Trinity University validated the results with even more data. The 4% rule became **the global retirement standard**.
 
-### **2024–2025: Modern Update**
+### **2026 Update**
 
 Experts revisited the rule with 30 more years of data, including:
 
@@ -101,12 +102,12 @@ The rule works because it balances perfectly:
 
 ---
 
-## ⚡ **2025 Version: Modern Improvements**
+## ⚡ **2026 Version: Modern Improvements**
 
 ### **Improvement #1: Optimized Allocation**
 
 **Old version (Bengen 1994)**: 50% U.S. stocks / 50% U.S. bonds
-**Modern 2025 version**: Advanced global diversification
+**Modern 2026 version**: Advanced global diversification
 
 | **Asset Class**          | **% Recommended** | **Reasoning**                          |
 | ------------------------ | ----------------- | -------------------------------------- |
@@ -253,11 +254,12 @@ Distribute according to the modern model:
 
 ### **Key Differences vs. U.S.**
 
-**More generous government benefits**
+**More generous government benefits (2026)**
 
-* CPP/QPP: Up to \$1,300/month
-* OAS + GIS: Up to \$1,100/month combined
-* **Impact**: Reduces private capital needed
+* QPP: ~$1,433/month (at 65) | CPP: ~$1,395/month (at 65)
+* OAS: ~$727/month (ages 65–74) | ~$800/month (75+)
+* OAS + GIS: Up to ~$1,100/month combined for low-income retirees
+* **Impact**: Reduces private capital needed — and protecting OAS from clawback (threshold: **$95,323** in 2026) is a key strategy when planning RRIF withdrawals
 
 **Different taxation**
 
@@ -332,7 +334,7 @@ Distribute according to the modern model:
 
 ### **Week 2: Allocation Optimization**
 
-* [ ] Rebalance according to 2025 model (60–70% diversified stocks)
+* [ ] Rebalance according to 2026 model (60–70% diversified stocks)
 * [ ] Build your cash ladder (2 years of expenses)
 * [ ] Organize accounts by optimal withdrawal order
 
@@ -380,4 +382,4 @@ The 4% rule isn’t magic—it’s **applied actuarial science**. It transforms 
 
 *The 4% rule reflects the collective wisdom of decades of retirement planning research. Examples and calculations are for educational purposes and do not constitute personalized financial advice.*
 
-**Sources**: William Bengen (1994), Trinity Study (1998), RBC Update 2024, FP Standards 2025, Statistics Canada.
+**Sources**: William Bengen (1994), Trinity Study (1998), RBC Update 2025, FP Standards 2026, Statistics Canada.
