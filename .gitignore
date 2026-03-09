@@ -83,3 +83,4 @@ reports/e2e/junit/results.xml
 reports/security/zap-baseline-report.html
 reports/security/zap-baseline-report.json
 reports/latest-npm-audit.json
+.claude/worktrees/
