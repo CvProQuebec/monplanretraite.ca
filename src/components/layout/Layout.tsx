@@ -4,6 +4,7 @@ import { AdaptiveHeader } from './header/AdaptiveHeader';
 import { useLanguage } from '../../features/retirement/hooks/useLanguage';
 import UnlockButton from '../ui/UnlockButton';
 import { SeniorsOptimizationService } from '../../services/SeniorsOptimizationService';
+import Footer from './Footer';
 
 // Import du CSS d'accessibilité pour seniors - appliqué globalement
 import '../../styles/accessibility-seniors.css';
@@ -49,6 +50,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
       <UnlockButton />
       
       <main>{children}</main>
+      <Footer />
     </div>
   );
 };
