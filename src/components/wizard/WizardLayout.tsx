@@ -133,7 +133,7 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
                 <span className="text-blue-700 font-bold">W</span>
               </div>
               <div>
-                <h1 className="text-2xl md:text-3xl font-bold text-gray-900">
+                <h1 data-testid="wizard-layout-heading" className="text-2xl md:text-3xl font-bold text-gray-900">
                   {isEnglish ? 'Retirement planning wizard' : 'Assistant de planification retraite'}
                 </h1>
                 <p className="text-gray-700">

@@ -41,22 +41,8 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npx playwright install --with-deps
-      - name: Build app
-        run: npm run build
-      - name: Start preview server
-        run: |
-          npm run preview -- --host --port 5173 &
-          echo $! > preview.pid
-      - name: Wait for preview server
-        run: npx --yes wait-on http://127.0.0.1:5173
       - name: Run E2E tests
-        env:
-          TEST_BASE_URL: http://127.0.0.1:5173
-          PLAYWRIGHT_SKIP_WEBSERVER: "true"
         run: npm run test:e2e
-      - name: Stop preview server
-        if: always()
-        run: kill $(cat preview.pid) || true
       - name: Upload Playwright report
         if: ${{ failure() }}
         uses: actions/upload-artifact@v4

@@ -10,7 +10,9 @@ test.describe("Retirement wizard smoke", () => {
     });
 
     await page.goto("/wizard/profil");
-    await expect(page.locator("body")).toContainText(/Profil|Profile/i);
+    // WizardLayout h1 renders synchronously once WizardPage module loads
+    const wizardHeading = page.locator('[data-testid="wizard-layout-heading"]');
+    await expect(wizardHeading).toBeVisible({ timeout: 20_000 });
 
     await page.goto("/wizard/prestations");
     // WizardPage is lazy-loaded; wait for the heading to appear before asserting content

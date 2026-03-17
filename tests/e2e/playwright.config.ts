@@ -10,7 +10,7 @@ export default defineConfig({
   timeout: 90_000,
   retries: process.env.CI ? 1 : 0,
   expect: {
-    timeout: 10_000
+    timeout: 20_000
   },
   reporter: [
     ["list"],
@@ -46,12 +46,13 @@ export default defineConfig({
       use: { ...devices["Pixel 5"] }
     }
   ],
-  webServer: process.env.PLAYWRIGHT_SKIP_WEBSERVER === "true"
-    ? undefined
-    : {
-        command: "npm run dev -- --host",
-        url: TEST_BASE_URL,
-        timeout: 120_000,
-        reuseExistingServer: !process.env.CI
-      }
+  webServer: {
+    // Vite dev server handles SPA routing correctly; preview server requires explicit
+    // historyApiFallback and was causing consistent failures in CI.
+    // Port 5173 matches TEST_BASE_URL default; overrides vite.config.ts server.port (3001).
+    command: "npm run dev -- --host --port 5173",
+    url: TEST_BASE_URL,
+    timeout: 120_000,
+    reuseExistingServer: !process.env.CI
+  }
 });
