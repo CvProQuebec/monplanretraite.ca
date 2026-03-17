@@ -12,7 +12,7 @@ export default function AllToolsPage() {
 
   return (
     <div className="senior-layout p-6">
-      <h1 className="h1 mb-6">{isEnglish ? 'Tools' : 'Outils'}</h1>
+      <h1 data-testid="tools-page-heading" className="h1 mb-6">{isEnglish ? 'Tools' : 'Outils'}</h1>
       <p className="text-[18px] mb-6">
         {isEnglish
           ? 'Discover all available tools, grouped by plan. Large buttons, clear texts and accessible navigation are provided for comfortable use.'
