@@ -366,7 +366,7 @@ export const BLOG_CATEGORIES = [
   'Défis spécifiques aux femmes',
   'Aspects pratiques et quotidiens',
   'Fiscalité simplifiée',
-  'Sujets saisonniers et d'actualité',
+  "Sujets saisonniers et d'actualité",
   'Outils et ressources',
   'Bien-être et qualité de vie',
 ];

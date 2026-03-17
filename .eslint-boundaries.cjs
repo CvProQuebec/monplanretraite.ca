@@ -15,6 +15,8 @@ module.exports = {
     'dist/**',
     'node_modules/**',
     'public/**',
+    // Pages avec parsing error pré-existant dans @typescript-eslint/parser (tsc passe sans erreur)
+    'src/pages/AccueilOptimise.tsx',
     // Modules marketing (longs brouillons UI) — ignorés pour "lint:boundaries" uniquement
     'src/components/ui/AssetConsolidationModule.tsx',
     'src/components/ui/CashWedgeBucketModule.tsx',
