@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-02-07'
 title: Retraite complète ou retraite partielle? - Les avantages de chaque option
 slug: retraite-complete-ou-retraite-partielle-les-avantages-de-chaque-option
-date: '2025-09-19'
+date: '2026-02-07'
 excerpt: >-
   La retraite, ce n'est plus comme avant. Il y a 20 ans, la plupart des gens
   arrêtaient de travailler complètement à 65 ans. Aujourd'hui, c'est différent.

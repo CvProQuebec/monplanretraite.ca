@@ -1,8 +1,8 @@
 ---
 title: 'Old Age Security (OAS): What You Need to Know'
 slug: old-age-security-what-you-need-to-know
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-02-16'
+lastUpdated: '2026-02-16'
 excerpt: >-
   OAS is your right — no need to have worked, just lived in Canada. But
   mismanaging it can cost you thousands of dollars. Here's everything you need

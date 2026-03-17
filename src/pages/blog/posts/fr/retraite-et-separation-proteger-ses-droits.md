@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-23'
 title: 'Retraite et séparation : protéger ses droits'
 slug: retraite-et-separation-proteger-ses-droits
-date: '2025-09-19'
+date: '2026-01-23'
 excerpt: >-
   Quand un couple se sépare, c'est un moment très difficile. En plus de la
   peine, il faut prendre des décisions importantes sur l'argent et la retraite.

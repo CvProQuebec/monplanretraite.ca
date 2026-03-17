@@ -214,9 +214,20 @@ function buildCache(): BlogPost[] {
       oqlfChecked: fm.oqlfChecked,
       relatedSlugFr: fm.relatedSlugFr,
       relatedSlugEn: fm.relatedSlugEn,
-      // keyPoints may be string or array; coerce to string[]
+      // keyPoints: coerce each item to a plain string, skip objects/nulls
       keyPoints: Array.isArray(fm.keyPoints)
-        ? (fm.keyPoints as unknown[]).map((kp) => fixPunctuation(kp)).filter(Boolean)
+        ? (fm.keyPoints as unknown[])
+            .map((kp) => {
+              if (typeof kp === 'string') return fixPunctuation(kp);
+              if (kp && typeof kp === 'object') {
+                // Handle YAML objects like {text: "..."} or {point: "..."}
+                const obj = kp as Record<string, unknown>;
+                const val = obj['text'] ?? obj['point'] ?? obj['label'] ?? Object.values(obj)[0];
+                return typeof val === 'string' ? fixPunctuation(val) : null;
+              }
+              return null;
+            })
+            .filter((kp): kp is string => typeof kp === 'string' && kp.length > 0)
         : (typeof (fm as any).keyPoints === 'string'
             ? [fixPunctuation((fm as any).keyPoints)]
             : undefined),
@@ -278,21 +289,45 @@ function standardizeTagsFromTitle(title: string): string[] {
 }
 
 function normalizeCategory(cat: string): string {
-  // Always normalize to FR canonical labels used across the app
-  const mapEnToFr: Record<string, string> = {
-    'Retirement basics': 'Les bases de la retraite',
-    'Government programs': 'Comprendre les régimes gouvernementaux',
-    'Manage savings and investments': 'Gérer son épargne et ses placements',
-    'Planning for couples': 'Planification pour les couples',
-    'Women-specific challenges': 'Défis spécifiques aux femmes',
-    'Practical everyday aspects': 'Aspects pratiques et quotidiens',
-    'Simple taxation': 'Fiscalité simplifiée',
-    'Seasonal and current topics': 'Sujets saisonniers et d’actualité',
-    'Tools and resources': 'Outils et ressources',
-    'Well-being and quality of life': 'Bien-être et qualité de vie',
-  };
+  // Strip surrounding quotes if any
   const c = (cat || '').trim().replace(/^"(.+)"$/, '$1');
-  return mapEnToFr[c] || c;
+
+  // ── Mapping English → French canonical ────────────────────────
+  const mapEnToFr: Record<string, string> = {
+    'Retirement basics':              'Les bases de la retraite',
+    'Retirement Basics':              'Les bases de la retraite',
+    'Government programs':            'Comprendre les régimes gouvernementaux',
+    'Government Programs':            'Comprendre les régimes gouvernementaux',
+    'Manage savings and investments': 'Gérer son épargne et ses placements',
+    'Planning for couples':           'Planification pour les couples',
+    'Planning for Couples':           'Planification pour les couples',
+    'Women-specific challenges':      'Défis spécifiques aux femmes',
+    'Practical everyday aspects':     'Aspects pratiques et quotidiens',
+    'Simple taxation':                'Fiscalité simplifiée',
+    'Simple Taxation':                'Fiscalité simplifiée',
+    'Seasonal and current topics':    "Sujets saisonniers et d'actualité",
+    'Tools and resources':            'Outils et ressources',
+    'Tools and Resources':            'Outils et ressources',
+    'Well-being and quality of life': 'Bien-être et qualité de vie',
+    'Wellness and quality of life':   'Bien-être et qualité de vie',
+    // Non-standard EN categories used in some articles
+    'Retirement Planning':            'Les bases de la retraite',
+    'Retirement Income':              'Comprendre les régimes gouvernementaux',
+    'Pension Plans':                  'Comprendre les régimes gouvernementaux',
+    'Investments':                    'Gérer son épargne et ses placements',
+    'Financial Planning':             'Les bases de la retraite',
+  };
+
+  // ── Mapping French non-standard → French canonical ────────────
+  const mapFrNonStd: Record<string, string> = {
+    'Revenus de retraite':            'Comprendre les régimes gouvernementaux',
+    'Planification de la retraite':   'Les bases de la retraite',
+    'Régimes de retraite':            'Comprendre les régimes gouvernementaux',
+    'Placements et investissements':  'Gérer son épargne et ses placements',
+    'Planification financière':       'Les bases de la retraite',
+  };
+
+  return mapEnToFr[c] || mapFrNonStd[c] || c;
 }
 
 /**
@@ -331,7 +366,7 @@ export const BLOG_CATEGORIES = [
   'Défis spécifiques aux femmes',
   'Aspects pratiques et quotidiens',
   'Fiscalité simplifiée',
-  'Sujets saisonniers et d’actualité',
+  'Sujets saisonniers et d'actualité',
   'Outils et ressources',
   'Bien-être et qualité de vie',
 ];

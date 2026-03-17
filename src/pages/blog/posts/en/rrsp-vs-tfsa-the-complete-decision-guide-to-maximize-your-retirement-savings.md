@@ -1,8 +1,8 @@
 ---
 title: 'RRSP vs TFSA: The Complete Decision Guide to Maximize Your Retirement Savings'
 slug: rrsp-vs-tfsa-the-complete-decision-guide-to-maximize-your-retirement-savings
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-01-09'
+lastUpdated: '2026-01-09'
 excerpt: >-
   RRSP or TFSA? The answer can save you tens of thousands of dollars in taxes.
   Discover 10 critical decision factors — including employer matching, creditor

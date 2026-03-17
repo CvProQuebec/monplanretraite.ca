@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-01-15'
+date: '2026-01-15'
 category: Practical everyday aspects
 relatedSlugFr: rester-chez-soi-ou-aller-en-residence-planifier-les-couts
 ---

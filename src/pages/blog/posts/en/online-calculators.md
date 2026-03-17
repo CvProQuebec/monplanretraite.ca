@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-01-03'
+date: '2026-01-03'
 category: Tools and resources
 relatedSlugFr: les-calculateurs-en-ligne-lesquels-utiliser-et-comment
 ---

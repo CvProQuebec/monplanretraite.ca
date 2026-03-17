@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-14'
 title: 'Planifier la retraite en couple : éviter les surprises'
 slug: planifier-la-retraite-en-couple-eviter-les-surprises
-date: '2025-09-19'
+date: '2026-01-14'
 excerpt: >-
   Planifier sa retraite en couple, c'est comme préparer un long voyage à deux :
   il faut se parler, faire des plans ensemble et éviter les mauvaises surprises.

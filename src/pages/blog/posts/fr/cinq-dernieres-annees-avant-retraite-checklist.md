@@ -1,8 +1,8 @@
 ---
 title: 'Les 5 dernières années avant la retraite : votre checklist définitive'
 slug: cinq-dernieres-annees-avant-retraite-checklist
-date: '2026-03-01'
-lastUpdated: '2026-03-01'
+date: '2026-03-07'
+lastUpdated: '2026-03-07'
 excerpt: >-
   Les 5 dernières années avant la retraite sont les plus importantes de toute
   votre vie professionnelle. Ce que vous faites — ou n'avez pas fait — durant

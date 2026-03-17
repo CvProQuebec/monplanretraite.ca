@@ -1,8 +1,8 @@
 ---
 title: The Smart Order for Withdrawing Your Money in Retirement
 slug: smart-withdrawal-order
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-01-06'
+lastUpdated: '2026-01-06'
 excerpt: >-
   A poor withdrawal order can cost you $50,000 or more in unnecessary taxes and
   lost benefits. Discover the expert decumulation framework — RRSP meltdown,

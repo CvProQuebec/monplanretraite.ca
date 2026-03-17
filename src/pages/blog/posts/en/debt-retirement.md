@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-01-07'
+date: '2026-01-07'
 category: Manage savings and investments
 ---
 # Should You Pay Off Your Debts Before Retirement?

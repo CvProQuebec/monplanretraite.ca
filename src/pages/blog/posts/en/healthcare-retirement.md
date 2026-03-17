@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-02-03'
+date: '2026-02-03'
 category: Practical everyday aspects
 relatedSlugFr: les-soins-de-sante-a-la-retraite-a-quoi-s-attendre
 ---

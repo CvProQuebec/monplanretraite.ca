@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-02-26'
+date: '2026-02-26'
 category: Practical everyday aspects
 relatedSlugFr: comment-eviter-les-fraudes-financieres-apres-65-ans
 ---

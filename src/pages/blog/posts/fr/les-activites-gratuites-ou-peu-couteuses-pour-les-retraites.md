@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-26'
 title: "Les activités gratuites ou peu coûteuses pour les retraités"
 slug: les-activites-gratuites-ou-peu-couteuses-pour-les-retraites
-date: "2025-09-21"
+date: '2026-01-26'
 excerpt: "Des idées simples et accessibles pour rester actif, social et en santé à la retraite sans dépenser beaucoup."
 tags:
   - retraite

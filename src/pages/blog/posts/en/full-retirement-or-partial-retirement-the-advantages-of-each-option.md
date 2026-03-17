@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-02-07'
+date: '2026-02-07'
 title: Full Retirement or Partial Retirement? - The Advantages of Each Option
 slug: full-retirement-or-partial-retirement-the-advantages-of-each-option
 language: en

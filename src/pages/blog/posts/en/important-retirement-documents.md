@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-01-27'
+date: '2026-01-27'
 category: Tools and resources
 relatedSlugFr: les-documents-importants-a-garder-pour-sa-retraite
 ---

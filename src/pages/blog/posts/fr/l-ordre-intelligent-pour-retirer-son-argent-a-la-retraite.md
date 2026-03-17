@@ -1,8 +1,8 @@
 ---
 title: L'ordre intelligent pour retirer son argent à la retraite
 slug: l-ordre-intelligent-pour-retirer-son-argent-a-la-retraite
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-01-06'
+lastUpdated: '2026-01-06'
 excerpt: >-
   Un mauvais ordre de retraits peut vous coûter 50 000 $ ou plus en impôts
   inutiles et en prestations perdues. Découvrez le cadre expert de la

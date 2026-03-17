@@ -1,8 +1,8 @@
 ---
 title: Créer un budget réaliste pour ses premières années de retraite
 slug: creer-un-budget-realiste-pour-ses-premieres-annees-de-retraite
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-01-04'
+lastUpdated: '2026-01-04'
 excerpt: >-
   Vous approchez de la retraite et vous vous demandez comment bien planifier
   votre budget? Vous avez raison de vous poser cette question! Les premières

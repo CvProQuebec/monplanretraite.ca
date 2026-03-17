@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-01-31'
+date: '2026-01-31'
 category: Women-specific challenges
 relatedSlugFr: veuvage-gerer-ses-finances-apres-le-deces-du-conjoint
 ---

@@ -1,8 +1,8 @@
 ---
 title: Préparer sa déclaration de revenus de retraité
 slug: preparer-sa-declaration-de-revenus-de-retraite
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-03-15'
+lastUpdated: '2026-03-15'
 excerpt: >-
   Préparer sa déclaration de revenus quand on est à la retraite, c'est différent
   de quand on travaillait. Vos sources de revenus ont changé et il y a de

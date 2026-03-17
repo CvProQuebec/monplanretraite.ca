@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-31'
 title: 'Veuvage : gérer ses finances après le décès du conjoint'
 slug: veuvage-gerer-ses-finances-apres-le-deces-du-conjoint
-date: '2025-09-19'
+date: '2026-01-31'
 excerpt: >-
   Perdre son conjoint, c'est l'une des épreuves les plus difficiles de la vie.
   En plus de la peine immense, vous devez faire face à de nombreuses démarches

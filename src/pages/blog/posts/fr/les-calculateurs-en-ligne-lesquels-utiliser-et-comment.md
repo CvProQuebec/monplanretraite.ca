@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-03'
 title: 'Les calculateurs en ligne : lesquels utiliser et comment'
 slug: les-calculateurs-en-ligne-lesquels-utiliser-et-comment
-date: '2025-09-19'
+date: '2026-01-03'
 excerpt: >-
   Planifier sa retraite peut sembler compliqué. Heureusement, il existe des
   outils gratuits et faciles à utiliser sur internet pour vous aider. Ces

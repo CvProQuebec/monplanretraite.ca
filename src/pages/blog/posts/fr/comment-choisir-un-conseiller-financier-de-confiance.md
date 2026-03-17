@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-12'
 title: Comment choisir un conseiller financier de confiance
 slug: comment-choisir-un-conseiller-financier-de-confiance
-date: '2025-09-19'
+date: '2026-01-12'
 excerpt: >-
   Vous approchez de la retraite ou vous voulez mieux gérer vos finances? Choisir
   la bonne personne pour vous aider avec votre argent est très important. Un

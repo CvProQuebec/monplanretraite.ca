@@ -1,8 +1,8 @@
 ---
 title: 'RRSP vs TFSA: Which to Choose at 55 and Over?'
 slug: rrsp-tfsa-55plus
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-03-17'
+lastUpdated: '2026-03-17'
 excerpt: >-
   At 55, you're in a golden window between peak earnings and mandatory RRIF
   withdrawals. RRSP or TFSA? Discover how the RRSP meltdown strategy, employer

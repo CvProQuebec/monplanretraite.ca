@@ -4,8 +4,8 @@ title: >-
   épargne-retraite
 slug: >-
   reer-vs-celi-le-guide-decisionnel-complet-pour-maximiser-votre-epargne-retraite
-date: '2025-09-18'
-lastUpdated: '2026-03-01'
+date: '2026-01-09'
+lastUpdated: '2026-01-09'
 excerpt: >-
   REER ou CELI? La réponse peut vous faire économiser des dizaines de milliers
   de dollars en impôts. Découvrez les 10 facteurs critiques — y compris la

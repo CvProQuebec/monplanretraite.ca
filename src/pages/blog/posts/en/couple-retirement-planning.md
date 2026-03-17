@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-01-14'
+date: '2026-01-14'
 category: Planning for couples
 relatedSlugFr: planifier-la-retraite-en-couple-eviter-les-surprises
 ---

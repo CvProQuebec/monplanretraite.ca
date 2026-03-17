@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-27'
 title: Les documents importants à garder pour sa retraite
 slug: les-documents-importants-a-garder-pour-sa-retraite
-date: '2025-09-19'
+date: '2026-01-27'
 excerpt: >-
   Préparer sa retraite, c'est plus que de l'argent dans un compte. C'est aussi
   garder les bons papiers au bon endroit. Voici un guide simple pour vous aider

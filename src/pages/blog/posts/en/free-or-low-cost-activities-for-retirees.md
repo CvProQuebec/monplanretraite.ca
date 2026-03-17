@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-26'
 title: "Free or Low-Cost Activities for Retirees"
 slug: free-or-low-cost-activities-for-retirees
-date: "2025-09-21"
+date: '2026-01-26'
 excerpt: "Simple, free or low-cost activities to stay active, social, and healthy in retirement."
 tags:
   - retirement

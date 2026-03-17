@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-02-03'
 title: 'Les soins de santé à la retraite : à quoi s''attendre'
 slug: les-soins-de-sante-a-la-retraite-a-quoi-s-attendre
-date: '2025-09-19'
+date: '2026-02-03'
 excerpt: >-
   Quand vous prenez votre retraite, votre santé reste votre actif le plus
   important. Mais avec l'âge, il faut se préparer au fait que votre santé peut

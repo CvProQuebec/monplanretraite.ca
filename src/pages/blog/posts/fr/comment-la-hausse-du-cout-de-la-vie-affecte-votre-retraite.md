@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-29'
 title: Comment la hausse du coût de la vie affecte votre retraite
 slug: comment-la-hausse-du-cout-de-la-vie-affecte-votre-retraite
-date: '2025-09-19'
+date: '2026-01-29'
 excerpt: >-
   Vous avez sûrement remarqué que tout coûte plus cher qu'avant. L'épicerie,
   l'essence, le logement... Cette hausse des prix, qu'on appelle l'inflation,

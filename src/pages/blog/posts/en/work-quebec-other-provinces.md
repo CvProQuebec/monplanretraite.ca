@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-01-28'
+date: '2026-01-28'
 category: Government programs
 relatedSlugFr: que-faire-si-vous-avez-travaille-au-quebec-et-dans-une-autre-province
 ---

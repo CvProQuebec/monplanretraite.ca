@@ -1,8 +1,8 @@
 ---
 title: How to Share Retirement Income and Save on Taxes
 slug: income-sharing-couples
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-02-18'
+lastUpdated: '2026-02-18'
 excerpt: >-
   In retirement, sharing income with your spouse can save you $2,000 to $8,000
   per year in taxes and protect your OAS. A practical guide for couples: form

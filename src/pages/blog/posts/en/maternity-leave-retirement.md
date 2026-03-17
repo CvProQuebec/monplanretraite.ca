@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-02-14'
+date: '2026-02-14'
 category: Women-specific challenges
 relatedSlugFr: conges-de-maternite-et-retraite-comment-rattraper-le-retard
 ---

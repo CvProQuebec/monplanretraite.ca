@@ -1,8 +1,8 @@
 ---
 title: 'La Sécurité de la vieillesse (SV) : ce que vous devez savoir'
 slug: la-securite-de-la-vieillesse-sv-ce-que-vous-devez-savoir
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-02-16'
+lastUpdated: '2026-02-16'
 excerpt: >-
   La pension de la Sécurité de la vieillesse, c'est votre droit — pas besoin
   d'avoir travaillé, juste d'avoir vécu au Canada. Mais mal la gérer peut vous

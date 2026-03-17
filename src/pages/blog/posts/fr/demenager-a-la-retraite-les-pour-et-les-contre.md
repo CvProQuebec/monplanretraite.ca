@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-02-22'
 title: 'Déménager à la retraite : les pour et les contre'
 slug: demenager-a-la-retraite-les-pour-et-les-contre
-date: '2025-09-19'
+date: '2026-02-22'
 excerpt: >-
   La retraite approche et vous vous demandez si vous devriez déménager? Garder
   votre maison familiale ou la vendre pour quelque chose de plus petit? C'est

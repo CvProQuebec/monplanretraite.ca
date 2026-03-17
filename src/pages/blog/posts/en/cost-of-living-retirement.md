@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-01-29'
+date: '2026-01-29'
 category: Seasonal and current topics
 relatedSlugFr: comment-la-hausse-du-cout-de-la-vie-affecte-votre-retraite
 ---

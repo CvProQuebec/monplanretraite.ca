@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-03-01'
+date: '2026-03-01'
 category: Retirement basics
 relatedSlugFr: comment-eviter-les-7-pieges-les-plus-courants-de-la-retraite
 ---

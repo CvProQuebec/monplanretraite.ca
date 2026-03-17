@@ -1,8 +1,8 @@
 ---
 title: 'REER vs CELI : lequel choisir à 55 ans et plus?'
 slug: reer-vs-celi-lequel-choisir-a-55-ans-et-plus
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-03-17'
+lastUpdated: '2026-03-17'
 excerpt: >-
   À 55 ans et plus, la fenêtre d'or entre votre salaire de pointe et vos
   retraits obligatoires définit toute votre stratégie. REER ou CELI? Découvrez

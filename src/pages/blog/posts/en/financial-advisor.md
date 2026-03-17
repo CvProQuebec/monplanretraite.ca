@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-01-12'
+date: '2026-01-12'
 category: Practical everyday aspects
 relatedSlugFr: comment-choisir-un-conseiller-financier-de-confiance
 ---

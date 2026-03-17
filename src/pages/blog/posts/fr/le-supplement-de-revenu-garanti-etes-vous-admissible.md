@@ -1,8 +1,8 @@
 ---
 title: 'Le Supplément de revenu garanti : êtes-vous admissible?'
 slug: le-supplement-de-revenu-garanti-etes-vous-admissible
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-02-25'
+lastUpdated: '2026-02-25'
 excerpt: >-
   Le SRG peut valoir jusqu'à 13 200 $ par année en argent net et non imposable.
   Pourtant, des milliers de Canadiens admissibles ne le demandent jamais. Voici

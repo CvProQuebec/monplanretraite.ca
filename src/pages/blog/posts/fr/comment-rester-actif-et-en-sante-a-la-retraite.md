@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-03-13'
 title: Comment rester actif et en santé à la retraite
 slug: comment-rester-actif-et-en-sante-a-la-retraite
-date: '2025-09-19'
+date: '2026-03-13'
 excerpt: >-
   La retraite est une belle étape de la vie. C'est le moment de profiter de tout
   ce temps libre que vous avez gagné après des années de travail. Mais pour

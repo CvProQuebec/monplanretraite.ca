@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-15'
 title: 'Rester chez soi ou aller en résidence : planifier les coûts'
 slug: rester-chez-soi-ou-aller-en-residence-planifier-les-couts
-date: '2025-09-19'
+date: '2026-01-15'
 excerpt: >-
   En vieillissant, une question importante se pose : vaut-il mieux rester dans
   sa maison ou déménager dans une résidence spécialisée? Cette décision touche

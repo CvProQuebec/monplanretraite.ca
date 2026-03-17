@@ -1,8 +1,8 @@
 ---
 title: Comment économiser sur vos impôts de retraité
 slug: comment-economiser-sur-vos-impots-de-retraite
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-03-11'
+lastUpdated: '2026-03-11'
 excerpt: >-
   À la retraite, vous avez plus de contrôle fiscal qu'à n'importe quel autre
   moment de votre vie. Découvrez les 7 stratégies expertes — emplacement des
@@ -169,7 +169,7 @@ Si vous n'avez pas encore 71 ans et avez encore des droits de cotisation REER, c
 
 Le seuil de récupération SV est souvent mal connu — et coûte cher à ceux qui le franchissent.
 
-**Seuil 2026 : 95 323 $** (↑ de 86 912 $ en 2025)
+**Seuil 2026 : 95 323 $** (↑ de 93 454 $ en 2025)
 **Taux** : 15 ¢ perdu pour chaque dollar au-delà du seuil
 
 Ce qui compte dans vos revenus (et peut déclencher la récupération) :

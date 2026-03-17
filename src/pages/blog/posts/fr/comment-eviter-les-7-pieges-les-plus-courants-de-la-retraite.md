@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-03-01'
 title: Comment éviter les 7 pièges les plus courants de la retraite
 slug: comment-eviter-les-7-pieges-les-plus-courants-de-la-retraite
-date: '2025-09-19'
+date: '2026-03-01'
 excerpt: >-
   Vous avez travaillé dur toute votre vie. Vous méritez une retraite sans tracas
   financiers. Pourtant, beaucoup de personnes font des erreurs coûteuses qui

@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-02-17'
+date: '2026-02-17'
 category: Planning for couples
 relatedSlugFr: que-faire-quand-un-conjoint-veut-partir-avant-l-autre
 ---

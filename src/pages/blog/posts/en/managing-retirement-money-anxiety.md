@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-02-10'
+date: '2026-02-10'
 category: Well-being and quality of life
 relatedSlugFr: gerer-l-anxiete-face-a-l-argent-a-la-retraite
 ---

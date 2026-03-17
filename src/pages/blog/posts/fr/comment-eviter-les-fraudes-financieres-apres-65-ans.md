@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-02-26'
 title: Comment éviter les fraudes financières après 65 ans
 slug: comment-eviter-les-fraudes-financieres-apres-65-ans
-date: '2025-09-19'
+date: '2026-02-26'
 excerpt: >-
   Quand vous prenez votre retraite, vous devenez malheureusement une cible plus
   facile pour les fraudeurs. Ils pensent que vous avez de l'argent de côté, que

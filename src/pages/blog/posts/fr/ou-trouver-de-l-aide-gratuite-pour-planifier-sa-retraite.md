@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-05'
 title: Où trouver de l'aide gratuite pour planifier sa retraite
 slug: ou-trouver-de-l-aide-gratuite-pour-planifier-sa-retraite
-date: '2025-09-19'
+date: '2026-01-05'
 excerpt: >-
   Planifier sa retraite peut sembler difficile au début. Heureusement, il existe
   plusieurs endroits où vous pouvez obtenir de l'aide gratuitement. Voici un

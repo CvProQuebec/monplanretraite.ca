@@ -1,8 +1,8 @@
 ---
 title: 'Budget retraite : ce qui change vraiment'
 slug: budget-retraite-ce-qui-change-vraiment
-date: '2025-09-18'
-lastUpdated: '2026-03-01'
+date: '2026-01-19'
+lastUpdated: '2026-01-19'
 excerpt: >-
   Planifier son budget de retraite n'a pas à être une source d'anxiété.
   Contrairement aux idées reçues, établir un budget réaliste pour ses années

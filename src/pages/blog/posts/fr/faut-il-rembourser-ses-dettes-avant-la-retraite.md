@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-03-04'
 title: Faut-il rembourser ses dettes avant la retraite?
 slug: faut-il-rembourser-ses-dettes-avant-la-retraite
-date: '2025-09-19'
+date: '2026-03-04'
 excerpt: >-
   Une des grandes questions que se posent les futurs retraités : « Dois-je me
   dépêcher de rembourser mes dettes avant d'arrêter de travailler? » La réponse

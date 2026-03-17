@@ -1,8 +1,8 @@
 ---
 title: 'Guaranteed Income Supplement (GIS): Are You Eligible?'
 slug: gis-eligibility-are-you-eligible
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-02-25'
+lastUpdated: '2026-02-25'
 excerpt: >-
   GIS can be worth up to $13,200 per year in tax-free income. Yet thousands of
   eligible Canadians never apply. Here's how to know if you qualify, how to

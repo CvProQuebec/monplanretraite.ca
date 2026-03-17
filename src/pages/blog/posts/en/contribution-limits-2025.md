@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-02-21'
+date: '2026-02-21'
 category: Seasonal and current topics
 relatedSlugFr: nouveaux-plafonds-de-cotisation-ce-que-ca-change-pour-vous
 ---
@@ -80,9 +82,9 @@ This threshold matters for RRSP-to-RRIF conversion planning. Large RRIF withdraw
 
 In 2024, the federal government proposed raising the capital gains inclusion rate from 50% to 66.67% on gains above $250,000. This change was ultimately cancelled. The inclusion rate remains at **50%** for 2026 and beyond, which means investment planning based on the existing rules still holds.
 
-### 6. Lifetime Capital Gains Exemption: $1,275,000
+### 6. Lifetime Capital Gains Exemption: $1,250,000
 
-For Canadians who own qualifying small business shares or farm/fishing property, the lifetime capital gains exemption rises to **$1,275,000** in 2026 (up from $1,250,000). Consult a tax professional to confirm your remaining exemption if you've used part of it in prior years.
+For Canadians who own qualifying small business shares or farm/fishing property, the confirmed lifetime capital gains exemption is **$1,250,000** for 2025. The 2026 limit has not yet been officially announced by the CRA — it will be published later in 2026 for the 2027 tax season. Consult a tax professional to confirm your remaining exemption if you've used part of it in prior years.
 
 ---
 

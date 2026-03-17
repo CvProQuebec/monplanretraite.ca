@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-01-25'
+date: '2026-01-25'
 category: Simple taxation
 relatedSlugFr: l-impot-a-la-retraite-ce-qui-change
 ---

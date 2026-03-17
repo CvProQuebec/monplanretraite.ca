@@ -1,8 +1,8 @@
 ---
 title: Comment partager les revenus de retraite et économiser des impôts
 slug: comment-partager-les-revenus-de-retraite-et-economiser-des-impots
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-02-18'
+lastUpdated: '2026-02-18'
 excerpt: >-
   À la retraite, partager vos revenus avec votre conjoint peut vous faire
   économiser 2 000 $ à 8 000 $ par année en impôts et protéger votre PSV.

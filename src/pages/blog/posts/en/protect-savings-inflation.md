@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-01-08'
+date: '2026-01-08'
 category: Manage savings and investments
 relatedSlugFr: comment-proteger-ses-economies-de-l-inflation
 ---

@@ -1,8 +1,8 @@
 ---
 title: How to Make Your Money Last Your Whole Life
 slug: make-money-last-lifetime
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-02-04'
+lastUpdated: '2026-02-04'
 excerpt: >-
   Worried about running out of money in retirement? With increasing life
   expectancy, your savings now need to last 25 to 30 years. Here are the most

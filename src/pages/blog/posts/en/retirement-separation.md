@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-01-23'
+date: '2026-01-23'
 category: Planning for couples
 relatedSlugFr: retraite-et-separation-proteger-ses-droits
 ---

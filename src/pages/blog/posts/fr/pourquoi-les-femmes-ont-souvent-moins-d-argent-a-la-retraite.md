@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-20'
 title: Pourquoi les femmes ont souvent moins d'argent à la retraite
 slug: pourquoi-les-femmes-ont-souvent-moins-d-argent-a-la-retraite
-date: '2025-09-19'
+date: '2026-01-20'
 excerpt: >-
   Malheureusement, les femmes arrivent souvent à la retraite avec moins d'argent
   que les hommes. C'est un problème sérieux qui touche de nombreuses familles

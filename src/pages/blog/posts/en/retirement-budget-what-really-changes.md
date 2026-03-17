@@ -1,8 +1,8 @@
 ---
 title: 'Retirement Budget: What Really Changes'
 slug: retirement-budget-what-really-changes
-date: '2025-09-18'
-lastUpdated: '2026-03-01'
+date: '2026-01-19'
+lastUpdated: '2026-01-19'
 excerpt: >-
   Planning your retirement budget doesn’t have to be a source of anxiety.
   Contrary to popular belief, creating a realistic budget for your golden years

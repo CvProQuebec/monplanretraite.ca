@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-01-20'
+date: '2026-01-20'
 category: Women-specific challenges
 relatedSlugFr: pourquoi-les-femmes-ont-souvent-moins-d-argent-a-la-retraite
 ---

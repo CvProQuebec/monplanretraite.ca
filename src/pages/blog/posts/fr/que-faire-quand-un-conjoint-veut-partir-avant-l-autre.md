@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-02-17'
 title: Que faire quand un conjoint veut partir avant l'autre?
 slug: que-faire-quand-un-conjoint-veut-partir-avant-l-autre
-date: '2025-09-19'
+date: '2026-02-17'
 excerpt: >-
   Planifier sa retraite à deux, c'est comme danser : il faut parfois ajuster ses
   pas quand l'un veut avancer plus vite que l'autre!

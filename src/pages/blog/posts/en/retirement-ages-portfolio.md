@@ -1,5 +1,7 @@
 ---
+date: '2026-02-27'
 category: Retirement basics
+lastUpdated: '2026-02-27'
 relatedSlugFr: >-
   quand-puis-je-prendre-ma-retraite-les-differents-ages-et-ce-que-cela-change-dans-votre-portefeuille
 ---
@@ -57,12 +59,12 @@ Experts estimate that you need between 60% and 80% of your work income to mainta
 ### The Importance of Supplementary Savings
 
 #### RRSP (Registered Retirement Savings Plan)
-- **2025 maximum contribution:** $32,490 or 18% of income
+- **2026 maximum contribution:** $33,810 or 18% of income
 - **Advantage:** Immediate tax deduction
 - **Disadvantage:** Withdrawals taxable in retirement
 
 #### TFSA (Tax-Free Savings Account)
-- **2025 maximum contribution:** $7,000
+- **2026 annual limit:** $7,000
 - **Advantage:** Non-taxable withdrawals
 - **Strategy:** Ideal for avoiding recovery tax on OAS
 
@@ -89,7 +91,7 @@ The extension of deferral age from 70 to 72 in 2024 recognizes life expectancy e
 ## Special Considerations
 
 ### Recovery Tax
-If your retirement income exceeds $86,912 (2023 data), you'll have to repay part of your OAS pension. This reality makes TFSA withdrawals particularly attractive for high incomes.
+If your retirement income exceeds $95,323 (2026 threshold), you'll have to repay part of your OAS pension. This reality makes TFSA withdrawals particularly attractive for high incomes.
 
 ### Income Splitting
 Couples can divide their pension income to reduce their overall tax burden. This strategy can be applied automatically for most income, but must be requested manually for QPP pension.

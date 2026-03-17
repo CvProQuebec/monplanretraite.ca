@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-03-13'
+date: '2026-03-13'
 category: Well-being and quality of life
 relatedSlugFr: comment-rester-actif-et-en-sante-a-la-retraite
 ---

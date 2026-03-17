@@ -1,8 +1,8 @@
 ---
 title: 'Retirement Taxes and Tax Return: The Complete 2026 Guide'
 slug: tax-return-retirement
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-03-15'
+lastUpdated: '2026-03-15'
 excerpt: >-
   Retirement changes your tax situation completely. New income sources, special
   credits, and one major trap to avoid — the OAS clawback. Here's everything

@@ -1,8 +1,8 @@
 ---
 title: Comment faire durer son argent toute sa vie
 slug: comment-faire-durer-son-argent-toute-sa-vie
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-02-04'
+lastUpdated: '2026-02-04'
 excerpt: >-
   Vous vous inquiétez de manquer d'argent à la retraite? Cette peur est normale
   et partagée par beaucoup de personnes. Avec l'espérance de vie qui augmente,

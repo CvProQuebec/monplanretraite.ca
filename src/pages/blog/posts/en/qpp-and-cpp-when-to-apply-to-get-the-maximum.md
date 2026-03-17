@@ -1,8 +1,8 @@
 ---
 title: 'QPP and CPP: When to Apply to Get the Maximum'
 slug: qpp-and-cpp-when-to-apply-to-get-the-maximum
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-03-12'
+lastUpdated: '2026-03-12'
 excerpt: >-
   Starting your QPP/CPP at 60 or waiting until 70 can make a difference of
   $50,000 to $100,000 over your lifetime. This guide gives you the exact

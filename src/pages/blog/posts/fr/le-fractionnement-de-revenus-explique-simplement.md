@@ -1,8 +1,8 @@
 ---
 title: Le fractionnement de revenus expliqué simplement
 slug: le-fractionnement-de-revenus-explique-simplement
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-03-16'
+lastUpdated: '2026-03-16'
 excerpt: >-
   Le fractionnement de revenus peut vous faire économiser 3 000 $ à 10 000 $
   par année — légalement et simplement. Découvrez le formulaire T1032, le

@@ -179,8 +179,8 @@ const BlogHome: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
     title: lang === 'fr' ? 'Bibliothèque du Blog' : 'Blog Library',
     subtitle:
       lang === 'fr'
-        ? '44 articles pour planifier votre retraite en confiance'
-        : '44 articles to plan your retirement with confidence',
+        ? `${allPosts.length} articles pour planifier votre retraite en confiance`
+        : `${allPosts.length} articles to plan your retirement with confidence`,
     searchPlaceholder: lang === 'fr' ? 'Rechercher un article, ex.: RRQ, CELI, budget…' : 'Search articles, e.g., OAS, TFSA, budget…',
     essentials: lang === 'fr' ? 'Guides essentiels' : 'Essential Guides',
     categories: lang === 'fr' ? 'Catégories' : 'Categories',

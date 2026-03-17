@@ -1,8 +1,8 @@
 ---
 title: 'RRQ et RPC : quand les demander pour en avoir le maximum'
 slug: rrq-et-rpc-quand-les-demander-pour-en-avoir-le-maximum
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-03-12'
+lastUpdated: '2026-03-12'
 excerpt: >-
   Débuter votre RRQ/RPC à 60 ans ou attendre jusqu'à 70 ans peut faire une
   différence de 50 000 $ à 100 000 $ sur votre vie. Ce guide vous donne les

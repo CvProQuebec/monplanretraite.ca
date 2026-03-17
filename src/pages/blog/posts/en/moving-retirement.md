@@ -1,4 +1,6 @@
 ---
+lastUpdated: '2026-02-22'
+date: '2026-02-22'
 category: Practical everyday aspects
 relatedSlugFr: demenager-a-la-retraite-les-pour-et-les-contre
 ---

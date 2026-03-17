@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-08'
 title: Comment protéger ses économies de l'inflation
 slug: comment-proteger-ses-economies-de-l-inflation
-date: '2025-09-19'
+date: '2026-01-08'
 excerpt: >-
   L'inflation est comme un voleur silencieux qui s'attaque à vos économies. Jour
   après jour, elle gruge votre pouvoir d'achat sans que vous vous en rendiez

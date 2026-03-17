@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-02-14'
 title: 'Congés de maternité et retraite : comment rattraper le retard'
 slug: conges-de-maternite-et-retraite-comment-rattraper-le-retard
-date: '2025-09-19'
+date: '2026-02-14'
 excerpt: >-
   Avoir des enfants, c'est l'un des plus beaux cadeaux de la vie. Mais cela peut
   aussi créer des défis pour votre retraite. Quand vous prenez un congé de

@@ -1,7 +1,8 @@
 ---
+lastUpdated: '2026-01-28'
 title: Que faire si vous avez travaillé au Québec ET dans une autre province
 slug: que-faire-si-vous-avez-travaille-au-quebec-et-dans-une-autre-province
-date: '2025-09-19'
+date: '2026-01-28'
 excerpt: >-
   Vous avez travaillé pendant quelques années au Québec, puis vous avez déménagé
   en Ontario pour votre carrière? Ou peut-être avez-vous fait le contraire :

@@ -1,8 +1,8 @@
 ---
 title: Pourquoi reporter ses pensions gouvernementales peut être payant
 slug: pourquoi-reporter-ses-pensions-gouvernementales-peut-etre-payant
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
+date: '2026-01-17'
+lastUpdated: '2026-01-17'
 excerpt: >-
   Reporter votre RRQ/RPC et votre PSV n'est pas seulement une question de
   montant mensuel plus élevé — c'est une stratégie fiscale complète. Découvrez
