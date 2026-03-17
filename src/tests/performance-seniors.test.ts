@@ -274,6 +274,8 @@ describe('Performance Optimization Seniors', () => {
 
 // Tests d'intégration pour scénarios réels
 describe('Integration Performance Tests', () => {
+  const targets = { initialLoad: 3000 };
+
   test('complete user journey stays within performance budgets', async () => {
     // Simuler un parcours utilisateur complet
     const journeySteps = [

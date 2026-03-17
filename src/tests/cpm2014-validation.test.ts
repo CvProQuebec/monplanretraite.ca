@@ -94,9 +94,9 @@ describe('CPM2014 Implementation', () => {
       const result60 = calculateLifeExpectancyCPM2014({ age: 60, gender: 'male' });
       const result65 = calculateLifeExpectancyCPM2014({ age: 65, gender: 'male' });
 
-      // Age 62 should be between age 60 and 65
-      expect(result62.lifeExpectancy).toBeGreaterThan(result60.lifeExpectancy - 1);
-      expect(result62.lifeExpectancy).toBeLessThan(result65.lifeExpectancy + 1);
+      // Age 62 should be between age 60 and 65 (remaining life expectancy decreases with age)
+      expect(result62.lifeExpectancy).toBeLessThanOrEqual(result60.lifeExpectancy);
+      expect(result62.lifeExpectancy).toBeGreaterThanOrEqual(result65.lifeExpectancy);
     });
   });
 
