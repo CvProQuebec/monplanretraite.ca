@@ -13,7 +13,10 @@ test.describe("Retirement wizard smoke", () => {
     await expect(page.locator("body")).toContainText(/Profil|Profile/i);
 
     await page.goto("/wizard/prestations");
-    await expect(page.locator("body")).toContainText(/RRQ|QPP|SV|OAS/i);
+    // WizardPage is lazy-loaded; wait for the heading to appear before asserting content
+    const prestationsHeading = page.locator('[data-testid="prestations-heading"]');
+    await expect(prestationsHeading).toBeVisible({ timeout: 20_000 });
+    await expect(prestationsHeading).toContainText(/RRQ|QPP/i);
 
     expect(errors, "console errors").toHaveLength(0);
   });

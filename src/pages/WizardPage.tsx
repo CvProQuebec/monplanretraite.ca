@@ -82,7 +82,7 @@ const WizardPage: React.FC = () => {
         return (
           <div className="grid grid-cols-1 gap-6">
             <div className="bg-white border-2 border-gray-200 rounded-xl p-4">
-              <h2 className="text-lg font-semibold text-gray-900 mb-2">
+              <h2 data-testid="prestations-heading" className="text-lg font-semibold text-gray-900 mb-2">
                 {isEnglish ? 'QPP/CPP decision helper' : 'Assistant décision RRQ/CPP'}
               </h2>
               <Suspense fallback={<SeniorsLoadingSpinner />}>
