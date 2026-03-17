@@ -85,17 +85,21 @@ const WizardPage: React.FC = () => {
               <h2 className="text-lg font-semibold text-gray-900 mb-2">
                 {isEnglish ? 'QPP/CPP decision helper' : 'Assistant décision RRQ/CPP'}
               </h2>
-              <RRQQuickCompare />
-              <div className="mt-4">
-                <RRQDelaySimulator />
-              </div>
+              <Suspense fallback={<SeniorsLoadingSpinner />}>
+                <RRQQuickCompare />
+                <div className="mt-4">
+                  <RRQDelaySimulator />
+                </div>
+              </Suspense>
             </div>
             <FeatureGate feature="hasOASGISAnalysis">
               <div className="bg-white border-2 border-gray-200 rounded-xl p-4">
                 <h2 className="text-lg font-semibold text-gray-900 mb-2">
                   {isEnglish ? 'OAS/GIS analysis' : 'Analyse SV/SRG'}
                 </h2>
-                <OASGISAnalysis />
+                <Suspense fallback={<SeniorsLoadingSpinner />}>
+                  <OASGISAnalysis />
+                </Suspense>
               </div>
             </FeatureGate>
 
