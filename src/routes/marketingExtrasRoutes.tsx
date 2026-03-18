@@ -30,7 +30,11 @@ export function MarketingExtrasRoutes() {
   return (
     <>
       {/* Trousse de protection familiale et successorale */}
-      <Route path="/trousse" element={<TroussePage />} />
+      {LocalizedRoute({
+        fr: "/trousse",
+        en: "/kit",
+        component: TroussePage
+      })}
 
       {/* Règle du 4 % — FR/EN + alias */}
       {LocalizedRoute({

@@ -20,6 +20,7 @@ const detectLanguage = (): Language => {
   
   // Routes spécifiques anglaises
   if (path === '/emergency-planning' || 
+      path === '/kit' ||
       path === '/home' || 
       path === '/my-retirement' || 
       path === '/my-income' ||
@@ -29,6 +30,7 @@ const detectLanguage = (): Language => {
   
   // Routes spécifiques françaises  
   if (path === '/planification-urgence' ||
+      path === '/trousse' ||
       path === '/accueil' ||
       path === '/ma-retraite' ||
       path === '/mes-revenus' ||

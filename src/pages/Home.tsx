@@ -759,7 +759,7 @@ const Home: React.FC = () => {
 
               {/* Bouton principal vers la page dédiée */}
               <Link
-                to="/trousse"
+                to={isFr ? "/trousse" : "/kit"}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',

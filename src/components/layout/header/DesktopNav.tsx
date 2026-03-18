@@ -119,8 +119,8 @@ const DesktopNav = ({ isEnglish, isHomePage }: DesktopNavProps) => {
 
           {/* Trousse de protection familiale */}
           <Link
-            to="/trousse"
-            className={getNavLinkClasses("/trousse")}
+            to={isEnglish ? "/kit" : "/trousse"}
+            className={getNavLinkClasses(isEnglish ? "/kit" : "/trousse")}
           >
             Trousse
           </Link>
