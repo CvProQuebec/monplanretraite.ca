@@ -29,9 +29,9 @@ import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 
 /* ─── DPD Purchase Links (FR links kept temporarily during EN translation) ─── */
 const DPD_FORM_A =
-  'https://monplanretraite-ca.dpdcart.com/cart/add?product_id=249036&method_id=272002&return=1';
+  'https://monplanretraite-ca.dpdcart.com/cart/add?product_id=249036&method_id=272002';
 const DPD_TROUSSE =
-  'https://monplanretraite-ca.dpdcart.com/cart/add?product_id=249037&method_id=272003&return=1';
+  'https://monplanretraite-ca.dpdcart.com/cart/add?product_id=249037&method_id=272003';
 
 /* ─── Animation helpers ─── */
 const fadeUp = {
@@ -225,7 +225,8 @@ function FaqItem({ question, answer }: { question: string; answer: string }) {
    MAIN COMPONENT
 ══════════════════════════════════════════════════════════ */
 export default function TroussePage() {
-  const { isFr } = useLanguage();
+  const { language } = useLanguage();
+  const isFr = language === 'fr';
 
   return (
     <div style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", color: '#1a365d' }}>
