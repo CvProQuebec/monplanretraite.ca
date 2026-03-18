@@ -168,10 +168,10 @@ const AssetConsolidationModule: React.FC = () => {
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="assessment">Évaluation</TabsTrigger>
-          <TabsTrigger value="plan">Plan de Consolidation</TabsTrigger>
+          <TabsTrigger value="assessment">Mes comptes</TabsTrigger>
+          <TabsTrigger value="plan">Plan suggéré</TabsTrigger>
           <TabsTrigger value="benefits">Avantages</TabsTrigger>
-          <TabsTrigger value="action">Plan d'Action</TabsTrigger>
+          <TabsTrigger value="action">Prochaines étapes</TabsTrigger>
         </TabsList>
 
         <TabsContent value="assessment" className="space-y-6">
@@ -179,10 +179,10 @@ const AssetConsolidationModule: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Calculator className="h-5 w-5" />
-                Vos Institutions Financières
+                Vos institutions financières
               </CardTitle>
               <CardDescription>
-                Ajoutez toutes vos institutions où vous avez des comptes de retraite
+                Listez vos comptes pour voir si les regrouper pourrait simplifier votre retraite.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -294,7 +294,7 @@ const AssetConsolidationModule: React.FC = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Target className="h-5 w-5 text-blue-600" />
-                    Plan Recommandé
+                    Plan suggéré
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -335,7 +335,7 @@ const AssetConsolidationModule: React.FC = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <TrendingUp className="h-5 w-5 text-green-600" />
-                    Impact sur 10 ans
+                    Effet sur 10 ans
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -374,7 +374,7 @@ const AssetConsolidationModule: React.FC = () => {
             <Alert>
               <AlertTriangle className="h-4 w-4" />
               <AlertDescription>
-                Ajoutez au moins une institution dans l'onglet "Évaluation" pour voir votre plan de consolidation.
+                Ajoutez au moins une institution dans l'onglet "Mes comptes" pour voir le plan suggéré.
               </AlertDescription>
             </Alert>
           )}
@@ -386,7 +386,7 @@ const AssetConsolidationModule: React.FC = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <DollarSign className="h-5 w-5 text-green-600" />
-                  Avantages Financiers
+                  Ce que vous pouvez y gagner
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -426,7 +426,7 @@ const AssetConsolidationModule: React.FC = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Clock className="h-5 w-5 text-blue-600" />
-                  Avantages Pratiques
+                  Ce que cela simplifie
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">

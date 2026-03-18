@@ -1,23 +1,26 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { 
-  Menu, 
-  X, 
-  Home, 
-  Calculator, 
-  FileText, 
-  ChevronDown,
-  Database,
-  TrendingUp,
-  DollarSign,
-  BarChart3,
-  Building
-} from 'lucide-react';
+import { BookOpen, ChevronDown, Compass, FolderOpen, Home, Menu, Wrench, X } from 'lucide-react';
 import LanguageSelector from './LanguageSelector';
 
 interface UniformHeaderProps {
   isEnglish: boolean;
 }
+
+type NavigationSubItem = {
+  id: string;
+  label: string;
+  path: string;
+};
+
+type NavigationItem = {
+  id: string;
+  label: string;
+  icon: React.ComponentType<{ className?: string }>;
+  path?: string;
+  hasSubmenu?: boolean;
+  submenu?: NavigationSubItem[];
+};
 
 export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
   const navigate = useNavigate();
@@ -25,285 +28,86 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
-  // Navigation items avec sous-menus
-  const navigationItems = [
+  const navigationItems: NavigationItem[] = [
     {
       id: 'home',
       label: isEnglish ? 'Home' : 'Accueil',
       icon: Home,
-      path: isEnglish ? '/' : '/',
-      hasSubmenu: false
+      path: isEnglish ? '/en' : '/fr',
     },
     {
-      id: 'dashboard',
-      label: isEnglish ? 'My Retirement' : 'Ma Retraite',
-      icon: TrendingUp,
-      path: isEnglish ? '/my-retirement' : '/ma-retraite',
-      hasSubmenu: false
-    },
-    {
-      id: 'income',
-      label: isEnglish ? 'Income' : 'Revenus',
-      icon: DollarSign,
-      path: isEnglish ? '/my-income' : '/mes-revenus',
-      hasSubmenu: false
-    },
-    {
-      id: 'expenses',
-      label: isEnglish ? 'Expenses' : 'Dépenses',
-      icon: Calculator,
-      path: isEnglish ? '/expenses' : '/depenses',
-      hasSubmenu: false
-    },
-    {
-      id: 'budget',
-      label: isEnglish ? 'Budget' : 'Budget',
-      icon: BarChart3,
-      path: isEnglish ? '/my-budget' : '/mon-budget',
-      hasSubmenu: false
-    },
-    {
-      id: 'real-estate',
-      label: isEnglish ? 'Real Estate' : 'Immobilier',
-      icon: Home,
-      path: isEnglish ? '/real-estate' : '/immobilier',
-      hasSubmenu: false
-    },
-    {
-      id: 'government-benefits',
-      label: isEnglish ? 'Government' : 'Gouvernement',
-      icon: Building,
-      hasSubmenu: true,
-      submenu: [
-        {
-          id: 'srg-module',
-          label: isEnglish ? 'SRG (GIS) Module' : 'Module SRG (GIS)',
-          path: '/module-srg'
-        },
-        {
-          id: 'rregop-module',
-          label: isEnglish ? 'RREGOP Module' : 'Module RREGOP',
-          path: '/module-rregop'
-        },
-        {
-          id: 'rrq-cpp',
-          label: isEnglish ? 'RRQ/CPP Analysis' : 'Analyse RRQ/CPP',
-          path: '/rrq-cpp-analysis'
-        }
-      ]
+      id: 'start',
+      label: isEnglish ? 'Start here' : 'Commencer',
+      icon: Compass,
+      path: isEnglish ? '/start-here' : '/commencer',
     },
     {
       id: 'tools',
-      label: isEnglish ? 'Tools' : 'Outils',
-      icon: Calculator,
-      hasSubmenu: false,
-      path: isEnglish ? '/tools' : '/outils',
+      label: isEnglish ? 'Tools' : 'Mes outils',
+      icon: Wrench,
+      hasSubmenu: true,
       submenu: [
-        // 🟢 OUTILS GRATUITS
         {
-          id: 'free-tools-header',
-          label: isEnglish ? '🟢 FREE TOOLS' : '🟢 OUTILS GRATUITS',
-          isHeader: true
+          id: 'tools-all',
+          label: isEnglish ? 'All tools' : 'Tous les outils',
+          path: isEnglish ? '/tools' : '/outils',
         },
         {
-          id: 'assistant',
-          label: isEnglish ? 'Financial Assistant' : 'Assistant financier',
-          path: isEnglish ? '/financial-assistant' : '/assistant-financier',
-          planLevel: 'free'
+          id: 'tools-situations',
+          label: isEnglish ? 'By situation' : 'Par situation',
+          path: isEnglish ? '/situations' : '/par-situation',
         },
         {
-          id: 'emergency-info',
-          label: isEnglish ? 'Emergency Planning' : 'Planification d\'urgence',
-          path: isEnglish ? '/emergency-planning' : '/planification-urgence',
-          planLevel: 'free'
+          id: 'tools-evaluation',
+          label: isEnglish ? 'Assess my situation' : 'Évaluer ma situation',
+          path: isEnglish ? '/tools#evaluation' : '/outils#evaluation',
         },
         {
-          id: 'expenses-planning',
-          label: isEnglish ? 'Expense Planning' : 'Planification de dépenses',
-          path: isEnglish ? '/expense-planning' : '/planification-depenses',
-          planLevel: 'free'
-        },
-        
-        // 🔵 OUTILS PROFESSIONNELS
-        {
-          id: 'professional-tools-header',
-          label: isEnglish ? '🔵 PROFESSIONAL TOOLS' : '🔵 OUTILS PROFESSIONNELS',
-          isHeader: true
+          id: 'tools-income',
+          label: isEnglish ? 'Retirement income' : 'Revenus de retraite',
+          path: isEnglish ? '/tools#revenus' : '/outils#revenus',
         },
         {
-          id: 'advanced-performance',
-          label: isEnglish ? 'Advanced Performance Calculator' : 'Calculette de rendement avancée',
-          path: isEnglish ? '/advanced-performance-calculator' : '/calculette-rendement-avancee',
-          planLevel: 'professional'
+          id: 'tools-tax',
+          label: isEnglish ? 'Reduce my taxes' : 'Réduire mes impôts',
+          path: isEnglish ? '/tools#impots' : '/outils#impots',
         },
         {
-          id: 'four-percent-rule',
-          label: isEnglish ? '4% Rule Analysis' : 'Analyse Règle 4%',
-          path: isEnglish ? '/four-percent-rule' : '/regle-4-pourcent',
-          planLevel: 'professional'
+          id: 'tools-special',
+          label: isEnglish ? 'Special situations' : 'Situations particulières',
+          path: isEnglish ? '/tools#situations' : '/outils#situations',
+        },
+      ],
+    },
+    {
+      id: 'dossier',
+      label: isEnglish ? 'My dossier' : 'Mon dossier',
+      icon: FolderOpen,
+      hasSubmenu: true,
+      submenu: [
+        {
+          id: 'dossier-home',
+          label: isEnglish ? 'Prepare my dossier' : 'Préparer mon dossier',
+          path: isEnglish ? '/my-dossier' : '/mon-dossier',
         },
         {
-          id: 'optimal-allocation',
-          label: isEnglish ? 'Optimal Allocation' : 'Allocation Optimale',
-          path: '/module-allocation-optimale',
-          planLevel: 'professional'
+          id: 'dossier-reports',
+          label: isEnglish ? 'My reports' : 'Mes rapports',
+          path: isEnglish ? '/en/retirement-reports' : '/fr/rapports-retraite',
         },
         {
-          id: 'celiapp',
-          label: 'CELIAPP',
-          path: '/celiapp',
-          planLevel: 'professional'
+          id: 'dossier-save',
+          label: isEnglish ? 'Save my data' : 'Sauvegarder mes données',
+          path: isEnglish ? '/en/save-load' : '/fr/sauvegarder-charger',
         },
-        {
-          id: 'asset-consolidation',
-          label: isEnglish ? 'Asset Consolidation' : 'Consolidation d\'Actifs',
-          path: '/module-consolidation-actifs',
-          planLevel: 'professional'
-        },
-        {
-          id: 'financial-consolidation',
-          label: isEnglish ? 'Financial Consolidation' : 'Consolidation Financière',
-          path: isEnglish ? '/financial-consolidation' : '/consolidation-financiere',
-          planLevel: 'professional'
-        },
-        {
-          id: 'healthcare-costs',
-          label: isEnglish ? 'Healthcare Costs' : 'Coûts de Santé',
-          path: isEnglish ? '/healthcare-costs' : '/couts-sante',
-          planLevel: 'professional'
-        },
-        {
-          id: 'excess-liquidity',
-          label: isEnglish ? 'Excess Liquidity Detector' : 'Détecteur Liquidités Excessives',
-          path: '/detecteur-liquidites-excessives',
-          planLevel: 'professional'
-        },
-        {
-          id: 'tax-impact-65',
-          label: isEnglish ? 'Tax Impact at 65' : 'Impact Fiscal à 65 ans',
-          path: '/calculateur-impact-fiscal-65',
-          planLevel: 'professional'
-        },
-        {
-          id: 'ferr-optimization',
-          label: isEnglish ? 'RRIF Optimization' : 'Optimisation FERR',
-          path: isEnglish ? '/ferr-optimization' : '/optimisation-ferr',
-          planLevel: 'professional'
-        },
-        {
-          id: 'multi-source-tax',
-          label: isEnglish ? 'Multi-Source Tax Optimization' : 'Optimisation Fiscale Multi-Sources',
-          path: isEnglish ? '/multi-source-tax-optimization' : '/optimisation-fiscale-multi-sources',
-          planLevel: 'professional'
-        },
-        {
-          id: 'cpp-timing',
-          label: isEnglish ? 'CPP Timing Optimization' : 'Optimisation Timing CPP',
-          path: isEnglish ? '/cpp-timing' : '/optimisation-timing-cpp',
-          planLevel: 'professional'
-        },
-        {
-          id: 'rrq-quick-compare',
-          label: isEnglish ? 'RRQ/CPP Quick Compare' : 'Comparateur RRQ/CPP',
-          path: '/rrq-quick-compare',
-          planLevel: 'free'
-        },
-        {
-          id: 'rrq-delay-simulator',
-          label: isEnglish ? 'RRQ/CPP Defer by X Months' : 'Report RRQ/CPP de X mois',
-          path: '/rrq-delay-simulator',
-          planLevel: 'free'
-        },
-        {
-          id: 'longevity-planning',
-          label: isEnglish ? 'Longevity Planning' : 'Planification Longévité',
-          path: isEnglish ? '/longevity-planning' : '/planification-longevite',
-          planLevel: 'professional'
-        },
-        {
-          id: 'dynamic-withdrawal',
-          label: isEnglish ? 'Dynamic Withdrawal Planning' : 'Planification Retrait Dynamique',
-          path: isEnglish ? '/dynamic-withdrawal' : '/planification-retrait-dynamique',
-          planLevel: 'professional'
-        },
-        {
-          id: 'inflation-protection',
-          label: isEnglish ? 'Inflation Protection' : 'Protection Inflation',
-          path: '/centre-protection-inflation',
-          planLevel: 'professional'
-        },
-        {
-          id: 'spending-psychology',
-          label: isEnglish ? 'Spending Psychology' : 'Psychologie des Dépenses',
-          path: isEnglish ? '/spending-psychology' : '/psychologie-depenses',
-          planLevel: 'professional'
-        },
-        {
-          id: 'progressive-retirement',
-          label: isEnglish ? 'Progressive Retirement' : 'Retraite Progressive',
-          path: isEnglish ? '/progressive-retirement' : '/retraite-progressive',
-          planLevel: 'professional'
-        },
-        {
-          id: 'rvdaa',
-          label: 'RVDAA',
-          path: '/rvdaa',
-          planLevel: 'professional'
-        },
-        {
-          id: 'withdrawal-sequence',
-          label: isEnglish ? 'Withdrawal Sequence' : 'Séquence de Retrait',
-          path: isEnglish ? '/withdrawal-sequence' : '/sequence-retrait',
-          planLevel: 'professional'
-        },
-        {
-          id: 'rrsp-meltdown',
-          label: isEnglish ? 'RRSP Meltdown Strategies' : 'Stratégies REER Meltdown',
-          path: isEnglish ? '/rrsp-meltdown' : '/strategies-reer-meltdown',
-          planLevel: 'professional'
-        },
-        {
-          id: 'cash-wedge-bucket',
-          label: isEnglish ? 'Cash Wedge Strategy' : 'Stratégie Coussin Liquidités',
-          path: '/module-coussin-liquidites',
-          planLevel: 'professional'
-        },
-        
-        // 🟣 OUTILS EXPERTS
-        {
-          id: 'expert-tools-header',
-          label: isEnglish ? '🟣 EXPERT TOOLS' : '🟣 OUTILS EXPERTS',
-          isHeader: true
-        },
-        {
-          id: 'succession',
-          label: isEnglish ? 'Succession Planning' : 'Planification successorale',
-          path: isEnglish ? '/succession-planning' : '/planification-successorale',
-          planLevel: 'expert'
-        }
-      ]
+      ],
     },
     {
       id: 'blog',
-      label: isEnglish ? 'Blog' : 'Blog',
-      icon: FileText,
+      label: isEnglish ? 'Guides' : 'Articles',
+      icon: BookOpen,
       path: isEnglish ? '/en/blog' : '/blog',
-      hasSubmenu: false
     },
-    {
-      id: 'reports',
-      label: isEnglish ? 'Reports' : 'Rapports',
-      icon: FileText,
-      path: isEnglish ? '/en/retirement-reports' : '/fr/rapports-retraite',
-      hasSubmenu: false
-    },
-    {
-      id: 'save-load',
-      label: isEnglish ? 'Save/Load' : 'Sauvegarder/Charger',
-      icon: Database,
-      path: isEnglish ? '/en/save-load' : '/fr/sauvegarder-charger',
-      hasSubmenu: false
-    }
   ];
 
   const handleNavigation = (path: string) => {
@@ -312,23 +116,21 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
     setOpenSubmenu(null);
   };
 
-  const handleMenuClick = (item: any) => {
-    if (item.hasSubmenu && item.path) {
-      handleNavigation(item.path);
-    } else if (item.hasSubmenu) {
-      toggleSubmenu(item.id);
-    } else {
+  const handleMenuClick = (item: NavigationItem) => {
+    if (item.hasSubmenu) {
+      setOpenSubmenu(openSubmenu === item.id ? null : item.id);
+      return;
+    }
+
+    if (item.path) {
       handleNavigation(item.path);
     }
   };
 
-  const handleSubmenuClick = (path: string) => {
-    handleNavigation(path);
-    setOpenSubmenu(null);
-  };
-
-  const toggleSubmenu = (menuId: string) => {
-    setOpenSubmenu(openSubmenu === menuId ? null : menuId);
+  const isPathActive = (path: string) => {
+    const cleanTarget = path.split('#')[0];
+    const cleanCurrent = location.pathname;
+    return cleanCurrent === cleanTarget || cleanCurrent.startsWith(cleanTarget + '/');
   };
 
   useEffect(() => {
@@ -342,178 +144,131 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [openSubmenu]);
 
-  const isActivePath = (path: string) => {
-    return location.pathname === path || location.pathname.startsWith(path + '/');
-  };
-
   return (
-    <header className="bg-white shadow-lg border-b-2 border-blue-100 sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-14">
-          {/* Logo */}
-          <div className="flex items-center">
+    <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur" style={{ borderColor: 'var(--mpr-border)' }}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex min-h-[72px] items-center justify-between gap-4">
           <button
-              onClick={() => handleNavigation(isEnglish ? '/en' : '/fr')}
+            onClick={() => handleNavigation(isEnglish ? '/en' : '/fr')}
             className="flex items-center hover:opacity-80 transition-opacity"
+            aria-label="MonPlanRetraite.ca"
           >
             <img
               src="/logo-planretraite.png"
-              alt="MonPlanRetraite.ca Logo"
-              className="h-9 w-auto"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
+              alt="MonPlanRetraite.ca"
+              className="h-10 w-auto"
+              onError={(event) => {
+                const target = event.target as HTMLImageElement;
                 target.style.display = 'none';
               }}
             />
-            </button>
-          </div>
-
-                           {/* Desktop Navigation */}
-                 <nav className="hidden md:flex items-center space-x-0.5 submenu-container header-nav-compact">
-            {navigationItems.map((item) => (
-              <div key={item.id} className="relative submenu-container mr-0">
-                <button
-                  onClick={() => handleMenuClick(item)}
-                  className={`flex items-center space-x-0.5 px-0 py-1 rounded-md text-xs font-medium transition-all duration-200 ${
-                    isActivePath(item.path)
-                      ? 'bg-blue-100 text-blue-700 shadow-sm'
-                      : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
-                  }`}
-                >
-                                      <item.icon className="w-3 h-3 flex-shrink-0" />
-                    <span className="whitespace-nowrap text-xs">{item.label}</span>
-                  {item.hasSubmenu && (
-                    <ChevronDown className={`w-3 h-3 flex-shrink-0 transition-transform ${openSubmenu === item.id ? 'rotate-180' : ''}`} />
-                  )}
           </button>
 
-                                 {/* Sous-menu déroulant */}
-                 {item.hasSubmenu && openSubmenu === item.id && (
-                   <div className="absolute top-full left-0 mt-0.5 w-72 bg-white border border-gray-200 rounded-lg shadow-lg z-[9999] max-h-96 overflow-y-auto">
-                     {item.submenu?.map((subItem, index) => {
-                       if (subItem.isHeader) {
-                         return (
-                           <div
-                             key={subItem.id}
-                             className={`px-3 py-1.5 text-xs font-bold text-gray-500 bg-gray-50 border-b border-gray-100 ${
-                               index === 0 ? 'rounded-t-lg' : ''
-                             }`}
-                           >
-                             {subItem.label}
-                           </div>
-                         );
-                       }
-                       
-                       const planLevelColors = {
-                         free: 'hover:bg-green-50 hover:text-green-700 border-l-2 border-l-green-400',
-                         professional: 'hover:bg-blue-50 hover:text-blue-700 border-l-2 border-l-blue-400',
-                         expert: 'hover:bg-purple-50 hover:text-purple-700 border-l-2 border-l-purple-400'
-                       };
-                       
-                       const planLevelColor = subItem.planLevel ? planLevelColors[subItem.planLevel] : 'hover:bg-gray-50 hover:text-gray-700';
-                       
-                       return (
-                         <button
-                           key={subItem.id}
-                           onClick={() => handleSubmenuClick(subItem.path)}
-                           className={`w-full text-left px-3 py-1.5 text-sm text-gray-700 transition-colors ${planLevelColor} ${
-                             index === item.submenu.length - 1 ? 'rounded-b-lg' : ''
-                           }`}
-                         >
-                           {subItem.label}
-                         </button>
-                       );
-                     })}
-                   </div>
-                 )}
-              </div>
-            ))}
+          <nav className="hidden md:flex items-center gap-2 submenu-container">
+            {navigationItems.map((item) => {
+              const active = item.path ? isPathActive(item.path) : item.submenu?.some((sub) => isPathActive(sub.path));
+              const Icon = item.icon;
+
+              return (
+                <div key={item.id} className="relative submenu-container">
+                  <button
+                    onClick={() => handleMenuClick(item)}
+                    className={`flex min-h-[56px] items-center gap-2 rounded-xl px-4 text-[16px] font-semibold transition-colors ${
+                      active
+                        ? 'text-[color:var(--mpr-primary)] bg-[#f0f4ff]'
+                        : 'text-[color:var(--mpr-text)] hover:bg-[#f8fafc]'
+                    }`}
+                  >
+                    <Icon className="h-5 w-5" />
+                    <span>{item.label}</span>
+                    {item.hasSubmenu && (
+                      <ChevronDown
+                        className={`h-4 w-4 transition-transform ${openSubmenu === item.id ? 'rotate-180' : ''}`}
+                      />
+                    )}
+                  </button>
+
+                  {item.hasSubmenu && openSubmenu === item.id && (
+                    <div
+                      className="absolute right-0 top-full mt-2 w-72 rounded-2xl border bg-white p-2 shadow-lg"
+                      style={{ borderColor: 'var(--mpr-border)' }}
+                    >
+                      {item.submenu?.map((subItem) => (
+                        <button
+                          key={subItem.id}
+                          onClick={() => handleNavigation(subItem.path)}
+                          className="flex min-h-[56px] w-full items-center rounded-xl px-4 text-left text-[16px] font-semibold text-[color:var(--mpr-text)] hover:bg-[#f8fafc]"
+                        >
+                          {subItem.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </nav>
 
-          {/* Language Selector & Mobile Menu Button */}
-          <div className="flex items-center space-x-3">
-            <div className="block">
-          <LanguageSelector isEnglish={isEnglish} />
-        </div>
-
+          <div className="flex items-center gap-3">
+            <LanguageSelector isEnglish={isEnglish} />
             <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors"
-              aria-label={isMobileMenuOpen ? (isEnglish ? 'Close navigation menu' : 'Fermer le menu de navigation') : (isEnglish ? 'Open navigation menu' : 'Ouvrir le menu de navigation')}
-              title={isMobileMenuOpen ? (isEnglish ? 'Close navigation menu' : 'Fermer le menu de navigation') : (isEnglish ? 'Open navigation menu' : 'Ouvrir le menu de navigation')}
+              onClick={() => setIsMobileMenuOpen((value) => !value)}
+              className="md:hidden flex h-12 w-12 items-center justify-center rounded-xl border"
+              style={{ borderColor: 'var(--mpr-border)' }}
+              aria-label={isMobileMenuOpen ? (isEnglish ? 'Close menu' : 'Fermer le menu') : (isEnglish ? 'Open menu' : 'Ouvrir le menu')}
               aria-expanded={isMobileMenuOpen}
-              aria-controls="mobile-navigation-menu"
             >
-              {isMobileMenuOpen ? (
-                <X className="w-6 h-6" />
-              ) : (
-                <Menu className="w-6 h-6" />
-              )}
+              {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
 
-                 {/* Mobile Navigation Menu */}
-         {isMobileMenuOpen && (
-           <div id="mobile-navigation-menu" className="md:hidden border-t border-gray-200 py-2">
-             <div className="space-y-1">
-              {navigationItems.map((item) => (
-                <div key={item.id}>
-                  <button
-                    onClick={() => handleMenuClick(item)}
-                    className={`flex items-center justify-between w-full px-4 py-2 rounded-lg text-left transition-all duration-200 ${
-                      isActivePath(item.path)
-                        ? 'bg-blue-100 text-blue-700'
-                        : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
-                    }`}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <item.icon className="w-5 h-5" />
-                      <span className="font-medium">{item.label}</span>
-                    </div>
-                    {item.hasSubmenu && (
-                      <ChevronDown className={`w-4 h-4 transition-transform ${openSubmenu === item.id ? 'rotate-180' : ''}`} />
+        {isMobileMenuOpen && (
+          <div className="md:hidden border-t py-3" style={{ borderColor: 'var(--mpr-border)' }}>
+            <div className="space-y-2">
+              {navigationItems.map((item) => {
+                const Icon = item.icon;
+                const active = item.path ? isPathActive(item.path) : item.submenu?.some((sub) => isPathActive(sub.path));
+
+                return (
+                  <div key={item.id}>
+                    <button
+                      onClick={() => handleMenuClick(item)}
+                      className={`flex min-h-[56px] w-full items-center justify-between rounded-xl px-4 text-left ${
+                        active
+                          ? 'text-[color:var(--mpr-primary)] bg-[#f0f4ff]'
+                          : 'text-[color:var(--mpr-text)] bg-white'
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Icon className="h-5 w-5" />
+                        <span className="text-[18px] font-semibold">{item.label}</span>
+                      </div>
+                      {item.hasSubmenu && (
+                        <ChevronDown
+                          className={`h-4 w-4 transition-transform ${openSubmenu === item.id ? 'rotate-180' : ''}`}
+                        />
+                      )}
+                    </button>
+
+                    {item.hasSubmenu && openSubmenu === item.id && (
+                      <div className="mt-2 space-y-2 pl-4">
+                        {item.submenu?.map((subItem) => (
+                          <button
+                            key={subItem.id}
+                            onClick={() => handleNavigation(subItem.path)}
+                            className="flex min-h-[52px] w-full items-center rounded-xl border bg-white px-4 text-left text-[16px] font-semibold text-[color:var(--mpr-text)]"
+                            style={{ borderColor: 'var(--mpr-border)' }}
+                          >
+                            {subItem.label}
+                          </button>
+                        ))}
+                      </div>
                     )}
-                  </button>
-                  
-                                     {/* Sous-menu mobile */}
-                   {item.hasSubmenu && openSubmenu === item.id && (
-                     <div className="ml-4 mt-1 space-y-0.5 max-h-80 overflow-y-auto">
-                       {item.submenu?.map((subItem) => {
-                         if (subItem.isHeader) {
-                           return (
-                             <div
-                               key={subItem.id}
-                               className="px-3 py-1.5 text-xs font-bold text-gray-500 bg-gray-50 rounded-lg border border-gray-200"
-                             >
-                               {subItem.label}
-                             </div>
-                           );
-                         }
-                         
-                         const planLevelColors = {
-                           free: 'hover:bg-green-50 hover:text-green-700 border-l-4 border-l-green-400',
-                           professional: 'hover:bg-blue-50 hover:text-blue-700 border-l-4 border-l-blue-400',
-                           expert: 'hover:bg-purple-50 hover:text-purple-700 border-l-4 border-l-purple-400'
-                         };
-                         
-                         const planLevelColor = subItem.planLevel ? planLevelColors[subItem.planLevel] : 'hover:bg-gray-50 hover:text-gray-700';
-                         
-                         return (
-                           <button
-                             key={subItem.id}
-                             onClick={() => handleSubmenuClick(subItem.path)}
-                             className={`w-full text-left px-3 py-1.5 text-sm text-gray-600 rounded-lg transition-colors ${planLevelColor}`}
-                           >
-                             {subItem.label}
-                           </button>
-                         );
-                       })}
-                     </div>
-                   )}
-                </div>
-              ))}
-        </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

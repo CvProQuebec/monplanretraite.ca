@@ -331,8 +331,7 @@ const TenEssentialTipsDashboard: React.FC = () => {
           Les 10 Conseils Essentiels pour la Retraite
         </h1>
         <p className="text-xl text-gray-600 max-w-4xl mx-auto">
-          Basés sur l'expertise d'un planificateur financier professionnel. 
-          Suivez ces conseils pour transformer votre retraite et éviter les erreurs coûteuses.
+          Dix repères simples pour préparer votre retraite sans vous perdre dans les détails inutiles.
         </p>
       </div>
 
@@ -375,11 +374,9 @@ const TenEssentialTipsDashboard: React.FC = () => {
       {/* Alerte motivationnelle */}
       <Alert className="border-blue-500 bg-blue-50">
         <Zap className="h-5 w-5 text-blue-500" />
-        <AlertTitle className="text-blue-800">💡 CONSEIL D'EXPERT</AlertTitle>
+        <AlertTitle className="text-blue-800">Par où commencer</AlertTitle>
         <AlertDescription className="text-blue-700 text-lg">
-          <strong>Ne vous laissez pas submerger !</strong> Commencez par les conseils de priorité haute. 
-          Même en appliquant seulement 3-4 de ces conseils, vous pourriez économiser des milliers de dollars 
-          et réduire considérablement le stress de votre retraite.
+          <strong>Ne cherchez pas à tout faire en même temps.</strong> Commencez par les conseils prioritaires. En régler quelques-uns suffit souvent à clarifier beaucoup votre situation.
         </AlertDescription>
       </Alert>
 
@@ -481,7 +478,7 @@ const TenEssentialTipsDashboard: React.FC = () => {
                 <div>
                   <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
                     <Target className="w-4 h-4 text-blue-600" />
-                    Plan d'action
+                    Étapes à suivre
                   </h4>
                   <ul className="space-y-2">
                     {selectedTipData.actionSteps.map((step, index) => (
@@ -499,7 +496,7 @@ const TenEssentialTipsDashboard: React.FC = () => {
                 <div>
                   <h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
                     <XCircle className="w-4 h-4 text-red-600" />
-                    Erreurs à éviter
+                    À éviter
                   </h4>
                   <ul className="space-y-2">
                     {selectedTipData.commonMistakes.map((mistake, index) => (
@@ -514,7 +511,7 @@ const TenEssentialTipsDashboard: React.FC = () => {
                 {/* Conseil d'expert */}
                 <Alert className="border-yellow-400 bg-yellow-50">
                   <Star className="h-4 w-4 text-yellow-600" />
-                  <AlertTitle className="text-yellow-800">Conseil d'expert</AlertTitle>
+                  <AlertTitle className="text-yellow-800">À retenir</AlertTitle>
                   <AlertDescription className="text-yellow-700">
                     {selectedTipData.expertTip}
                   </AlertDescription>
@@ -532,12 +529,12 @@ const TenEssentialTipsDashboard: React.FC = () => {
                   {tipStatuses.find(s => s.id === selectedTipData.id)?.completed ? (
                     <>
                       <CheckCircle className="w-4 h-4 mr-2" />
-                      Marquer comme non-complété
+                      Marquer comme à revoir
                     </>
                   ) : (
                     <>
                       <Target className="w-4 h-4 mr-2" />
-                      Marquer comme complété
+                      Marquer comme fait
                     </>
                   )}
                 </Button>
@@ -550,11 +547,11 @@ const TenEssentialTipsDashboard: React.FC = () => {
                   <Info className="w-12 h-12 mx-auto" />
                 </div>
                 <h3 className="text-lg font-semibold text-gray-600 mb-2">
-                  Sélectionnez un conseil
+                  Choisissez un conseil
                 </h3>
                 <p className="text-gray-500">
                   Cliquez sur un conseil à gauche pour voir les détails, 
-                  le plan d'action et les conseils d'expert.
+                  les détails et les prochaines étapes.
                 </p>
               </CardContent>
             </Card>
@@ -579,11 +576,11 @@ const TenEssentialTipsDashboard: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button size="lg" className="bg-purple-600 hover:bg-purple-700">
               <Zap className="w-5 h-5 mr-2" />
-              Commencer maintenant
+              Commencer
             </Button>
             <Button variant="outline" size="lg" className="border-purple-600 text-purple-600 hover:bg-purple-50">
               <Users className="w-5 h-5 mr-2" />
-              Consulter un expert
+              Parler à un professionnel
             </Button>
           </div>
         </CardContent>

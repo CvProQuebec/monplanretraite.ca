@@ -167,12 +167,12 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
       <CardHeader className="border-b border-gray-300">
         <CardTitle className="text-2xl font-bold text-gray-800 flex items-center gap-3">
           <Calculator className="w-8 h-8 text-gray-600" />
-          {isFrench ? 'Assurance emploi Avancée' : 'Advanced Employment Insurance'} - {personName}
+          {isFrench ? 'Assurance emploi détaillée' : 'Detailed Employment Insurance'} - {personName}
         </CardTitle>
         <CardDescription className="text-gray-600">
           {isFrench 
-            ? 'Gestion complète des périodes d\'emploi et transitions'
-            : 'Complete management of employment periods and transitions'
+            ? 'Suivi des périodes d\'emploi, des semaines d\'AE et des transitions'
+            : 'Track employment periods, EI weeks, and transitions'
           }
         </CardDescription>
       </CardHeader>
@@ -322,7 +322,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
             className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold py-3 px-8"
           >
             <Calculator className="w-5 h-5 mr-2" />
-            {isFrench ? 'Calculer les projections' : 'Calculate Projections'}
+            {isFrench ? 'Voir les résultats' : 'See results'}
           </Button>
         </div>
         
@@ -331,7 +331,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
           <div className="space-y-6 mt-8">
             <h3 className="text-xl font-bold text-white flex items-center gap-2">
               <FileText className="w-6 h-6" />
-              {isFrench ? 'Analyse détaillée' : 'Detailed Analysis'}
+              {isFrench ? 'Résultats détaillés' : 'Detailed results'}
             </h3>
             
             {/* Résumé financier */}
@@ -405,7 +405,7 @@ const AdvancedEIManager: React.FC<AdvancedEIManagerProps> = ({
             {eiData.calculationResult.transitionRecommendations.length > 0 && (
               <div className="space-y-4">
                 <h4 className="text-lg font-semibold text-white">
-                  {isFrench ? 'Recommandations de transition' : 'Transition Recommendations'}
+                  {isFrench ? 'Pistes pour la suite' : 'Next-step suggestions'}
                 </h4>
                 
                 {eiData.calculationResult.transitionRecommendations.map((rec, index) => (

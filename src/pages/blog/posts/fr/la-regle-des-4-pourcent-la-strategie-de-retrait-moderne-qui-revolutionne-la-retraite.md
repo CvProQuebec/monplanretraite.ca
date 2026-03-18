@@ -1,7 +1,7 @@
 ---
 title: 'La règle des 4 % : la stratégie de retrait moderne qui révolutionne la retraite'
 slug: la-regle-des-4-pourcent-la-strategie-de-retrait-moderne-qui-revolutionne-la-retraite
-date: '2025-09-18'
+date: '2026-01-25'
 lastUpdated: '2026-03-01'
 excerpt: 'Depuis 30 ans, une règle simple guide les retraités du monde entier : retirer 4 % de son capital la première année, puis ajuster selon l''inflation. Cette stratégie a survécu à toutes les crises financières depuis 1928. Découvrez comment l''appliquer pour sécuriser votre retraite.'
 category: Les bases de la retraite

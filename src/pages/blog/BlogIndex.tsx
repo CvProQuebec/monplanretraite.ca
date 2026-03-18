@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { getAllPosts, getAvailableCategories, getCategoryDisplayLabel, BlogPost } from './utils/content';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
+import Meta from '@/components/ui/Meta';
 
 type Props = {
   language?: 'fr' | 'en';
@@ -66,21 +67,47 @@ const BlogIndex: React.FC<Props> = ({ language }) => {
     navigate(`${lang === 'en' ? '/en/blog' : '/blog'}/${p.slug}`);
   };
 
-  const title = lang === 'fr' ? 'Blog MonPlanRetraite.ca' : 'MonPlanRetraite.ca Blog';
+  const title = lang === 'fr' ? 'Articles et guides retraite' : 'Retirement articles and guides';
   const subtitle = lang === 'fr'
-    ? 'Guides, conseils et analyses pour optimiser votre planification de retraite'
-    : 'Guides, tips and analyses to optimize your retirement planning';
+    ? 'Des explications simples pour comprendre vos revenus, vos retraits, vos impôts et vos décisions de retraite'
+    : 'Simple explanations to understand income, withdrawals, taxes, and retirement decisions';
 
   const categoryLabel = (cat: string) => getCategoryDisplayLabel(cat, lang);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <Meta
+        title={lang === 'fr' ? 'Articles et guides retraite | MonPlanRetraite.ca' : 'Retirement articles and guides | MonPlanRetraite.ca'}
+        description={lang === 'fr'
+          ? 'Parcourez nos articles simples sur la retraite au Québec pour mieux comprendre vos revenus, vos impôts et vos retraits.'
+          : 'Browse simple retirement articles to better understand income, taxes, and withdrawals.'}
+        lang={lang}
+      />
       <div className="container mx-auto px-6 py-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-gray-900 mb-3">{title}</h1>
             <p className="text-lg text-gray-600">{subtitle}</p>
+            <p className="mt-3 text-base text-gray-500 max-w-3xl mx-auto">
+              {lang === 'fr'
+                ? 'Commencez par une question simple, puis passez à un outil ou à votre dossier quand vous êtes prêt.'
+                : 'Start with one simple question, then move to a tool or your dossier when you are ready.'}
+            </p>
+            <div className="mt-5 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <button
+                onClick={() => navigate(lang === 'fr' ? '/commencer' : '/start-here')}
+                className="min-h-[48px] rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white"
+              >
+                {lang === 'fr' ? 'Commencer simplement' : 'Start simply'}
+              </button>
+              <button
+                onClick={() => navigate(lang === 'fr' ? '/outils' : '/tools')}
+                className="min-h-[48px] rounded-lg border border-blue-300 bg-white px-4 py-2 font-semibold text-blue-700"
+              >
+                {lang === 'fr' ? 'Voir les outils retraite' : 'See retirement tools'}
+              </button>
+            </div>
           </div>
 
           {/* Filters */}

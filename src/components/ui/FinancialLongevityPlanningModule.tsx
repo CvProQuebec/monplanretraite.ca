@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+﻿import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -6,6 +6,8 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
+import GuidedPageIntro from '@/components/ui/GuidedPageIntro';
+import NextStepPanel from '@/components/ui/NextStepPanel';
 import { Clock, TrendingUp, Shield, Target, Info, Calendar } from 'lucide-react';
 
 interface LongevityPlanningData {
@@ -64,17 +66,17 @@ const FinancialLongevityPlanningModule: React.FC = () => {
   const [projection, setProjection] = useState<LongevityProjection | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
-  // Calcul de l'espérance de vie selon les données de Statistique Canada
+  // Calcul de l'espÃ©rance de vie selon les donnÃ©es de Statistique Canada
   const calculateLongevityProjection = useCallback(() => {
     setIsCalculating(true);
     
-    // Espérance de vie de base selon Statistique Canada (2025)
+    // EspÃ©rance de vie de base selon Statistique Canada (2025)
     const baseLifeExpectancy = {
       male: 81,
       female: 85
     };
     
-    // Ajustements selon les facteurs de santé et mode de vie
+    // Ajustements selon les facteurs de santÃ© et mode de vie
     const healthAdjustment = {
       excellent: 3,
       good: 0,
@@ -94,7 +96,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
       'very-active': 3
     };
     
-    // Calcul de l'espérance de vie ajustée
+    // Calcul de l'espÃ©rance de vie ajustÃ©e
     const adjustedLifeExpectancy = baseLifeExpectancy[data.gender] +
       healthAdjustment[data.healthStatus] +
       familyAdjustment[data.familyLongevity] +
@@ -102,10 +104,10 @@ const FinancialLongevityPlanningModule: React.FC = () => {
     
     const retirementDuration = adjustedLifeExpectancy - data.retirementAge;
     
-    // Probabilités de survie selon les tables actuarielles canadiennes
+    // ProbabilitÃ©s de survie selon les tables actuarielles canadiennes
     const calculateSurvivalProbability = (targetAge: number): number => {
       const yearsToTarget = targetAge - data.currentAge;
-      const baseProbability = Math.exp(-yearsToTarget * 0.02); // Modèle exponentiel simplifié
+      const baseProbability = Math.exp(-yearsToTarget * 0.02); // ModÃ¨le exponentiel simplifiÃ©
       
       // Ajustements selon les facteurs personnels
       let adjustment = 1.0;
@@ -120,7 +122,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
     const probabilityAge95 = calculateSurvivalProbability(95);
     const probabilityAge100 = calculateSurvivalProbability(100);
     
-    // Projection année par année
+    // Projection annÃ©e par annÃ©e
     const yearByYearProjection = [];
     let currentAssets = data.totalAssets;
     const annualExpenses = data.monthlyExpenses * 12;
@@ -147,7 +149,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
         survivalProbability
       });
       
-      // Arrêter si les actifs sont épuisés
+      // ArrÃªter si les actifs sont Ã©puisÃ©s
       if (currentAssets <= 0) break;
     }
     
@@ -155,7 +157,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
     const totalRetirementNeeds = annualExpenses * retirementDuration * 
       Math.pow(1 + data.inflationRate / 100, retirementDuration / 2); // Inflation moyenne
     
-    // Évaluation de la suffisance des actifs
+    // Ã‰valuation de la suffisance des actifs
     let assetSufficiency: 'sufficient' | 'marginal' | 'insufficient';
     const assetToNeedsRatio = data.totalAssets / totalRetirementNeeds;
     
@@ -167,49 +169,49 @@ const FinancialLongevityPlanningModule: React.FC = () => {
       assetSufficiency = 'insufficient';
     }
     
-    // Recommandations basées sur l'analyse
+    // Recommandations basÃ©es sur l'analyse
     const recommendations = [];
     const riskFactors = [];
     
     if (adjustedLifeExpectancy > 85) {
       recommendations.push('Planifiez pour une retraite de 25-30 ans minimum');
-      recommendations.push('Considérez une rente viagère pour garantir un revenu à vie');
+      recommendations.push('ConsidÃ©rez une rente viagÃ¨re pour garantir un revenu Ã  vie');
     }
     
     if (probabilityAge90 > 50) {
-      recommendations.push('Forte probabilité de vivre au-delà de 90 ans - planifiez en conséquence');
-      riskFactors.push('Risque de longévité élevé');
+      recommendations.push('Forte probabilitÃ© de vivre au-delÃ  de 90 ans - planifiez en consÃ©quence');
+      riskFactors.push('Risque de longÃ©vitÃ© Ã©levÃ©');
     }
     
     if (assetSufficiency === 'insufficient') {
-      recommendations.push('Vos actifs actuels sont insuffisants - augmentez votre épargne');
-      recommendations.push('Considérez reporter votre retraite de 2-3 ans');
-      riskFactors.push('Actifs insuffisants pour la durée de retraite projetée');
+      recommendations.push('Vos actifs actuels sont insuffisants - augmentez votre Ã©pargne');
+      recommendations.push('ConsidÃ©rez reporter votre retraite de 2-3 ans');
+      riskFactors.push('Actifs insuffisants pour la durÃ©e de retraite projetÃ©e');
     } else if (assetSufficiency === 'marginal') {
-      recommendations.push('Vos actifs sont marginaux - surveillez vos dépenses');
-      recommendations.push('Optimisez votre stratégie de retrait');
-      riskFactors.push('Marge de sécurité financière limitée');
+      recommendations.push('Vos actifs sont marginaux - surveillez vos dÃ©penses');
+      recommendations.push('Optimisez votre stratÃ©gie de retrait');
+      riskFactors.push('Marge de sÃ©curitÃ© financiÃ¨re limitÃ©e');
     }
     
-    // Vérification de la règle des 4 %
+    // VÃ©rification de la rÃ¨gle des 4 %
     const safeWithdrawalRate = (data.monthlyExpenses * 12) / data.totalAssets * 100;
     if (safeWithdrawalRate > 4) {
-      recommendations.push('Votre taux de retrait dépasse la règle des 4 % - risque d\'épuisement');
+      recommendations.push('Votre taux de retrait dÃ©passe la rÃ¨gle des 4 % - risque d\'Ã©puisement');
       riskFactors.push(`Taux de retrait initial de ${safeWithdrawalRate.toFixed(1)} % (>4%)`);
     }
     
     if (data.expectedReturn < data.inflationRate + 2) {
-      recommendations.push('Votre rendement attendu est trop faible face à l\'inflation');
+      recommendations.push('Votre rendement attendu est trop faible face Ã  l\'inflation');
       riskFactors.push('Rendement insuffisant pour maintenir le pouvoir d\'achat');
     }
     
     if (data.hasSpouse) {
-      recommendations.push('Planifiez pour le conjoint survivant - besoins différents');
-      recommendations.push('Considérez l\'assurance vie pour protéger le conjoint survivant');
+      recommendations.push('Planifiez pour le conjoint survivant - besoins diffÃ©rents');
+      recommendations.push('ConsidÃ©rez l\'assurance vie pour protÃ©ger le conjoint survivant');
     }
     
-    recommendations.push('Révisez votre plan tous les 3-5 ans');
-    recommendations.push('Maintenez un fonds d\'urgence séparé pour les imprévus');
+    recommendations.push('RÃ©visez votre plan tous les 3-5 ans');
+    recommendations.push('Maintenez un fonds d\'urgence sÃ©parÃ© pour les imprÃ©vus');
     
     setProjection({
       lifeExpectancy: adjustedLifeExpectancy,
@@ -269,23 +271,34 @@ const FinancialLongevityPlanningModule: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6">
+      <GuidedPageIntro
+        eyebrow="LongÃ©vitÃ© financiÃ¨re"
+        title="VÃ©rifier si votre argent peut durer aussi longtemps que vous"
+        description="Cette page estime la durÃ©e possible de votre retraite selon votre Ã¢ge, votre santÃ©, votre mode de vie, vos dÃ©penses et vos actifs. Lâ€™objectif nâ€™est pas de prÃ©dire parfaitement lâ€™avenir, mais de vous donner une marge de sÃ©curitÃ© rÃ©aliste."
+        bullets={[
+          'Commencez par votre Ã¢ge de retraite et vos dÃ©penses mensuelles.',
+          'Ajoutez ensuite vos actifs et un rendement prudent.',
+          'Regardez enfin la durÃ©e projetÃ©e et les recommandations de prudence.',
+        ]}
+        primaryLink={{ label: 'PrÃ©parer mon dossier', href: '/mon-dossier' }}
+        secondaryLink={{ label: 'Voir les outils de revenus', href: '/outils#revenus' }}
+      />
+
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-2">
           <Clock className="h-8 w-8 text-blue-600" />
           <h1 className="text-3xl font-bold text-gray-900">
-            Planification de Longévité Financière
+            Faire durer votre argent
           </h1>
         </div>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          Planifiez votre retraite pour 25-35 ans selon votre espérance de vie et 
-          les données de Statistique Canada sur la longévité.
+          Estimez combien de temps votre argent pourrait durer si votre retraite s'étend sur 25, 30 ou même 35 ans.
         </p>
         
         <Alert className="max-w-2xl mx-auto">
           <Info className="h-4 w-4" />
           <AlertDescription>
-            <strong>Statistique Canada :</strong> L'espérance de vie est de 81 ans (hommes) et 
-            85 ans (femmes). 50% des couples de 65 ans verront un conjoint vivre au-delà de 90 ans.
+            <strong>Repère utile :</strong> Une retraite dure souvent plus longtemps qu'on le croit. Pour un couple de 65 ans, il est courant qu'au moins un conjoint vive au-delà de 90 ans.
           </AlertDescription>
         </Alert>
       </div>
@@ -294,7 +307,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="calculator" className="flex items-center gap-2">
             <Target className="h-4 w-4" />
-            Calculateur
+            Mes chiffres
           </TabsTrigger>
           <TabsTrigger value="projection" className="flex items-center gap-2">
             <TrendingUp className="h-4 w-4" />
@@ -302,11 +315,11 @@ const FinancialLongevityPlanningModule: React.FC = () => {
           </TabsTrigger>
           <TabsTrigger value="risks" className="flex items-center gap-2">
             <Shield className="h-4 w-4" />
-            Facteurs Risque
+            Risques à surveiller
           </TabsTrigger>
           <TabsTrigger value="education" className="flex items-center gap-2">
             <Info className="h-4 w-4" />
-            Éducation
+            À retenir
           </TabsTrigger>
         </TabsList>
 
@@ -315,19 +328,19 @@ const FinancialLongevityPlanningModule: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Calendar className="h-5 w-5" />
-                Vos Informations Personnelles
+                Vos informations
               </CardTitle>
               <CardDescription>
-                Entrez vos informations pour calculer votre espérance de vie et besoins financiers
+                Entrez vos renseignements pour voir si votre capital semble suffisant pour une retraite qui peut durer longtemps.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <h4 className="font-semibold">Informations Démographiques</h4>
+                  <h4 className="font-semibold">Votre profil</h4>
                   
                   <div>
-                    <Label htmlFor="currentAge">Âge Actuel</Label>
+                    <Label htmlFor="currentAge">Ã‚ge Actuel</Label>
                     <Input
                       id="currentAge"
                       type="number"
@@ -338,7 +351,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                   </div>
                   
                   <div>
-                    <Label htmlFor="retirementAge">Âge de Retraite Prévu</Label>
+                    <Label htmlFor="retirementAge">Ã‚ge de Retraite PrÃ©vu</Label>
                     <Input
                       id="retirementAge"
                       type="number"
@@ -363,12 +376,12 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                   </div>
                   
                   <div>
-                    <Label htmlFor="healthStatus">État de Santé</Label>
+                    <Label htmlFor="healthStatus">Ã‰tat de SantÃ©</Label>
                     <select
                       id="healthStatus"
                       value={data.healthStatus}
                       onChange={(e) => handleSelectChange('healthStatus', e.target.value)}
-                      title="État de santé"
+                      title="Ã‰tat de santÃ©"
                       className="w-full p-2 border border-gray-300 rounded-md"
                     >
                       <option value="excellent">Excellent</option>
@@ -379,17 +392,17 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                   </div>
                   
                   <div>
-                    <Label htmlFor="familyLongevity">Longévité Familiale</Label>
+                    <Label htmlFor="familyLongevity">LongÃ©vitÃ© Familiale</Label>
                     <select
                       id="familyLongevity"
                       value={data.familyLongevity}
                       onChange={(e) => handleSelectChange('familyLongevity', e.target.value)}
-                      title="Longévité familiale"
+                      title="LongÃ©vitÃ© familiale"
                       className="w-full p-2 border border-gray-300 rounded-md"
                     >
-                      <option value="low">Faible (parents décédés avant 75 ans)</option>
-                      <option value="average">Moyenne (parents décédés 75-85 ans)</option>
-                      <option value="high">Élevée (parents décédés après 85 ans)</option>
+                      <option value="low">Faible (parents dÃ©cÃ©dÃ©s avant 75 ans)</option>
+                      <option value="average">Moyenne (parents dÃ©cÃ©dÃ©s 75-85 ans)</option>
+                      <option value="high">Ã‰levÃ©e (parents dÃ©cÃ©dÃ©s aprÃ¨s 85 ans)</option>
                     </select>
                   </div>
                   
@@ -402,15 +415,15 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                       title="Mode de vie"
                       className="w-full p-2 border border-gray-300 rounded-md"
                     >
-                      <option value="sedentary">Sédentaire</option>
+                      <option value="sedentary">SÃ©dentaire</option>
                       <option value="active">Actif</option>
-                      <option value="very-active">Très Actif</option>
+                      <option value="very-active">TrÃ¨s Actif</option>
                     </select>
                   </div>
                 </div>
                 
                 <div className="space-y-4">
-                  <h4 className="font-semibold">Informations Financières</h4>
+                  <h4 className="font-semibold">Votre situation financière</h4>
                   
                   <div>
                     <Label htmlFor="totalAssets">Total des Actifs ($)</Label>
@@ -424,7 +437,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                   </div>
                   
                   <div>
-                    <Label htmlFor="monthlyExpenses">Dépenses Mensuelles Prévues ($)</Label>
+                    <Label htmlFor="monthlyExpenses">DÃ©penses Mensuelles PrÃ©vues ($)</Label>
                     <Input
                       id="monthlyExpenses"
                       type="number"
@@ -473,7 +486,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                   {data.hasSpouse && (
                     <>
                       <div>
-                        <Label htmlFor="spouseAge">Âge du Conjoint</Label>
+                        <Label htmlFor="spouseAge">Ã‚ge du Conjoint</Label>
                         <Input
                           id="spouseAge"
                           type="number"
@@ -507,7 +520,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                 className="w-full"
                 size="lg"
               >
-                {isCalculating ? 'Calcul en cours...' : 'Calculer la Projection de Longévité'}
+                {isCalculating ? 'Calcul en cours...' : 'Voir combien de temps votre argent pourrait durer'}
               </Button>
             </CardContent>
           </Card>
@@ -517,7 +530,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Clock className="h-5 w-5 text-blue-600" />
-                  Résultats de la Projection
+                  RÃ©sultats de la Projection
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -526,21 +539,21 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                     <div className="text-2xl font-bold text-blue-600">
                       {projection.lifeExpectancy} ans
                     </div>
-                    <div className="text-sm text-gray-600">Espérance de Vie Ajustée</div>
+                    <div className="text-sm text-gray-600">EspÃ©rance de Vie AjustÃ©e</div>
                   </div>
                   
                   <div className="text-center p-4 bg-purple-50 rounded-lg">
                     <div className="text-2xl font-bold text-purple-600">
                       {projection.retirementDuration} ans
                     </div>
-                    <div className="text-sm text-gray-600">Durée de Retraite</div>
+                    <div className="text-sm text-gray-600">DurÃ©e de Retraite</div>
                   </div>
                   
                   <div className="text-center p-4 bg-orange-50 rounded-lg">
                     <div className="text-2xl font-bold text-orange-600">
                       {projection.probabilityAge90.toFixed(0)} %
                     </div>
-                    <div className="text-sm text-gray-600">Probabilité 90 ans</div>
+                    <div className="text-sm text-gray-600">ProbabilitÃ© 90 ans</div>
                   </div>
                   
                   <div className={`text-center p-4 rounded-lg border ${getSufficiencyBgColor(projection.assetSufficiency)}`}>
@@ -556,7 +569,7 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                   <div className="text-3xl font-bold text-blue-600">
                     {formatCurrency(projection.totalRetirementNeeds)}
                   </div>
-                  <div className="text-sm text-gray-600">Besoins Totaux de Retraite Estimés</div>
+                  <div className="text-sm text-gray-600">Besoins Totaux de Retraite EstimÃ©s</div>
                 </div>
               </CardContent>
             </Card>
@@ -567,9 +580,9 @@ const FinancialLongevityPlanningModule: React.FC = () => {
           {projection && (
             <Card>
               <CardHeader>
-                <CardTitle>Projection Année par Année</CardTitle>
+                <CardTitle>Projection AnnÃ©e par AnnÃ©e</CardTitle>
                 <CardDescription>
-                  Évolution de vos actifs et probabilités de survie
+                  Ã‰volution de vos actifs et probabilitÃ©s de survie
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -577,9 +590,9 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b">
-                        <th className="text-left p-2">Année</th>
-                        <th className="text-left p-2">Âge</th>
-                        <th className="text-left p-2">Dépenses</th>
+                        <th className="text-left p-2">AnnÃ©e</th>
+                        <th className="text-left p-2">Ã‚ge</th>
+                        <th className="text-left p-2">DÃ©penses</th>
                         <th className="text-left p-2">Valeur Actifs</th>
                         <th className="text-left p-2">Taux Retrait</th>
                         <th className="text-left p-2">Prob. Survie</th>
@@ -613,9 +626,9 @@ const FinancialLongevityPlanningModule: React.FC = () => {
             <>
               <Card>
                 <CardHeader>
-                  <CardTitle>Facteurs de Risque Identifiés</CardTitle>
+                  <CardTitle>Facteurs de Risque IdentifiÃ©s</CardTitle>
                   <CardDescription>
-                    Risques potentiels pour votre sécurité financière à long terme
+                    Risques potentiels pour votre sÃ©curitÃ© financiÃ¨re Ã  long terme
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -632,9 +645,9 @@ const FinancialLongevityPlanningModule: React.FC = () => {
               
               <Card>
                 <CardHeader>
-                  <CardTitle>Recommandations Personnalisées</CardTitle>
+                  <CardTitle>Actions à envisager</CardTitle>
                   <CardDescription>
-                    Actions recommandées pour optimiser votre sécurité financière
+                    Quelques pistes concrètes si votre marge de sécurité semble mince.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -655,64 +668,64 @@ const FinancialLongevityPlanningModule: React.FC = () => {
         <TabsContent value="education" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Éducation : Planification de Longévité</CardTitle>
+              <CardTitle>À retenir</CardTitle>
               <CardDescription>
-                Comprendre les enjeux de la longévité financière au Canada
+                Les repères les plus utiles pour planifier une retraite qui peut durer longtemps.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
-                <h4 className="font-semibold text-lg">Données de Statistique Canada</h4>
+                <h4 className="font-semibold text-lg">DonnÃ©es de Statistique Canada</h4>
                 
                 <div className="p-4 bg-blue-50 rounded-lg">
-                  <h5 className="font-medium">Espérance de Vie Actuelle</h5>
+                  <h5 className="font-medium">EspÃ©rance de Vie Actuelle</h5>
                   <p className="text-sm text-gray-600 mt-2">
                     Hommes : 81 ans | Femmes : 85 ans. Ces chiffres continuent d'augmenter 
-                    grâce aux progrès médicaux et aux meilleures habitudes de vie.
+                    grÃ¢ce aux progrÃ¨s mÃ©dicaux et aux meilleures habitudes de vie.
                   </p>
                 </div>
                 
                 <div className="p-4 bg-green-50 rounded-lg">
-                  <h5 className="font-medium">Probabilités de Longévité</h5>
+                  <h5 className="font-medium">ProbabilitÃ©s de LongÃ©vitÃ©</h5>
                   <p className="text-sm text-gray-600 mt-2">
-                    Pour un couple de 65 ans : 50% de chance qu'un conjoint vive au-delà de 90 ans, 
-                    25% de chance qu'un conjoint vive au-delà de 95 ans.
+                    Pour un couple de 65 ans : 50% de chance qu'un conjoint vive au-delÃ  de 90 ans, 
+                    25% de chance qu'un conjoint vive au-delÃ  de 95 ans.
                   </p>
                 </div>
                 
                 <div className="p-4 bg-yellow-50 rounded-lg">
                   <h5 className="font-medium">Impact sur la Planification</h5>
                   <p className="text-sm text-gray-600 mt-2">
-                    Une retraite peut durer 25-35 ans. Vos actifs doivent être suffisants 
-                    pour maintenir votre niveau de vie pendant toute cette période.
+                    Une retraite peut durer 25-35 ans. Vos actifs doivent Ãªtre suffisants 
+                    pour maintenir votre niveau de vie pendant toute cette pÃ©riode.
                   </p>
                 </div>
                 
                 <div className="p-4 bg-red-50 rounded-lg">
-                  <h5 className="font-medium">Règle des 4%</h5>
+                  <h5 className="font-medium">RÃ¨gle des 4%</h5>
                   <p className="text-sm text-gray-600 mt-2">
-                    La règle des 4 % suggère qu'un taux de retrait initial de 4% de vos actifs 
+                    La rÃ¨gle des 4 % suggÃ¨re qu'un taux de retrait initial de 4% de vos actifs 
                     devrait permettre de maintenir votre capital pendant 30 ans.
                   </p>
                 </div>
               </div>
               
               <div className="space-y-4">
-                <h4 className="font-semibold text-lg">Stratégies de Protection</h4>
+                <h4 className="font-semibold text-lg">StratÃ©gies de Protection</h4>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-4 border rounded-lg">
-                    <h5 className="font-medium text-blue-600">Rente Viagère</h5>
+                    <h5 className="font-medium text-blue-600">Rente ViagÃ¨re</h5>
                     <p className="text-sm text-gray-600 mt-2">
-                      Garantit un revenu à vie, élimine le risque de longévité. 
-                      Considérez pour 25-30% de vos actifs.
+                      Garantit un revenu Ã  vie, Ã©limine le risque de longÃ©vitÃ©. 
+                      ConsidÃ©rez pour 25-30% de vos actifs.
                     </p>
                   </div>
                   
                   <div className="p-4 border rounded-lg">
                     <h5 className="font-medium text-blue-600">Diversification Temporelle</h5>
                     <p className="text-sm text-gray-600 mt-2">
-                      Répartissez vos actifs selon différents horizons : court terme (liquidités), 
+                      RÃ©partissez vos actifs selon diffÃ©rents horizons : court terme (liquiditÃ©s), 
                       moyen terme (obligations), long terme (actions).
                     </p>
                   </div>
@@ -720,16 +733,16 @@ const FinancialLongevityPlanningModule: React.FC = () => {
                   <div className="p-4 border rounded-lg">
                     <h5 className="font-medium text-blue-600">Assurance Vie</h5>
                     <p className="text-sm text-gray-600 mt-2">
-                      Protège le conjoint survivant en cas de décès prématuré. 
-                      Particulièrement important si un conjoint a une pension réduite.
+                      ProtÃ¨ge le conjoint survivant en cas de dÃ©cÃ¨s prÃ©maturÃ©. 
+                      ParticuliÃ¨rement important si un conjoint a une pension rÃ©duite.
                     </p>
                   </div>
                   
                   <div className="p-4 border rounded-lg">
-                    <h5 className="font-medium text-blue-600">Flexibilité des Dépenses</h5>
+                    <h5 className="font-medium text-blue-600">FlexibilitÃ© des DÃ©penses</h5>
                     <p className="text-sm text-gray-600 mt-2">
-                      Planifiez des dépenses variables : plus élevées en début de retraite, 
-                      réduites en fin de vie.
+                      Planifiez des dÃ©penses variables : plus Ã©levÃ©es en dÃ©but de retraite, 
+                      rÃ©duites en fin de vie.
                     </p>
                   </div>
                 </div>
@@ -738,17 +751,25 @@ const FinancialLongevityPlanningModule: React.FC = () => {
               <Alert>
                 <Info className="h-4 w-4" />
                 <AlertDescription>
-                  <strong>Conseil Important :</strong> La longévité est imprévisible. 
-                  Planifiez pour vivre jusqu'à 95 ans minimum et révisez votre plan 
-                  régulièrement selon l'évolution de votre santé et situation financière.
+                  <strong>À retenir :</strong> Personne ne sait combien d'années durera sa retraite. Mieux vaut prévoir large, puis revoir le plan régulièrement selon votre santé, vos dépenses et vos revenus.
                 </AlertDescription>
               </Alert>
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
+      <NextStepPanel
+        title="Prochaine Ã©tape"
+        text="Si votre marge de sÃ©curitÃ© semble faible, reliez maintenant cette projection Ã  votre budget, Ã  vos retraits et Ã  votre dossier pour voir quelles dÃ©cisions peuvent amÃ©liorer la situation."
+        primaryLabel="PrÃ©parer mon dossier"
+        primaryHref="/mon-dossier"
+        secondaryLabel="Voir mon budget"
+        secondaryHref="/mon-budget"
+      />
     </div>
   );
 };
 
 export default FinancialLongevityPlanningModule;
+
+

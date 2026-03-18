@@ -148,11 +148,10 @@ const CELISuccessionModule: React.FC = () => {
       {/* Alerte critique */}
       <Alert className="border-red-500 bg-red-50">
         <AlertTriangle className="h-5 w-5 text-red-500" />
-        <AlertTitle className="text-red-800">⚠️ ATTENTION CRITIQUE</AlertTitle>
+        <AlertTitle className="text-red-800">Point très important</AlertTitle>
         <AlertDescription className="text-red-700 text-lg">
-          <strong>Plus de 50% des CELI n'ont PAS de bénéficiaire désigné correctement.</strong> 
-          Cela peut coûter des milliers de dollars en frais de probate et en impôts évitables. 
-          Vérifiez MAINTENANT vos désignations !
+          <strong>Beaucoup de CELI ne sont pas désignés de la meilleure façon.</strong> 
+          Cela peut entraîner des frais et une perte de souplesse fiscale. Mieux vaut vérifier vos désignations pendant qu'il est encore simple de les corriger.
         </AlertDescription>
       </Alert>
 
@@ -250,7 +249,7 @@ const CELISuccessionModule: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-3">
             <FileText className="w-6 h-6 text-purple-600" />
-            Les 4 scénarios possibles
+            Les 4 cas les plus fréquents
           </CardTitle>
           <CardDescription>
             Cliquez sur chaque scénario pour comprendre les implications
@@ -259,9 +258,9 @@ const CELISuccessionModule: React.FC = () => {
         <CardContent>
           <Tabs value={activeScenario} onValueChange={setActiveScenario}>
             <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="1" className="text-xs">Successor Holder</TabsTrigger>
-              <TabsTrigger value="2" className="text-xs">Beneficiary</TabsTrigger>
-              <TabsTrigger value="3" className="text-xs">Non-Conjoint</TabsTrigger>
+              <TabsTrigger value="1" className="text-xs">Titulaire remplaçant</TabsTrigger>
+              <TabsTrigger value="2" className="text-xs">Bénéficiaire</TabsTrigger>
+              <TabsTrigger value="3" className="text-xs">Autre personne</TabsTrigger>
               <TabsTrigger value="4" className="text-xs">Aucun</TabsTrigger>
             </TabsList>
 
@@ -319,7 +318,7 @@ const CELISuccessionModule: React.FC = () => {
 
                       {/* Processus */}
                       <div className="bg-white p-4 rounded-lg border">
-                        <h4 className="font-semibold mb-2">📋 Comment ça fonctionne :</h4>
+                        <h4 className="font-semibold mb-2">Comment ça fonctionne :</h4>
                         <p className="text-sm text-gray-700">{info.process}</p>
                       </div>
 
@@ -327,7 +326,7 @@ const CELISuccessionModule: React.FC = () => {
                       {scenario === '1' && (
                         <Alert className="border-green-500 bg-green-50">
                           <CheckCircle className="h-4 w-4 text-green-600" />
-                          <AlertTitle className="text-green-800">✅ RECOMMANDATION FORTE</AlertTitle>
+                          <AlertTitle className="text-green-800">Souvent le meilleur choix</AlertTitle>
                           <AlertDescription className="text-green-700">
                             Si vous êtes marié(e) ou conjoint de fait, nommez ABSOLUMENT votre conjoint comme 
                             "Successor Holder" (pas juste bénéficiaire). C'est la seule façon de préserver 
@@ -339,7 +338,7 @@ const CELISuccessionModule: React.FC = () => {
                       {scenario === '2' && (
                         <Alert className="border-yellow-500 bg-yellow-50">
                           <AlertTriangle className="h-4 w-4 text-yellow-600" />
-                          <AlertTitle className="text-yellow-800">⚠️ ATTENTION</AlertTitle>
+                          <AlertTitle className="text-yellow-800">À vérifier</AlertTitle>
                           <AlertDescription className="text-yellow-700">
                             Si votre conjoint est listé comme "bénéficiaire" seulement, vous perdez de l'argent ! 
                             Changez immédiatement pour "Successor Holder". Le formulaire RC240 est un plan B, 
@@ -361,13 +360,13 @@ const CELISuccessionModule: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-3">
             <Shield className="w-6 h-6 text-purple-600" />
-            Plan d'action immédiat
+            Quoi faire maintenant
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h4 className="font-semibold mb-4 text-purple-800">📋 Étapes à suivre MAINTENANT :</h4>
+              <h4 className="font-semibold mb-4 text-purple-800">Étapes simples à suivre :</h4>
               <div className="space-y-3">
                 <div className="flex items-start gap-3 p-3 bg-white rounded-lg border">
                   <div className="w-6 h-6 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
@@ -404,7 +403,7 @@ const CELISuccessionModule: React.FC = () => {
             </div>
 
             <div>
-              <h4 className="font-semibold mb-4 text-purple-800">🏦 Institutions à contacter :</h4>
+              <h4 className="font-semibold mb-4 text-purple-800">Qui contacter :</h4>
               <div className="space-y-2 text-sm">
                 <div className="p-3 bg-white rounded-lg border">
                   <div className="font-medium">Banques principales</div>
@@ -425,8 +424,7 @@ const CELISuccessionModule: React.FC = () => {
               <Alert className="mt-4">
                 <HelpCircle className="h-4 w-4" />
                 <AlertDescription className="text-sm">
-                  <strong>Phrase magique :</strong> "Je veux changer mon bénéficiaire CELI pour un 
-                  'Successor Holder' au lieu d'un simple bénéficiaire."
+                  <strong>Phrase utile :</strong> "Je veux vérifier si la désignation actuelle de mon CELI est la meilleure option pour mon conjoint ou mes proches."
                 </AlertDescription>
               </Alert>
             </div>
@@ -467,7 +465,7 @@ const CELISuccessionModule: React.FC = () => {
             </div>
             
             <div>
-              <h4 className="font-semibold mb-3">💡 Conseils d'experts :</h4>
+              <h4 className="font-semibold mb-3">À retenir :</h4>
               <ul className="space-y-2 text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+﻿import React, { useState, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -6,6 +6,8 @@ import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Badge } from '@/components/ui/badge';
+import GuidedPageIntro from '@/components/ui/GuidedPageIntro';
+import NextStepPanel from '@/components/ui/NextStepPanel';
 import { Calculator, TrendingDown, PieChart, Target, Info, DollarSign } from 'lucide-react';
 
 interface TaxOptimizationData {
@@ -75,14 +77,14 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
   const [optimization, setOptimization] = useState<OptimizationResult | null>(null);
   const [isCalculating, setIsCalculating] = useState(false);
 
-  // Calcul de l'optimisation fiscale selon les règles gouvernementales
+  // Calcul de l'optimisation fiscale selon les rÃ¨gles gouvernementales
   const calculateTaxOptimization = useCallback(() => {
     setIsCalculating(true);
     
     const totalRetirementIncome = data.pensionIncome + data.rrqCppIncome + data.svIncome;
     const totalAssets = data.rrspValue + data.ferrValue + data.celiValue + data.nonRegisteredValue;
     
-    // Stratégies d'optimisation basées sur les règles gouvernementales
+    // Pistes simples d'optimisation basÃ©es sur les rÃ¨gles gouvernementales
     const strategies: TaxOptimizationStrategy[] = [];
     
     // 1. Fractionnement de revenu de pension (65 ans+)
@@ -93,11 +95,11 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
       
       strategies.push({
         strategy: 'Fractionnement de Revenu de Pension',
-        description: 'Transférez jusqu\'à 50% de votre revenu de pension admissible à votre conjoint pour réduire l\'impôt total du couple.',
+        description: 'TransfÃ©rez jusqu\'Ã  50% de votre revenu de pension admissible Ã  votre conjoint pour rÃ©duire l\'impÃ´t total du couple.',
         potentialSavings,
         complexity: 'low',
         timeline: 'immediate',
-        governmentProgram: 'Loi de l\'impôt sur le revenu - Article 60.03'
+        governmentProgram: 'Loi de l\'impÃ´t sur le revenu - Article 60.03'
       });
     }
     
@@ -110,55 +112,55 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
       
       strategies.push({
         strategy: 'Report des Prestations RRQ/RPC',
-        description: `Reporter vos prestations jusqu'à 70 ans augmente votre rente de ${bonification.toFixed(1)}% à vie.`,
+        description: `Reporter vos prestations jusqu'Ã  70 ans augmente votre rente de ${bonification.toFixed(1)}% Ã  vie.`,
         potentialSavings,
         complexity: 'low',
         timeline: 'long-term',
-        governmentProgram: 'Régime de rentes du Québec / Régime de pensions du Canada'
+        governmentProgram: 'RÃ©gime de rentes du QuÃ©bec / RÃ©gime de pensions du Canada'
       });
     }
     
-    // 3. Optimisation de la séquence de retrait
+    // 3. Optimisation de la sÃ©quence de retrait
     if (totalAssets > 100000) {
       const celiFirst = data.celiValue * 0.05;
       const taxSavings = celiFirst * (data.marginalTaxRate / 100);
       
       strategies.push({
-        strategy: 'Séquence de Retrait Optimisée',
-        description: 'Retirez d\'abord du CELI, puis des comptes non-enregistrés, ensuite du REER/FERR pour minimiser l\'impôt.',
+        strategy: 'SÃ©quence de Retrait OptimisÃ©e',
+        description: 'Retirez d\'abord du CELI, puis des comptes non-enregistrÃ©s, ensuite du REER/FERR pour minimiser l\'impÃ´t.',
         potentialSavings: taxSavings * 10,
         complexity: 'medium',
         timeline: 'immediate',
-        governmentProgram: 'Stratégie recommandée par l\'ARC'
+        governmentProgram: 'StratÃ©gie recommandÃ©e par l\'ARC'
       });
     }
     
-    // Calcul de la séquence de retrait optimale
+    // Calcul de la sÃ©quence de retrait optimale
     const withdrawalSequence = [
       {
         source: 'CELI',
         amount: data.celiValue * 0.05,
         taxImpact: 0,
         netAmount: data.celiValue * 0.05,
-        reasoning: 'Aucun impôt, n\'affecte pas les prestations gouvernementales'
+        reasoning: 'Aucun impÃ´t, n\'affecte pas les prestations gouvernementales'
       },
       {
-        source: 'Comptes Non-Enregistrés',
+        source: 'Comptes Non-EnregistrÃ©s',
         amount: data.nonRegisteredValue * 0.04,
         taxImpact: data.nonRegisteredValue * 0.04 * 0.5 * (data.marginalTaxRate / 100),
         netAmount: data.nonRegisteredValue * 0.04 * (1 - 0.5 * (data.marginalTaxRate / 100)),
-        reasoning: 'Gains en capital imposés à 50%, plus avantageux que le revenu ordinaire'
+        reasoning: 'Gains en capital imposÃ©s Ã  50%, plus avantageux que le revenu ordinaire'
       },
       {
         source: 'FERR (Minimum Obligatoire)',
         amount: data.ferrValue * 0.0528,
         taxImpact: data.ferrValue * 0.0528 * (data.marginalTaxRate / 100),
         netAmount: data.ferrValue * 0.0528 * (1 - data.marginalTaxRate / 100),
-        reasoning: 'Retrait minimum obligatoire, imposé comme revenu ordinaire'
+        reasoning: 'Retrait minimum obligatoire, imposÃ© comme revenu ordinaire'
       }
     ];
     
-    // Opportunités de fractionnement de revenu
+    // OpportunitÃ©s de fractionnement de revenu
     const incomeSplittingOpportunities = [];
     
     if (data.hasSpouse) {
@@ -237,23 +239,34 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-6">
+      <GuidedPageIntro
+        eyebrow="ImpÃ´t Ã  la retraite"
+        title="Calculateur pour payer moins d’impôt à la retraite"
+        description="Cette page compare vos revenus de pension, vos retraits REER ou FERR, votre CELI et vos placements non enregistrés. Le but est de vous montrer dans quel ordre retirer votre argent pour éviter de payer trop d’impôt."
+        bullets={[
+          'Entrez dâ€™abord vos montants de revenus et vos soldes principaux.',
+          'Lancez ensuite le calcul pour voir les stratÃ©gies les plus utiles.',
+          'Gardez surtout les pistes simples Ã  discuter avec votre planificateur.',
+        ]}
+        primaryLink={{ label: 'PrÃ©parer mon dossier', href: '/mon-dossier' }}
+        secondaryLink={{ label: 'Voir les outils fiscaux', href: '/outils#impots' }}
+      />
+
       <div className="text-center space-y-4">
         <div className="flex items-center justify-center gap-2">
           <TrendingDown className="h-8 w-8 text-green-600" />
           <h1 className="text-3xl font-bold text-gray-900">
-            Optimisation Fiscale Multi-Sources
+            Payer moins d'impôt à la retraite
           </h1>
         </div>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          Optimisez votre stratégie fiscale en coordonnant vos multiples sources de revenus 
-          selon les règles et programmes du gouvernement du Canada.
+          Voyez dans quel ordre retirer vos revenus de retraite pour éviter de payer plus d'impôt que nécessaire.
         </p>
         
         <Alert className="max-w-2xl mx-auto">
           <Info className="h-4 w-4" />
           <AlertDescription>
-            <strong>Gouvernement du Canada :</strong> Une planification fiscale appropriée peut 
-            réduire votre fardeau fiscal de 15% à 30% en coordonnant vos sources de revenus.
+            <strong>Idée clé :</strong> Le même montant d'argent peut avoir un effet fiscal très différent selon qu'il vient d'un REER, d'un FERR, d'un CELI ou d'un compte non enregistré.
           </AlertDescription>
         </Alert>
       </div>
@@ -262,40 +275,40 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="calculator" className="flex items-center gap-2">
             <Calculator className="h-4 w-4" />
-            Calculateur
+            Mes chiffres
           </TabsTrigger>
           <TabsTrigger value="strategies" className="flex items-center gap-2">
             <Target className="h-4 w-4" />
-            Stratégies
+            Pistes simples
           </TabsTrigger>
           <TabsTrigger value="sequence" className="flex items-center gap-2">
             <PieChart className="h-4 w-4" />
-            Séquence Retrait
+            Ordre des retraits
           </TabsTrigger>
           <TabsTrigger value="education" className="flex items-center gap-2">
             <Info className="h-4 w-4" />
-            Éducation
+            À retenir
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="calculator" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Calculator className="h-5 w-5" />
-                Vos Sources de Revenus
-              </CardTitle>
+                <CardTitle className="flex items-center gap-2">
+                  <Calculator className="h-5 w-5" />
+                  Vos revenus et vos comptes
+                </CardTitle>
               <CardDescription>
-                Entrez toutes vos sources de revenus pour l'analyse d'optimisation
+                Entrez vos revenus et vos soldes principaux pour faire ressortir les pistes les plus utiles.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="space-y-4">
-                  <h4 className="font-semibold">Informations Personnelles</h4>
+                  <h4 className="font-semibold">Vos renseignements</h4>
                   
                   <div>
-                    <Label htmlFor="currentAge">Âge Actuel</Label>
+                    <Label htmlFor="currentAge">Ã‚ge Actuel</Label>
                     <Input
                       id="currentAge"
                       type="number"
@@ -306,7 +319,7 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
                   </div>
                   
                   <div>
-                    <Label htmlFor="retirementAge">Âge de Retraite</Label>
+                    <Label htmlFor="retirementAge">Ã‚ge de Retraite</Label>
                     <Input
                       id="retirementAge"
                       type="number"
@@ -324,7 +337,7 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
                       onChange={(e) => handleSelectChange('province', e.target.value)}
                       className="w-full p-2 border border-gray-300 rounded-md"
                     >
-                      <option value="QC">Québec</option>
+                      <option value="QC">QuÃ©bec</option>
                       <option value="ON">Ontario</option>
                       <option value="BC">Colombie-Britannique</option>
                       <option value="AB">Alberta</option>
@@ -357,7 +370,7 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
                 </div>
                 
                 <div className="space-y-4">
-                  <h4 className="font-semibold">Actifs et Revenus</h4>
+                  <h4 className="font-semibold">Vos comptes et revenus</h4>
                   
                   <div>
                     <Label htmlFor="rrspValue">Valeur REER ($)</Label>
@@ -393,7 +406,7 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
                   </div>
                   
                   <div>
-                    <Label htmlFor="rrqCppIncome">RRQ/RPC Estimé ($/an)</Label>
+                    <Label htmlFor="rrqCppIncome">RRQ/RPC EstimÃ© ($/an)</Label>
                     <Input
                       id="rrqCppIncome"
                       type="number"
@@ -421,7 +434,7 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <DollarSign className="h-5 w-5 text-green-600" />
-                  Résultats de l'Optimisation
+                  RÃ©sultats de l'Optimisation
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -437,14 +450,14 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
                     <div className="text-2xl font-bold text-green-600">
                       {formatCurrency(optimization.optimizedTaxBurden)}
                     </div>
-                    <div className="text-sm text-gray-600">Fardeau Fiscal Optimisé</div>
+                    <div className="text-sm text-gray-600">Fardeau Fiscal OptimisÃ©</div>
                   </div>
                   
                   <div className="text-center p-4 bg-blue-50 rounded-lg">
                     <div className="text-2xl font-bold text-blue-600">
                       {formatCurrency(optimization.totalSavings)}
                     </div>
-                    <div className="text-sm text-gray-600">Économies Totales</div>
+                    <div className="text-sm text-gray-600">Ã‰conomies Totales</div>
                   </div>
                 </div>
               </CardContent>
@@ -455,7 +468,7 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
         <TabsContent value="strategies" className="space-y-6">
           {optimization && (
             <div className="space-y-4">
-              <h3 className="text-xl font-semibold">Stratégies Recommandées</h3>
+              <h3 className="text-xl font-semibold">Pistes pour réduire votre impôt</h3>
               
               {optimization.strategies.map((strategy, index) => (
                 <Card key={index}>
@@ -468,10 +481,10 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
                       <div className="flex gap-2">
                         <Badge className={getComplexityColor(strategy.complexity)}>
                           {strategy.complexity === 'low' ? 'Faible' : 
-                           strategy.complexity === 'medium' ? 'Moyenne' : 'Élevée'}
+                           strategy.complexity === 'medium' ? 'Moyenne' : 'Ã‰levÃ©e'}
                         </Badge>
                         <Badge className={getTimelineColor(strategy.timeline)}>
-                          {strategy.timeline === 'immediate' ? 'Immédiat' :
+                          {strategy.timeline === 'immediate' ? 'ImmÃ©diat' :
                            strategy.timeline === 'short-term' ? 'Court terme' : 'Long terme'}
                         </Badge>
                       </div>
@@ -490,9 +503,9 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
           {optimization && (
             <Card>
               <CardHeader>
-                <CardTitle>Séquence de Retrait Optimale</CardTitle>
+                <CardTitle>SÃ©quence de Retrait Optimale</CardTitle>
                 <CardDescription>
-                  Ordre recommandé pour minimiser l'impact fiscal
+                  Ordre recommandÃ© pour minimiser l'impact fiscal
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -508,7 +521,7 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
                       <p className="text-sm text-gray-600">{withdrawal.reasoning}</p>
                       <div className="mt-2 text-xs text-gray-500">
                         Montant: {formatCurrency(withdrawal.amount)} | 
-                        Impôt: {formatCurrency(withdrawal.taxImpact)}
+                        ImpÃ´t: {formatCurrency(withdrawal.taxImpact)}
                       </div>
                     </div>
                   ))}
@@ -521,36 +534,36 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
         <TabsContent value="education" className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Éducation : Optimisation Fiscale Multi-Sources</CardTitle>
+              <CardTitle>À retenir</CardTitle>
               <CardDescription>
-                Comprendre les stratégies fiscales gouvernementales
+                Les repères simples à garder en tête avant de parler stratégie avec votre planificateur.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
-                <h4 className="font-semibold text-lg">Programmes Gouvernementaux Clés</h4>
+                <h4 className="font-semibold text-lg">Règles utiles</h4>
                 
                 <div className="p-4 bg-blue-50 rounded-lg">
                   <h5 className="font-medium">Fractionnement de Revenu de Pension</h5>
                   <p className="text-sm text-gray-600 mt-2">
-                    À partir de 65 ans, vous pouvez transférer jusqu'à 50% de votre revenu de pension 
-                    admissible à votre conjoint pour réduire l'impôt total du couple.
+                    Ã€ partir de 65 ans, vous pouvez transfÃ©rer jusqu'Ã  50% de votre revenu de pension 
+                    admissible Ã  votre conjoint pour rÃ©duire l'impÃ´t total du couple.
                   </p>
                 </div>
                 
                 <div className="p-4 bg-green-50 rounded-lg">
                   <h5 className="font-medium">Report des Prestations RRQ/RPC</h5>
                   <p className="text-sm text-gray-600 mt-2">
-                    Reporter vos prestations après 65 ans les augmente de 0,7% par mois, 
-                    soit 8,4% par année jusqu'à 70 ans.
+                    Reporter vos prestations aprÃ¨s 65 ans les augmente de 0,7% par mois, 
+                    soit 8,4% par annÃ©e jusqu'Ã  70 ans.
                   </p>
                 </div>
                 
                 <div className="p-4 bg-yellow-50 rounded-lg">
-                  <h5 className="font-medium">Crédit d'Impôt pour Revenu de Pension</h5>
+                  <h5 className="font-medium">CrÃ©dit d'ImpÃ´t pour Revenu de Pension</h5>
                   <p className="text-sm text-gray-600 mt-2">
-                    Crédit de 2 000$ sur le revenu de pension admissible, disponible dès 65 ans 
-                    ou en cas de décès du conjoint.
+                    CrÃ©dit de 2 000$ sur le revenu de pension admissible, disponible dÃ¨s 65 ans 
+                    ou en cas de dÃ©cÃ¨s du conjoint.
                   </p>
                 </div>
               </div>
@@ -558,20 +571,28 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
               <Alert>
                 <Info className="h-4 w-4" />
                 <AlertDescription>
-                  <strong>Conseil Important :</strong> L'optimisation fiscale nécessite une 
-                  coordination entre toutes vos sources de revenus. Consultez un planificateur 
-                  financier pour une stratégie personnalisée.
+                  <strong>À retenir :</strong> Le but n'est pas d'appliquer une stratégie compliquée. Le plus utile est souvent d'arriver avec 2 ou 3 pistes claires à valider avec votre planificateur.
                 </AlertDescription>
               </Alert>
             </CardContent>
           </Card>
         </TabsContent>
       </Tabs>
+      <NextStepPanel
+        title="Prochaine Ã©tape"
+        text="Gardez les 2 ou 3 stratÃ©gies les plus simples et ajoutez-les Ã  votre dossier. Câ€™est souvent suffisant pour avoir une discussion beaucoup plus productive avec votre planificateur."
+        primaryLabel="PrÃ©parer mon dossier"
+        primaryHref="/mon-dossier"
+        secondaryLabel="Voir les revenus de retraite"
+        secondaryHref="/outils#revenus"
+      />
       <p className="text-sm leading-6" style={{ color: '#64748b' }}>
-        Ces outils sont fournis à titre éducatif uniquement et ne constituent pas des conseils financiers, fiscaux ou juridiques. Les projections sont basées sur des hypothèses et ne garantissent pas les résultats futurs. Consultez un planificateur financier agréé pour des conseils adaptés à votre situation.
+        Ces outils sont fournis Ã  titre Ã©ducatif uniquement et ne constituent pas des conseils financiers, fiscaux ou juridiques. Les projections sont basÃ©es sur des hypothÃ¨ses et ne garantissent pas les rÃ©sultats futurs. Consultez un planificateur financier agrÃ©Ã© pour des conseils adaptÃ©s Ã  votre situation.
       </p>
     </div>
   );
 };
 
 export default MultiSourceTaxOptimizationModule;
+
+

@@ -278,27 +278,25 @@ const GovernmentEducationCenter: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <GraduationCap className="h-6 w-6" />
-            Centre d'éducation gouvernementale
+            Guide des programmes et stratégies
           </CardTitle>
           <CardDescription>
-            Maîtrisez l'expertise du Gouvernement du Canada en matière de planification de retraite
+            Parcourez les principaux sujets utiles pour mieux comprendre vos choix de retraite.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Alert className="mb-6">
             <BookOpen className="h-4 w-4" />
             <AlertDescription>
-              <strong>Expertise officielle :</strong> Tous les modules sont basés sur les documents officiels 
-              du Gouvernement du Canada, incluant les dernières mises à jour des programmes RVDAA (2020+), 
-              CELIAPP (2023+) et les formules officielles des prestations.
+              <strong>Repère utile :</strong> ces fiches résument les principales règles et stratégies à partir des sources officielles, dans un format plus simple à parcourir.
             </AlertDescription>
           </Alert>
 
           <Tabs defaultValue="modules" className="w-full">
             <TabsList className="grid w-full grid-cols-3">
-              <TabsTrigger value="modules">Modules d'expertise</TabsTrigger>
-              <TabsTrigger value="paths">Parcours d'apprentissage</TabsTrigger>
-              <TabsTrigger value="progress">Mon progrès</TabsTrigger>
+              <TabsTrigger value="modules">Sujets</TabsTrigger>
+              <TabsTrigger value="paths">Parcours</TabsTrigger>
+              <TabsTrigger value="progress">Ma progression</TabsTrigger>
             </TabsList>
 
             <TabsContent value="modules" className="space-y-4">

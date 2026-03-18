@@ -187,6 +187,16 @@ const BenefitsTable: React.FC<BenefitsTableProps> = ({
 
       {!isCollapsed && (
         <CardContent className="p-6 space-y-6">
+          <div className="rounded-2xl border-2 border-blue-100 bg-white p-5">
+            <h3 className="text-xl font-bold text-blue-900 mb-2">
+              {isFrench ? 'Par où commencer' : 'Where to start'}
+            </h3>
+            <p className="text-[18px] leading-8 text-gray-700">
+              {isFrench
+                ? 'Entrez d’abord vos rentes connues ou déjà commencées. Ajoutez ensuite la Sécurité de la vieillesse et, au besoin, l’assurance emploi. Le but est d’avoir un portrait clair de vos revenus garantis.'
+                : 'Start with the pensions you already know or already receive. Then add Old Age Security and, if needed, Employment Insurance. The goal is to build a clear picture of your guaranteed income.'}
+            </p>
+          </div>
           {/* Section RRQ - Nouveau système par périodes */}
           <RRQManager
             personNumber={personNumber}

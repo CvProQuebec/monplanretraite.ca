@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './card';
 import { Button } from './button';
 import { Alert, AlertDescription } from './alert';
 import { Badge } from './badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs';
+import GuidedPageIntro from './GuidedPageIntro';
+import NextStepPanel from './NextStepPanel';
 import { Clock, Calculator, TrendingUp, Calendar, Target, AlertTriangle, CheckCircle, Info, DollarSign } from 'lucide-react';
 
 interface CPPTimingScenario {
@@ -42,63 +44,63 @@ const CPPTimingOptimizationModule: React.FC = () => {
   const cppScenarios: CPPTimingScenario[] = [
     {
       id: 'early',
-      name: 'Début précoce (60 ans)',
-      description: 'Commencer les prestations RRQ/CPP dès 60 ans avec réduction permanente',
+      name: 'DÃ©but prÃ©coce (60 ans)',
+      description: 'Commencer les prestations RRQ/CPP dÃ¨s 60 ans avec rÃ©duction permanente',
       startAge: 60,
       adjustmentRate: -36,
       monthlyBenefit: 768, // 64% of full benefit
       lifetimeValue: 230400, // Assuming 25 years
       breakEvenAge: 74,
       pros: [
-        'Liquidités immédiates disponibles',
-        'Sécurité de recevoir des prestations',
-        'Utile si santé précaire ou besoins financiers urgents',
-        'Permet de différer autres sources de revenus'
+        'LiquiditÃ©s immÃ©diates disponibles',
+        'SÃ©curitÃ© de recevoir des prestations',
+        'Utile si santÃ© prÃ©caire ou besoins financiers urgents',
+        'Permet de diffÃ©rer autres sources de revenus'
       ],
       cons: [
-        'Réduction permanente de 36% des prestations',
-        'Perte significative de revenus à long terme',
-        'Impact négatif si longévité élevée',
+        'RÃ©duction permanente de 36% des prestations',
+        'Perte significative de revenus Ã  long terme',
+        'Impact nÃ©gatif si longÃ©vitÃ© Ã©levÃ©e',
         'Moins avantageux fiscalement'
       ],
       bestFor: [
-        'Personnes avec espérance de vie réduite',
-        'Besoins financiers immédiats critiques',
-        'Stratégie de pont vers autres revenus',
+        'Personnes avec espÃ©rance de vie rÃ©duite',
+        'Besoins financiers immÃ©diats critiques',
+        'StratÃ©gie de pont vers autres revenus',
         'Risque de changements futurs des programmes'
       ]
     },
     {
       id: 'standard',
-      name: 'Âge standard (65 ans)',
-      description: 'Commencer les prestations à l\'âge normal de retraite sans ajustement',
+      name: 'Ã‚ge standard (65 ans)',
+      description: 'Commencer les prestations Ã  l\'Ã¢ge normal de retraite sans ajustement',
       startAge: 65,
       adjustmentRate: 0,
       monthlyBenefit: 1200, // 100% of full benefit
       lifetimeValue: 240000, // Assuming 20 years
       breakEvenAge: 65,
       pros: [
-        'Prestations complètes sans réduction',
-        'Âge traditionnel de retraite',
-        'Équilibre entre sécurité et optimisation',
+        'Prestations complÃ¨tes sans rÃ©duction',
+        'Ã‚ge traditionnel de retraite',
+        'Ã‰quilibre entre sÃ©curitÃ© et optimisation',
         'Coordination naturelle avec autres programmes'
       ],
       cons: [
-        'Pas d\'optimisation pour longévité élevée',
-        'Opportunité manquée d\'augmentation',
-        'Peut ne pas être optimal selon la situation'
+        'Pas d\'optimisation pour longÃ©vitÃ© Ã©levÃ©e',
+        'OpportunitÃ© manquÃ©e d\'augmentation',
+        'Peut ne pas Ãªtre optimal selon la situation'
       ],
       bestFor: [
-        'Espérance de vie moyenne (80-85 ans)',
-        'Besoins de revenus immédiats modérés',
+        'EspÃ©rance de vie moyenne (80-85 ans)',
+        'Besoins de revenus immÃ©diats modÃ©rÃ©s',
         'Approche conservatrice et traditionnelle',
         'Coordination avec cessation d\'emploi'
       ]
     },
     {
       id: 'delayed',
-      name: 'Report stratégique (70 ans)',
-      description: 'Reporter les prestations jusqu\'à 70 ans pour maximiser les montants',
+      name: 'Report stratÃ©gique (70 ans)',
+      description: 'Reporter les prestations jusqu\'Ã  70 ans pour maximiser les montants',
       startAge: 70,
       adjustmentRate: 42,
       monthlyBenefit: 1704, // 142% of full benefit
@@ -106,27 +108,27 @@ const CPPTimingOptimizationModule: React.FC = () => {
       breakEvenAge: 82,
       pros: [
         'Augmentation permanente de 42% des prestations',
-        'Optimisation pour longévité élevée',
-        'Revenus de retraite maximisés',
+        'Optimisation pour longÃ©vitÃ© Ã©levÃ©e',
+        'Revenus de retraite maximisÃ©s',
         'Avantage fiscal potentiel'
       ],
       cons: [
-        'Aucune prestation pendant 5 années critiques',
-        'Risque si décès prématuré',
-        'Nécessite autres sources de revenus',
-        'Complexité de planification'
+        'Aucune prestation pendant 5 annÃ©es critiques',
+        'Risque si dÃ©cÃ¨s prÃ©maturÃ©',
+        'NÃ©cessite autres sources de revenus',
+        'ComplexitÃ© de planification'
       ],
       bestFor: [
-        'Espérance de vie élevée (85+ ans)',
+        'EspÃ©rance de vie Ã©levÃ©e (85+ ans)',
         'Autres sources de revenus suffisantes',
-        'Optimisation fiscale avancée',
+        'Optimisation fiscale avancÃ©e',
         'Maximisation du patrimoine familial'
       ]
     },
     {
       id: 'hybrid',
-      name: 'Stratégie hybride (67-68 ans)',
-      description: 'Compromis entre sécurité et optimisation avec début modérément différé',
+      name: 'StratÃ©gie hybride (67-68 ans)',
+      description: 'Compromis entre sÃ©curitÃ© et optimisation avec dÃ©but modÃ©rÃ©ment diffÃ©rÃ©',
       startAge: 67,
       adjustmentRate: 16.8,
       monthlyBenefit: 1402, // 116.8% of full benefit
@@ -134,20 +136,20 @@ const CPPTimingOptimizationModule: React.FC = () => {
       breakEvenAge: 78,
       pros: [
         'Augmentation significative des prestations',
-        'Équilibre risque/rendement optimal',
-        'Période d\'attente raisonnable',
-        'Flexibilité de planification'
+        'Ã‰quilibre risque/rendement optimal',
+        'PÃ©riode d\'attente raisonnable',
+        'FlexibilitÃ© de planification'
       ],
       cons: [
         'Pas d\'optimisation maximale',
-        'Toujours un risque de longévité',
-        'Complexité de timing'
+        'Toujours un risque de longÃ©vitÃ©',
+        'ComplexitÃ© de timing'
       ],
       bestFor: [
-        'Approche équilibrée et pragmatique',
-        'Espérance de vie légèrement supérieure à la moyenne',
+        'Approche Ã©quilibrÃ©e et pragmatique',
+        'EspÃ©rance de vie lÃ©gÃ¨rement supÃ©rieure Ã  la moyenne',
         'Revenus de transition disponibles',
-        'Optimisation modérée souhaitée'
+        'Optimisation modÃ©rÃ©e souhaitÃ©e'
       ]
     }
   ];
@@ -195,31 +197,44 @@ const CPPTimingOptimizationModule: React.FC = () => {
 
   return (
     <div className="space-y-6">
+      <GuidedPageIntro
+        eyebrow="RRQ et CPP"
+        title="RRQ ou CPP : faut-il commencer à 60, 65 ou 70 ans ?"
+        description="Cette page vous aide à comparer un début à 60, 65 ou 70 ans. Commencez par une estimation réaliste de votre rente à 65 ans, puis comparez l’effet sur vos revenus mensuels et sur votre revenu à vie."
+        bullets={[
+          'Commencez par votre montant estimÃ© Ã  65 ans.',
+          'Comparez ensuite les scÃ©narios 60, 65 et 70 ans.',
+          'Terminez en ajoutant cette dÃ©cision Ã  votre dossier retraite.',
+        ]}
+        primaryLink={{ label: 'PrÃ©parer mon dossier', href: '/mon-dossier' }}
+        secondaryLink={{ label: 'Voir tous les outils', href: '/outils#revenus' }}
+      />
+
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Clock className="h-6 w-6" />
-            Optimisation du timing RRQ/CPP (60-70 ans)
+            Simulateur RRQ et CPP : comparer 60, 65 ou 70 ans
           </CardTitle>
           <CardDescription>
-            Stratégies avancées pour maximiser vos prestations du Régime de rentes du Québec et du Régime de pensions du Canada
+            Comparez simplement un début à 60, 65 ou 70 ans pour voir l'effet sur votre revenu mensuel et sur votre revenu à vie.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Alert className="mb-6">
             <Info className="h-4 w-4" />
             <AlertDescription>
-              <strong>Décision cruciale :</strong> Le timing de vos prestations RRQ/CPP peut représenter une différence 
-              de plus de 100 000$ sur votre vie. Cette décision est permanente et irréversible dans la plupart des cas.
+              <strong>DÃ©cision cruciale :</strong> Le timing de vos prestations RRQ/CPP peut reprÃ©senter une diffÃ©rence 
+              de plus de 100 000$ sur votre vie. Cette dÃ©cision est permanente et irrÃ©versible dans la plupart des cas.
             </AlertDescription>
           </Alert>
 
           <Tabs defaultValue="scenarios" className="w-full">
             <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="scenarios">Scénarios</TabsTrigger>
-              <TabsTrigger value="calculator">Calculateur</TabsTrigger>
-              <TabsTrigger value="decision">Aide à la décision</TabsTrigger>
-              <TabsTrigger value="strategies">Stratégies avancées</TabsTrigger>
+              <TabsTrigger value="scenarios">Comparer les âges</TabsTrigger>
+              <TabsTrigger value="calculator">Mes chiffres</TabsTrigger>
+              <TabsTrigger value="decision">M'aider à choisir</TabsTrigger>
+              <TabsTrigger value="strategies">Cas fréquents</TabsTrigger>
             </TabsList>
 
             <TabsContent value="scenarios" className="space-y-4">
@@ -265,7 +280,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
 
                       <div>
                         <div className="text-sm font-medium mb-1">
-                          Seuil de rentabilité : <span className="font-bold">{scenario.breakEvenAge} ans</span>
+                          Seuil de rentabilitÃ© : <span className="font-bold">{scenario.breakEvenAge} ans</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
                           <div 
@@ -288,7 +303,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-sm mb-2 text-red-700">Inconvénients :</h4>
+                        <h4 className="font-semibold text-sm mb-2 text-red-700">InconvÃ©nients :</h4>
                         <ul className="text-sm space-y-1">
                           {scenario.cons.slice(0, 2).map((con, i) => (
                             <li key={i} className="flex items-start gap-2">
@@ -300,7 +315,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
                       </div>
 
                       <div>
-                        <h4 className="font-semibold text-sm mb-2">Idéal pour :</h4>
+                        <h4 className="font-semibold text-sm mb-2">IdÃ©al pour :</h4>
                         <div className="flex flex-wrap gap-1">
                           {scenario.bestFor.slice(0, 2).map((best, i) => (
                             <Badge key={i} variant="outline" className="text-xs">
@@ -316,33 +331,33 @@ const CPPTimingOptimizationModule: React.FC = () => {
 
               <Card className="bg-yellow-50">
                 <CardHeader>
-                  <CardTitle className="text-lg text-yellow-800">Facteurs de décision clés</CardTitle>
+                  <CardTitle className="text-lg text-yellow-800">Facteurs de dÃ©cision clÃ©s</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <h4 className="font-medium mb-2">Espérance de vie :</h4>
+                      <h4 className="font-medium mb-2">EspÃ©rance de vie :</h4>
                       <ul className="text-sm space-y-1">
-                        <li>• <strong>Moins de 78 ans :</strong> Début précoce</li>
-                        <li>• <strong>78-82 ans :</strong> Âge standard</li>
-                        <li>• <strong>Plus de 82 ans :</strong> Report stratégique</li>
+                        <li>â€¢ <strong>Moins de 78 ans :</strong> DÃ©but prÃ©coce</li>
+                        <li>â€¢ <strong>78-82 ans :</strong> Ã‚ge standard</li>
+                        <li>â€¢ <strong>Plus de 82 ans :</strong> Report stratÃ©gique</li>
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-medium mb-2">Situation financière :</h4>
+                      <h4 className="font-medium mb-2">Situation financiÃ¨re :</h4>
                       <ul className="text-sm space-y-1">
-                        <li>• <strong>Besoins immédiats :</strong> Début précoce</li>
-                        <li>• <strong>Revenus suffisants :</strong> Report possible</li>
-                        <li>• <strong>Optimisation fiscale :</strong> Timing stratégique</li>
+                        <li>â€¢ <strong>Besoins immÃ©diats :</strong> DÃ©but prÃ©coce</li>
+                        <li>â€¢ <strong>Revenus suffisants :</strong> Report possible</li>
+                        <li>â€¢ <strong>Optimisation fiscale :</strong> Timing stratÃ©gique</li>
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-medium mb-2">Autres considérations :</h4>
+                      <h4 className="font-medium mb-2">Autres considÃ©rations :</h4>
                       <ul className="text-sm space-y-1">
-                        <li>• État de santé actuel</li>
-                        <li>• Historique familial de longévité</li>
-                        <li>• Autres sources de revenus</li>
-                        <li>• Objectifs de planification successorale</li>
+                        <li>â€¢ Ã‰tat de santÃ© actuel</li>
+                        <li>â€¢ Historique familial de longÃ©vitÃ©</li>
+                        <li>â€¢ Autres sources de revenus</li>
+                        <li>â€¢ Objectifs de planification successorale</li>
                       </ul>
                     </div>
                   </div>
@@ -355,17 +370,17 @@ const CPPTimingOptimizationModule: React.FC = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Calculator className="h-5 w-5" />
-                    Calculateur de timing RRQ/CPP
+                    Mes chiffres de timing RRQ/CPP
                   </CardTitle>
                   <CardDescription>
-                    Personnalisez vos paramètres pour voir l'impact du timing sur vos prestations
+                    Entrez votre montant estimé et voyez ce que change un début plus tôt ou plus tard.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium mb-2">
-                        Prestation mensuelle de base à 65 ans ($)
+                        Prestation mensuelle de base Ã  65 ans ($)
                       </label>
                       <input
                         type="number"
@@ -382,7 +397,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
 
                     <div>
                       <label className="block text-sm font-medium mb-2">
-                        Âge de début souhaité
+                        Ã‚ge de dÃ©but souhaitÃ©
                       </label>
                       <input
                         type="number"
@@ -399,7 +414,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
 
                     <div>
                       <label className="block text-sm font-medium mb-2">
-                        Espérance de vie estimée
+                        EspÃ©rance de vie estimÃ©e
                       </label>
                       <input
                         type="number"
@@ -443,7 +458,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
                             maximumFractionDigits: 0
                           })}
                         </div>
-                        <div className="text-sm text-gray-600">Prestation mensuelle ajustée</div>
+                        <div className="text-sm text-gray-600">Prestation mensuelle ajustÃ©e</div>
                       </CardContent>
                     </Card>
 
@@ -456,7 +471,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
                             maximumFractionDigits: 0
                           })}
                         </div>
-                        <div className="text-sm text-gray-600">Valeur totale à vie</div>
+                        <div className="text-sm text-gray-600">Valeur totale Ã  vie</div>
                       </CardContent>
                     </Card>
 
@@ -474,7 +489,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
                         <div className="text-2xl font-bold text-orange-600">
                           {calculation.breakEvenAge}
                         </div>
-                        <div className="text-sm text-gray-600">Âge de rentabilité</div>
+                        <div className="text-sm text-gray-600">Ã‚ge de rentabilitÃ©</div>
                       </CardContent>
                     </Card>
                   </div>
@@ -482,12 +497,12 @@ const CPPTimingOptimizationModule: React.FC = () => {
                   <Alert>
                     <Info className="h-4 w-4" />
                     <AlertDescription>
-                      <strong>Analyse :</strong> Avec vos paramètres, commencer à {calculation.startAge} ans vous donnerait{' '}
+                      <strong>Analyse :</strong> Avec vos paramÃ¨tres, commencer Ã  {calculation.startAge} ans vous donnerait{' '}
                       <strong>{calculation.adjustedMonthlyBenefit.toLocaleString('fr-CA', {
                         style: 'currency',
                         currency: 'CAD',
                         maximumFractionDigits: 0
-                      })}</strong> par mois. Le seuil de rentabilité par rapport au début à 65 ans serait à{' '}
+                      })}</strong> par mois. Le seuil de rentabilitÃ© par rapport au dÃ©but Ã  65 ans serait Ã {' '}
                       <strong>{calculation.breakEvenAge} ans</strong>.
                     </AlertDescription>
                   </Alert>
@@ -500,7 +515,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Target className="h-5 w-5" />
-                    Aide à la décision personnalisée
+                    M'aider à choisir
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -513,11 +528,11 @@ const CPPTimingOptimizationModule: React.FC = () => {
                         <ul className="space-y-2 text-sm">
                           <li className="flex items-start gap-2">
                             <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                            <span><strong>Longévité familiale :</strong> Parents/grands-parents ont vécu 85+ ans</span>
+                            <span><strong>LongÃ©vitÃ© familiale :</strong> Parents/grands-parents ont vÃ©cu 85+ ans</span>
                           </li>
                           <li className="flex items-start gap-2">
                             <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                            <span><strong>Excellente santé :</strong> Mode de vie sain, pas de problèmes majeurs</span>
+                            <span><strong>Excellente santÃ© :</strong> Mode de vie sain, pas de problÃ¨mes majeurs</span>
                           </li>
                           <li className="flex items-start gap-2">
                             <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
@@ -525,11 +540,11 @@ const CPPTimingOptimizationModule: React.FC = () => {
                           </li>
                           <li className="flex items-start gap-2">
                             <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                            <span><strong>Optimisation fiscale :</strong> Stratégie de minimisation d'impôt</span>
+                            <span><strong>Optimisation fiscale :</strong> StratÃ©gie de minimisation d'impÃ´t</span>
                           </li>
                           <li className="flex items-start gap-2">
                             <CheckCircle className="h-4 w-4 text-green-600 mt-0.5 flex-shrink-0" />
-                            <span><strong>Héritage :</strong> Maximiser les prestations pour le conjoint survivant</span>
+                            <span><strong>HÃ©ritage :</strong> Maximiser les prestations pour le conjoint survivant</span>
                           </li>
                         </ul>
                       </CardContent>
@@ -537,13 +552,13 @@ const CPPTimingOptimizationModule: React.FC = () => {
 
                     <Card className="bg-red-50">
                       <CardHeader>
-                        <CardTitle className="text-lg text-red-800">Arguments pour le début précoce (60 ans)</CardTitle>
+                        <CardTitle className="text-lg text-red-800">Arguments pour le dÃ©but prÃ©coce (60 ans)</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <ul className="space-y-2 text-sm">
                           <li className="flex items-start gap-2">
                             <AlertTriangle className="h-4 w-4 text-red-600 mt-0.5 flex-shrink-0" />
-                            <span><strong>Santé précaire :</strong> Problèmes de santé ou espérance de vie réduite</span>
+                            <span><strong>SantÃ© prÃ©caire :</strong> ProblÃ¨mes de santÃ© ou espÃ©rance de vie rÃ©duite</span>
                           </li>
                           <li className="flex items-start gap-2">
                             <AlertTriangle className="h-4 w-4 text-red-600 mt-0.5 flex-shrink-0" />
@@ -551,15 +566,15 @@ const CPPTimingOptimizationModule: React.FC = () => {
                           </li>
                           <li className="flex items-start gap-2">
                             <AlertTriangle className="h-4 w-4 text-red-600 mt-0.5 flex-shrink-0" />
-                            <span><strong>Cessation d'emploi :</strong> Perte d'emploi involontaire ou épuisement</span>
+                            <span><strong>Cessation d'emploi :</strong> Perte d'emploi involontaire ou Ã©puisement</span>
                           </li>
                           <li className="flex items-start gap-2">
                             <AlertTriangle className="h-4 w-4 text-red-600 mt-0.5 flex-shrink-0" />
-                            <span><strong>Sécurité :</strong> Préférence pour la certitude vs optimisation</span>
+                            <span><strong>SÃ©curitÃ© :</strong> PrÃ©fÃ©rence pour la certitude vs optimisation</span>
                           </li>
                           <li className="flex items-start gap-2">
                             <AlertTriangle className="h-4 w-4 text-red-600 mt-0.5 flex-shrink-0" />
-                            <span><strong>Stratégie de pont :</strong> Utiliser RRQ/CPP pour préserver autres actifs</span>
+                            <span><strong>StratÃ©gie de pont :</strong> Utiliser RRQ/CPP pour prÃ©server autres actifs</span>
                           </li>
                         </ul>
                       </CardContent>
@@ -568,29 +583,29 @@ const CPPTimingOptimizationModule: React.FC = () => {
 
                   <Card className="bg-blue-50">
                     <CardHeader>
-                      <CardTitle className="text-lg text-blue-800">Questionnaire d'aide à la décision</CardTitle>
+                      <CardTitle className="text-lg text-blue-800">Petit repère pour vous orienter</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div>
-                            <h4 className="font-medium mb-2">Évaluez votre situation :</h4>
+                            <h4 className="font-medium mb-2">Ã‰valuez votre situation :</h4>
                             <div className="space-y-2 text-sm">
                               <div className="flex items-center gap-2">
                                 <input type="checkbox" id="health" className="rounded" />
-                                <label htmlFor="health">Excellente santé et longévité familiale</label>
+                                <label htmlFor="health">Excellente santÃ© et longÃ©vitÃ© familiale</label>
                               </div>
                               <div className="flex items-center gap-2">
                                 <input type="checkbox" id="income" className="rounded" />
-                                <label htmlFor="income">Autres revenus suffisants jusqu'à 70 ans</label>
+                                <label htmlFor="income">Autres revenus suffisants jusqu'Ã  70 ans</label>
                               </div>
                               <div className="flex items-center gap-2">
                                 <input type="checkbox" id="optimize" className="rounded" />
-                                <label htmlFor="optimize">Objectif d'optimisation à long terme</label>
+                                <label htmlFor="optimize">Objectif d'optimisation Ã  long terme</label>
                               </div>
                               <div className="flex items-center gap-2">
                                 <input type="checkbox" id="spouse" className="rounded" />
-                                <label htmlFor="spouse">Conjoint bénéficierait des prestations maximisées</label>
+                                <label htmlFor="spouse">Conjoint bÃ©nÃ©ficierait des prestations maximisÃ©es</label>
                               </div>
                             </div>
                           </div>
@@ -599,19 +614,19 @@ const CPPTimingOptimizationModule: React.FC = () => {
                             <div className="space-y-2 text-sm">
                               <div className="flex items-center gap-2">
                                 <input type="checkbox" id="health-risk" className="rounded" />
-                                <label htmlFor="health-risk">Problèmes de santé significatifs</label>
+                                <label htmlFor="health-risk">ProblÃ¨mes de santÃ© significatifs</label>
                               </div>
                               <div className="flex items-center gap-2">
                                 <input type="checkbox" id="financial-need" className="rounded" />
-                                <label htmlFor="financial-need">Besoins financiers immédiats</label>
+                                <label htmlFor="financial-need">Besoins financiers immÃ©diats</label>
                               </div>
                               <div className="flex items-center gap-2">
                                 <input type="checkbox" id="job-loss" className="rounded" />
-                                <label htmlFor="job-loss">Perte d'emploi ou incapacité de travailler</label>
+                                <label htmlFor="job-loss">Perte d'emploi ou incapacitÃ© de travailler</label>
                               </div>
                               <div className="flex items-center gap-2">
                                 <input type="checkbox" id="security" className="rounded" />
-                                <label htmlFor="security">Préférence pour la sécurité immédiate</label>
+                                <label htmlFor="security">PrÃ©fÃ©rence pour la sÃ©curitÃ© immÃ©diate</label>
                               </div>
                             </div>
                           </div>
@@ -620,9 +635,7 @@ const CPPTimingOptimizationModule: React.FC = () => {
                         <Alert>
                           <Info className="h-4 w-4" />
                           <AlertDescription>
-                            <strong>Recommandation générale :</strong> Si vous avez coché plus d'éléments dans la section 
-                            "Évaluez votre situation", le report pourrait être avantageux. Si vous avez plus de "Facteurs de risque", 
-                            un début plus précoce pourrait être approprié.
+                            <strong>Repère simple :</strong> Si vous vous reconnaissez surtout dans les éléments en faveur du report, attendre peut être logique. Si les besoins immédiats et les risques dominent, un début plus tôt peut mieux convenir.
                           </AlertDescription>
                         </Alert>
                       </div>
@@ -637,75 +650,75 @@ const CPPTimingOptimizationModule: React.FC = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <TrendingUp className="h-5 w-5" />
-                    Stratégies avancées de timing
+                    Cas fréquents de timing
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <Card className="bg-blue-50">
                       <CardHeader>
-                        <CardTitle className="text-lg text-blue-800">Stratégie du "Bridge"</CardTitle>
+                        <CardTitle className="text-lg text-blue-800">StratÃ©gie du "Bridge"</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <p className="text-sm mb-3">
-                          Utiliser les prestations RRQ/CPP précoces comme pont financier tout en préservant d'autres actifs.
+                          Utiliser les prestations RRQ/CPP prÃ©coces comme pont financier tout en prÃ©servant d'autres actifs.
                         </p>
                         <ul className="text-sm space-y-1">
-                          <li>• Commencer RRQ/CPP à 60-62 ans</li>
-                          <li>• Préserver REER/FERR pour plus tard</li>
-                          <li>• Permettre croissance continue des investissements</li>
-                          <li>• Réduire le stress financier de transition</li>
+                          <li>â€¢ Commencer RRQ/CPP Ã  60-62 ans</li>
+                          <li>â€¢ PrÃ©server REER/FERR pour plus tard</li>
+                          <li>â€¢ Permettre croissance continue des investissements</li>
+                          <li>â€¢ RÃ©duire le stress financier de transition</li>
                         </ul>
                       </CardContent>
                     </Card>
 
                     <Card className="bg-green-50">
                       <CardHeader>
-                        <CardTitle className="text-lg text-green-800">Optimisation fiscale coordonnée</CardTitle>
+                        <CardTitle className="text-lg text-green-800">Optimisation fiscale coordonnÃ©e</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <p className="text-sm mb-3">
-                          Coordonner le timing RRQ/CPP avec d'autres stratégies fiscales pour minimiser l'impôt total.
+                          Coordonner le timing RRQ/CPP avec d'autres stratÃ©gies fiscales pour minimiser l'impÃ´t total.
                         </p>
                         <ul className="text-sm space-y-1">
-                          <li>• Synchroniser avec fonte REER</li>
-                          <li>• Utiliser fractionnement de pension à 65+</li>
-                          <li>• Optimiser les tranches d'imposition</li>
-                          <li>• Maximiser les crédits d'impôt disponibles</li>
+                          <li>â€¢ Synchroniser avec fonte REER</li>
+                          <li>â€¢ Utiliser fractionnement de pension Ã  65+</li>
+                          <li>â€¢ Optimiser les tranches d'imposition</li>
+                          <li>â€¢ Maximiser les crÃ©dits d'impÃ´t disponibles</li>
                         </ul>
                       </CardContent>
                     </Card>
 
                     <Card className="bg-purple-50">
                       <CardHeader>
-                        <CardTitle className="text-lg text-purple-800">Stratégie de couple</CardTitle>
+                        <CardTitle className="text-lg text-purple-800">StratÃ©gie de couple</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <p className="text-sm mb-3">
                           Optimiser le timing des deux conjoints pour maximiser les prestations familiales totales.
                         </p>
                         <ul className="text-sm space-y-1">
-                          <li>• Échelonner les dates de début</li>
-                          <li>• Considérer les différences d'âge</li>
-                          <li>• Optimiser les prestations de survivant</li>
-                          <li>• Coordonner avec autres revenus du couple</li>
+                          <li>â€¢ Ã‰chelonner les dates de dÃ©but</li>
+                          <li>â€¢ ConsidÃ©rer les diffÃ©rences d'Ã¢ge</li>
+                          <li>â€¢ Optimiser les prestations de survivant</li>
+                          <li>â€¢ Coordonner avec autres revenus du couple</li>
                         </ul>
                       </CardContent>
                     </Card>
 
                     <Card className="bg-orange-50">
                       <CardHeader>
-                        <CardTitle className="text-lg text-orange-800">Stratégie de longévité</CardTitle>
+                        <CardTitle className="text-lg text-orange-800">StratÃ©gie de longÃ©vitÃ©</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <p className="text-sm mb-3">
                           Maximiser les prestations pour une retraite de 30+ ans en reportant au maximum.
                         </p>
                         <ul className="text-sm space-y-1">
-                          <li>• Reporter jusqu'à 70 ans si possible</li>
-                          <li>• Utiliser autres sources de revenus temporaires</li>
-                          <li>• Maximiser les prestations indexées à vie</li>
-                          <li>• Protéger contre l'inflation à long terme</li>
+                          <li>â€¢ Reporter jusqu'Ã  70 ans si possible</li>
+                          <li>â€¢ Utiliser autres sources de revenus temporaires</li>
+                          <li>â€¢ Maximiser les prestations indexÃ©es Ã  vie</li>
+                          <li>â€¢ ProtÃ©ger contre l'inflation Ã  long terme</li>
                         </ul>
                       </CardContent>
                     </Card>
@@ -714,17 +727,23 @@ const CPPTimingOptimizationModule: React.FC = () => {
                   <Alert>
                     <DollarSign className="h-4 w-4" />
                     <AlertDescription>
-                      <strong>Conseil d'expert :</strong> La décision de timing RRQ/CPP devrait être intégrée dans une 
-                      stratégie globale de retraite. Consultez un planificateur financier pour analyser votre situation 
-                      complète et optimiser toutes vos sources de revenus ensemble.
+                      <strong>À retenir :</strong> Le bon âge dépend rarement d'un seul chiffre. L'idéal est de relier cette décision à vos autres revenus, à vos retraits et à votre situation de couple.
                     </AlertDescription>
                   </Alert>
                 </CardContent>
               </Card>
             </TabsContent>
           </Tabs>
+          <NextStepPanel
+            title="Prochaine Ã©tape"
+            text="Quand vous avez une idÃ©e du meilleur Ã¢ge pour demander votre RRQ, ajoutez cette dÃ©cision Ã  votre dossier et vÃ©rifiez ensuite son impact sur vos retraits et votre impÃ´t."
+            primaryLabel="PrÃ©parer mon dossier"
+            primaryHref="/mon-dossier"
+            secondaryLabel="Voir les outils fiscaux"
+            secondaryHref="/outils#impots"
+          />
           <p className="mt-6 text-sm leading-6" style={{ color: '#64748b' }}>
-            Ces outils sont fournis à titre éducatif uniquement et ne constituent pas des conseils financiers, fiscaux ou juridiques. Les projections sont basées sur des hypothèses et ne garantissent pas les résultats futurs. Consultez un planificateur financier agréé pour des conseils adaptés à votre situation.
+            Ces outils sont fournis Ã  titre Ã©ducatif uniquement et ne constituent pas des conseils financiers, fiscaux ou juridiques. Les projections sont basÃ©es sur des hypothÃ¨ses et ne garantissent pas les rÃ©sultats futurs. Consultez un planificateur financier agrÃ©Ã© pour des conseils adaptÃ©s Ã  votre situation.
           </p>
         </CardContent>
       </Card>
@@ -733,3 +752,5 @@ const CPPTimingOptimizationModule: React.FC = () => {
 };
 
 export default CPPTimingOptimizationModule;
+
+

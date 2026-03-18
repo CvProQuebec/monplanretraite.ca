@@ -176,8 +176,7 @@ const CashWedgeBucketModule: React.FC = () => {
           </h1>
         </div>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          Protégez votre retraite avec une stratégie de buckets. Gardez 3-5 ans de liquidités 
-          pour naviguer les marchés baissiers sans toucher vos investissements.
+          Réservez plusieurs années de liquidités pour éviter de vendre vos placements au mauvais moment.
         </p>
       </div>
 
@@ -213,10 +212,10 @@ const CashWedgeBucketModule: React.FC = () => {
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="calculator">Calculateur</TabsTrigger>
-          <TabsTrigger value="strategy">Stratégie</TabsTrigger>
-          <TabsTrigger value="scenarios">Scénarios</TabsTrigger>
-          <TabsTrigger value="education">Éducation</TabsTrigger>
+          <TabsTrigger value="calculator">Mes chiffres</TabsTrigger>
+          <TabsTrigger value="strategy">Répartition suggérée</TabsTrigger>
+          <TabsTrigger value="scenarios">Exemples</TabsTrigger>
+          <TabsTrigger value="education">À retenir</TabsTrigger>
         </TabsList>
 
         <TabsContent value="calculator" className="space-y-6">
@@ -225,10 +224,10 @@ const CashWedgeBucketModule: React.FC = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Calculator className="h-5 w-5" />
-                  Paramètres de Retraite
+                  Vos repères
                 </CardTitle>
                 <CardDescription>
-                  Entrez vos informations pour calculer votre stratégie optimale
+                  Entrez vos montants pour voir quelle réserve de liquidités pourrait vous convenir.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -313,7 +312,7 @@ const CashWedgeBucketModule: React.FC = () => {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <PieChart className="h-5 w-5" />
-                  Répartition Recommandée
+                  Répartition suggérée
                 </CardTitle>
               </CardHeader>
               <CardContent>

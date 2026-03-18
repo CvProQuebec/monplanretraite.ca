@@ -192,12 +192,11 @@ const TaxEducationCenter: React.FC = () => {
         <div className="flex items-center justify-center gap-3">
           <GraduationCap className="h-8 w-8 text-purple-600" />
           <h1 className="text-3xl font-bold text-gray-900">
-            Centre d'Éducation Fiscale
+            Comprendre l'impôt à la retraite
           </h1>
         </div>
         <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-          Maîtrisez les stratégies fiscales de la retraite. Économisez des milliers de dollars 
-          en comprenant les crédits, déductions et optimisations disponibles.
+          Avancez un concept à la fois pour mieux comprendre les crédits, les retraits et les décisions qui influencent votre impôt.
         </p>
       </div>
 
@@ -207,7 +206,7 @@ const TaxEducationCenter: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-lg">
               <Target className="h-5 w-5" />
-              Progression
+              Votre progression
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -225,7 +224,7 @@ const TaxEducationCenter: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-lg">
               <DollarSign className="h-5 w-5" />
-              Économies Potentielles
+              Économies possibles
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -245,7 +244,7 @@ const TaxEducationCenter: React.FC = () => {
           <CardHeader className="pb-3">
             <CardTitle className="flex items-center gap-2 text-lg">
               <Award className="h-5 w-5" />
-              Niveau d'Expertise
+              Niveau actuel
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -265,9 +264,9 @@ const TaxEducationCenter: React.FC = () => {
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="concepts">Concepts Clés</TabsTrigger>
-          <TabsTrigger value="strategies">Stratégies</TabsTrigger>
-          <TabsTrigger value="calculator">Calculateur</TabsTrigger>
+          <TabsTrigger value="concepts">Notions utiles</TabsTrigger>
+          <TabsTrigger value="strategies">Par âge</TabsTrigger>
+          <TabsTrigger value="calculator">Mes repères</TabsTrigger>
           <TabsTrigger value="resources">Ressources</TabsTrigger>
         </TabsList>
 
@@ -322,12 +321,12 @@ const TaxEducationCenter: React.FC = () => {
                     {concept.completed ? (
                       <>
                         <CheckCircle className="h-4 w-4 mr-2" />
-                        Concept maîtrisé
+                        Notion comprise
                       </>
                     ) : (
                       <>
                         <BookOpen className="h-4 w-4 mr-2" />
-                        Apprendre ce concept
+                        Voir cette notion
                       </>
                     )}
                   </Button>
@@ -342,10 +341,10 @@ const TaxEducationCenter: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Calendar className="h-5 w-5" />
-                Stratégies par Âge
+                Repères par âge
               </CardTitle>
               <CardDescription>
-                Sélectionnez votre âge pour voir les stratégies applicables
+                Choisissez votre âge pour voir les pistes les plus pertinentes.
               </CardDescription>
             </CardHeader>
             <CardContent>

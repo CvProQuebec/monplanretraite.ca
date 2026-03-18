@@ -199,18 +199,18 @@ export const InflationProtectionCenter: React.FC<InflationProtectionCenterProps>
           <div className="max-w-md mx-auto">
             <Shield className="w-16 h-16 text-gray-400 mx-auto mb-6" />
             <h3 className="text-xl font-semibold text-gray-900 mb-4">
-              Fonctionnalité Premium
+              Module réservé aux forfaits avancés
             </h3>
             <p className="text-gray-600 mb-6">
               L'analyse de protection contre l'inflation est disponible avec les plans Professionnel et Expert.
             </p>
             <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
               <p className="text-sm text-green-800">
-                <strong>Protection essentielle:</strong> L'inflation peut réduire votre pouvoir d'achat de 50%+ sur 25 ans
+                <strong>Pourquoi c'est utile :</strong> l'inflation peut réduire fortement votre pouvoir d'achat sur une longue retraite.
               </p>
             </div>
             <Button className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700">
-              Débloquer le Module
+              Débloquer ce module
             </Button>
           </div>
         </CardContent>
@@ -230,7 +230,7 @@ export const InflationProtectionCenter: React.FC<InflationProtectionCenterProps>
             Centre de Protection contre l'Inflation
           </CardTitle>
           <CardDescription className="text-lg text-gray-600">
-            Analysez et protégez votre patrimoine contre l'érosion du pouvoir d'achat
+            Voyez comment l'inflation peut gruger votre revenu futur et quelles protections peuvent aider.
           </CardDescription>
         </CardHeader>
       </Card>
@@ -240,7 +240,7 @@ export const InflationProtectionCenter: React.FC<InflationProtectionCenterProps>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Calculator className="w-5 h-5" />
-            Vos Paramètres Financiers
+            Vos repères
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
@@ -350,7 +350,7 @@ export const InflationProtectionCenter: React.FC<InflationProtectionCenterProps>
                 step="5000"
               />
               <p className="text-xs text-gray-500 mt-1">
-                Actions, REITs, obligations indexées, matières premières, etc.
+                Par exemple : actions, immobilier coté, obligations indexées, matières premières.
               </p>
             </div>
           </div>

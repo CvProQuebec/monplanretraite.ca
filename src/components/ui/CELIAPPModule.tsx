@@ -253,25 +253,25 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
             <Badge variant="secondary">GOUVERNEMENT DU CANADA 2023+</Badge>
           </CardTitle>
           <CardDescription>
-            Optimisez votre stratégie d'achat de première propriété avec le nouveau CELIAPP
+            Voyez comment le CELIAPP peut vous aider à préparer une mise de fonds plus efficacement.
           </CardDescription>
         </CardHeader>
       </Card>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="calculator">Calculateur</TabsTrigger>
-          <TabsTrigger value="comparison">CELIAPP vs RAP</TabsTrigger>
-          <TabsTrigger value="strategy">Stratégie</TabsTrigger>
+          <TabsTrigger value="calculator">Mes chiffres</TabsTrigger>
+          <TabsTrigger value="comparison">CELIAPP ou RAP</TabsTrigger>
+          <TabsTrigger value="strategy">Plan suggéré</TabsTrigger>
           <TabsTrigger value="education">Guide</TabsTrigger>
         </TabsList>
 
         <TabsContent value="calculator" className="space-y-4">
           <Card>
             <CardHeader>
-              <CardTitle>Votre Profil d'Acheteur</CardTitle>
+              <CardTitle>Votre projet d'achat</CardTitle>
               <CardDescription>
-                Configurez votre situation pour calculer les avantages CELIAPP
+                Entrez vos renseignements de base pour voir ce que le CELIAPP pourrait vous apporter.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -356,7 +356,7 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
               <CardHeader>
                 <CardTitle>Vos Comptes CELIAPP</CardTitle>
                 <CardDescription>
-                  Gérez vos comptes CELIAPP pour optimiser votre épargne
+                  Ajoutez vos comptes pour voir votre marge de cotisation et votre solde projeté.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
@@ -414,7 +414,7 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
                   </Button>
                   <Button onClick={calculateCELIAPP} className="flex items-center gap-2">
                     <Calculator className="h-4 w-4" />
-                    Calculer Stratégie CELIAPP
+                    Voir le résultat
                   </Button>
                 </div>
               </CardContent>
@@ -470,7 +470,7 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <TrendingUp className="h-5 w-5" />
-                    CELIAPP vs RAP - Comparaison Détaillée
+                    CELIAPP ou RAP
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -524,7 +524,7 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
                   <Alert className="mt-6">
                     <CheckCircle className="h-4 w-4" />
                     <AlertDescription>
-                      <strong>Recommandation:</strong> {comparison.recommendation}
+                      <strong>Repère simple :</strong> {comparison.recommendation}
                     </AlertDescription>
                   </Alert>
 
@@ -534,7 +534,7 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
                       {comparison.advantageCELIAPP.toLocaleString('fr-CA', { style: 'currency', currency: 'CAD' })}
                     </p>
                     <p className="text-sm text-gray-600 mt-1">
-                      Économies totales vs RAP traditionnel
+                      Différence estimée par rapport au RAP
                     </p>
                   </div>
                 </CardContent>
@@ -542,7 +542,7 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Tableau Comparatif Détaillé</CardTitle>
+              <CardTitle>Comparer les deux options</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="overflow-x-auto">
@@ -589,9 +589,9 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
           ) : (
             <Card>
               <CardContent className="p-8 text-center">
-                <p className="text-gray-600">Calculez d'abord votre stratégie CELIAPP dans l'onglet Calculateur pour voir la comparaison détaillée.</p>
+                <p className="text-gray-600">Commencez par entrer vos chiffres pour voir quelle option semble la plus avantageuse.</p>
                 <Button onClick={() => setActiveTab('calculator')} className="mt-4">
-                  Aller au Calculateur
+                  Aller à mes chiffres
                 </Button>
               </CardContent>
             </Card>
@@ -603,17 +603,17 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Calendar className="h-5 w-5" />
-                Stratégie d'Épargne Optimisée
+                Plan d'épargne suggéré
               </CardTitle>
               <CardDescription>
-                Plan personnalisé pour maximiser vos avantages CELIAPP
+                Quelques repères simples pour tirer le meilleur du CELIAPP selon votre horizon.
               </CardDescription>
             </CardHeader>
             <CardContent>
               {calculations ? (
                 <div className="space-y-4">
                   <div className="p-4 border rounded-lg bg-yellow-50">
-                    <h3 className="font-semibold mb-2">Plan d'Épargne Recommandé</h3>
+                    <h3 className="font-semibold mb-2">Plan suggéré</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <p className="text-sm text-gray-600">Cotisation annuelle optimale:</p>
@@ -633,7 +633,7 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
                   <Alert>
                     <Info className="h-4 w-4" />
                     <AlertDescription>
-                      <strong>Conseil:</strong> Maximisez vos cotisations CELIAPP avant de considérer d'autres véhicules d'épargne pour l'achat immobilier.
+                      <strong>À retenir :</strong> Quand vous êtes admissible, le CELIAPP mérite souvent d'être regardé en premier avant les autres comptes pour une mise de fonds.
                     </AlertDescription>
                   </Alert>
 
@@ -646,7 +646,7 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                     <div className="p-4 border rounded-lg">
-                      <h4 className="font-semibold mb-2">Stratégie Court Terme (1-3 ans)</h4>
+                      <h4 className="font-semibold mb-2">Si l'achat est proche (1 à 3 ans)</h4>
                       <ul className="text-sm space-y-1">
                         <li>• Maximiser cotisations annuelles CELIAPP</li>
                         <li>• Placements conservateurs (CPG, obligations)</li>
@@ -654,7 +654,7 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
                       </ul>
                     </div>
                     <div className="p-4 border rounded-lg">
-                      <h4 className="font-semibold mb-2">Stratégie Long Terme (4+ ans)</h4>
+                      <h4 className="font-semibold mb-2">Si l'achat est plus loin (4 ans et plus)</h4>
                       <ul className="text-sm space-y-1">
                         <li>• Diversification avec fonds équilibrés</li>
                         <li>• Croissance potentielle plus élevée</li>
@@ -665,7 +665,7 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
 
                   {hasAdvancedFeatures && (
                     <div className="mt-4 p-4 bg-purple-50 border border-purple-200 rounded-lg">
-                      <h3 className="font-semibold text-purple-800 mb-2">Stratégie Expert</h3>
+                      <h3 className="font-semibold text-purple-800 mb-2">Pour aller plus loin</h3>
                       <div className="space-y-2 text-sm">
                         <p>• <strong>Fractionnement familial:</strong> Considérez ouvrir CELIAPP pour conjoint éligible</p>
                         <p>• <strong>Optimisation fiscale:</strong> Coordonnez avec REER pour maximiser déductions</p>
@@ -677,9 +677,9 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
               ) : (
                 <Card>
                   <CardContent className="p-8 text-center">
-                    <p className="text-gray-600">Calculez d'abord votre stratégie CELIAPP dans l'onglet Calculateur pour voir le plan d'épargne personnalisé.</p>
+                    <p className="text-gray-600">Commencez par entrer vos chiffres pour voir le plan suggéré.</p>
                     <Button onClick={() => setActiveTab('calculator')} className="mt-4">
-                      Aller au Calculateur
+                      Aller à mes chiffres
                     </Button>
                   </CardContent>
                 </Card>
@@ -693,10 +693,10 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <BookOpen className="h-5 w-5" />
-                Guide CELIAPP - Gouvernement du Canada
+                Guide CELIAPP
               </CardTitle>
               <CardDescription>
-                Tout ce que vous devez savoir sur le nouveau compte d'épargne pour première propriété
+                Les règles essentielles à connaître avant d'utiliser ce compte.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -802,7 +802,7 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
               <Alert>
                 <DollarSign className="h-4 w-4" />
                 <AlertDescription>
-                  <strong>Conseil d'expert:</strong> Le CELIAPP représente une opportunité unique combinant les avantages du REER et du CELI. Pour la plupart des premiers acheteurs, il devrait être priorisé avant les autres véhicules d'épargne immobilière.
+                  <strong>À retenir :</strong> Pour beaucoup de premiers acheteurs, le CELIAPP est l'un des premiers comptes à considérer parce qu'il combine déduction fiscale et retrait admissible non imposable.
                 </AlertDescription>
               </Alert>
             </CardContent>

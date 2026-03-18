@@ -1,7 +1,7 @@
 ---
 title: When Can I Retire? - The Different Ages and What This Changes in Your Portfolio
 slug: retirement-ages-portfolio
-date: '2026-02-27'
+date: '2026-02-09'
 lastUpdated: '2026-02-27'
 excerpt: Retiring is no longer a binary decision where you work until 65 and then stop completely. Today, retirement planning offers remarkable flexibility, but this freedom of choice comes with financial complexity that must be mastered.
 category: Retirement Basics

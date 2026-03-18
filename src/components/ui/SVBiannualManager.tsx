@@ -132,6 +132,16 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
       </CardHeader>
       
       <CardContent className="p-6 space-y-6">
+        <div className="rounded-2xl border-2 border-blue-100 bg-white p-5">
+          <h3 className="text-xl font-bold text-blue-900 mb-2">
+            {isFrench ? 'Comprendre les deux périodes' : 'Understanding the two periods'}
+          </h3>
+          <p className="text-[18px] leading-8 text-gray-700">
+            {isFrench
+              ? 'La Sécurité de la vieillesse est souvent ajustée à partir de juillet selon votre revenu de l’année précédente. Entrez ici le montant de janvier à juin, puis celui de juillet à décembre si une récupération s’applique.'
+              : 'Old Age Security is often adjusted starting in July based on your previous year’s income. Enter the January to June amount, then the July to December amount if a clawback applies.'}
+          </p>
+        </div>
         {/* Information sur la récupération fiscale */}
         <Alert className="border-4 border-orange-500 bg-orange-50">
           <AlertTriangle className="h-6 w-6 text-orange-600" />

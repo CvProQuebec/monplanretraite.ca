@@ -1,4 +1,4 @@
-// src/components/ui/FERROptimizationModule.tsx
+﻿// src/components/ui/FERROptimizationModule.tsx
 /**
  * MODULE FERR OPTIMISÉ - Fonds Enregistré de Revenu de Retraite
  * 
@@ -299,31 +299,31 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingUp className="h-5 w-5" />
-            FERR Optimisé - Stratégies Gouvernementales
+            Calculateur FERR et retraits minimums
             <Badge variant="secondary">GOUVERNEMENT DU CANADA</Badge>
           </CardTitle>
           <CardDescription>
-            Optimisez vos retraits FERR avec les formules officielles et stratégies avancées
+            Estimez vos retraits FERR minimums et repérez les points qui peuvent influencer votre impôt, la SV et le SRG.
           </CardDescription>
         </CardHeader>
       </Card>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid w-full grid-cols-4">
-          <TabsTrigger value="calculator">Calculateur</TabsTrigger>
-          <TabsTrigger value="optimization">Optimisation</TabsTrigger>
-          <TabsTrigger value="spouse-strategy">Stratégie Conjoint</TabsTrigger>
-          <TabsTrigger value="benefits-impact">Impact Prestations</TabsTrigger>
+          <TabsTrigger value="calculator">Mes chiffres</TabsTrigger>
+          <TabsTrigger value="optimization">Option suggérée</TabsTrigger>
+          <TabsTrigger value="spouse-strategy">Avec mon conjoint</TabsTrigger>
+          <TabsTrigger value="benefits-impact">Effet sur la SV et le SRG</TabsTrigger>
         </TabsList>
 
         <TabsContent value="calculator" className="space-y-4">
           <Card>
-            <CardHeader>
-              <CardTitle>Configuration de Base</CardTitle>
-              <CardDescription>
-                Entrez vos informations pour calculer les retraits FERR optimaux
-              </CardDescription>
-            </CardHeader>
+              <CardHeader>
+                <CardTitle>Vos renseignements de base</CardTitle>
+                <CardDescription>
+                  Entrez vos renseignements pour voir vos retraits minimums et les principaux points d’attention à la retraite.
+                </CardDescription>
+              </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
@@ -388,7 +388,7 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
             <CardHeader>
               <CardTitle>Vos Comptes FERR</CardTitle>
               <CardDescription>
-                Ajoutez tous vos FERR pour une analyse complète
+                Ajoutez vos comptes pour obtenir une vue simple de vos retraits minimums.
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -437,7 +437,7 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
                 </Button>
                 <Button onClick={calculateFERRWithdrawals} className="flex items-center gap-2">
                   <Calculator className="h-4 w-4" />
-                  Calculer Optimisation FERR
+                  Voir le résultat
                 </Button>
               </div>
             </CardContent>
@@ -446,10 +446,10 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
           {calculations.length > 0 && (
             <Card>
               <CardHeader>
-                <CardTitle>Projections des Retraits Minimums</CardTitle>
-                <CardDescription>
-                  Basé sur les pourcentages officiels du Gouvernement du Canada
-                </CardDescription>
+              <CardTitle>Projections des Retraits Minimums</CardTitle>
+              <CardDescription>
+                Ces montants suivent les pourcentages minimums applicables selon l'âge.
+              </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="overflow-x-auto">
@@ -506,13 +506,13 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <DollarSign className="h-5 w-5" />
-                    Comparaison des Stratégies
+                    Comparaison de vos retraits FERR
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="p-4 border rounded-lg">
-                      <h3 className="font-semibold text-lg mb-3">Stratégie Actuelle</h3>
+                      <h3 className="font-semibold text-lg mb-3">Ce qui se passe sans ajustement</h3>
                       <div className="space-y-2">
                         <div className="flex justify-between">
                           <span>Retrait minimum:</span>
@@ -542,7 +542,7 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
                     </div>
 
                     <div className="p-4 border rounded-lg bg-green-50">
-                      <h3 className="font-semibold text-lg mb-3 text-green-800">Stratégie Optimisée</h3>
+                      <h3 className="font-semibold text-lg mb-3 text-green-800">Option suggérée</h3>
                       <div className="space-y-2">
                         <div className="flex justify-between">
                           <span>Retrait minimum:</span>
@@ -592,7 +592,7 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
 
               <Card>
                 <CardHeader>
-                  <CardTitle>Recommandations Personnalisées</CardTitle>
+                  <CardTitle>Points à retenir</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-3">
@@ -614,10 +614,10 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <Users className="h-5 w-5" />
-                Stratégie Âge du Conjoint
+                Option avec l'âge du conjoint
               </CardTitle>
               <CardDescription>
-                Utilisez l'âge de votre conjoint pour minimiser les retraits FERR
+                Cette option peut parfois réduire le retrait minimum obligatoire si votre conjoint est plus jeune.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -677,7 +677,7 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
                 Impact sur les Prestations Gouvernementales
               </CardTitle>
               <CardDescription>
-                Analysez l'impact de vos retraits FERR sur SV, SRG et autres prestations
+                Vérifiez si vos retraits risquent d'augmenter la récupération de la SV ou de réduire le SRG.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -725,16 +725,14 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
                 <Alert>
                   <AlertTriangle className="h-4 w-4" />
                   <AlertDescription>
-                    <strong>Stratégie recommandée:</strong> Si vous êtes proche des seuils de récupération, 
-                    considérez étaler vos retraits sur plusieurs années ou utiliser l'âge de votre conjoint 
-                    pour réduire les montants minimums.
+                    <strong>À retenir :</strong> Si vous êtes proche des seuils, répartir les retraits sur plusieurs années ou utiliser l'âge du conjoint peut parfois réduire la pression fiscale.
                   </AlertDescription>
                 </Alert>
 
                 {hasAdvancedFeatures && (
                   <Card>
                     <CardHeader>
-                      <CardTitle>Simulation Avancée - Impact sur 10 ans</CardTitle>
+                      <CardTitle>Projection sur 10 ans</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="overflow-x-auto">
@@ -791,3 +789,4 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
 };
 
 export default FERROptimizationModule;
+

@@ -639,7 +639,7 @@ export default function CCQModule({ data, onUpdate, language = 'fr' }: CCQModule
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2 text-green-800">
                     <DollarSign className="w-5 h-5" />
-                    Vue d'ensemble de votre pension CCQ
+                    Aperçu de votre pension CCQ
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -757,7 +757,7 @@ export default function CCQModule({ data, onUpdate, language = 'fr' }: CCQModule
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Lightbulb className="w-5 h-5 text-yellow-600" />
-                      Recommandations
+                      Pistes utiles
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -787,7 +787,7 @@ export default function CCQModule({ data, onUpdate, language = 'fr' }: CCQModule
             <Card>
               <CardContent className="text-center py-8">
                 <Calculator className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600">Complétez les informations et cliquez sur "Calculer" pour voir vos résultats.</p>
+                <p className="text-gray-600">Entrez vos renseignements puis lancez le calcul pour obtenir un aperçu de votre pension.</p>
               </CardContent>
             </Card>
           )}
@@ -846,7 +846,7 @@ export default function CCQModule({ data, onUpdate, language = 'fr' }: CCQModule
             <Card>
               <CardContent className="text-center py-8">
                 <TrendingUp className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600">Les scénarios apparaîtront après le calcul de votre pension.</p>
+                <p className="text-gray-600">Les comparaisons apparaîtront après le calcul de votre pension.</p>
               </CardContent>
             </Card>
           )}

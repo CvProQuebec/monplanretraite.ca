@@ -179,28 +179,26 @@ const RRSPMeltdownStrategiesModule: React.FC = () => {
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <TrendingDown className="h-6 w-6" />
-            Stratégies de fonte du REER (RRSP Meltdown)
+            Retirer votre REER progressivement avant 71 ans
           </CardTitle>
           <CardDescription>
-            Techniques avancées pour optimiser fiscalement la réduction de vos REER avant 71 ans
+            Voyez quand des retraits progressifs peuvent aider à réduire l'impôt futur lié au FERR.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Alert className="mb-6">
             <Info className="h-4 w-4" />
             <AlertDescription>
-              <strong>Stratégie canadienne :</strong> La fonte du REER est une technique d'optimisation fiscale 
-              qui consiste à réduire progressivement vos REER avant l'âge de 71 ans pour éviter les retraits 
-              FERR obligatoires dans des tranches d'imposition plus élevées.
+              <strong>Idée clé :</strong> dans certains cas, retirer une partie du REER avant 71 ans peut éviter des retraits FERR plus lourds fiscalement plus tard.
             </AlertDescription>
           </Alert>
 
           <Tabs defaultValue="strategies" className="w-full">
             <TabsList className="grid w-full grid-cols-4">
-              <TabsTrigger value="strategies">Stratégies</TabsTrigger>
-              <TabsTrigger value="calculator">Calculateur</TabsTrigger>
-              <TabsTrigger value="timing">Timing optimal</TabsTrigger>
-              <TabsTrigger value="risks">Risques & considérations</TabsTrigger>
+              <TabsTrigger value="strategies">Approches</TabsTrigger>
+              <TabsTrigger value="calculator">Mes chiffres</TabsTrigger>
+              <TabsTrigger value="timing">Quand y penser</TabsTrigger>
+              <TabsTrigger value="risks">À surveiller</TabsTrigger>
             </TabsList>
 
             <TabsContent value="strategies" className="space-y-4">
@@ -271,10 +269,10 @@ const RRSPMeltdownStrategiesModule: React.FC = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Calculator className="h-5 w-5" />
-                    Calculateur de fonte REER
+                    Mes chiffres
                   </CardTitle>
                   <CardDescription>
-                    Estimez les économies fiscales potentielles de votre stratégie de fonte
+                    Estimez si cette approche pourrait réduire votre impôt futur.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -445,7 +443,7 @@ const RRSPMeltdownStrategiesModule: React.FC = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Calendar className="h-5 w-5" />
-                    Timing optimal pour la fonte REER
+                    Quand cette stratégie est souvent la plus utile
                   </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -496,8 +494,7 @@ const RRSPMeltdownStrategiesModule: React.FC = () => {
                   <Alert>
                     <Target className="h-4 w-4" />
                     <AlertDescription>
-                      <strong>Moment optimal :</strong> La fonte REER est généralement plus efficace pendant les années 
-                      de faible revenu (55-65 ans), avant le début des prestations gouvernementales et des retraits FERR obligatoires.
+                      <strong>Repère simple :</strong> cette stratégie est souvent plus utile pendant les années de revenu plus faible, avant le début des revenus gouvernementaux et des retraits FERR obligatoires.
                     </AlertDescription>
                   </Alert>
 

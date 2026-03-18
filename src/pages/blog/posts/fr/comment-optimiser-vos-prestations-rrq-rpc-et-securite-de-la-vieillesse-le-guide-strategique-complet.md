@@ -1,7 +1,7 @@
 ---
 title: 'Comment optimiser vos prestations RRQ, RPC et Sécurité de la vieillesse : le guide stratégique complet'
 slug: comment-optimiser-vos-prestations-rrq-rpc-et-securite-de-la-vieillesse-le-guide-strategique-complet
-date: '2025-09-18'
+date: '2026-01-17'
 lastUpdated: '2026-03-01'
 excerpt: Débuter vos prestations gouvernementales à 60, 65 ou 70 ans peut faire une différence de 100 000 $ sur votre vie. Découvrez les stratégies d'optimisation méconnues — incluant le dégel REER — qui transforment ces programmes en piliers financiers de votre retraite.
 category: Les bases de la retraite

@@ -36,6 +36,7 @@ export type BlogPost = {
   language: 'fr' | 'en';
   slug: string;
   title: string;
+  seoTitle: string;
   date: string; // ISO
   excerpt: string;
   tags: string[];
@@ -96,6 +97,88 @@ function deriveExcerpt(md: string): string {
     return l.replace(/\*\*(.*?)\*\*/g, '$1').replace(/\*(.*?)\*/g, '$1');
   }
   return '';
+}
+
+function stripMarkdownDecorations(input: string): string {
+  return input
+    .replace(/\*\*(.*?)\*\*/g, '$1')
+    .replace(/\*(.*?)\*/g, '$1')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[[^\]]*\]\([^)]*\)/g, '$1')
+    .replace(/`([^`]*)`/g, '$1')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function normalizeTitleText(input: unknown): string {
+  const raw = fixPunctuation(input)
+    .replace(/''/g, "'")
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  return raw
+    .replace(/\s+-\s+/g, ' : ')
+    .replace(/\s+:\s+/g, ' : ')
+    .replace(/\s+\|\s+/g, ' | ');
+}
+
+function deriveSeoExcerpt(md: string): string {
+  const paragraphs = md
+    .split(/\r?\n\r?\n/)
+    .map((p) => stripMarkdownDecorations(p))
+    .map((p) => p.trim())
+    .filter(Boolean)
+    .filter((p) => !p.startsWith('#'))
+    .filter((p) => !/^Updated\b/i.test(p))
+    .filter((p) => !/^Published\b/i.test(p))
+    .filter((p) => !/^Mis à jour\b/i.test(p))
+    .filter((p) => !/^Publié\b/i.test(p))
+    .filter((p) => p.length > 45);
+
+  return paragraphs[0] || deriveExcerpt(md);
+}
+
+function clampExcerpt(input: string, max = 165): string {
+  if (input.length <= max) return input;
+
+  const sentenceBreak = input.slice(0, max + 15).match(/^(.+?[.!?])(?:\s|$)/);
+  if (sentenceBreak && sentenceBreak[1].length >= 110) {
+    return sentenceBreak[1].trim();
+  }
+
+  const clipped = input.slice(0, max);
+  const lastSpace = clipped.lastIndexOf(' ');
+  return `${clipped.slice(0, lastSpace > 90 ? lastSpace : max).trim()}...`;
+}
+
+function normalizeExcerptText(input: unknown, content: string): string {
+  let excerpt = fixPunctuation(input)
+    .replace(/^>-\s*/g, '')
+    .replace(/''/g, "'")
+    .replace(/\r?\n+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  excerpt = stripMarkdownDecorations(excerpt);
+
+  if (
+    !excerpt ||
+    excerpt.length < 100 ||
+    excerpt.length > 220 ||
+    /^Updated\b/i.test(excerpt) ||
+    /^Published\b/i.test(excerpt) ||
+    /^Mis à jour\b/i.test(excerpt) ||
+    /^Publié\b/i.test(excerpt)
+  ) {
+    excerpt = stripMarkdownDecorations(deriveSeoExcerpt(content));
+  }
+
+  return clampExcerpt(excerpt);
+}
+
+export function buildArticleSeoTitle(title: string): string {
+  const cleanTitle = normalizeTitleText(title);
+  return `${cleanTitle} | MonPlanRetraite.ca`;
 }
 
 function ensureISODate(input?: string): string {
@@ -188,12 +271,12 @@ function buildCache(): BlogPost[] {
   const loaded = loadAll();
   const posts: BlogPost[] = loaded.map(({ fm, content, virtualPath, derivedLanguage, filename }) => {
     const rawTitle = (fm.title as unknown) || deriveTitleFromContent(content, filename);
-    const title = fixPunctuation(rawTitle);
+    const title = normalizeTitleText(rawTitle);
     const slug = fm.slug ? normalizeSlug(fm.slug) : normalizeSlug(title);
     const date = ensureISODate(fm.date);
     const readingTime = typeof fm.readingTime === 'number' ? fm.readingTime : estimateReadingTime(content);
     const rawExcerpt = (fm.excerpt as unknown) || deriveExcerpt(content);
-    const excerpt = fixPunctuation(rawExcerpt);
+    const excerpt = normalizeExcerptText(rawExcerpt, content);
     // Normalize tags: allow string (comma/space separated) or array
     const normalizedTags: string[] = Array.isArray(fm.tags)
       ? (fm.tags as unknown[]).map((t) => fixPunctuation(t).toLowerCase()).filter(Boolean)
@@ -210,6 +293,7 @@ function buildCache(): BlogPost[] {
       language: derivedLanguage,
       slug,
       title,
+      seoTitle: buildArticleSeoTitle(title),
       date,
       excerpt,
       tags,

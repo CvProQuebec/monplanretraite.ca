@@ -15,61 +15,59 @@ export const AdaptiveHeader: React.FC<AdaptiveHeaderProps> = ({ isEnglish }) => 
   const { language } = useLanguage();
   const { user, signOut } = useAuth();
 
-  // Déterminer si on est sur la page d'accueil
   const isHomePage = location.pathname === '/' || location.pathname === '/fr' || location.pathname === '/en';
 
-  // Pages pour les 4 blocs seniors (uniquement sur la page d'accueil)
   const seniorsPages = isEnglish
     ? [
         {
-          key: '/home',
-          label: 'How does it work?',
-          description: 'Simple step-by-step guide',
-          icon: '🧭',
+          key: '/start-here',
+          label: 'Where to start',
+          description: 'A simple guided path',
+          icon: '1',
         },
         {
-          key: '/profile',
-          label: 'Who am I?',
-          description: 'Your basic information',
-          icon: '👤',
+          key: '/tools',
+          label: 'My tools',
+          description: 'Grouped by real needs',
+          icon: '2',
         },
         {
-          key: '/en/retirement',
-          label: 'How much money will I have?',
-          description: 'Plan my retirement',
-          icon: '💰',
+          key: '/my-dossier',
+          label: 'My dossier',
+          description: 'Prepare for my planner',
+          icon: '3',
         },
         {
-          key: '/en/retirement-reports',
-          label: 'Will I be okay?',
-          description: 'See my results',
-          icon: '📊',
+          key: '/en/blog',
+          label: 'Guides',
+          description: 'Read simple articles',
+          icon: '4',
         },
       ]
     : [
         {
-          key: '/accueil',
-          label: 'Comment ça fonctionne?',
-          description: 'Guide simple pas à pas',
-          icon: '🧭',
+          key: '/commencer',
+          label: 'Par où commencer',
+          description: 'Un parcours guidé simple',
+          icon: '1',
         },
         {
-          key: '/profil',
-          label: 'Qui suis-je?',
-          description: 'Mes informations de base',
-          icon: '👤',
+          key: '/outils',
+          label: 'Mes outils',
+          description: 'Classés par besoin',
+          icon: '2',
         },
         {
-          key: '/fr/retraite',
-          label: "Combien d'argent aurai-je?",
-          description: 'Calculer ma retraite',
-          icon: '💰',
+          key: '/mon-dossier',
+          label: 'Mon dossier',
+          description: 'Préparer mon rendez-vous',
+          icon: '3',
         },
         {
-          key: '/fr/rapports-retraite',
-          label: 'Est-ce que je serai correct?',
-          description: 'Voir mes résultats',
-          icon: '📊',
+          key: '/blog',
+          label: 'Articles',
+          description: 'Lire des guides simples',
+          icon: '4',
         },
       ];
 
@@ -84,23 +82,20 @@ export const AdaptiveHeader: React.FC<AdaptiveHeaderProps> = ({ isEnglish }) => 
 
   return (
     <div>
-      {/* Header avec navigation élégante */}
       <UniformHeader isEnglish={isEnglish} />
-      
-      {/* Seniors-friendly 4-block navigation - UNIQUEMENT sur la page d'accueil */}
+
       {isHomePage && (
         <div className="bg-white border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
             <SeniorsNavigation
               title={isEnglish ? 'Main Menu' : 'Menu principal'}
-              subtitle={isEnglish ? 'Click on the desired section' : 'Cliquez sur la section désirée'}
+              subtitle={isEnglish ? 'Choose a simple path' : 'Choisissez un parcours simple'}
               pages={seniorsPages}
             />
           </div>
         </div>
       )}
 
-      {/* User info and sign out - only show if user is logged in and not on home page */}
       {user && !isHomePage && (
         <div className="bg-gray-50 border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">

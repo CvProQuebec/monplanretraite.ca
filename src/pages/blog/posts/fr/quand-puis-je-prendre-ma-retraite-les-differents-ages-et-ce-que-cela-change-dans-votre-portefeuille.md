@@ -1,7 +1,7 @@
 ---
 title: Quand puis-je prendre ma retraite? - Les différents âges et ce que cela change dans votre portefeuille
 slug: quand-puis-je-prendre-ma-retraite-les-differents-ages-et-ce-que-cela-change-dans-votre-portefeuille
-date: '2025-09-19'
+date: '2026-02-09'
 lastUpdated: '2026-03-16'
 excerpt: Prendre sa retraite n'est plus une décision binaire où l'on travaille jusqu'à 65 ans pour ensuite arrêter complètement. Aujourd'hui, la planification de la retraite offre une flexibilité remarquable, mais cette liberté de choix s'accompagne d'une complexité financière qu'il faut absolument maîtriser.
 category: Les bases de la retraite

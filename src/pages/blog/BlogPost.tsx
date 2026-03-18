@@ -6,6 +6,8 @@ import toc from 'markdown-it-table-of-contents';
 import { getPostBySlug, getPrevNext, getAllPosts, getCategoryDisplayLabel } from './utils/content';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import ArticleWrapper from '@/components/blog/ArticleWrapper';
+import Meta from '@/components/ui/Meta';
+import NextStepPanel from '@/components/ui/NextStepPanel';
 import './blog-templates.css';
 
 type Props = {
@@ -146,6 +148,7 @@ const BlogPost: React.FC<Props> = ({ language }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+      <Meta title={post.seoTitle} description={post.excerpt} lang={lang} />
       <div className="container mx-auto px-6 py-8">
         <article className="max-w-4xl mx-auto bg-white rounded-2xl border border-gray-200 shadow-sm p-6 md:p-10">
           {/* Header */}
@@ -199,6 +202,21 @@ const BlogPost: React.FC<Props> = ({ language }) => {
               </ul>
             </aside>
           )}
+
+          <div className="mb-6">
+            <NextStepPanel
+              title={lang === 'fr' ? 'Prochaine etape simple' : 'Simple next step'}
+              text={
+                lang === 'fr'
+                  ? 'Quand cet article a repondu a votre question, passez ensuite a un outil de calcul ou ajoutez vos decisions a votre dossier retraite.'
+                  : 'Once this article has answered your question, move next to a calculator or add your decisions to your retirement dossier.'
+              }
+              primaryLabel={lang === 'fr' ? 'Voir mes outils retraite' : 'See my retirement tools'}
+              primaryHref={lang === 'fr' ? '/outils' : '/tools'}
+              secondaryLabel={lang === 'fr' ? 'Preparer mon dossier' : 'Prepare my dossier'}
+              secondaryHref={lang === 'fr' ? '/mon-dossier' : '/my-dossier'}
+            />
+          </div>
 
           {/* Table of contents marker (optional) */}
           {/* To enable ToC, insert "[toc]" line inside the markdown. */}

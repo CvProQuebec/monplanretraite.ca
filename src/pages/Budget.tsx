@@ -101,6 +101,7 @@ import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 import { SmartAlerts } from '@/components/ui/SmartAlerts';
 import { OnboardingWizard } from '@/components/ui/OnboardingWizard';
 import { LearningModule } from '@/components/ui/LearningModule';
+import GuidedPageIntro from '@/components/ui/GuidedPageIntro';
 import { CoastFIRECalculator } from '@/components/ui/CoastFIRECalculator';
 import { EconomyTipsGuide } from '@/components/ui/EconomyTipsGuide';
 import { SeasonalWorkerBudget } from '@/components/ui/SeasonalWorkerBudget';
@@ -113,6 +114,7 @@ import { BudgetSettings, BudgetTargets } from '@/types/budget';
 import BudgetLinkService, { BudgetLink } from '@/services/BudgetLinkService';
 import { useSearchParams } from 'react-router-dom';
 import { NotificationSchedulerService } from '@/services/NotificationSchedulerService';
+import Meta from '@/components/ui/Meta';
 
 const IncomeDeductionsForm = lazy(() => import('@/components/budget/IncomeDeductionsForm'));
 const BudgetTargetsGauges = lazy(() => import('@/components/budget/BudgetTargetsGauges'));
@@ -849,6 +851,13 @@ const Budget: React.FC = () => {
 
   return (
     <div className="senior-layout min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 text-gray-900">
+      <Meta
+        title={isFrench ? 'Calculateur de budget retraite | MonPlanRetraite.ca' : 'Retirement budget calculator | MonPlanRetraite.ca'}
+        description={isFrench
+          ? 'Organisez vos revenus, vos dépenses et votre marge de manœuvre avec un budget retraite simple et clair.'
+          : 'Organize income, expenses, and spending room with a simple retirement budget calculator.'}
+        lang={isFrench ? 'fr' : 'en'}
+      />
       {/* Particules de fond */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-2 h-2 bg-blue-300 rounded-full animate-pulse"></div>
@@ -862,15 +871,50 @@ const Budget: React.FC = () => {
         {/* En-tÃªte spectaculaire */}
         <div className="mpr-section text-center">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent drop-shadow-2xl" style={{fontSize: '3.5rem'}}>
-            ðŸ’° {isFrench ? 'Mon budget intelligent' : 'My Smart Budget'}
+            {isFrench ? 'Mon budget retraite' : 'My retirement budget'}
           </h1>
           <p className="text-xl md:text-2xl text-gray-700 max-w-4xl mx-auto leading-relaxed" style={{fontSize: '1.375rem'}}>
             {isFrench 
-              ? 'GÃ©rez vos finances avec prÃ©cision - revenus, dÃ©penses, et prÃ©visions saisonniÃ¨res'
-              : 'Manage your finances with precision - income, expenses, and seasonal forecasts'
+              ? 'Voyez clairement ce qui entre, ce qui sort et ce qui reste pour votre retraite'
+              : 'See clearly what comes in, what goes out, and what remains for retirement'
             }
           </p>
         </div>
+
+        <GuidedPageIntro
+          eyebrow={isFrench ? 'Budget retraite' : 'Retirement budget'}
+          title={
+            isFrench
+              ? 'Commencez par voir ce qui entre, ce qui sort et ce qui reste'
+              : 'Start by seeing what comes in, what goes out, and what remains'
+          }
+          description={
+            isFrench
+              ? 'Cette page vous aide à organiser vos revenus, vos dépenses et votre marge de manœuvre. Le plus utile est de commencer simplement, puis d’ajuster votre budget au fil du temps.'
+              : 'This page helps you organize income, expenses, and the room you have left. The most useful approach is to start simple, then refine over time.'
+          }
+          bullets={
+            isFrench
+              ? [
+                  'Commencez par votre revenu mensuel net.',
+                  'Ajoutez ensuite vos grandes dépenses récurrentes.',
+                  'Utilisez enfin les onglets pour prévoir l’épargne, les urgences et les objectifs.',
+                ]
+              : [
+                  'Start with your monthly net income.',
+                  'Then add your major recurring expenses.',
+                  'Finally use the tabs to plan savings, emergencies, and goals.',
+                ]
+          }
+          primaryLink={{
+            label: isFrench ? 'Préparer mon dossier' : 'Prepare my dossier',
+            href: isFrench ? '/mon-dossier' : '/my-dossier',
+          }}
+          secondaryLink={{
+            label: isFrench ? 'Voir mes revenus' : 'View my income',
+            href: isFrench ? '/mes-revenus' : '/my-income',
+          }}
+        />
 
         {/* RÃ©sumÃ© financier */}
         <div className="mpr-form-row cols-4">

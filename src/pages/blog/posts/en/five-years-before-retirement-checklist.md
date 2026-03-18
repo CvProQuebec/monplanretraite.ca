@@ -1,13 +1,9 @@
----
+﻿---
 title: 'The 5 Years Before Retirement: Your Ultimate Checklist'
 slug: five-years-before-retirement-checklist
 date: '2026-03-07'
 lastUpdated: '2026-03-07'
-excerpt: >-
-  The 5 years before retirement are the most important of your entire working
-  life. What you do or fail to do during this period will determine the quality
-  of your retirement for the next 30 years. Here is the complete checklist to
-  navigate this stage with confidence.
+excerpt: The 5 years before retirement are the most important of your entire working life. What you do or fail to do during this period will determine the quality of your retirement for the next 30 years. Here is the complete checklist to navigate this stage with confidence.
 tags:
   - retirement
   - planning
@@ -179,3 +175,4 @@ The 5 years before retirement are not just another phase. They are the moment wh
 The people who live the most peaceful retirements are not necessarily those who saved the most. They are the ones who planned the transition best.
 
 If you use these 5 years wisely, you can enter retirement with clarity, confidence, and freedom.
+

@@ -1,7 +1,7 @@
 ---
 title: 'How to Optimize Your QPP, CPP, and Old Age Security Benefits: The Complete Strategic Guide'
 slug: how-to-optimize-your-qpp-cpp-and-old-age-security-benefits-the-complete-strategic-guide
-date: '2025-09-18'
+date: '2026-01-17'
 lastUpdated: '2026-03-01'
 excerpt: Starting your government benefits at 60, 65, or 70 can make a $100,000 difference over your lifetime. Discover the little-known optimization strategies — including the RRSP meltdown — that transform these programs into financial pillars of your retirement.
 category: Retirement Income

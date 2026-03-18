@@ -188,19 +188,17 @@ const TaxImpactAt65Calculator: React.FC = () => {
       {/* Alerte importante */}
       <Alert className="border-blue-500 bg-blue-50">
         <Gift className="h-5 w-5 text-blue-500" />
-        <AlertTitle className="text-blue-800">🎁 CADEAU DU GOUVERNEMENT À 65 ANS</AlertTitle>
+        <AlertTitle className="text-blue-800">Ce qui change souvent à 65 ans</AlertTitle>
         <AlertDescription className="text-blue-700 text-lg">
-          <strong>Juste en vieillissant, vous payez moins d'impôts !</strong> Les crédits d'âge et de pension 
-          peuvent vous faire économiser des milliers de dollars par année. C'est automatique, mais il faut 
-          connaître les montants pour bien planifier.
+          <strong>À partir de 65 ans, certains crédits peuvent réduire votre impôt.</strong> Mieux vaut connaître cet effet pour planifier vos retraits et vos revenus de retraite.
         </AlertDescription>
       </Alert>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="calculator">Calculateur</TabsTrigger>
+          <TabsTrigger value="calculator">Mes chiffres</TabsTrigger>
           <TabsTrigger value="comparison">Comparaison</TabsTrigger>
-          <TabsTrigger value="strategies">Stratégies</TabsTrigger>
+          <TabsTrigger value="strategies">À retenir</TabsTrigger>
         </TabsList>
 
         {/* Onglet Calculateur */}
@@ -214,7 +212,7 @@ const TaxImpactAt65Calculator: React.FC = () => {
                   Vos informations
                 </CardTitle>
                 <CardDescription>
-                  Entrez vos données pour calculer l'impact fiscal
+                  Entrez vos revenus pour voir ce qui pourrait changer fiscalement à 65 ans.
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-6">
@@ -379,10 +377,10 @@ const TaxImpactAt65Calculator: React.FC = () => {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-3">
                     <PieChart className="w-6 h-6 text-purple-600" />
-                    Comparaison détaillée
+                    Comparaison simple
                   </CardTitle>
                   <CardDescription>
-                    Impact des crédits fiscaux selon différents niveaux de revenus
+                    Repères simples selon différents niveaux de revenus.
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -431,7 +429,7 @@ const TaxImpactAt65Calculator: React.FC = () => {
                   <div className="mt-8 p-6 bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg border border-purple-200">
                     <h4 className="font-semibold text-purple-800 mb-4 flex items-center gap-2">
                       <Users className="w-5 h-5" />
-                      Avantage ÉNORME des couples
+                      Avantage possible pour les couples
                     </h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
@@ -474,8 +472,7 @@ const TaxImpactAt65Calculator: React.FC = () => {
                     <Alert className="mt-4 border-purple-300 bg-purple-50">
                       <Heart className="h-4 w-4 text-purple-600" />
                       <AlertDescription className="text-purple-700">
-                        <strong>Les couples économisent presque 2x plus !</strong> Le fractionnement de revenus 
-                        et les crédits doublés créent un avantage fiscal majeur.
+                        <strong>Repère utile :</strong> le fractionnement et certains crédits peuvent rendre l'écart plus favorable pour un couple que pour une personne seule.
                       </AlertDescription>
                     </Alert>
                   </div>
@@ -584,13 +581,13 @@ const TaxImpactAt65Calculator: React.FC = () => {
             <CardHeader>
               <CardTitle className="flex items-center gap-3">
                 <Zap className="w-6 h-6 text-purple-600" />
-                Conseils d'experts
+                À retenir
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-semibold mb-3 text-purple-800">💡 Optimisations avancées :</h4>
+                  <h4 className="font-semibold mb-3 text-purple-800">Pistes utiles :</h4>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
@@ -612,7 +609,7 @@ const TaxImpactAt65Calculator: React.FC = () => {
                 </div>
                 
                 <div>
-                  <h4 className="font-semibold mb-3 text-purple-800">⚠️ Pièges à éviter :</h4>
+                  <h4 className="font-semibold mb-3 text-purple-800">Points à surveiller :</h4>
                   <ul className="space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <AlertTriangle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />

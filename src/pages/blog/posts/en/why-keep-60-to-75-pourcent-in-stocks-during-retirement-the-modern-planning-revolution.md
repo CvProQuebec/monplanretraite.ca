@@ -1,7 +1,7 @@
 ---
 title: 'Why Keep 60 to 75% in Stocks During Retirement: The Modern Planning Revolution'
 slug: why-keep-60-to-75-pourcent-in-stocks-during-retirement-the-modern-planning-revolution
-date: '2026-02-12'
+date: '2026-02-08'
 lastUpdated: '2026-02-12'
 excerpt: Did you think that in retirement you had to sell all your stocks to buy “safe” bonds? That old-fashioned strategy could ruin your retirement. Discover why experts now recommend keeping 60 to 75% in stocks—even at age 70.
 category: Retirement Basics

@@ -1,7 +1,7 @@
 ---
 title: How Much Money Do I Really Need? - Calculating Your Retirement Needs Without the Headache
 slug: retirement-money-needs
-date: '2026-01-30'
+date: '2026-01-18'
 lastUpdated: '2026-01-30'
 excerpt: '"One million dollars!" That''s often the first answer that comes to mind for a comfortable retirement. But is that magic number right for you? Spoiler: probably not. Here''s how to calculate your real retirement needs — simply and realistically.'
 category: Retirement Basics

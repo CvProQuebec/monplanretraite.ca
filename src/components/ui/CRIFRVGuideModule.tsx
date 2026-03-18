@@ -100,7 +100,7 @@ export const CRIFRVGuideModule: React.FC = () => {
                 className="mt-2 text-[18px] leading-[1.65]"
                 style={{ color: 'var(--mpr-text-muted)' }}
               >
-                Comprenez le fonctionnement des fonds immobilisés et voyez rapidement combien vous pouvez retirer de votre FRV.
+                Comprenez simplement comment fonctionnent les fonds immobilisés et voyez rapidement combien vous pouvez retirer de votre FRV.
               </CardDescription>
             </div>
           </div>
@@ -329,7 +329,7 @@ export const CRIFRVGuideModule: React.FC = () => {
               >
                 <Info className="h-5 w-5" style={{ color: 'var(--mpr-primary)' }} />
                 <AlertDescription className="text-[18px] leading-[1.7]" style={{ color: 'var(--mpr-text)' }}>
-                  <strong>Stratégie recommandée :</strong> retirez le maximum permis chaque année pour sortir les fonds du FRV et les transférer dans votre CELI ou réduire votre FERR. Cela maximise votre flexibilité fiscale.
+                  <strong>Repère utile :</strong> dans plusieurs cas, retirer le maximum permis peut vous redonner plus de souplesse en sortant graduellement l'argent du FRV.
                 </AlertDescription>
               </Alert>
             </CardContent>

@@ -43,6 +43,7 @@ import GlobalSummary from '@/components/ui/GlobalSummary';
 import CollapsibleSection from '@/components/ui/CollapsibleSection';
 import SeasonalWorkToggle from '@/components/ui/SeasonalWorkToggle';
 import RRQManager from '@/components/ui/RRQManager';
+import GuidedPageIntro from '@/components/ui/GuidedPageIntro';
 import { EnhancedSaveManager } from '@/services/EnhancedSaveManager';
 import AdvancedUpgradeModal from '@/components/ui/advanced-upgrade-modal';
 import { useSubscriptionLimits } from '@/hooks/useSubscriptionLimits';
@@ -277,6 +278,41 @@ const Revenus: React.FC = () => {
             </Button>
           </div>
         </div>
+
+        <GuidedPageIntro
+          eyebrow={isFrench ? 'Revenus de retraite' : 'Retirement income'}
+          title={
+            isFrench
+              ? 'Rassemblez ici toutes vos sources de revenu'
+              : 'Gather all your income sources here'
+          }
+          description={
+            isFrench
+              ? 'Cette page sert à mettre au même endroit vos salaires, rentes, prestations et revenus de placement. Plus vos chiffres sont clairs ici, plus vos calculs de retraite seront utiles.'
+              : 'This page brings together salaries, pensions, benefits, and investment income. The clearer your numbers are here, the more useful your retirement calculations become.'
+          }
+          bullets={
+            isFrench
+              ? [
+                  'Commencez par vos revenus actuels ou prévus.',
+                  'Ajoutez ensuite RRQ, SV et autres rentes si elles sont déjà connues.',
+                  'Utilisez enfin le budget et le dossier pour relier ces revenus à vos décisions.',
+                ]
+              : [
+                  'Start with your current or expected income.',
+                  'Then add QPP, OAS, and other pensions if you already know them.',
+                  'Finally use the budget and dossier to connect these numbers to your decisions.',
+                ]
+          }
+          primaryLink={{
+            label: isFrench ? 'Voir mon budget' : 'View my budget',
+            href: isFrench ? '/mon-budget' : '/my-budget',
+          }}
+          secondaryLink={{
+            label: isFrench ? 'Préparer mon dossier' : 'Prepare my dossier',
+            href: isFrench ? '/mon-dossier' : '/my-dossier',
+          }}
+        />
 
 
 

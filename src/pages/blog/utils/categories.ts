@@ -4,6 +4,8 @@ export type BlogCategoryDef = {
   key: string;
   fr: string;
   en: string;
+  descriptionFr: string;
+  descriptionEn: string;
   aliases: string[];
 };
 
@@ -12,6 +14,10 @@ export const BLOG_TAXONOMY: BlogCategoryDef[] = [
     key: 'retirement-basics',
     fr: 'Les bases de la retraite',
     en: 'Retirement Basics',
+    descriptionFr:
+      'Les notions essentielles pour comprendre la retraite, savoir par ou commencer et eviter les erreurs les plus frequentes.',
+    descriptionEn:
+      'The essential concepts to understand retirement, know where to start, and avoid the most common mistakes.',
     aliases: [
       'Les bases de la retraite',
       'Retirement Basics',
@@ -24,26 +30,36 @@ export const BLOG_TAXONOMY: BlogCategoryDef[] = [
     key: 'retirement-income',
     fr: 'Revenus de retraite',
     en: 'Retirement Income',
+    descriptionFr:
+      'Les articles sur la RRQ, la SV, le SRG, les pensions et les grands choix de revenu a la retraite.',
+    descriptionEn:
+      'Articles about QPP, OAS, GIS, pensions, and major retirement income decisions.',
     aliases: [
       'Revenus de retraite',
       'Retirement Income',
-      'Comprendre les régimes gouvernementaux',
+      'Comprendre les regimes gouvernementaux',
       'Government programs',
       'Pension Plans',
-      'Régimes de retraite',
+      'Regimes de retraite',
     ],
   },
   {
     key: 'taxation',
-    fr: 'Fiscalité',
+    fr: 'Fiscalite',
     en: 'Taxation',
+    descriptionFr:
+      "Les strategies simples pour mieux comprendre l'impot a la retraite, proteger la SV et reduire la facture fiscale.",
+    descriptionEn:
+      'Simple strategies to better understand retirement taxes, protect OAS, and reduce your tax bill.',
     aliases: [
+      'Fiscalite',
       'Fiscalité',
       'Taxation',
+      'Fiscalite simplifiee',
       'Fiscalité simplifiée',
       'Simple taxation',
-      'Sujets saisonniers et d’actualité',
-      "Sujets saisonniers et d'actualité",
+      "Sujets saisonniers et d'actualite",
+      'Sujets saisonniers et d’actualite',
       'Seasonal and current topics',
     ],
   },
@@ -51,10 +67,14 @@ export const BLOG_TAXONOMY: BlogCategoryDef[] = [
     key: 'investments',
     fr: 'Investissements',
     en: 'Investments',
+    descriptionFr:
+      'Les reperes pour gerer vos placements, votre decaissement et la duree de votre argent a la retraite.',
+    descriptionEn:
+      'Guidance to manage investments, withdrawals, and how long your money may last in retirement.',
     aliases: [
       'Investissements',
       'Investments',
-      'Gérer son épargne et ses placements',
+      'Gerer son epargne et ses placements',
       'Manage savings and investments',
     ],
   },
@@ -62,20 +82,28 @@ export const BLOG_TAXONOMY: BlogCategoryDef[] = [
     key: 'estate-planning',
     fr: 'Planification successorale',
     en: 'Estate Planning',
-    aliases: [
-      'Planification successorale',
-      'Estate Planning',
-    ],
+    descriptionFr:
+      'Les sujets lies a la succession, aux documents importants et a la transmission du patrimoine.',
+    descriptionEn:
+      'Topics related to estate planning, important documents, and wealth transfer.',
+    aliases: ['Planification successorale', 'Estate Planning'],
   },
   {
     key: 'health-wellness',
-    fr: 'Santé et bien-être',
+    fr: 'Sante et bien-etre',
     en: 'Health & Wellness',
+    descriptionFr:
+      "Les articles sur la sante, la qualite de vie, l'autonomie et le bien-etre a la retraite.",
+    descriptionEn:
+      'Articles about health, quality of life, autonomy, and well-being in retirement.',
     aliases: [
+      'Sante et bien-etre',
       'Santé et bien-être',
       'Health & Wellness',
+      'Bien-etre et qualite de vie',
       'Bien-être et qualité de vie',
       'Well-being and quality of life',
+      'Defis specifiques aux femmes',
       'Défis spécifiques aux femmes',
       'Women-specific challenges',
     ],
@@ -84,6 +112,10 @@ export const BLOG_TAXONOMY: BlogCategoryDef[] = [
     key: 'couple-family',
     fr: 'Couple et famille',
     en: 'Couple & Family',
+    descriptionFr:
+      'Les decisions de retraite a deux, les enjeux familiaux et les transitions qui touchent le couple.',
+    descriptionEn:
+      'Retirement decisions for couples, family issues, and transitions that affect the household.',
     aliases: [
       'Couple et famille',
       'Couple & Family',
@@ -93,9 +125,14 @@ export const BLOG_TAXONOMY: BlogCategoryDef[] = [
   },
   {
     key: 'budget-expenses',
-    fr: 'Budget et dépenses',
+    fr: 'Budget et depenses',
     en: 'Budget & Expenses',
+    descriptionFr:
+      'Les guides pour prevoir vos depenses, organiser votre budget et proteger votre marge de manoeuvre.',
+    descriptionEn:
+      'Guides to plan expenses, organize your budget, and protect your financial breathing room.',
     aliases: [
+      'Budget et depenses',
       'Budget et dépenses',
       'Budget & Expenses',
       'Aspects pratiques et quotidiens',
@@ -106,6 +143,10 @@ export const BLOG_TAXONOMY: BlogCategoryDef[] = [
     key: 'tools-resources',
     fr: 'Outils et ressources',
     en: 'Tools & Resources',
+    descriptionFr:
+      'Les ressources pratiques pour choisir les bons outils, mieux vous informer et preparer votre dossier.',
+    descriptionEn:
+      'Practical resources to choose the right tools, learn faster, and prepare your dossier.',
     aliases: [
       'Outils et ressources',
       'Tools & Resources',
@@ -154,8 +195,21 @@ export function getCategoryDisplayLabel(category: string, language: BlogLanguage
   return language === 'fr' ? def.fr : def.en;
 }
 
+export function getCategoryDescription(category: string, language: BlogLanguage): string {
+  const normalized = normalizeCategoryLabel(category);
+  const def = CATEGORY_LOOKUP.get(normalizeKey(normalized));
+  if (!def) {
+    return language === 'fr'
+      ? 'Parcourez les articles de cette categorie pour mieux comprendre votre retraite.'
+      : 'Browse the articles in this category to better understand retirement.';
+  }
+  return language === 'fr' ? def.descriptionFr : def.descriptionEn;
+}
+
 export function sortCategories(categories: string[]): string[] {
-  const unique = Array.from(new Set(categories.map((category) => normalizeCategoryLabel(category)).filter(Boolean)));
+  const unique = Array.from(
+    new Set(categories.map((category) => normalizeCategoryLabel(category)).filter(Boolean))
+  );
   const taxonomyIndex = new Map(BLOG_CATEGORIES.map((category, index) => [category, index]));
 
   return unique.sort((a, b) => {

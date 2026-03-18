@@ -82,7 +82,7 @@ const SeniorsFinancialHelp: React.FC<SeniorsFinancialHelpProps> = ({ isFrench })
           className="bg-blue-50 border-2 border-blue-300 text-blue-700 hover:bg-blue-100 text-xl px-8 py-4 h-16"
         >
           <HelpCircle className="w-6 h-6 mr-3" />
-          {isFrench ? 'Aide : Que signifient ces termes ?' : 'Help: What do these terms mean?'}
+          {isFrench ? 'Aide : comprendre les termes' : 'Help: understand the terms'}
         </Button>
       </div>
     );
@@ -94,7 +94,7 @@ const SeniorsFinancialHelp: React.FC<SeniorsFinancialHelpProps> = ({ isFrench })
         <div className="flex items-center justify-between">
           <CardTitle className="text-3xl font-bold text-blue-800 flex items-center gap-3">
             <Info className="w-8 h-8 text-blue-600" />
-            {isFrench ? 'Guide des termes financiers' : 'Financial Terms Guide'}
+            {isFrench ? 'Guide des mots utiles' : 'Helpful terms guide'}
           </CardTitle>
           <Button
             onClick={() => setShowHelp(false)}
