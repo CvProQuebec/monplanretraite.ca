@@ -321,6 +321,10 @@ Les seuils fiscaux changent (le seuil SV a augmenté de plus de 8 000 $ en un an
 
 ---
 
+> **Outil associé :** [Optimiseur fiscal multi-sources](/outils) — Testez par vous-même avec nos calculateurs.
+
+---
+
 *Les stratégies et chiffres présentés reflètent la fiscalité fédérale et québécoise de 2026. Chaque situation est unique — consultez un planificateur financier agréé pour un plan personnalisé.*
 
 **Sources** : ARC, Revenu Québec, transcriptions d'experts (Trans Canada Wealth, Ferguson Financial Planning, Danny Pero WealthPoint, Michael Kim CPA, Joe Macek).

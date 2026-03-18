@@ -181,4 +181,8 @@ Le CELIAPP est l'outil d'épargne le plus puissant pour les premiers acheteurs a
 
 ---
 
+> **Outil associé :** [Outil CELIAPP — Simuler votre épargne première propriété](/outils) — Testez par vous-même avec nos calculateurs.
+
+---
+
 *⚠️ Cet article est fourni à titre informatif seulement et ne constitue pas un conseil fiscal ou financier personnalisé. Les règles fiscales peuvent changer. Consultez un planificateur financier agréé (PFA) ou un conseiller fiscal pour une analyse adaptée à votre situation.*

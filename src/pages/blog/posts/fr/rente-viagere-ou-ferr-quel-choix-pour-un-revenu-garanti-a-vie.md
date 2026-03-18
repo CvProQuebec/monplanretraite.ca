@@ -187,4 +187,8 @@ Non. Les rentes doivent être achetées avec des fonds enregistrés (REER/FERR) 
 
 ---
 
+> **Outil associé :** [Comparateur Rente viagère vs FERR](/outils) — Testez par vous-même avec nos calculateurs.
+
+---
+
 *⚠️ Cet article est fourni à titre informatif seulement et ne constitue pas un conseil financier personnalisé. Consultez un planificateur financier agréé (PFA) et votre conseiller en assurance avant de prendre des décisions relatives aux rentes viagères.*

@@ -77,9 +77,9 @@ export interface FondsProjection {
 export class TaxOptimizationService2025 {
   
   private static readonly PARAMS: TaxParameters2025 = {
-    reerPlafond: 32490,
+    reerPlafond: 33810,
     celiPlafond: 7000,
-    psvSeuilRecuperationPartielle: 90997,
+    psvSeuilRecuperationPartielle: 95323,
     psvSeuilRecuperationComplete: 148451,
     psvSeuilRecuperationComplete75Plus: 153771,
     creditAgeSeuilRevenu: 42335,
@@ -323,7 +323,7 @@ export class TaxOptimizationService2025 {
   }
   
   private static determinePrioriteSources(revenuTotal: number): string[] {
-    if (revenuTotal > 90997) {
+    if (revenuTotal > 95323) {
       return ['CELI', 'PLACEMENTS_NON_ENREGISTRES', 'REER_MINIMAL'];
     }
     return ['REER_OPTIMISE', 'CELI', 'PLACEMENTS_NON_ENREGISTRES'];

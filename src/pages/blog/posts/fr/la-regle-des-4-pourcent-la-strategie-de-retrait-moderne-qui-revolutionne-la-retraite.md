@@ -356,6 +356,10 @@ La règle des 4 % n'est pas magique - c'est de la **science actuarielle appliqu�
 
 ---
 
+> **Outil associé :** [Calculateur Règle du 4 %](/outils) — Testez par vous-même avec nos calculateurs.
+
+---
+
 *La règle des 4 % représente la sagesse collective de décennies de recherche en planification de retraite. Les exemples et calculs présentés sont à des fins éducatives et ne constituent pas des conseils financiers personnalisés.*
 
 **Sources** : William Bengen (1994), Trinity Study (1998), Mise à jour RBC 2025, Normes IPF 2026, Statistique Canada.

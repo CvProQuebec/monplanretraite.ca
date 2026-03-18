@@ -172,8 +172,8 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
       if (data.currentAge < 71) {
         incomeSplittingOpportunities.push({
           type: 'REER Conjoint',
-          maxAmount: 32490,
-          savings: 32490 * (data.marginalTaxRate / 100) * 0.3,
+          maxAmount: 33810,
+          savings: 33810 * (data.marginalTaxRate / 100) * 0.3,
           eligibilityAge: data.currentAge
         });
       }
@@ -567,6 +567,9 @@ const MultiSourceTaxOptimizationModule: React.FC = () => {
           </Card>
         </TabsContent>
       </Tabs>
+      <p className="text-sm leading-6" style={{ color: '#64748b' }}>
+        Ces outils sont fournis à titre éducatif uniquement et ne constituent pas des conseils financiers, fiscaux ou juridiques. Les projections sont basées sur des hypothèses et ne garantissent pas les résultats futurs. Consultez un planificateur financier agréé pour des conseils adaptés à votre situation.
+      </p>
     </div>
   );
 };

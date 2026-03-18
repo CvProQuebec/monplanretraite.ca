@@ -223,4 +223,8 @@ La retraite d'un travailleur autonome ou entrepreneur incorporé au Québec dema
 
 ---
 
+> **Outil associé :** [Outil Travailleur autonome et incorporé](/outils) — Testez par vous-même avec nos calculateurs.
+
+---
+
 *⚠️ Cet article est fourni à titre informatif seulement et ne constitue pas un conseil fiscal ou financier personnalisé. Les règles fiscales sont complexes et évoluent. Consultez un comptable agréé (CPA) et un planificateur financier agréé (PFA) pour une stratégie adaptée à votre situation.*

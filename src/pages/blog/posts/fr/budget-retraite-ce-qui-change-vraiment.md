@@ -137,4 +137,8 @@ Le secret? Commencer tôt, réviser régulièrement et ne pas hésiter à demand
 
 ---
 
+> **Outil associé :** [Calculateur de budget retraite](/outils) — Testez par vous-même avec nos calculateurs.
+
+---
+
 *Un budget bien planifié est votre meilleur passeport vers une retraite sereine. N'attendez plus pour faire cet exercice essentiel : votre futur vous remerciera.*

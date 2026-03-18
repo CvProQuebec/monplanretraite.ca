@@ -269,4 +269,8 @@ Commencez aujourd'hui, même si vous ne savez pas encore par où. La première �
 
 ---
 
+> **Outil associé :** [Checklist interactive — 5 ans avant la retraite](/outils) — Testez par vous-même avec nos calculateurs.
+
+---
+
 *Publié le 1er mars 2026. Les montants gouvernementaux (RRQ, SV, SRG) sont des références approximatives 2026, ajustées trimestriellement. Consultez un planificateur financier agréé pour une stratégie adaptée à votre situation personnelle.*

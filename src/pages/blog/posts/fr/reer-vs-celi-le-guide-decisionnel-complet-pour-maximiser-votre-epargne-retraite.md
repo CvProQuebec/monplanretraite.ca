@@ -564,6 +564,10 @@ La différence entre REER et CELI peut représenter **20-30% de votre épargne-r
 
 ---
 
+> **Outil associé :** [Outil d'optimisation multi-sources REER et CELI](/outils) — Testez par vous-même avec nos calculateurs.
+
+---
+
 *Les exemples et calculs présentés sont à des fins éducatives et reflètent les données fiscales de 2026. Consultez un planificateur financier pour des conseils personnalisés adaptés à votre situation spécifique.*
 
 **Sources** : Revenu Québec, Agence du revenu du Canada, transcriptions d'experts (Blueprint Financial, Next Step Wealth, Parallel Wealth).

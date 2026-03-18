@@ -142,7 +142,7 @@ export const DIVIDENDS_2025: DividendParams = {
  */
 export const OAS_2025: OasParams = {
   annualBenefitMax: 8400,  // approx annual OAS at full
-  recoveryStart: 93000,    // approx 2025 threshold
+  recoveryStart: 95323,    // approx 2025 threshold
   recoveryRate: 0.15
 };
 

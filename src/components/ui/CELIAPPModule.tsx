@@ -235,6 +235,9 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
               Mettre à niveau pour accéder au module CELIAPP
             </Button>
           </div>
+          <p className="mt-6 text-sm leading-6" style={{ color: '#64748b' }}>
+            Ces outils sont fournis à titre éducatif uniquement et ne constituent pas des conseils financiers, fiscaux ou juridiques. Les projections sont basées sur des hypothèses et ne garantissent pas les résultats futurs. Consultez un planificateur financier agréé pour des conseils adaptés à votre situation.
+          </p>
         </CardContent>
       </Card>
     );
@@ -634,6 +637,13 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
                     </AlertDescription>
                   </Alert>
 
+                  <div className="rounded-lg border border-blue-200 bg-blue-50 p-4">
+                    <h3 className="mb-2 text-base font-semibold text-blue-900">Conseil stratégique</h3>
+                    <p className="text-base leading-relaxed text-blue-900">
+                      Ouvrez le CELIAPP dès 18 ans pour démarrer l'horloge des 15 ans, même si vous n'y cotisez pas immédiatement. Le délai de 15 ans commence à l'ouverture du compte, pas à la première cotisation.
+                    </p>
+                  </div>
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                     <div className="p-4 border rounded-lg">
                       <h4 className="font-semibold mb-2">Stratégie Court Terme (1-3 ans)</h4>
@@ -713,8 +723,12 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
                       <li>8 000$ par année (2025)</li>
                       <li>40 000$ maximum à vie</li>
                       <li>Période de participation: 15 ans maximum</li>
+                      <li>Report des droits inutilisés : 1 an seulement (non cumulable)</li>
                       <li>Âge limite: 71 ans</li>
                     </ul>
+                    <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 text-base leading-relaxed text-blue-900">
+                      Contrairement au CELI, les droits de cotisation CELIAPP non utilisés ne s'accumulent pas indéfiniment. Vous ne pouvez reporter que l'espace inutilisé d'une seule année antérieure.
+                    </div>
                     <p><strong>Conditions d'admissibilité:</strong></p>
                     <ul className="list-disc list-inside space-y-1 ml-4">
                       <li>Résident canadien âgé de 18 ans ou plus</li>
@@ -795,6 +809,9 @@ export const CELIAPPModule: React.FC<CELIAPPModuleProps> = ({ userPlan, onUpgrad
           </Card>
         </TabsContent>
       </Tabs>
+      <p className="text-sm leading-6" style={{ color: '#64748b' }}>
+        Ces outils sont fournis à titre éducatif uniquement et ne constituent pas des conseils financiers, fiscaux ou juridiques. Les projections sont basées sur des hypothèses et ne garantissent pas les résultats futurs. Consultez un planificateur financier agréé pour des conseils adaptés à votre situation.
+      </p>
     </div>
   );
 };

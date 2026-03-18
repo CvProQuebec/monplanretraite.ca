@@ -213,7 +213,7 @@ export class OnboardingService {
    * Estime le solde REER
    */
   private static estimateREERBalance(salary: number, age: number): number {
-    const contribution = Math.min(salary * 0.18, 32490); // 18% du salaire, max 32 490$
+    const contribution = Math.min(salary * 0.18, 33810); // 18% du salaire, max 32 490$
     const years = Math.max(age - 25, 0);
     const returnRate = 0.06; // 6% de rendement
     

@@ -282,6 +282,10 @@ Si vous avez entre 55 et 70 ans avec un REER de plus de 300 000 $, le coût d'in
 
 ---
 
+> **Outil associé :** [Simulateur FERR et stratégie de décaissement](/outils) — Testez par vous-même avec nos calculateurs.
+
+---
+
 *Les exemples et calculs présentés sont à des fins éducatives et reflètent les données fiscales de 2026. Les taux et seuils sont sujets à modification annuelle. Consultez un planificateur financier agréé pour des conseils personnalisés adaptés à votre situation.*
 
 **Sources** : Agence du revenu du Canada (ARC), Retraite Québec, Service Canada — ainsi que les transcripts d'experts de Parallel Wealth (Adam Bornn), Next Step Wealth (Stefano Francescut, CFP) et TMFG.

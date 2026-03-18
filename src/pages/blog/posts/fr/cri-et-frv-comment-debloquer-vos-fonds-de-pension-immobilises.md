@@ -182,4 +182,8 @@ Le CRI et le FRV sont des outils puissants souvent mal utilisés :
 
 ---
 
+> **Outil associé :** [Guide CRI et FRV — Calculateur de retraits](/outils) — Testez par vous-même avec nos calculateurs.
+
+---
+
 *⚠️ Cet article est fourni à titre informatif seulement et ne constitue pas un conseil financier personnalisé. Les règles varient selon la province et votre situation spécifique. Consultez un planificateur financier agréé (PFA) avant de prendre des décisions.*

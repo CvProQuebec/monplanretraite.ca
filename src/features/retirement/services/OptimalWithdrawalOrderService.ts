@@ -11,7 +11,7 @@ import type { UserData } from '../types';
 
 export class OptimalWithdrawalOrderService {
   // Seuil 2025 (aligné avec services OASGIS)
-  private static readonly SV_SEUIL_RECUPERATION_2025 = 90997;
+  private static readonly SV_SEUIL_RECUPERATION_2026 = 95323;
 
   static suggest(userData: UserData, options?: { age?: number; projectedTaxableIncome?: number }): string[] {
     const age = options?.age ?? this.calculateAge(userData.personal?.naissance1) ?? 65;
@@ -20,7 +20,7 @@ export class OptimalWithdrawalOrderService {
 
     // FERR obligatoire après 72: mettre FERR tôt dans l'ordre
     if (age >= 72) {
-      if (projected > this.SV_SEUIL_RECUPERATION_2025) {
+      if (projected > this.SV_SEUIL_RECUPERATION_2026) {
         // Rester sous seuil SV autant que possible: FERR (obligatoire), puis CELI, puis non-enregistré/complément
         return ['FERR', 'CELI', 'PLACEMENTS_NON_ENREGISTRES', 'CELI_COMPLEMENT'];
       } else {
@@ -29,7 +29,7 @@ export class OptimalWithdrawalOrderService {
     }
 
     // Avant 72 ans
-    if (projected > this.SV_SEUIL_RECUPERATION_2025) {
+    if (projected > this.SV_SEUIL_RECUPERATION_2026) {
       // On évite d'augmenter l'imposable: CELI d'abord, puis non-enregistré, minimiser REER
       return ['CELI', 'PLACEMENTS_NON_ENREGISTRES', 'REER_MINIMAL'];
     }

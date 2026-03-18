@@ -783,6 +783,9 @@ export const FERROptimizationModule: React.FC<FERRModuleProps> = ({ userPlan, on
           </Card>
         </TabsContent>
       </Tabs>
+      <p className="text-sm leading-6" style={{ color: '#64748b' }}>
+        Ces outils sont fournis à titre éducatif uniquement et ne constituent pas des conseils financiers, fiscaux ou juridiques. Les projections sont basées sur des hypothèses et ne garantissent pas les résultats futurs. Consultez un planificateur financier agréé pour des conseils adaptés à votre situation.
+      </p>
     </div>
   );
 };

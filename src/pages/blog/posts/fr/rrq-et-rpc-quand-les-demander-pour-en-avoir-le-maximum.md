@@ -242,6 +242,10 @@ Le gouvernement ne vous envoie **pas** votre rente automatiquement. Vous devez l
 
 ---
 
+> **Outil associé :** [Simulateur RRQ — Comparez 60, 65 et 70 ans](/outils) — Testez par vous-même avec nos calculateurs.
+
+---
+
 *Les montants de référence reflètent les maximums 2026. Votre rente personnelle dépend de votre historique de cotisation — consultez votre relevé officiel pour des chiffres précis. Pour des conseils personnalisés, consultez un planificateur financier certifié.*
 
 **Sources :** Retraite Québec, Service Canada, ARC, transcriptions d'experts (Parallel Wealth, Trans Canada Wealth, Ferguson Financial Planning, Blueprint Financial).

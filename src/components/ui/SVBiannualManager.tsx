@@ -67,7 +67,7 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
   });
 
   const montantMaximumSV = 713.34; // Juillet-septembre 2025
-  const seuilRecuperation = 90997; // Seuil de récupération 2024
+  const seuilRecuperation = 95323; // Seuil de récupération 2026
 
   const calculateClawback = (revenus: number, montantBase: number) => {
     if (revenus <= seuilRecuperation) return montantBase;
@@ -464,6 +464,9 @@ const SVBiannualManager: React.FC<SVBiannualManagerProps> = ({
             </div>
           </AlertDescription>
         </Alert>
+        <p className="text-sm leading-6" style={{ color: '#64748b' }}>
+          Ces outils sont fournis à titre éducatif uniquement et ne constituent pas des conseils financiers, fiscaux ou juridiques. Les projections sont basées sur des hypothèses et ne garantissent pas les résultats futurs. Consultez un planificateur financier agréé pour des conseils adaptés à votre situation.
+        </p>
       </CardContent>
     </Card>
   );

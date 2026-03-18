@@ -25,7 +25,7 @@ export interface OASGISCalculation {
 export class OASGISService {
   // Paramètres SV 2025
   private static readonly SV_MONTANT_MAX_2025 = 717.15; // mensuel
-  private static readonly SV_SEUIL_RECUPERATION_2025 = 90997; // annuel
+  private static readonly SV_SEUIL_RECUPERATION_2026 = 95323; // annuel
   private static readonly SV_SEUIL_RECUPERATION_COMPLETE_2025 = 148451;
   
   // Paramètres SRG 2025
@@ -59,7 +59,7 @@ export class OASGISService {
       securiteVieillesse: {
         montantMensuel: montantSVNet,
         ageDebut: params.age >= 65 ? params.age : 65,
-        seuil_recuperation: this.SV_SEUIL_RECUPERATION_2025,
+        seuil_recuperation: this.SV_SEUIL_RECUPERATION_2026,
         recuperationPartielle: recuperationSV,
         recuperationComplete: this.SV_SEUIL_RECUPERATION_COMPLETE_2025
       },
@@ -81,7 +81,7 @@ export class OASGISService {
   private static calculateOASClawback(revenuAnnuel: number, age: number): number {
     const seuil = age >= 75 
       ? 153771  // Seuil plus élevé pour 75+
-      : this.SV_SEUIL_RECUPERATION_2025;
+      : this.SV_SEUIL_RECUPERATION_2026;
       
     if (revenuAnnuel <= seuil) return 0;
     
