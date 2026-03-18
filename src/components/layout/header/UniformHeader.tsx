@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { BookOpen, ChevronDown, Compass, FolderOpen, Home, Menu, Wrench, X } from 'lucide-react';
+import { BookOpen, ChevronDown, Compass, FolderOpen, Home, Menu, Shield, Wrench, X } from 'lucide-react';
 import LanguageSelector from './LanguageSelector';
 
 interface UniformHeaderProps {
@@ -101,6 +101,12 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
           path: isEnglish ? '/en/save-load' : '/fr/sauvegarder-charger',
         },
       ],
+    },
+    {
+      id: 'trousse',
+      label: isEnglish ? 'Emergency Kit' : 'Trousse',
+      icon: Shield,
+      path: isEnglish ? '/kit' : '/trousse',
     },
     {
       id: 'blog',

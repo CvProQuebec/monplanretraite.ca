@@ -152,15 +152,6 @@ export interface CompleteBackupData {
     }>;
   };
   
-  // Module Planification d'Urgence
-  planificationUrgence: {
-    fondsUrgence: number;
-    assuranceVie: number;
-    testament: boolean;
-    mandatProtection: boolean;
-    directivesMedicales: boolean;
-  };
-  
   // Module Planification Successorale
   planificationSuccessorale: {
     testament: boolean;
@@ -297,12 +288,6 @@ export class DataCollectionService {
         data.planificationExpert = JSON.parse(expertData);
       }
       
-      // Données de planification d'urgence
-      const urgenceData = localStorage.getItem('planification-urgence-data');
-      if (urgenceData) {
-        data.planificationUrgence = JSON.parse(urgenceData);
-      }
-      
       // Données de planification successorale
       const successoraleData = localStorage.getItem('planification-successorale-data');
       if (successoraleData) {
@@ -359,7 +344,6 @@ export class DataCollectionService {
     if (allData.analyseSensibilite) modules.push('analyse-sensibilite');
     if (allData.comparaisonScenarios) modules.push('comparaison-scenarios');
     if (allData.planificationExpert) modules.push('planification-expert');
-    if (allData.planificationUrgence) modules.push('planification-urgence');
     if (allData.planificationSuccessorale) modules.push('planification-successorale');
     
     return modules;
@@ -442,10 +426,6 @@ export class DataCollectionService {
       
       if (data.planificationExpert) {
         localStorage.setItem('planification-expert-data', JSON.stringify(data.planificationExpert));
-      }
-      
-      if (data.planificationUrgence) {
-        localStorage.setItem('planification-urgence-data', JSON.stringify(data.planificationUrgence));
       }
       
       if (data.planificationSuccessorale) {

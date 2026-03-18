@@ -13,7 +13,6 @@ import Home from './pages/Home';
 const MaRetraite = React.lazy(() => import('./pages/MaRetraite'));
 const MaRetraiteWithDashboard = React.lazy(() => import('./pages/MaRetraiteWithDashboard'));
 const Revenus = React.lazy(() => import('./pages/Revenus'));
-const PlanificationUrgence = React.lazy(() => import('./pages/PlanificationUrgence'));
 const PlanificationSuccessorale = React.lazy(() => import('./pages/PlanificationSuccessorale'));
 const PlanificationDepenses = React.lazy(() => import('./pages/PlanificationDepenses'));
 const AssistantFinancier = React.lazy(() => import('./pages/AssistantFinancier'));

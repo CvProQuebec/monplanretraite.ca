@@ -26,7 +26,6 @@ export type ReportType =
   | 'professional_banking'
   | 'professional_legal'
   | 'professional_real_estate'
-  | 'emergency_plan'
   | 'ultimate_succession';
 
 export interface ReportDefinition {
@@ -81,17 +80,6 @@ export class UnifiedReportManager {
       estimatedTime: 10,
       features: ['Règle du 4%', 'Calculs de base', 'Objectifs simples'],
       serviceClass: 'BasicRetirementService'
-    },
-
-    emergency_plan: {
-      id: 'emergency_plan',
-      category: 'emergency',
-      name: 'Plan d\'urgence complet',
-      description: 'Document d\'urgence pour vos proches',
-      requiredPlan: 'gratuit',
-      estimatedTime: 15,
-      features: ['Contacts d\'urgence', 'Informations médicales', 'Documents importants'],
-      serviceClass: 'EmergencyPlanningService'
     },
 
     // Rapports professionnels
@@ -296,9 +284,6 @@ export class UnifiedReportManager {
         case 'UltimatePlanningService':
           reportContent = await this.generateProfessionalReport(options);
           break;
-        case 'EmergencyPlanningService':
-          reportContent = await this.generateEmergencyReport(options);
-          break;
         default:
           reportContent = await this.generateBasicReport(options);
       }
@@ -476,32 +461,6 @@ Selon votre expertise en ${professionalType}, voici les points à examiner...
 - Documents légaux pertinents
 
 *Rapport préparé pour consultation professionnelle*`;
-  }
-
-  private static async generateEmergencyReport(options: ReportGenerationOptions): Promise<string> {
-    return `# Plan d'Urgence Complet
-
-## Contacts d'Urgence
-- Famille proche
-- Médecin traitant
-- Services d'urgence
-
-## Informations Médicales
-- Allergies et médicaments
-- Conditions médicales
-- Directives médicales
-
-## Documents Importants
-- Localisation des documents
-- Codes d'accès
-- Instructions spéciales
-
-## Préférences Personnelles
-- Souhaits funéraires
-- Don d'organes
-- Volontés particulières
-
-*Document d'urgence pour vos proches*`;
   }
 
   private static async generateBasicReport(options: ReportGenerationOptions): Promise<string> {

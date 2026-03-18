@@ -33,7 +33,6 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
       else if (path === "/depenses") path = "/expenses";
       else if (path === "/mon-budget") path = "/my-budget";
       else if (path === "/immobilier") path = "/real-estate";
-      else if (path === "/planification-urgence") path = "/emergency-planning";
       else if (path === "/planification-successorale") path = "/succession-planning";
       else if (path === "/planification-depenses") path = "/expense-planning";
       else if (path === "/assistant-financier") path = "/financial-assistant";
@@ -46,7 +45,6 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
       else if (path === "/expenses") path = "/depenses";
       else if (path === "/my-budget") path = "/mon-budget";
       else if (path === "/real-estate") path = "/immobilier";
-      else if (path === "/emergency-planning") path = "/planification-urgence";
       else if (path === "/succession-planning") path = "/planification-successorale";
       else if (path === "/expense-planning") path = "/planification-depenses";
       else if (path === "/financial-assistant") path = "/assistant-financier";
@@ -163,13 +161,13 @@ const MobileNav = ({ isEnglish, isHomePage, toggleMenu }: MobileNavProps) => {
               {isEnglish ? "Financial Assistant" : "Assistant financier"}
             </Link>
             
-            {/* Planification d'urgence / Emergency Planning */}
+            {/* Trousse urgence et inaptitude / Emergency Kit */}
             <Link
-              to={isEnglish ? "/emergency-planning" : "/planification-urgence"}
-              className={getMobileLinkClasses(isEnglish ? "/emergency-planning" : "/planification-urgence")}
+              to={isEnglish ? "/kit" : "/trousse"}
+              className={getMobileLinkClasses(isEnglish ? "/kit" : "/trousse")}
               onClick={toggleMenu}
             >
-              {isEnglish ? "Emergency Planning" : "Planification d'urgence"}
+              {isEnglish ? "Emergency & Incapacity Kit" : "Trousse urgence et inaptitude"}
             </Link>
             
             {/* Planification successorale / Succession Planning */}

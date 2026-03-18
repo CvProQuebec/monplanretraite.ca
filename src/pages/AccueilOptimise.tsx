@@ -129,7 +129,7 @@ const AccueilOptimise: React.FC = () => {
 
               <div className="text-center">
                 <Button 
-                  onClick={() => handleNavigation('/planification-urgence')}
+                  onClick={() => handleNavigation('/trousse')}
                   size="lg"
                   className="bg-white text-emerald-600 hover:bg-gray-100 font-bold px-12 py-4 text-xl rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                 >

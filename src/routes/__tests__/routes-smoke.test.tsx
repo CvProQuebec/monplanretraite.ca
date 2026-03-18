@@ -68,7 +68,7 @@ describe('Routes smoke tests', () => {
 
   test('RetirementRoutes: some typical paths can be instantiated', () => {
     const html = ssrRender(
-      <MemoryRouter initialEntries={['/planification-urgence', '/rappels', '/optimisation-fiscale']}>
+      <MemoryRouter initialEntries={['/trousse', '/rappels', '/optimisation-fiscale']}>
         <Suspense fallback={null}>
           <Routes>
             <RetirementRoutes />

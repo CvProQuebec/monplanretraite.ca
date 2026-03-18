@@ -1,4 +1,4 @@
-﻿---
+---
 title: 'RRIF Decumulation Strategy: How to Avoid the RRSP Tax Bomb'
 slug: rrif-decumulation-strategy-avoid-the-rrsp-tax-bomb
 date: '2026-03-16'
@@ -103,8 +103,8 @@ Diane has a defined benefit pension of $55,000/year. She doesn't need more incom
 **Profile 2 â€” Marc, 58, RRSP $450,000, early retiree with no pension**
 Marc has 7 years before mandatory RRIF. His income from investments is $35,000/year. Strategy: Withdraw additional $35,000/year from RRSP during the golden window (total ~$70,000 income, filling the 33% bracket). By 71, RRSP balance is reduced by ~$245,000, significantly lowering future forced withdrawals.
 
-**Profile 3 â€” HÃ©lÃ¨ne, 67, single, RRSP $200,000**
-HÃ©lÃ¨ne is collecting CPP and OAS totalling $28,000/year. With RRIF minimums starting at $10,000+/year, her taxable income reaches $38,000 â€” comfortably low. Less urgency for aggressive meltdown. Strategy: Gradual withdrawals targeted at the lowest tax bracket.
+**Profile 3 â€” Hélène, 67, single, RRSP $200,000**
+Hélène is collecting CPP and OAS totalling $28,000/year. With RRIF minimums starting at $10,000+/year, her taxable income reaches $38,000 â€” comfortably low. Less urgency for aggressive meltdown. Strategy: Gradual withdrawals targeted at the lowest tax bracket.
 
 **Profile 4 â€” Robert & Anne, couple, combined RRSPs $1.2M**
 As a couple, income-splitting at retirement is powerful. Target: Each partner maintains roughly equal income to avoid one person being pushed to high brackets. Consider RRSP spousal contributions in the final working years.

@@ -58,7 +58,7 @@ const sections: ToolSection[] = [
       'Pour les besoins plus précis, comme le CELIAPP, la santé, la consolidation ou la succession.',
     textEn:
       'For more specific needs such as FHSA, health costs, consolidation or succession.',
-    toolIds: ['celiapp', 'healthcare-costs', 'financial-consolidation', 'asset-consolidation', 'emergency-planning'],
+    toolIds: ['celiapp', 'healthcare-costs', 'financial-consolidation', 'asset-consolidation', 'emergency-kit', 'succession-planning'],
   },
 ];
 

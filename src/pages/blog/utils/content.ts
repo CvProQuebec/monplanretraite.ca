@@ -2,6 +2,7 @@ import yaml from 'js-yaml';
 import {
   BLOG_CATEGORIES,
   getCategoryDisplayLabel,
+  getCategoryDescription,
   normalizeCategoryLabel,
   sortCategories,
   type BlogLanguage,
@@ -400,7 +401,7 @@ export function getPrevNext(slug: string, language?: 'fr' | 'en'): { prev?: Blog
 /**
  * Categories helper (static list for filters if needed)
  */
-export { BLOG_CATEGORIES, getCategoryDisplayLabel };
+export { BLOG_CATEGORIES, getCategoryDisplayLabel, getCategoryDescription };
 
 /**
  * Helpers for categories and featured curation
