@@ -124,7 +124,7 @@ export const WizardLayout: React.FC<WizardLayoutProps> = ({
 
   return (
     <div className="min-h-screen bg-white seniors-mode">
-      <div className="container mx-auto px-4 md:px-6 py-6" role="main" aria-label={isEnglish ? 'Guided wizard' : 'Assistant guidé'}>
+      <div className="container mx-auto px-4 md:px-6 py-6" aria-label={isEnglish ? 'Guided wizard' : 'Assistant guidé'}>
         {/* En-tête Wizard: titre + mode + progression */}
         <div className="bg-white border-2 border-gray-300 rounded-xl p-4 md:p-6 mb-6">
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">

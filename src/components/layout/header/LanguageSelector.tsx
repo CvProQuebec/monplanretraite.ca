@@ -149,6 +149,7 @@ const LanguageSelector = ({ isEnglish }: LanguageSelectorProps) => {
         "shadow-sm hover:shadow-md",
         "transform hover:scale-105 active:scale-95"
       )}
+      aria-label={language === 'fr' ? 'Switch to English' : 'Passer en français'}
       title={language === 'fr' ? 'Switch to English' : 'Passer en français'}
     >
       <Globe className="h-4 w-4" />

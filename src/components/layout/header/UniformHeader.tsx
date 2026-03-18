@@ -439,6 +439,10 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="md:hidden p-2 rounded-lg text-gray-600 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+              aria-label={isMobileMenuOpen ? (isEnglish ? 'Close navigation menu' : 'Fermer le menu de navigation') : (isEnglish ? 'Open navigation menu' : 'Ouvrir le menu de navigation')}
+              title={isMobileMenuOpen ? (isEnglish ? 'Close navigation menu' : 'Fermer le menu de navigation') : (isEnglish ? 'Open navigation menu' : 'Ouvrir le menu de navigation')}
+              aria-expanded={isMobileMenuOpen}
+              aria-controls="mobile-navigation-menu"
             >
               {isMobileMenuOpen ? (
                 <X className="w-6 h-6" />
@@ -451,7 +455,7 @@ export const UniformHeader: React.FC<UniformHeaderProps> = ({ isEnglish }) => {
 
                  {/* Mobile Navigation Menu */}
          {isMobileMenuOpen && (
-           <div className="md:hidden border-t border-gray-200 py-2">
+           <div id="mobile-navigation-menu" className="md:hidden border-t border-gray-200 py-2">
              <div className="space-y-1">
               {navigationItems.map((item) => (
                 <div key={item.id}>

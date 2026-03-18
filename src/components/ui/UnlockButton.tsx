@@ -70,6 +70,7 @@ const UnlockButton: React.FC = () => {
         onClick={() => setIsOpen(true)}
         className="fixed bottom-6 right-20 z-50 w-12 h-12 rounded-full bg-gray-600 hover:bg-gray-700 text-white shadow-lg transition-all duration-200 hover:scale-105"
         size="icon"
+        aria-label={isFrench ? 'Déverrouiller les fonctionnalités' : 'Unlock features'}
         title={isFrench ? 'Déverrouiller les fonctionnalités' : 'Unlock features'}
       >
         <Key className="w-5 h-5" />

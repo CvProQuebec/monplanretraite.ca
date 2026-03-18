@@ -31,9 +31,13 @@ export function ToolCard({ tool }: { tool: ToolItem }) {
     tool.plan === 'free' ? (isEnglish ? 'Free' : 'Gratuit')
       : tool.plan === 'professional' ? (isEnglish ? 'Professional' : 'Pro')
       : 'Expert';
+  const cardLabel = `${title} - ${planLabel}`;
+  const actionLabel = locked
+    ? `${isEnglish ? 'Upgrade to access' : 'Mettre à niveau pour accéder à'} ${title}`
+    : `${isEnglish ? 'Open tool' : 'Ouvrir l’outil'} ${title}`;
 
   return (
-    <div className={`mpr-result-card ${planClass}`} role="region" aria-label={title} tabIndex={0}>
+    <article className={`mpr-result-card ${planClass}`} role="region" aria-label={cardLabel} tabIndex={0}>
       <div className="flex items-center justify-between mb-2">
         <h3 className="h3 m-0">{title}</h3>
         <span className="badge">{planLabel}</span>
@@ -41,16 +45,16 @@ export function ToolCard({ tool }: { tool: ToolItem }) {
       <p className="text-[16px] leading-6 text-[color:var(--mpr-text)]">{desc}</p>
       <div className="mt-3">
         {locked ? (
-          <a className="senior-btn senior-btn-primary" href={isEnglish ? '/my-budget#plans' : '/mon-budget#plans'}>
+          <a className="senior-btn senior-btn-primary" href={isEnglish ? '/my-budget#plans' : '/mon-budget#plans'} aria-label={actionLabel}>
             {isEnglish ? 'Upgrade' : 'Mettre à niveau'}
           </a>
         ) : (
-          <a className="senior-btn senior-btn-secondary" href={href}>
+          <a className="senior-btn senior-btn-secondary" href={href} aria-label={actionLabel}>
             {isEnglish ? 'Open tool' : 'Ouvrir l’outil'}
           </a>
         )}
       </div>
-    </div>
+    </article>
   );
 }
 

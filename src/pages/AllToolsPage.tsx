@@ -19,8 +19,8 @@ export default function AllToolsPage() {
           : 'Découvrez tous les outils disponibles, regroupés par forfait. Grands boutons, textes clairs et navigation accessible pour un usage confortable.'}
       </p>
 
-      <section className="mb-8">
-        <h2 className="h2 mb-3">{isEnglish ? 'Free' : 'Gratuit'}</h2>
+      <section className="mb-8" aria-labelledby="tools-free-heading">
+        <h2 id="tools-free-heading" className="h2 mb-3">{isEnglish ? 'Free' : 'Gratuit'}</h2>
         <div className="mpr-result-grid">
           {free.map(tool => (
             <ToolCard key={tool.id} tool={tool} />
@@ -28,8 +28,8 @@ export default function AllToolsPage() {
         </div>
       </section>
 
-      <section className="mb-8">
-        <h2 className="h2 mb-3">{isEnglish ? 'Professional' : 'Pro'}</h2>
+      <section className="mb-8" aria-labelledby="tools-pro-heading">
+        <h2 id="tools-pro-heading" className="h2 mb-3">{isEnglish ? 'Professional' : 'Pro'}</h2>
         <div className="mpr-result-grid">
           {pro.map(tool => (
             <ToolCard key={tool.id} tool={tool} />
@@ -37,8 +37,8 @@ export default function AllToolsPage() {
         </div>
       </section>
 
-      <section className="mb-8">
-        <h2 className="h2 mb-3">Expert</h2>
+      <section className="mb-8" aria-labelledby="tools-expert-heading">
+        <h2 id="tools-expert-heading" className="h2 mb-3">Expert</h2>
         <div className="mpr-result-grid">
           {expert.map(tool => (
             <ToolCard key={tool.id} tool={tool} />
