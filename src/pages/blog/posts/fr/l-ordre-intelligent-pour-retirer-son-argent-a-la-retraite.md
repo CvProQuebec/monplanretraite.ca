@@ -1,13 +1,11 @@
 ---
 title: L'ordre intelligent pour retirer son argent à la retraite
 slug: l-ordre-intelligent-pour-retirer-son-argent-a-la-retraite
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Un mauvais ordre de retraits peut vous coûter 50 000 $ ou plus en impôts
-  inutiles et en prestations perdues. Découvrez le cadre expert de la
-  décumulation — dégel REER, remplissage de tranche, coordination RRQ/SV — pour
-  faire durer votre argent et maximiser votre succession.
+date: '2026-01-06'
+lastUpdated: '2026-01-06'
+excerpt: Un mauvais ordre de retraits peut vous coûter 50 000 $ ou plus en impôts inutiles et en prestations perdues. Découvrez le cadre expert de la décumulation — dégel REER, remplissage de tranche, coordination RRQ/SV — pour faire durer votre argent et maximiser votre succession.
+category: Investissements
+language: fr
 tags:
   - fiscalité
   - retraite
@@ -15,14 +13,13 @@ tags:
   - CELI
   - RRQ
   - SV
-category: Gérer son épargne et ses placements
-language: fr
 status: published
 readingTime: 14
 oqlfChecked: false
 relatedSlugFr: l-ordre-intelligent-pour-retirer-son-argent-a-la-retraite
 relatedSlugEn: smart-withdrawal-order
 ---
+
 # L'ordre intelligent pour retirer son argent à la retraite
 
 *Mis à jour le 1er mars 2026 | Lecture : 14 minutes*

@@ -1,22 +1,20 @@
 ---
 title: 'Congés de maternité et retraite : comment rattraper le retard'
 slug: conges-de-maternite-et-retraite-comment-rattraper-le-retard
-date: '2025-09-19'
-excerpt: >-
-  Avoir des enfants, c'est l'un des plus beaux cadeaux de la vie. Mais cela peut
-  aussi créer des défis pour votre retraite. Quand vous prenez un congé de
-  maternité ou que vous réduisez vos heures de travail pour vous occuper de
-  votre famille, vous cotisez moins à vos régimes de retraite.
+date: '2026-02-14'
+lastUpdated: '2026-02-14'
+excerpt: Avoir des enfants, c'est l'un des plus beaux cadeaux de la vie. Mais cela peut aussi créer des défis pour votre retraite. Quand vous prenez un congé de maternité ou que vous réduisez vos heures de travail pour vous occuper de votre famille, vous cotisez moins à vos régimes de retraite.
+category: Santé et bien-être
+language: fr
 tags:
   - retraite
-category: Défis spécifiques aux femmes
-language: fr
 status: published
 readingTime: 11
 oqlfChecked: false
 relatedSlugFr: conges-de-maternite-et-retraite-comment-rattraper-le-retard
 relatedSlugEn: maternity-leave-retirement
 ---
+
 # Congés de maternité et retraite : comment rattraper le retard
 
 ## Un défi que vivent beaucoup de mères

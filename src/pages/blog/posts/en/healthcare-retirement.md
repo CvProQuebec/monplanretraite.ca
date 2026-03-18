@@ -1,7 +1,14 @@
 ---
-category: Practical everyday aspects
+title: 'Healthcare in Retirement: What to Expect'
+slug: healthcare-retirement
+date: '2026-02-03'
+lastUpdated: '2026-02-03'
+excerpt: When you retire, your health remains your most important asset. But with age, you need to prepare for the fact that your health may change. Healthcare costs often increase as we age. This is normal, and it's better to prepare for it now.
+category: Budget & Expenses
+language: en
 relatedSlugFr: les-soins-de-sante-a-la-retraite-a-quoi-s-attendre
 ---
+
 # Healthcare in Retirement: What to Expect
 
 ## Your Health, Your Most Precious Asset

@@ -1,27 +1,24 @@
 ---
 title: Income Splitting Explained Simply
 slug: income-splitting-simple
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Income splitting can save you $3,000 to $10,000 per year in retirement —
-  legally and simply. Discover form T1032, CPP/QPP pension sharing, the
-  micro-RRIF trick at 65, and how to protect your OAS through this often
-  overlooked strategy.
+date: '2026-03-16'
+lastUpdated: '2026-03-16'
+excerpt: Income splitting can save you $3,000 to $10,000 per year in retirement — legally and simply. Discover form T1032, CPP/QPP pension sharing, the micro-RRIF trick at 65, and how to protect your OAS through this often overlooked strategy.
+category: Taxation
+language: en
 tags:
   - taxation
   - income splitting
   - retirement
   - OAS
   - RRIF
-category: Simple taxation
-language: en
 status: published
 readingTime: 10
 oqlfChecked: false
 relatedSlugFr: le-fractionnement-de-revenus-explique-simplement
 relatedSlugEn: income-splitting-simple
 ---
+
 # Income Splitting Explained Simply
 
 *Updated March 1, 2026 | Reading time: 10 minutes*

@@ -1,27 +1,24 @@
 ---
 title: How to Save on Your Retirement Taxes
 slug: saving-taxes-retirement
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  In retirement, you control your tax bill more than at any other point in your
-  life. Discover 7 expert strategies — investment location, the micro-RRIF at
-  65, securities donations, avoiding the $95,323 OAS clawback — to keep tens of
-  thousands more in your pocket.
+date: '2026-03-11'
+lastUpdated: '2026-03-11'
+excerpt: In retirement, you control your tax bill more than at any other point in your life. Discover 7 expert strategies — investment location, the micro-RRIF at 65, securities donations, avoiding the $95,323 OAS clawback — to keep tens of thousands more in your pocket.
+category: Taxation
+language: en
 tags:
   - TFSA
   - taxes
   - retirement
   - RRIF
   - income splitting
-category: Simple taxation
-language: en
 status: published
 readingTime: 13
 oqlfChecked: false
 relatedSlugFr: comment-economiser-sur-vos-impots-de-retraite
 relatedSlugEn: saving-taxes-retirement
 ---
+
 # How to Save on Your Retirement Taxes
 
 *Updated March 1, 2026 | Reading time: 13 minutes*
@@ -162,7 +159,7 @@ If you still have RRSP contribution room and are under age 71, contributing to a
 
 The OAS clawback threshold is often misunderstood — and expensive for those who cross it unknowingly.
 
-**2026 Threshold: $95,323** (↑ from $90,997 in 2025)
+**2026 Threshold: $95,323** (↑ from $93,454 in 2025)
 **Rate**: 15 cents lost for every dollar above the threshold
 
 What **counts** as income (can trigger clawback):

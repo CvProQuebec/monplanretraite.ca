@@ -1,21 +1,20 @@
 ---
 title: Faut-il rembourser ses dettes avant la retraite?
 slug: faut-il-rembourser-ses-dettes-avant-la-retraite
-date: '2025-09-19'
-excerpt: >-
-  Une des grandes questions que se posent les futurs retraités : « Dois-je me
-  dépêcher de rembourser mes dettes avant d'arrêter de travailler? » La réponse
-  n'est pas toujours simple. Cela dépend de plusieurs facteurs importants que
-  nous allons examiner ensemble.
+date: '2026-03-04'
+lastUpdated: '2026-03-04'
+excerpt: 'Une des grandes questions que se posent les futurs retraités : « Dois-je me dépêcher de rembourser mes dettes avant d''arrêter de travailler? » La réponse n''est pas toujours simple. Cela dépend de plusieurs facteurs importants que nous allons examiner ensemble.'
+category: Investissements
+language: fr
 tags:
   - retraite
-category: Gérer son épargne et ses placements
-language: fr
 status: published
 readingTime: 7
 oqlfChecked: false
 relatedSlugFr: faut-il-rembourser-ses-dettes-avant-la-retraite
+relatedSlugEn: debt-retirement
 ---
+
 # Faut-il rembourser ses dettes avant la retraite?
 
 Une des grandes questions que se posent les futurs retraités : « Dois-je me dépêcher de rembourser mes dettes avant d'arrêter de travailler? » La réponse n'est pas toujours simple. Cela dépend de plusieurs facteurs importants que nous allons examiner ensemble.

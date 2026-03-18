@@ -1,28 +1,24 @@
 ---
 title: 'RRSP vs TFSA: The Complete Decision Guide to Maximize Your Retirement Savings'
 slug: rrsp-vs-tfsa-the-complete-decision-guide-to-maximize-your-retirement-savings
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  RRSP or TFSA? The answer can save you tens of thousands of dollars in taxes.
-  Discover 10 critical decision factors — including employer matching, creditor
-  protection, and the permanent RRIF age choice — with our complete guide
-  updated for 2026.
+date: '2026-01-09'
+lastUpdated: '2026-01-09'
+excerpt: RRSP or TFSA? The answer can save you tens of thousands of dollars in taxes. Discover 10 critical decision factors — including employer matching, creditor protection, and the permanent RRIF age choice — with our complete guide updated for 2026.
+category: Retirement Basics
+language: en
 tags:
   - RRSP
   - TFSA
   - RRIF
   - taxes
   - retirement
-category: Retirement basics
-language: en
 status: published
 readingTime: 15
 oqlfChecked: false
-relatedSlugFr: >-
-  reer-vs-celi-le-guide-decisionnel-complet-pour-maximiser-votre-epargne-retraite
+relatedSlugFr: reer-vs-celi-le-guide-decisionnel-complet-pour-maximiser-votre-epargne-retraite
 relatedSlugEn: rrsp-vs-tfsa-the-complete-decision-guide-to-maximize-your-retirement-savings
 ---
+
 # RRSP vs TFSA: The Complete Decision Guide to Maximize Your Retirement Savings
 
 *Updated March 1, 2026 | Reading time: 15 minutes*

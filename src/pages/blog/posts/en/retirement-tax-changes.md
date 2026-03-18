@@ -1,7 +1,14 @@
 ---
-category: Simple taxation
+title: 'Retirement Taxes: What Changes'
+slug: retirement-tax-changes
+date: '2026-01-25'
+lastUpdated: '2026-01-25'
+excerpt: When you were working, you received a salary from one source. In retirement, your money can come from several different places. Each source of money has its own tax rules. It's important to understand them to avoid unpleasant surprises.
+category: Taxation
+language: en
 relatedSlugFr: l-impot-a-la-retraite-ce-qui-change
 ---
+
 # Retirement Taxes: What Changes
 
 ## Your Tax Situation Changes When You Retire

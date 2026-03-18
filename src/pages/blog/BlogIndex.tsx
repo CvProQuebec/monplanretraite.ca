@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { getAllPosts, BLOG_CATEGORIES, BlogPost } from './utils/content';
+import { getAllPosts, getAvailableCategories, getCategoryDisplayLabel, BlogPost } from './utils/content';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 
 type Props = {
@@ -31,8 +31,7 @@ function humanReadingTime(mins: number, lang: 'fr' | 'en'): string {
 function useCategoryFilter(): string | undefined {
   const loc = useLocation();
   const params = new URLSearchParams(loc.search);
-  const cat = params.get('cat') || undefined;
-  return cat && BLOG_CATEGORIES.includes(cat) ? cat : undefined;
+  return params.get('cat') || undefined;
 }
 
 /**
@@ -55,12 +54,13 @@ const BlogIndex: React.FC<Props> = ({ language }) => {
   const selectedTag = useTagFilter();
 
   const all = useMemo(() => getAllPosts(lang), [lang]);
+  const categories = useMemo(() => getAvailableCategories(lang), [lang]);
   const posts = useMemo(() => {
     let list = all;
-    if (selectedCategory) list = list.filter(p => p.category === selectedCategory);
+    if (selectedCategory && categories.includes(selectedCategory)) list = list.filter(p => p.category === selectedCategory);
     if (selectedTag) list = list.filter(p => p.tags.includes(selectedTag));
     return list;
-  }, [all, selectedCategory, selectedTag]);
+  }, [all, categories, selectedCategory, selectedTag]);
 
   const onOpen = (p: BlogPost) => {
     navigate(`${lang === 'en' ? '/en/blog' : '/blog'}/${p.slug}`);
@@ -71,23 +71,7 @@ const BlogIndex: React.FC<Props> = ({ language }) => {
     ? 'Guides, conseils et analyses pour optimiser votre planification de retraite'
     : 'Guides, tips and analyses to optimize your retirement planning';
 
-  // Localize category labels for display (keys remain FR for filtering)
-  const categoryLabel = (cat: string) => {
-    if (lang === 'fr') return cat;
-    const map: Record<string, string> = {
-      'Les bases de la retraite': 'Retirement basics',
-      'Comprendre les régimes gouvernementaux': 'Government programs',
-      'Gérer son épargne et ses placements': 'Manage savings and investments',
-      'Planification pour les couples': 'Planning for couples',
-      'Défis spécifiques aux femmes': 'Women-specific challenges',
-      'Aspects pratiques et quotidiens': 'Practical everyday aspects',
-      'Fiscalité simplifiée': 'Simple taxation',
-      'Sujets saisonniers et d’actualité': 'Seasonal and current topics',
-      'Outils et ressources': 'Tools and resources',
-      'Bien-être et qualité de vie': 'Well-being and quality of life',
-    };
-    return map[cat] || cat;
-  };
+  const categoryLabel = (cat: string) => getCategoryDisplayLabel(cat, lang);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -102,7 +86,7 @@ const BlogIndex: React.FC<Props> = ({ language }) => {
           {/* Filters */}
           <div className="flex flex-wrap items-center gap-3 mb-6">
             <span className="text-sm text-gray-700">{lang === 'fr' ? 'Catégories:' : 'Categories:'}</span>
-            {BLOG_CATEGORIES.map(cat => {
+            {categories.map(cat => {
               const active = selectedCategory === cat;
               const to = active ? (lang === 'en' ? '/en/blog' : '/blog') : `${lang === 'en' ? '/en/blog' : '/blog'}?cat=${encodeURIComponent(cat)}`;
               return (

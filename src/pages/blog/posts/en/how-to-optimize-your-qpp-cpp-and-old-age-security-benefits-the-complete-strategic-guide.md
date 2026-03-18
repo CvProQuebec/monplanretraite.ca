@@ -1,32 +1,24 @@
 ---
-title: >-
-  How to Optimize Your QPP, CPP, and Old Age Security Benefits: The Complete
-  Strategic Guide
-slug: >-
-  how-to-optimize-your-qpp-cpp-and-old-age-security-benefits-the-complete-strategic-guide
+title: 'How to Optimize Your QPP, CPP, and Old Age Security Benefits: The Complete Strategic Guide'
+slug: how-to-optimize-your-qpp-cpp-and-old-age-security-benefits-the-complete-strategic-guide
 date: '2025-09-18'
 lastUpdated: '2026-03-01'
-excerpt: >-
-  Starting your government benefits at 60, 65, or 70 can make a $100,000
-  difference over your lifetime. Discover the little-known optimization
-  strategies — including the RRSP meltdown — that transform these programs
-  into financial pillars of your retirement.
+excerpt: Starting your government benefits at 60, 65, or 70 can make a $100,000 difference over your lifetime. Discover the little-known optimization strategies — including the RRSP meltdown — that transform these programs into financial pillars of your retirement.
+category: Retirement Income
+language: en
 tags:
   - QPP
   - CPP
   - OAS
   - retirement
   - taxation
-category: Government programs
-language: en
 status: published
 readingTime: 15
 oqlfChecked: false
-relatedSlugFr: >-
-  comment-optimiser-vos-prestations-rrq-rpc-et-securite-de-la-vieillesse-le-guide-strategique-complet
-relatedSlugEn: >-
-  how-to-optimize-your-qpp-cpp-and-old-age-security-benefits-the-complete-strategic-guide
+relatedSlugFr: comment-optimiser-vos-prestations-rrq-rpc-et-securite-de-la-vieillesse-le-guide-strategique-complet
+relatedSlugEn: how-to-optimize-your-qpp-cpp-and-old-age-security-benefits-the-complete-strategic-guide
 ---
+
 # How to Optimize Your QPP, CPP, and Old Age Security Benefits: The Complete Strategic Guide
 
 *Updated March 1, 2026 | Reading time: 15 minutes*

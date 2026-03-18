@@ -1,26 +1,23 @@
 ---
 title: 'QPP and CPP: When to Apply to Get the Maximum'
 slug: qpp-and-cpp-when-to-apply-to-get-the-maximum
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Starting your QPP/CPP at 60 or waiting until 70 can make a difference of
-  $50,000 to $100,000 over your lifetime. This guide gives you the exact
-  calculations, real break-even points, and the RRSP coordination strategy
-  to maximize your retirement.
+date: '2026-03-12'
+lastUpdated: '2026-03-12'
+excerpt: Starting your QPP/CPP at 60 or waiting until 70 can make a difference of $50,000 to $100,000 over your lifetime. This guide gives you the exact calculations, real break-even points, and the RRSP coordination strategy to maximize your retirement.
+category: Retirement Income
+language: en
 tags:
   - QPP
   - CPP
   - retirement
   - OAS
-category: Government programs
-language: en
 status: published
 readingTime: 11
 oqlfChecked: false
 relatedSlugFr: rrq-et-rpc-quand-les-demander-pour-en-avoir-le-maximum
 relatedSlugEn: qpp-and-cpp-when-to-apply-to-get-the-maximum
 ---
+
 # QPP and CPP: When to Apply to Get the Maximum
 
 *Updated March 1, 2026 | Reading time: 11 minutes*

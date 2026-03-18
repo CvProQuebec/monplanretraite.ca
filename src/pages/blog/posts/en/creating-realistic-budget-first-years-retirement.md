@@ -1,24 +1,21 @@
 ---
 title: Creating a Realistic Budget for Your First Years of Retirement
 slug: creating-realistic-budget-first-years-retirement
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Approaching retirement and wondering how to plan your budget? The first years
-  of retirement are special — that's when you live your dreams while learning
-  to embrace a new lifestyle. Here's how to create a realistic budget that lets
-  you fully enjoy this wonderful chapter.
+date: '2026-01-04'
+lastUpdated: '2026-01-04'
+excerpt: Approaching retirement and wondering how to plan your budget? The first years of retirement are special — that's when you live your dreams while learning to embrace a new lifestyle. Here's how to create a realistic budget that lets you fully enjoy this wonderful chapter.
+category: Retirement Basics
+language: en
 tags:
   - budget
   - retirement
-category: Wellness and quality of life
-language: en
 status: published
 readingTime: 9
 oqlfChecked: false
 relatedSlugFr: creer-un-budget-realiste-pour-ses-premieres-annees-de-retraite
 relatedSlugEn: creating-realistic-budget-first-years-retirement
 ---
+
 # Creating a Realistic Budget for Your First Years of Retirement
 
 *Updated March 1, 2026*

@@ -1,13 +1,11 @@
 ---
 title: 'Plafonds de cotisation 2025–2026 : tout ce qui change pour vos comptes de retraite'
 slug: nouveaux-plafonds-de-cotisation-ce-que-ca-change-pour-vous
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Les règles pour épargner dans vos comptes enregistrés continuent d'évoluer.
-  Pour 2025 et 2026, les changements vont bien au-delà des nouveaux plafonds REER
-  et CELI : ils touchent le RPC, les paliers d'imposition, le seuil de
-  récupération de la SV et de nouvelles stratégies à connaître.
+date: '2026-02-21'
+lastUpdated: '2026-02-21'
+excerpt: 'Les règles pour épargner dans vos comptes enregistrés continuent d''évoluer. Pour 2025 et 2026, les changements vont bien au-delà des nouveaux plafonds REER et CELI : ils touchent le RPC, les paliers d''imposition, le seuil de récupération de la SV et de nouvelles stratégies à connaître.'
+category: Fiscalité
+language: fr
 tags:
   - REER
   - CELI
@@ -15,14 +13,13 @@ tags:
   - fiscalité
   - RPC
   - SV
-category: Sujets saisonniers et d'actualité
-language: fr
 status: published
 readingTime: 7
 oqlfChecked: false
 relatedSlugFr: nouveaux-plafonds-de-cotisation-ce-que-ca-change-pour-vous
 relatedSlugEn: contribution-limits-2025
 ---
+
 # Plafonds de cotisation 2025–2026 : tout ce qui change pour vos comptes de retraite
 
 Les règles pour épargner dans vos comptes enregistrés continuent d'évoluer. Pour 2025 et 2026, les changements vont bien au-delà des nouveaux plafonds REER et CELI — ils touchent aussi les cotisations au RPC, les paliers d'imposition fédéraux, le seuil de récupération de la Sécurité de la vieillesse, et une nouvelle stratégie REER qui vaut la peine d'être connue. Voici tout ce qu'il faut savoir pour planifier intelligemment.
@@ -101,9 +98,9 @@ Ce seuil est crucial pour la planification de vos retraits FERR. Des retraits im
 
 En 2024, le gouvernement fédéral avait proposé de hausser le taux d'inclusion des gains en capital de 50 % à 66,67 % au-delà de 250 000 $. Cette mesure a finalement été abandonnée. Le taux d'inclusion reste à **50 %** pour 2026 et au-delà — ce qui signifie que votre planification fiscale basée sur les règles actuelles demeure valide.
 
-### 6. Exonération cumulative des gains en capital : 1 275 000 $
+### 6. Exonération cumulative des gains en capital : 1 250 000 $
 
-Pour les Canadiens qui détiennent des actions admissibles de petites entreprises ou des biens agricoles ou de pêche, l'exonération cumulative des gains en capital passe à **1 275 000 $** en 2026 (contre 1 250 000 $ en 2025). Consultez un fiscaliste pour confirmer vos droits restants si vous avez déjà utilisé une partie de cette exonération.
+Pour les Canadiens qui détiennent des actions admissibles de petites entreprises ou des biens agricoles ou de pêche, l'exonération cumulative des gains en capital confirmée pour **2025 est de 1 250 000 $**. Le plafond 2026 n'a pas encore été officiellement annoncé par l'ARC — il sera publié plus tard en 2026 pour la saison d'impôts 2027. Consultez un fiscaliste pour confirmer vos droits restants si vous avez déjà utilisé une partie de cette exonération.
 
 ---
 

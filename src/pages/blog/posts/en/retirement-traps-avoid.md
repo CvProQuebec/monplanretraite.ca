@@ -1,7 +1,14 @@
 ---
-category: Retirement basics
+title: How to Avoid the 7 Most Common Retirement Traps
+slug: retirement-traps-avoid
+date: '2026-03-01'
+lastUpdated: '2026-03-01'
+excerpt: You've worked hard all your life. You deserve a retirement without financial hassles. Yet, many people make costly mistakes that can cost them thousands of dollars.
+category: Retirement Basics
+language: en
 relatedSlugFr: comment-eviter-les-7-pieges-les-plus-courants-de-la-retraite
 ---
+
 # How to Avoid the 7 Most Common Retirement Traps
 
 ## A Simple Guide for a Peaceful Retirement

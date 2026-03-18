@@ -1,25 +1,22 @@
 ---
 title: Préparer sa déclaration de revenus de retraité
 slug: preparer-sa-declaration-de-revenus-de-retraite
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Préparer sa déclaration de revenus quand on est à la retraite, c'est différent
-  de quand on travaillait. Vos sources de revenus ont changé et il y a de
-  nouveaux crédits d'impôt dont vous pouvez profiter. Voici un guide simple pour
-  vous aider à préparer votre déclaration sans stress.
+date: '2026-03-15'
+lastUpdated: '2026-03-15'
+excerpt: Préparer sa déclaration de revenus quand on est à la retraite, c'est différent de quand on travaillait. Vos sources de revenus ont changé et il y a de nouveaux crédits d'impôt dont vous pouvez profiter. Voici un guide simple pour vous aider à préparer votre déclaration sans stress.
+category: Fiscalité
+language: fr
 tags:
   - SV
   - fiscalité
   - retraite
-category: Sujets saisonniers et d'actualité
-language: fr
 status: published
 readingTime: 8
 oqlfChecked: false
 relatedSlugFr: preparer-sa-declaration-de-revenus-de-retraite
 relatedSlugEn: tax-return-retirement
 ---
+
 # Préparer sa déclaration de revenus de retraité
 
 *Mis à jour le 1er mars 2026 | Temps de lecture : 8 minutes*

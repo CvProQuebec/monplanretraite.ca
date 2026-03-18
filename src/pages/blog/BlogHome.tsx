@@ -3,9 +3,9 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import {
   getAllPosts,
+  getCategoryDisplayLabel,
   getCategoryCounts,
   getFeaturedPosts,
-  BLOG_CATEGORIES,
   slugifyCategory,
   type BlogPost,
 } from './utils/content';
@@ -109,22 +109,20 @@ function getTabForPost(categoryFR: string, tagsLower: string[]): 'planning' | 'm
   // Map canonical FR categories to tabs
   if (includesAny([
     'les bases de la retraite',
-    'planification pour les couples',
+    'couple et famille',
+    'planification successorale',
     'outils et ressources',
   ])) return 'planning';
 
   if (includesAny([
-    'comprendre les régimes gouvernementaux',
-    'gérer son épargne et ses placements',
-    'fiscalité simplifiée',
-    'sujets saisonniers et d’actualité',
-    "sujets saisonniers et d'actualité",
+    'revenus de retraite',
+    'investissements',
+    'fiscalité',
+    'budget et dépenses',
   ])) return 'money';
 
   if (includesAny([
-    'aspects pratiques et quotidiens',
-    'bien-être et qualité de vie',
-    'défis spécifiques aux femmes',
+    'santé et bien-être',
   ])) return 'lifestyle';
 
   // Fallbacks using tags if category doesn't match
@@ -157,30 +155,14 @@ const BlogHome: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
   }, [allPosts, query]);
   const catCounts = useMemo(() => getCategoryCounts(lang), [lang]);
 
-  // Localize category labels for display (keys remain FR for filtering and slugs)
-  const categoryLabel = (cat: string) => {
-    if (lang === 'fr') return cat;
-    const map: Record<string, string> = {
-      'Les bases de la retraite': 'Retirement basics',
-      'Comprendre les régimes gouvernementaux': 'Government programs',
-      'Gérer son épargne et ses placements': 'Manage savings and investments',
-      'Planification pour les couples': 'Planning for couples',
-      'Défis spécifiques aux femmes': 'Women-specific challenges',
-      'Aspects pratiques et quotidiens': 'Practical everyday aspects',
-      'Fiscalité simplifiée': 'Simple taxation',
-      'Sujets saisonniers et d’actualité': 'Seasonal and current topics',
-      'Outils et ressources': 'Tools and resources',
-      'Bien-être et qualité de vie': 'Well-being and quality of life',
-    };
-    return map[cat] || cat;
-  };
+  const categoryLabel = (cat: string) => getCategoryDisplayLabel(cat, lang);
 
   const t = {
     title: lang === 'fr' ? 'Bibliothèque du Blog' : 'Blog Library',
     subtitle:
       lang === 'fr'
-        ? '44 articles pour planifier votre retraite en confiance'
-        : '44 articles to plan your retirement with confidence',
+        ? `${allPosts.length} articles pour planifier votre retraite en confiance`
+        : `${allPosts.length} articles to plan your retirement with confidence`,
     searchPlaceholder: lang === 'fr' ? 'Rechercher un article, ex.: RRQ, CELI, budget…' : 'Search articles, e.g., OAS, TFSA, budget…',
     essentials: lang === 'fr' ? 'Guides essentiels' : 'Essential Guides',
     categories: lang === 'fr' ? 'Catégories' : 'Categories',
@@ -325,10 +307,14 @@ const BlogHome: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
                   const icon = (() => {
                     const c = (p.category || '').toLowerCase();
                     if (c.includes('fiscal') || c.includes('impôt')) return '🧮';
-                    if (c.includes('gouvernement')) return '🏛️';
+                    if (c.includes('revenus')) return '🏛️';
+                    if (c.includes('investissement')) return '📈';
+                    if (c.includes('budget') || c.includes('dépenses')) return '💸';
+                    if (c.includes('successor')) return '🧾';
+                    if (c.includes('couple') || c.includes('famille')) return '👪';
                     if (c.includes('outils') || c.includes('ressources')) return '🛠️';
                     if (c.includes('bases') || c.includes('retraite')) return '📘';
-                    if (c.includes('bien-être') || c.includes('qualité')) return '🌿';
+                    if (c.includes('santé') || c.includes('bien-être')) return '🌿';
                     return '📄';
                   })();
 

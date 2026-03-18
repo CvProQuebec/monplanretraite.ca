@@ -1,26 +1,24 @@
 ---
 title: 'Delaying Government Pensions: Why It Can Pay Off'
 slug: delaying-government-pensions-why-it-can-pay-off
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Delaying your QPP/CPP and OAS isn't just about a higher monthly amount —
-  it's a complete tax strategy. Discover why healthy retirees with other income
-  almost always benefit from waiting, and how to fund the waiting period.
+date: '2026-01-17'
+lastUpdated: '2026-01-17'
+excerpt: Delaying your QPP/CPP and OAS isn't just about a higher monthly amount — it's a complete tax strategy. Discover why healthy retirees with other income almost always benefit from waiting, and how to fund the waiting period.
+category: Retirement Income
+language: en
 tags:
   - QPP
   - CPP
   - OAS
   - retirement
   - taxation
-category: Government programs
-language: en
 status: published
 readingTime: 8
 oqlfChecked: false
 relatedSlugFr: pourquoi-reporter-ses-pensions-gouvernementales-peut-etre-payant
 relatedSlugEn: delaying-government-pensions-why-it-can-pay-off
 ---
+
 # Delaying Government Pensions: Why It Can Pay Off
 
 *Updated March 1, 2026 | Reading time: 8 minutes*

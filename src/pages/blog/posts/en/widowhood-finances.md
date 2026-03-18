@@ -1,7 +1,14 @@
 ---
-category: Women-specific challenges
+title: 'Widowhood: Managing Your Finances After Your Spouse''s Death'
+slug: widowhood-finances
+date: '2026-01-31'
+lastUpdated: '2026-01-31'
+excerpt: Losing your spouse is one of life's most difficult trials. In addition to immense grief, you must face numerous administrative and financial procedures. It's normal to feel overwhelmed.
+category: Health & Wellness
+language: en
 relatedSlugFr: veuvage-gerer-ses-finances-apres-le-deces-du-conjoint
 ---
+
 # Widowhood: Managing Your Finances After Your Spouse's Death
 
 ## A Trial Where You Must Also Think About Money

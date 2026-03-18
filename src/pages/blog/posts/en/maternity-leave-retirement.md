@@ -1,7 +1,14 @@
 ---
-category: Women-specific challenges
+title: 'Maternity Leave and Retirement: How to Catch Up'
+slug: maternity-leave-retirement
+date: '2026-02-14'
+lastUpdated: '2026-02-14'
+excerpt: Having children is one of life's most beautiful gifts. But it can also create challenges for your retirement. When you take maternity leave or reduce your work hours to care for your family, you contribute less to your retirement plans.
+category: Health & Wellness
+language: en
 relatedSlugFr: conges-de-maternite-et-retraite-comment-rattraper-le-retard
 ---
+
 # Maternity Leave and Retirement: How to Catch Up
 
 ## A Challenge Many Mothers Experience

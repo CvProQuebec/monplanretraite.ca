@@ -1,22 +1,20 @@
 ---
 title: Comment protéger ses économies de l'inflation
 slug: comment-proteger-ses-economies-de-l-inflation
-date: '2025-09-19'
-excerpt: >-
-  L'inflation est comme un voleur silencieux qui s'attaque à vos économies. Jour
-  après jour, elle gruge votre pouvoir d'achat sans que vous vous en rendiez
-  compte. Mais bonne nouvelle : il existe des moyens simples et efficaces pour
-  protéger votre argent. Voyons ensemble comment faire.
+date: '2026-01-08'
+lastUpdated: '2026-01-08'
+excerpt: 'L''inflation est comme un voleur silencieux qui s''attaque à vos économies. Jour après jour, elle gruge votre pouvoir d''achat sans que vous vous en rendiez compte. Mais bonne nouvelle : il existe des moyens simples et efficaces pour protéger votre argent. Voyons ensemble comment faire.'
+category: Investissements
+language: fr
 tags:
   - retraite
-category: Gérer son épargne et ses placements
-language: fr
 status: published
 readingTime: 8
 oqlfChecked: false
 relatedSlugFr: comment-proteger-ses-economies-de-l-inflation
 relatedSlugEn: protect-savings-inflation
 ---
+
 # Comment protéger ses économies de l'inflation
 
 L'inflation est comme un voleur silencieux qui s'attaque à vos économies. Jour après jour, elle gruge votre pouvoir d'achat sans que vous vous en rendiez compte. Mais bonne nouvelle : il existe des moyens simples et efficaces pour protéger votre argent. Voyons ensemble comment faire.

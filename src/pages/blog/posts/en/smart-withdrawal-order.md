@@ -1,13 +1,11 @@
 ---
 title: The Smart Order for Withdrawing Your Money in Retirement
 slug: smart-withdrawal-order
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  A poor withdrawal order can cost you $50,000 or more in unnecessary taxes and
-  lost benefits. Discover the expert decumulation framework — RRSP meltdown,
-  bracket filling, CPP/OAS coordination — to make your money last and maximize
-  your estate.
+date: '2026-01-06'
+lastUpdated: '2026-01-06'
+excerpt: A poor withdrawal order can cost you $50,000 or more in unnecessary taxes and lost benefits. Discover the expert decumulation framework — RRSP meltdown, bracket filling, CPP/OAS coordination — to make your money last and maximize your estate.
+category: Investments
+language: en
 tags:
   - taxes
   - retirement
@@ -15,14 +13,13 @@ tags:
   - TFSA
   - CPP
   - OAS
-category: Manage savings and investments
-language: en
 status: published
 readingTime: 14
 oqlfChecked: false
 relatedSlugFr: l-ordre-intelligent-pour-retirer-son-argent-a-la-retraite
 relatedSlugEn: smart-withdrawal-order
 ---
+
 # The Smart Order for Withdrawing Your Money in Retirement
 
 *Updated March 1, 2026 | Reading time: 14 minutes*

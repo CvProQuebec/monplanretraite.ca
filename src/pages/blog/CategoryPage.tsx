@@ -2,9 +2,9 @@ import React, { useMemo } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import {
+  getCategoryDisplayLabel,
   getPostsByCategorySlug,
   resolveCategorySlug,
-  slugifyCategory,
   type BlogPost,
 } from './utils/content';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -19,27 +19,10 @@ const CategoryPage: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
   const lang: 'fr' | 'en' = language || pathLang || (uiLanguage === 'fr' ? 'fr' : 'en');
   const navigate = useNavigate();
 
-  const canonical = slug ? resolveCategorySlug(slug) : undefined;
+  const canonical = slug ? resolveCategorySlug(slug, lang) : undefined;
   const posts = useMemo(() => (slug ? getPostsByCategorySlug(slug, lang) : []), [slug, lang]);
 
-  // Localize category labels for display (keys remain FR for filtering)
-  const categoryLabel = (cat: string | undefined) => {
-    if (!cat) return undefined;
-    if (lang === 'fr') return cat;
-    const map: Record<string, string> = {
-      'Les bases de la retraite': 'Retirement basics',
-      'Comprendre les régimes gouvernementaux': 'Government programs',
-      'Gérer son épargne et ses placements': 'Manage savings and investments',
-      'Planification pour les couples': 'Planning for couples',
-      'Défis spécifiques aux femmes': 'Women-specific challenges',
-      'Aspects pratiques et quotidiens': 'Practical everyday aspects',
-      'Fiscalité simplifiée': 'Simple taxation',
-      'Sujets saisonniers et d’actualité': 'Seasonal and current topics',
-      'Outils et ressources': 'Tools and resources',
-      'Bien-être et qualité de vie': 'Well-being and quality of life',
-    };
-    return map[cat] || cat;
-  };
+  const categoryLabel = (cat: string | undefined) => (cat ? getCategoryDisplayLabel(cat, lang) : undefined);
 
   const t = {
     back: lang === 'fr' ? 'Retour' : 'Back',

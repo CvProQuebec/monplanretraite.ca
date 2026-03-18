@@ -1,26 +1,20 @@
 ---
 title: 'The 4% Rule: The Modern Withdrawal Strategy That Revolutionizes Retirement'
-slug: >-
-  the-4-pourcent-rule-the-modern-withdrawal-strategy-that-revolutionizes-retirement
+slug: the-4-pourcent-rule-the-modern-withdrawal-strategy-that-revolutionizes-retirement
 date: '2025-09-19'
 lastUpdated: '2026-03-01'
-excerpt: >-
-  For 30 years, a simple rule has guided retirees around the world: withdraw 4%
-  of your savings the first year, then adjust for inflation. This strategy has
-  survived every financial crisis since 1928. Discover how to apply it to secure
-  your retirement.
+excerpt: 'For 30 years, a simple rule has guided retirees around the world: withdraw 4% of your savings the first year, then adjust for inflation. This strategy has survived every financial crisis since 1928. Discover how to apply it to secure your retirement.'
+category: Retirement Basics
+language: en
 tags:
   - retraite
-category: Retirement basics
-language: en
 status: published
 readingTime: 9
 oqlfChecked: false
-relatedSlugFr: >-
-  la-regle-des-4-pourcent-la-strategie-de-retrait-moderne-qui-revolutionne-la-retraite
-relatedSlugEn: >-
-  the-4-pourcent-rule-the-modern-withdrawal-strategy-that-revolutionizes-retirement
+relatedSlugFr: la-regle-des-4-pourcent-la-strategie-de-retrait-moderne-qui-revolutionne-la-retraite
+relatedSlugEn: the-4-pourcent-rule-the-modern-withdrawal-strategy-that-revolutionizes-retirement
 ---
+
 # The 4% Rule: The Modern Withdrawal Strategy That Revolutionizes Retirement
 
 *Updated March 1, 2026 | Reading time: 11 minutes*

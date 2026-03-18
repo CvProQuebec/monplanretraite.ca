@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
-import { getAllPosts, type BlogPost } from './utils/content';
+import { getAllPosts, getCategoryDisplayLabel, type BlogPost } from './utils/content';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Star, CheckCircle2, Circle, ArrowLeft } from 'lucide-react';
@@ -124,7 +124,7 @@ const EssentialsPage: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
                         <Star className="w-4 h-4" />
                         <span>{idx + 1 < 10 ? `0${idx + 1}` : idx + 1}</span>
                         <span>·</span>
-                        <span>{p.category}</span>
+                        <span>{getCategoryDisplayLabel(p.category, lang)}</span>
                       </div>
                       <h2
                         className="text-lg md:text-xl font-bold text-gray-900 mt-1 mb-1 cursor-pointer hover:text-blue-700"

@@ -1,22 +1,20 @@
 ---
 title: Comment choisir un conseiller financier de confiance
 slug: comment-choisir-un-conseiller-financier-de-confiance
-date: '2025-09-19'
-excerpt: >-
-  Vous approchez de la retraite ou vous voulez mieux gérer vos finances? Choisir
-  la bonne personne pour vous aider avec votre argent est très important. Un
-  conseiller financier de confiance peut faire une grande différence dans votre
-  bien-être financier.
+date: '2026-01-12'
+lastUpdated: '2026-01-12'
+excerpt: Vous approchez de la retraite ou vous voulez mieux gérer vos finances? Choisir la bonne personne pour vous aider avec votre argent est très important. Un conseiller financier de confiance peut faire une grande différence dans votre bien-être financier.
+category: Budget et dépenses
+language: fr
 tags:
   - retraite
-category: Aspects pratiques et quotidiens
-language: fr
 status: published
 readingTime: 4
 oqlfChecked: false
 relatedSlugFr: comment-choisir-un-conseiller-financier-de-confiance
 relatedSlugEn: financial-advisor
 ---
+
 # Comment choisir un conseiller financier de confiance
 
 Vous approchez de la retraite ou vous voulez mieux gérer vos finances? Choisir la bonne personne pour vous aider avec votre argent est très important. Un conseiller financier de confiance peut faire une grande différence dans votre bien-être financier.

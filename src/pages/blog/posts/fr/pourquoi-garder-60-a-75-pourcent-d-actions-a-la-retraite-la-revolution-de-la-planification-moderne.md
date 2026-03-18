@@ -1,28 +1,20 @@
 ---
-title: >-
-  Pourquoi garder 60 à 75 % d'actions à la retraite : la révolution de la
-  planification moderne
-slug: >-
-  pourquoi-garder-60-a-75-pourcent-d-actions-a-la-retraite-la-revolution-de-la-planification-moderne
+title: 'Pourquoi garder 60 à 75 % d''actions à la retraite : la révolution de la planification moderne'
+slug: pourquoi-garder-60-a-75-pourcent-d-actions-a-la-retraite-la-revolution-de-la-planification-moderne
 date: '2025-09-18'
 lastUpdated: '2026-03-01'
-excerpt: >-
-  Vous pensiez qu'à la retraite, il fallait vendre toutes ses actions pour
-  acheter des obligations « sécuritaires »? Cette stratégie d'un autre âge
-  pourrait ruiner votre retraite. Découvrez pourquoi les experts recommandent
-  maintenant de conserver 60 à 75 % d'actions même à 70 ans.
-tags:
-  - retraite
+excerpt: Vous pensiez qu'à la retraite, il fallait vendre toutes ses actions pour acheter des obligations « sécuritaires »? Cette stratégie d'un autre âge pourrait ruiner votre retraite. Découvrez pourquoi les experts recommandent maintenant de conserver 60 à 75 % d'actions même à 70 ans.
 category: Les bases de la retraite
 language: fr
+tags:
+  - retraite
 status: published
 readingTime: 9
 oqlfChecked: false
-relatedSlugFr: >-
-  pourquoi-garder-60-a-75-pourcent-d-actions-a-la-retraite-la-revolution-de-la-planification-moderne
-relatedSlugEn: >-
-  why-keep-60-to-75-pourcent-in-stocks-during-retirement-the-modern-planning-revolution
+relatedSlugFr: pourquoi-garder-60-a-75-pourcent-d-actions-a-la-retraite-la-revolution-de-la-planification-moderne
+relatedSlugEn: why-keep-60-to-75-pourcent-in-stocks-during-retirement-the-modern-planning-revolution
 ---
+
 # Pourquoi garder 60 à 75 % d'actions à la retraite : la révolution de la planification moderne
 
 *Mis à jour le 1er mars 2026 | Lecture : 9 minutes*

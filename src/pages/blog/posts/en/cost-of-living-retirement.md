@@ -1,7 +1,14 @@
 ---
-category: Seasonal and current topics
+title: How Rising Cost of Living Affects Your Retirement
+slug: cost-of-living-retirement
+date: '2026-01-29'
+lastUpdated: '2026-01-29'
+excerpt: You've probably noticed that everything costs more than before. Groceries, gas, housing... This price increase, called inflation, particularly affects retirees. Here's how it can impact your retirement and what you can do to protect yourself.
+category: Taxation
+language: en
 relatedSlugFr: comment-la-hausse-du-cout-de-la-vie-affecte-votre-retraite
 ---
+
 # How Rising Cost of Living Affects Your Retirement
 
 You've probably noticed that everything costs more than before. Groceries, gas, housing... This price increase, called inflation, particularly affects retirees. Here's how it can impact your retirement and what you can do to protect yourself.

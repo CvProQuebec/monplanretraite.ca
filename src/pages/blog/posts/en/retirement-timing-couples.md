@@ -1,7 +1,14 @@
 ---
-category: Planning for couples
+title: What to Do When One Spouse Wants to Retire Before the Other
+slug: retirement-timing-couples
+date: '2026-02-17'
+lastUpdated: '2026-02-17'
+excerpt: 'Planning retirement as a couple is like dancing: sometimes you need to adjust your steps when one wants to move faster than the other!'
+category: Couple & Family
+language: en
 relatedSlugFr: que-faire-quand-un-conjoint-veut-partir-avant-l-autre
 ---
+
 # What to Do When One Spouse Wants to Retire Before the Other
 
 *Planning retirement as a couple is like dancing: sometimes you need to adjust your steps when one wants to move faster than the other!*

@@ -1,24 +1,21 @@
 ---
 title: 'L''impôt à la retraite : ce qui change'
 slug: l-impot-a-la-retraite-ce-qui-change
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Quand vous travailliez, vous receviez un salaire d'une seule source. À la
-  retraite, votre argent peut venir de plusieurs endroits différents. Chaque
-  source d'argent a ses propres règles d'impôt. C'est important de les
-  comprendre pour ne pas avoir de mauvaises surprises.
+date: '2026-02-09'
+lastUpdated: '2026-02-09'
+excerpt: Quand vous travailliez, vous receviez un salaire d'une seule source. À la retraite, votre argent peut venir de plusieurs endroits différents. Chaque source d'argent a ses propres règles d'impôt. C'est important de les comprendre pour ne pas avoir de mauvaises surprises.
+category: Fiscalité
+language: fr
 tags:
   - fiscalité
   - retraite
-category: Fiscalité simplifiée
-language: fr
 status: published
 readingTime: 9
 oqlfChecked: false
 relatedSlugFr: l-impot-a-la-retraite-ce-qui-change
 relatedSlugEn: tax-return-retirement
 ---
+
 # L'impôt à la retraite : ce qui change
 
 *Mis à jour le 1er mars 2026 | Temps de lecture : 9 minutes*

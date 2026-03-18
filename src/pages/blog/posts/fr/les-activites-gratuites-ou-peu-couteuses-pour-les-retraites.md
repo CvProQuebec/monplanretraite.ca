@@ -1,14 +1,18 @@
 ---
-title: "Les activités gratuites ou peu coûteuses pour les retraités"
+title: Les activités gratuites ou peu coûteuses pour les retraités
 slug: les-activites-gratuites-ou-peu-couteuses-pour-les-retraites
-date: "2025-09-21"
-excerpt: "Des idées simples et accessibles pour rester actif, social et en santé à la retraite sans dépenser beaucoup."
+date: '2026-01-26'
+lastUpdated: '2026-01-26'
+excerpt: Des idées simples et accessibles pour rester actif, social et en santé à la retraite sans dépenser beaucoup.
+category: Santé et bien-être
+language: fr
 tags:
   - retraite
-category: Bien-être et qualité de vie
-language: fr
 status: published
 readingTime: 6
+oqlfChecked: false
+relatedSlugFr: les-activites-gratuites-ou-peu-couteuses-pour-les-retraites
+relatedSlugEn: free-or-low-cost-activities-for-retirees
 keyPoints:
   - Bouger sans frais: danse en ligne et marche pour rester actif
   - Stimuler le cerveau: jeux, lecture, mots croisés et bibliothèques
@@ -16,10 +20,8 @@ keyPoints:
   - Créativité à petit budget: jardinage et artisanat
   - Profiter des ressources municipales et des bibliothèques
   - Économiser: choisir le gratuit, rabais aînés, apporter son lunch
-oqlfChecked: false
-relatedSlugEn: free-or-low-cost-activities-for-retirees
-relatedSlugFr: les-activites-gratuites-ou-peu-couteuses-pour-les-retraites
 ---
+
 # Des activités enrichissantes qui ne coûtent presque rien
 
 Vous venez de prendre votre retraite ou vous vous y préparez? C'est formidable! Cette nouvelle étape de votre vie peut être remplie d'activités passionnantes sans vider votre porte-monnaie. Voici des idées d'activités gratuites ou peu coûteuses qui vous aideront à rester actif et heureux.

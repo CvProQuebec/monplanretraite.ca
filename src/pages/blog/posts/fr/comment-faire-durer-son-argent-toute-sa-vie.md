@@ -1,22 +1,20 @@
 ---
 title: Comment faire durer son argent toute sa vie
 slug: comment-faire-durer-son-argent-toute-sa-vie
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Vous vous inquiétez de manquer d'argent à la retraite? Cette peur est normale
-  et partagée par beaucoup de personnes. Avec l'espérance de vie qui augmente,
-  nos épargnes doivent maintenant durer plus longtemps qu'avant.
+date: '2026-02-04'
+lastUpdated: '2026-02-04'
+excerpt: Vous vous inquiétez de manquer d'argent à la retraite? Cette peur est normale et partagée par beaucoup de personnes. Avec l'espérance de vie qui augmente, nos épargnes doivent maintenant durer plus longtemps qu'avant.
+category: Investissements
+language: fr
 tags:
   - retraite
-category: Gérer son épargne et ses placements
-language: fr
 status: published
 readingTime: 8
 oqlfChecked: false
 relatedSlugFr: comment-faire-durer-son-argent-toute-sa-vie
 relatedSlugEn: make-money-last-lifetime
 ---
+
 # Comment faire durer son argent toute sa vie
 
 *Mis à jour le 1er mars 2026 | Temps de lecture : 8 minutes*

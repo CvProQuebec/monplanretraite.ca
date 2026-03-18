@@ -1,27 +1,24 @@
 ---
 title: 'REER vs CELI : lequel choisir à 55 ans et plus?'
 slug: reer-vs-celi-lequel-choisir-a-55-ans-et-plus
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  À 55 ans et plus, la fenêtre d'or entre votre salaire de pointe et vos
-  retraits obligatoires définit toute votre stratégie. REER ou CELI? Découvrez
-  comment le dégel REER, la cotisation patronale et la protection de la PSV
-  peuvent vous faire économiser des dizaines de milliers de dollars.
+date: '2026-03-17'
+lastUpdated: '2026-03-17'
+excerpt: À 55 ans et plus, la fenêtre d'or entre votre salaire de pointe et vos retraits obligatoires définit toute votre stratégie. REER ou CELI? Découvrez comment le dégel REER, la cotisation patronale et la protection de la PSV peuvent vous faire économiser des dizaines de milliers de dollars.
+category: Investissements
+language: fr
 tags:
   - REER
   - CELI
   - retraite
   - FERR
   - PSV
-category: Gérer son épargne et ses placements
-language: fr
 status: published
 readingTime: 11
 oqlfChecked: false
 relatedSlugFr: reer-vs-celi-lequel-choisir-a-55-ans-et-plus
 relatedSlugEn: rrsp-tfsa-55plus
 ---
+
 # REER vs CELI : lequel choisir à 55 ans et plus?
 
 *Mis à jour le 1er mars 2026 | Temps de lecture : 11 minutes*

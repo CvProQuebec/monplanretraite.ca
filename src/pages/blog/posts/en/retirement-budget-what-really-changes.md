@@ -1,24 +1,21 @@
 ---
 title: 'Retirement Budget: What Really Changes'
 slug: retirement-budget-what-really-changes
-date: '2025-09-18'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Planning your retirement budget doesn’t have to be a source of anxiety.
-  Contrary to popular belief, creating a realistic budget for your golden years
-  can be simple and reassuring. Here’s what really changes in your budget when
-  you retire in Quebec.
+date: '2026-01-19'
+lastUpdated: '2026-01-19'
+excerpt: Planning your retirement budget doesn’t have to be a source of anxiety. Contrary to popular belief, creating a realistic budget for your golden years can be simple and reassuring. Here’s what really changes in your budget when you retire in Quebec.
+category: Retirement Basics
+language: en
 tags:
   - budget
   - retraite
-category: Retirement basics
-language: en
 status: published
 readingTime: 4
 oqlfChecked: false
 relatedSlugFr: budget-retraite-ce-qui-change-vraiment
 relatedSlugEn: retirement-budget-what-really-changes
 ---
+
 # Retirement Budget: What Really Changes
 
 *Updated March 1, 2026*

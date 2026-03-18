@@ -1,31 +1,24 @@
 ---
-title: >-
-  REER vs CELI : le guide décisionnel complet pour maximiser votre
-  épargne-retraite
-slug: >-
-  reer-vs-celi-le-guide-decisionnel-complet-pour-maximiser-votre-epargne-retraite
-date: '2025-09-18'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  REER ou CELI? La réponse peut vous faire économiser des dizaines de milliers
-  de dollars en impôts. Découvrez les 10 facteurs critiques — y compris la
-  protection des créanciers, la cotisation patronale et le choix de l'âge FERR
-  — avec notre guide décisionnel mis à jour pour 2026.
+title: 'REER vs CELI : le guide décisionnel complet pour maximiser votre épargne-retraite'
+slug: reer-vs-celi-le-guide-decisionnel-complet-pour-maximiser-votre-epargne-retraite
+date: '2026-01-09'
+lastUpdated: '2026-01-09'
+excerpt: REER ou CELI? La réponse peut vous faire économiser des dizaines de milliers de dollars en impôts. Découvrez les 10 facteurs critiques — y compris la protection des créanciers, la cotisation patronale et le choix de l'âge FERR — avec notre guide décisionnel mis à jour pour 2026.
+category: Les bases de la retraite
+language: fr
 tags:
   - REER
   - CELI
   - FERR
   - fiscalité
   - retraite
-category: Les bases de la retraite
-language: fr
 status: published
 readingTime: 15
 oqlfChecked: false
-relatedSlugFr: >-
-  reer-vs-celi-le-guide-decisionnel-complet-pour-maximiser-votre-epargne-retraite
+relatedSlugFr: reer-vs-celi-le-guide-decisionnel-complet-pour-maximiser-votre-epargne-retraite
 relatedSlugEn: rrsp-vs-tfsa-the-complete-decision-guide-to-maximize-your-retirement-savings
 ---
+
 # REER vs CELI : le guide décisionnel complet pour maximiser votre épargne-retraite
 
 *Mis à jour le 1er mars 2026 | Lecture : 15 minutes*

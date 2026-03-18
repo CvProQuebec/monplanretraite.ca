@@ -1,26 +1,24 @@
 ---
 title: 'Guaranteed Income Supplement (GIS): Are You Eligible?'
 slug: gis-eligibility-are-you-eligible
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  GIS can be worth up to $13,200 per year in tax-free income. Yet thousands of
-  eligible Canadians never apply. Here's how to know if you qualify, how to
-  calculate your amount, and above all, how to protect it.
+date: '2026-02-25'
+lastUpdated: '2026-02-25'
+excerpt: GIS can be worth up to $13,200 per year in tax-free income. Yet thousands of eligible Canadians never apply. Here's how to know if you qualify, how to calculate your amount, and above all, how to protect it.
+category: Retirement Income
+language: en
 tags:
   - GIS
   - OAS
   - retirement
   - low income
   - taxes
-category: Government programs
-language: en
 status: published
 readingTime: 10
 oqlfChecked: false
 relatedSlugFr: le-supplement-de-revenu-garanti-etes-vous-admissible
 relatedSlugEn: gis-eligibility-are-you-eligible
 ---
+
 # Guaranteed Income Supplement (GIS): Are You Eligible?
 
 *Updated March 1, 2026 | Reading time: 10 minutes*

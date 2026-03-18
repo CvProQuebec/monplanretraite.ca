@@ -1,7 +1,14 @@
 ---
-category: Tools and resources
+title: 'Online Calculators: Which Ones to Use and How'
+slug: online-calculators
+date: '2026-01-03'
+lastUpdated: '2026-01-03'
+excerpt: Planning for retirement can seem complicated. Fortunately, there are free and easy-to-use tools on the internet to help you. These online calculators can give you a good idea of what you'll need for your retirement. Here's a simple guide on how to use them.
+category: Tools & Resources
+language: en
 relatedSlugFr: les-calculateurs-en-ligne-lesquels-utiliser-et-comment
 ---
+
 # Online Calculators: Which Ones to Use and How
 
 Planning for retirement can seem complicated. Fortunately, there are free and easy-to-use tools on the internet to help you. These online calculators can give you a good idea of what you'll need for your retirement. Here's a simple guide on how to use them.

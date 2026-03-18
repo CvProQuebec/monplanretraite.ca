@@ -1,7 +1,14 @@
 ---
-category: Women-specific challenges
+title: Why Women Often Have Less Money in Retirement
+slug: women-retirement
+date: '2026-01-20'
+lastUpdated: '2026-01-20'
+excerpt: 'Unfortunately, women often arrive at retirement with less money than men. This is a serious problem that affects many Quebec families. The numbers show it clearly: nearly 60% of people over 75 who receive the Guaranteed Income Supplement are women, compared to only 46% of men.'
+category: Health & Wellness
+language: en
 relatedSlugFr: pourquoi-les-femmes-ont-souvent-moins-d-argent-a-la-retraite
 ---
+
 # Why Women Often Have Less Money in Retirement
 
 ## A Reality That Affects Many Women

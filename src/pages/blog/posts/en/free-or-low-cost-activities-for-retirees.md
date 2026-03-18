@@ -1,14 +1,18 @@
 ---
-title: "Free or Low-Cost Activities for Retirees"
+title: Free or Low-Cost Activities for Retirees
 slug: free-or-low-cost-activities-for-retirees
-date: "2025-09-21"
-excerpt: "Simple, free or low-cost activities to stay active, social, and healthy in retirement."
+date: '2026-01-26'
+lastUpdated: '2026-01-26'
+excerpt: Simple, free or low-cost activities to stay active, social, and healthy in retirement.
+category: Health & Wellness
+language: en
 tags:
   - retirement
-category: "Well-being and quality of life"
-language: en
 status: published
 readingTime: 6
+oqlfChecked: false
+relatedSlugFr: les-activites-gratuites-ou-peu-couteuses-pour-les-retraites
+relatedSlugEn: free-or-low-cost-activities-for-retirees
 keyPoints:
   - Move for health: line dancing and walking as free starter activities
   - Keep the mind sharp: games, reading, crosswords and library programs
@@ -16,9 +20,6 @@ keyPoints:
   - Budget-friendly creativity: gardening and simple crafts at home
   - Use free city resources and public libraries (events, courses, internet)
   - Save more: pick free options, senior discounts, bring your own lunch
-oqlfChecked: false
-relatedSlugFr: les-activites-gratuites-ou-peu-couteuses-pour-les-retraites
-relatedSlugEn: free-or-low-cost-activities-for-retirees
 ---
 
 # Enriching Activities That Cost Almost Nothing

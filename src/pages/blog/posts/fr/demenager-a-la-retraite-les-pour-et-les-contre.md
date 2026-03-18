@@ -1,22 +1,20 @@
 ---
 title: 'Déménager à la retraite : les pour et les contre'
 slug: demenager-a-la-retraite-les-pour-et-les-contre
-date: '2025-09-19'
-excerpt: >-
-  La retraite approche et vous vous demandez si vous devriez déménager? Garder
-  votre maison familiale ou la vendre pour quelque chose de plus petit? C'est
-  une décision importante qui touche autant vos finances que votre qualité de
-  vie. Voici un guide simple pour vous aider à faire le bon choix.
+date: '2026-02-22'
+lastUpdated: '2026-02-22'
+excerpt: La retraite approche et vous vous demandez si vous devriez déménager? Garder votre maison familiale ou la vendre pour quelque chose de plus petit? C'est une décision importante qui touche autant vos finances que votre qualité de vie. Voici un guide simple pour vous aider à faire le bon choix.
+category: Budget et dépenses
+language: fr
 tags:
   - retraite
-category: Aspects pratiques et quotidiens
-language: fr
 status: published
 readingTime: 6
 oqlfChecked: false
 relatedSlugFr: demenager-a-la-retraite-les-pour-et-les-contre
 relatedSlugEn: moving-retirement
 ---
+
 # Déménager à la retraite : les pour et les contre
 
 La retraite approche et vous vous demandez si vous devriez déménager? Garder votre maison familiale ou la vendre pour quelque chose de plus petit? C'est une décision importante qui touche autant vos finances que votre qualité de vie. Voici un guide simple pour vous aider à faire le bon choix.

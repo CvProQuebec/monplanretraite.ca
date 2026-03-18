@@ -1,22 +1,20 @@
 ---
 title: Comment éviter les fraudes financières après 65 ans
 slug: comment-eviter-les-fraudes-financieres-apres-65-ans
-date: '2025-09-19'
-excerpt: >-
-  Quand vous prenez votre retraite, vous devenez malheureusement une cible plus
-  facile pour les fraudeurs. Ils pensent que vous avez de l'argent de côté, que
-  vous êtes plus seuls, et parfois moins familiers avec les nouvelles
-  technologies. C'est faux, bien sûr, mais c'est ce qu'ils croient.
+date: '2026-02-26'
+lastUpdated: '2026-02-26'
+excerpt: Quand vous prenez votre retraite, vous devenez malheureusement une cible plus facile pour les fraudeurs. Ils pensent que vous avez de l'argent de côté, que vous êtes plus seuls, et parfois moins familiers avec les nouvelles technologies. C'est faux, bien sûr, mais c'est ce qu'ils croient.
+category: Budget et dépenses
+language: fr
 tags:
   - retraite
-category: Aspects pratiques et quotidiens
-language: fr
 status: published
 readingTime: 9
 oqlfChecked: false
 relatedSlugFr: comment-eviter-les-fraudes-financieres-apres-65-ans
 relatedSlugEn: financial-fraud-65
 ---
+
 # Comment éviter les fraudes financières après 65 ans
 
 ## Pourquoi les personnes de 65 ans et plus sont-elles ciblées?

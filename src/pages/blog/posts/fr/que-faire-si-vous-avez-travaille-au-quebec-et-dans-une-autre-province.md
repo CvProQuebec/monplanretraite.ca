@@ -1,22 +1,20 @@
 ---
 title: Que faire si vous avez travaillé au Québec ET dans une autre province
 slug: que-faire-si-vous-avez-travaille-au-quebec-et-dans-une-autre-province
-date: '2025-09-19'
-excerpt: >-
-  Vous avez travaillé pendant quelques années au Québec, puis vous avez déménagé
-  en Ontario pour votre carrière? Ou peut-être avez-vous fait le contraire :
-  commencé en Alberta et terminé au Québec? Rassurez-vous, vos années de travail
-  dans toutes les provinces du Canada comptent pour votre retraite!
+date: '2026-01-28'
+lastUpdated: '2026-01-28'
+excerpt: 'Vous avez travaillé pendant quelques années au Québec, puis vous avez déménagé en Ontario pour votre carrière? Ou peut-être avez-vous fait le contraire : commencé en Alberta et terminé au Québec? Rassurez-vous, vos années de travail dans toutes les provinces du Canada comptent pour votre retraite!'
+category: Revenus de retraite
+language: fr
 tags:
   - retraite
-category: Comprendre les régimes gouvernementaux
-language: fr
 status: published
 readingTime: 6
 oqlfChecked: false
 relatedSlugFr: que-faire-si-vous-avez-travaille-au-quebec-et-dans-une-autre-province
 relatedSlugEn: work-quebec-other-provinces
 ---
+
 # Que faire si vous avez travaillé au Québec ET dans une autre province
 
 Vous avez travaillé pendant quelques années au Québec, puis vous avez déménagé en Ontario pour votre carrière? Ou peut-être avez-vous fait le contraire : commencé en Alberta et terminé au Québec? Rassurez-vous, vos années de travail dans toutes les provinces du Canada comptent pour votre retraite! 

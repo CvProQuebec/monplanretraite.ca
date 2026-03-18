@@ -1,27 +1,24 @@
 ---
 title: Comment partager les revenus de retraite et économiser des impôts
 slug: comment-partager-les-revenus-de-retraite-et-economiser-des-impots
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  À la retraite, partager vos revenus avec votre conjoint peut vous faire
-  économiser 2 000 $ à 8 000 $ par année en impôts et protéger votre PSV.
-  Voici un guide pratique pour les couples : formulaire T1032, partage CPP/RRQ,
-  et stratégies concrètes selon votre situation.
+date: '2026-02-18'
+lastUpdated: '2026-02-18'
+excerpt: 'À la retraite, partager vos revenus avec votre conjoint peut vous faire économiser 2 000 $ à 8 000 $ par année en impôts et protéger votre PSV. Voici un guide pratique pour les couples : formulaire T1032, partage CPP/RRQ, et stratégies concrètes selon votre situation.'
+category: Couple et famille
+language: fr
 tags:
   - fiscalité
   - retraite
   - fractionnement
   - couples
   - PSV
-category: Planification pour les couples
-language: fr
 status: published
 readingTime: 8
 oqlfChecked: false
 relatedSlugFr: comment-partager-les-revenus-de-retraite-et-economiser-des-impots
 relatedSlugEn: income-sharing-couples
 ---
+
 # Comment partager les revenus de retraite et économiser des impôts
 
 *Mis à jour le 1er mars 2026 | Temps de lecture : 8 minutes*

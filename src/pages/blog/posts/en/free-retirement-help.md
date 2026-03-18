@@ -1,7 +1,14 @@
 ---
-category: Tools and resources
+title: Where to Find Free Help to Plan Your Retirement
+slug: free-retirement-help
+date: '2026-01-05'
+lastUpdated: '2026-01-05'
+excerpt: Planning your retirement can seem difficult at first. Fortunately, there are several places where you can get help for free. Here's a simple guide to help you find the right resources.
+category: Tools & Resources
+language: en
 relatedSlugFr: ou-trouver-de-l-aide-gratuite-pour-planifier-sa-retraite
 ---
+
 # Where to Find Free Help to Plan Your Retirement
 
 Planning your retirement can seem difficult at first. Fortunately, there are several places where you can get help for free. Here's a simple guide to help you find the right resources.

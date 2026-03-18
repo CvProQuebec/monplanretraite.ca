@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
-import { getCategoryCounts, slugifyCategory } from './utils/content';
+import { getCategoryCounts, getCategoryDisplayLabel, slugifyCategory } from './utils/content';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FolderOpen, ArrowLeft } from 'lucide-react';
@@ -15,23 +15,7 @@ const CategoryIndex: React.FC<{ language?: 'fr' | 'en' }> = ({ language }) => {
 
   const counts = useMemo(() => getCategoryCounts(lang), [lang]);
 
-  // Localize category labels for display (keys remain FR for filtering/slugs)
-  const categoryLabel = (cat: string) => {
-    if (lang === 'fr') return cat;
-    const map: Record<string, string> = {
-      'Les bases de la retraite': 'Retirement basics',
-      'Comprendre les régimes gouvernementaux': 'Government programs',
-      'Gérer son épargne et ses placements': 'Manage savings and investments',
-      'Planification pour les couples': 'Planning for couples',
-      'Défis spécifiques aux femmes': 'Women-specific challenges',
-      'Aspects pratiques et quotidiens': 'Practical everyday aspects',
-      'Fiscalité simplifiée': 'Simple taxation',
-      'Sujets saisonniers et d’actualité': 'Seasonal and current topics',
-      'Outils et ressources': 'Tools and resources',
-      'Bien-être et qualité de vie': 'Well-being and quality of life',
-    };
-    return map[cat] || cat;
-  };
+  const categoryLabel = (cat: string) => getCategoryDisplayLabel(cat, lang);
 
   const t = {
     title: lang === 'fr' ? 'Catégories du blog' : 'Blog categories',

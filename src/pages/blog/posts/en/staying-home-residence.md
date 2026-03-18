@@ -1,7 +1,14 @@
 ---
-category: Practical everyday aspects
+title: 'Staying at Home or Moving to a Residence: Planning the Costs'
+slug: staying-home-residence
+date: '2026-01-15'
+lastUpdated: '2026-01-15'
+excerpt: 'As we age, an important question arises: is it better to stay in your home or move to a specialized residence? This decision affects your quality of life, your safety, and especially your budget. Here''s a simple guide to help you calculate the costs and make the right choice.'
+category: Budget & Expenses
+language: en
 relatedSlugFr: rester-chez-soi-ou-aller-en-residence-planifier-les-couts
 ---
+
 # Staying at Home or Moving to a Residence: Planning the Costs
 
 As we age, an important question arises: is it better to stay in your home or move to a specialized residence? This decision affects your quality of life, your safety, and especially your budget. Here's a simple guide to help you calculate the costs and make the right choice.

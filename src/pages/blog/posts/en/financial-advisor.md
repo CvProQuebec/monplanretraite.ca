@@ -1,7 +1,14 @@
 ---
-category: Practical everyday aspects
+title: How to Choose a Trustworthy Financial Advisor
+slug: financial-advisor
+date: '2026-01-12'
+lastUpdated: '2026-01-12'
+excerpt: Are you approaching retirement or want to better manage your finances? Choosing the right person to help you with your money is very important. A trustworthy financial advisor can make a big difference in your financial well-being.
+category: Budget & Expenses
+language: en
 relatedSlugFr: comment-choisir-un-conseiller-financier-de-confiance
 ---
+
 # How to Choose a Trustworthy Financial Advisor
 
 Are you approaching retirement or want to better manage your finances? Choosing the right person to help you with your money is very important. A trustworthy financial advisor can make a big difference in your financial well-being.

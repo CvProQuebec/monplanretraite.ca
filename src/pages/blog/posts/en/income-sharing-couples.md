@@ -1,26 +1,24 @@
 ---
 title: How to Share Retirement Income and Save on Taxes
 slug: income-sharing-couples
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  In retirement, sharing income with your spouse can save you $2,000 to $8,000
-  per year in taxes and protect your OAS. A practical guide for couples: form
-  T1032, CPP/QPP pension sharing, and concrete strategies for your situation.
+date: '2026-02-18'
+lastUpdated: '2026-02-18'
+excerpt: 'In retirement, sharing income with your spouse can save you $2,000 to $8,000 per year in taxes and protect your OAS. A practical guide for couples: form T1032, CPP/QPP pension sharing, and concrete strategies for your situation.'
+category: Couple & Family
+language: en
 tags:
   - taxation
   - retirement
   - income splitting
   - couples
   - OAS
-category: Planning for couples
-language: en
 status: published
 readingTime: 8
 oqlfChecked: false
 relatedSlugFr: comment-partager-les-revenus-de-retraite-et-economiser-des-impots
 relatedSlugEn: income-sharing-couples
 ---
+
 # How to Share Retirement Income and Save on Taxes
 
 *Updated March 1, 2026 | Reading time: 8 minutes*

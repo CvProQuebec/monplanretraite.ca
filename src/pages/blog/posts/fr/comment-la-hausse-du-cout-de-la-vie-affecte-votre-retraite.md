@@ -1,21 +1,19 @@
 ---
 title: Comment la hausse du coût de la vie affecte votre retraite
 slug: comment-la-hausse-du-cout-de-la-vie-affecte-votre-retraite
-date: '2025-09-19'
-excerpt: >-
-  Vous avez sûrement remarqué que tout coûte plus cher qu'avant. L'épicerie,
-  l'essence, le logement... Cette hausse des prix, qu'on appelle l'inflation,
-  touche particulièrement les retraités. Voici comment elle peut affecter votre
-  retraite et ce que vous pouvez faire pour vous protéger.
-tags:
-  - retraite
+date: '2026-01-29'
+lastUpdated: '2026-01-29'
+excerpt: Vous avez sûrement remarqué que tout coûte plus cher qu'avant. L'épicerie, l'essence, le logement... Cette hausse des prix, qu'on appelle l'inflation, touche particulièrement les retraités. Voici comment elle peut affecter votre retraite et ce que vous pouvez faire pour vous protéger.
 category: Les bases de la retraite
 language: fr
+tags:
+  - retraite
 status: published
 readingTime: 6
 oqlfChecked: false
 relatedSlugEn: cost-of-living-retirement
 ---
+
 # Comment la hausse du coût de la vie affecte votre retraite
 
 Vous avez sûrement remarqué que tout coûte plus cher qu'avant. L'épicerie, l'essence, le logement... Cette hausse des prix, qu'on appelle l'inflation, touche particulièrement les retraités. Voici comment elle peut affecter votre retraite et ce que vous pouvez faire pour vous protéger.

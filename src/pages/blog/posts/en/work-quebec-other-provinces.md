@@ -1,7 +1,14 @@
 ---
-category: Government programs
+title: What to Do If You Worked in Quebec AND Another Province
+slug: work-quebec-other-provinces
+date: '2026-01-28'
+lastUpdated: '2026-01-28'
+excerpt: 'You worked for a few years in Quebec, then moved to Ontario for your career? Or maybe you did the opposite: started in Alberta and finished in Quebec? Rest assured, your years of work in all Canadian provinces count for your retirement!'
+category: Retirement Income
+language: en
 relatedSlugFr: que-faire-si-vous-avez-travaille-au-quebec-et-dans-une-autre-province
 ---
+
 # What to Do If You Worked in Quebec AND Another Province
 
 You worked for a few years in Quebec, then moved to Ontario for your career? Or maybe you did the opposite: started in Alberta and finished in Quebec? Rest assured, your years of work in all Canadian provinces count for your retirement!

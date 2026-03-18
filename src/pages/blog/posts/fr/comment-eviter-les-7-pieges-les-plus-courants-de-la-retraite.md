@@ -1,21 +1,20 @@
 ---
 title: Comment éviter les 7 pièges les plus courants de la retraite
 slug: comment-eviter-les-7-pieges-les-plus-courants-de-la-retraite
-date: '2025-09-19'
-excerpt: >-
-  Vous avez travaillé dur toute votre vie. Vous méritez une retraite sans tracas
-  financiers. Pourtant, beaucoup de personnes font des erreurs coûteuses qui
-  peuvent leur faire perdre des milliers de dollars.
-tags:
-  - retraite
+date: '2026-03-01'
+lastUpdated: '2026-03-01'
+excerpt: Vous avez travaillé dur toute votre vie. Vous méritez une retraite sans tracas financiers. Pourtant, beaucoup de personnes font des erreurs coûteuses qui peuvent leur faire perdre des milliers de dollars.
 category: Les bases de la retraite
 language: fr
+tags:
+  - retraite
 status: published
 readingTime: 4
 oqlfChecked: false
 relatedSlugFr: comment-eviter-les-7-pieges-les-plus-courants-de-la-retraite
 relatedSlugEn: retirement-traps-avoid
 ---
+
 # Comment éviter les 7 pièges les plus courants de la retraite
 
 ## Un guide simple pour une retraite sereine

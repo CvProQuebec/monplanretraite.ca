@@ -1,21 +1,20 @@
 ---
 title: 'Veuvage : gérer ses finances après le décès du conjoint'
 slug: veuvage-gerer-ses-finances-apres-le-deces-du-conjoint
-date: '2025-09-19'
-excerpt: >-
-  Perdre son conjoint, c'est l'une des épreuves les plus difficiles de la vie.
-  En plus de la peine immense, vous devez faire face à de nombreuses démarches
-  administratives et financières. C'est normal de se sentir dépassé.
+date: '2026-01-31'
+lastUpdated: '2026-01-31'
+excerpt: Perdre son conjoint, c'est l'une des épreuves les plus difficiles de la vie. En plus de la peine immense, vous devez faire face à de nombreuses démarches administratives et financières. C'est normal de se sentir dépassé.
+category: Santé et bien-être
+language: fr
 tags:
   - retraite
-category: Défis spécifiques aux femmes
-language: fr
 status: published
 readingTime: 12
 oqlfChecked: false
 relatedSlugFr: veuvage-gerer-ses-finances-apres-le-deces-du-conjoint
 relatedSlugEn: widowhood-finances
 ---
+
 # Veuvage : gérer ses finances après le décès du conjoint
 
 ## Une épreuve où l'on doit aussi penser à l'argent

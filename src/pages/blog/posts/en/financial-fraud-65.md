@@ -1,7 +1,14 @@
 ---
-category: Practical everyday aspects
+title: How to Avoid Financial Fraud After Age 65
+slug: financial-fraud-65
+date: '2026-02-26'
+lastUpdated: '2026-02-26'
+excerpt: When you retire, you unfortunately become an easier target for fraudsters. They think you have money saved up, that you're more alone, and sometimes less familiar with new technologies. This is false, of course, but it's what they believe.
+category: Budget & Expenses
+language: en
 relatedSlugFr: comment-eviter-les-fraudes-financieres-apres-65-ans
 ---
+
 # How to Avoid Financial Fraud After Age 65
 
 ## Why Are People 65+ Targeted?

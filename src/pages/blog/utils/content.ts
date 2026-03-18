@@ -1,4 +1,11 @@
 import yaml from 'js-yaml';
+import {
+  BLOG_CATEGORIES,
+  getCategoryDisplayLabel,
+  normalizeCategoryLabel,
+  sortCategories,
+  type BlogLanguage,
+} from './categories';
 
 /**
  * Types
@@ -278,21 +285,7 @@ function standardizeTagsFromTitle(title: string): string[] {
 }
 
 function normalizeCategory(cat: string): string {
-  // Always normalize to FR canonical labels used across the app
-  const mapEnToFr: Record<string, string> = {
-    'Retirement basics': 'Les bases de la retraite',
-    'Government programs': 'Comprendre les régimes gouvernementaux',
-    'Manage savings and investments': 'Gérer son épargne et ses placements',
-    'Planning for couples': 'Planification pour les couples',
-    'Women-specific challenges': 'Défis spécifiques aux femmes',
-    'Practical everyday aspects': 'Aspects pratiques et quotidiens',
-    'Simple taxation': 'Fiscalité simplifiée',
-    'Seasonal and current topics': 'Sujets saisonniers et d’actualité',
-    'Tools and resources': 'Outils et ressources',
-    'Well-being and quality of life': 'Bien-être et qualité de vie',
-  };
-  const c = (cat || '').trim().replace(/^"(.+)"$/, '$1');
-  return mapEnToFr[c] || c;
+  return normalizeCategoryLabel(cat);
 }
 
 /**
@@ -323,31 +316,24 @@ export function getPrevNext(slug: string, language?: 'fr' | 'en'): { prev?: Blog
 /**
  * Categories helper (static list for filters if needed)
  */
-export const BLOG_CATEGORIES = [
-  'Les bases de la retraite',
-  'Comprendre les régimes gouvernementaux',
-  'Gérer son épargne et ses placements',
-  'Planification pour les couples',
-  'Défis spécifiques aux femmes',
-  'Aspects pratiques et quotidiens',
-  'Fiscalité simplifiée',
-  'Sujets saisonniers et d’actualité',
-  'Outils et ressources',
-  'Bien-être et qualité de vie',
-];
+export { BLOG_CATEGORIES, getCategoryDisplayLabel };
 
 /**
  * Helpers for categories and featured curation
  */
-export function getCategoryCounts(language?: 'fr' | 'en'): { category: string; count: number }[] {
+export function getAvailableCategories(language?: BlogLanguage): string[] {
+  const list = getAllPosts(language);
+  return sortCategories(list.map((post) => post.category || BLOG_CATEGORIES[0]));
+}
+
+export function getCategoryCounts(language?: BlogLanguage): { category: string; count: number }[] {
   const list = getAllPosts(language);
   const map = new Map<string, number>();
-  for (const c of BLOG_CATEGORIES) map.set(c, 0);
   for (const p of list) {
-    const c = p.category || 'Les bases de la retraite';
+    const c = p.category || BLOG_CATEGORIES[0];
     map.set(c, (map.get(c) || 0) + 1);
   }
-  return BLOG_CATEGORIES.map((c) => ({ category: c, count: map.get(c) || 0 }));
+  return getAvailableCategories(language).map((c) => ({ category: c, count: map.get(c) || 0 }));
 }
 
 export function slugifyCategory(cat: string): string {
@@ -360,12 +346,12 @@ export function slugifyCategory(cat: string): string {
     .replace(/\s+/g, '-');
 }
 
-export function resolveCategorySlug(slug: string): string | undefined {
-  return BLOG_CATEGORIES.find((c) => slugifyCategory(c) === slug);
+export function resolveCategorySlug(slug: string, language?: BlogLanguage): string | undefined {
+  return getAvailableCategories(language).find((c) => slugifyCategory(c) === slug);
 }
 
-export function getPostsByCategorySlug(slug: string, language?: 'fr' | 'en') {
-  const cat = resolveCategorySlug(slug);
+export function getPostsByCategorySlug(slug: string, language?: BlogLanguage) {
+  const cat = resolveCategorySlug(slug, language);
   if (!cat) return [];
   return getAllPosts(language).filter((p) => p.category === cat);
 }

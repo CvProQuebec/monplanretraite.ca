@@ -1,20 +1,20 @@
 ---
 title: Que faire quand un conjoint veut partir avant l'autre?
 slug: que-faire-quand-un-conjoint-veut-partir-avant-l-autre
-date: '2025-09-19'
-excerpt: >-
-  Planifier sa retraite à deux, c'est comme danser : il faut parfois ajuster ses
-  pas quand l'un veut avancer plus vite que l'autre!
+date: '2026-02-17'
+lastUpdated: '2026-02-17'
+excerpt: 'Planifier sa retraite à deux, c''est comme danser : il faut parfois ajuster ses pas quand l''un veut avancer plus vite que l''autre!'
+category: Couple et famille
+language: fr
 tags:
   - retraite
-category: Planification pour les couples
-language: fr
 status: published
 readingTime: 5
 oqlfChecked: false
 relatedSlugFr: que-faire-quand-un-conjoint-veut-partir-avant-l-autre
 relatedSlugEn: retirement-timing-couples
 ---
+
 # Que faire quand un conjoint veut partir avant l'autre?
 
 *Planifier sa retraite à deux, c'est comme danser : il faut parfois ajuster ses pas quand l'un veut avancer plus vite que l'autre!*

@@ -1,26 +1,21 @@
 ---
 title: Créer un budget réaliste pour ses premières années de retraite
 slug: creer-un-budget-realiste-pour-ses-premieres-annees-de-retraite
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Vous approchez de la retraite et vous vous demandez comment bien planifier
-  votre budget? Vous avez raison de vous poser cette question! Les premières
-  années de retraite sont spéciales : c'est là que vous réalisez vos rêves tout
-  en apprenant à vivre avec un nouveau mode de vie. Voici comment créer un
-  budget réaliste qui vous permettra de profiter pleinement de cette belle
-  étape.
+date: '2026-01-04'
+lastUpdated: '2026-01-04'
+excerpt: 'Vous approchez de la retraite et vous vous demandez comment bien planifier votre budget? Vous avez raison de vous poser cette question! Les premières années de retraite sont spéciales : c''est là que vous réalisez vos rêves tout en apprenant à vivre avec un nouveau mode de vie. Voici comment créer un budget réaliste qui vous permettra de profiter pleinement de cette belle étape.'
+category: Santé et bien-être
+language: fr
 tags:
   - budget
   - retraite
-category: Bien-être et qualité de vie
-language: fr
 status: published
 readingTime: 9
 oqlfChecked: false
 relatedSlugFr: creer-un-budget-realiste-pour-ses-premieres-annees-de-retraite
 relatedSlugEn: creating-realistic-budget-first-years-retirement
 ---
+
 # Créer un budget réaliste pour ses premières années de retraite
 
 *Mis à jour le 1er mars 2026*

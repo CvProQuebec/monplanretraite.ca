@@ -1,7 +1,14 @@
 ---
-category: Well-being and quality of life
+title: How to Stay Active and Healthy in Retirement
+slug: staying-active-healthy-retirement
+date: '2026-03-13'
+lastUpdated: '2026-03-13'
+excerpt: Retirement is a beautiful stage of life. It's time to enjoy all that free time you've gained after years of work. But to really live these years well, you need to take care of your health and stay active.
+category: Health & Wellness
+language: en
 relatedSlugFr: comment-rester-actif-et-en-sante-a-la-retraite
 ---
+
 # How to Stay Active and Healthy in Retirement
 
 Retirement is a beautiful stage of life. It's time to enjoy all that free time you've gained after years of work. But to really live these years well, you need to take care of your health and stay active.

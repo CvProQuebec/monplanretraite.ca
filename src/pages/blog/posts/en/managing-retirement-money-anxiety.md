@@ -1,7 +1,14 @@
 ---
-category: Well-being and quality of life
+title: Managing Money Anxiety in Retirement
+slug: managing-retirement-money-anxiety
+date: '2026-02-10'
+lastUpdated: '2026-02-10'
+excerpt: 'Are you approaching retirement and money worries you? You''re not alone! Many Quebecers feel stress when they think about their finances. But good news: there are simple ways to feel more at peace with your money.'
+category: Health & Wellness
+language: en
 relatedSlugFr: gerer-l-anxiete-face-a-l-argent-a-la-retraite
 ---
+
 # Managing Money Anxiety in Retirement
 
 Are you approaching retirement and money worries you? You're not alone! Many Quebecers feel stress when they think about their finances. But good news: there are simple ways to feel more at peace with your money.

@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import MarkdownIt from 'markdown-it';
 import anchor from 'markdown-it-anchor';
 import toc from 'markdown-it-table-of-contents';
-import { getPostBySlug, getPrevNext, getAllPosts } from './utils/content';
+import { getPostBySlug, getPrevNext, getAllPosts, getCategoryDisplayLabel } from './utils/content';
 import { useLanguage } from '@/features/retirement/hooks/useLanguage';
 import ArticleWrapper from '@/components/blog/ArticleWrapper';
 import './blog-templates.css';
@@ -150,7 +150,7 @@ const BlogPost: React.FC<Props> = ({ language }) => {
         <article className="max-w-4xl mx-auto bg-white rounded-2xl border border-gray-200 shadow-sm p-6 md:p-10">
           {/* Header */}
           <header className="mb-6">
-            <div className="text-xs text-blue-700 font-semibold mb-2">{post.category}</div>
+            <div className="text-xs text-blue-700 font-semibold mb-2">{getCategoryDisplayLabel(post.category, lang)}</div>
             <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-3">{post.title}</h1>
             <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600">
               <span>{new Date(post.date + 'T00:00:00').toLocaleDateString(lang === 'fr' ? 'fr-CA' : 'en-CA', { year: 'numeric', month: 'long', day: 'numeric' })}</span>

@@ -1,7 +1,14 @@
 ---
-category: Tools and resources
+title: Important Documents to Keep for Your Retirement
+slug: important-retirement-documents
+date: '2026-01-27'
+lastUpdated: '2026-01-27'
+excerpt: Preparing for retirement is more than just money in an account. It's also about keeping the right papers in the right place. Here's a simple guide to help you organize your important documents.
+category: Tools & Resources
+language: en
 relatedSlugFr: les-documents-importants-a-garder-pour-sa-retraite
 ---
+
 # Important Documents to Keep for Your Retirement
 
 Preparing for retirement is more than just money in an account. It's also about keeping the right papers in the right place. Here's a simple guide to help you organize your important documents.

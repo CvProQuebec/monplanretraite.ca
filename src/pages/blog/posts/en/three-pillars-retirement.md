@@ -1,28 +1,23 @@
 ---
-title: >-
-  The Three Pillars of Your Retirement: QPP/CPP, Employer Plans and Personal
-  Savings Explained Simply
+title: 'The Three Pillars of Your Retirement: QPP/CPP, Employer Plans and Personal Savings Explained Simply'
 slug: three-pillars-retirement
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Planning your retirement is like building a solid house. You need three strong
-  pillars to support your financial comfort. Here's how QPP/CPP, employer plans
-  and personal savings work together to ensure a comfortable retirement.
+date: '2026-02-13'
+lastUpdated: '2026-02-13'
+excerpt: Planning your retirement is like building a solid house. You need three strong pillars to support your financial comfort. Here's how QPP/CPP, employer plans and personal savings work together to ensure a comfortable retirement.
+category: Retirement Basics
+language: en
 tags:
   - QPP
   - CPP
   - retirement
   - OAS
-category: Retirement basics
-language: en
 status: published
 readingTime: 9
 oqlfChecked: false
-relatedSlugFr: >-
-  les-trois-piliers-de-votre-retraite-rrq-rpc-regimes-d-employeur-et-epargne-personnelle-expliques-simplement
+relatedSlugFr: les-trois-piliers-de-votre-retraite-rrq-rpc-regimes-d-employeur-et-epargne-personnelle-expliques-simplement
 relatedSlugEn: three-pillars-retirement
 ---
+
 # The Three Pillars of Your Retirement: QPP/CPP, Employer Plans and Personal Savings Explained Simply
 
 *Updated March 1, 2026 | Reading time: 9 minutes*

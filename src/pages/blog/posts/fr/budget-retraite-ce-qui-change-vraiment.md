@@ -1,24 +1,21 @@
 ---
 title: 'Budget retraite : ce qui change vraiment'
 slug: budget-retraite-ce-qui-change-vraiment
-date: '2025-09-18'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Planifier son budget de retraite n'a pas à être une source d'anxiété.
-  Contrairement aux idées reçues, établir un budget réaliste pour ses années
-  dorées peut être simple et rassurant. Voici ce qui change vraiment dans votre
-  budget lorsque vous prenez votre retraite au Québec.
+date: '2026-01-19'
+lastUpdated: '2026-01-19'
+excerpt: Planifier son budget de retraite n'a pas à être une source d'anxiété. Contrairement aux idées reçues, établir un budget réaliste pour ses années dorées peut être simple et rassurant. Voici ce qui change vraiment dans votre budget lorsque vous prenez votre retraite au Québec.
+category: Les bases de la retraite
+language: fr
 tags:
   - budget
   - retraite
-category: Les bases de la retraite
-language: fr
 status: published
 readingTime: 5
 oqlfChecked: false
 relatedSlugFr: budget-retraite-ce-qui-change-vraiment
 relatedSlugEn: retirement-budget-what-really-changes
 ---
+
 # Budget retraite : ce qui change vraiment
 
 *Mis à jour le 1er mars 2026*

@@ -1,23 +1,20 @@
 ---
 title: Pourquoi les femmes ont souvent moins d'argent à la retraite
 slug: pourquoi-les-femmes-ont-souvent-moins-d-argent-a-la-retraite
-date: '2025-09-19'
-excerpt: >-
-  Malheureusement, les femmes arrivent souvent à la retraite avec moins d'argent
-  que les hommes. C'est un problème sérieux qui touche de nombreuses familles
-  québécoises. Les chiffres le montrent clairement : près de 60 % des personnes
-  âgées de plus de 75 ans qui reçoivent le Supplément de revenu garanti sont des
-  femmes, contre seulement 46 % d'hommes.
+date: '2026-01-20'
+lastUpdated: '2026-01-20'
+excerpt: 'Malheureusement, les femmes arrivent souvent à la retraite avec moins d''argent que les hommes. C''est un problème sérieux qui touche de nombreuses familles québécoises. Les chiffres le montrent clairement : près de 60 % des personnes âgées de plus de 75 ans qui reçoivent le Supplément de revenu garanti sont des femmes, contre seulement 46 % d''hommes.'
+category: Santé et bien-être
+language: fr
 tags:
   - retraite
-category: Défis spécifiques aux femmes
-language: fr
 status: published
 readingTime: 9
 oqlfChecked: false
 relatedSlugFr: pourquoi-les-femmes-ont-souvent-moins-d-argent-a-la-retraite
 relatedSlugEn: women-retirement
 ---
+
 # Pourquoi les femmes ont souvent moins d'argent à la retraite
 
 ## Une réalité qui touche beaucoup de femmes

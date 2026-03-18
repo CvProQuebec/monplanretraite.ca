@@ -1,23 +1,20 @@
 ---
 title: Retraite complète ou retraite partielle? - Les avantages de chaque option
 slug: retraite-complete-ou-retraite-partielle-les-avantages-de-chaque-option
-date: '2025-09-19'
-excerpt: >-
-  La retraite, ce n'est plus comme avant. Il y a 20 ans, la plupart des gens
-  arrêtaient de travailler complètement à 65 ans. Aujourd'hui, c'est différent.
-  Beaucoup de personnes choisissent de ralentir leur travail petit à petit.
-  D'autres continuent à travailler quelques jours par semaine. Et certains
-  changent complètement de métier.
-tags:
-  - retraite
+date: '2026-02-07'
+lastUpdated: '2026-02-07'
+excerpt: La retraite, ce n'est plus comme avant. Il y a 20 ans, la plupart des gens arrêtaient de travailler complètement à 65 ans. Aujourd'hui, c'est différent. Beaucoup de personnes choisissent de ralentir leur travail petit à petit. D'autres continuent à travailler quelques jours par semaine. Et certains changent complètement de métier.
 category: Les bases de la retraite
 language: fr
+tags:
+  - retraite
 status: published
 readingTime: 11
 oqlfChecked: false
 relatedSlugFr: retraite-complete-ou-retraite-partielle-les-avantages-de-chaque-option
 relatedSlugEn: full-retirement-or-partial-retirement-the-advantages-of-each-option
 ---
+
 # Retraite complète ou retraite partielle? - Les avantages de chaque option
 
 La retraite, ce n'est plus comme avant. Il y a 20 ans, la plupart des gens arrêtaient de travailler complètement à 65 ans. Aujourd'hui, c'est différent. Beaucoup de personnes choisissent de ralentir leur travail petit à petit. D'autres continuent à travailler quelques jours par semaine. Et certains changent complètement de métier.

@@ -1,9 +1,12 @@
 ---
 title: Full Retirement or Partial Retirement? - The Advantages of Each Option
 slug: full-retirement-or-partial-retirement-the-advantages-of-each-option
+date: '2026-02-07'
+lastUpdated: '2026-02-07'
+excerpt: Retirement isn't what it used to be. Twenty years ago, most people completely stopped working at 65. Today, it's different. Many people choose to gradually slow down their work. Others continue working a few days a week. And some completely change careers.
+category: Retirement Basics
 language: en
 status: published
-category: Retirement basics
 relatedSlugFr: retraite-complete-ou-retraite-partielle-les-avantages-de-chaque-option
 ---
 

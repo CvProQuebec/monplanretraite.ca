@@ -17,6 +17,7 @@
     "audit:nav": "node scripts/audit-nav-runner.cjs",
     "audit:tools": "node scripts/audit-tools-runner.cjs",
     "fix:tools": "node scripts/generate-missing-tool-routes-runner.cjs",
+    "blog:sync": "node scripts/sync-generated-blog-posts.mjs",
     "typecheck": "tsc --noEmit",
     "test": "jest",
     "test:emergency": "jest src/lib/fileCrypto.test.ts src/utils/redaction.test.ts",

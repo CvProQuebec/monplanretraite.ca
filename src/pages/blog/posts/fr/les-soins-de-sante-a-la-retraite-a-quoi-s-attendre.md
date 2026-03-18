@@ -1,22 +1,20 @@
 ---
 title: 'Les soins de santé à la retraite : à quoi s''attendre'
 slug: les-soins-de-sante-a-la-retraite-a-quoi-s-attendre
-date: '2025-09-19'
-excerpt: >-
-  Quand vous prenez votre retraite, votre santé reste votre actif le plus
-  important. Mais avec l'âge, il faut se préparer au fait que votre santé peut
-  changer. Les coûts de santé augmentent souvent quand on vieillit. C'est
-  normal, et il vaut mieux s'y préparer maintenant.
+date: '2026-02-03'
+lastUpdated: '2026-02-03'
+excerpt: Quand vous prenez votre retraite, votre santé reste votre actif le plus important. Mais avec l'âge, il faut se préparer au fait que votre santé peut changer. Les coûts de santé augmentent souvent quand on vieillit. C'est normal, et il vaut mieux s'y préparer maintenant.
+category: Budget et dépenses
+language: fr
 tags:
   - retraite
-category: Aspects pratiques et quotidiens
-language: fr
 status: published
 readingTime: 6
 oqlfChecked: false
 relatedSlugFr: les-soins-de-sante-a-la-retraite-a-quoi-s-attendre
 relatedSlugEn: healthcare-retirement
 ---
+
 # Les soins de santé à la retraite : à quoi s'attendre
 
 ## Votre santé, votre bien le plus précieux

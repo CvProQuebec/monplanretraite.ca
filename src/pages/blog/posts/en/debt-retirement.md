@@ -1,6 +1,15 @@
 ---
-category: Manage savings and investments
+title: Should You Pay Off Your Debts Before Retirement?
+slug: debt-retirement
+date: '2026-01-07'
+lastUpdated: '2026-01-07'
+excerpt: 'One of the big questions that future retirees ask themselves: "Should I hurry to pay off my debts before I stop working?" The answer isn''t always simple. It depends on several important factors that we''ll examine together.'
+category: Investments
+language: en
+relatedSlugFr: faut-il-rembourser-ses-dettes-avant-la-retraite
+relatedSlugEn: debt-retirement
 ---
+
 # Should You Pay Off Your Debts Before Retirement?
 
 One of the big questions that future retirees ask themselves: "Should I hurry to pay off my debts before I stop working?" The answer isn't always simple. It depends on several important factors that we'll examine together.

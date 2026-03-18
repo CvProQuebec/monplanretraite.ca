@@ -1,22 +1,20 @@
 ---
 title: Comment rester actif et en santé à la retraite
 slug: comment-rester-actif-et-en-sante-a-la-retraite
-date: '2025-09-19'
-excerpt: >-
-  La retraite est une belle étape de la vie. C'est le moment de profiter de tout
-  ce temps libre que vous avez gagné après des années de travail. Mais pour
-  vraiment bien vivre ces années, il faut prendre soin de sa santé et rester
-  actif.
+date: '2026-03-13'
+lastUpdated: '2026-03-13'
+excerpt: La retraite est une belle étape de la vie. C'est le moment de profiter de tout ce temps libre que vous avez gagné après des années de travail. Mais pour vraiment bien vivre ces années, il faut prendre soin de sa santé et rester actif.
+category: Santé et bien-être
+language: fr
 tags:
   - retraite
-category: Bien-être et qualité de vie
-language: fr
 status: published
 readingTime: 5
 oqlfChecked: false
 relatedSlugFr: comment-rester-actif-et-en-sante-a-la-retraite
 relatedSlugEn: staying-active-healthy-retirement
 ---
+
 # Comment rester actif et en santé à la retraite
 
 La retraite est une belle étape de la vie. C'est le moment de profiter de tout ce temps libre que vous avez gagné après des années de travail. Mais pour vraiment bien vivre ces années, il faut prendre soin de sa santé et rester actif.

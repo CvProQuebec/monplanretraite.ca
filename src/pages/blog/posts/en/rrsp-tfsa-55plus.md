@@ -1,27 +1,24 @@
 ---
 title: 'RRSP vs TFSA: Which to Choose at 55 and Over?'
 slug: rrsp-tfsa-55plus
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  At 55, you're in a golden window between peak earnings and mandatory RRIF
-  withdrawals. RRSP or TFSA? Discover how the RRSP meltdown strategy, employer
-  matching, and OAS clawback protection can save you tens of thousands of
-  dollars in retirement.
+date: '2026-03-17'
+lastUpdated: '2026-03-17'
+excerpt: At 55, you're in a golden window between peak earnings and mandatory RRIF withdrawals. RRSP or TFSA? Discover how the RRSP meltdown strategy, employer matching, and OAS clawback protection can save you tens of thousands of dollars in retirement.
+category: Investments
+language: en
 tags:
   - RRSP
   - TFSA
   - retirement
   - RRIF
   - OAS
-category: Manage savings and investments
-language: en
 status: published
 readingTime: 11
 oqlfChecked: false
 relatedSlugFr: reer-vs-celi-lequel-choisir-a-55-ans-et-plus
 relatedSlugEn: rrsp-tfsa-55plus
 ---
+
 # RRSP vs TFSA: Which to Choose at 55 and Over?
 
 *Updated March 1, 2026 | Reading time: 11 minutes*

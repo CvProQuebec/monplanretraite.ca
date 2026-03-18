@@ -1,7 +1,14 @@
 ---
-category: Planning for couples
+title: 'Planning Retirement as a Couple: Avoiding Surprises'
+slug: couple-retirement-planning
+date: '2026-01-14'
+lastUpdated: '2026-01-14'
+excerpt: 'Planning retirement as a couple is like preparing for a long journey together: you need to talk, make plans together, and avoid unpleasant surprises. Unfortunately, too many couples discover too late that they didn''t have the same vision of their retirement. Here''s how to prep...'
+category: Couple & Family
+language: en
 relatedSlugFr: planifier-la-retraite-en-couple-eviter-les-surprises
 ---
+
 # Planning Retirement as a Couple: Avoiding Surprises
 
 Planning retirement as a couple is like preparing for a long journey together: you need to talk, make plans together, and avoid unpleasant surprises. Unfortunately, too many couples discover too late that they didn't have the same vision of their retirement. Here's how to prepare well together.

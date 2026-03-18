@@ -1,22 +1,20 @@
 ---
 title: 'Les calculateurs en ligne : lesquels utiliser et comment'
 slug: les-calculateurs-en-ligne-lesquels-utiliser-et-comment
-date: '2025-09-19'
-excerpt: >-
-  Planifier sa retraite peut sembler compliqué. Heureusement, il existe des
-  outils gratuits et faciles à utiliser sur internet pour vous aider. Ces
-  calculateurs en ligne peuvent vous donner une bonne idée de ce dont vous aurez
-  besoin pour votre retraite. Voici un guide simple pour les utiliser.
-tags:
-  - retraite
+date: '2026-01-03'
+lastUpdated: '2026-01-03'
+excerpt: Planifier sa retraite peut sembler compliqué. Heureusement, il existe des outils gratuits et faciles à utiliser sur internet pour vous aider. Ces calculateurs en ligne peuvent vous donner une bonne idée de ce dont vous aurez besoin pour votre retraite. Voici un guide simple pour les utiliser.
 category: Outils et ressources
 language: fr
+tags:
+  - retraite
 status: published
 readingTime: 8
 oqlfChecked: false
 relatedSlugFr: les-calculateurs-en-ligne-lesquels-utiliser-et-comment
 relatedSlugEn: online-calculators
 ---
+
 # Les calculateurs en ligne : lesquels utiliser et comment
 
 Planifier sa retraite peut sembler compliqué. Heureusement, il existe des outils gratuits et faciles à utiliser sur internet pour vous aider. Ces calculateurs en ligne peuvent vous donner une bonne idée de ce dont vous aurez besoin pour votre retraite. Voici un guide simple pour les utiliser.

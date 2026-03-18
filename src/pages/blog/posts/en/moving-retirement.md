@@ -1,7 +1,14 @@
 ---
-category: Practical everyday aspects
+title: 'Moving in Retirement: Pros and Cons'
+slug: moving-retirement
+date: '2026-02-22'
+lastUpdated: '2026-02-22'
+excerpt: Retirement is approaching and you're wondering if you should move? Keep your family home or sell it for something smaller? This is an important decision that affects both your finances and your quality of life. Here's a simple guide to help you make the right choice.
+category: Budget & Expenses
+language: en
 relatedSlugFr: demenager-a-la-retraite-les-pour-et-les-contre
 ---
+
 # Moving in Retirement: Pros and Cons
 
 Retirement is approaching and you're wondering if you should move? Keep your family home or sell it for something smaller? This is an important decision that affects both your finances and your quality of life. Here's a simple guide to help you make the right choice.

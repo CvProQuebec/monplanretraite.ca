@@ -1,27 +1,24 @@
 ---
 title: Le fractionnement de revenus expliqué simplement
 slug: le-fractionnement-de-revenus-explique-simplement
-date: '2025-09-19'
-lastUpdated: '2026-03-01'
-excerpt: >-
-  Le fractionnement de revenus peut vous faire économiser 3 000 $ à 10 000 $
-  par année — légalement et simplement. Découvrez le formulaire T1032, le
-  partage de rente CPP/RRQ, le micro-FERR à 65 ans et comment protéger votre
-  PSV grâce à cette stratégie souvent ignorée.
+date: '2026-03-16'
+lastUpdated: '2026-03-16'
+excerpt: Le fractionnement de revenus peut vous faire économiser 3 000 $ à 10 000 $ par année — légalement et simplement. Découvrez le formulaire T1032, le partage de rente CPP/RRQ, le micro-FERR à 65 ans et comment protéger votre PSV grâce à cette stratégie souvent ignorée.
+category: Fiscalité
+language: fr
 tags:
   - fiscalité
   - fractionnement
   - retraite
   - PSV
   - FERR
-category: Fiscalité simplifiée
-language: fr
 status: published
 readingTime: 10
 oqlfChecked: false
 relatedSlugFr: le-fractionnement-de-revenus-explique-simplement
 relatedSlugEn: income-splitting-simple
 ---
+
 # Le fractionnement de revenus expliqué simplement
 
 *Mis à jour le 1er mars 2026 | Temps de lecture : 10 minutes*

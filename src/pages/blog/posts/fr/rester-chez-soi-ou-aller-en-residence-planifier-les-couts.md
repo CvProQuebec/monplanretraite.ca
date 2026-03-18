@@ -1,22 +1,20 @@
 ---
 title: 'Rester chez soi ou aller en résidence : planifier les coûts'
 slug: rester-chez-soi-ou-aller-en-residence-planifier-les-couts
-date: '2025-09-19'
-excerpt: >-
-  En vieillissant, une question importante se pose : vaut-il mieux rester dans
-  sa maison ou déménager dans une résidence spécialisée? Cette décision touche
-  votre qualité de vie, votre sécurité et surtout votre budget. Voici un guide
-  simple pour vous aider à calculer les coûts et faire le bon choix.
+date: '2026-01-15'
+lastUpdated: '2026-01-15'
+excerpt: 'En vieillissant, une question importante se pose : vaut-il mieux rester dans sa maison ou déménager dans une résidence spécialisée? Cette décision touche votre qualité de vie, votre sécurité et surtout votre budget. Voici un guide simple pour vous aider à calculer les coûts et faire le bon choix.'
+category: Budget et dépenses
+language: fr
 tags:
   - budget
-category: Aspects pratiques et quotidiens
-language: fr
 status: published
 readingTime: 7
 oqlfChecked: false
 relatedSlugFr: rester-chez-soi-ou-aller-en-residence-planifier-les-couts
 relatedSlugEn: staying-home-residence
 ---
+
 # Rester chez soi ou aller en résidence : planifier les coûts
 
 En vieillissant, une question importante se pose : vaut-il mieux rester dans sa maison ou déménager dans une résidence spécialisée? Cette décision touche votre qualité de vie, votre sécurité et surtout votre budget. Voici un guide simple pour vous aider à calculer les coûts et faire le bon choix.

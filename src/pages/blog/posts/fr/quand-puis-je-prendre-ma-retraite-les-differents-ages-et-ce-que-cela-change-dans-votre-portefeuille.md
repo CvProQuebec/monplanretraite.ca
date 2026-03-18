@@ -1,26 +1,20 @@
 ---
-title: >-
-  Quand puis-je prendre ma retraite? - Les différents âges et ce que cela change
-  dans votre portefeuille
-slug: >-
-  quand-puis-je-prendre-ma-retraite-les-differents-ages-et-ce-que-cela-change-dans-votre-portefeuille
+title: Quand puis-je prendre ma retraite? - Les différents âges et ce que cela change dans votre portefeuille
+slug: quand-puis-je-prendre-ma-retraite-les-differents-ages-et-ce-que-cela-change-dans-votre-portefeuille
 date: '2025-09-19'
-excerpt: >-
-  Prendre sa retraite n'est plus une décision binaire où l'on travaille jusqu'à
-  65 ans pour ensuite arrêter complètement. Aujourd'hui, la planification de la
-  retraite offre une flexibilité remarquable, mais cette liberté de choix
-  s'accompagne d'une complexité financière qu'il faut absolument maîtriser.
-tags:
-  - retraite
+lastUpdated: '2026-03-16'
+excerpt: Prendre sa retraite n'est plus une décision binaire où l'on travaille jusqu'à 65 ans pour ensuite arrêter complètement. Aujourd'hui, la planification de la retraite offre une flexibilité remarquable, mais cette liberté de choix s'accompagne d'une complexité financière qu'il faut absolument maîtriser.
 category: Les bases de la retraite
 language: fr
+tags:
+  - retraite
 status: published
 readingTime: 5
 oqlfChecked: false
-relatedSlugFr: >-
-  quand-puis-je-prendre-ma-retraite-les-differents-ages-et-ce-que-cela-change-dans-votre-portefeuille
+relatedSlugFr: quand-puis-je-prendre-ma-retraite-les-differents-ages-et-ce-que-cela-change-dans-votre-portefeuille
 relatedSlugEn: retirement-ages-portfolio
 ---
+
 # Quand puis-je prendre ma retraite? - Les différents âges et ce que cela change dans votre portefeuille
 
 Prendre sa retraite n'est plus une décision binaire où l'on travaille jusqu'à 65 ans pour ensuite arrêter complètement. Aujourd'hui, la planification de la retraite offre une flexibilité remarquable, mais cette liberté de choix s'accompagne d'une complexité financière qu'il faut absolument maîtriser.
@@ -75,7 +69,7 @@ Les experts estiment qu'il faut entre 60 % et 80 % de vos revenus de travail pou
 ### L'importance de l'épargne complémentaire
 
 #### Le REER (Régime enregistré d'épargne-retraite)
-- **Cotisation maximale 2025 :** 32 490 $ ou 18 % du revenu
+- **Cotisation maximale 2026 :** 33 810 $ ou 18 % du revenu
 - **Avantage :** Déduction fiscale immédiate
 - **Inconvénient :** Retraits imposables à la retraite
 
@@ -107,7 +101,7 @@ L'extension de l'âge de report de 70 à 72 ans en 2024 reconnaît l'évolution 
 ## Considérations spéciales
 
 ### L'impôt de récupération
-Si votre revenu de retraite dépasse 86 912 $ (données 2023), vous devrez rembourser une partie de votre pension de SV. Cette réalité rend les retraits du CELI particulièrement attrayants pour les revenus élevés.
+Si votre revenu de retraite dépasse 95 323 $ (seuil 2026), vous devrez rembourser une partie de votre pension de SV. Cette réalité rend les retraits du CELI particulièrement attrayants pour les revenus élevés.
 
 ### Le fractionnement des revenus
 Les couples peuvent diviser leurs revenus de pension pour réduire leur fardeau fiscal global. Cette stratégie peut être appliquée automatiquement pour la plupart des revenus, mais doit être demandée manuellement pour la rente RRQ.

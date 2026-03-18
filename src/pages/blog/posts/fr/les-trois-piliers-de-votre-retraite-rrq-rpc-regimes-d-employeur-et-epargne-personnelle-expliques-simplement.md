@@ -1,28 +1,21 @@
 ---
-title: >-
-  Les trois piliers de votre retraite - RRQ/RPC, régimes d'employeur et épargne
-  personnelle expliqués simplement
-slug: >-
-  les-trois-piliers-de-votre-retraite-rrq-rpc-regimes-d-employeur-et-epargne-personnelle-expliques-simplement
+title: Les trois piliers de votre retraite - RRQ/RPC, régimes d'employeur et épargne personnelle expliqués simplement
+slug: les-trois-piliers-de-votre-retraite-rrq-rpc-regimes-d-employeur-et-epargne-personnelle-expliques-simplement
 date: '2025-09-19'
 lastUpdated: '2026-03-01'
-excerpt: >-
-  Planifier sa retraite, c'est comme construire une maison solide. Vous avez
-  besoin de trois piliers forts pour soutenir votre confort financier. Voici
-  comment ces trois piliers travaillent ensemble pour vous assurer une retraite
-  sereine.
+excerpt: Planifier sa retraite, c'est comme construire une maison solide. Vous avez besoin de trois piliers forts pour soutenir votre confort financier. Voici comment ces trois piliers travaillent ensemble pour vous assurer une retraite sereine.
+category: Les bases de la retraite
+language: fr
 tags:
   - RRQ
   - retraite
-category: Les bases de la retraite
-language: fr
 status: published
 readingTime: 9
 oqlfChecked: false
-relatedSlugFr: >-
-  les-trois-piliers-de-votre-retraite-rrq-rpc-regimes-d-employeur-et-epargne-personnelle-expliques-simplement
+relatedSlugFr: les-trois-piliers-de-votre-retraite-rrq-rpc-regimes-d-employeur-et-epargne-personnelle-expliques-simplement
 relatedSlugEn: three-pillars-retirement
 ---
+
 # Les trois piliers de votre retraite — RRQ/RPC, régimes d'employeur et épargne personnelle expliqués simplement
 
 *Mis à jour le 1er mars 2026 | Temps de lecture : 9 minutes*

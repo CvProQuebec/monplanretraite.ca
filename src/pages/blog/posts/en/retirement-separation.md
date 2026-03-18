@@ -1,7 +1,14 @@
 ---
-category: Planning for couples
+title: 'Retirement and Separation: Protecting Your Rights'
+slug: retirement-separation
+date: '2026-01-23'
+lastUpdated: '2026-01-23'
+excerpt: When a couple separates, it's a very difficult time. In addition to grief, important decisions must be made about money and retirement. These choices will affect your financial future. It's important to understand your rights well so you don't lose money.
+category: Couple & Family
+language: en
 relatedSlugFr: retraite-et-separation-proteger-ses-droits
 ---
+
 # Retirement and Separation: Protecting Your Rights
 
 ## A Difficult Time That Requires Important Decisions
