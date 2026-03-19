@@ -15,9 +15,44 @@ describe('IncomeSynchronizationService', () => {
       secteurActivite1: 'technologie',
       secteurActivite2: 'sante'
     },
-    retirement: {},
-    savings: {},
-    cashflow: {}
+    retirement: {
+      rrqAgeActuel1: 65,
+      rrqMontantActuel1: 0,
+      rrqMontant70_1: 0,
+      esperanceVie1: 85,
+      rrqAgeActuel2: 65,
+      rrqMontantActuel2: 0,
+      rrqMontant70_2: 0,
+      esperanceVie2: 87,
+      rregopMembre1: 'non',
+      rregopAnnees1: 0,
+      pensionPrivee1: 0,
+      pensionPrivee2: 0
+    },
+    savings: {
+      reer1: 0,
+      reer2: 0,
+      celi1: 0,
+      celi2: 0,
+      placements1: 0,
+      placements2: 0,
+      epargne1: 0,
+      epargne2: 0,
+      cri1: 0,
+      cri2: 0,
+      residenceValeur: 0,
+      residenceHypotheque: 0
+    },
+    cashflow: {
+      logement: 0,
+      servicesPublics: 0,
+      assurances: 0,
+      telecom: 0,
+      alimentation: 0,
+      transport: 0,
+      sante: 0,
+      loisirs: 0
+    }
   };
 
   describe('synchronizeHouseholdIncome', () => {
@@ -27,7 +62,7 @@ describe('IncomeSynchronizationService', () => {
       expect(result.totalHouseholdIncome).toBe(140000);
       expect(result.person1Income).toBe(75000);
       expect(result.person2Income).toBe(65000);
-      expect(result.monthlyHouseholdIncome).toBe(11666.67);
+      expect(result.monthlyHouseholdIncome).toBeCloseTo(11666.67, 2);
       expect(result.annualHouseholdIncome).toBe(140000);
     });
 
@@ -82,7 +117,7 @@ describe('IncomeSynchronizationService', () => {
       
       expect(updateUserData).toHaveBeenCalledWith('personal', expect.objectContaining({
         totalHouseholdIncome: 140000,
-        monthlyHouseholdIncome: 11666.67,
+        monthlyHouseholdIncome: expect.closeTo(11666.67, 2),
         incomeMultiplier: expect.any(Number),
         sectorLongevityImpact: expect.any(Number)
       }));

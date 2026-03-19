@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 /**
  * Tests de confidentialité pour BackgroundBackupService
  * - Vérifie qu'aucune donnée en clair n'est écrite dans le fichier de sauvegarde
@@ -39,7 +40,32 @@ let lastWrittenFileContent = '';
 function makeWritable() {
   return {
     async write(blob: Blob) {
-      lastWrittenFileContent = await (blob as any).text?.() ?? String(blob);
+      if (blob && typeof (blob as any).text === 'function') {
+        lastWrittenFileContent = await (blob as any).text();
+        return;
+      }
+
+      if (blob && typeof (blob as any).arrayBuffer === 'function') {
+        const buffer = await (blob as any).arrayBuffer();
+        lastWrittenFileContent = new TextDecoder().decode(buffer);
+        return;
+      }
+
+      const implSymbol = Object.getOwnPropertySymbols(blob as object).find(
+        (symbol) => symbol.toString() === 'Symbol(impl)',
+      );
+      const buffer = implSymbol ? (blob as any)[implSymbol]?._buffer : undefined;
+      if (buffer) {
+        lastWrittenFileContent = Buffer.from(buffer).toString('utf8');
+        return;
+      }
+
+      if (typeof Response !== 'undefined') {
+        lastWrittenFileContent = await new Response(blob as any).text();
+        return;
+      }
+
+      lastWrittenFileContent = String(blob);
     },
     async close() {
       // no-op
@@ -125,7 +151,6 @@ function mockIndexedDB() {
 
 describe('BackgroundBackupService - confidentialité et restauration', () => {
   beforeEach(() => {
-    jest.useFakeTimers();
     jest.spyOn(console, 'warn').mockImplementation(() => {});
     jest.spyOn(console, 'error').mockImplementation(() => {});
     lastWrittenFileContent = '';
@@ -153,7 +178,6 @@ describe('BackgroundBackupService - confidentialité et restauration', () => {
   });
 
   afterEach(() => {
-    jest.useRealTimers();
     (console.warn as any).mockRestore?.();
     (console.error as any).mockRestore?.();
   });

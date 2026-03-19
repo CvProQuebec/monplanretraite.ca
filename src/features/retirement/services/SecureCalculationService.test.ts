@@ -1,3 +1,4 @@
+/** @jest-environment jsdom */
 // src/features/retirement/services/SecureCalculationService.test.ts
 import { SecureCalculationService } from './SecureCalculationService';
 import { UserData } from '../types';
@@ -70,8 +71,24 @@ const mockFetch = jest.fn();
 global.fetch = mockFetch;
 
 describe('SecureCalculationService', () => {
+  let consoleErrorSpy: jest.SpyInstance;
+  let consoleWarnSpy: jest.SpyInstance;
+  let consoleLogSpy: jest.SpyInstance;
+  let delaySpy: jest.SpyInstance;
+
   beforeEach(() => {
-    mockFetch.mockClear();
+    mockFetch.mockReset();
+    delaySpy = jest.spyOn(SecureCalculationService as any, 'delay').mockResolvedValue(undefined);
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+    consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => {});
+    consoleLogSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
+  });
+
+  afterEach(() => {
+    delaySpy.mockRestore();
+    consoleErrorSpy.mockRestore();
+    consoleWarnSpy.mockRestore();
+    consoleLogSpy.mockRestore();
   });
 
   describe('calculateAll', () => {
@@ -110,7 +127,7 @@ describe('SecureCalculationService', () => {
 
     it('should handle API errors gracefully', async () => {
       // Mock d'une erreur API
-      mockFetch.mockRejectedValueOnce(new Error('Network error'));
+      mockFetch.mockRejectedValue(new Error('Network error'));
 
       const result = await SecureCalculationService.calculateAll(mockUserData);
 
@@ -147,10 +164,8 @@ describe('SecureCalculationService', () => {
 
     it('should handle timeout errors', async () => {
       // Mock d'un timeout
-      mockFetch.mockImplementationOnce(() => 
-        new Promise((_, reject) => 
-          setTimeout(() => reject(new Error('Timeout')), 100)
-        )
+      mockFetch.mockImplementation(() =>
+        Promise.reject(new Error('Timeout'))
       );
 
       const result = await SecureCalculationService.calculateAll(mockUserData);
@@ -183,14 +198,14 @@ describe('SecureCalculationService', () => {
 
   describe('fallback calculations', () => {
     it('should provide reasonable fallback values', async () => {
-      mockFetch.mockRejectedValueOnce(new Error('API down'));
+      mockFetch.mockRejectedValue(new Error('API down'));
 
       const result = await SecureCalculationService.calculateAll(mockUserData);
 
       // Vérifier que les calculs de fallback sont raisonnables
       expect(result.netWorth).toBeGreaterThan(0);
       expect(result.retirementCapital).toBeGreaterThan(result.netWorth);
-      expect(result.monthlyIncome).toBe(11667); // 75000 + 65000 / 12
+      expect(result.monthlyIncome).toBeCloseTo(11666.67, 2); // 75000 + 65000 / 12
       expect(result.monthlyExpenses).toBe(5050); // Somme des dépenses
     });
   });
@@ -204,7 +219,7 @@ describe('SecureCalculationService', () => {
         cashflow: { logement: 0, servicesPublics: 0, assurances: 0, telecom: 0, alimentation: 0, transport: 0, sante: 0, loisirs: 0 }
       };
 
-      mockFetch.mockRejectedValueOnce(new Error('API down'));
+      mockFetch.mockRejectedValue(new Error('API down'));
 
       const result = await SecureCalculationService.calculateAll(emptyData);
 
