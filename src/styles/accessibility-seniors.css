@@ -479,9 +479,34 @@ h4 { font-size: 20px; font-weight: 500; }
   min-height: 56px;          /* Boutons principaux plus grands */
   font-size: 20px;
   border-radius: 8px;        /* Bordures douces */
-  border: 2px solid #3182ce; /* Bordure visible */
-  background-color: var(--background-primary, #fff);
-  color: var(--primary-text, #1a365d);
+  border: 2px solid #1d4ed8; /* Bordure visible */
+  background-color: #1d4ed8;
+  color: #ffffff;
+}
+
+.button-primary:hover,
+.button-primary:focus-visible {
+  background-color: #1e40af;
+  border-color: #1e40af;
+  color: #ffffff;
+}
+
+.button-secondary,
+.button-outline {
+  min-height: 56px;
+  font-size: 20px;
+  border-radius: 8px;
+  border: 2px solid #1d4ed8;
+  background-color: #ffffff;
+  color: #1e3a8a;
+}
+
+.button-secondary:hover,
+.button-secondary:focus-visible,
+.button-outline:hover,
+.button-outline:focus-visible {
+  background-color: #eff6ff;
+  color: #1e3a8a;
 }
 
 .navigation-link {

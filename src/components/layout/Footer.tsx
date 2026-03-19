@@ -28,7 +28,7 @@ const Footer: React.FC = () => {
         }}
       >
         {/* Copyright */}
-        <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.45)', margin: 0 }}>
+        <p style={{ fontSize: '14px', color: 'rgba(255,255,255,0.72)', margin: 0 }}>
           © {new Date().getFullYear()} MonPlanRetraite.ca —{' '}
           {isFr ? 'Tous droits réservés.' : 'All rights reserved.'}
         </p>
@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            color: 'rgba(255,255,255,0.65)',
+            color: 'rgba(255,255,255,0.82)',
             textDecoration: 'none',
             fontSize: '15px',
             fontWeight: 500,
@@ -56,7 +56,7 @@ const Footer: React.FC = () => {
             (e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(255,255,255,0.06)';
           }}
           onMouseLeave={e => {
-            (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.65)';
+            (e.currentTarget as HTMLElement).style.color = 'rgba(255,255,255,0.82)';
             (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,255,255,0.12)';
             (e.currentTarget as HTMLElement).style.backgroundColor = 'transparent';
           }}
