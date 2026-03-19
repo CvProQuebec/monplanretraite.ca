@@ -13,15 +13,13 @@ export class SecureCalculationService {
   static async calculateAll(userData: UserData): Promise<Calculations> {
     try {
       // Log de la demande
-      securityLogger.logEvent({
-        type: SecurityEventType.CALCULATION_REQUEST,
-        severity: SecuritySeverity.LOW,
-        source: 'SecureCalculationService',
-        details: {
-          message: 'Demande de calcul sécurisé',
-          userId: userData.personal?.prenom1 || 'anonyme'
-        }
-      });
+      securityLogger.log(
+        SecurityEventType.CALCULATION_REQUEST,
+        SecuritySeverity.LOW,
+        'Demande de calcul sécurisé',
+        { userId: userData.personal?.prenom1 || 'anonyme' },
+        { source: 'SecureCalculationService' }
+      );
 
       const response = await this.makeSecureRequest(userData);
       
@@ -30,15 +28,13 @@ export class SecureCalculationService {
       }
 
       // Log du succès
-      securityLogger.logEvent({
-        type: SecurityEventType.CALCULATION_SUCCESS,
-        severity: SecuritySeverity.LOW,
-        source: 'SecureCalculationService',
-        details: {
-          message: 'Calcul sécurisé réussi',
-          userId: userData.personal?.prenom1 || 'anonyme'
-        }
-      });
+      securityLogger.log(
+        SecurityEventType.CALCULATION_SUCCESS,
+        SecuritySeverity.LOW,
+        'Calcul sécurisé réussi',
+        { userId: userData.personal?.prenom1 || 'anonyme' },
+        { source: 'SecureCalculationService' }
+      );
 
       return {
         netWorth: response.data.netWorth,
@@ -54,15 +50,13 @@ export class SecureCalculationService {
       console.error('Erreur dans SecureCalculationService:', error);
       
       // Log de l'erreur
-      securityLogger.logEvent({
-        type: SecurityEventType.CALCULATION_ERROR,
-        severity: SecuritySeverity.MEDIUM,
-        source: 'SecureCalculationService',
-        details: {
-          message: 'Erreur lors du calcul sécurisé',
-          error: error instanceof Error ? error.message : 'Erreur inconnue'
-        }
-      });
+      securityLogger.log(
+        SecurityEventType.CALCULATION_ERROR,
+        SecuritySeverity.MEDIUM,
+        'Erreur lors du calcul sécurisé',
+        { error: error instanceof Error ? error.message : 'Erreur inconnue' },
+        { source: 'SecureCalculationService' }
+      );
 
       // Retourner des valeurs par défaut en cas d'erreur
       return this.getFallbackCalculations(userData);
@@ -114,9 +108,11 @@ export class SecureCalculationService {
    * Détermine si une erreur est récupérable
    */
   private static isRetryableError(error: any): boolean {
+    const message = String(error?.message || '').toLowerCase();
+
     if (error.name === 'AbortError') return true;
-    if (error.message?.includes('network')) return true;
-    if (error.message?.includes('timeout')) return true;
+    if (message.includes('network')) return true;
+    if (message.includes('timeout')) return true;
     return false;
   }
 
@@ -135,7 +131,7 @@ export class SecureCalculationService {
     
     // Calculs simplifiés côté client en cas d'urgence
     const netWorth = this.calculateSimpleNetWorth(userData);
-    const monthlyIncome = (userData.personal.salaire1 || 0) + (userData.personal.salaire2 || 0);
+    const monthlyIncome = ((userData.personal.salaire1 || 0) + (userData.personal.salaire2 || 0)) / 12;
     const monthlyExpenses = this.calculateSimpleMonthlyExpenses(userData);
 
     return {
@@ -170,10 +166,12 @@ export class SecureCalculationService {
    * Calcul simple des dépenses mensuelles (fallback)
    */
   private static calculateSimpleMonthlyExpenses(userData: UserData): number {
-    const { expenses } = userData;
+    const expenses = userData.cashflow;
     if (!expenses) return 0;
 
-    return Object.values(expenses).reduce((sum: number, expense: any) => sum + (expense || 0), 0);
+    return Object.values(expenses).reduce<number>((sum, expense) => {
+      return sum + (typeof expense === 'number' ? expense : 0);
+    }, 0);
   }
 
   /**

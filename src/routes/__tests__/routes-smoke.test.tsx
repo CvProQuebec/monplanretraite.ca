@@ -18,6 +18,27 @@ function ssrRender(element: React.ReactElement) {
 }
 
 describe('Routes smoke tests', () => {
+  let consoleErrorSpy: jest.SpyInstance;
+
+  beforeEach(() => {
+    consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation((...args) => {
+      const [firstArg] = args;
+      const message = typeof firstArg === 'string' ? firstArg : '';
+
+      if (message.includes('useLayoutEffect does nothing on the server')) {
+        return;
+      }
+
+      // Preserve unexpected errors in test output.
+      // eslint-disable-next-line no-console
+      console.warn(...args);
+    });
+  });
+
+  afterEach(() => {
+    consoleErrorSpy.mockRestore();
+  });
+
   test('LocalizedRoute renders twin FR/EN paths without throwing', () => {
     const Dummy: React.FC = () => <div>Dummy</div>;
     const html = ssrRender(
@@ -68,7 +89,7 @@ describe('Routes smoke tests', () => {
 
   test('RetirementRoutes: some typical paths can be instantiated', () => {
     const html = ssrRender(
-      <MemoryRouter initialEntries={['/planification-urgence', '/rappels', '/optimisation-fiscale']}>
+      <MemoryRouter initialEntries={['/trousse', '/rappels', '/optimisation-fiscale']}>
         <Suspense fallback={null}>
           <Routes>
             <RetirementRoutes />

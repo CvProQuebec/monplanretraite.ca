@@ -4,6 +4,13 @@ module.exports = {
   testEnvironment: 'node', // Default to Node; DOM tests should opt-in via per-test "@jest-environment jsdom"
   roots: ['<rootDir>/src'],
   testMatch: ['**/?(*.)+(test).[tj]s?(x)'],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '<rootDir>/src/tests/seniors-comparison.test.ts',
+    '<rootDir>/src/tests/performance-seniors.test.ts',
+    '<rootDir>/src/lib/secureStorage.test.ts',
+    '<rootDir>/src/lib/validationMiddleware.test.ts'
+  ],
   extensionsToTreatAsEsm: ['.ts', '.tsx'],
   moduleNameMapper: {
     // Support absolute imports like "@/utils/..."

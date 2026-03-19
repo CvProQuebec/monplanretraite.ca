@@ -7,13 +7,9 @@ import SeniorsLoadingSpinner from './components/SeniorsLoadingSpinner';
 import BackupBootstrap from './components/backup/BackupBootstrap';
 import BackupManagerPanel from './components/backup/BackupManagerPanel';
 
-// Nouvelles pages principales
-import Accueil from './pages/Accueil';
-import Home from './pages/Home';
 const MaRetraite = React.lazy(() => import('./pages/MaRetraite'));
 const MaRetraiteWithDashboard = React.lazy(() => import('./pages/MaRetraiteWithDashboard'));
 const Revenus = React.lazy(() => import('./pages/Revenus'));
-const PlanificationUrgence = React.lazy(() => import('./pages/PlanificationUrgence'));
 const PlanificationSuccessorale = React.lazy(() => import('./pages/PlanificationSuccessorale'));
 const PlanificationDepenses = React.lazy(() => import('./pages/PlanificationDepenses'));
 const AssistantFinancier = React.lazy(() => import('./pages/AssistantFinancier'));
@@ -72,6 +68,7 @@ const SpendingPlanningEn = React.lazy(() => import('./pages/SpendingPlanning'));
 const IncomePageEn = React.lazy(() => import('./pages/IncomePage'));
 const SaveLoadEn = React.lazy(() => import('./pages/SaveLoad'));
 const HomeOptimized = React.lazy(() => import('./pages/HomeOptimized'));
+const Accueil = React.lazy(() => import('./pages/Accueil'));
 
 // Composants de test et validation - Lazy loading
 const FinalValidation = React.lazy(() => import('./components/FinalValidation'));

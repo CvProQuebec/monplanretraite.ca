@@ -2,8 +2,6 @@
 // Service pour la sauvegarde individuelle et combinée des données
 
 import { UserData } from '../types';
-import { EmergencyPlanningState } from '../types/emergency-planning';
-import { EmergencyPlanningService } from './EmergencyPlanningService';
 
 export interface Person1Data {
   // Données personnelles Personne 1
@@ -145,17 +143,6 @@ export interface CombinedFinancialData {
   };
 }
 
-export interface EmergencyPlanFile {
-  planificationUrgence: EmergencyPlanningState;
-  metadata: {
-    dateCreation: Date;
-    derniereMiseAJour: Date;
-    version: string;
-    type: 'emergency_planning';
-    personnes: ('person1' | 'person2')[];
-  };
-}
-
 export class IndividualSaveService {
   private static readonly VERSION = '1.0.0';
   private static readonly STORAGE_KEYS = {
@@ -287,26 +274,6 @@ export class IndividualSaveService {
   }
 
   /**
-   * Créer le fichier de planification d'urgence
-   */
-  static createEmergencyPlanFile(emergencyState: EmergencyPlanningState): EmergencyPlanFile {
-    const personnes: ('person1' | 'person2')[] = [];
-    if (emergencyState.person1Plan) personnes.push('person1');
-    if (emergencyState.person2Plan) personnes.push('person2');
-
-    return {
-      planificationUrgence: emergencyState,
-      metadata: {
-        dateCreation: new Date(),
-        derniereMiseAJour: new Date(),
-        version: this.VERSION,
-        type: 'emergency_planning',
-        personnes
-      }
-    };
-  }
-
-  /**
    * Sauvegarder individuellement Personne 1
    */
   static savePerson1Individual(userData: UserData): void {
@@ -349,30 +316,11 @@ export class IndividualSaveService {
   }
 
   /**
-   * Sauvegarder la planification d'urgence (fichier séparé)
+   * Sauvegarde automatique par défaut (combinée)
    */
-  static saveEmergencyPlanning(emergencyState: EmergencyPlanningState): void {
-    try {
-      const emergencyFile = this.createEmergencyPlanFile(emergencyState);
-      localStorage.setItem(this.STORAGE_KEYS.EMERGENCY, JSON.stringify(emergencyFile));
-      console.log('💾 Planification d\'urgence sauvegardée séparément');
-    } catch (error) {
-      console.error('Erreur sauvegarde planification d\'urgence:', error);
-      throw new Error('Impossible de sauvegarder la planification d\'urgence');
-    }
-  }
-
-  /**
-   * Sauvegarde automatique par défaut (combinée + urgence)
-   */
-  static saveDefault(userData: UserData, emergencyState?: EmergencyPlanningState): void {
+  static saveDefault(userData: UserData): void {
     // Sauvegarde combinée par défaut
     this.saveCombinedFinancialData(userData);
-    
-    // Sauvegarde planification d'urgence si disponible
-    if (emergencyState) {
-      this.saveEmergencyPlanning(emergencyState);
-    }
   }
 
   /**
@@ -440,38 +388,6 @@ export class IndividualSaveService {
   }
 
   /**
-   * Charger la planification d'urgence
-   */
-  static loadEmergencyPlanning(): EmergencyPlanFile | null {
-    try {
-      const data = localStorage.getItem(this.STORAGE_KEYS.EMERGENCY);
-      if (!data) return null;
-      
-      const parsedData = JSON.parse(data);
-      // Convertir les dates
-      parsedData.metadata.dateCreation = new Date(parsedData.metadata.dateCreation);
-      parsedData.metadata.derniereMiseAJour = new Date(parsedData.metadata.derniereMiseAJour);
-      
-      // Convertir les dates dans les plans d'urgence
-      if (parsedData.planificationUrgence.person1Plan) {
-        parsedData.planificationUrgence.person1Plan = EmergencyPlanningService.convertDatesInPlan(
-          parsedData.planificationUrgence.person1Plan
-        );
-      }
-      if (parsedData.planificationUrgence.person2Plan) {
-        parsedData.planificationUrgence.person2Plan = EmergencyPlanningService.convertDatesInPlan(
-          parsedData.planificationUrgence.person2Plan
-        );
-      }
-      
-      return parsedData;
-    } catch (error) {
-      console.error('Erreur chargement planification d\'urgence:', error);
-      return null;
-    }
-  }
-
-  /**
    * Exporter Personne 1 (fichier JSON)
    */
   static exportPerson1Individual(userData: UserData): void {
@@ -513,22 +429,6 @@ export class IndividualSaveService {
     const a = document.createElement('a');
     a.href = url;
     a.download = `donnees-combinees-${new Date().toISOString().split('T')[0]}.json`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  }
-
-  /**
-   * Exporter planification d'urgence (fichier JSON séparé)
-   */
-  static exportEmergencyPlanning(emergencyState: EmergencyPlanningState): void {
-    const emergencyFile = this.createEmergencyPlanFile(emergencyState);
-    const blob = new Blob([JSON.stringify(emergencyFile, null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `planification-urgence-${new Date().toISOString().split('T')[0]}.json`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

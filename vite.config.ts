@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => {
       outDir: 'dist',
       // Only enable sourcemaps when analyzing to keep bundles lean by default
       sourcemap: isAnalyze,
-      chunkSizeWarningLimit: 700,
+      chunkSizeWarningLimit: 1500,
       target: 'es2020',
       rollupOptions: {
         output: {
@@ -85,10 +85,7 @@ export default defineConfig(({ mode }) => {
               return 'matter';
             }
 
-            // PDF/reporting libs (loaded on demand) - split individually to reduce chunk size
-            if (pid.includes('jspdf')) {
-              return 'jspdf';
-            }
+            // Keep jsPDF with its importers to avoid cross-chunk init cycles.
             if (pid.includes('html2canvas')) {
               return 'html2canvas';
             }
@@ -98,23 +95,7 @@ export default defineConfig(({ mode }) => {
               return 'motion';
             }
 
-            // Split large areas for better initial load for seniors
-            if (pid.includes('/src/services/')) return 'core-services';
-            if (pid.includes('/src/components/ui/')) {
-              // Split UI into smaller groups to keep chunks < 500kB
-              // - ui-modules: app-specific heavy modules
-              // - ui-shadcn: base UI primitives (buttons, dialogs, etc.)
-              if (
-                /\/src\/components\/ui\/(AdvancedEIManager|AssetConsolidationModule|FourPercentRuleModule|OptimalAllocationModule|ExcessLiquidityDetector|InflationProtectionCenter|advanced-upgrade-modal)\.tsx?$/
-                  .test(pid)
-              ) {
-                return 'ui-modules';
-              }
-              return 'ui-shadcn';
-            }
             if (pid.includes('lucide-react')) return 'icons';
-            if (pid.includes('@radix-ui')) return 'radix';
-            if (pid.includes('react-router')) return 'router';
             if (pid.includes('firebase')) return 'firebase';
 
             return undefined;

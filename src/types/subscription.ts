@@ -49,7 +49,6 @@ export interface PlanFeatures {
   // Fonctionnalités premium
   hasAIConsulting: boolean; // IA prédictive et conseils avancés
   hasSuccessionPlanning: boolean; // Planification successorale
-  hasEmergencyPlanning: boolean; // Planification d'urgence (8 sections)
   hasRealEstateOptimization: boolean; // Optimisation immobilière
   
   // Modules gouvernementaux

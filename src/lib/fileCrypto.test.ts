@@ -5,7 +5,7 @@ describe('fileCrypto isExportEnvelope', () => {
     const env = {
       version: 'EPU-1.0',
       app: 'MonPlanRetraite.ca',
-      module: 'PlanificationUrgence',
+      module: 'Trousse',
       alg: 'AES-256-GCM',
       kdf: { name: 'PBKDF2', hash: 'SHA-256', iterations: 200000, salt: 'c2FsdA==' },
       iv: 'aXY=',

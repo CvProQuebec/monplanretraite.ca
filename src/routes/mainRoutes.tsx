@@ -7,7 +7,6 @@ import { Route } from "react-router-dom";
  * Etape 1: petite extraction non risquee. D'autres groupes pourront suivre (profil, budget, etc.).
  */
 const Accueil = React.lazy(() => import("@/pages/Accueil"));
-const Home = React.lazy(() => import("@/pages/Home"));
 
 export function MainRoutesHome() {
   return (
@@ -16,8 +15,8 @@ export function MainRoutesHome() {
       <Route path="/" element={<Accueil />} />
       <Route path="/accueil" element={<Accueil />} />
       <Route path="/fr" element={<Accueil />} />
-      <Route path="/home" element={<Home />} />
-      <Route path="/en" element={<Home />} />
+      <Route path="/home" element={<Accueil />} />
+      <Route path="/en" element={<Accueil />} />
     </>
   );
 }

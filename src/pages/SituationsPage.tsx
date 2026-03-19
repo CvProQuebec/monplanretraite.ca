@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Meta from '@/components/ui/Meta';
-import { ArrowRight, Briefcase, HardHat, HeartHandshake, Home, Users } from 'lucide-react';
+import { ArrowRight, Briefcase, HardHat, HeartHandshake, Home, Shield, Users } from 'lucide-react';
 
 const situations = [
   {
@@ -48,6 +48,15 @@ const situations = [
     textEn: 'To prepare your dossier, clarify income, and avoid last-minute mistakes.',
     hrefFr: '/mon-dossier',
     hrefEn: '/my-dossier',
+  },
+  {
+    icon: Shield,
+    titleFr: 'Je veux protéger ma famille (urgence et succession)',
+    titleEn: 'I want to protect my family (emergency and estate)',
+    textFr: 'Pour préparer vos documents d\'urgence, vos volontés funéraires et votre dossier de liquidateur — en format PDF à compléter à votre rythme.',
+    textEn: 'To prepare your emergency documents, funeral wishes, and executor file — as PDFs to complete at your own pace.',
+    hrefFr: '/trousse',
+    hrefEn: '/kit',
   },
 ];
 

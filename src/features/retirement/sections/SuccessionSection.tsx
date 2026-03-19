@@ -1,6 +1,6 @@
 // src/features/retirement/sections/SuccessionSection.tsx
 import React from 'react';
-import { SuccessionTab } from '../components/emergency/SuccessionTab';
+import { SuccessionPlanningManager } from '../components/SuccessionPlanningManager';
 import { useRetirementData } from '../hooks/useRetirementData';
 import { useLanguage } from '../hooks/useLanguage';
 
@@ -68,10 +68,7 @@ export const SuccessionSection: React.FC<SuccessionSectionProps> = ({ data, onUp
 
         {/* Contenu principal */}
         <div className="bg-white/10 backdrop-blur-sm rounded-lg border border-purple-300/30 p-6">
-          <SuccessionTab 
-            data={successionData}
-            onUpdate={handleSuccessionUpdate}
-          />
+          <SuccessionPlanningManager />
         </div>
       </div>
     </div>

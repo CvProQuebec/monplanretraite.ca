@@ -19,7 +19,7 @@ export class IncomeSynchronizationService {
    * Synchronise les revenus totaux entre les profils 1 et 2
    */
   static synchronizeHouseholdIncome(userData: UserData): SynchronizedIncomeData {
-    const personal = userData.personal || {};
+    const personal: Partial<UserData['personal']> = userData.personal ?? {};
     
     // Revenus individuels
     const person1Income = personal.salaire1 || 0;

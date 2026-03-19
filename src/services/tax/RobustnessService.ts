@@ -207,3 +207,45 @@ export function evaluateRobustness(params: RobustnessParams, language: 'fr' | 'e
     explanations
   };
 }
+
+export function evaluateShocks(
+  plan: Partial<RobustnessParams>,
+  options?: { inflationHigh?: boolean; longevityPlus?: boolean; sequenceShock?: boolean }
+) {
+  if (
+    !plan.opening ||
+    !plan.assumptions ||
+    !Array.isArray(plan.decisions) ||
+    typeof plan.horizonYears !== 'number' ||
+    typeof plan.targetNetAnnual !== 'number'
+  ) {
+    return {
+      score: 0,
+      explanations: [],
+      metrics: { options: options ?? {} }
+    };
+  }
+
+  const report = evaluateRobustness({
+    opening: plan.opening,
+    assumptions: plan.assumptions,
+    decisions: plan.decisions,
+    horizonYears: plan.horizonYears,
+    targetNetAnnual: plan.targetNetAnnual,
+    shortfallPenalty: plan.shortfallPenalty,
+    clawbackPenalty: plan.clawbackPenalty,
+    mtrSpikePenalty: plan.mtrSpikePenalty
+  });
+
+  const metrics = {
+    sequence: options?.sequenceShock === false ? undefined : report.sequence,
+    inflation: options?.inflationHigh === false ? undefined : report.inflation,
+    longevity: options?.longevityPlus === false ? undefined : report.longevity
+  };
+
+  return {
+    score: report.robustScore,
+    explanations: report.explanations,
+    metrics
+  };
+}

@@ -9,6 +9,7 @@ import {
   ClipboardList,
   FolderOpen,
   Landmark,
+  Shield,
 } from 'lucide-react';
 
 const Home: React.FC = () => {
@@ -66,6 +67,13 @@ const Home: React.FC = () => {
       titleEn: 'I want to read simple guides',
       hrefFr: '/blog',
       hrefEn: '/en/blog',
+    },
+    {
+      icon: Shield,
+      titleFr: 'Je veux protéger ma famille en cas d\'urgence',
+      titleEn: 'I want to protect my family in case of emergency',
+      hrefFr: '/trousse',
+      hrefEn: '/kit',
     },
   ];
 

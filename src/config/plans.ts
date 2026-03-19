@@ -55,7 +55,6 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
       // Fonctionnalités premium
       hasAIConsulting: false,
       hasSuccessionPlanning: false,
-      hasEmergencyPlanning: true, // Module d'urgence complet (sauvegarde + impression)
       hasRealEstateOptimization: false,
 
       // Modules gouvernementaux - VERROUILLÉS
@@ -147,7 +146,6 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
       // Fonctionnalités premium - sélection
       hasAIConsulting: false,
       hasSuccessionPlanning: false,
-      hasEmergencyPlanning: true,
       hasRealEstateOptimization: false,
 
       // Modules gouvernementaux - INCLUS
@@ -239,7 +237,6 @@ export const PLAN_CONFIG: Record<SubscriptionPlan, PlanLimits> = {
       // Fonctionnalités premium - TOUTES
       hasAIConsulting: true,
       hasSuccessionPlanning: true,
-      hasEmergencyPlanning: true,
       hasRealEstateOptimization: true,
 
       // Modules gouvernementaux - OPTIMISÉS
@@ -513,7 +510,6 @@ export const getRequiredPlanForFeature = (
 
   // Gratuit
   if (
-    feature === 'hasEmergencyPlanning' ||
     feature === 'hasCashflowManagement' ||
     feature === 'hasExpensePlanning' ||
     feature === 'hasFinancialAssistant' ||

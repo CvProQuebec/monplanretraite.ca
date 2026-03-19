@@ -63,8 +63,13 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
       - run: npm ci
+      - name: Save audit report
+        run: |
+          mkdir -p reports
+          npm audit --json > reports/latest-npm-audit.json || true
       - run: npm run test:security:audit
       - name: Upload audit report
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: npm-audit
@@ -88,8 +93,8 @@ jobs:
           echo $! > preview.pid
       - name: Wait for preview
         run: npx --yes wait-on http://127.0.0.1:4173
-      - name: Install k6
-        run: sudo apt-get update && sudo apt-get install -y k6
+      - name: Setup k6
+        uses: grafana/setup-k6-action@v1
       - name: Run k6 smoke test
         env:
           K6_BASE_URL: http://127.0.0.1:4173

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Navigate } from 'react-router-dom';
 import { LocalizedRoute } from './LocalizedRoute';
 
 // Pages / Components (lazy to preserve chunking as in App.tsx)
-const PlanificationUrgence = React.lazy(() => import('../pages/PlanificationUrgence'));
 const PlanificationSuccessorale = React.lazy(() => import('../pages/PlanificationSuccessorale'));
 const EstatePlanning = React.lazy(() => import('../pages/EstatePlanning'));
 const PlanificationDepenses = React.lazy(() => import('../pages/PlanificationDepenses'));
@@ -80,8 +79,9 @@ const ExpensesPage = React.lazy(() => import('../pages/ExpensesPage'));
 export function RetirementRoutes() {
   return (
     <>
-      {/* Urgence */}
-      {LocalizedRoute({ fr: "/planification-urgence", en: "/emergency-planning", component: PlanificationUrgence })}
+      {/* Urgence — redirige vers la trousse PDF */}
+      <Route path="/planification-urgence" element={<Navigate to="/trousse" replace />} />
+      <Route path="/emergency-planning" element={<Navigate to="/kit" replace />} />
 
       {/* Successorale (FR) / Estate planning (EN) — composants distincts */}
       <Route path="/planification-successorale" element={<PlanificationSuccessorale />} />

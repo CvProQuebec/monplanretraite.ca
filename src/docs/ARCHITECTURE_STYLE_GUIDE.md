@@ -95,6 +95,5 @@ Annexes: Commandes
 - Tests: npm test
 
 Références
-- architecture.md (structure globale, modules, UI seniors)
-- AGENTS.md (procédures, OQLF, sécurité, modules retraite/budget)
-- 2025-09-18 Instructions uniformisation web.md (spéc. UI formulaires)
+- `CLAUDE.md` à la racine du projet (référence unique — remplace AGENTS.md et architecture.md)
+- Mis à jour : mars 2026

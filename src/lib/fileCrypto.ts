@@ -10,7 +10,7 @@ export interface KdfParams {
 export interface ExportEnvelope {
   version: 'EPU-1.0';
   app: 'MonPlanRetraite.ca';
-  module: 'PlanificationUrgence';
+  module: string;
   alg: 'AES-256-GCM';
   kdf: KdfParams;
   iv: string; // base64 (12 bytes)
@@ -86,7 +86,7 @@ export async function encryptToEnvelope(data: any, password: string, schemaVersi
   const envelope: ExportEnvelope = {
     version: 'EPU-1.0',
     app: 'MonPlanRetraite.ca',
-    module: 'PlanificationUrgence',
+    module: 'Trousse',
     alg: 'AES-256-GCM',
     kdf: {
       name: 'PBKDF2',

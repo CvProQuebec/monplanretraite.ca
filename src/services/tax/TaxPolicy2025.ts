@@ -180,3 +180,25 @@ export const TAX_POLICY_2025_QC: TaxPolicy = {
   rrif: { minFactorsByAge: RRIF_MIN_FACTORS },
   capitalGainsInclusion: 0.5
 };
+
+export function getBrackets(province: ProvinceCode | string = 'QC', year: number = 2025) {
+  if (province !== 'QC' || year !== 2025) {
+    return {
+      federal: FEDERAL_BRACKETS_2025,
+      provincial: QUEBEC_BRACKETS_2025
+    };
+  }
+
+  return {
+    federal: TAX_POLICY_2025_QC.federalBrackets,
+    provincial: TAX_POLICY_2025_QC.quebecBrackets
+  };
+}
+
+export function getCredits(year: number = 2025): NonRefundableCredits {
+  if (year !== 2025) {
+    return CREDITS_2025;
+  }
+
+  return TAX_POLICY_2025_QC.credits;
+}
