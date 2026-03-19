@@ -7,9 +7,6 @@ import SeniorsLoadingSpinner from './components/SeniorsLoadingSpinner';
 import BackupBootstrap from './components/backup/BackupBootstrap';
 import BackupManagerPanel from './components/backup/BackupManagerPanel';
 
-// Nouvelles pages principales
-import Accueil from './pages/Accueil';
-import Home from './pages/Home';
 const MaRetraite = React.lazy(() => import('./pages/MaRetraite'));
 const MaRetraiteWithDashboard = React.lazy(() => import('./pages/MaRetraiteWithDashboard'));
 const Revenus = React.lazy(() => import('./pages/Revenus'));

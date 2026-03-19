@@ -1,0 +1,1 @@
+export { SuccessionTab } from './EmergencyTabFallback';

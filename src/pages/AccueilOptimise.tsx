@@ -162,6 +162,23 @@ const AccueilOptimise: React.FC = () => {
             </CardContent>
           </Card>
 
+          <Card className="bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white shadow-2xl mb-16 border-0 overflow-hidden">
+            <CardContent className="p-8 md:p-10">
+              <div className="text-center mb-10">
+                <p className="text-sm font-semibold uppercase tracking-[0.3em] text-blue-200 mb-3">
+                  {isFrench ? 'Abonnements' : 'Plans'}
+                </p>
+                <h2 className="text-4xl font-bold mb-4">
+                  {isFrench ? 'Choisissez le niveau d’accompagnement qui vous convient' : 'Choose the level of guidance that fits you'}
+                </h2>
+                <p className="text-lg text-blue-100 max-w-3xl mx-auto">
+                  {isFrench
+                    ? 'Débloquez les outils avancés, les simulations approfondies et un accompagnement plus stratégique selon votre situation.'
+                    : 'Unlock advanced tools, deeper simulations, and more strategic guidance based on your situation.'}
+                </p>
+              </div>
+
+              <div className="grid gap-8 lg:grid-cols-2">
                 {/* PLAN PROFESSIONNEL - Simplifié */}
                 <Card className="bg-white border-4 border-blue-400 shadow-2xl relative">
                   <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
@@ -253,8 +270,8 @@ const AccueilOptimise: React.FC = () => {
                   {isFrench ? '✨ Garantie 14 jours remboursé sur tous les plans payants' : '✨ 14-day money-back guarantee on all paid plans'}
                 </p>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
 
           {/* SECTION 5: CTA Final - Optimisé */}
           <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 shadow-2xl">

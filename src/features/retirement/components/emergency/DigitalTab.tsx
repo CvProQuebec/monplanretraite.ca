@@ -1,0 +1,1 @@
+export { DigitalTab } from './EmergencyTabFallback';

@@ -29,7 +29,7 @@ export default defineConfig(({ mode }) => {
       outDir: 'dist',
       // Only enable sourcemaps when analyzing to keep bundles lean by default
       sourcemap: isAnalyze,
-      chunkSizeWarningLimit: 700,
+      chunkSizeWarningLimit: 1500,
       target: 'es2020',
       rollupOptions: {
         output: {

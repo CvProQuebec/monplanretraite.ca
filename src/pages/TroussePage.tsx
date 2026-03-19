@@ -12,7 +12,7 @@
  */
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, type Variants } from 'framer-motion';
 import {
   ShieldAlert,
   Flower2,
@@ -34,23 +34,25 @@ const DPD_TROUSSE =
   'https://monplanretraite-ca.dpdcart.com/cart/add?product_id=249037&method_id=272003';
 
 /* ─── Animation helpers ─── */
-const fadeUp = {
+const easeOut = [0.25, 0.46, 0.45, 0.94] as const;
+
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: (i = 0) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, delay: i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.55, delay: i * 0.08, ease: easeOut },
   }),
 };
 
-const fadeLeft = {
+const fadeLeft: Variants = {
   hidden: { opacity: 0, x: -24 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: easeOut } },
 };
 
-const fadeRight = {
+const fadeRight: Variants = {
   hidden: { opacity: 0, x: 24 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] } },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: easeOut } },
 };
 
 /* ─── Shared styles ─── */

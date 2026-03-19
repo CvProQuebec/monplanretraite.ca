@@ -8,12 +8,12 @@ import {
   FileText,
   FolderOpen,
   Save,
-  UserRound,
+  User,
 } from 'lucide-react';
 
 const steps = [
   {
-    icon: UserRound,
+    icon: User,
     titleFr: 'Votre profil',
     titleEn: 'Your profile',
     textFr: 'Commencez par vos renseignements personnels, votre âge et votre horizon de retraite.',

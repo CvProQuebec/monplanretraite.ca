@@ -1,0 +1,1 @@
+export { DependentsTab } from './EmergencyTabFallback';
