@@ -4,6 +4,9 @@ import { dirname, resolve } from "node:path";
 
 const rootDir = dirname(fileURLToPath(new URL("./playwright.config.ts", import.meta.url)));
 const TEST_BASE_URL = process.env.TEST_BASE_URL ?? "http://127.0.0.1:5173";
+const PLAYWRIGHT_SERVER_COMMAND = process.env.CI
+  ? "npm run build && npm run preview -- --host 127.0.0.1 --port 5173 --strictPort"
+  : "npm run dev -- --host 127.0.0.1 --port 5173 --strictPort";
 
 export default defineConfig({
   testDir: rootDir,
@@ -49,9 +52,9 @@ export default defineConfig({
   webServer: process.env.PLAYWRIGHT_SKIP_WEBSERVER === "true"
     ? undefined
     : {
-        command: "npm run dev -- --host",
+        command: PLAYWRIGHT_SERVER_COMMAND,
         url: TEST_BASE_URL,
-        timeout: 120_000,
+        timeout: 180_000,
         reuseExistingServer: !process.env.CI
       }
 });
