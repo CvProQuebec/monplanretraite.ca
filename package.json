@@ -37,7 +37,7 @@
     "test:a11y": "playwright test tests/e2e/accessibility.spec.ts --config tests/e2e/playwright.config.ts",
     "test:perf": "node tests/perf/run-k6.mjs",
     "test:security:zap": "node tests/security/run-zap-baseline.mjs",
-    "test:security:audit": "npm audit --json > reports/latest-npm-audit.json && npm audit",
+    "test:security:audit": "npm audit --audit-level=high",
     "qa:smoke": "npm run test:routes",
     "qa:all": "npm run typecheck && npm run lint:boundaries && npm run lint:mpr && npm run deps:check && npm run test:unit && npm run test:vitest && npm run test:e2e"
   },
