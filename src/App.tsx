@@ -68,6 +68,7 @@ const SpendingPlanningEn = React.lazy(() => import('./pages/SpendingPlanning'));
 const IncomePageEn = React.lazy(() => import('./pages/IncomePage'));
 const SaveLoadEn = React.lazy(() => import('./pages/SaveLoad'));
 const HomeOptimized = React.lazy(() => import('./pages/HomeOptimized'));
+const Accueil = React.lazy(() => import('./pages/Accueil'));
 
 // Composants de test et validation - Lazy loading
 const FinalValidation = React.lazy(() => import('./components/FinalValidation'));
