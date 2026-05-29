@@ -2,7 +2,7 @@
 title: 'Planning Retirement as a Couple: Avoiding Surprises'
 slug: couple-retirement-planning
 date: '2026-01-14'
-lastUpdated: '2026-01-14'
+lastUpdated: '2026-05-29'
 excerpt: 'Planning retirement as a couple is like preparing for a long journey together: you need to talk, make plans together, and avoid unpleasant surprises. Unfortunately, too many couples discover too late that they didn''t have the same vision of their retirement. Here''s how to prep...'
 category: Couple & Family
 language: en
@@ -147,6 +147,22 @@ Planning retirement as a couple is like preparing for a long journey together: y
 - More time for expensive leisure activities
 - Private healthcare
 - Travel and retirement activities
+
+### Step 3B: Do Not Let a Headline Number Replace Your Plan
+
+You may hear that Canadians need a very large amount, sometimes $1 million, $1.5 million, or even more, to retire comfortably. These numbers can be useful as conversation starters, but they are not a retirement plan for your household.
+
+For a couple, the real question is not "Do we have the national average?" It is:
+
+- What lifestyle do we actually want?
+- At what age will each of us retire?
+- How much secure income will we have from pensions, QPP/CPP, Old Age Security, or workplace plans?
+- How much flexibility do we have in our spending?
+- What happens if one spouse retires earlier, lives longer, or needs care?
+
+**Example:** A couple with modest spending, a paid-off home, and two reliable pensions may need much less personal savings than a couple with no pension, a mortgage, and a goal of travelling several months per year.
+
+This is why the same savings balance can mean very different things for different couples. Instead of comparing yourselves to a headline number, build your own couple number from your monthly spending, retirement age, pension income, and desired margin of safety.
 
 ### Step 4: Use Tax Strategies for Couples
 

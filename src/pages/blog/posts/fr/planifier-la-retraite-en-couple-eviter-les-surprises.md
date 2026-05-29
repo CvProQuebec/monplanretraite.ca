@@ -2,7 +2,7 @@
 title: 'Planifier la retraite en couple : éviter les surprises'
 slug: planifier-la-retraite-en-couple-eviter-les-surprises
 date: '2026-01-14'
-lastUpdated: '2026-01-14'
+lastUpdated: '2026-05-29'
 excerpt: 'Planifier sa retraite en couple, c''est comme préparer un long voyage à deux : il faut se parler, faire des plans ensemble et éviter les mauvaises surprises. Malheureusement, trop de couples découvrent trop tard qu''ils n''avaient pas la même vision de leur retraite. Voici comment bien vous préparer ensemble.'
 category: Couple et famille
 language: fr
@@ -153,6 +153,22 @@ Planifier sa retraite en couple, c'est comme préparer un long voyage à deux : 
 - Plus de temps pour les loisirs coûteux
 - Soins de santé privés
 - Voyages et activités de retraite
+
+### Étape 3B : Ne laissez pas un chiffre-choc remplacer votre plan
+
+Vous entendrez parfois que les Canadiens ont besoin d'un très gros montant, parfois 1 million $, 1,5 million $ ou même davantage, pour prendre leur retraite confortablement. Ces chiffres peuvent servir de point de départ pour une discussion, mais ils ne remplacent pas un vrai plan pour votre ménage.
+
+Pour un couple, la vraie question n'est pas : « Avons-nous le montant moyen national? » C'est plutôt :
+
+- Quel style de vie voulons-nous vraiment?
+- À quel âge chacun de nous veut-il prendre sa retraite?
+- Quels revenus sûrs aurons-nous grâce aux régimes de retraite, à la RRQ/RPC, à la Sécurité de la vieillesse ou à un régime d'employeur?
+- Quelle flexibilité avons-nous dans nos dépenses?
+- Que se passe-t-il si l'un de nous prend sa retraite plus tôt, vit plus longtemps ou a besoin de soins?
+
+**Exemple :** Un couple qui dépense modestement, dont la maison est payée et qui reçoit deux rentes fiables peut avoir besoin de beaucoup moins d'épargne personnelle qu'un couple sans régime de retraite, avec une hypothèque et le désir de voyager plusieurs mois par année.
+
+C'est pourquoi le même solde d'épargne peut vouloir dire des choses très différentes d'un couple à l'autre. Au lieu de vous comparer à un chiffre-choc, bâtissez votre propre chiffre de couple à partir de vos dépenses mensuelles, de votre âge de retraite, de vos revenus de retraite et de votre marge de sécurité souhaitée.
 
 ### Étape 4 : Utilisez les stratégies fiscales pour couples
 
